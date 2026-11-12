@@ -31,7 +31,7 @@ On the workstation, in an empty folder:
    nothing until all of them are right.
 
 `node import.ts --project` writes only what a project needs at its root: `AGENTS.md`, `.agents/`,
-`docs/`, `templates/` and `scripts/check-base.ts`. `--from` and `--to` change the folders read and
+`docs/`, `templates/`, `scripts/check-base.ts` and `scripts/check-versions.ts`. `--from` and `--to` change the folders read and
 written; `--force` replaces files that already exist and differ.
 
 ## Check the base

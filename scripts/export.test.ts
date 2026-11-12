@@ -222,18 +222,19 @@ describe('import refusals', () => {
   it('refuses a part with a changed line, names it and writes nothing', () => {
     const parts = exportBase(testBase(), 10);
     const target = mkdtempSync(join(tmpdir(), 'import-'));
-    const damaged = parts.map((part, index) => {
+    const index = parts.findIndex((part) => part.text.includes('Do the thing'));
+    const damaged = parts.map((part, position) => {
       return {
         name: part.name,
-        text: index === 1 ? part.text.replace('Do the thing', 'Do the thinq') : part.text,
+        text: position === index ? part.text.replace('Do the thing', 'Do the thinq') : part.text,
       };
     });
 
-    assert.ok(parts.length > 1);
+    assert.ok(parts.length > 1 && index >= 0);
     assert.throws(() => importBase(damaged, target, {
       project: false,
       force: false,
-    }), /base-2\.txt: part 2 of \d+ was damaged by the copy/);
+    }), new RegExp(`base-${index + 1}\\.txt: part ${index + 1} of \\d+ was damaged by the copy`));
     assert.deepEqual(readdirSync(target), []);
   });
   it('refuses a part with a removed line, and a missing part', () => {

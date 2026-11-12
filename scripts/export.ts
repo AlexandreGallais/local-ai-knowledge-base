@@ -37,6 +37,7 @@ const KB = 1000;
 const NEWLINE = '\n';
 const ROOT_FILES = [
   'scripts/check-base.ts',
+  'scripts/check-versions.ts',
   'import.ts',
   'README.md',
   'LICENSE',

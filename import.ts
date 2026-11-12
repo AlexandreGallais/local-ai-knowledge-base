@@ -4,7 +4,8 @@
 //   node import.ts --from <folder>    reads the export files from <folder>
 //   node import.ts --to <folder>      writes the base into <folder>
 //   node import.ts --project          writes only what a project needs: AGENTS.md, .agents/, docs/,
-//                                     templates/ at the root, and scripts/check-base.ts
+//                                     templates/ at the root, and scripts/check-base.ts and
+//                                     scripts/check-versions.ts
 //   node import.ts --force            replaces files that already exist and differ
 // It checks every part and every file with its SHA-256 checksum, and writes nothing if one fails.
 import { createHash } from 'node:crypto';
@@ -56,6 +57,7 @@ export const PART_PATTERN = /^base-\d+\.txt$/;
 const PROJECT_FOLDERS = [
   'code/',
   'scripts/check-base.ts',
+  'scripts/check-versions.ts',
 ];
 const NEWLINE = '\n';
 
