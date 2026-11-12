@@ -23,7 +23,10 @@ Nothing is researched or written yet.
 
 1. Research first, before any topic:
    - How to research a topic and write a document of the base.
-   - How to write instructions, skills and agents that a smaller model follows well.
+   - How to write and organize a knowledge base that a smaller model follows well: instructions,
+     skills, agents, documents, loading, checks by tools, evaluation.
+   - How to bring the official documentation of each tool into the base, at the version the project
+     uses.
 2. Then the topics below, priority 1 first.
 
 ## Priority 1
