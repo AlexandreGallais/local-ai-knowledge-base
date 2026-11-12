@@ -198,7 +198,16 @@ The first two researches are done; the third is next.
   with no build step and no npm package.
 - The import, run on the export in an empty folder, rebuilds the same tree as the base.
 
-### 13. Evaluation
+### 13. Keeping the base up to date
+
+- Projects update their tool versions once or twice a year; the documents follow.
+- Each document records its tool, its version and the date it was checked.
+- One simple, written procedure updates the documents of one tool to a new version: find what
+  changed between the two versions, rewrite only the sections it touches, check again.
+- A check lists the documents whose version is behind the version a project uses.
+- Angular comes first: it is the tool the team uses most.
+
+### 14. Evaluation
 
 - A set of test tasks, run with and without the base.
 - The AI must do better with the base, without using more tokens.
