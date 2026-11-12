@@ -98,7 +98,8 @@ scripts/
      uses.
 2. Then the topics below, priority 1 first.
 
-The first two researches are done; the third is next.
+The research is done: four starting researches and one research per topic. Their reports stay
+out of this repository; each topic is built from its report.
 
 ## Priority 1
 
