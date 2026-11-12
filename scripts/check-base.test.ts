@@ -298,6 +298,125 @@ describe('checkChatModel', () => {
     assert.match(messages(checkChatModel(text, 'model.md')), /search its knowledge/);
   });
 });
+const HEAVY_SKILL = [
+  '---',
+  'name: read-big',
+  'description: Read a big file through its extract. Use when a task needs a .pdf or .xd file.',
+  'license: MIT',
+  'metadata:',
+  '  variant: files',
+  '  version: "0.1.0"',
+  '---',
+  '',
+  '# Read a big file',
+  '',
+  '## Heavy files',
+  '',
+  '- Documents and design: .pdf .xd',
+  '',
+  '## Steps',
+  '',
+  '1. Find the family of the file.',
+  '<!-- files:begin id=extract -->',
+  '2. Read `.agents/skills/read-big/references/formats.md`.',
+  '3. Run `node .agents/skills/read-big/scripts/extract.ts "<path>"`.',
+  '<!-- files:end -->',
+  '4. Answer from the extract only.',
+  '',
+  '## Example',
+  '',
+  'Wrong: read `ui.xd` raw. Right: read its extract.',
+  '',
+  '## Final check',
+  '',
+  '- Did you read only the extract?',
+  '',
+].join(NEWLINE);
+const HEAVY_CHAT = [
+  '<!-- chat:begin id=extract -->',
+  '2. Give the user the command for the format. Ask the user to paste its output.',
+  '<!-- chat:end -->',
+  '',
+].join(NEWLINE);
+const HEAVY_AGENTS = VALID_AGENTS
+  .replace('2. Never search the web. Never open a URL.', '2. Never search the web. Never open a URL.\n3. Never read a heavy file raw.\n   Heavy files: .xd .pdf')
+  .replace('- To write a unit test: load the skill `write-test`.', '- To read a heavy file: load the skill `read-big`.');
+
+function heavyBase(overrides: Record<string, string | undefined> = {}): string {
+  const root = mkdtempSync(join(tmpdir(), 'check-base-'));
+  const files: Record<string, string | undefined> = {
+    'AGENTS.md': HEAVY_AGENTS,
+    '.agents/skills/read-big/SKILL.md': HEAVY_SKILL,
+    '.agents/skills/read-big/chat.md': HEAVY_CHAT,
+    '.agents/skills/read-big/references/formats.md': VALID_DOCUMENT,
+    '.agents/skills/read-big/scripts/extract.ts': 'export {};\n',
+    'docs/README.fr.md': FRENCH_TEXT,
+    'docs/typescript/README.fr.md': FRENCH_TEXT,
+    'docs/typescript/strict-null-checks.md': VALID_DOCUMENT,
+    ...overrides,
+  };
+
+  writeTree(
+    root,
+    Object.fromEntries(Object
+      .entries(files)
+      .filter((entry): entry is [string, string] => entry[1] !== undefined)),
+  );
+  return messages(checkBase(root).findings);
+}
+
+describe('skill references, scripts and chat.md', () => {
+  it('accepts a skill with its references, its script and its chat text', () => {
+    assert.equal(heavyBase(), '');
+  });
+  it('refuses an unexpected entry in a skill folder', () => {
+    assert.match(heavyBase({ '.agents/skills/read-big/notes.txt': 'x' }), /unexpected entry/);
+  });
+  it('refuses a reference that SKILL.md never names', () => {
+    assert.match(heavyBase({ '.agents/skills/read-big/references/other.md': VALID_DOCUMENT }), /reference not named in SKILL\.md/);
+  });
+  it('refuses a reference named in SKILL.md but missing', () => {
+    assert.match(heavyBase({ '.agents/skills/read-big/references/formats.md': undefined }), /names a missing reference: references\/formats\.md/);
+  });
+  it('refuses a reference without its header or its sources', () => {
+    assert.match(heavyBase({ '.agents/skills/read-big/references/formats.md': '# Formats\n\nNo header.\n' }), /missing YAML header/);
+  });
+  it('refuses a plain JavaScript script and a script never named', () => {
+    const result = heavyBase({ '.agents/skills/read-big/scripts/helper.js': 'export {};\n' });
+
+    assert.match(result, /plain JavaScript/);
+    assert.match(heavyBase({ '.agents/skills/read-big/scripts/unused.ts': 'export {};\n' }), /script never named/);
+  });
+  it('refuses a chat block whose id has no files block', () => {
+    const chat = HEAVY_CHAT.replace('id=extract', 'id=convert');
+
+    assert.match(heavyBase({ '.agents/skills/read-big/chat.md': chat }), /chat block id=convert has no <!-- files:begin id=convert --> block/);
+  });
+  it('refuses text outside a chat block and a chat block not closed', () => {
+    const chat = `Intro line.\n${HEAVY_CHAT.replace('<!-- chat:end -->', '')}`;
+    const result = heavyBase({ '.agents/skills/read-big/chat.md': chat });
+
+    assert.match(result, /text outside a chat block/);
+    assert.match(result, /chat block not closed/);
+  });
+  it('refuses a files block id used twice', () => {
+    const skill = HEAVY_SKILL.replace('4. Answer from the extract only.', '<!-- files:begin id=extract -->\n4. Run `ls`.\n<!-- files:end -->');
+
+    assert.match(heavyBase({ '.agents/skills/read-big/SKILL.md': skill }), /files block id=extract appears twice/);
+  });
+});
+describe('heavy file extensions', () => {
+  it('refuses AGENTS.md and a skill that list different extensions', () => {
+    const agents = HEAVY_AGENTS.replace('Heavy files: .xd .pdf', 'Heavy files: .xd .docx');
+
+    assert.match(heavyBase({ 'AGENTS.md': agents }), /heavy files differ from the skill "read-big": only in the skill: \.pdf; only in AGENTS\.md: \.docx/);
+  });
+  it('refuses a skill that lists heavy files when AGENTS.md has no "Heavy files:" line', () => {
+    const agents = HEAVY_AGENTS.replace('\n   Heavy files: .xd .pdf', '');
+
+    assert.match(heavyBase({ 'AGENTS.md': agents }), /no "Heavy files:" line/);
+  });
+});
 describe('checkBase', () => {
   it('accepts a small correct base', () => {
     const root = mkdtempSync(join(tmpdir(), 'check-base-'));

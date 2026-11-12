@@ -18,11 +18,21 @@ anglais.
 | --- | --- |
 | `AGENTS.md` | Le fichier d'entrée, chargé à chaque session : les règles vitales, une ligne par skill pour dire quand le charger, et l'index des documents. |
 | `.agents/skills/<nom>/SKILL.md` | Un skill par dossier : une procédure pas à pas que l'IA charge pour une tâche précise. |
+| `.agents/skills/<nom>/references/` | Les fiches détaillées d'un skill, une par cas : l'IA n'ouvre que celle dont elle a besoin. |
+| `.agents/skills/<nom>/scripts/` | Les scripts d'un skill, en TypeScript, lancés par `node` sans paquet à installer. |
+| `.agents/skills/<nom>/chat.md` | Le texte qui remplace, dans la version pour le chat, les étapes où l'IA lance une commande. |
+| `.extract/` | Créé dans le projet par le skill `read-heavy-file` : les extraits des fichiers lourds. Git l'ignore. |
 | `docs/template.md` | Le patron d'un document de la base : en-tête, sections, exemples faux et justes, sources. |
 | `docs/<sujet>/` | Les documents de référence d'un sujet, un document par question. |
 | `docs/<sujet>/README.fr.md` | Le résumé en français du sujet, pour l'équipe : chaque fichier en une ligne. |
 | `templates/<langage>/` | Des fichiers de code modèles, à copier et adapter. Vide pour l'instant. |
 | `scripts/check-base.ts` | Le contrôle de la base, livré avec elle. |
+
+## Les skills
+
+| Skill | Ce qu'il fait |
+| --- | --- |
+| `read-heavy-file` | Fait lire un fichier lourd par son extrait, jamais tel quel. |
 
 ## Les skills de rédaction
 
@@ -33,6 +43,24 @@ anglais.
 | `write-agent` | Écrit un agent : un skill avec un rôle et un format de réponse. |
 | `write-base-document` | Écrit un document de la base à partir de sources fournies, sa ligne d'index, et met à jour le résumé français du sujet. |
 | `write-chat-model` | Écrit la consigne de base d'un modèle de chat, pour un sujet. |
+
+## Lire les fichiers lourds
+
+- L'IA ne lit jamais tel quel un fichier lourd ou binaire : Word, Excel, PowerPoint, OpenDocument,
+  PDF, images, Adobe XD, Sketch, Visio, draw.io, notebooks, archives, e-mails, binaires. La liste
+  complète est dans `AGENTS.md`.
+- Un fichier texte de plus de 100 Ko ou de plus de 2 000 lignes compte aussi comme lourd.
+- Le skill `read-heavy-file` lance d'abord une commande d'extraction, qui écrit un texte court dans
+  `.extract/`, puis l'IA ne lit que ce texte, par morceaux de 200 lignes au plus.
+- Le script `extract.ts` lit sans rien installer Word, Excel (feuilles, valeurs, formules),
+  PowerPoint (diapositives et notes), OpenDocument, Adobe XD (écrans et textes), Sketch, Visio,
+  draw.io, les notebooks, la structure d'un gros JSON et la liste d'une archive.
+- Pour un PDF, une image ou un vieux fichier Office (`.doc`, `.xls`, `.ppt`), il donne la commande
+  à lancer à la place : `pdftotext`, `tesseract` ou `soffice`, si ces outils sont installés.
+- Sécurité : le script n'exécute rien de ce qu'il lit, n'écrit rien sur le disque depuis une
+  archive, refuse les fichiers chiffrés et limite la taille de ce qu'il décompresse.
+- Le script s'essaie à la main sur un fichier :
+  `node .agents/skills/read-heavy-file/scripts/extract.ts mon-fichier.xlsx`.
 
 ## Vérifier la base
 

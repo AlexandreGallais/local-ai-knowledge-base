@@ -9,8 +9,9 @@ two profiles, each independent of any software:
   today's target.
 
 Status: the foundation is in place: `code/AGENTS.md`, the five authoring skills, the document
-template, the French overview and the base check. No topic is written yet. This file lists every
-topic the base will cover, in the order they will be built.
+template, the French overview and the base check. The skill `read-heavy-file` and its script
+`extract.ts` make the AI read heavy files through a short extract. No topic document is written
+yet. This file lists every topic the base will cover, in the order they will be built.
 
 ## Check the base
 
@@ -18,7 +19,8 @@ With Node 22.18 or later, from the root of this repository, with no package to i
 
 ```sh
 node scripts/check-base.ts          # checks code/ and chat/models/
-node --test 'scripts/*.test.ts'     # tests of the check itself
+node --test 'scripts/*.test.ts'     # tests of the check and of extract.ts
+node scripts/fixtures.ts samples    # fake sample files, to try extract.ts by hand
 ```
 
 The check fails on any finding: `AGENTS.md` too long, a skill without its trigger line or with an
@@ -33,6 +35,8 @@ code/                        Code profile, the single source
   .agents/skills/<name>/     One skill per folder
     SKILL.md                 The skill; action steps marked for the chat variant
     chat.md                  Optional: chat text that replaces a marked block
+    references/              Optional: one detailed document per case, read on demand
+    scripts/                 Optional: TypeScript scripts run with node, no package
   docs/                      Reference documents
     README.fr.md             For people: the structure and contents of the whole base, in French
     <topic>/
@@ -46,6 +50,7 @@ adapters/                    Optional files that one software needs
   open-webui/                Generated at export: import files
 scripts/
   check-base.ts              The base check, copied with the base into a project
+  fixtures.ts                Fake sample files for the tests, never copied into a project
                              Export and import come later
 ```
 

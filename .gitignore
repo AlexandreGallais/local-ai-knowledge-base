@@ -5,6 +5,9 @@ bin/
 obj/
 target/
 
+# Extracts of heavy files, written by the read-heavy-file skill
+.extract/
+
 # Local secrets
 .env
 .env.*

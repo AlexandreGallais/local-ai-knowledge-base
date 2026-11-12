@@ -99,6 +99,21 @@ const FILE_ACTION = /^(write|read|open|list|add|update|copy|append)\b/i;
 const FILE_HINT = /\bfiles?\b|`[^`]*[./][^`]*`/i;
 const FILES_BEGIN = /^<!--\s*files:begin(?:\s+id=[\w-]+)?\s*-->$/;
 const FILES_END = /^<!--\s*files:end\s*-->$/;
+const FILES_BEGIN_ID = /^<!--\s*files:begin\s+id=([\w-]+)\s*-->$/;
+const CHAT_BEGIN = /^<!--\s*chat:begin\s+id=([\w-]+)\s*-->$/;
+const CHAT_END = /^<!--\s*chat:end\s*-->$/;
+const SKILL_ENTRIES = new Set([
+  'SKILL.md',
+  'chat.md',
+  'references',
+  'scripts',
+  'assets',
+]);
+const PLAIN_JAVASCRIPT = /\.(?:js|mjs|cjs)$/;
+const SCRIPT_FILE = /\.(?:ts|cs|sh)$/;
+const HEAVY_LINE = /Heavy files:/i;
+const HEAVY_SECTION = 'Heavy files';
+const EXTENSION = /(?<![\w/.])\.[a-z\d]+\b/gi;
 const FRENCH_WORDS = new Set([
   'le',
   'la',
@@ -318,6 +333,14 @@ function checkMarkers(lines: Line[], file: string): Finding[] {
   return findings;
 }
 
+function checkMarkerIds(text: string, file: string): Finding[] {
+  const ids = markerIds(text, FILES_BEGIN_ID);
+
+  return [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))].map((id) => {
+    return finding(file, `files block id=${id} appears twice`);
+  });
+}
+
 function isUnmarkedAction(line: Line): boolean {
   if (line.section !== 'Steps' || !LIST_ITEM.test(line.text)) {
     return false;
@@ -400,6 +423,7 @@ export function checkSkill(folderName: string, text: string, file: string): Find
     ...checkSkillHeader(header, folderName, file),
     ...checkSkillSections(lines, file),
     ...checkMarkers(lines, file),
+    ...checkMarkerIds(text, file),
     ...checkActionSteps(lines, file),
     ...commonFindings(text, file),
   ];
@@ -625,8 +649,145 @@ function read(path: string): string {
   return readFileSync(path, 'utf8');
 }
 
+function filesIn(folder: string): string[] {
+  if (!existsSync(folder)) {
+    return [];
+  }
+  return readdirSync(folder)
+    .filter((entry) => !statSync(join(folder, entry)).isDirectory())
+    .toSorted();
+}
+
+function checkSkillLayout(folder: string): Finding[] {
+  return readdirSync(folder)
+    .filter((entry) => !SKILL_ENTRIES.has(entry))
+    .map((entry) => {
+      return finding(shown(join(folder, entry)), 'unexpected entry; a skill folder holds SKILL.md, chat.md, references/, scripts/ and assets/ only');
+    });
+}
+
+function citedFiles(text: string, pattern: RegExp): Set<string> {
+  return new Set([...text.matchAll(pattern)].map((match) => match[1]));
+}
+
+function checkReferences(folder: string, name: string, skillText: string): BaseResult {
+  const referencesFolder = join(folder, 'references');
+  const files = filesIn(referencesFolder);
+  const cited = citedFiles(skillText, new RegExp(`(?:\\.agents/skills/${name}/)?references/([\\w.-]+)`, 'g'));
+  const findings = files.flatMap((file) => {
+    const path = join(referencesFolder, file);
+
+    if (!file.endsWith('.md')) {
+      return [finding(shown(path), 'a reference is a Markdown document (.md)')];
+    }
+    const text = read(path);
+
+    return [
+      ...checkDocument(text, shown(path), parseFrontMatter(text)?.fields.get('topic') ?? ''),
+      ...checkSoftwareNames(text, shown(path)),
+      ...(cited.has(file) ? [] : [finding(shown(path), 'reference not named in SKILL.md; the AI never finds it')]),
+    ];
+  });
+
+  for (const file of [...cited].filter((item) => !files.includes(item))) {
+    findings.push(finding(shown(join(folder, 'SKILL.md')), `names a missing reference: references/${file}`));
+  }
+  return {
+    findings,
+    files: files.length,
+  };
+}
+
+function checkScripts(folder: string, name: string, citingText: string): BaseResult {
+  const scriptsFolder = join(folder, 'scripts');
+  const files = filesIn(scriptsFolder);
+  const cited = citedFiles(citingText, new RegExp(`\\.agents/skills/${name}/scripts/([\\w.-]+)`, 'g'));
+  const findings = files.flatMap((file) => {
+    const path = shown(join(scriptsFolder, file));
+
+    if (PLAIN_JAVASCRIPT.test(file)) {
+      return [finding(path, 'plain JavaScript; write the script in TypeScript (.ts)')];
+    }
+    if (!SCRIPT_FILE.test(file)) {
+      return [finding(path, 'a skill script is a .ts, .cs or .sh file')];
+    }
+    return cited.has(file) ? [] : [finding(path, `script never named with its path .agents/skills/${name}/scripts/${file}`)];
+  });
+
+  for (const file of [...cited].filter((item) => !files.includes(item))) {
+    findings.push(finding(shown(join(folder, 'SKILL.md')), `names a missing script: scripts/${file}`));
+  }
+  return {
+    findings,
+    files: files.length,
+  };
+}
+
+function markerIds(text: string, pattern: RegExp): string[] {
+  return analyseLines(text)
+    .filter((line) => !line.inCode)
+    .map((line) => pattern.exec(line.text.trim())?.[1])
+    .filter((id) => id !== undefined);
+}
+
+function chatLineFinding(trimmed: string, open: boolean, file: string): Finding | undefined {
+  if (FILES_BEGIN.test(trimmed) || FILES_END.test(trimmed)) {
+    return finding(file, 'files markers belong in SKILL.md, not in chat.md');
+  }
+  if (trimmed.startsWith('<!--') && trimmed.includes('chat:')) {
+    return finding(file, `malformed chat marker: ${trimmed}`);
+  }
+  if (!open && trimmed !== '') {
+    return finding(file, `text outside a chat block is never used: ${trimmed}`);
+  }
+  return undefined;
+}
+
+function checkChatBlock(id: string, seen: Set<string>, filesIds: string[], file: string): Finding[] {
+  const findings: Finding[] = [];
+
+  if (seen.has(id)) {
+    findings.push(finding(file, `chat block id=${id} appears twice`));
+  }
+  if (!filesIds.includes(id)) {
+    findings.push(finding(file, `chat block id=${id} has no <!-- files:begin id=${id} --> block in SKILL.md`));
+  }
+  seen.add(id);
+  return findings;
+}
+
+export function checkChatVariant(chatText: string, skillText: string, file: string): Finding[] {
+  const filesIds = markerIds(skillText, FILES_BEGIN_ID);
+  const seen = new Set<string>();
+  const findings: Finding[] = [];
+  let open = false;
+
+  for (const line of analyseLines(chatText).filter((item) => !item.inCode)) {
+    const trimmed = line.text.trim();
+    const begin = CHAT_BEGIN.exec(trimmed);
+
+    if (begin !== null) {
+      findings.push(...(open ? [finding(file, 'chat block opened inside another chat block')] : []), ...checkChatBlock(begin[1], seen, filesIds, file));
+      open = true;
+    } else if (CHAT_END.test(trimmed)) {
+      findings.push(...(open ? [] : [finding(file, 'chat:end without chat:begin')]));
+      open = false;
+    } else {
+      const problem = chatLineFinding(trimmed, open, file);
+
+      findings.push(...(problem === undefined ? [] : [problem]));
+    }
+  }
+  return open ? [
+    ...findings,
+    finding(file, 'chat block not closed: add <!-- chat:end -->'),
+  ] : findings;
+}
+
 function checkOneSkill(skillsFolder: string, name: string): BaseResult {
-  const skillPath = join(skillsFolder, name, 'SKILL.md');
+  const folder = join(skillsFolder, name);
+  const skillPath = join(folder, 'SKILL.md');
+  const chatPath = join(folder, 'chat.md');
 
   if (!existsSync(skillPath)) {
     return {
@@ -634,16 +795,88 @@ function checkOneSkill(skillsFolder: string, name: string): BaseResult {
       files: 0,
     };
   }
-  const extras = markdownFiles(join(skillsFolder, name)).filter((path) => path !== skillPath);
-  const findings = [
-    ...checkSkill(name, read(skillPath), shown(skillPath)),
-    ...extras.flatMap((path) => commonFindings(read(path), shown(path))),
-  ];
-
-  return {
-    findings,
-    files: 1 + extras.length,
+  const skillText = read(skillPath);
+  const references = checkReferences(folder, name, skillText);
+  const referencesText = filesIn(join(folder, 'references'))
+    .map((file) => read(join(folder, 'references', file)))
+    .join(NEWLINE);
+  const chat: BaseResult = existsSync(chatPath) ? {
+    findings: [
+      ...commonFindings(read(chatPath), shown(chatPath)),
+      ...checkChatVariant(read(chatPath), skillText, shown(chatPath)),
+    ],
+    files: 1,
+  } : {
+    findings: [],
+    files: 0,
   };
+
+  return merge([
+    {
+      findings: [
+        ...checkSkill(name, skillText, shown(skillPath)),
+        ...checkSkillLayout(folder),
+      ],
+      files: 1,
+    },
+    references,
+    checkScripts(folder, name, skillText + NEWLINE + referencesText),
+    chat,
+  ]);
+}
+
+function extensionsIn(text: string): string[] {
+  return (text.match(EXTENSION) ?? []).map((extension) => extension.toLowerCase());
+}
+
+function agentsHeavyExtensions(text: string): string[] | undefined {
+  const lines = analyseLines(text).filter((line) => !line.inCode && HEAVY_LINE.test(line.text));
+
+  if (lines.length === 0) {
+    return undefined;
+  }
+  return lines.flatMap((line) => extensionsIn(line.text.slice(line.text.search(HEAVY_LINE))));
+}
+
+function skillHeavyExtensions(text: string): string[] | undefined {
+  const lines = analyseLines(text).filter((line) => !line.inCode && line.section === HEAVY_SECTION);
+
+  return lines.length === 0 ? undefined : lines.flatMap((line) => extensionsIn(line.text));
+}
+
+function differences(first: string[], second: string[]): string {
+  return [...new Set(first)]
+    .filter((item) => !second.includes(item))
+    .join(' ');
+}
+
+export function checkHeavyFiles(
+  agentsText: string,
+  agentsFile: string,
+  skills: {
+    name: string;
+    text: string;
+  }[],
+): Finding[] {
+  const inAgents = agentsHeavyExtensions(agentsText);
+
+  return skills.flatMap((skill) => {
+    const inSkill = skillHeavyExtensions(skill.text);
+
+    if (inSkill === undefined) {
+      return [];
+    }
+    if (inAgents === undefined) {
+      return [finding(agentsFile, `no "Heavy files:" line, but the skill "${skill.name}" lists heavy files`)];
+    }
+    const onlyInSkill = differences(inSkill, inAgents);
+    const onlyInAgents = differences(inAgents, inSkill);
+
+    if (onlyInSkill === '' && onlyInAgents === '') {
+      return [];
+    }
+    return [finding(agentsFile, `heavy files differ from the skill "${skill.name}": only in the skill: ${onlyInSkill || 'none'}; only in AGENTS.md: ${onlyInAgents || 'none'}`)];
+  });
 }
 
 function checkFrenchFile(path: string, docsFolder: string): Finding[] {
@@ -719,6 +952,20 @@ function merge(results: BaseResult[]): BaseResult {
   };
 }
 
+function readSkills(skillsFolder: string, skillNames: string[]): {
+  name: string;
+  text: string;
+}[] {
+  return skillNames
+    .filter((name) => existsSync(join(skillsFolder, name, 'SKILL.md')))
+    .map((name) => {
+      return {
+        name,
+        text: read(join(skillsFolder, name, 'SKILL.md')),
+      };
+    });
+}
+
 export function checkBase(base: string, chatModels?: string): BaseResult {
   const agentsPath = join(base, 'AGENTS.md');
 
@@ -733,6 +980,7 @@ export function checkBase(base: string, chatModels?: string): BaseResult {
   const summaries = new Map<string, string>();
   const docs = checkDocs(join(base, 'docs'), summaries);
   const agentsText = read(agentsPath);
+  const skillTexts = readSkills(skillsFolder, skillNames);
   const agents = [
     ...checkAgentsMd(agentsText, shown(agentsPath), {
       skillNames,
@@ -740,6 +988,7 @@ export function checkBase(base: string, chatModels?: string): BaseResult {
       exists: (path) => existsSync(join(base, path)),
     }),
     ...checkIndexSummaries(agentsText, shown(agentsPath), summaries),
+    ...checkHeavyFiles(agentsText, shown(agentsPath), skillTexts),
   ];
 
   return merge([
