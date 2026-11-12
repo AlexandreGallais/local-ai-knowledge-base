@@ -1,0 +1,13 @@
+# Dependencies and builds
+node_modules/
+dist/
+bin/
+obj/
+target/
+
+# Local secrets
+.env
+.env.*
+
+# The system's
+.DS_Store
