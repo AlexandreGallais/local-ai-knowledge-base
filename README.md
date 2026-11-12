@@ -156,3 +156,10 @@ Nothing is researched or written yet.
 
 - A set of test tasks, run with and without the base.
 - The AI must do better with the base, without using more tokens.
+
+## License
+
+- Everything written for this base, documents and scripts, is under the MIT License: see
+  `LICENSE`.
+- Text adapted from an official documentation keeps the attribution its own license asks for. Each
+  such source is listed in `THIRD_PARTY_NOTICES.md` once the first one is added.
