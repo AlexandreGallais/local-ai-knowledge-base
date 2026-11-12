@@ -33,6 +33,7 @@ anglais.
 | Skill | Ce qu'il fait |
 | --- | --- |
 | `analyze-csharp` | Écrit du C# conforme à l'analyse, puis lance le formatage et `dotnet build` jusqu'à zéro erreur. |
+| `look-up-api` | Cherche la signature exacte d'une API dans la doc installée avec le projet (types `.d.ts`, XML de .NET, `--help`), par recherche ciblée, sans lire de gros fichier. |
 | `lint-typescript` | Écrit du TypeScript et de l'Angular conformes au lint, puis lance `npm run fix`, `npm run check` et `npm run build` jusqu'à zéro erreur. |
 | `read-heavy-file` | Fait lire un fichier lourd par son extrait, jamais tel quel. |
 | `write-commit-message` | Écrit un message de commit au format Conventional Commits, qui passe commitlint. |
@@ -53,8 +54,18 @@ anglais.
 
 | Dossier | Ce qu'il contient |
 | --- | --- |
+| `docs/angular/` | Ce qui a changé dans Angular de la 17 à la 22, pour écrire du code à la version du projet. |
+| `docs/typescript/` | Ce qui a changé dans TypeScript (5.0 à 7.0), RxJS 7 et Node.js (22 à 26). |
+| `docs/maintenance/` | La procédure pour mettre à jour les documents d'un outil qui change de version. |
 | `docs/csharp-analysis/` | Les règles d'analyse C# que le build fait échouer, chacune avec un exemple faux et un juste. |
 | `docs/typescript-lint/` | Les règles de lint TypeScript et Angular que l'outil ne corrige pas seul, chacune avec un exemple faux et un juste. |
+
+## Écrire à la version du projet
+
+- Avant d'écrire du code Angular, l'IA lit la version de `@angular/core` et de `typescript` dans
+  `package.json`, et n'applique que les nouveautés de ces versions ou d'avant.
+- `node scripts/check-versions.ts <dossier du projet>` liste les documents de la base en retard sur
+  les versions d'un projet ; `docs/maintenance/update-a-tool.md` dit comment les mettre à jour.
 
 ## Lint TypeScript et Angular
 

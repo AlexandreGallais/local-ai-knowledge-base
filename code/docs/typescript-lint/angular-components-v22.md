@@ -31,10 +31,10 @@ export class PumpStore {
 }
 ```
 
-Right:
+Right, with `@Service()`, the service decorator of Angular 22:
 
 ```ts
-@Injectable({ providedIn: 'root' })
+@Service()
 export class PumpStore {
   private readonly http = inject(HttpClient);
 

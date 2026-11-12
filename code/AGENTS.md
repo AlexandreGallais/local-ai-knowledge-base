@@ -12,11 +12,12 @@
    Heavy files: .docx .docm .xlsx .xlsm .pptx .pptm .doc .xls .ppt .odt .ods .odp .rtf .pdf .png .jpg .jpeg .gif .webp .tif .tiff .bmp .heic .psd .ai .eps .emf .wmf .xd .sketch .fig .vsdx .drawio .ipynb .zip .7z .tar .gz .tgz .jar .war .nupkg .sqlite .db .msg .eml .dwg .dxf .dll .exe .so .wasm .class .bin
 8. A text file over 100 KB or 2,000 lines is heavy too. Before you read a log, data or export file you do not know, check its size with `wc -c -l "<path>"`.
 9. Write TypeScript, never plain JavaScript. Configuration files of tools are the only exception.
-10. Trust the documents of this base more than your memory.
-11. When a task matches a line of `## Skills`, load that skill before you start.
-12. After you change code, run its check commands below. Fix every error. Repeat until zero errors.
-13. After you change a file of this base, run `node scripts/check-base.ts`. Fix every finding. Repeat until zero findings.
-14. Stop after 3 failed attempts on the same error. Show the error to the user.
+10. Before you write Angular or TypeScript code, read the versions of `@angular/core` and `typescript` in `package.json`. Write only what the documents of the topics `angular` and `typescript` allow at these versions.
+11. Trust the documents of this base more than your memory.
+12. When a task matches a line of `## Skills`, load that skill before you start.
+13. After you change code, run its check commands below. Fix every error. Repeat until zero errors.
+14. After you change a file of this base, run `node scripts/check-base.ts`. Fix every finding. Repeat until zero findings.
+15. Stop after 3 failed attempts on the same error. Show the error to the user.
 
 ## Check commands
 
@@ -33,6 +34,7 @@ Run them in the dev container, from the project root.
 | --- | --- |
 | To write or change TypeScript or Angular code | load the skill `lint-typescript` |
 | To write or change C# code, or to fix a build error | load the skill `analyze-csharp` |
+| To check an API signature, an option or a command flag | load the skill `look-up-api` |
 | To read a heavy file, or a folder of them | load the skill `read-heavy-file` |
 | To write a commit message, or to commit | load the skill `write-commit-message` |
 | To choose a version number, or to tag a release | load the skill `choose-version` |
@@ -48,6 +50,11 @@ Run them in the dev container, from the project root.
 One line per document, in this form: `- [Title](docs/<topic>/<file>.md): <summary>`.
 Open only the documents of your topic.
 
+### angular
+
+- [Angular old patterns and their replacements](docs/angular/old-to-new.md): Old Angular patterns and what to write instead, with the version each one needs. Angular 17 to 22.
+- [Angular 22: what changed](docs/angular/v22-changes.md): What breaks, new defaults, new stable APIs and migrations in Angular 22.
+
 ### csharp-analysis
 
 - [C# analysis setup](docs/csharp-analysis/analysis-setup.md): Configuration files, format and build commands, and the strict formatting switch of a .NET project. .NET 10.
@@ -57,6 +64,16 @@ Open only the documents of your topic.
 - [C# logging and exception rules](docs/csharp-analysis/logging-exception-rules.md): CA2254, CA1727, CA1031 and CA2200, with wrong and right examples. .NET 10.
 - [C# collection and disposal rules](docs/csharp-analysis/collection-disposal-rules.md): CA1827, CA1860, CA1854, CA1869 and CA1001, with wrong and right examples. .NET 10.
 - [C# style rules](docs/csharp-analysis/style-rules.md): IDE1006, IDE0040, IDE0011 and IDE0044 with examples; the style rules the format command fixes. .NET 10.
+
+### maintenance
+
+- [Update the documents of a tool to a new version](docs/maintenance/update-a-tool.md): Step-by-step procedure to update the documents of a tool to a new major version, Angular first.
+
+### typescript
+
+- [TypeScript 5.0 to 7.0: what changed](docs/typescript/typescript-changes.md): Syntax added from 5.0 to 5.9, new defaults and removed options of 6.0, and what 7.0 changes. TypeScript 6.0.
+- [RxJS 7 and Angular signals](docs/typescript/rxjs-and-signals.md): RxJS 7 deprecations, the bridge between signals and observables, and when to use each. RxJS 7.
+- [Node.js versions and built-in APIs](docs/typescript/nodejs.md): Node.js LTS lines, running TypeScript files directly, and built-in APIs that replace packages. Node.js 22 to 26.
 
 ### typescript-lint
 

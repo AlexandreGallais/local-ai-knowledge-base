@@ -43,7 +43,7 @@ const BLOCK = /^(Wrong|Right)\b[^\n]*:\n\n```(ts|html)\n([\s\S]*?)\n```$/gm;
 
 export const PRELUDE = [
   'import { HttpClient } from \'@angular/common/http\';',
-  'import { Component, EventEmitter, HostListener, Injectable, Input, inject, input, OnInit, Output, output, signal } from \'@angular/core\';',
+  'import { Component, EventEmitter, HostListener, Injectable, Input, inject, input, OnInit, Output, output, Service, signal } from \'@angular/core\';',
   'import { takeUntilDestroyed, toSignal } from \'@angular/core/rxjs-interop\';',
   'import { Router } from \'@angular/router\';',
   'import { Observable } from \'rxjs\';',
