@@ -8,6 +8,10 @@ target/
 # Extracts of heavy files, written by the read-heavy-file skill
 .extract/
 
+# Export of the base, built by scripts/export.ts; local state of the chat adapter
+export/
+state.local.json
+
 # Local secrets
 .env
 .env.*

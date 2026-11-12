@@ -85,6 +85,5 @@ Then read `.extract/home.xd.md`, lines 1 to 200.
 
 ## Final check
 
-- Did you read only files in `.extract/`, and never the heavy file itself?
-- Did you write every extract to `.extract/`?
+- Did you use only the extract of each heavy file, and never the file itself?
 - Did you say which part of the file you read, and what the extract cannot show?

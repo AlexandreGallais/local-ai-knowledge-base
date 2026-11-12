@@ -10,13 +10,13 @@ import {
   fstatSync,
   openSync,
   readSync,
+  realpathSync,
   statSync,
 } from 'node:fs';
 import {
   basename,
   extname,
   posix,
-  resolve,
 } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
@@ -1907,7 +1907,7 @@ export function run(argv: string[]): Extract {
   }
 }
 
-if (process.argv[1] !== undefined && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (process.argv[1] !== undefined && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url))) {
   const result = run(process.argv.slice(2));
 
   process.stdout.write(result.text);

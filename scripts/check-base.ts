@@ -7,6 +7,7 @@ import {
   existsSync,
   readdirSync,
   readFileSync,
+  realpathSync,
   statSync,
 } from 'node:fs';
 import {
@@ -101,6 +102,7 @@ const CHAT_SCOPES = new Set([
   'restricted',
 ]);
 const SEARCH_KNOWLEDGE = /\bsearch\b.*\bknowledge\b/i;
+const ANY_MARKER = /^<!--\s*(?:files|chat):/;
 const SCOPE_RULE = /\brefuse\b.*\bone sentence\b/i;
 const SOFTWARE_NAMES = /\b(opencode|open\s*webui)\b/i;
 const ALWAYS_ACTION = /^(run|execute|save|create|delete|move|rename|commit|edit|install)\b/i;
@@ -1010,6 +1012,65 @@ function merge(results: BaseResult[]): BaseResult {
   };
 }
 
+function leftMarkers(lines: Line[], file: string): Finding[] {
+  return lines
+    .filter((line) => !line.inCode && ANY_MARKER.test(line.text.trim()))
+    .map((line) => finding(file, `action block left in the chat variant: ${line.text.trim()}`));
+}
+
+export function checkChatSkill(text: string, file: string): Finding[] {
+  const header = parseFrontMatter(text);
+
+  if (header === undefined) {
+    return [finding(file, 'missing YAML header between --- lines')];
+  }
+  const lines = analyseLines(text);
+  const findings = [
+    ...commonFindings(text, file),
+    ...leftMarkers(lines, file),
+    ...lines
+      .filter((line) => !line.inCode && isUnmarkedAction(line))
+      .map((line) => finding(file, `the chat variant asks to act on a file or to run a command: ${line.text.trim()}`)),
+  ];
+
+  if (header.fields.get('metadata.variant') !== 'chat') {
+    findings.push(finding(file, 'metadata.variant must be "chat" in the chat variant'));
+  }
+  if (!lines.some((line) => !line.inCode && line.section === 'Limits')) {
+    findings.push(finding(file, 'missing ## Limits section in the chat variant'));
+  }
+  return findings;
+}
+
+export function checkChatDocument(text: string, file: string): Finding[] {
+  const findings = leftMarkers(analyseLines(text), file);
+
+  if (parseFrontMatter(text)?.fields.get('variant') !== 'chat') {
+    findings.push(finding(file, 'variant must be "chat" in the chat knowledge'));
+  }
+  return findings;
+}
+
+export function checkChatProfile(chatFolder: string): BaseResult {
+  const files = markdownFiles(chatFolder).filter((path) => !path.startsWith(join(chatFolder, 'models')));
+  const findings = files.flatMap((path) => {
+    const parts = relative(chatFolder, path).split(/[\\/]/);
+
+    if (path.endsWith('.fr.md')) {
+      return [finding(shown(path), 'French summaries stay out of the chat profile')];
+    }
+    if (parts[0] === 'skills' && parts.at(-1) === 'SKILL.md') {
+      return checkChatSkill(read(path), shown(path));
+    }
+    return parts[0] === 'knowledge' ? checkChatDocument(read(path), shown(path)) : [];
+  });
+
+  return {
+    findings,
+    files: files.length,
+  };
+}
+
 function readSkills(skillsFolder: string, skillNames: string[]): {
   name: string;
   text: string;
@@ -1058,6 +1119,7 @@ export function checkBase(base: string, chatModels?: string): BaseResult {
     },
     checkFolder(markdownFiles(join(base, 'templates')), checkEnglish),
     checkFolder(chatModels === undefined ? [] : markdownFiles(chatModels), (text, file) => checkChatModel(text, file, skillLineCounts(skillTexts))),
+    chatModels === undefined ? merge([]) : checkChatProfile(dirname(chatModels)),
   ]);
 }
 
@@ -1105,6 +1167,6 @@ function main(): void {
   console.log(`Base check passed: ${files} file(s), 0 findings.`);
 }
 
-if (process.argv[1] !== undefined && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (process.argv[1] !== undefined && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url))) {
   main();
 }

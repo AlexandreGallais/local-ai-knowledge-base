@@ -3,6 +3,7 @@
 //   node scripts/fixtures.ts <folder>     writes one sample file per format into <folder>
 import {
   mkdirSync,
+  realpathSync,
   writeFileSync,
 } from 'node:fs';
 import {
@@ -492,6 +493,6 @@ function main(folder: string): void {
   console.log(`Wrote ${Object.keys(SAMPLES).length} sample files to ${folder}.`);
 }
 
-if (process.argv[1] !== undefined && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (process.argv[1] !== undefined && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url))) {
   main(resolve(process.argv[2] ?? 'samples'));
 }

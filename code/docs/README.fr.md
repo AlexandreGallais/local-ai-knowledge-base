@@ -72,6 +72,19 @@ anglais.
 - Elle demande Node 22.18 ou plus, sans paquet à installer.
 - L'IA la lance d'elle-même après chaque changement de la base, et corrige jusqu'à zéro erreur.
 
+## Amener la base sur un poste
+
+- Dans le dépôt de la base, `node scripts/export.ts` écrit dans `export/` le fichier `import.ts`
+  et quelques fichiers texte `base-1.txt`, `base-2.txt`… de 500 Ko au plus chacun (`--max-kb`
+  change la limite).
+- Sur le poste, on colle `import.ts` puis chaque partie dans un fichier du même nom, et on lance
+  `node import.ts`. Le script vérifie chaque partie, dit laquelle a été abîmée par le collage, et
+  n'écrit rien tant qu'elles ne sont pas toutes justes.
+- `node import.ts --project` n'écrit que ce qu'il faut à la racine d'un projet : `AGENTS.md`,
+  `.agents/`, `docs/`, `templates/` et `scripts/check-base.ts`.
+- L'export produit aussi la version pour le chat : chaque skill sans ses étapes qui lancent des
+  commandes, et les documents de chaque sujet, sans les résumés en français.
+
 ## Dans le dépôt de la base, en plus
 
 - `chat/` : le profil pour une interface de chat sans accès aux fichiers. Les consignes de base des
