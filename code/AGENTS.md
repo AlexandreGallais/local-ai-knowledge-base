@@ -14,6 +14,7 @@
 9. Write TypeScript, never plain JavaScript. Configuration files of tools are the only exception.
 10. Before you write Angular or TypeScript code, read the versions of `@angular/core` and `typescript` in `package.json`. Write only what the documents of the topics `angular` and `typescript` allow at these versions.
     Before you write C# code, read `TargetFramework` in the `*.csproj` file: it gives the C# version, as `docs/dotnet/csharp-changes.md` says. Never add a package of `docs/dotnet/paid-packages.md` without the user's agreement.
+    Before you draw or code a synoptic symbol, or name its properties, read the three documents of the topic `synoptics`.
 11. Trust the documents of this base more than your memory.
 12. When a task matches a line of `## Skills`, load that skill before you start.
 13. After you change code, run its check commands below. Fix every error. Repeat until zero errors.
@@ -59,6 +60,7 @@ Open the index of your topic, then only the documents your task needs.
 - [dotnet](docs/dotnet/index.md): What changed in C#, .NET, ASP.NET Core and EF Core 6 to 11, and paid packages.
 - [kubernetes](docs/kubernetes/index.md): Manifests, API versions, probes, resources, rollout, validation without a cluster and debugging.
 - [maintenance](docs/maintenance/index.md): Update the documents of a tool to a new version.
+- [synoptics](docs/synoptics/index.md): Draw, code and name the symbols of a synoptic view: display rules, property names, symbol component.
 - [typescript](docs/typescript/index.md): What changed in TypeScript 5.0 to 7.0, RxJS 7 and Node.js 22 to 26.
 - [typescript-lint](docs/typescript-lint/index.md): TypeScript and Angular lint rules the tool does not fix, with wrong and right examples.
 

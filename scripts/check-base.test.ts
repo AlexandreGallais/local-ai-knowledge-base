@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {
   mkdirSync,
   mkdtempSync,
+  readFileSync,
   writeFileSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -19,9 +20,11 @@ import {
   checkBase,
   checkChatModel,
   checkDocument,
+  checkPropertyNames,
   checkSkill,
   findWebRequests,
   looksFrench,
+  unitSuffixes,
 } from './check-base.ts';
 
 const NEWLINE = '\n';
@@ -478,6 +481,79 @@ describe('heavy file extensions', () => {
     const agents = HEAVY_AGENTS.replace('\n   Heavy files: .xd .pdf', '');
 
     assert.match(heavyBase({ 'AGENTS.md': agents }), /no "Heavy files:" line/);
+  });
+});
+const SUFFIXES = [
+  'Bar',
+  'Rpm',
+  'Percent',
+  'Count',
+];
+
+function namesBlock(lines: string[]): string {
+  return [
+    '```ts',
+    ...lines,
+    '```',
+  ].join(NEWLINE);
+}
+
+describe('property names of the synoptics documents', () => {
+  it('accepts numbers with a unit suffix and booleans with is, has or can', () => {
+    const text = namesBlock([
+      'export interface PumpRight {',
+      '  readonly dischargePressureBar: number;',
+      '  readonly startCount?: number;',
+      '  readonly isRunning: boolean;',
+      '  readonly tagName: string;',
+      '}',
+    ]);
+
+    assert.deepEqual(checkPropertyNames(text, 'pump.md', SUFFIXES), []);
+  });
+  it('refuses a number whose unit is outside the closed list', () => {
+    const text = namesBlock([
+      'export interface Pump {',
+      '  readonly dischargePressurePsi: number;',
+      '}',
+    ]);
+
+    assert.match(messages(checkPropertyNames(text, 'pump.md', SUFFIXES)), /number property "dischargePressurePsi" must end with a unit suffix/);
+  });
+  it('refuses a boolean without is, has or can', () => {
+    const text = namesBlock([
+      'export interface Valve {',
+      '  readonly open: boolean | undefined;',
+      '}',
+    ]);
+
+    assert.match(messages(checkPropertyNames(text, 'valve.md', SUFFIXES)), /boolean property "open" must start with is, has or can/);
+  });
+  it('skips the interfaces named Wrong and the code that is not TypeScript', () => {
+    const wrong = namesBlock([
+      'export interface ValveWrong {',
+      '  open: boolean;',
+      '}',
+    ]);
+    const csharp = wrong
+      .replace('```ts', '```csharp')
+      .replace('ValveWrong', 'Valve');
+
+    assert.deepEqual(checkPropertyNames(`${wrong}${NEWLINE}${csharp}`, 'valve.md', SUFFIXES), []);
+  });
+  it('reads the closed list of unit suffixes from the naming document of the base', () => {
+    const base = join(dirname(fileURLToPath(import.meta.url)), '..', 'code', 'docs', 'synoptics', 'symbol-property-naming.md');
+    const suffixes = unitSuffixes(readFileSync(base, 'utf8'));
+
+    for (const suffix of [
+      'Bar',
+      'DegC',
+      'M3PerH',
+      'KgM2',
+      'Count',
+    ]) {
+      assert.ok(suffixes.includes(suffix), suffix);
+    }
   });
 });
 const TOPIC_INDEX_TEXT = [

@@ -1124,6 +1124,89 @@ function readSkills(skillsFolder: string, skillNames: string[]): {
     });
 }
 
+// The unit suffixes of the closed list: the backticked words of the second column of the tables of
+// section "2. Units" of docs/synoptics/symbol-property-naming.md.
+export function unitSuffixes(namingText: string): string[] {
+  return analyseLines(namingText)
+    .filter((line) => line.section.startsWith('2. Units') && line.text.startsWith('|'))
+    .flatMap((line) => (line.text.split('|')[2] ?? '').match(/`[A-Za-z0-9]+`/g) ?? [])
+    .map((word) => word.slice(1, -1));
+}
+
+const TS_FENCE = /^```(?:ts|typescript)$/;
+const INTERFACE = /\binterface\s+(\w+)/;
+const PROPERTY = /^\s*(?:readonly\s+)?(\w+)\??:\s*([^;]+);/;
+const UNITLESS_NAMES = new Set(['value']);
+
+function endsWithSuffix(name: string, suffix: string): boolean {
+  const before = name.at(-suffix.length - 1) ?? '';
+
+  return name.length > suffix.length && name.endsWith(suffix) && /[a-z0-9]/.test(before);
+}
+
+function checkPropertyName(name: string, type: string, file: string, suffixes: string[]): Finding[] {
+  const types = new Set(type
+    .split('|')
+    .map((item) => item.trim()));
+
+  if (types.has('boolean') && !/^(?:is|has|can)[A-Z]/.test(name)) {
+    return [finding(file, `boolean property "${name}" must start with is, has or can`)];
+  }
+  if (types.has('number') && !UNITLESS_NAMES.has(name) && !suffixes.some((suffix) => endsWithSuffix(name, suffix))) {
+    return [finding(file, `number property "${name}" must end with a unit suffix of symbol-property-naming.md`)];
+  }
+  return [];
+}
+
+type Fence = 'none' | 'ts' | 'other';
+
+function nextFence(fence: Fence, line: string): Fence {
+  if (fence === 'none') {
+    return TS_FENCE.test(line) ? 'ts' : 'other';
+  }
+  return 'none';
+}
+
+// Checks the property names of the TypeScript examples of a synoptics document against the naming
+// convention. The properties of an interface whose name ends with "Wrong" are wrong on purpose.
+export function checkPropertyNames(text: string, file: string, suffixes: string[]): Finding[] {
+  const findings: Finding[] = [];
+  let fence: Fence = 'none';
+  let isWrong = false;
+
+  for (const line of splitLines(text)) {
+    const trimmed = line.trim();
+    const property = PROPERTY.exec(line);
+
+    if (trimmed.startsWith('```')) {
+      fence = nextFence(fence, trimmed);
+      isWrong = false;
+    } else if (fence === 'ts' && INTERFACE.test(line)) {
+      isWrong = (INTERFACE.exec(line)?.[1] ?? '').endsWith('Wrong');
+    } else if (fence === 'ts' && !isWrong && property !== null) {
+      findings.push(...checkPropertyName(property[1], property[2], file, suffixes));
+    }
+  }
+  return findings;
+}
+
+function checkSynopticNames(base: string): BaseResult {
+  const folder = join(base, 'docs', 'synoptics');
+  const namingPath = join(folder, 'symbol-property-naming.md');
+
+  if (!existsSync(namingPath)) {
+    return merge([]);
+  }
+  const suffixes = unitSuffixes(read(namingPath));
+
+  return {
+    findings: markdownFiles(folder)
+      .filter((path) => !path.endsWith('.fr.md'))
+      .flatMap((path) => checkPropertyNames(read(path), shown(path), suffixes)),
+    files: 0,
+  };
+}
+
 export function checkBase(base: string, chatModels?: string): BaseResult {
   const agentsPath = join(base, 'AGENTS.md');
 
@@ -1153,6 +1236,7 @@ export function checkBase(base: string, chatModels?: string): BaseResult {
   return merge([
     ...skillNames.map((name) => checkOneSkill(skillsFolder, name)),
     docs,
+    checkSynopticNames(base),
     {
       findings: agents,
       files: 1,
