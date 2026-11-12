@@ -239,6 +239,10 @@ describe('findWebRequests', () => {
   it('accepts a rule that forbids the web', () => {
     assert.deepEqual(findWebRequests('Never search the web. Never open a URL.', 'a.md', false), []);
   });
+  it('accepts a publisher named Google in the Sources section of a document only', () => {
+    assert.deepEqual(findWebRequests(`## Sources${NEWLINE}- [S1] Google, "Control flow", Angular 22.`, 'a.md', true), []);
+    assert.equal(findWebRequests('Ask Google for the answer.', 'a.md', false).length, 1);
+  });
   it('accepts URLs in the Sources section of a document only', () => {
     assert.deepEqual(findWebRequests(`## Sources${NEWLINE}- [S1] https://example.com`, 'a.md', true), []);
     assert.equal(findWebRequests(`## Rule${NEWLINE}See https://example.com`, 'a.md', true).length, 1);

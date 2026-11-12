@@ -1,0 +1,30 @@
+{
+  "name": "sample-typescript-angular",
+  "private": true,
+  "description": "Example Angular project for the tests of the lint configuration of the base. Fake code only.",
+  "type": "module",
+  "scripts": {
+    "fix": "eslint src --fix > /dev/null; prettier --write --log-level warn src",
+    "check": "prettier --check --log-level warn src && eslint src --max-warnings 0 --no-color",
+    "build": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@angular/common": "22.2.6",
+    "@angular/compiler": "22.2.6",
+    "@angular/core": "22.2.6",
+    "@angular/router": "22.2.6",
+    "rxjs": "7.8.2",
+    "tslib": "2.9.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@stylistic/eslint-plugin": "5.10.0",
+    "angular-eslint": "22.6.0",
+    "eslint": "10.14.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-simple-import-sort": "14.0.0",
+    "prettier": "3.10.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.2"
+  }
+}

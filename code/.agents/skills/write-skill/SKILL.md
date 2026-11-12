@@ -35,7 +35,7 @@ metadata:
 <!-- files:begin -->
 
 5. Write the content to `.agents/skills/<name>/SKILL.md`.
-6. Add one line to the `## Skills` section of `AGENTS.md`: "To <task>: load the skill `<name>`."
+6. Add one row to the table of the `## Skills` section of `AGENTS.md`: "| To <task> | load the skill `<name>` |".
 7. Run `node scripts/check-base.ts`. Fix every finding. Repeat until zero findings.
 
 <!-- files:end -->

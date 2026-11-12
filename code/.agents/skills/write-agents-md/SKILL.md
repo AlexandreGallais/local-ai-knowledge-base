@@ -19,7 +19,8 @@ metadata:
 - Say what to do. Use "never" only for a real danger.
 - Give the exact command for each check: lint, build, test.
 - Repeat the three most important rules as questions in `## Final check`.
-- Keep one line per skill: "To <task>: load the skill `<name>`."
+- Keep one table row per skill in `## Skills`: "| To <task> | load the skill `<name>` |".
+- Group the index by topic, under one `### <topic>` heading per topic.
 - Do not add a project overview, a folder tree or a history.
 - Do not add internal names, quotas, network details or real data.
 - Never tell the model to search the web or to open a URL.
@@ -67,9 +68,13 @@ metadata:
 
 ## Skills
 
-- To <task>: load the skill `<name>`.
+| Task | Skill |
+| --- | --- |
+| To <task> | load the skill `<name>` |
 
 ## Index
+
+### <topic>
 
 - [<Title>](docs/<topic>/<file>.md): <summary>
 

@@ -11,33 +11,55 @@
 7. Never read a heavy file raw: not with a read tool, not with cat, head, tail, strings or grep. Load the skill `read-heavy-file` first, then read only the extract in `.extract/`.
    Heavy files: .docx .docm .xlsx .xlsm .pptx .pptm .doc .xls .ppt .odt .ods .odp .rtf .pdf .png .jpg .jpeg .gif .webp .tif .tiff .bmp .heic .psd .ai .eps .emf .wmf .xd .sketch .fig .vsdx .drawio .ipynb .zip .7z .tar .gz .tgz .jar .war .nupkg .sqlite .db .msg .eml .dwg .dxf .dll .exe .so .wasm .class .bin
 8. A text file over 100 KB or 2,000 lines is heavy too. Before you read a log, data or export file you do not know, check its size with `wc -c -l "<path>"`.
-9. Trust the documents of this base more than your memory.
-10. When a task matches a line of `## Skills`, load that skill before you start.
-11. After you change a file of this base, run `node scripts/check-base.ts`. Fix every finding. Repeat until zero findings.
-12. Stop after 3 failed attempts on the same error. Show the error to the user.
+9. Write TypeScript, never plain JavaScript. Configuration files of tools are the only exception.
+10. Trust the documents of this base more than your memory.
+11. When a task matches a line of `## Skills`, load that skill before you start.
+12. After you change code, run its check commands below. Fix every error. Repeat until zero errors.
+13. After you change a file of this base, run `node scripts/check-base.ts`. Fix every finding. Repeat until zero findings.
+14. Stop after 3 failed attempts on the same error. Show the error to the user.
+
+## Check commands
+
+Run them in the dev container, from the project root.
+
+| Code changed | Commands, in this order |
+| --- | --- |
+| TypeScript or Angular | `npm run fix`, `npm run check`, `npm run build` |
 
 ## Skills
 
-- To read a heavy file, or a folder of them: load the skill `read-heavy-file`.
-- To write a commit message, or to commit: load the skill `write-commit-message`.
-- To choose a version number, or to tag a release: load the skill `choose-version`.
-- To name a branch, or to create one: load the skill `name-branch`.
-- To write or shorten `AGENTS.md`: load the skill `write-agents-md`.
-- To write a skill: load the skill `write-skill`.
-- To write an agent: load the skill `write-agent`.
-- To add or update a document of the base: load the skill `write-base-document`.
-- To write the system prompt of a chat model: load the skill `write-chat-model`.
+| Task | Skill |
+| --- | --- |
+| To write or change TypeScript or Angular code | load the skill `lint-typescript` |
+| To read a heavy file, or a folder of them | load the skill `read-heavy-file` |
+| To write a commit message, or to commit | load the skill `write-commit-message` |
+| To choose a version number, or to tag a release | load the skill `choose-version` |
+| To name a branch, or to create one | load the skill `name-branch` |
+| To write or shorten `AGENTS.md` | load the skill `write-agents-md` |
+| To write a skill | load the skill `write-skill` |
+| To write an agent | load the skill `write-agent` |
+| To add or update a document of the base | load the skill `write-base-document` |
+| To write the system prompt of a chat model | load the skill `write-chat-model` |
 
 ## Index
 
 One line per document, in this form: `- [Title](docs/<topic>/<file>.md): <summary>`.
 Open only the documents of your topic.
 
-No document yet.
+### typescript-lint
+
+- [TypeScript types without any](docs/typescript-lint/ts-types.md): Rules for any, unknown, type assertions, non-null assertions and thrown values, with examples. typescript-eslint 8.
+- [TypeScript null checks and conditions](docs/typescript-lint/ts-null-and-conditions.md): Rules for index access, needless conditions, complete switch statements, template strings and nullish values. TypeScript 6.0.
+- [TypeScript promises](docs/typescript-lint/ts-async.md): Rules to handle every promise, await before a test, and use async only with await. typescript-eslint 8.
+- [Angular 22 components](docs/typescript-lint/angular-components-v22.md): Rules for inject(), signal inputs and outputs, lifecycle methods, host bindings and standalone components. Angular 22.
+- [Angular 22 templates](docs/typescript-lint/angular-templates-v22.md): Rules for control flow, class bindings, buttons, keyboard access and empty lists in templates. Angular 22.
+- [Angular and RxJS](docs/typescript-lint/angular-rxjs.md): Rules to end subscriptions with the component and to turn streams into signals. Angular 22, RxJS 7.
+- [Strict formatting](docs/typescript-lint/ts-angular-strict-format.md): Member order to write by hand, and what the fix command orders for you. ESLint 10, STRICT_FORMAT.
 
 ## Final check
 
 - Is your answer in the language of the question, with no mix of two languages?
 - Did you open only the documents of your topic, and no `.fr.md` file?
 - Did you read heavy files only through their extract in `.extract/`?
+- Did the check commands of the code you changed end with zero errors?
 - Did you stay away from the web and from every URL?

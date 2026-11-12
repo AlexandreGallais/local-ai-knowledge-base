@@ -275,7 +275,8 @@ function lineFindings(line: Line, file: string, allowUrlsInSources: boolean): Fi
   if (URL.test(line.text) && !urlAllowed) {
     findings.push(finding(file, `URL outside the Sources section; links only cite sources: ${line.text.trim()}`));
   }
-  if (WEB_REQUESTS.some((pattern) => pattern.test(line.text)) && !NEGATION.test(line.text)) {
+  // The Sources section of a document only cites: a publisher such as Google is no request.
+  if (!urlAllowed && WEB_REQUESTS.some((pattern) => pattern.test(line.text)) && !NEGATION.test(line.text)) {
     findings.push(finding(file, `asks to use the web: ${line.text.trim()}`));
   }
   return findings;
@@ -511,7 +512,7 @@ function checkTriggers(lines: Line[], file: string, skillNames: string[]): Findi
   return skillNames
     .filter((name) => !hasTrigger(name))
     .map((name) => {
-      return finding(file, `no trigger line for the skill "${name}": "To <task>: load the skill \`${name}\`."`);
+      return finding(file, `no trigger line for the skill "${name}": "| To <task> | load the skill \`${name}\` |"`);
     });
 }
 

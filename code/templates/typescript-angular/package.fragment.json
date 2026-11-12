@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "fix": "eslint src --fix > /dev/null; prettier --write --log-level warn src",
+    "check": "prettier --check --log-level warn src && eslint src --max-warnings 0 --no-color",
+    "build": "ng build"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@stylistic/eslint-plugin": "5.10.0",
+    "angular-eslint": "22.6.0",
+    "eslint": "10.14.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-simple-import-sort": "14.0.0",
+    "prettier": "3.10.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.2"
+  }
+}

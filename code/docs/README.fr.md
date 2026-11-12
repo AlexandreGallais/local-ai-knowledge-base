@@ -25,13 +25,14 @@ anglais.
 | `docs/template.md` | Le patron d'un document de la base : en-tête, sections, exemples faux et justes, sources. |
 | `docs/<sujet>/` | Les documents de référence d'un sujet, un document par question. |
 | `docs/<sujet>/README.fr.md` | Le résumé en français du sujet, pour l'équipe : chaque fichier en une ligne. |
-| `templates/<langage>/` | Des fichiers de code modèles, à copier et adapter. Vide pour l'instant. |
+| `templates/<langage>/` | Des fichiers modèles, à copier et adapter. `templates/typescript-angular/` : la configuration ESLint, Prettier et `tsconfig` stricte d'un projet Angular 22, et les scripts `fix` et `check` à fusionner dans `package.json`. |
 | `scripts/check-base.ts` | Le contrôle de la base, livré avec elle. |
 
 ## Les skills
 
 | Skill | Ce qu'il fait |
 | --- | --- |
+| `lint-typescript` | Écrit du TypeScript et de l'Angular conformes au lint, puis lance `npm run fix`, `npm run check` et `npm run build` jusqu'à zéro erreur. |
 | `read-heavy-file` | Fait lire un fichier lourd par son extrait, jamais tel quel. |
 | `write-commit-message` | Écrit un message de commit au format Conventional Commits, qui passe commitlint. |
 | `choose-version` | Choisit le prochain numéro de version (SemVer) d'après les commits depuis la dernière version. |
@@ -46,6 +47,22 @@ anglais.
 | `write-agent` | Écrit un agent : un skill avec un rôle et un format de réponse. |
 | `write-base-document` | Écrit un document de la base à partir de sources fournies, sa ligne d'index, et met à jour le résumé français du sujet. |
 | `write-chat-model` | Écrit la consigne de base d'un modèle de chat : pour un sujet, avec sa base documentaire, ou pour une seule tâche (assistant restreint, qui refuse le reste). |
+
+## Les sujets
+
+| Dossier | Ce qu'il contient |
+| --- | --- |
+| `docs/typescript-lint/` | Les règles de lint TypeScript et Angular que l'outil ne corrige pas seul, chacune avec un exemple faux et un juste. |
+
+## Lint TypeScript et Angular
+
+- Copier dans le projet les fichiers de `templates/typescript-angular/`, fusionner
+  `package.fragment.json` dans `package.json`, puis `npm install`.
+- `npm run fix` corrige tout ce que l'outil sait corriger ; `npm run check` liste ce qui reste ;
+  `npm run build` vérifie les types et les gabarits.
+- Le formatage strict (ordre des imports, accolades, lignes vides) est actif par défaut ;
+  `STRICT_FORMAT=0 npm run check` le coupe.
+- Un commentaire `eslint-disable` n'a aucun effet : il faut corriger le code.
 
 ## Lire les fichiers lourds
 

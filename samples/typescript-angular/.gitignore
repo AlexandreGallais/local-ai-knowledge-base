@@ -1,0 +1,13 @@
+# Installed packages
+node_modules/
+
+# Copies of code/templates/typescript-angular/, made by the tests before each run
+eslint.config.mjs
+eslint.strict-format.mjs
+.prettierrc.json
+tsconfig.json
+
+# Files written by the tests
+src/examples/
+src/trial/
+.eslintcache
