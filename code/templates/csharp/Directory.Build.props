@@ -1,0 +1,25 @@
+<Project>
+  <PropertyGroup>
+    <!-- Compiler: nullable reference types on. Every compiler and analyzer warning fails the build. -->
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- Analyzers of the .NET SDK: the rule set of one release, in default mode.
+         Set the release the project targets, for example 10.0. Never write "latest". -->
+    <AnalysisLevel>10.0</AnalysisLevel>
+
+    <!-- Run the code-style rules (IDExxxx) that .editorconfig sets to warning during the build. -->
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
+    <!-- IDE0005 (unused using) is reported on build only when XML documentation is generated. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- CS1591 (missing XML comment) is not part of this rule set. -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- The single switch for strict formatting. Keep this line in this exact form:
+         scripts/format-csharp.sh reads it. true: CSharpier. false: dotnet format. -->
+    <StrictFormatting>false</StrictFormatting>
+  </PropertyGroup>
+</Project>

@@ -32,6 +32,7 @@ anglais.
 
 | Skill | Ce qu'il fait |
 | --- | --- |
+| `analyze-csharp` | Écrit du C# conforme à l'analyse, puis lance le formatage et `dotnet build` jusqu'à zéro erreur. |
 | `lint-typescript` | Écrit du TypeScript et de l'Angular conformes au lint, puis lance `npm run fix`, `npm run check` et `npm run build` jusqu'à zéro erreur. |
 | `read-heavy-file` | Fait lire un fichier lourd par son extrait, jamais tel quel. |
 | `write-commit-message` | Écrit un message de commit au format Conventional Commits, qui passe commitlint. |
@@ -52,6 +53,7 @@ anglais.
 
 | Dossier | Ce qu'il contient |
 | --- | --- |
+| `docs/csharp-analysis/` | Les règles d'analyse C# que le build fait échouer, chacune avec un exemple faux et un juste. |
 | `docs/typescript-lint/` | Les règles de lint TypeScript et Angular que l'outil ne corrige pas seul, chacune avec un exemple faux et un juste. |
 
 ## Lint TypeScript et Angular
@@ -63,6 +65,15 @@ anglais.
 - Le formatage strict (ordre des imports, accolades, lignes vides) est actif par défaut ;
   `STRICT_FORMAT=0 npm run check` le coupe.
 - Un commentaire `eslint-disable` n'a aucun effet : il faut corriger le code.
+
+## Analyse C# et .NET
+
+- Copier à la racine du projet .NET `Directory.Build.props` et `.editorconfig` de
+  `templates/csharp/`, et `format-csharp.sh` dans son dossier `scripts/`.
+- `bash scripts/format-csharp.sh` formate ; `dotnet build` lance l'analyse : chaque avertissement
+  devient une erreur.
+- La ligne `<StrictFormatting>true</StrictFormatting>` de `Directory.Build.props` passe au
+  formatage strict avec CSharpier (à installer une fois : `dotnet tool install csharpier`).
 
 ## Lire les fichiers lourds
 

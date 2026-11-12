@@ -1,0 +1,117 @@
+# C# analysis and style configuration.
+# Every rule set to "warning" here fails the build: Directory.Build.props sets TreatWarningsAsErrors.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+
+[*.cs]
+indent_size = 4
+# Read by CSharpier only. dotnet format has no line length option.
+max_line_length = 100
+# --- Formatting (IDE0055): applied by the format command, never reported by the build ---
+dotnet_diagnostic.IDE0055.severity = none
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+csharp_indent_case_contents = true
+csharp_indent_switch_labels = true
+dotnet_sort_system_directives_first = true
+# --- Style preferences ---
+csharp_style_namespace_declarations = file_scoped
+csharp_using_directive_placement = outside_namespace
+csharp_prefer_braces = true
+dotnet_style_readonly_field = true
+# --- Style rules that fail the build. The format command fixes them. ---
+# IDE0005: remove unused using
+dotnet_diagnostic.IDE0005.severity = warning
+# IDE0011: add braces
+dotnet_diagnostic.IDE0011.severity = warning
+# IDE0036: order modifiers
+dotnet_diagnostic.IDE0036.severity = warning
+# IDE0040: add accessibility modifiers
+dotnet_diagnostic.IDE0040.severity = warning
+# IDE0044: add readonly modifier
+dotnet_diagnostic.IDE0044.severity = warning
+# IDE0051: remove unused private member
+dotnet_diagnostic.IDE0051.severity = warning
+# IDE0052: remove unread private member
+dotnet_diagnostic.IDE0052.severity = warning
+# IDE0059: remove unnecessary value assignment
+dotnet_diagnostic.IDE0059.severity = warning
+# IDE0065: using directive placement
+dotnet_diagnostic.IDE0065.severity = warning
+# IDE0161: use file-scoped namespace
+dotnet_diagnostic.IDE0161.severity = warning
+# --- Naming (IDE1006): interface names start with I ---
+dotnet_diagnostic.IDE1006.severity = warning
+dotnet_naming_symbols.interface_types.applicable_kinds = interface
+dotnet_naming_style.prefix_i.required_prefix = I
+dotnet_naming_style.prefix_i.capitalization = pascal_case
+dotnet_naming_rule.interfaces_start_with_i.symbols = interface_types
+dotnet_naming_rule.interfaces_start_with_i.style = prefix_i
+dotnet_naming_rule.interfaces_start_with_i.severity = warning
+# --- Async ---
+# CA2016: forward the CancellationToken parameter
+dotnet_diagnostic.CA2016.severity = warning
+# CA1849: call async methods when in an async method
+dotnet_diagnostic.CA1849.severity = warning
+# CA2012: use ValueTasks correctly
+dotnet_diagnostic.CA2012.severity = warning
+# --- Disposal ---
+# CA1001: types that own disposable fields should be disposable
+dotnet_diagnostic.CA1001.severity = warning
+# CA2213: dispose the disposable fields
+dotnet_diagnostic.CA2213.severity = warning
+# CA1816: call GC.SuppressFinalize correctly
+dotnet_diagnostic.CA1816.severity = warning
+# --- Strings and culture ---
+# CA1304: specify CultureInfo
+dotnet_diagnostic.CA1304.severity = warning
+# CA1305: specify IFormatProvider
+dotnet_diagnostic.CA1305.severity = warning
+# CA1309: use ordinal StringComparison
+dotnet_diagnostic.CA1309.severity = warning
+# CA1310: specify StringComparison for correctness
+dotnet_diagnostic.CA1310.severity = warning
+# CA1311: specify a culture or use an invariant version
+dotnet_diagnostic.CA1311.severity = warning
+# CA1862: use the StringComparison overloads for case-insensitive comparisons
+dotnet_diagnostic.CA1862.severity = warning
+# --- Logging ---
+# CA2254: the log message template must be a constant
+dotnet_diagnostic.CA2254.severity = warning
+# CA1727: use PascalCase for named placeholders
+dotnet_diagnostic.CA1727.severity = warning
+# --- Collections and LINQ ---
+# CA1827: do not use Count() when Any() can be used
+dotnet_diagnostic.CA1827.severity = warning
+# CA1829: use the Length or Count property instead of Count()
+dotnet_diagnostic.CA1829.severity = warning
+# CA1854: prefer TryGetValue
+dotnet_diagnostic.CA1854.severity = warning
+# CA1860: avoid Enumerable.Any() when Length, Count or IsEmpty exists
+dotnet_diagnostic.CA1860.severity = warning
+# CA1869: cache and reuse JsonSerializerOptions instances
+dotnet_diagnostic.CA1869.severity = warning
+# --- Exceptions ---
+# CA1031: do not catch general exception types
+dotnet_diagnostic.CA1031.severity = warning
+# CA1510, CA1511, CA1512, CA1513: use the exception throw helpers
+dotnet_diagnostic.CA1510.severity = warning
+dotnet_diagnostic.CA1511.severity = warning
+dotnet_diagnostic.CA1512.severity = warning
+dotnet_diagnostic.CA1513.severity = warning
+
+# --- Second circle: enable after a trial, they can report false positives ---
+# CA2000: dispose objects before losing scope
+# dotnet_diagnostic.CA2000.severity = warning
+# CA1851: possible multiple enumerations of an IEnumerable collection
+# dotnet_diagnostic.CA1851.severity = warning
+[*.{csproj,props,targets,json,yml,yaml}]
+indent_size = 2

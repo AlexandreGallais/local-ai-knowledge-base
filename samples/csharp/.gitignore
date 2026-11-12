@@ -1,0 +1,11 @@
+bin/
+obj/
+build.log
+
+# Copies of code/templates/csharp/, made by the tests before each run
+Directory.Build.props
+.editorconfig
+scripts/
+
+# Files written by the tests
+Examples/
