@@ -33,7 +33,7 @@ metadata:
 5. List the errors, each one once, 30 lines at most:
    `grep -E ": (error|warning) " /tmp/build.log | sort -u | head -n 30`
 6. Take the first error. Note its ID (for example `CA2016`), its file and its line.
-7. Find the ID in the index of this base. Open that document of `docs/csharp-analysis/`. Read only the section of that ID. Change the code to the "Right" form.
+7. Find the ID in `docs/csharp-analysis/index.md`. Open that document. Read only the section of that ID. Change the code to the "Right" form.
 8. Go back to step 2.
 9. Run `grep -rn --include=*.cs "async void" . | grep -v EventArgs`. It must print nothing. Else return a `Task` and go back to step 2.
 10. Run the format check: `bash scripts/format-csharp.sh --check`. If it fails, go back to step 2.

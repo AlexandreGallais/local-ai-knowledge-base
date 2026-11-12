@@ -6,7 +6,7 @@
 2. Read this base in English, whatever the language of the question.
 3. Write code, comments, file content and commit messages in English.
 4. Never search the web. Never open a URL. Links in documents only cite sources.
-5. Open only the documents of the topic of your task, from `## Index`. Never read the whole `docs/` folder.
+5. Find the topic of your task in `## Index`. Open its index file, then only the documents your task needs. Never read the whole `docs/` folder.
 6. Never read files that end with `.fr.md`. They are summaries for people. Open one only when a skill tells you to.
 7. Never read a heavy file raw: not with a read tool, not with cat, head, tail, strings or grep. Load the skill `read-heavy-file` first, then read only the extract in `.extract/`.
    Heavy files: .docx .docm .xlsx .xlsm .pptx .pptm .doc .xls .ppt .odt .ods .odp .rtf .pdf .png .jpg .jpeg .gif .webp .tif .tiff .bmp .heic .psd .ai .eps .emf .wmf .xd .sketch .fig .vsdx .drawio .ipynb .zip .7z .tar .gz .tgz .jar .war .nupkg .sqlite .db .msg .eml .dwg .dxf .dll .exe .so .wasm .class .bin
@@ -28,6 +28,7 @@ Run them in the dev container, from the project root.
 | --- | --- |
 | TypeScript or Angular | `npm run fix`, `npm run check`, `npm run build` |
 | C# | `bash scripts/format-csharp.sh`, `dotnet build --no-restore -tl:off -nologo -v:q` |
+| Dockerfile, dev container or Kubernetes | The commands of the skill `check-container-change` |
 
 ## Skills
 
@@ -35,6 +36,7 @@ Run them in the dev container, from the project root.
 | --- | --- |
 | To write or change TypeScript or Angular code | load the skill `lint-typescript` |
 | To write or change C# code, or to fix a build error | load the skill `analyze-csharp` |
+| To write or check a Dockerfile, a devcontainer.json, a Kubernetes manifest, a Helm chart or a kustomization | load the skill `check-container-change` |
 | To check an API signature, an option or a command flag | load the skill `look-up-api` |
 | To read a heavy file, or a folder of them | load the skill `read-heavy-file` |
 | To write a commit message, or to commit | load the skill `write-commit-message` |
@@ -48,51 +50,17 @@ Run them in the dev container, from the project root.
 
 ## Index
 
-One line per document, in this form: `- [Title](docs/<topic>/<file>.md): <summary>`.
-Open only the documents of your topic.
+One line per topic. Each line points to the index of the topic: one line per document, with its summary.
+Open the index of your topic, then only the documents your task needs.
 
-### angular
-
-- [Angular old patterns and their replacements](docs/angular/old-to-new.md): Old Angular patterns and what to write instead, with the version each one needs. Angular 17 to 22.
-- [Angular 22: what changed](docs/angular/v22-changes.md): What breaks, new defaults, new stable APIs and migrations in Angular 22.
-
-### csharp-analysis
-
-- [C# analysis setup](docs/csharp-analysis/analysis-setup.md): Configuration files, format and build commands, and the strict formatting switch of a .NET project. .NET 10.
-- [C# async rules](docs/csharp-analysis/async-rules.md): CA2016, CA1849, CS4014 and async void, with wrong and right examples. .NET 10.
-- [C# nullability rules](docs/csharp-analysis/nullability-rules.md): CS8602, CS8603, CS8618 and CA1510, with wrong and right examples. .NET 10.
-- [C# string and culture rules](docs/csharp-analysis/string-culture-rules.md): CA1305, CA1310 and CA1862, with wrong and right examples. .NET 10.
-- [C# logging and exception rules](docs/csharp-analysis/logging-exception-rules.md): CA2254, CA1727, CA1031 and CA2200, with wrong and right examples. .NET 10.
-- [C# collection and disposal rules](docs/csharp-analysis/collection-disposal-rules.md): CA1827, CA1860, CA1854, CA1869 and CA1001, with wrong and right examples. .NET 10.
-- [C# style rules](docs/csharp-analysis/style-rules.md): IDE1006, IDE0040, IDE0011 and IDE0044 with examples; the style rules the format command fixes. .NET 10.
-
-### dotnet
-
-- [C# 10 to 15, what changed](docs/dotnet/csharp-changes.md): Find the project's C# version from its target framework, then pick old or new syntax. C# 10 to 15.
-- [.NET 6 to 11, what changed in the libraries and the SDK](docs/dotnet/dotnet-changes.md): Built-in APIs that replace packages, common breaking changes, file-based apps and native AOT. .NET 6 to 11.
-- [ASP.NET Core 6 to 11, what changed](docs/dotnet/aspnetcore-changes.md): Hosting, minimal APIs, typed results, OpenAPI, validation and what a model still writes the old way. ASP.NET Core 11.
-- [EF Core 7 to 11, what changed](docs/dotnet/efcore-changes.md): Queries, migrations, configuration and the high-impact breaking change of each EF Core version. EF Core 11.
-- [.NET packages that became paid](docs/dotnet/paid-packages.md): AutoMapper, MediatR, MassTransit, FluentAssertions and Polly changed license; their free replacements. Checked 2026-11.
-
-### maintenance
-
-- [Update the documents of a tool to a new version](docs/maintenance/update-a-tool.md): Step-by-step procedure to update the documents of a tool to a new major version, Angular and .NET each November.
-
-### typescript
-
-- [TypeScript 5.0 to 7.0: what changed](docs/typescript/typescript-changes.md): Syntax added from 5.0 to 5.9, new defaults and removed options of 6.0, and what 7.0 changes. TypeScript 6.0.
-- [RxJS 7 and Angular signals](docs/typescript/rxjs-and-signals.md): RxJS 7 deprecations, the bridge between signals and observables, and when to use each. RxJS 7.
-- [Node.js versions and built-in APIs](docs/typescript/nodejs.md): Node.js LTS lines, running TypeScript files directly, and built-in APIs that replace packages. Node.js 22 to 26.
-
-### typescript-lint
-
-- [TypeScript types without any](docs/typescript-lint/ts-types.md): Rules for any, unknown, type assertions, non-null assertions and thrown values, with examples. typescript-eslint 8.
-- [TypeScript null checks and conditions](docs/typescript-lint/ts-null-and-conditions.md): Rules for index access, needless conditions, complete switch statements, template strings and nullish values. TypeScript 6.0.
-- [TypeScript promises](docs/typescript-lint/ts-async.md): Rules to handle every promise, await before a test, and use async only with await. typescript-eslint 8.
-- [Angular 22 components](docs/typescript-lint/angular-components-v22.md): Rules for inject(), signal inputs and outputs, lifecycle methods, host bindings and standalone components. Angular 22.
-- [Angular 22 templates](docs/typescript-lint/angular-templates-v22.md): Rules for control flow, class bindings, buttons, keyboard access and empty lists in templates. Angular 22.
-- [Angular and RxJS](docs/typescript-lint/angular-rxjs.md): Rules to end subscriptions with the component and to turn streams into signals. Angular 22, RxJS 7.
-- [Strict formatting](docs/typescript-lint/ts-angular-strict-format.md): Member order to write by hand, and what the fix command orders for you. ESLint 10, STRICT_FORMAT.
+- [angular](docs/angular/index.md): What changed in Angular 17 to 22, and the old patterns to replace.
+- [containers](docs/containers/index.md): Dockerfile rules, .NET and Angular images, Podman, dev containers and container problems.
+- [csharp-analysis](docs/csharp-analysis/index.md): C# analysis rules that fail the build, with wrong and right examples.
+- [dotnet](docs/dotnet/index.md): What changed in C#, .NET, ASP.NET Core and EF Core 6 to 11, and paid packages.
+- [kubernetes](docs/kubernetes/index.md): Manifests, API versions, probes, resources, rollout, validation without a cluster and debugging.
+- [maintenance](docs/maintenance/index.md): Update the documents of a tool to a new version.
+- [typescript](docs/typescript/index.md): What changed in TypeScript 5.0 to 7.0, RxJS 7 and Node.js 22 to 26.
+- [typescript-lint](docs/typescript-lint/index.md): TypeScript and Angular lint rules the tool does not fix, with wrong and right examples.
 
 ## Final check
 

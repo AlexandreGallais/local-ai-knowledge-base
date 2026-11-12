@@ -1,0 +1,9 @@
+# hadolint settings. Every warning fails the check, except the version pinning of system
+# packages (DL3008): it stays visible as info, so that no package version is invented.
+failure-threshold: warning
+override:
+  warning:
+    - DL3009
+    - DL3015
+  info:
+    - DL3008

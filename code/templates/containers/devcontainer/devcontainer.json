@@ -1,0 +1,28 @@
+{
+  // .NET and Angular dev container. The coding assistant runs inside it, so the check commands
+  // of AGENTS.md are plain terminal commands.
+  "name": "dotnet-angular",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".",
+    "args": {
+      "DOTNET_VERSION": "10.0",
+      "NODE_VERSION": "24",
+      // The npm package of the coding assistant, with its version: "<package>@<version>".
+      "ASSISTANT_PACKAGE": ""
+    }
+  },
+  "remoteUser": "app",
+  "forwardPorts": [
+    8080,
+    4200
+  ],
+  // Once, after creation: fail early when a check tool is missing from the image.
+  "onCreateCommand": "hadolint --version && kubeconform -v && kube-linter version && helm version",
+  // Restore before any check: the tool waits for this command.
+  "updateContentCommand": {
+    "dotnet": "dotnet restore && dotnet tool restore",
+    "npm": "npm ci"
+  },
+  "postStartCommand": "dotnet --version && node --version"
+}

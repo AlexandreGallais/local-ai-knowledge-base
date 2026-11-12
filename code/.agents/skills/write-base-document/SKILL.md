@@ -29,7 +29,7 @@ metadata:
 
 <!-- files:begin -->
 
-4. Read `AGENTS.md`, section `## Index`. Check that no document already answers the question.
+4. Read `AGENTS.md`, section `## Index`, then the index of the topic, `docs/<topic>/index.md`. Check that no document already answers the question.
 5. Read `docs/template.md`.
 
 <!-- files:end -->
@@ -44,7 +44,7 @@ metadata:
 <!-- files:begin -->
 
 12. Write the document to `docs/<topic>/<file>.md`.
-13. Add the index line to the `## Index` section of `AGENTS.md`. Replace the line "No document yet." if it is there.
+13. Add the index line to `docs/<topic>/index.md`. For a new topic, create this file and add one line for the topic to the `## Index` section of `AGENTS.md`: `- [<topic>](docs/<topic>/index.md): <what the topic covers>`.
 14. Open `docs/<topic>/README.fr.md`, or create it. Add one line in French for the document. Reread the French line and fix its spelling.
 15. Add each adapted source to `THIRD_PARTY_NOTICES.md` if the repository has one.
 16. Run `node scripts/check-base.ts`. Fix every finding. Repeat until zero findings.

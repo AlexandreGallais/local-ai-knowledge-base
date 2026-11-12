@@ -218,7 +218,7 @@ export function chatProfile(root: string): ExportedFile[] {
     .filter((path) => path.endsWith('.md'))
     .flatMap((path) => headerList(read(root, path), 'knowledge')));
   const knowledge = [...topics].flatMap((topic) => walk(root, `code/docs/${topic}`)
-    .filter((path) => path.endsWith('.md') && !path.endsWith('.fr.md'))
+    .filter((path) => path.endsWith('.md') && !path.endsWith('.fr.md') && !path.endsWith('/index.md'))
     .map((path) => {
       return {
         path: `chat/knowledge/${topic}/${path.split('/').at(-1)}`,

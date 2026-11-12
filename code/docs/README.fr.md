@@ -16,7 +16,7 @@ anglais.
 
 | Chemin | Rôle |
 | --- | --- |
-| `AGENTS.md` | Le fichier d'entrée, chargé à chaque session : les règles vitales, une ligne par skill pour dire quand le charger, et l'index des documents. |
+| `AGENTS.md` | Le fichier d'entrée, chargé à chaque session : les règles vitales, une ligne par skill pour dire quand le charger, et la carte des sujets (une ligne par sujet). |
 | `.agents/skills/<nom>/SKILL.md` | Un skill par dossier : une procédure pas à pas que l'IA charge pour une tâche précise. |
 | `.agents/skills/<nom>/references/` | Les fiches détaillées d'un skill, une par cas : l'IA n'ouvre que celle dont elle a besoin. |
 | `.agents/skills/<nom>/scripts/` | Les scripts d'un skill, en TypeScript, lancés par `node` sans paquet à installer. |
@@ -24,8 +24,9 @@ anglais.
 | `.extract/` | Créé dans le projet par le skill `read-heavy-file` : les extraits des fichiers lourds. Git l'ignore. |
 | `docs/template.md` | Le patron d'un document de la base : en-tête, sections, exemples faux et justes, sources. |
 | `docs/<sujet>/` | Les documents de référence d'un sujet, un document par question. |
+| `docs/<sujet>/index.md` | L'index du sujet, lu par l'IA : une ligne par document, avec son résumé. L'IA lit la carte d'`AGENTS.md`, puis l'index du sujet, puis seulement les documents utiles. |
 | `docs/<sujet>/README.fr.md` | Le résumé en français du sujet, pour l'équipe : chaque fichier en une ligne. |
-| `templates/<langage>/` | Des fichiers modèles, à copier et adapter. `templates/typescript-angular/` : la configuration ESLint, Prettier et `tsconfig` stricte d'un projet Angular 22, et les scripts `fix` et `check` à fusionner dans `package.json`. |
+| `templates/<langage>/` | Des fichiers modèles, à copier et adapter. `templates/typescript-angular/` : la configuration ESLint, Prettier et `tsconfig` stricte d'un projet Angular 22, et les scripts `fix` et `check` à fusionner dans `package.json`. `templates/containers/` : `Dockerfile` .NET et Angular, dev container, Deployment et Service, réglages de hadolint. |
 | `scripts/check-base.ts` | Le contrôle de la base, livré avec elle. |
 
 ## Les skills
@@ -33,6 +34,7 @@ anglais.
 | Skill | Ce qu'il fait |
 | --- | --- |
 | `analyze-csharp` | Écrit du C# conforme à l'analyse, puis lance le formatage et `dotnet build` jusqu'à zéro erreur. |
+| `check-container-change` | Contrôle un `Dockerfile`, un `devcontainer.json`, un manifeste Kubernetes, un chart Helm ou une surcouche Kustomize avec l'outil de son type (hadolint, kubeconform, KubeLinter, `helm lint`), et dit ce qui n'a pas pu être contrôlé. |
 | `look-up-api` | Cherche la signature exacte d'une API dans la doc installée avec le projet (types `.d.ts`, XML de .NET, `--help`), par recherche ciblée, sans lire de gros fichier. |
 | `lint-typescript` | Écrit du TypeScript et de l'Angular conformes au lint, puis lance `npm run fix`, `npm run check` et `npm run build` jusqu'à zéro erreur. |
 | `read-heavy-file` | Fait lire un fichier lourd par son extrait, jamais tel quel. |
@@ -57,6 +59,8 @@ anglais.
 | `docs/angular/` | Ce qui a changé dans Angular de la 17 à la 22, pour écrire du code à la version du projet. |
 | `docs/typescript/` | Ce qui a changé dans TypeScript (5.0 à 7.0), RxJS 7 et Node.js (22 à 26). |
 | `docs/dotnet/` | Ce qui a changé dans C#, .NET, ASP.NET Core et EF Core de la 6 à la 11, et les bibliothèques devenues payantes. |
+| `docs/containers/` | Les règles d'un `Dockerfile`, les images .NET et Angular, Podman, les dev containers et les problèmes de conteneur. |
+| `docs/kubernetes/` | Les manifestes Kubernetes, les `apiVersion`, les sondes, les ressources et le temps réel, le déploiement, le contrôle sans cluster et le dépannage d'un Pod. |
 | `docs/maintenance/` | La procédure pour mettre à jour les documents d'un outil qui change de version. |
 | `docs/csharp-analysis/` | Les règles d'analyse C# que le build fait échouer, chacune avec un exemple faux et un juste. |
 | `docs/typescript-lint/` | Les règles de lint TypeScript et Angular que l'outil ne corrige pas seul, chacune avec un exemple faux et un juste. |
@@ -86,6 +90,17 @@ anglais.
   devient une erreur.
 - La ligne `<StrictFormatting>true</StrictFormatting>` de `Directory.Build.props` passe au
   formatage strict avec CSharpier (à installer une fois : `dotnet tool install csharpier`).
+
+## Conteneurs et dev container
+
+- L'assistant de code tourne dans le dev container : il est installé dans son image, avec les outils
+  de contrôle. Les commandes d'`AGENTS.md` sont donc celles d'un terminal ordinaire.
+- Copier `templates/containers/devcontainer/` en `.devcontainer/` à la racine du projet ; mettre une
+  fois dans `tools/` les binaires Linux de hadolint, kubeconform, kube-linter et helm, et dans
+  `kubernetes-schemas/` les schémas JSON de la version du cluster ; donner le paquet npm de
+  l'assistant dans `ASSISTANT_PACKAGE`.
+- Ce qu'utilise le cluster de l'équipe (version, Ingress ou Gateway API, Helm ou Kustomize, dossier
+  des schémas) s'écrit dans l'`AGENTS.md` du projet, pas dans la base.
 
 ## Lire les fichiers lourds
 

@@ -40,6 +40,8 @@ interface AgentsContext {
   skillNames: string[];
   documentPaths: string[];
   exists: (path: string) => boolean;
+  // The text of a topic index (docs/<topic>/index.md), or undefined when it is missing.
+  readIndex?: (path: string) => string | undefined;
 }
 
 interface BaseResult {
@@ -473,23 +475,49 @@ function checkAgentsSections(lines: Line[], file: string): Finding[] {
     });
 }
 
-function checkIndex(lines: Line[], file: string, context: AgentsContext): Finding[] {
-  const indexLines = lines.filter((line) => line.section === 'Index' && !line.inCode);
-  const indexed = new Set<string>();
+const TOPIC_INDEX = /^docs\/[^/]+\/index\.md$/;
+
+// Reads index lines into `indexed`; a line that points to a topic index (docs/<topic>/index.md)
+// adds the lines of that index instead.
+function readIndexLines(lines: Line[], file: string, context: AgentsContext, indexed: Set<string>): Finding[] {
   const findings: Finding[] = [];
 
-  for (const line of indexLines.filter((item) => item.text.startsWith('- '))) {
+  for (const line of lines.filter((item) => !item.inCode && item.text.startsWith('- '))) {
     const match = INDEX_LINE.exec(line.text.trim());
 
     if (match === null) {
       findings.push(finding(file, `index line is not "- [Title](path): summary": ${line.text}`));
       continue;
     }
-    indexed.add(match[2]);
     if (!context.exists(match[2])) {
       findings.push(finding(file, `index line points to a missing file: ${match[2]}`));
+      continue;
     }
+    if (TOPIC_INDEX.test(match[2]) && context.readIndex !== undefined) {
+      findings.push(...checkTopicIndex(match[2], context, indexed));
+      continue;
+    }
+    indexed.add(match[2]);
   }
+  return findings;
+}
+
+function checkTopicIndex(path: string, context: AgentsContext, indexed: Set<string>): Finding[] {
+  const text = context.readIndex?.(path) ?? '';
+  const lines = analyseLines(text);
+  const findings = readIndexLines(lines, path, context, indexed);
+
+  if (tokens(text) > MAX_INDEX_TOKENS) {
+    findings.push(finding(path, 'topic index is over 2,000 tokens: split the topic in two'));
+  }
+  return findings;
+}
+
+function checkIndex(lines: Line[], file: string, context: AgentsContext): Finding[] {
+  const indexLines = lines.filter((line) => line.section === 'Index' && !line.inCode);
+  const indexed = new Set<string>();
+  const findings = readIndexLines(indexLines, file, context, indexed);
+
   if (tokens(indexLines
     .map((line) => line.text)
     .join(NEWLINE)) > MAX_INDEX_TOKENS) {
@@ -960,7 +988,7 @@ function checkDocsFile(path: string, docsFolder: string, summaries: Map<string, 
   if (path.endsWith('.fr.md')) {
     return checkFrenchFile(path, docsFolder);
   }
-  if (parts.length === 1) {
+  if (parts.length === 1 || (parts.length === 2 && parts[1] === 'index.md')) {
     return [
       ...findWebRequests(text, shown(path), true),
       ...checkEnglish(text, shown(path)),
@@ -990,13 +1018,23 @@ function checkDocs(docsFolder: string, summaries: Map<string, string>): BaseResu
   };
 }
 
-function checkIndexSummaries(text: string, file: string, summaries: Map<string, string>): Finding[] {
-  return analyseLines(text)
-    .filter((line) => line.section === 'Index')
-    .map((line) => INDEX_LINE.exec(line.text.trim()))
-    .filter((match) => match !== null)
-    .filter((match) => summaries.has(match[2]) && summaries.get(match[2]) !== match[3])
-    .map((match) => finding(file, `index line of ${match[2]} differs from the summary in its header`));
+function checkIndexSummaries(text: string, file: string, summaries: Map<string, string>, base: string): Finding[] {
+  const matches = (lines: Line[]): RegExpExecArray[] => {
+    return lines
+      .map((line) => INDEX_LINE.exec(line.text.trim()))
+      .filter((match) => match !== null);
+  };
+  const topLines = matches(analyseLines(text).filter((line) => line.section === 'Index'));
+  const topicFindings = topLines
+    .filter((match) => TOPIC_INDEX.test(match[2]) && existsSync(join(base, match[2])))
+    .flatMap((match) => checkIndexSummaries(`## Index\n${read(join(base, match[2]))}`, match[2], summaries, base));
+
+  return [
+    ...topLines
+      .filter((match) => summaries.has(match[2]) && summaries.get(match[2]) !== match[3])
+      .map((match) => finding(file, `index line of ${match[2]} differs from the summary in its header`)),
+    ...topicFindings,
+  ];
 }
 
 function checkFolder(paths: string[], check: (text: string, file: string) => Finding[]): BaseResult {
@@ -1106,8 +1144,9 @@ export function checkBase(base: string, chatModels?: string): BaseResult {
       skillNames,
       documentPaths: [...summaries.keys()],
       exists: (path) => existsSync(join(base, path)),
+      readIndex: (path) => existsSync(join(base, path)) ? read(join(base, path)) : undefined,
     }),
-    ...checkIndexSummaries(agentsText, shown(agentsPath), summaries),
+    ...checkIndexSummaries(agentsText, shown(agentsPath), summaries, base),
     ...checkHeavyFiles(agentsText, shown(agentsPath), skillTexts),
   ];
 

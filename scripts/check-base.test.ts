@@ -480,6 +480,28 @@ describe('heavy file extensions', () => {
     assert.match(heavyBase({ 'AGENTS.md': agents }), /no "Heavy files:" line/);
   });
 });
+const TOPIC_INDEX_TEXT = [
+  '# typescript index',
+  '',
+  '- [Strict null checks](docs/typescript/strict-null-checks.md): Rules for strictNullChecks. TS 5.9.',
+  '',
+].join(NEWLINE);
+
+function topicMapBase(topicIndex: string): ReturnType<typeof checkBase>['findings'] {
+  const root = mkdtempSync(join(tmpdir(), 'check-base-'));
+  const agents = VALID_AGENTS.replace('- [Strict null checks](docs/typescript/strict-null-checks.md): Rules for strictNullChecks. TS 5.9.', '- [typescript](docs/typescript/index.md): TypeScript rules.');
+
+  writeTree(root, {
+    'AGENTS.md': agents,
+    '.agents/skills/write-test/SKILL.md': VALID_SKILL,
+    'docs/README.fr.md': FRENCH_TEXT,
+    'docs/typescript/README.fr.md': FRENCH_TEXT,
+    'docs/typescript/index.md': topicIndex,
+    'docs/typescript/strict-null-checks.md': VALID_DOCUMENT,
+  });
+  return checkBase(root).findings;
+}
+
 describe('checkBase', () => {
   it('accepts a small correct base', () => {
     const root = mkdtempSync(join(tmpdir(), 'check-base-'));
@@ -503,6 +525,17 @@ describe('checkBase', () => {
       'docs/typescript/strict-null-checks.md': VALID_DOCUMENT,
     });
     assert.match(messages(checkBase(root).findings), /missing French summary of the topic/);
+  });
+  it('accepts a map of topics whose topic index lists every document', () => {
+    assert.deepEqual(topicMapBase(TOPIC_INDEX_TEXT), []);
+  });
+  it('refuses a topic index that misses a document', () => {
+    assert.match(messages(topicMapBase('# typescript index\n')), /missing from the index: docs\/typescript\/strict-null-checks.md/);
+  });
+  it('refuses a topic index line that differs from the summary of the document', () => {
+    const text = TOPIC_INDEX_TEXT.replace('Rules for strictNullChecks.', 'Other rules.');
+
+    assert.match(messages(topicMapBase(text)), /index line of docs\/typescript\/strict-null-checks.md differs from the summary/);
   });
   it('passes on the base of this repository', () => {
     const base = join(dirname(fileURLToPath(import.meta.url)), '..', 'code');

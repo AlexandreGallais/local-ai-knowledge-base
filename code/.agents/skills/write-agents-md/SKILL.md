@@ -20,7 +20,7 @@ metadata:
 - Give the exact command for each check: lint, build, test.
 - Repeat the three most important rules as questions in `## Final check`.
 - Keep one table row per skill in `## Skills`: "| To <task> | load the skill `<name>` |".
-- Group the index by topic, under one `### <topic>` heading per topic.
+- Write one index line per topic. It points to the index of the topic, `docs/<topic>/index.md`, which lists its documents.
 - Do not add a project overview, a folder tree or a history.
 - Do not add internal names, quotas, network details or real data.
 - Never tell the model to search the web or to open a URL.
@@ -74,9 +74,7 @@ metadata:
 
 ## Index
 
-### <topic>
-
-- [<Title>](docs/<topic>/<file>.md): <summary>
+- [<topic>](docs/<topic>/index.md): <what the topic covers>
 
 ## Final check
 

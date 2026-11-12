@@ -51,7 +51,7 @@ Update `docs/dotnet/` and `docs/csharp-analysis/`, then pass again three months 
 2. Write the document `v<N>-changes.md` of the topic with the `write-base-document` skill: one section per box, a wrong and a right example for the riskiest points.
 3. Update the cumulative table (`old-to-new.md` for Angular): add the new rows; change the state of old patterns ("Still works", then "Deprecated in N", then "Removed in N").
 4. Search the whole base for each API that was removed or deprecated: `grep -rn "<name>" docs templates .agents`. Rewrite only the sections found. Move the old form to "Old patterns".
-5. In every document changed: set `version` to the new major version and `checked` to the date of the review. Update the index line and the French summary of the topic.
+5. In every document changed: set `version` to the new major version and `checked` to the date of the review. Update the line of each document in `docs/<topic>/index.md` and the French summary of the topic.
 6. Run `node scripts/check-base.ts`, then `node scripts/check-versions.ts <project at version N>`: it must list no document of this tool.
 7. Compile and lint the examples in a project at version N. Commit one tool per commit.
 

@@ -21,7 +21,7 @@ metadata:
 ## Steps
 
 1. Note the tool, the API or command name, and the question.
-2. Check the documents of this base first: find the topic in the index, read only the matching section.
+2. Check the documents of this base first: find the topic in `## Index` of `AGENTS.md`, then the document in `docs/<topic>/index.md`; read only the matching section.
 
 <!-- files:begin id=lookup -->
 
