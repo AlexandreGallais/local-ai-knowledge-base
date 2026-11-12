@@ -19,9 +19,11 @@ code/                        Code profile, the single source
   .agents/skills/<name>/     One skill per folder
     SKILL.md                 The skill; action steps marked for the chat variant
     chat.md                  Optional: chat text that replaces a marked block
-  docs/<topic>/              Reference documents
-    <document>.md            One document, one question
-    <document>.fr.md         French summary, for people only
+  docs/                      Reference documents
+    README.fr.md             For people: the structure and contents of the whole base, in French
+    <topic>/
+      README.fr.md           For people: what the topic holds, each file in one line, in French
+      <document>.md          One document, one question
   templates/<language>/      Code templates to copy and adapt
 chat/                        Chat profile
   models/<subject>.md        System prompt of each custom chat model (4 subjects)
@@ -58,7 +60,11 @@ scripts/                     Export and import
     write a file or run a command.
 - An agent is a skill. Agent mode, where a software offers it, only adds a short entry in that
   software's adapter.
-- French summaries exist only in the code profile, for the people of the team.
+- Language of the answer: the AI answers in the language of the question, never a mix of two. The
+  base itself is in English; the AI reads it in English whatever the language of the question.
+- French summaries are for people only: one overview of the whole base and one summary per topic,
+  so that the team understands the structure and what each file holds. The AI never reads them
+  (`AGENTS.md` says so), and the export leaves them out of the chat profile.
 
 ## Order of work
 
@@ -88,7 +94,7 @@ The first two researches are done; the third is next.
   - Write an `AGENTS.md` file.
   - Write a skill.
   - Write an agent.
-  - Write a document of the base, its index line and its French summary.
+  - Write a document of the base and its index line, and update the French summary of its topic.
   - Write the system prompt of a custom chat model.
 - Git skills:
   - Write a commit message: Conventional Commits, checked by commitlint.
