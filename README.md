@@ -9,17 +9,25 @@ Nothing is researched or written yet.
 
 ## Principles
 
-- Every instruction for the AI is written in English, in short imperative sentences.
-- The AI reads a short index first, then only the files of its topic, never the whole folder.
+- Every instruction for the AI is written in English, in short imperative sentences, the vital
+  rules first and repeated at the end.
+- Little is always loaded: a short `AGENTS.md`, a compact index and the list of skills. Documents
+  and skill bodies are read on demand; the AI never reads the whole folder.
+- Every choice left to the model gets an explicit trigger: `AGENTS.md` says which skill to load for
+  which task.
+- What a tool can check (format, lint, types, tests, commit messages) is checked by the tool: the
+  base gives the exact command and the loop write, check, fix.
 - Every document is self-contained: it holds what the AI needs to know. Links only cite sources.
 - Every document built from research cites its sources.
-- Two targets, two variants of each skill and document:
-  - OpenCode: the AI reads and writes the project's files and runs commands.
-  - Open WebUI: the AI only answers in the chat; it never claims to write a file.
+- Two variants of each skill and document, from one source:
+  - Files: the AI reads and writes the project's files and runs commands (OpenCode today).
+  - Chat: the AI only answers; it never claims to write a file. The chat variant is generated at
+    export by removing the marked action steps.
 - Tool-neutral layout, so that the base survives a change of tool:
   - The entry file is `AGENTS.md`; skills live in `.agents/skills/<name>/SKILL.md`, never in a
     folder named after one tool.
-  - What only one tool reads (its own configuration) stays small and apart.
+  - An agent is a skill plus a short entry in the tool's configuration.
+  - What only one tool reads stays in one small file (`opencode.json` today).
   - The chat variant fits any web chat without file access; Open WebUI is today's target.
 - French summaries: in the OpenCode base, each topic has a short summary in French for the people of
   the team. They are not loaded into Open WebUI.
@@ -33,6 +41,8 @@ Nothing is researched or written yet.
    - How to bring the official documentation of each tool into the base, at the version the project
      uses.
 2. Then the topics below, priority 1 first.
+
+The first two researches are done; the third is next.
 
 ## Priority 1
 
