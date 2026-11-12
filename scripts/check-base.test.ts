@@ -112,7 +112,10 @@ const VALID_DOCUMENT = [
 const VALID_CHAT_MODEL = [
   '---',
   'id: typescript-angular',
+  'name: TypeScript and Angular',
+  'description: Answers from the TypeScript and Angular knowledge.',
   'subject: TypeScript and Angular code',
+  'scope: subject',
   'knowledge: typescript, angular',
   'skills: write-test',
   'access: developers',
@@ -124,6 +127,27 @@ const VALID_CHAT_MODEL = [
   '',
   '1. Search the attached knowledge before you answer.',
   '2. Never search the web. Never open a URL.',
+  '',
+].join(NEWLINE);
+const RESTRICTED_MODEL = [
+  '---',
+  'id: commit-helper',
+  'name: Commit helper',
+  'description: Proposes a commit message.',
+  'subject: commit messages',
+  'scope: restricted',
+  'knowledge: none',
+  'skills: write-test',
+  'access: everyone',
+  '---',
+  '',
+  'You are the commit message assistant of a team.',
+  '',
+  '## Rules',
+  '',
+  '1. If the request is not about commit messages, refuse in one sentence and say what you can do.',
+  '2. Ask what changed.',
+  '3. Never search the web. Never open a URL.',
   '',
 ].join(NEWLINE);
 const FRENCH_TEXT = 'Ce fichier est pour les humains. Il donne la structure de la base et le rôle de chaque dossier, avec une ligne pour chaque fichier.';
@@ -296,6 +320,41 @@ describe('checkChatModel', () => {
     const text = VALID_CHAT_MODEL.replace('1. Search the attached knowledge before you answer.', '1. Answer briefly.');
 
     assert.match(messages(checkChatModel(text, 'model.md')), /search its knowledge/);
+  });
+  it('accepts a restricted model without knowledge', () => {
+    assert.deepEqual(checkChatModel(RESTRICTED_MODEL, 'model.md', new Map([['write-test', 40]])), []);
+  });
+  it('refuses a model without knowledge that asks to search a knowledge', () => {
+    const text = RESTRICTED_MODEL.replace('2. Ask what changed.', '2. Search the attached knowledge first.');
+
+    assert.match(messages(checkChatModel(text, 'model.md')), /knowledge: none, but the prompt asks to search/);
+  });
+  it('refuses a restricted model without its scope rule', () => {
+    const text = RESTRICTED_MODEL.replace('1. If the request is not about commit messages, refuse in one sentence and say what you can do.', '1. Help the user.');
+
+    assert.match(messages(checkChatModel(text, 'model.md')), /restricted model without its scope rule/);
+  });
+  it('refuses a model without name or description', () => {
+    const result = messages(checkChatModel(
+      VALID_CHAT_MODEL
+        .replace('name: TypeScript and Angular\n', '')
+        .replace('description: Answers from the TypeScript and Angular knowledge.\n', ''),
+      'model.md',
+    ));
+
+    assert.match(result, /missing header field "name"/);
+    assert.match(result, /missing header field "description"/);
+  });
+  it('refuses an id with a space', () => {
+    const text = VALID_CHAT_MODEL.replace('id: typescript-angular', 'id: typescript angular');
+
+    assert.match(messages(checkChatModel(text, 'model.md')), /no space/);
+  });
+  it('refuses a model without knowledge whose prompt and skills pass 150 lines', () => {
+    assert.match(messages(checkChatModel(RESTRICTED_MODEL, 'model.md', new Map([['write-test', 145]]))), /keep 150 or fewer/);
+  });
+  it('refuses an attached skill that does not exist', () => {
+    assert.match(messages(checkChatModel(RESTRICTED_MODEL, 'model.md', new Map())), /attached skill not found/);
   });
 });
 const HEAVY_SKILL = [

@@ -33,6 +33,9 @@ anglais.
 | Skill | Ce qu'il fait |
 | --- | --- |
 | `read-heavy-file` | Fait lire un fichier lourd par son extrait, jamais tel quel. |
+| `write-commit-message` | Écrit un message de commit au format Conventional Commits, qui passe commitlint. |
+| `choose-version` | Choisit le prochain numéro de version (SemVer) d'après les commits depuis la dernière version. |
+| `name-branch` | Nomme une branche au format Conventional Branch (`feature/…`, `bugfix/…`). |
 
 ## Les skills de rédaction
 
@@ -42,7 +45,7 @@ anglais.
 | `write-skill` | Écrit un skill au format `SKILL.md`. |
 | `write-agent` | Écrit un agent : un skill avec un rôle et un format de réponse. |
 | `write-base-document` | Écrit un document de la base à partir de sources fournies, sa ligne d'index, et met à jour le résumé français du sujet. |
-| `write-chat-model` | Écrit la consigne de base d'un modèle de chat, pour un sujet. |
+| `write-chat-model` | Écrit la consigne de base d'un modèle de chat : pour un sujet, avec sa base documentaire, ou pour une seule tâche (assistant restreint, qui refuse le reste). |
 
 ## Lire les fichiers lourds
 
@@ -73,4 +76,7 @@ anglais.
 
 - `chat/` : le profil pour une interface de chat sans accès aux fichiers. Les consignes de base des
   modèles de chat sont dans `chat/models/` ; le reste sera produit par l'export.
+- `chat/models/commit-assistant.md` : un assistant de commits pour les personnes qui ne sont pas
+  développeurs. Il propose le message de commit, explique le type choisi, et refuse tout autre
+  sujet en une phrase.
 - `adapters/` : ce qu'un logiciel précis exige en plus. Facultatif : la base marche sans.

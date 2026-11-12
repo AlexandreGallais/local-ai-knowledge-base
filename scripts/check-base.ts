@@ -72,7 +72,10 @@ const DOCUMENT_FIELDS = [
 ];
 const CHAT_MODEL_FIELDS = [
   'id',
+  'name',
+  'description',
   'subject',
+  'scope',
   'knowledge',
   'skills',
   'access',
@@ -93,6 +96,12 @@ const WEB_REQUESTS = [
   /\b(open|visit|fetch|follow|click|go\s+to)\b.*\b(url|link|website|web\s+page)\b/i,
 ];
 const NEGATION = /\b(never|not|no|don't|cannot|can't|without)\b/i;
+const CHAT_SCOPES = new Set([
+  'subject',
+  'restricted',
+]);
+const SEARCH_KNOWLEDGE = /\bsearch\b.*\bknowledge\b/i;
+const SCOPE_RULE = /\brefuse\b.*\bone sentence\b/i;
 const SOFTWARE_NAMES = /\b(opencode|open\s*webui)\b/i;
 const ALWAYS_ACTION = /^(run|execute|save|create|delete|move|rename|commit|edit|install)\b/i;
 const FILE_ACTION = /^(write|read|open|list|add|update|copy|append)\b/i;
@@ -586,24 +595,71 @@ export function checkDocument(text: string, file: string, topic: string): Findin
   return findings;
 }
 
-function checkChatPrompt(body: string, file: string): Finding[] {
-  const lines = splitLines(body.trim());
+function listField(header: FrontMatter, name: string): string[] {
+  const value = (header.fields.get(name) ?? '').trim();
+
+  return value === 'none' || value === '' ? [] : value
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function checkKnowledgeRule(lines: string[], hasKnowledge: boolean, file: string): Finding[] {
   const firstRule = lines.find((line) => /^1\.\s/.test(line.trim())) ?? '';
+  const searchLine = lines.find((line) => SEARCH_KNOWLEDGE.test(line) && !NEGATION.test(line));
+
+  if (hasKnowledge && !SEARCH_KNOWLEDGE.test(firstRule)) {
+    return [finding(file, 'the first rule must tell the model to search its knowledge')];
+  }
+  if (!hasKnowledge && searchLine !== undefined) {
+    return [finding(file, `knowledge: none, but the prompt asks to search a knowledge: ${searchLine.trim()}`)];
+  }
+  return [];
+}
+
+function checkChatHeader(header: FrontMatter, file: string): Finding[] {
+  const id = header.fields.get('id') ?? '';
+  const scope = header.fields.get('scope') ?? '';
   const findings: Finding[] = [];
+
+  if (id !== '' && !NAME_PATTERN.test(id)) {
+    findings.push(finding(file, `id "${id}" must use lowercase letters, digits and single hyphens, no space`));
+  }
+  if (scope !== '' && !CHAT_SCOPES.has(scope)) {
+    findings.push(finding(file, `scope must be "subject" or "restricted": ${scope}`));
+  }
+  return findings;
+}
+
+function checkChatSize(header: FrontMatter, promptLines: number, skillLines: Map<string, number>, file: string): Finding[] {
+  const skills = listField(header, 'skills');
+  const missing = skills.filter((name) => !skillLines.has(name));
+  const findings = missing.map((name) => finding(file, `attached skill not found in .agents/skills/: ${name}`));
+  const total = promptLines + skills.reduce((sum, name) => sum + (skillLines.get(name) ?? 0), 0);
+
+  if (listField(header, 'knowledge').length === 0 && total > MAX_SKILL_LINES) {
+    findings.push(finding(file, `system prompt and attached skills make ${total} lines; without knowledge they are sent with every message: keep 150 or fewer`));
+  }
+  return findings;
+}
+
+function checkChatPrompt(header: FrontMatter, file: string): Finding[] {
+  const lines = splitLines(header.body.trim());
+  const findings = checkKnowledgeRule(lines, listField(header, 'knowledge').length > 0, file);
 
   if (lines.length > MAX_CHAT_PROMPT_LINES) {
     findings.push(finding(file, 'system prompt over 40 lines; it is sent with every message'));
   }
-  if (!/\bsearch\b/i.test(firstRule) || !/\bknowledge\b/i.test(firstRule)) {
-    findings.push(finding(file, 'the first rule must tell the model to search its knowledge'));
+  if (header.fields.get('scope') === 'restricted' && !lines.some((line) => SCOPE_RULE.test(line))) {
+    findings.push(finding(file, 'restricted model without its scope rule: "If the request is not about <subject>, refuse in one sentence and say what you can do."'));
   }
-  if (body.includes('{{')) {
+  if (header.body.includes('{{')) {
     findings.push(finding(file, 'variables make the prompt change; keep it static'));
   }
   return findings;
 }
 
-export function checkChatModel(text: string, file: string): Finding[] {
+export function checkChatModel(text: string, file: string, skillLines?: Map<string, number>): Finding[] {
   const header = parseFrontMatter(text);
 
   if (header === undefined) {
@@ -612,7 +668,9 @@ export function checkChatModel(text: string, file: string): Finding[] {
   return [
     ...header.errors.map((error) => finding(file, error)),
     ...missingFields(header, CHAT_MODEL_FIELDS, file),
-    ...checkChatPrompt(header.body, file),
+    ...checkChatHeader(header, file),
+    ...checkChatPrompt(header, file),
+    ...(skillLines === undefined ? [] : checkChatSize(header, splitLines(header.body.trim()).length, skillLines, file)),
     ...commonFindings(text, file),
   ];
 }
@@ -999,8 +1057,18 @@ export function checkBase(base: string, chatModels?: string): BaseResult {
       files: 1,
     },
     checkFolder(markdownFiles(join(base, 'templates')), checkEnglish),
-    checkFolder(chatModels === undefined ? [] : markdownFiles(chatModels), checkChatModel),
+    checkFolder(chatModels === undefined ? [] : markdownFiles(chatModels), (text, file) => checkChatModel(text, file, skillLineCounts(skillTexts))),
   ]);
+}
+
+function skillLineCounts(skills: {
+  name: string;
+  text: string;
+}[]): Map<string, number> {
+  return new Map(skills.map((skill) => [
+    skill.name,
+    splitLines(skill.text.trimEnd()).length,
+  ]));
 }
 
 export function resolveRoots(argument?: string): {

@@ -19,6 +19,9 @@
 ## Skills
 
 - To read a heavy file, or a folder of them: load the skill `read-heavy-file`.
+- To write a commit message, or to commit: load the skill `write-commit-message`.
+- To choose a version number, or to tag a release: load the skill `choose-version`.
+- To name a branch, or to create one: load the skill `name-branch`.
 - To write or shorten `AGENTS.md`: load the skill `write-agents-md`.
 - To write a skill: load the skill `write-skill`.
 - To write an agent: load the skill `write-agent`.
