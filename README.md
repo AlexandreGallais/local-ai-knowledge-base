@@ -1,36 +1,64 @@
 # Local AI knowledge base
 
-A shared base of documents, rules, agents and skills that an AI coding assistant reads to work
-better on a project. Copy it into a project, open the project with OpenCode, and the assistant
-follows it without any other instruction. The same content is also loaded into Open WebUI.
+A shared base of documents, rules, agents and skills that a local AI reads to work better. It has
+two profiles, each independent of any software:
+
+- Code: for any AI coding assistant that reads and writes files and runs commands. OpenCode is
+  today's target.
+- Chat: for any web chat without file access. The AI only answers and explains. Open WebUI is
+  today's target.
 
 Status: draft. This file lists every topic the base will cover, in the order they will be built.
 Nothing is researched or written yet.
+
+## Layout
+
+```text
+code/                        Code profile, the single source
+  AGENTS.md                  Entry file: short rules, check commands, skill triggers, index
+  .agents/skills/<name>/     One skill per folder
+    SKILL.md                 The skill; action steps marked for the chat variant
+    chat.md                  Optional: chat text that replaces a marked block
+  docs/<topic>/              Reference documents
+    <document>.md            One document, one question
+    <document>.fr.md         French summary, for people only
+  templates/<language>/      Code templates to copy and adapt
+chat/                        Chat profile
+  models/<subject>.md        System prompt of each custom chat model (4 subjects)
+adapters/                    Optional files that one software needs
+  opencode/                  For example `opencode.json`: agents, read permissions
+  open-webui/                Generated at export: import files
+scripts/                     Export and import
+```
+
+- Only `code/` is written by hand, plus the chat system prompts in `chat/models/`. The export
+  generates the rest of the chat profile from `code/`:
+  - `chat/skills/`: each skill without its marked action steps, with a fixed "Limits" block.
+  - `chat/knowledge/<subject>/`: the documents of each subject, without the French summaries.
+- In a project, the contents of `code/` go to the project root, so that the assistant reads
+  `AGENTS.md` when it opens the project.
+- `adapters/` is optional: the base works without it. Changing software means changing or deleting
+  one adapter, never the content.
 
 ## Principles
 
 - Every instruction for the AI is written in English, in short imperative sentences, the vital
   rules first and repeated at the end.
-- Little is always loaded: a short `AGENTS.md`, a compact index and the list of skills. Documents
-  and skill bodies are read on demand; the AI never reads the whole folder.
+- Little is always loaded: a short `AGENTS.md` with a compact index, and the list of skills.
+  Documents and skill bodies are read on demand; the AI never reads the whole folder.
 - Every choice left to the model gets an explicit trigger: `AGENTS.md` says which skill to load for
   which task.
 - What a tool can check (format, lint, types, tests, commit messages) is checked by the tool: the
   base gives the exact command and the loop write, check, fix.
 - Every document is self-contained: it holds what the AI needs to know. Links only cite sources.
 - Every document built from research cites its sources.
-- Two variants of each skill and document, from one source:
-  - Files: the AI reads and writes the project's files and runs commands (OpenCode today).
-  - Chat: the AI only answers; it never claims to write a file. The chat variant is generated at
-    export by removing the marked action steps.
-- Tool-neutral layout, so that the base survives a change of tool:
-  - The entry file is `AGENTS.md`; skills live in `.agents/skills/<name>/SKILL.md`, never in a
-    folder named after one tool.
-  - An agent is a skill plus a short entry in the tool's configuration.
-  - What only one tool reads stays in one small file (`opencode.json` today).
-  - The chat variant fits any web chat without file access; Open WebUI is today's target.
-- French summaries: in the OpenCode base, each topic has a short summary in French for the people of
-  the team. They are not loaded into Open WebUI.
+- One source, two variants:
+  - Files variant (code profile): the AI writes files and runs commands.
+  - Chat variant (chat profile): the AI shows the code and the command to run; it never claims to
+    write a file or run a command.
+- An agent is a skill. Agent mode, where a software offers it, only adds a short entry in that
+  software's adapter.
+- French summaries exist only in the code profile, for the people of the team.
 
 ## Order of work
 
@@ -48,9 +76,10 @@ The first two researches are done; the third is next.
 
 ### 1. How the AI uses the base
 
-- Entry file read by OpenCode when it opens the project root (`AGENTS.md`).
-- Short index: one line per document, with its topic.
-- Reading rules: open the index, then only the files of the topic; never load the whole base.
+- Entry file `AGENTS.md`, read when the assistant opens the project root.
+- Compact index in `AGENTS.md`: one line per document, with its topic. When it grows past about
+  2,000 tokens, it becomes a map of topics with one index per topic.
+- Reading rules: open only the documents of the topic; never load the whole base.
 - Writing style of every rule, agent and skill: English, short, imperative.
 
 ### 2. Skills
@@ -60,7 +89,7 @@ The first two researches are done; the third is next.
   - Write a skill.
   - Write an agent.
   - Write a document of the base, its index line and its French summary.
-  - Write an Open WebUI custom model.
+  - Write the system prompt of a custom chat model.
 - Git skills:
   - Write a commit message: Conventional Commits, checked by commitlint.
   - Choose a version number: Semantic Versioning.
@@ -74,7 +103,7 @@ The first two researches are done; the third is next.
 - Strict formatting rules, stricter than Prettier, switched on or off by one setting.
 - Reference documentation of TypeScript, Angular and their common APIs.
 - Lint loop: after writing code, the AI runs the lint in the dev container and fixes it until zero
-  errors.
+  errors. In the chat profile, the AI gives the command to run instead.
 - Always TypeScript, never plain JavaScript.
 
 ### 4. Writing code: C# and .NET
@@ -83,7 +112,7 @@ The first two researches are done; the third is next.
 - Ready-to-use configuration files (`.editorconfig`, analyzer settings).
 - Strict formatting rules, switched on or off by one setting.
 - Reference documentation of C#, .NET and their common APIs.
-- Lint loop in the dev container, until zero errors.
+- Lint loop in the dev container, until zero errors. In the chat profile, the AI gives the command.
 
 ### 5. Containers and deployment
 
@@ -95,7 +124,8 @@ The first two researches are done; the third is next.
 ### 6. Synoptics and symbols
 
 - Rules to represent symbols on a synoptic (layout, states, colours, animation).
-- Standards the symbols come from (ISO 1219, IEC 60617, ISA 5.1, ISO 7010).
+- Standards the symbols come from (ISO 1219, IEC 60617, ISA 5.1, ISO 7010), cited by reference,
+  never copied.
 - Symbol catalogue, each symbol with proposed property names in English:
   - Hydraulics.
   - Pneumatics and compressed air.
@@ -109,7 +139,7 @@ The first two researches are done; the third is next.
 - Physical equipment (valves, sensors, actuators, pumps…): how it really works, then how it is
   modelled.
 
-### 7. Open WebUI
+### 7. Chat profile
 
 - Skills shared with the whole team, imported without manual edits.
 - Knowledge bases shared with the whole team, imported without manual edits.
@@ -119,6 +149,7 @@ The first two researches are done; the third is next.
   - C# and .NET code.
   - Containers and Kubernetes.
   - Simulation and naval (synoptics, symbols, vocabulary).
+- Each system prompt tells the model to search its knowledge base before it answers.
 
 ## Priority 2
 
@@ -127,8 +158,7 @@ The first two researches are done; the third is next.
 - .NET and Angular architecture.
 - Code review.
 - Physical equipment: real operation first, then its model.
-- Agent mode may not be available everywhere: each agent also exists as a skill, so its content
-  works without it.
+- Each agent is a skill first, so that it works where agent mode does not exist.
 
 ## Priority 3
 
@@ -157,7 +187,7 @@ The first two researches are done; the third is next.
 ### 12. Export and import
 
 - One command builds the export: few text files, 500 KB each at most by default, the limit changed
-  by one setting.
+  by one setting. It generates the chat profile and the adapters.
 - Import script: one TypeScript file, run with `node import.ts` on Linux with Node 22.18 or later,
   with no build step and no npm package.
 - The import, run on the export in an empty folder, rebuilds the same tree as the base.
