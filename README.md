@@ -172,7 +172,12 @@ The first two researches are done; the third is next.
   the task needs.
 - One way per format, the cleanest available: built into the platform, or an official or
   well-known library; nothing obscure to install.
-- Formats: design files (Adobe XD), PDF, Word, Excel, and others met in projects.
+- Formats: the files a development team exchanges in an office, for example:
+  - Office documents, spreadsheets and presentations, with what they embed (sheets, formulas,
+    charts, images, comments).
+  - PDF, including scanned pages and forms.
+  - Design files (Adobe XD and others), images, SVG and other vector files, diagrams.
+  - Emails, archives, and large data files (JSON, XML, CSV, logs).
 - For each format: what it is made of, the command or script that extracts it, and what to read
   next.
 
