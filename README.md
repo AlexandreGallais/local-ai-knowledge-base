@@ -16,6 +16,11 @@ Nothing is researched or written yet.
 - Two targets, two variants of each skill and document:
   - OpenCode: the AI reads and writes the project's files and runs commands.
   - Open WebUI: the AI only answers in the chat; it never claims to write a file.
+- Tool-neutral layout, so that the base survives a change of tool:
+  - The entry file is `AGENTS.md`; skills live in `.agents/skills/<name>/SKILL.md`, never in a
+    folder named after one tool.
+  - What only one tool reads (its own configuration) stays small and apart.
+  - The chat variant fits any web chat without file access; Open WebUI is today's target.
 - French summaries: in the OpenCode base, each topic has a short summary in French for the people of
   the team. They are not loaded into Open WebUI.
 
