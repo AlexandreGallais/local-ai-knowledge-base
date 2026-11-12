@@ -8,8 +8,22 @@ two profiles, each independent of any software:
 - Chat: for any web chat without file access. The AI only answers and explains. Open WebUI is
   today's target.
 
-Status: draft. This file lists every topic the base will cover, in the order they will be built.
-Nothing is researched or written yet.
+Status: the foundation is in place: `code/AGENTS.md`, the five authoring skills, the document
+template, the French overview and the base check. No topic is written yet. This file lists every
+topic the base will cover, in the order they will be built.
+
+## Check the base
+
+With Node 22.18 or later, from the root of this repository, with no package to install:
+
+```sh
+node scripts/check-base.ts          # checks code/ and chat/models/
+node --test 'scripts/*.test.ts'     # tests of the check itself
+```
+
+The check fails on any finding: `AGENTS.md` too long, a skill without its trigger line or with an
+unmarked action step, a document without its header or sources, a request to use the web, French
+text in a file for the AI.
 
 ## Layout
 
@@ -30,7 +44,9 @@ chat/                        Chat profile
 adapters/                    Optional files that one software needs
   opencode/                  For example `opencode.json`: agents, read permissions
   open-webui/                Generated at export: import files
-scripts/                     Export and import
+scripts/
+  check-base.ts              The base check, copied with the base into a project
+                             Export and import come later
 ```
 
 - Only `code/` is written by hand, plus the chat system prompts in `chat/models/`. The export
@@ -38,7 +54,8 @@ scripts/                     Export and import
   - `chat/skills/`: each skill without its marked action steps, with a fixed "Limits" block.
   - `chat/knowledge/<subject>/`: the documents of each subject, without the French summaries.
 - In a project, the contents of `code/` go to the project root, so that the assistant reads
-  `AGENTS.md` when it opens the project.
+  `AGENTS.md` when it opens the project. `scripts/check-base.ts` goes with them, so that the
+  assistant can check what it adds to the base.
 - `adapters/` is optional: the base works without it. Changing software means changing or deleting
   one adapter, never the content.
 
