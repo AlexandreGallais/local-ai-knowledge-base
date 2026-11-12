@@ -166,16 +166,26 @@ The first two researches are done; the third is next.
 - Physical equipment: real operation first, then its model.
 - Each agent is a skill first, so that it works where agent mode does not exist.
 
+### 9. Reading file formats
+
+- Never read a binary or heavy file raw: extract its text or structure first, then read only what
+  the task needs.
+- One way per format, the cleanest available: built into the platform, or an official or
+  well-known library; nothing obscure to install.
+- Formats: design files (Adobe XD), PDF, Word, Excel, and others met in projects.
+- For each format: what it is made of, the command or script that extracts it, and what to read
+  next.
+
 ## Priority 3
 
-### 9. Software architecture
+### 10. Software architecture
 
 - Microservices and APIs.
 - .NET backend patterns.
 - Angular frontend patterns.
 - Contracts between a .NET API and an Angular client (REST, OpenAPI, real-time messages).
 
-### 10. Simulation
+### 11. Simulation
 
 - Principles of simulation.
 - Architecture of a simulation software.
@@ -183,14 +193,14 @@ The first two researches are done; the third is next.
 - Component models: physical equations, states, inputs and outputs.
 - Distributed simulation and co-simulation standards (HLA, DIS, FMI).
 
-### 11. Reading code: C, C++, Java and Rust
+### 12. Reading code: C, C++, Java and Rust
 
 - One reading guide per language, so that the AI can explain a code excerpt it is given.
 - Build files met when reading these projects: CMake, Make, Maven, Gradle, Cargo.
 
 ## Delivery and evaluation
 
-### 12. Export and import
+### 13. Export and import
 
 - One command builds the export: few text files, 500 KB each at most by default, the limit changed
   by one setting. It generates the chat profile and the adapters.
@@ -198,7 +208,7 @@ The first two researches are done; the third is next.
   with no build step and no npm package.
 - The import, run on the export in an empty folder, rebuilds the same tree as the base.
 
-### 13. Keeping the base up to date
+### 14. Keeping the base up to date
 
 - Projects update their tool versions once or twice a year; the documents follow.
 - Each document records its tool, its version and the date it was checked.
@@ -207,7 +217,7 @@ The first two researches are done; the third is next.
 - A check lists the documents whose version is behind the version a project uses.
 - Angular comes first: it is the tool the team uses most.
 
-### 14. Evaluation
+### 15. Evaluation
 
 - A set of test tasks, run with and without the base.
 - The AI must do better with the base, without using more tokens.
