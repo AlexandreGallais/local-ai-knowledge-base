@@ -13,6 +13,7 @@
 8. A text file over 100 KB or 2,000 lines is heavy too. Before you read a log, data or export file you do not know, check its size with `wc -c -l "<path>"`.
 9. Write TypeScript, never plain JavaScript. Configuration files of tools are the only exception.
 10. Before you write Angular or TypeScript code, read the versions of `@angular/core` and `typescript` in `package.json`. Write only what the documents of the topics `angular` and `typescript` allow at these versions.
+    Before you write C# code, read `TargetFramework` in the `*.csproj` file: it gives the C# version, as `docs/dotnet/csharp-changes.md` says. Never add a package of `docs/dotnet/paid-packages.md` without the user's agreement.
 11. Trust the documents of this base more than your memory.
 12. When a task matches a line of `## Skills`, load that skill before you start.
 13. After you change code, run its check commands below. Fix every error. Repeat until zero errors.
@@ -65,9 +66,17 @@ Open only the documents of your topic.
 - [C# collection and disposal rules](docs/csharp-analysis/collection-disposal-rules.md): CA1827, CA1860, CA1854, CA1869 and CA1001, with wrong and right examples. .NET 10.
 - [C# style rules](docs/csharp-analysis/style-rules.md): IDE1006, IDE0040, IDE0011 and IDE0044 with examples; the style rules the format command fixes. .NET 10.
 
+### dotnet
+
+- [C# 10 to 15, what changed](docs/dotnet/csharp-changes.md): Find the project's C# version from its target framework, then pick old or new syntax. C# 10 to 15.
+- [.NET 6 to 11, what changed in the libraries and the SDK](docs/dotnet/dotnet-changes.md): Built-in APIs that replace packages, common breaking changes, file-based apps and native AOT. .NET 6 to 11.
+- [ASP.NET Core 6 to 11, what changed](docs/dotnet/aspnetcore-changes.md): Hosting, minimal APIs, typed results, OpenAPI, validation and what a model still writes the old way. ASP.NET Core 11.
+- [EF Core 7 to 11, what changed](docs/dotnet/efcore-changes.md): Queries, migrations, configuration and the high-impact breaking change of each EF Core version. EF Core 11.
+- [.NET packages that became paid](docs/dotnet/paid-packages.md): AutoMapper, MediatR, MassTransit, FluentAssertions and Polly changed license; their free replacements. Checked 2026-11.
+
 ### maintenance
 
-- [Update the documents of a tool to a new version](docs/maintenance/update-a-tool.md): Step-by-step procedure to update the documents of a tool to a new major version, Angular first.
+- [Update the documents of a tool to a new version](docs/maintenance/update-a-tool.md): Step-by-step procedure to update the documents of a tool to a new major version, Angular and .NET each November.
 
 ### typescript
 

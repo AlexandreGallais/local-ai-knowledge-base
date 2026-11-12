@@ -66,5 +66,5 @@ import { checkBase } from './check-base.ts';
 - [S1] Node.js, "Releases", <https://nodejs.org/en/about/previous-releases>, read 2026-11-12, MIT, summarized.
 - [S2] Angular Team, "Version compatibility", v22, <https://angular.dev/reference/versions>, read 2026-11-12, CC BY 4.0, summarized.
 - [S3] Node.js, "Modules: TypeScript", v26, <https://nodejs.org/api/typescript.html>, read 2026-11-12, MIT, summarized.
-- [S4] Node.js, release notes of versions 22 and 26, <https://nodejs.org/en/blog/release>, read 2026-11-12, MIT, summarized.
+- [S4] Node.js, "Node.js 22 is now available!", <https://nodejs.org/en/blog/announcements/v22-release-announce>, and "Node.js 26.0.0", <https://nodejs.org/en/blog/release/v26.0.0>, read 2026-11-12, summarized.
 - [S5] Scripts and tests of this base, run with Node.js 22.18.0 and 24.18.0 on 2026-11-13.

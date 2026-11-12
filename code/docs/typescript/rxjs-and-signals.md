@@ -61,6 +61,6 @@ const valves = await firstValueFrom(this.http.get<unknown>('/api/valves'));
 
 ## Sources
 
-- [S1] RxJS, types of the package `rxjs` 7.8.2 (`@deprecated` tags), <https://github.com/ReactiveX/rxjs>, read 2026-11-12, Apache 2.0, summarized.
+- [S1] ReactiveX, types of `rxjs` 7.8.2 (`@deprecated` tags), <https://app.unpkg.com/rxjs@7.8.2/files/dist/types/internal/Observable.d.ts>, and the roadmap issue 6367, <https://github.com/ReactiveX/rxjs/issues/6367>, read 2026-11-12, Apache 2.0, summarized.
 - [S2] Angular Team, "Version compatibility", v22, <https://angular.dev/reference/versions>, read 2026-11-12, CC BY 4.0, summarized.
 - [S3] Angular Team, "RxJS interop with Angular signals", v22, <https://angular.dev/ecosystem/rxjs-interop>, read 2026-11-12, CC BY 4.0, summarized.

@@ -62,7 +62,7 @@ New defaults: `strict: true`, `module: esnext`, `target` the latest ECMAScript (
 
 ## Sources
 
-- [S1] Microsoft, "TypeScript 5.0" to "TypeScript 5.9" release notes, <https://www.typescriptlang.org/docs/handbook/release-notes/overview.html>, read 2026-11-12, CC BY 4.0, summarized.
+- [S1] Microsoft, "TypeScript 5.0" to "TypeScript 5.9" release notes, <https://typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html> and the pages of the following versions, read 2026-11-12, CC BY 4.0, summarized.
 - [S2] Angular Team, "Version compatibility", v22, <https://angular.dev/reference/versions>, read 2026-11-12, CC BY 4.0, summarized.
-- [S3] Microsoft, "Announcing TypeScript 6.0", 2026-03-23, <https://devblogs.microsoft.com/typescript/>, read 2026-11-12, summarized.
-- [S4] Microsoft, "Announcing TypeScript 7.0", 2026-07-08, <https://devblogs.microsoft.com/typescript/>, read 2026-11-12, summarized.
+- [S3] D. Rosenwasser, "Announcing TypeScript 6.0", 2026-03-23, <https://devblogs.microsoft.com/typescript/announcing-typescript-6-0/>, read 2026-11-12, summarized.
+- [S4] D. Rosenwasser, "Announcing TypeScript 7.0", 2026-07-08, <https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/>, read 2026-11-12, summarized.

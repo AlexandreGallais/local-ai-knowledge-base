@@ -3,8 +3,15 @@
 // Needs the packages of the example project (npm registry once).
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import {
+  existsSync,
+  readFileSync,
+} from 'node:fs';
+import { homedir } from 'node:os';
+import {
+  dirname,
+  join,
+} from 'node:path';
 import {
   describe,
   it,
@@ -20,6 +27,27 @@ function run(cwd: string, command: string, args: string[]): string {
   }).stdout;
 }
 
+const NUGET_XML = join(homedir(), '.nuget', 'packages', 'microsoft.extensions.logging.abstractions', '10.0.0', 'lib', 'net10.0', 'Microsoft.Extensions.Logging.Abstractions.xml');
+
+describe('commands of the look-up-api skill on NuGet documentation', { skip: existsSync(NUGET_XML) ? false : 'the example .NET project was not restored on this machine' }, () => {
+  it('finds the documentation of LogInformation by a narrow search, then reads a range only', () => {
+    const found = run(dirname(NUGET_XML), 'grep', [
+      '-n',
+      'name="M:Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(',
+      'Microsoft.Extensions.Logging.Abstractions.xml',
+    ]);
+    const line = Number(/^(\d+):/.exec(found)?.[1]);
+    const range = run(dirname(NUGET_XML), 'sed', [
+      '-n',
+      `${line},${line + 12}p`,
+      'Microsoft.Extensions.Logging.Abstractions.xml',
+    ]);
+
+    assert.ok(line > 0, found);
+    assert.match(range, /<summary>/);
+    assert.ok(readFileSync(NUGET_XML, 'utf8').split('\n').length > MAX_RANGE);
+  });
+});
 describe('commands of the look-up-api skill', () => {
   const project = prepareProject();
 

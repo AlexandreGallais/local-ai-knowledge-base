@@ -80,6 +80,43 @@ describe('versions of a project', () => {
     ]);
   });
 });
+describe('versions of a .NET project', () => {
+  it('reads the target framework, the C# version it allows, and EF Core from Directory.Packages.props', () => {
+    const project = writeTree({
+      'src/Api/Api.csproj': '<Project Sdk="Microsoft.NET.Sdk.Web"><PropertyGroup><TargetFramework>net8.0</TargetFramework></PropertyGroup></Project>',
+      'Directory.Packages.props': '<Project><ItemGroup><PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.4" /></ItemGroup></Project>',
+    });
+    const versions = projectVersions(project);
+
+    assert.equal(versions.get('dotnet'), 8);
+    assert.equal(versions.get('csharp'), 12);
+    assert.equal(versions.get('efcore'), 9);
+  });
+  it('reads the SDK of global.json when no project file is there', () => {
+    const project = writeTree({ 'global.json': JSON.stringify({ sdk: { version: '11.0.100' } }) });
+
+    assert.equal(projectVersions(project).get('dotnet'), 11);
+  });
+  it('lists the .NET documents, and only them, for a project in net12.0', () => {
+    const project = writeTree({ 'App.csproj': '<Project><PropertyGroup><TargetFramework>net12.0</TargetFramework></PropertyGroup></Project>' });
+    const behind = checkVersions(testBase(), project);
+
+    assert.deepEqual(
+      behind
+        .map((item) => item.document)
+        .toSorted(),
+      [
+        'docs/dotnet/csharp-changes.md',
+        'docs/dotnet/dotnet-changes.md',
+      ],
+    );
+  });
+  it('lists nothing for a project in net11.0', () => {
+    const project = writeTree({ 'App.csproj': '<Project><PropertyGroup><TargetFramework>net11.0</TargetFramework></PropertyGroup></Project>' });
+
+    assert.deepEqual(checkVersions(testBase(), project), []);
+  });
+});
 describe('update procedure played on Angular 21 to 22', () => {
   const docs = join(dirname(fileURLToPath(import.meta.url)), '..', 'code', 'docs', 'angular');
   const real = [

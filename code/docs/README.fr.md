@@ -56,6 +56,7 @@ anglais.
 | --- | --- |
 | `docs/angular/` | Ce qui a changé dans Angular de la 17 à la 22, pour écrire du code à la version du projet. |
 | `docs/typescript/` | Ce qui a changé dans TypeScript (5.0 à 7.0), RxJS 7 et Node.js (22 à 26). |
+| `docs/dotnet/` | Ce qui a changé dans C#, .NET, ASP.NET Core et EF Core de la 6 à la 11, et les bibliothèques devenues payantes. |
 | `docs/maintenance/` | La procédure pour mettre à jour les documents d'un outil qui change de version. |
 | `docs/csharp-analysis/` | Les règles d'analyse C# que le build fait échouer, chacune avec un exemple faux et un juste. |
 | `docs/typescript-lint/` | Les règles de lint TypeScript et Angular que l'outil ne corrige pas seul, chacune avec un exemple faux et un juste. |
