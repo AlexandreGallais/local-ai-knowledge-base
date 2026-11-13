@@ -4,8 +4,9 @@
 //   node scripts/check-base.ts [repository-root]
 import {
   existsSync,
-  readdirSync,
   readFileSync,
+  readdirSync,
+  realpathSync,
 } from 'node:fs';
 import {
   basename,
@@ -447,6 +448,7 @@ function main(): void {
   console.log(`Base check passed: ${result.files} file(s), 0 findings.`);
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+// Run main only when this file is the command, whatever symbolic links lead to it.
+if (realpathSync(process.argv[1] ?? '.') === realpathSync(fileURLToPath(import.meta.url))) {
   main();
 }

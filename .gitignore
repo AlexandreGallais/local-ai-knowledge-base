@@ -21,6 +21,9 @@ state.local.json
 # Measures of an evaluation on the workstation
 **/evaluation/results.csv
 
+# Settings of one machine, such as the Node binaries the tests also run
+*.local.txt
+
 # Local secrets
 .env
 .env.*
