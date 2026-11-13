@@ -408,10 +408,11 @@ function angularStores(ngrx) {
       extends: [ngrx.configs.signalsTypeChecked],
       rules: {
         'local/store-lists-features': ERROR,
+        // A composed store is a short list; a small store in one file stops at 80 lines, then splits.
         'max-lines': [
           ERROR,
           {
-            max: 40,
+            max: 80,
             skipBlankLines: true,
             skipComments: true,
           },
@@ -426,6 +427,13 @@ function angularStores(ngrx) {
       rules: {
         ...limitRules(LIMITS.storeFeature),
         [ONE_FUNCTION]: ERROR,
+        'local/store-lists-features': ERROR,
+        // A feature with an input declares "<_>", as NgRx asks: a known TypeScript failure otherwise.
+        '@typescript-eslint/no-unnecessary-type-parameters': OFF,
+        '@typescript-eslint/no-unused-vars': [
+          ERROR,
+          { varsIgnorePattern: '^_$' },
+        ],
         '@typescript-eslint/explicit-function-return-type': OFF,
         '@typescript-eslint/explicit-module-boundary-types': OFF,
       },

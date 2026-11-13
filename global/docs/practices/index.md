@@ -14,7 +14,7 @@ One sheet per lint rule that the format pass cannot fix and that models often br
 - [Compare, never test a value as true or false](typescript-eslint--strict-boolean-expressions.md): Write "if (name !== '')" or "if (count > 0)", never "if (name)" or "if (count)".
 - [No "!" after a value that may be missing](typescript-eslint--no-non-null-assertion.md): "list[0]!" hides a missing value; give a default with "??" or check it first.
 - [Every exported function has an example](jsdoc--require-example.md): The JSDoc of an exported function ends with "@example" and a call with its result.
-- [A composed store only lists features](local--store-lists-features.md): The store file calls signalStore with features only; state, computed and methods live in feature files.
+- [A store lists features, or is a small store](local--store-lists-features.md): A composed store lists only features of sub-domains; a small store without sub-domain keeps its blocks in one file; never both. At most 15 features in a store, 10 in a signalStoreFeature.
 - [No Angular Material, no CDK](no-restricted-imports.md): The team writes its own components: never import @angular/material nor @angular/cdk.
 - [output(), not @Output() and EventEmitter](angular-eslint--prefer-output-emitter-ref.md): Declare an output with "readonly changed = output<string>()".
 - [A click on a button, never on a div](angular-eslint--template--click-events-have-key-events.md): Put (click) on a <button type="button">: a click on a <div> or <li> cannot be reached with the keyboard.

@@ -7,6 +7,14 @@
     "angular-app",
     "angular-lib"
   ],
+  "components": [
+    "angular-app",
+    "angular-lib"
+  ],
+  "ngrx-signals": [
+    "angular-app",
+    "angular-lib"
+  ],
   "typescript": [
     "angular-app",
     "angular-lib",

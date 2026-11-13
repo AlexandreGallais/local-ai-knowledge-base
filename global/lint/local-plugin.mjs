@@ -12,6 +12,7 @@ import {
 } from 'node:path';
 
 const SHEET = 'practices: rule local/';
+const IDENTIFIER = 'Identifier';
 // Nothing before the first comment but a byte order mark, a shebang line and blanks.
 const BYTE_ORDER_MARK = String.fromCodePoint(0xFE_FF);
 const SHEBANG_AND_BLANKS = /(#![^\n]*\n)?\s*$/u.source;
@@ -54,7 +55,7 @@ const exportedOther = (node, what) => ({
 
 function declaratorExport(declarator) {
   const init = declarator.init;
-  const isFunction = init !== null && init !== undefined && FUNCTION_INIT.has(init.type) && declarator.id.type === 'Identifier';
+  const isFunction = init !== null && init !== undefined && FUNCTION_INIT.has(init.type) && declarator.id.type === IDENTIFIER;
 
   return isFunction ? exportedFunction(declarator.id, declarator.id.name) : exportedOther(declarator, 'a value that is not a function');
 }
@@ -628,6 +629,76 @@ const noImportCycle = rule(
     };
   },
 );
+// ---------------------------------------------------------------- NgRx Signals stores
+// The building blocks of @ngrx/signals; any other with...() call is a feature of the project.
+const STORE_BLOCKS = new Set([
+  'withState',
+  'withComputed',
+  'withMethods',
+  'withHooks',
+  'withProps',
+  'withLinkedState',
+  'withEntities',
+  'withReducer',
+  'withEventHandlers',
+  'withFeature',
+]);
+const STORE_LIMITS = {
+  signalStore: 15,
+  signalStoreFeature: 10,
+};
+
+function storeArguments(node) {
+  return node.arguments.filter((argument) => argument.type === 'CallExpression' && argument.callee.type === IDENTIFIER && /^with[A-Z]/.test(argument.callee.name));
+}
+
+const storeListsFeatures = rule(
+  'store-lists-features',
+  {
+    type: 'problem',
+    description: 'A store lists either features of sub-domains or the blocks of a small store, never both; at most 15 features in a store and 10 in a signalStoreFeature.',
+    schema: [],
+    messages: {
+      mixed: 'This store lists features of sub-domains: move "{{name}}" to a feature file.',
+      tooMany: '{{count}} features in {{callee}}: at most {{max}}. Group some in a signalStoreFeature.',
+    },
+  },
+  (context) => ({
+    CallExpression(node) {
+      const callee = node.callee.type === IDENTIFIER ? node.callee.name : '';
+      const max = STORE_LIMITS[callee];
+
+      if (max === undefined) {
+        return;
+      }
+      const features = node.arguments.filter((argument) => argument.type !== 'ObjectExpression' && !(argument.type === 'CallExpression' && argument.callee.name === 'type'));
+
+      if (features.length > max) {
+        context.report({
+          node,
+          messageId: 'tooMany',
+          data: {
+            count: String(features.length),
+            callee,
+            max: String(max),
+          },
+        });
+      }
+      const calls = storeArguments(node);
+      const hasOwnFeature = calls.some((call) => !STORE_BLOCKS.has(call.callee.name));
+
+      if (callee === 'signalStore' && hasOwnFeature) {
+        for (const call of calls.filter((item) => STORE_BLOCKS.has(item.callee.name))) {
+          context.report({
+            node: call,
+            messageId: 'mixed',
+            data: { name: call.callee.name },
+          });
+        }
+      }
+    },
+  }),
+);
 
 // ---------------------------------------------------------------- named syntax bans
 function restrictSyntax(name, selector, message) {
@@ -655,7 +726,6 @@ const BANS = [
   ['no-clock', 'NewExpression[callee.name="Date"][arguments.length=0]', 'Pass the date as a parameter.'],
   ['no-this', 'ThisExpression', 'Do not use "this" in a pure function.'],
   ['no-enum', 'TSEnumDeclaration', 'Write a union of string literals, not an enum.'],
-  ['store-lists-features', 'CallExpression[callee.name="signalStore"] > CallExpression[callee.name=/^with(State|Computed|Methods|Hooks|Props|LinkedState)$/]', 'A composed store only lists features. Move this block to a feature file.'],
   ['no-redundant-standalone', 'Decorator Property[key.name="standalone"][value.value=true]', 'Remove "standalone: true": it is the default.'],
 ];
 
@@ -673,6 +743,7 @@ export const local = {
     'one-item-per-line': oneItemPerLine,
     'no-undeclared-import': noUndeclaredImport,
     'no-import-cycle': noImportCycle,
+    'store-lists-features': storeListsFeatures,
     ...Object.fromEntries(BANS.map(([name, selector, message]) => [
       name,
       restrictSyntax(name, selector, message),

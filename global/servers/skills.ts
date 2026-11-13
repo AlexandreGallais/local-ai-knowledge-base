@@ -13,6 +13,7 @@ import { fileURLToPath } from 'node:url';
 import {
   baseRoot,
   projectRoot,
+  readJson,
   readProfile,
 } from './lib/base.ts';
 import {
@@ -59,6 +60,17 @@ function skillsIn(folder: string, from: string): Skill[] {
     });
 }
 
+// The groups of skills a profile receives, from global/skills/groups.json; all groups when the
+// project has no profile yet.
+export function skillGroups(base: string, profile: string | undefined): string[] {
+  const groups = readJson<Record<string, string[]>>(join(base, 'skills', 'groups.json'), {});
+
+  return Object
+    .entries(groups)
+    .filter(([, profiles]) => profile === undefined || profiles.includes(profile))
+    .map(([group]) => group);
+}
+
 // The project's skills come last: one of the same name replaces the common one.
 export function allSkills(): Skill[] {
   const base = baseRoot();
@@ -68,7 +80,7 @@ export function allSkills(): Skill[] {
 
   for (const skill of [
     ...skillsIn(join(base, 'opencode', 'skills'), 'base'),
-    ...profile === undefined ? [] : skillsIn(join(base, 'profiles', profile, 'skills'), `profile ${profile}`),
+    ...skillGroups(base, profile).flatMap((group) => skillsIn(join(base, 'skills', group), `group ${group}`)),
     ...skillsIn(join(project, '.agents', 'skills'), 'project'),
   ]) {
     byName.set(skill.name, skill);

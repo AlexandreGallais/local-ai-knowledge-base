@@ -1,0 +1,45 @@
+<span
+  class="label"
+  [id]="labelId"
+>{{ label() }}</span>
+<div
+  class="combobox"
+  role="combobox"
+  tabindex="0"
+  [attr.aria-activedescendant]="activeDescendantId()"
+  [attr.aria-controls]="listId"
+  [attr.aria-disabled]="isDisabled()"
+  [attr.aria-expanded]="isOpen()"
+  [attr.aria-labelledby]="labelId"
+  (blur)="close()"
+  (click)="toggle()"
+  (keydown)="onKeydown($event)"
+>
+  {{ selectedLabel() }}
+</div>
+<!-- The list takes the clicks of its options; it answers the keyboard too if it gets the focus. -->
+<ul
+  class="list"
+  role="listbox"
+  tabindex="-1"
+  [attr.aria-labelledby]="labelId"
+  [hidden]="!isOpen()"
+  [id]="listId"
+  (click)="chooseFromPointer($event)"
+  (keydown)="onKeydown($event)"
+  (mousedown)="$event.preventDefault()"
+>
+  @for (option of options(); track option.value) {
+    <li
+      class="option"
+      role="option"
+      [attr.aria-disabled]="option.isDisabled === true"
+      [attr.aria-selected]="option.value === value()"
+      [attr.data-index]="$index"
+      [class.is-active]="$index === activeIndex()"
+      [id]="optionId($index)"
+    >
+      {{ option.label }}
+    </li>
+  }
+</ul>

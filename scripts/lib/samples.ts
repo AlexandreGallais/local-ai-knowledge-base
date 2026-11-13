@@ -1,6 +1,9 @@
 // Helpers for the tests that run the format and lint passes on the sample projects for real.
 // They need the packages of samples/package.json installed once: npm install --prefix samples.
-import { execFileSync } from 'node:child_process';
+import {
+  execFileSync,
+  spawnSync,
+} from 'node:child_process';
 import { existsSync } from 'node:fs';
 import {
   dirname,
@@ -60,6 +63,30 @@ export function runTool(tool: string, args: string[], cwd: string): Run {
       output: `${failed.stdout}${failed.stderr}`,
     };
   }
+}
+
+// Runs a script of the sample packages (as "ng" or "tsc") in a folder.
+export function runIn(cwd: string, script: string, args: string[]): Run {
+  const result = spawnSync(
+    process.execPath,
+    [
+      join(SAMPLES, 'node_modules', script),
+      ...args,
+    ],
+    {
+      cwd,
+      encoding: 'utf8',
+      env: {
+        ...process.env,
+        NG_CLI_ANALYTICS: 'false',
+      },
+    },
+  );
+
+  return {
+    status: result.status ?? 1,
+    output: `${result.stdout}${result.stderr}`,
+  };
 }
 
 export function installLint(profile: string): void {

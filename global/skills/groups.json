@@ -1,0 +1,12 @@
+{
+  "angular": [
+    "angular-app",
+    "angular-lib"
+  ],
+  "typescript": [
+    "angular-app",
+    "angular-lib",
+    "ts-lib",
+    "ts-pure-lib"
+  ]
+}

@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   inject,
 } from '@angular/core';
@@ -7,7 +6,6 @@ import {
 import { UsersStore } from './users.store';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-user-list',
   styleUrl: './user-list.scss',
   templateUrl: './user-list.html',

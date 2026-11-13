@@ -92,11 +92,12 @@ function allMarkdown(path: string, skip: (folder: string) => boolean): string[] 
   });
 }
 
-// The folders that hold skills: common, per profile, and the project kit.
+// The folders that hold skills: common, per group of profiles (global/skills/<group>), and the
+// project kit.
 export function skillFolders(root: string): string[] {
   return [
     join(root, 'global', 'opencode', 'skills'),
-    ...folders(join(root, 'global', 'profiles')).map((profile) => join(root, 'global', 'profiles', profile, 'skills')),
+    ...folders(join(root, 'global', 'skills')).map((group) => join(root, 'global', 'skills', group)),
     join(root, 'project', '.agents', 'skills'),
   ].filter((path) => existsSync(path));
 }
@@ -190,6 +191,38 @@ export function checkDocument(text: string, file: string, topic: string): Findin
   }
   if (estimateTokens(text) > MAX_DOCUMENT_TOKENS) {
     findings.push(finding(file, `about ${estimateTokens(text)} tokens; split documents above 4000`));
+  }
+  return [
+    ...findings,
+    ...checkSinceColumns(text, file),
+  ];
+}
+
+function cells(line: string): string[] {
+  return line
+    .trim()
+    .replace(/^\|/, '')
+    .replace(/\|$/, '')
+    .split(/(?<!\\)\|/)
+    .map((cell) => cell.trim());
+}
+
+// In a table with a "Since" column, every row gives the version that brought the new way.
+export function checkSinceColumns(text: string, file: string): Finding[] {
+  const lines = analyseLines(text).filter((line) => !line.inCode);
+  const findings: Finding[] = [];
+  let column = -1;
+
+  for (const line of lines) {
+    const row = line.text.trim();
+
+    if (!row.startsWith('|')) {
+      column = -1;
+    } else if (column === -1 && /\bSince\b/.test(row)) {
+      column = cells(row).indexOf('Since');
+    } else if (column !== -1 && !/^\|[\s:|-]+\|$/.test(row) && !/\d/.test(cells(row)[column] ?? '')) {
+      findings.push(finding(file, `a row of the "Since" table has no version: ${row.slice(0, 60)}`));
+    }
   }
   return findings;
 }

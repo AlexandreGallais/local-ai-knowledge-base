@@ -7,6 +7,6 @@
     "format": "node /opt/local-ai-base/tools/format-file.ts --all",
     "lint": "node /opt/local-ai-base/tools/lint-file.ts --all",
     "build": "npx --no tsc -p tsconfig.json",
-    "test": "npx --no vitest run"
+    "test": "npx --no ng test --watch=false"
   }
 }

@@ -34,6 +34,11 @@ Versions pinned exactly; every one was installed and run on the four sample proj
 | stylelint-config-standard-scss | 18.0.0 | MIT | angular-app, angular-lib | Lint pass: the standard rules |
 | postcss-scss | 4.0.9 | MIT | angular-app, angular-lib | SCSS syntax |
 | @double-great/stylelint-a11y | 3.8.3 | MIT | angular-app, angular-lib | Accessibility of styles |
+| @angular/build, @angular/cli, @angular/compiler-cli | 22.2.6 | MIT | angular-app, angular-lib | `ng test`: compiles the tests as the build does (signal inputs need it), runs Vitest |
+| @angular/compiler, @angular/platform-browser | 22.2.6 | MIT | angular-app, angular-lib | `TestBed` in the tests |
+| jsdom | 31.0.1 | MIT | angular-app, angular-lib | The DOM of `ng test` by default |
+
+An Angular project made by `ng new` already has the Angular packages; the base adds none of them.
 
 ## Vendored in the base
 

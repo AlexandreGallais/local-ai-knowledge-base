@@ -31,7 +31,15 @@ const BASE: Record<string, string> = {
   'library/typescript-eslint/no-floating-promises.md': '# no-floating-promises\n\nOfficial page.\n',
   'library/unicorn/prefer-at.md': '# prefer-at\n\nPrefer .at() for index access from the end.\n',
   'opencode/skills/write-store/SKILL.md': '---\nname: write-store\ndescription: Use when you write a NgRx Signals store.\n---\n\n# Write a store\n\n1. Base steps.\n',
-  'profiles/angular-app/skills/write-component/SKILL.md': '---\nname: write-component\ndescription: Use when you write an Angular component.\n---\n\n# Write a component\n',
+  'skills/angular/write-component/SKILL.md': '---\nname: write-component\ndescription: Use when you write an Angular component.\n---\n\n# Write a component\n',
+  'skills/typescript/write-function/SKILL.md': '---\nname: write-function\ndescription: Use when you write a function of a library.\n---\n\n# Write a function\n',
+  'skills/groups.json': JSON.stringify({
+    angular: ['angular-app'],
+    typescript: [
+      'angular-app',
+      'ts-lib',
+    ],
+  }),
 };
 const PROJECT: Record<string, string> = {
   '.agents/profile.json': JSON.stringify({ profile: 'ts-lib' }),
@@ -99,10 +107,14 @@ describe('the practices server', () => {
   });
 });
 describe('the skills server', () => {
-  it('lists the skills of the profile, the project skill replacing the common one', async () => {
+  it('lists the skills of the profile only, the project skill replacing the common one', async () => {
     const result = await skills.call('list_skills', {});
 
-    assert.equal(result.text, 'write-store (project): Use when you write a store of this project.');
+    assert.equal(result.text, [
+      'write-function (group typescript): Use when you write a function of a library.',
+      'write-store (project): Use when you write a store of this project.',
+    ].join('\n'));
+    assert.doesNotMatch(result.text, /write-component/);
   });
   it('loads one skill without its header', async () => {
     const result = await skills.call('load_skill', { name: 'write-store' });

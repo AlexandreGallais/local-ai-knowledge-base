@@ -27,6 +27,9 @@ global/index/
 # Lint configs of the samples: copied from global/lint/ by the tests
 samples/*/.agents/lint/
 
+# Cache of the Angular CLI (ng test, ng build)
+.angular/
+
 # Settings of one machine, such as the Node binaries the tests also run
 *.local.txt
 

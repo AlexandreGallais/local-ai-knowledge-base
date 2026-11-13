@@ -171,6 +171,11 @@ describe('checkBase', () => {
 
     assert.deepEqual(messages(makeBase({ 'global/rules/common.md': rules })), ['asks to use the web: 1. Search the web when the docs do not answer.']);
   });
+  it('refuses an old-to-new row without its version', () => {
+    const table = '\n## Old to new\n\n| Old | New | Since |\n| --- | --- | --- |\n| `mutate` | `update` | 17 |\n| `idKey` | `selectId` |  |\n';
+
+    assert.deepEqual(messages(makeBase({ 'global/docs/angular/signals.md': `${DOCUMENT}${table}` })), ['a row of the "Since" table has no version: | `idKey` | `selectId` |  |']);
+  });
   it('refuses a config whose instructions load no file', () => {
     const config = '{ "instructions": ["/opt/local-ai-base/rules/missing.md"] }';
 
