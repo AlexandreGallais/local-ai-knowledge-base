@@ -59,6 +59,7 @@ interface ParsedPart {
 
 export const FORMAT = 'BASE-EXPORT-1';
 export const PART_PATTERN = /^base-\d+\.txt$/;
+export const PROJECT_RULES = 'AGENTS.project.md';
 export const LIBRARY_FORMAT = 'LIBRARY-EXPORT-1';
 export const LIBRARY_PART_PATTERN = /^library-\d+\.txt$/;
 const PROJECT_FOLDERS = [
@@ -373,7 +374,8 @@ export function importBase(
     ...base,
     ...library,
   ];
-  const chosen = options.project ? forProject(files) : files;
+  // The rules of a project are its own: an update of the base never writes AGENTS.project.md.
+  const chosen = (options.project ? forProject(files) : files).filter((file) => file.path !== PROJECT_RULES);
 
   return writeFiles(withOpenCode(chosen, options.opencode), target, options.force);
 }
@@ -397,6 +399,9 @@ function main(): void {
     });
 
     process.stdout.write(`Import done: ${written.length} files written.\n`);
+    if (existsSync(join(resolve(values.to ?? '.'), PROJECT_RULES))) {
+      process.stdout.write(`${PROJECT_RULES} kept as it is: it holds the rules of this project.\n`);
+    }
   } catch (error) {
     process.stdout.write(`Import failed: ${(error as Error).message}\n`);
     process.exitCode = 1;

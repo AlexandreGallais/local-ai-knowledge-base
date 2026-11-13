@@ -1,6 +1,6 @@
 ---
 name: write-agents-md
-description: Write, update or shorten the AGENTS.md entry file of a project that holds this base. Use when the user asks to create, update, shorten or review AGENTS.md.
+description: Write, update or shorten the AGENTS.md entry file of the base, or the AGENTS.project.md rules of a project that holds it. Use when the user asks to create, update, shorten or review AGENTS.md, or to add a rule of the project.
 license: MIT
 metadata:
   variant: files
@@ -11,6 +11,8 @@ metadata:
 
 ## Rules
 
+- Write a rule of one project in `AGENTS.project.md` at the project root, never in `AGENTS.md`: an update of the base replaces `AGENTS.md` and keeps `AGENTS.project.md`. Start from `templates/AGENTS.project.md`. Keep it under 40 lines.
+- Change `AGENTS.md` only for a rule of the base itself.
 - Keep the file under 60 lines and under 30 rules, the index apart. Every line is loaded in every session.
 - Keep the sections of the base in this order: `## Rules`, `## Check commands` if any, `## Skills`, `## Index`, `## Final check`.
 - Keep the vital rules of the base first: answer language, no web, only the documents of the topic, no `.fr.md` file.
@@ -42,7 +44,7 @@ metadata:
 
 <!-- files:begin -->
 
-7. Write the content to `AGENTS.md` at the project root.
+7. Write a rule of the project to `AGENTS.project.md`, a rule of the base to `AGENTS.md`.
 8. Run `node scripts/check-base.ts`. Fix every finding. Repeat until zero findings.
 
 <!-- files:end -->
@@ -115,6 +117,7 @@ Right:
 
 ## Final check
 
+- Is a rule of the project in `AGENTS.project.md`, not in `AGENTS.md`?
 - Is the file under 60 lines and under 30 rules, the index apart?
 - Does every check have its exact command?
 - Does every skill have its trigger line?

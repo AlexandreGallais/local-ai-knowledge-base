@@ -92,6 +92,7 @@ skip their part 1 step 1, the import is done.
 | 9 | `f17-simulation-equipment-agent.md`, `f18-architecture-code-review.md`: for "agent mode", call the subagent of `opencode.json` | C19, C26, C27 | 40 min |
 | 10 | `f19-reading-code.md` | C15 | 20 min |
 | 10b | `f25-library.md`: library parts pasted, a question only the official docs answer | C14, C38 | 30 min |
+| 10c | `f27-project-rules.md`: the rules of the project in `AGENTS.project.md`, kept by an update | C2, C3 | 15 min |
 | 11 | `f06-git-skills-commit-assistant.md` part 2, then `f16-open-webui.md`, then `f06-git-skills-commit-assistant.md` part 1 in the chat | C29 to C34, C45 | 1 h 30 |
 | 12 | Part 7 of this file: the docs server | Decision 0008 | 45 min |
 | 13 | `f20-public-check-evaluation.md` part 2: the evaluation, last, as it needs all the rest | C44 | half a day |

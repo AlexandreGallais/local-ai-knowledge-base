@@ -1108,6 +1108,30 @@ function checkOpenCodeAdapters(adaptersFolder: string, context: AdapterContext):
   return checkFolder(paths, (text, file) => checkOpenCodeAdapter(text, file, context));
 }
 
+const MAX_PROJECT_RULES_LINES = 40;
+
+// The rules of a project, AGENTS.project.md: short, in English, and never a request to use the web.
+export function checkProjectRules(text: string, file: string): Finding[] {
+  const lineCount = splitLines(text.trimEnd()).length;
+  const tooLong = lineCount > MAX_PROJECT_RULES_LINES ? [finding(file, `${lineCount} lines; keep 40 at most`)] : [];
+  const french = looksFrench(prose(analyseLines(text))) ? [finding(file, 'written in French; write the rules of the project in English')] : [];
+
+  return [
+    ...tooLong,
+    ...french,
+    ...findWebRequests(text, file, false),
+  ];
+}
+
+function checkProjectRulesOf(base: string): BaseResult {
+  const paths = [
+    join(base, 'AGENTS.project.md'),
+    join(base, 'templates', 'AGENTS.project.md'),
+  ].filter((path) => existsSync(path));
+
+  return checkFolder(paths, checkProjectRules);
+}
+
 // The adapters sit next to code/ in this repository, at the root in a project.
 function checkAdaptersOf(base: string, agentsText: string, skillNames: string[]): BaseResult {
   const root = basename(base) === 'code' ? dirname(base) : base;
@@ -1548,6 +1572,7 @@ export function checkBase(base: string, chatModels?: string): BaseResult {
 
   return merge([
     checkAdaptersOf(base, agentsText, skillNames),
+    checkProjectRulesOf(base),
     ...skillNames.map((name) => checkOneSkill(skillsFolder, name)),
     docs,
     checkSynopticNames(base),

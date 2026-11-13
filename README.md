@@ -51,7 +51,9 @@ On the workstation, in an empty folder:
 `docs/`, `templates/`, `scripts/check-base.ts`, `scripts/check-versions.ts`, `adapters/opencode/`
 and `adapters/mcp/`. `--opencode 1` or `--opencode 2` also writes `opencode.json` at the root, for
 that major version of OpenCode. `--from` and `--to` change the folders read and written; `--force`
-replaces files that already exist and differ.
+replaces files that already exist and differ. The rules of a project go in `AGENTS.project.md` at
+its root (template in `code/templates/`): the import never writes it, so an update of the base keeps
+them.
 
 ## Check the base
 

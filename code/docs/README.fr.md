@@ -150,6 +150,9 @@ anglais.
   `.agents/`, `docs/`, `templates/`, les scripts de contrôle et les adaptateurs d'OpenCode.
 - `--opencode 2` (ou `1` pour OpenCode 1.x) écrit en plus `opencode.json` à la racine : la lecture
   directe des fichiers lourds y est refusée, et les trois agents y sont déclarés.
+- Les règles propres à un projet (version du cluster, conventions, commandes) s'écrivent dans
+  `AGENTS.project.md` à sa racine, à partir de `templates/AGENTS.project.md` : 40 lignes au plus,
+  en anglais. L'IA le lit avant sa première tâche ; une mise à jour de la base ne le touche jamais.
 - `node scripts/export.ts --trial` ajoute à l'export le matériel des essais sur le poste :
   le dossier `trials/` (guides d'essai), les projets exemples et le jeu d'évaluation. Le dossier
   `export/` du dépôt contient l'export de la dernière livraison.

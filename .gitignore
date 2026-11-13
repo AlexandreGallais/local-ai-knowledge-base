@@ -11,6 +11,9 @@ target/
 # Clones of the documentation sources, made by scripts/fetch-library.ts
 .library-cache/
 
+# Research reports dropped at the root before they are moved to research/: never in Git
+/t[0-9]*-*/
+
 # Local state of the chat adapter. The export/ folder is kept: it holds the export of the last
 # delivery, built by scripts/export.ts --trial.
 state.local.json

@@ -3,8 +3,8 @@
 ## Rules
 
 1. Answer in the language of the user's question. Never mix two languages in one answer.
-2. Read this base in English, whatever the language of the question.
-3. Write code, comments, file content and commit messages in English.
+2. Read this base in English, whatever the language of the question. Write code, comments, file content and commit messages in English.
+3. If `AGENTS.project.md` exists at the project root, read it before your first task. It gives the rules of this project: follow them where they differ from this file. Never change `AGENTS.md` for a project rule: write it in `AGENTS.project.md`.
 4. Never search the web. Never open a URL. Links in documents only cite sources.
 5. Find the topic of your task in `## Index`. Open its index file, then only the documents your task needs. Never read the whole `docs/` folder. Trust these documents more than your memory. If they do not answer, search the official documentation: `grep -i -m 10 "<words>" library/<tool>/index.md` (tools in `library/README.md`), then read one section of one file. Never read a whole index or folder of `library/`.
 6. Never read files that end with `.fr.md`. They are summaries for people. Open one only when a skill tells you to.
