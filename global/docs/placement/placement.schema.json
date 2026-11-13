@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "placement.schema.json",
+  "title": "Placement config",
+  "description": "Places SVG elements from one-way rules. Units: user units. Angles: degrees, 0 on +x, positive clockwise on screen.",
+  "type": "object",
+  "required": ["version", "elements", "rules"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "const": 1 },
+    "canvas": {
+      "type": "object",
+      "required": ["width", "height"],
+      "additionalProperties": false,
+      "properties": {
+        "width": { "type": "number", "minimum": 0 },
+        "height": { "type": "number", "minimum": 0 }
+      }
+    },
+    "elements": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "$ref": "#/$defs/id", "not": { "const": "canvas" } },
+      "additionalProperties": { "$ref": "#/$defs/element" }
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          { "$ref": "#/$defs/fixed" },
+          { "$ref": "#/$defs/attach" },
+          { "$ref": "#/$defs/align" },
+          { "$ref": "#/$defs/distribute" },
+          { "$ref": "#/$defs/circle" },
+          { "$ref": "#/$defs/grid" },
+          { "$ref": "#/$defs/rotate" }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "ref": {
+      "description": "An element id, or an element id, a dot and an anchor: \"dial\" or \"dial.top-center\". Without an anchor: center.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)?$"
+    },
+    "point": {
+      "type": "object",
+      "required": ["x", "y"],
+      "additionalProperties": false,
+      "properties": { "x": { "type": "number" }, "y": { "type": "number" } }
+    },
+    "pointRef": { "oneOf": [{ "$ref": "#/$defs/ref" }, { "$ref": "#/$defs/point" }] },
+    "scalarRef": { "oneOf": [{ "$ref": "#/$defs/ref" }, { "type": "number" }] },
+    "idList": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+    "element": {
+      "type": "object",
+      "required": ["width", "height"],
+      "additionalProperties": false,
+      "properties": {
+        "width": { "type": "number", "minimum": 0 },
+        "height": { "type": "number", "minimum": 0 },
+        "anchors": {
+          "description": "Named points of the element, in its own coordinates (0, 0 is its top-left corner).",
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/id" },
+          "additionalProperties": { "$ref": "#/$defs/point" }
+        }
+      }
+    },
+    "fixed": {
+      "description": "Put an anchor of the element at fixed coordinates. Default anchor: top-left.",
+      "type": "object",
+      "required": ["type", "element", "x", "y"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "fixed" },
+        "element": { "$ref": "#/$defs/id" },
+        "anchor": { "$ref": "#/$defs/id" },
+        "x": { "type": "number" },
+        "y": { "type": "number" }
+      }
+    },
+    "attach": {
+      "description": "Put an anchor of the element on an anchor of another element, plus an offset. Default anchor: center.",
+      "type": "object",
+      "required": ["type", "element", "to"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "attach" },
+        "element": { "$ref": "#/$defs/id" },
+        "anchor": { "$ref": "#/$defs/id" },
+        "to": { "$ref": "#/$defs/ref" },
+        "dx": { "type": "number" },
+        "dy": { "type": "number" }
+      }
+    },
+    "align": {
+      "description": "Give several elements the same edge as another element. Sets one axis only.",
+      "type": "object",
+      "required": ["type", "elements", "edge", "to"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "align" },
+        "elements": { "$ref": "#/$defs/idList" },
+        "edge": { "enum": ["left", "center-x", "right", "top", "center-y", "bottom"] },
+        "to": { "$ref": "#/$defs/id" },
+        "offset": { "type": "number" }
+      }
+    },
+    "distribute": {
+      "description": "Spread elements along one axis, in the listed order. Sets one axis only.",
+      "type": "object",
+      "required": ["type", "elements", "axis", "mode", "start"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "distribute" },
+        "elements": { "$ref": "#/$defs/idList" },
+        "axis": { "enum": ["x", "y"] },
+        "mode": { "enum": ["space-between", "space-around", "space-evenly", "gap"] },
+        "start": { "$ref": "#/$defs/scalarRef" },
+        "end": { "$ref": "#/$defs/scalarRef" },
+        "gap": { "type": "number" }
+      },
+      "if": { "properties": { "mode": { "const": "gap" } } },
+      "then": { "required": ["gap"] },
+      "else": { "required": ["end"] }
+    },
+    "circle": {
+      "description": "Put the centers of the elements on a circle. Without endAngle: full circle, step 360 / count. With endAngle: arc, first on startAngle, last on endAngle.",
+      "type": "object",
+      "required": ["type", "elements", "around", "radius"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "circle" },
+        "elements": { "$ref": "#/$defs/idList" },
+        "around": { "$ref": "#/$defs/pointRef" },
+        "radius": { "type": "number", "minimum": 0 },
+        "startAngle": { "type": "number", "default": 0 },
+        "endAngle": { "type": "number" },
+        "rotate": { "enum": ["none", "radial", "tangent"], "default": "none" }
+      }
+    },
+    "grid": {
+      "description": "Put each element at the center of a grid cell, row by row.",
+      "type": "object",
+      "required": ["type", "elements", "origin", "columns", "cellWidth", "cellHeight"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "grid" },
+        "elements": { "$ref": "#/$defs/idList" },
+        "origin": { "$ref": "#/$defs/pointRef" },
+        "columns": { "type": "integer", "minimum": 1 },
+        "cellWidth": { "type": "number", "minimum": 0 },
+        "cellHeight": { "type": "number", "minimum": 0 },
+        "gapX": { "type": "number", "default": 0 },
+        "gapY": { "type": "number", "default": 0 }
+      }
+    },
+    "rotate": {
+      "description": "Turn the element about its center: a fixed angle, or toward a point of another element.",
+      "type": "object",
+      "required": ["type", "element"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "rotate" },
+        "element": { "$ref": "#/$defs/id" },
+        "angle": { "type": "number" },
+        "toward": { "$ref": "#/$defs/ref" }
+      },
+      "oneOf": [{ "required": ["angle"] }, { "required": ["toward"] }]
+    }
+  }
+}

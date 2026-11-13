@@ -66,6 +66,7 @@ describe('the OpenCode configuration of the global base', () => {
       'work',
       'code',
       'parse',
+      'geometry',
     ]);
     for (const [
       name,
