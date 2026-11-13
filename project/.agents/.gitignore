@@ -1,0 +1,3 @@
+# Local to this machine: work files, extracts of heavy files, caches. Never in Git.
+work/
+cache/

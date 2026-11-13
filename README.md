@@ -33,6 +33,8 @@ Two bases, so that project repositories stay clean:
 | `global/profiles/` | One folder per project profile: lint and format configs, skills, OpenCode config. |
 | `project/` | The project kit: `AGENTS.md` and `.agents/`. |
 | `scripts/` | Build tools of this repository: checks, export, imports, tests. |
+| `guides/` | Guides for people: install the base, paste the export, trial sessions. |
+| `notes/` | Notes for maintainers: what the base relies on in OpenCode, measures. |
 | `samples/` | Example projects, one per profile, used by the tests. |
 | `archive/v0.1/` | Version 0.1, unchanged. |
 

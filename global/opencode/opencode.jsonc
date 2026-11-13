@@ -1,0 +1,104 @@
+{
+  // Common OpenCode 2.2.7 configuration of the global base. Mounted read-only as /etc/opencode
+  // in every dev container (decision 0019): the highest priority, so no project can weaken it.
+  // The model and its provider stay in the user's own configuration.
+  "$schema": "https://opencode.ai/config.json",
+
+  // Common rules, loaded at every request with the project's AGENTS.md.
+  "instructions": ["/opt/local-ai-base/rules/*.md"],
+
+  // Token economy: summarise at about 60,000 tokens, keep the last 8,000 as they are.
+  "compaction": { "auto": true, "keep": { "tokens": 8000 }, "buffer": "70%" },
+  "tool_output": { "max_lines": 400, "max_bytes": 16384 },
+
+  // Built-in formatters are switched off one by one; the base's formatter runs instead.
+  "formatter": {
+    "prettier": { "disabled": true },
+    "biome": { "disabled": true },
+    "oxfmt": { "disabled": true },
+    "base-format": {
+      "command": ["node", "/opt/local-ai-base/tools/format-file.ts", "$FILE"],
+      "extensions": [".ts", ".html", ".css", ".scss", ".json"]
+    }
+  },
+
+  // MCP servers are added by their features, each with "codemode": false.
+  "mcp": { "servers": {} },
+
+  // Ordered rules: the last matching rule wins; an agent's own rules come after these.
+  "permissions": [
+    // Outside the project: ask, except the read-only global base.
+    { "action": "external_directory", "resource": "*", "effect": "ask" },
+    { "action": "external_directory", "resource": "/opt/local-ai-base/*", "effect": "allow" },
+    { "action": "edit", "resource": "/opt/local-ai-base/*", "effect": "deny" },
+    { "action": "edit", "resource": "/etc/opencode/*", "effect": "deny" },
+
+    // No web, no Code Mode, no built-in session or worktree tools.
+    { "action": "webfetch", "resource": "*", "effect": "deny" },
+    { "action": "websearch", "resource": "*", "effect": "deny" },
+    { "action": "execute", "resource": "*", "effect": "deny" },
+    { "action": "opencode_*", "resource": "*", "effect": "deny" },
+
+    // Shell: ask by default, then a short allowlist of checks and read-only commands.
+    { "action": "shell", "resource": "*", "effect": "ask" },
+    { "action": "shell", "resource": "npm run *", "effect": "allow" },
+    { "action": "shell", "resource": "npx --no *", "effect": "allow" },
+    { "action": "shell", "resource": "node /opt/local-ai-base/tools/*", "effect": "allow" },
+    { "action": "shell", "resource": "git status *", "effect": "allow" },
+    { "action": "shell", "resource": "git diff *", "effect": "allow" },
+    { "action": "shell", "resource": "git log *", "effect": "allow" },
+    { "action": "shell", "resource": "git show *", "effect": "allow" },
+    { "action": "shell", "resource": "ls *", "effect": "allow" },
+    { "action": "shell", "resource": "wc *", "effect": "allow" },
+
+    // Package changes always ask, even when a rule above would allow them.
+    { "action": "shell", "resource": "npm install *", "effect": "ask" },
+    { "action": "shell", "resource": "npm ci *", "effect": "ask" },
+    { "action": "shell", "resource": "npm update *", "effect": "ask" },
+    { "action": "shell", "resource": "npm uninstall *", "effect": "ask" },
+    { "action": "shell", "resource": "npx *", "effect": "ask" },
+    { "action": "shell", "resource": "npx --no *", "effect": "allow" }
+  ],
+
+  // Hard denies: stronger than agent rules and than "allow always" answers.
+  "policies": [
+    { "action": "tool.use", "resource": "webfetch:*", "effect": "deny" },
+    { "action": "tool.use", "resource": "websearch:*", "effect": "deny" },
+
+    { "action": "tool.use", "resource": "shell:curl *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:wget *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git push *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git clone *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git fetch *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git pull *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git remote *", "effect": "deny" },
+
+    { "action": "tool.use", "resource": "shell:git checkout -b *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git switch -c *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git switch --create *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git branch *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git worktree *", "effect": "deny" },
+
+    { "action": "tool.use", "resource": "shell:rm -rf *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:rm -fr *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git reset --hard *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git clean *", "effect": "deny" },
+
+    // Heavy files: never read raw; the parse tools read them.
+    { "action": "tool.use", "resource": "read:*.xd", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.pdf", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.docx", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.xlsx", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.pptx", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.png", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.jpg", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.jpeg", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.zip", "effect": "deny" }
+  ],
+
+  // Built-in agents that invite parallel work are switched off (decision 0018).
+  "agents": {
+    "general": { "disabled": true },
+    "explore": { "disabled": true }
+  }
+}
