@@ -9,7 +9,9 @@
       "DOTNET_VERSION": "10.0",
       "NODE_VERSION": "24",
       // The npm package of the coding assistant, with its version: "<package>@<version>".
-      "ASSISTANT_PACKAGE": ""
+      "ASSISTANT_PACKAGE": "",
+      // "false" when apt packages cannot be installed: no PDF text extraction and no OCR then.
+      "EXTRACT_TOOLS": "true"
     }
   },
   "remoteUser": "app",
@@ -18,7 +20,8 @@
     4200
   ],
   // Once, after creation: fail early when a check tool is missing from the image.
-  "onCreateCommand": "hadolint --version && kubeconform -v && kube-linter version && helm version",
+  // PDF and OCR tools are optional: only a message when they are missing.
+  "onCreateCommand": "hadolint --version && kubeconform -v && kube-linter version && helm version && { command -v pdftotext && command -v tesseract || echo 'No PDF or OCR tools: EXTRACT_TOOLS is false.'; }",
   // Restore before any check: the tool waits for this command.
   "updateContentCommand": {
     "dotnet": "dotnet restore && dotnet tool restore",

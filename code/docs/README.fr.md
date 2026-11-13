@@ -107,6 +107,9 @@ anglais.
   fois dans `tools/` les binaires Linux de hadolint, kubeconform, kube-linter et helm, et dans
   `kubernetes-schemas/` les schémas JSON de la version du cluster ; donner le paquet npm de
   l'assistant dans `ASSISTANT_PACKAGE`.
+- L'image installe aussi Poppler (`pdftotext`) et Tesseract (OCR en anglais et en français) pour
+  lire les PDF et les images. Si le poste ne peut pas installer de paquets `apt`, mettre
+  `EXTRACT_TOOLS` à `"false"` dans `devcontainer.json`.
 - Ce qu'utilise le cluster de l'équipe (version, Ingress ou Gateway API, Helm ou Kustomize, dossier
   des schémas) s'écrit dans l'`AGENTS.md` du projet, pas dans la base.
 
@@ -144,14 +147,20 @@ anglais.
   `node import.ts`. Le script vérifie chaque partie, dit laquelle a été abîmée par le collage, et
   n'écrit rien tant qu'elles ne sont pas toutes justes.
 - `node import.ts --project` n'écrit que ce qu'il faut à la racine d'un projet : `AGENTS.md`,
-  `.agents/`, `docs/`, `templates/` et `scripts/check-base.ts`.
+  `.agents/`, `docs/`, `templates/`, les scripts de contrôle et les adaptateurs d'OpenCode.
+- `--opencode 2` (ou `1` pour OpenCode 1.x) écrit en plus `opencode.json` à la racine : la lecture
+  directe des fichiers lourds y est refusée, et les trois agents y sont déclarés.
+- `node scripts/export.ts --trial` ajoute à l'export le matériel des essais sur le poste :
+  `trials.md`, les guides d'essai, les projets exemples et le jeu d'évaluation.
 - L'export produit aussi la version pour le chat : chaque skill sans ses étapes qui lancent des
   commandes, et les documents de chaque sujet, sans les résumés en français.
 
 ## Dans le dépôt de la base, en plus
 
 - `chat/` : le profil pour une interface de chat sans accès aux fichiers. Les consignes de base des
-  modèles de chat sont dans `chat/models/` ; le reste sera produit par l'export.
+  modèles de chat sont dans `chat/models/` ; le reste est produit par l'export.
+- `trials.md` : la séance d'essais sur le poste, dans l'ordre, avec les faits à relever d'abord
+  (versions d'OpenCode et d'Open WebUI, fenêtre de contexte, appel d'outils).
 - `chat/models/commit-assistant.md` : un assistant de commits pour les personnes qui ne sont pas
   développeurs. Il propose le message de commit, explique le type choisi, et refuse tout autre
   sujet en une phrase.
@@ -159,6 +168,13 @@ anglais.
   conteneurs et Kubernetes, simulation et naval. Chacun cherche d'abord dans sa base documentaire
   et cite les documents utilisés sur une ligne `Sources:`.
 - `adapters/` : ce qu'un logiciel précis exige en plus. Facultatif : la base marche sans.
+- `adapters/opencode/v1/` et `v2/` : la configuration d'OpenCode pour ses versions 1.x et 2.x.
+  Elle refuse la lecture directe des fichiers lourds et déclare les agents `architecture-review`,
+  `code-review` et `explain-equipment`, qui ne modifient aucun fichier.
+- `adapters/mcp/docs-server.ts` : un serveur de documentation en un seul fichier, sans paquet, à
+  l'essai. Il cherche dans les index (`search_docs`) et rend une seule section d'un document
+  (`read_doc`). Il est coupé par défaut ; on ne le garde que s'il fait au moins aussi bien que les
+  fichiers seuls, sans plus de tokens.
 - `scripts/check-public.ts` : avant de rendre le dépôt public, il vérifie qu'il ne contient que la
   base (ni `spec/`, ni rapport de recherche) et aucun terme d'une liste privée, dans les fichiers
   comme dans l'historique ; la liste reste hors du dépôt.

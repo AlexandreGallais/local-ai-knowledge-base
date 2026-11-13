@@ -67,7 +67,9 @@ Sources: [S1] [S2].
 }
 ```
 
-The coding assistant and the check tools are installed in the image of `.devcontainer/Dockerfile`; the full template is `templates/containers/devcontainer.json`.
+The coding assistant and the check tools are installed in the image of `.devcontainer/Dockerfile`; the full template is the folder `templates/containers/devcontainer/`.
+
+The template also installs Poppler (`pdftotext`) and Tesseract (`tesseract`, English and French) for the skill `read-heavy-file`. Set the build argument `EXTRACT_TOOLS` to `"false"` when apt packages cannot be installed; then PDF text and OCR are not available.
 
 ## Sources
 

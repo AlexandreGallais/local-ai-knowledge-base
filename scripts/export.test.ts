@@ -26,6 +26,7 @@ import {
   chatSkill,
   exportBase,
   openWebUiManifest,
+  trialFiles,
 } from './export.ts';
 
 const NEWLINE = '\n';
@@ -218,6 +219,80 @@ describe('export and import', () => {
     assert.ok(existsSync(join(target, '.agents/skills/do-thing/SKILL.md')));
     assert.ok(existsSync(join(target, 'scripts/check-base.ts')));
     assert.ok(!existsSync(join(target, 'chat')));
+  });
+  it('writes opencode.json at the root of a project with --opencode, and takes the adapters', () => {
+    const adapter = readFileSync(join(WORK, 'adapters/opencode/v2/opencode.json'), 'utf8');
+    const target = mkdtempSync(join(tmpdir(), 'import-'));
+    const root = testBase({
+      'adapters/opencode/v2/opencode.json': adapter,
+      'adapters/mcp/docs-server.ts': 'export {};\n',
+    });
+
+    importBase(exportBase(root), target, {
+      project: true,
+      force: false,
+      opencode: '2',
+    });
+    assert.equal(readFileSync(join(target, 'opencode.json'), 'utf8'), adapter);
+    assert.ok(existsSync(join(target, 'adapters/mcp/docs-server.ts')));
+    assert.ok(!existsSync(join(target, 'adapters/open-webui')));
+    assert.throws(() => importBase(exportBase(root), mkdtempSync(join(tmpdir(), 'import-')), {
+      project: true,
+      force: false,
+      opencode: '3',
+    }), /--opencode takes 1 or 2/);
+  });
+});
+describe('trial export', () => {
+  it('adds the trial guides, samples and evaluation that Git tracks, and nothing else', () => {
+    const root = testBase({
+      'trials.md': '# Trials\n',
+      'f3-base/trial.md': '# F3 trial\n',
+      'f3-base/notes.md': 'Not a trial guide.\n',
+      'samples/demo/app.ts': 'export {};\n',
+      'samples/demo/bin/out.txt': 'build output\n',
+      'evaluation/README.md': '# Evaluation\n',
+    });
+
+    spawnSync(
+      'git',
+      [
+        'init',
+        '--quiet',
+      ],
+      { cwd: root },
+    );
+    spawnSync(
+      'git',
+      [
+        'add',
+        '--',
+        'trials.md',
+        'f3-base/trial.md',
+        'f3-base/notes.md',
+        'samples/demo/app.ts',
+        'evaluation/README.md',
+      ],
+      { cwd: root },
+    );
+    assert.deepEqual(
+      trialFiles(root)
+        .map((file) => file.path)
+        .toSorted(),
+      [
+        'evaluation/README.md',
+        'f3-base/trial.md',
+        'samples/demo/app.ts',
+        'trials.md',
+      ],
+    );
+    const target = mkdtempSync(join(tmpdir(), 'import-'));
+
+    importBase(exportBase(root, 500, true), target, {
+      project: false,
+      force: false,
+    });
+    assert.equal(readFileSync(join(target, 'f3-base/trial.md'), 'utf8'), '# F3 trial\n');
   });
 });
 describe('import refusals', () => {

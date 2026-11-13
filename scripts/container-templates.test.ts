@@ -1,7 +1,15 @@
 // Tests of the container templates of the base: the dev container declares its image, its check
 // tools and its creation commands; the image templates keep the rules of docs/containers/.
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import {
+  chmodSync,
+  existsSync,
+  mkdtempSync,
+  readFileSync,
+  writeFileSync,
+} from 'node:fs';
+import { tmpdir } from 'node:os';
 import {
   dirname,
   join,
@@ -29,6 +37,7 @@ interface DevContainer {
   build?: {
     dockerfile?: string;
     context?: string;
+    args?: Record<string, string>;
   };
   remoteUser?: string;
   onCreateCommand?: string;
@@ -37,6 +46,46 @@ interface DevContainer {
 
 function devContainer(): DevContainer {
   return parseJsonc(read('devcontainer/devcontainer.json')) as DevContainer;
+}
+
+// The shell command of the RUN instruction guarded by EXTRACT_TOOLS.
+function extractToolsBlock(dockerfile: string): string {
+  const start = dockerfile.indexOf('RUN if [ "$EXTRACT_TOOLS"');
+  const end = dockerfile.indexOf('\n    fi', start) + '\n    fi'.length;
+
+  return dockerfile
+    .slice(start + 'RUN '.length, end)
+    .replaceAll('\\\n', ' ');
+}
+
+// Runs the command with apt-get and rm replaced by stubs that only log their arguments.
+function runWithStubs(command: string, extractTools: string): string {
+  const stubs = mkdtempSync(join(tmpdir(), 'stubs-'));
+  const log = join(stubs, 'calls.log');
+
+  for (const name of [
+    'apt-get',
+    'rm',
+  ]) {
+    writeFileSync(join(stubs, name), `#!/bin/sh\necho "${name} $*" >> "${log}"\n`);
+    chmodSync(join(stubs, name), 0o755);
+  }
+  const result = spawnSync(
+    'sh',
+    [
+      '-c',
+      command,
+    ],
+    {
+      env: {
+        PATH: `${stubs}:/usr/bin:/bin`,
+        EXTRACT_TOOLS: extractTools,
+      },
+    },
+  );
+
+  assert.equal(result.status, 0);
+  return existsSync(log) ? readFileSync(log, 'utf8') : '';
 }
 
 describe('JSON with comments', () => {
@@ -73,6 +122,15 @@ describe('dev container template', () => {
     assert.match(dockerfile, /npm install --global "\$ASSISTANT_PACKAGE"/);
     assert.match(dockerfile, /^USER app$/m);
     assert.equal(devContainer().remoteUser, 'app');
+  });
+  it('installs Poppler and Tesseract in English and French, unless EXTRACT_TOOLS is false', () => {
+    const block = extractToolsBlock(read('devcontainer/Dockerfile'));
+    const installed = runWithStubs(block, 'true');
+
+    assert.match(read('devcontainer/Dockerfile'), /^ARG EXTRACT_TOOLS=true$/m);
+    assert.match(installed, /^apt-get install --yes --no-install-recommends poppler-utils tesseract-ocr tesseract-ocr-eng tesseract-ocr-fra$/m);
+    assert.equal(runWithStubs(block, 'false'), '');
+    assert.equal(devContainer().build?.args?.EXTRACT_TOOLS, 'true');
   });
   it('restores the .NET and npm dependencies in updateContentCommand', () => {
     const commands = Object

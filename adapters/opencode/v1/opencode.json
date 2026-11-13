@@ -1,0 +1,101 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "read": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.docx": "deny",
+      "*.docm": "deny",
+      "*.xlsx": "deny",
+      "*.xlsm": "deny",
+      "*.pptx": "deny",
+      "*.pptm": "deny",
+      "*.doc": "deny",
+      "*.xls": "deny",
+      "*.ppt": "deny",
+      "*.odt": "deny",
+      "*.ods": "deny",
+      "*.odp": "deny",
+      "*.rtf": "deny",
+      "*.pdf": "deny",
+      "*.png": "deny",
+      "*.jpg": "deny",
+      "*.jpeg": "deny",
+      "*.gif": "deny",
+      "*.webp": "deny",
+      "*.tif": "deny",
+      "*.tiff": "deny",
+      "*.bmp": "deny",
+      "*.heic": "deny",
+      "*.psd": "deny",
+      "*.ai": "deny",
+      "*.eps": "deny",
+      "*.emf": "deny",
+      "*.wmf": "deny",
+      "*.xd": "deny",
+      "*.sketch": "deny",
+      "*.fig": "deny",
+      "*.vsdx": "deny",
+      "*.drawio": "deny",
+      "*.ipynb": "deny",
+      "*.zip": "deny",
+      "*.7z": "deny",
+      "*.tar": "deny",
+      "*.gz": "deny",
+      "*.tgz": "deny",
+      "*.jar": "deny",
+      "*.war": "deny",
+      "*.nupkg": "deny",
+      "*.sqlite": "deny",
+      "*.db": "deny",
+      "*.msg": "deny",
+      "*.eml": "deny",
+      "*.dwg": "deny",
+      "*.dxf": "deny",
+      "*.dll": "deny",
+      "*.exe": "deny",
+      "*.so": "deny",
+      "*.wasm": "deny",
+      "*.class": "deny",
+      "*.bin": "deny"
+    },
+    "bash": {
+      "cat *.xd*": "deny",
+      "cat *.pdf*": "deny",
+      "cat *.docx*": "deny",
+      "cat *.xlsx*": "deny",
+      "cat *.pptx*": "deny",
+      "cat *.zip*": "deny"
+    }
+  },
+  "agent": {
+    "architecture-review": {
+      "description": "Reviews the architecture of a .NET and Angular application: structure, API contract, real-time design, library choices. Reads only, changes no file.",
+      "mode": "subagent",
+      "prompt": "Load the skill `architecture-review` with the skill tool. Follow it exactly. Follow the rules of AGENTS.md. Answer in the language of the user's question.",
+      "permission": { "edit": "deny" }
+    },
+    "code-review": {
+      "description": "Reviews a code change in C#, TypeScript or Angular against the checklist of the base. Reads only, changes no file.",
+      "mode": "subagent",
+      "prompt": "Load the skill `code-review` with the skill tool. Follow it exactly. Follow the rules of AGENTS.md. Answer in the language of the user's question.",
+      "permission": { "edit": "deny" }
+    },
+    "explain-equipment": {
+      "description": "Explains a piece of ship equipment: its real working first, then its simulation model and its property names. Reads only, changes no file.",
+      "mode": "subagent",
+      "prompt": "Load the skill `explain-equipment` with the skill tool. Follow it exactly. Follow the rules of AGENTS.md. Answer in the language of the user's question.",
+      "permission": { "edit": "deny" }
+    }
+  },
+  "mcp": {
+    "docs": {
+      "type": "local",
+      "command": [
+        "node",
+        "adapters/mcp/docs-server.ts"
+      ],
+      "enabled": false
+    }
+  }
+}

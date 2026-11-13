@@ -5,6 +5,9 @@
 //   node scripts/export.ts                   writes export/base-<n>.txt and export/import.ts
 //   node scripts/export.ts --max-kb 100      parts of 100 KB at most
 //   node scripts/export.ts --chat <folder>   writes only the generated chat profile into <folder>
+//   node scripts/export.ts --trial           adds what the trials on the workstation need: trials.md,
+//                                            the trial guides, samples/, evaluation/ and their scripts
+import { spawnSync } from 'node:child_process';
 import {
   copyFileSync,
   existsSync,
@@ -46,6 +49,15 @@ const TREE_FOLDERS = [
   'code',
   'chat/models',
   'adapters',
+];
+// Trial material: taken from the files Git tracks, so that build outputs and copies stay out.
+const TRIAL_PATHS = [
+  'trials.md',
+  'samples',
+  'evaluation',
+  'scripts/fixtures.ts',
+  'scripts/evaluation-summary.ts',
+  ':(glob)f*/trial.md',
 ];
 const SKIPPED = new Set([
   '.DS_Store',
@@ -402,11 +414,41 @@ export function buildExport(files: ExportedFile[], maxKb = DEFAULT_MAX_KB): Part
   });
 }
 
-export function exportBase(root: string, maxKb = DEFAULT_MAX_KB): Part[] {
+export function trialFiles(root: string): ExportedFile[] {
+  const listed = spawnSync(
+    'git',
+    [
+      'ls-files',
+      '-z',
+      '--',
+      ...TRIAL_PATHS,
+    ],
+    {
+      cwd: root,
+      encoding: 'utf8',
+    },
+  );
+
+  if (listed.status !== 0) {
+    throw new Error('--trial reads the files Git tracks: run the export from a clone of the repository.');
+  }
+  return listed.stdout
+    .split('\0')
+    .filter((path) => path !== '')
+    .map((path) => {
+      return {
+        path,
+        content: read(root, path),
+      };
+    });
+}
+
+export function exportBase(root: string, maxKb = DEFAULT_MAX_KB, trial = false): Part[] {
   return buildExport(
     [
       ...baseFiles(root),
       ...chatProfile(root),
+      ...trial ? trialFiles(root) : [],
     ],
     maxKb,
   );
@@ -420,8 +462,8 @@ function writeChat(root: string, target: string): void {
   console.log(`Chat profile written to ${target}.`);
 }
 
-function writeExport(root: string, out: string, maxKb: number): void {
-  const parts = exportBase(root, maxKb);
+function writeExport(root: string, out: string, maxKb: number, trial: boolean): void {
+  const parts = exportBase(root, maxKb, trial);
 
   mkdirSync(out, { recursive: true });
   for (const name of readdirSync(out).filter((entry) => PART_PATTERN.test(entry))) {
@@ -440,6 +482,7 @@ function main(): void {
       'max-kb': { type: 'string' },
       'out': { type: 'string' },
       'chat': { type: 'string' },
+      'trial': { type: 'boolean' },
     },
   });
   const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -454,7 +497,7 @@ function main(): void {
     writeChat(root, resolve(values.chat));
     return;
   }
-  writeExport(root, resolve(values.out ?? join(root, 'export')), maxKb);
+  writeExport(root, resolve(values.out ?? join(root, 'export')), maxKb, values.trial === true);
 }
 
 if (process.argv[1] !== undefined && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url))) {

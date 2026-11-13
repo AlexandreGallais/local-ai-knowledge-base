@@ -4,8 +4,10 @@
 //   node import.ts --from <folder>    reads the export files from <folder>
 //   node import.ts --to <folder>      writes the base into <folder>
 //   node import.ts --project          writes only what a project needs: AGENTS.md, .agents/, docs/,
-//                                     templates/ at the root, and scripts/check-base.ts and
-//                                     scripts/check-versions.ts
+//                                     templates/ at the root, scripts/check-base.ts,
+//                                     scripts/check-versions.ts, adapters/opencode/ and adapters/mcp/
+//   node import.ts --opencode 2       also writes opencode.json at the root, from
+//                                     adapters/opencode/v2/ (1 for OpenCode 1.x)
 //   node import.ts --force            replaces files that already exist and differ
 // It checks every part and every file with its SHA-256 checksum, and writes nothing if one fails.
 import { createHash } from 'node:crypto';
@@ -58,7 +60,13 @@ const PROJECT_FOLDERS = [
   'code/',
   'scripts/check-base.ts',
   'scripts/check-versions.ts',
+  'adapters/opencode/',
+  'adapters/mcp/',
 ];
+const OPENCODE_VERSIONS = new Set([
+  '1',
+  '2',
+]);
 const NEWLINE = '\n';
 
 export class ImportError extends Error {}
@@ -238,6 +246,29 @@ export function writeFiles(files: ExportedFile[], target: string, force: boolean
   return files.map((file) => file.path);
 }
 
+// Adds opencode.json at the root, copied from the adapter of the given major version of OpenCode.
+export function withOpenCode(files: ExportedFile[], version?: string): ExportedFile[] {
+  if (version === undefined) {
+    return files;
+  }
+  if (!OPENCODE_VERSIONS.has(version)) {
+    throw new ImportError(`--opencode takes 1 or 2, the major version of OpenCode, not "${version}".`);
+  }
+  const adapter = `adapters/opencode/v${version}/opencode.json`;
+  const source = files.find((file) => file.path.split(sep).join('/') === adapter);
+
+  if (source === undefined) {
+    throw new ImportError(`${adapter} is not in the export.`);
+  }
+  return [
+    ...files,
+    {
+      path: 'opencode.json',
+      content: source.content,
+    },
+  ];
+}
+
 export function readParts(folder: string): Part[] {
   return readdirSync(folder)
     .filter((name) => PART_PATTERN.test(name))
@@ -255,11 +286,13 @@ export function importBase(
   options: {
     project: boolean;
     force: boolean;
+    opencode?: string;
   },
 ): string[] {
   const files = assemble(parts.map((part) => parsePart(part.text, part.name)));
+  const chosen = options.project ? forProject(files) : files;
 
-  return writeFiles(options.project ? forProject(files) : files, target, options.force);
+  return writeFiles(withOpenCode(chosen, options.opencode), target, options.force);
 }
 
 function main(): void {
@@ -269,6 +302,7 @@ function main(): void {
       to: { type: 'string' },
       project: { type: 'boolean' },
       force: { type: 'boolean' },
+      opencode: { type: 'string' },
     },
   });
 
@@ -276,6 +310,7 @@ function main(): void {
     const written = importBase(readParts(resolve(values.from ?? '.')), resolve(values.to ?? '.'), {
       project: values.project === true,
       force: values.force === true,
+      ...values.opencode === undefined ? {} : { opencode: values.opencode },
     });
 
     process.stdout.write(`Import done: ${written.length} files written.\n`);

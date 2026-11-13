@@ -968,6 +968,157 @@ export function checkHeavyFiles(
   });
 }
 
+export interface AdapterContext {
+  // The heavy file extensions of AGENTS.md, or undefined when it lists none.
+  heavy?: string[];
+  skillNames: string[];
+  // Whether a path, relative to the root that holds adapters/, exists.
+  exists: (path: string) => boolean;
+}
+
+type JsonObject = Record<string, unknown>;
+
+function isObject(value: unknown): value is JsonObject {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function denyRule(value: unknown, action: string): string | undefined {
+  if (!isObject(value) || value.action !== action || value.effect !== 'deny' || typeof value.resource !== 'string') {
+    return undefined;
+  }
+  return value.resource;
+}
+
+function readDenied(config: JsonObject): string[] {
+  const resources = Array.isArray(config.permissions) ? config.permissions.map((rule) => denyRule(rule, 'read')) : Object
+    .entries(isObject(config.permission) && isObject(config.permission.read) ? config.permission.read : {})
+    .map(([
+      pattern,
+      effect,
+    ]) => effect === 'deny' ? pattern : undefined);
+
+  return resources
+    .filter((resource): resource is string => resource !== undefined && resource !== '*.env')
+    .map((resource) => resource.replace(/^\*/, '').toLowerCase());
+}
+
+function agentDeniesEdit(agent: JsonObject): boolean {
+  if (Array.isArray(agent.permissions)) {
+    return agent.permissions.some((rule) => denyRule(rule, 'edit') === '*');
+  }
+  return isObject(agent.permission) && agent.permission.edit === 'deny';
+}
+
+function checkAdapterAgent(name: string, agent: unknown, file: string, context: AdapterContext): Finding[] {
+  if (!isObject(agent)) {
+    return [finding(file, `agent "${name}" is not an object`)];
+  }
+  const findings: Finding[] = [];
+  const prompt = typeof agent.system === 'string' ? agent.system : agent.prompt;
+  const description = typeof agent.description === 'string' ? agent.description : '';
+
+  if (!context.skillNames.includes(name)) {
+    findings.push(finding(file, `agent "${name}" has no skill .agents/skills/${name}/`));
+  }
+  if (typeof prompt !== 'string' || !prompt.includes(`\`${name}\``)) {
+    findings.push(finding(file, `agent "${name}" does not load its skill \`${name}\``));
+  }
+  if (/changes no file/i.test(description) && !agentDeniesEdit(agent)) {
+    findings.push(finding(file, `agent "${name}" says it changes no file, but edit is not denied`));
+  }
+  return findings;
+}
+
+function mcpServers(config: JsonObject): JsonObject {
+  if (!isObject(config.mcp)) {
+    return {};
+  }
+  return isObject(config.mcp.servers) ? config.mcp.servers : config.mcp;
+}
+
+function checkAdapterServers(config: JsonObject, file: string, context: AdapterContext): Finding[] {
+  return Object
+    .entries(mcpServers(config))
+    .flatMap(([
+      name,
+      server,
+    ]) => {
+      const command = isObject(server) && Array.isArray(server.command) ? server.command : [];
+
+      return command
+        .filter((part): part is string => typeof part === 'string' && part.endsWith('.ts'))
+        .filter((path) => !context.exists(path))
+        .map((path) => finding(file, `MCP server "${name}" runs a missing file: ${path}`));
+    });
+}
+
+// Agents are under "agents" in V2 and under "agent" in V1.
+function adapterAgents(config: JsonObject): JsonObject {
+  if (isObject(config.agents)) {
+    return config.agents;
+  }
+  return isObject(config.agent) ? config.agent : {};
+}
+
+export function checkOpenCodeAdapter(text: string, file: string, context: AdapterContext): Finding[] {
+  let config: unknown;
+
+  try {
+    config = JSON.parse(text);
+  } catch (error) {
+    return [finding(file, `invalid JSON: ${(error as Error).message}`)];
+  }
+  if (!isObject(config)) {
+    return [finding(file, 'the configuration is not a JSON object')];
+  }
+  if (!Array.isArray(config.permissions) && !isObject(config.permission)) {
+    return [finding(file, 'no read permissions: "permissions" (V2) or "permission" (V1)')];
+  }
+  const findings: Finding[] = [];
+  const denied = readDenied(config);
+
+  if (context.heavy !== undefined) {
+    const onlyHere = differences(denied, context.heavy);
+    const onlyInAgents = differences(context.heavy, denied);
+
+    if (onlyHere !== '' || onlyInAgents !== '') {
+      findings.push(finding(file, `denied reads differ from the heavy files of AGENTS.md: only here: ${onlyHere || 'none'}; only in AGENTS.md: ${onlyInAgents || 'none'}`));
+    }
+  }
+  const agents = adapterAgents(config);
+
+  return [
+    ...findings,
+    ...Object
+      .entries(agents)
+      .flatMap(([
+        name,
+        agent,
+      ]) => checkAdapterAgent(name, agent, file, context)),
+    ...checkAdapterServers(config, file, context),
+  ];
+}
+
+function checkOpenCodeAdapters(adaptersFolder: string, context: AdapterContext): BaseResult {
+  const folder = join(adaptersFolder, 'opencode');
+  const paths = subfolders(folder)
+    .map((version) => join(folder, version, 'opencode.json'))
+    .filter((path) => existsSync(path));
+
+  return checkFolder(paths, (text, file) => checkOpenCodeAdapter(text, file, context));
+}
+
+// The adapters sit next to code/ in this repository, at the root in a project.
+function checkAdaptersOf(base: string, agentsText: string, skillNames: string[]): BaseResult {
+  const root = basename(base) === 'code' ? dirname(base) : base;
+
+  return checkOpenCodeAdapters(join(root, 'adapters'), {
+    heavy: agentsHeavyExtensions(agentsText),
+    skillNames,
+    exists: (path) => existsSync(join(root, path)),
+  });
+}
+
 function checkFrenchFile(path: string, docsFolder: string): Finding[] {
   const depth = relative(docsFolder, path).split(/[\\/]/).length;
   const findings: Finding[] = [];
@@ -1396,6 +1547,7 @@ export function checkBase(base: string, chatModels?: string): BaseResult {
   ];
 
   return merge([
+    checkAdaptersOf(base, agentsText, skillNames),
     ...skillNames.map((name) => checkOneSkill(skillsFolder, name)),
     docs,
     checkSynopticNames(base),

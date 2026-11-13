@@ -57,8 +57,8 @@ OCR text has errors: say so in the answer, and quote it as found.
 
 ## 5. Pitfalls (PDF and images)
 
-- `pdftotext: command not found`: Poppler is not installed. Tell the user. Never read the PDF raw.
-- `tesseract: command not found`: OCR is not available. Tell the user. Never guess the text.
+- `pdftotext: command not found`: Poppler is not installed. Tell the user: the dev container of the base installs it when its build argument `EXTRACT_TOOLS` is `"true"`. Never read the PDF raw.
+- `tesseract: command not found`: OCR is not available, for the same reason. Tell the user. Never guess the text.
 - `Error opening data file ... fra.traineddata`: the French language data is missing. Use `-l eng`.
 - A PDF protected by a password: ask the user for a copy without a password.
 

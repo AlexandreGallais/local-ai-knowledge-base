@@ -27,5 +27,16 @@ ARG ASSISTANT_PACKAGE=""
 # hadolint ignore=DL3016
 RUN if [ -n "$ASSISTANT_PACKAGE" ]; then npm install --global "$ASSISTANT_PACKAGE"; fi
 
+# Tools of the skill read-heavy-file: Poppler for PDF files, Tesseract for OCR in English and
+# French. Set EXTRACT_TOOLS to false in devcontainer.json when apt packages cannot be installed.
+ARG EXTRACT_TOOLS=true
+# hadolint ignore=DL3008
+RUN if [ "$EXTRACT_TOOLS" = "true" ]; then \
+      apt-get update \
+      && apt-get install --yes --no-install-recommends \
+        poppler-utils tesseract-ocr tesseract-ocr-eng tesseract-ocr-fra \
+      && rm -rf /var/lib/apt/lists/*; \
+    fi
+
 # Non-root user of the .NET images (UID 1654).
 USER app
