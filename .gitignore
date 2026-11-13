@@ -12,6 +12,9 @@ target/
 export/
 state.local.json
 
+# Measures of an evaluation on the workstation
+evaluation/results.csv
+
 # Local secrets
 .env
 .env.*

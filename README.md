@@ -74,6 +74,9 @@ scripts/
   check-base.ts              The base check, copied with the base into a project
   fixtures.ts                Fake sample files for the tests, never copied into a project
   export.ts                  Builds the export and generates the chat profile
+  check-public.ts            Checks that this repository can be made public
+  evaluation-summary.ts      Sums up an evaluation with and without the base
+evaluation/                  The task set and protocol of the evaluation
 import.ts                    Rebuilds the base from its export, one file, no package
 ```
 

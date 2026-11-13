@@ -159,6 +159,11 @@ anglais.
   conteneurs et Kubernetes, simulation et naval. Chacun cherche d'abord dans sa base documentaire
   et cite les documents utilisés sur une ligne `Sources:`.
 - `adapters/` : ce qu'un logiciel précis exige en plus. Facultatif : la base marche sans.
+- `scripts/check-public.ts` : avant de rendre le dépôt public, il vérifie qu'il ne contient que la
+  base (ni `spec/`, ni rapport de recherche) et aucun terme d'une liste privée, dans les fichiers
+  comme dans l'historique ; la liste reste hors du dépôt.
+- `evaluation/` : le jeu de tâches et le protocole pour mesurer si l'IA réussit mieux avec la base
+  que sans, sans plus de tokens ; `scripts/evaluation-summary.ts` en fait le bilan.
 - `adapters/open-webui/push.ts` : sur le poste, après l'import, il crée ou met à jour dans Open WebUI
   les bases documentaires, les skills et les cinq modèles, lisibles par le groupe de l'équipe, sans
   aucun clic. L'adresse, le jeton, le modèle de base et le groupe se lisent dans l'environnement ;
