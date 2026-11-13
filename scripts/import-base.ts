@@ -4,6 +4,7 @@
 // Default: the parts next to this file, the base in ~/.local/share/local-ai-base.
 // Every part is checked before anything is written. A damaged or missing part is named, and
 // nothing is written. The previous base is replaced as a whole.
+import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
   existsSync,
@@ -257,6 +258,27 @@ function option(name: string): string | undefined {
   return position > 0 ? process.argv[position + 1] : undefined;
 }
 
+// The search index is built on the machine, from the installed documents: it never travels.
+function buildSearchIndex(target: string): void {
+  const script = join(target, 'tools', 'build-index.ts');
+
+  if (!existsSync(script)) {
+    return;
+  }
+  try {
+    process.stdout.write(execFileSync(
+      process.execPath,
+      [
+        script,
+        target,
+      ],
+      { encoding: 'utf8' },
+    ));
+  } catch (error) {
+    console.error(`The base is installed, but its search index was not built: ${(error as Error).message}`);
+  }
+}
+
 function main(): void {
   const from = resolve(option('from') ?? dirname(fileURLToPath(import.meta.url)));
   const target = resolve(option('target') ?? join(homedir(), '.local', 'share', 'local-ai-base'));
@@ -266,6 +288,7 @@ function main(): void {
 
     installBase(files, target);
     console.log(`Global base installed: ${files.length} files in ${target}.`);
+    buildSearchIndex(target);
     if (process.argv.includes('--machine')) {
       console.log(`Mount written: ${writeMachineConfig(target)}. Recreate your dev containers.`);
     }

@@ -58,7 +58,8 @@ const PACKS = [
     folder: 'project',
   },
 ];
-const IGNORED = /(?:^|\/)(?:node_modules|\.DS_Store)(?:\/|$)/;
+// Never exported: dependencies, system files, and the search index, built on each machine.
+const IGNORED = /(?:^|\/)(?:node_modules|\.DS_Store)(?:\/|$)|^index\//;
 
 // "500k" is 500,000 bytes and "1m" 1,000,000: decimal units, so a part never exceeds its label.
 export function sizeInBytes(size: string): number {
