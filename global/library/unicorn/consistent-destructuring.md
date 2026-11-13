@@ -1,0 +1,82 @@
+---
+title: "consistent-destructuring"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/consistent-destructuring.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# consistent-destructuring
+
+📝 Use destructured variables over properties.
+
+🚫 Disabled by default.
+
+💡 This rule is manually fixable by editor suggestions.
+
+Enforces the use of already destructured variables over accessing the same direct, non-computed identifier property again. Previous destructurings are easily missed which leads to an inconsistent code style.
+
+This rule is partly fixable. It does not suggest adding new properties to existing destructuring patterns, as that could read properties earlier than before.
+
+There is no option to ignore specific sources or properties. Properties without a corresponding destructured variable are ignored by design.
+
+## Examples
+
+```js
+// ❌
+const {a} = foo;
+console.log(foo.a);
+
+// ✅
+const {a} = foo;
+console.log(a);
+
+// ✅
+console.log(foo.a, foo.b);
+```
+
+```js
+// ✅
+const {a} = foo;
+console.log(a, foo.b);
+```
+
+```js
+// ✅
+const {
+	a: {b},
+} = foo;
+console.log(foo.a.c);
+```
+
+```js
+// ❌
+const {bar} = foo;
+const {a} = foo.bar;
+
+// ✅
+const {bar} = foo;
+const {a} = bar;
+```
+
+```js
+// ✅
+const {a} = foo;
+console.log(a, foo.b());
+```
+
+```js
+// ✅
+const {a} = foo.bar;
+console.log(foo.bar.a);
+```
+
+A destructured value is a snapshot. A direct call such as `update(foo)` or `foo.update()` between the destructuring and the property access could have changed the object, so that access is not reported. This is best-effort: a call in a nested function, a method call on `this`, and a call later in a loop body (which runs again before the next access) are not taken into account.
+
+```js
+// ✅
+const {a} = foo;
+update(foo);
+console.log(foo.a);
+```

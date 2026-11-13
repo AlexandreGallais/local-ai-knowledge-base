@@ -1,0 +1,85 @@
+---
+title: "no-array-splice"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-array-splice.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# no-array-splice
+
+📝 Prefer `Array#toSpliced()` over `Array#splice()`.
+
+💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+
+💡 This rule is manually fixable by editor suggestions.
+
+Prefer using `Array#toSpliced()` over `Array#splice()` when the return value of `splice()` is unused.
+
+`Array#splice()` modifies the original array and returns the removed elements, while `Array#toSpliced()` returns a changed copy and leaves the original array untouched.
+
+This rule only reports unused `splice()` calls when the receiver is a `let` or `var` variable initialized with a fresh array the scope owns: an array literal, `Array()`/`new Array()`, `Array.from()`, `Array.of()`, or an array-returning method (`.filter()`, `.flat()`, `.flatMap()`, `.map()`, `.toReversed()`, `.toSorted()`, `.toSpliced()`, `.with()`). TypeScript wrappers like `array!` and `array as string[]` are supported.
+
+It also skips arrays that _escape_ the scope (passed as an argument, aliased to another binding, returned, or stored in an array or object literal), since an outside reference could observe the in-place mutation.
+
+This rule ignores `splice()` patterns that have simpler mutating alternatives covered by `no-unnecessary-splice`, such as `array.splice(0, 1)` and `array.splice(array.length, 0, item)`.
+
+When TypeScript type annotations or type information show that the receiver is not an array, or that assigning a plain array back could be type-invalid, this rule does not report it. This includes tuples, type aliases, generic type parameters, and readonly array types. Complex inferred TypeScript types require type information to be skipped reliably.
+
+This rule is suggestion-only because assigning the `Array#toSpliced()` result changes alias behavior. Code that still references the original array object will observe different behavior after reassignment.
+
+## Examples
+
+```js
+// ❌
+let array = [1, 2, 3];
+array.splice(1, 1);
+
+// ✅
+array = array.toSpliced(1, 1);
+```
+
+```js
+// ❌
+let array = items.filter(isActive);
+array.splice(1, 1);
+
+// ✅
+let array = items.filter(isActive);
+array = array.toSpliced(1, 1);
+```
+
+```js
+// ✅
+const removed = array.splice(1, 1);
+```
+
+`toSpliced()` returns a dense array, while `splice()` keeps holes. A hole is normally invisible, so the suggestion is still offered for an array with holes, but the two are not identical then:
+
+```js
+let array = [1, 2, 3];
+array.length = 5;
+array.splice(1, 1);
+Object.hasOwn(array, 3); // false
+```
+
+```js
+let array = [1, 2, 3];
+array.length = 5;
+array = array.toSpliced(1, 1);
+Object.hasOwn(array, 3); // true
+```
+
+```js
+// ✅ — array comes from elsewhere and may be shared, so it must be mutated in place
+let structures = getStructures();
+structures.splice(index, 1);
+```
+
+```js
+// ✅ — array escapes, so an outside holder may rely on the in-place mutation
+let array = [];
+processItems(array);
+array.splice(1, 1);
+```

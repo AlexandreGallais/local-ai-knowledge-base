@@ -1,0 +1,110 @@
+---
+title: "no-non-function-verb-prefix"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-non-function-verb-prefix.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# no-non-function-verb-prefix
+
+📝 Disallow non-function values with function-style verb prefixes.
+
+💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+
+💭 This rule requires type information.
+
+Names that start with function-style verbs like `get`, `set`, or `create` imply that the value is callable or constructable. This rule reports JavaScript and TypeScript bindings where the name starts with a configured verb but the non-nullish type is not always callable or constructable.
+
+This rule requires type-aware linting, including for JavaScript files. Both inferred types and JSDoc annotations are supported. Without type information, it does nothing.
+
+Object-literal property names and type members are ignored; class fields are checked.
+
+Shorthand object destructuring is ignored, including shorthand with default values, because the name comes from the property. Explicitly renamed bindings are still checked.
+
+## Examples
+
+```js
+// ❌
+const getName = 'Sindre';
+
+// ✅
+const getName = () => 'Sindre';
+```
+
+```js
+// ❌
+const createPizza = new Pizza();
+
+// ✅
+const createPizza = () => new Pizza();
+```
+
+```ts
+declare const options: {setTitle: boolean; title: boolean};
+
+// ❌
+const {title: setTitle} = options;
+
+// ✅
+const {setTitle} = options;
+```
+
+```js
+// ✅
+const getter = 'name';
+const get_name = 'name';
+const GET_NAME = 'name';
+```
+
+## Options
+
+Type: `object`
+
+### verbs
+
+Type: `Array<string>`\
+Default: `['get', 'set', 'unset', 'delete', 'add', 'remove', 'destroy', 'create']`
+
+Function-style verb prefixes to check. Only camel-case names where the verb is followed by an uppercase letter are checked.
+
+```js
+/* eslint unicorn/no-non-function-verb-prefix: ["error", {"verbs": ["build"]}] */
+
+// ❌
+const buildName = 'name';
+
+// ✅
+const buildName = () => 'name';
+```
+
+### ignore
+
+Type: `Array<string | RegExp>`\
+Default: `[]`
+
+Names matching any of these patterns are not checked. Strings are treated as regular expressions, so they match anywhere in the name unless anchored with `^` and `$`.
+
+```js
+'unicorn/no-non-function-verb-prefix': [
+	'error',
+	{
+		ignore: [
+			'^addOns$',
+		],
+	},
+]
+```
+
+With the above config, this would pass:
+
+```js
+const addOns = ['cheese', 'pineapple'];
+```
+
+And this would still fail:
+
+```js
+const addPizza = new Pizza();
+```

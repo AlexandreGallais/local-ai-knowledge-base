@@ -1,0 +1,194 @@
+{
+  "angular": {
+    "commit": "dda2d41d948380d63619d597c9815db0aa77fd1d",
+    "files": 520,
+    "bytes": 3873770,
+    "built": "2026-11-13"
+  },
+  "typescript": {
+    "commit": "4ec663ac4412c3a7086401bd5a8811565589b11d",
+    "files": 199,
+    "bytes": 1794961,
+    "built": "2026-11-13"
+  },
+  "rxjs": {
+    "commit": "e5351d02e225e275ac0e497c7b66eaa5f0c88791",
+    "files": 26,
+    "bytes": 160689,
+    "built": "2026-11-13"
+  },
+  "ngrx-signals": {
+    "commit": "a4995391ef631f1bd60d539f436a1aa5c23c4fe5",
+    "files": 57,
+    "bytes": 206982,
+    "built": "2026-11-13"
+  },
+  "node": {
+    "commit": "e9c277643b0249c50f6e6de5413be8a88ea11b6a",
+    "files": 374,
+    "bytes": 4011037,
+    "built": "2026-11-13"
+  },
+  "npm": {
+    "commit": "60e11343e61316d966c86805d803df5a0eb99230",
+    "files": 92,
+    "bytes": 321578,
+    "built": "2026-11-13"
+  },
+  "vite": {
+    "commit": "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268",
+    "files": 54,
+    "bytes": 400674,
+    "built": "2026-11-13"
+  },
+  "vitest": {
+    "commit": "7a3844954d8753fc0d5bed76a96ffd3a21716c22",
+    "files": 262,
+    "bytes": 1396254,
+    "built": "2026-11-13"
+  },
+  "playwright": {
+    "commit": "a1f35e1955976e84411f9c10358228a80b763ebe",
+    "files": 241,
+    "bytes": 2188497,
+    "built": "2026-11-13"
+  },
+  "eslint": {
+    "commit": "12cbff4125db3f6446f72fa0c48c46b92b120427",
+    "files": 371,
+    "bytes": 1566965,
+    "built": "2026-11-13"
+  },
+  "typescript-eslint": {
+    "commit": "12e452f0292212bf9bf443b3988ec230f4ae7097",
+    "files": 169,
+    "bytes": 493473,
+    "built": "2026-11-13"
+  },
+  "angular-eslint": {
+    "commit": "7722ad2ab4da81568f19a7a29a3951fa443bf22c",
+    "files": 121,
+    "bytes": 918890,
+    "built": "2026-11-13"
+  },
+  "eslint-stylistic": {
+    "commit": "efbb1bc0e5aaedc4695c44a03f46f4fcbbe58712",
+    "files": 101,
+    "bytes": 466065,
+    "built": "2026-11-13"
+  },
+  "perfectionist": {
+    "commit": "9ee9e5b6edbec9e3b9936e5677105404fe656a0b",
+    "files": 50,
+    "bytes": 433288,
+    "built": "2026-11-13"
+  },
+  "unicorn": {
+    "commit": "d078ad9e080d7eba07a1aab65c5faa6461a2eed7",
+    "files": 377,
+    "bytes": 873210,
+    "built": "2026-11-13"
+  },
+  "eslint-regexp": {
+    "commit": "8200d2990ca2685610c98ce2d0eefef23e35ed8f",
+    "files": 84,
+    "bytes": 175470,
+    "built": "2026-11-13"
+  },
+  "import-x": {
+    "commit": "522c2c259cb080030afca4359561c932505ebe80",
+    "files": 53,
+    "bytes": 146133,
+    "built": "2026-11-13"
+  },
+  "eslint-jsdoc": {
+    "commit": "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3",
+    "files": 116,
+    "bytes": 807385,
+    "built": "2026-11-13"
+  },
+  "eslint-functional": {
+    "commit": "d7aa1dd4ae4ef804f3010a92d3e7b385153415d8",
+    "files": 21,
+    "bytes": 69689,
+    "built": "2026-11-13"
+  },
+  "eslint-vitest": {
+    "commit": "c5df1054a25044a7ca5baf07461b7aee1f15f5f2",
+    "files": 82,
+    "bytes": 110020,
+    "built": "2026-11-13"
+  },
+  "rxjs-x": {
+    "commit": "f7f9e1f72be9fc25c35de69d052af38a828a9c85",
+    "files": 44,
+    "bytes": 87540,
+    "built": "2026-11-13"
+  },
+  "eslint-jsonc": {
+    "commit": "a9b64928d3c1d2500f03f126abcd1db1c13c3392",
+    "files": 45,
+    "bytes": 66527,
+    "built": "2026-11-13"
+  },
+  "stylelint": {
+    "commit": "bc06c7cdb1413de3d8dc939b33af138ab7e59df1",
+    "files": 163,
+    "bytes": 383357,
+    "built": "2026-11-13"
+  },
+  "stylelint-stylistic": {
+    "commit": "d61d92538fce80f9e25ad9fee7b8018bf7f33e92",
+    "files": 78,
+    "bytes": 147506,
+    "built": "2026-11-13"
+  },
+  "stylelint-order": {
+    "commit": "039bd9458a98b7c869347fd5fbd85d517d09bc3b",
+    "files": 4,
+    "bytes": 27483,
+    "built": "2026-11-13"
+  },
+  "mdn-javascript": {
+    "commit": "c44f591049bc129b356acb0a9ce281974c035113",
+    "files": 1435,
+    "bytes": 5789802,
+    "built": "2026-11-13"
+  },
+  "mdn-html": {
+    "commit": "c44f591049bc129b356acb0a9ce281974c035113",
+    "files": 305,
+    "bytes": 1865851,
+    "built": "2026-11-13"
+  },
+  "mdn-css": {
+    "commit": "c44f591049bc129b356acb0a9ce281974c035113",
+    "files": 1399,
+    "bytes": 7609293,
+    "built": "2026-11-13"
+  },
+  "mdn-http": {
+    "commit": "c44f591049bc129b356acb0a9ce281974c035113",
+    "files": 401,
+    "bytes": 1501843,
+    "built": "2026-11-13"
+  },
+  "mdn-svg": {
+    "commit": "c44f591049bc129b356acb0a9ce281974c035113",
+    "files": 318,
+    "bytes": 991477,
+    "built": "2026-11-13"
+  },
+  "mdn-accessibility": {
+    "commit": "c44f591049bc129b356acb0a9ce281974c035113",
+    "files": 184,
+    "bytes": 1014414,
+    "built": "2026-11-13"
+  },
+  "mdn-api": {
+    "commit": "c44f591049bc129b356acb0a9ce281974c035113",
+    "files": 8337,
+    "bytes": 20328201,
+    "built": "2026-11-13"
+  }
+}

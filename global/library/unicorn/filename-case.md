@@ -1,0 +1,277 @@
+---
+title: "filename-case"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/filename-case.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# filename-case
+
+📝 Enforce a case style for filenames and directory names.
+
+💼🚫 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, 🧩 `recommended-json`, 📚 `recommended-markdown`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`. This rule is _disabled_ in the ☑️ `unopinionated` config.
+
+Enforces filenames and directory names of linted files to use a certain case style and lowercase file extension. The default is `kebabCase`.
+
+Consistent paths make files predictable to find and import, including on case-sensitive filesystems.
+
+Because this rule only inspects the path, it applies to files of any language, not just JavaScript, as long as they are linted with the matching ESLint language plugin (for example `@eslint/css` or `@eslint/markdown`).
+
+Named virtual files created by processors are ignored to avoid duplicate reports for one physical file.
+
+Directory names are checked only when the file is inside the current working directory. Files outside the current working directory only have their filename checked.
+
+Conventional lowercase entrypoint filenames `index.js`, `index.mjs`, `index.cjs`, `index.ts`, `index.tsx`, and `index.vue` are intentionally ignored, including when `pascalCase` is selected. Their parent directories are still checked.
+
+Characters other than `a-z`, `A-Z`, `0-9`, `-`, and `_` are ignored for casing and kept as-is in suggested names.
+
+The case check ignores path segments starting with `$`, as they are commonly used for route parameters.
+
+Set the `checkDirectories` option to `false` to only check filenames.
+
+## Cases
+
+### `kebabCase`
+
+- `foo-bar.js`
+- `foo-bar.test.js`
+- `foo-bar.test-utils.js`
+
+### `camelCase`
+
+- `fooBar.js`
+- `fooBar.test.js`
+- `fooBar.testUtils.js`
+
+### `camelCaseWithAcronyms`
+
+- `innerHTML.js`
+- `getDOMRangeRect.js`
+- `apiURL.js`
+
+This case style is still lower camel case. Leading acronyms are lowercased, for example `HTMLParser.js` should be `htmlParser.js`.
+
+### `snakeCase`
+
+- `foo_bar.js`
+- `foo_bar.test.js`
+- `foo_bar.test_utils.js`
+
+### `pascalCase`
+
+- `FooBar.js`
+- `FAQPage.js`
+- `FooBar.Test.js`
+- `FooBar.TestUtils.js`
+
+## Options
+
+### case
+
+Type: `'camelCase' | 'camelCaseWithAcronyms' | 'snakeCase' | 'kebabCase' | 'pascalCase'`
+
+You can set the `case` option like this:
+
+```js
+'unicorn/filename-case': [
+	'error',
+	{
+		case: 'kebabCase',
+	},
+]
+```
+
+### cases
+
+Type: `{camelCase?: boolean, camelCaseWithAcronyms?: boolean, snakeCase?: boolean, kebabCase?: boolean, pascalCase?: boolean}`
+
+You can set the `cases` option to allow multiple cases:
+
+```js
+'unicorn/filename-case': [
+	'error',
+	{
+		cases: {
+			camelCase: true,
+			pascalCase: true,
+		},
+	},
+]
+```
+
+For React projects, allow both kebab-case and PascalCase:
+
+```js
+'unicorn/filename-case': [
+	'error',
+	{
+		cases: {
+			kebabCase: true,
+			pascalCase: true,
+		},
+	},
+]
+```
+
+To enforce PascalCase only for TypeScript and TSX files, use ESLint's `files` config:
+
+```js
+import typescriptEslintParser from '@typescript-eslint/parser';
+import {defineConfig} from 'eslint/config';
+import unicorn from 'eslint-plugin-unicorn';
+
+export default defineConfig([
+	{
+		plugins: {
+			unicorn,
+		},
+		rules: {
+			'unicorn/filename-case': [
+				'error',
+				{
+					case: 'kebabCase',
+				},
+			],
+		},
+	},
+	{
+		files: ['**/*.{ts,tsx}'],
+		languageOptions: {
+			parser: typescriptEslintParser,
+			parserOptions: {
+				ecmaFeatures: {
+					jsx: true,
+				},
+			},
+		},
+		rules: {
+			'unicorn/filename-case': [
+				'error',
+				{
+					case: 'pascalCase',
+					checkDirectories: false,
+				},
+			],
+		},
+	},
+]);
+```
+
+The override disables directory checking because rule options apply to both filenames and directory names.
+
+The rule intentionally does not detect JSX syntax or React component exports. Non-component files can contain JSX too, like entrypoints, route files, tests, and `index.js`.
+
+### ignore
+
+Type: `Array<string | RegExp>`\
+Default: `[]`
+
+Path segments to ignore. If any path segment matches, the file is ignored.
+
+When a string is given, it's interpreted as a regular expression.
+
+Sometimes you may have non-standard filenames or directory names in a project. This option lets you ignore those files or directories.
+
+For example:
+
+- Vendor packages that are copied into the project.
+- Conventionally named files such as `README.md`.
+- Some tools may require special names for some files.
+- Ignore a directory and everything in it.
+
+Don't forget that you must escape special characters that you don't want to be interpreted as part of the regex, for example, if you have `[` in the actual path segment. For example, to match `[id].js`, use `/^\[id]\.js$/` or `'^\\[id]\\.js$'`.
+
+```js
+'unicorn/filename-case': [
+	'error',
+	{
+		case: 'kebabCase',
+		ignore: [
+			'^FOOBAR\\.js$',
+			'^vendor$',
+			'^(B|b)az',
+			'\\.SOMETHING\\.js$',
+			/^fixtures$/i,
+		],
+	},
+]
+```
+
+### checkDirectories
+
+Type: `boolean`\
+Default: `true`
+
+Whether to check directory names. Filenames are always checked.
+
+### directoryRoots
+
+Type: `Array<string | RegExp>`\
+Default: `[]`
+
+Directory roots below which directory names are checked. The matched root and its ancestors are skipped. Strings match exact `/`-separated paths relative to ESLint's current working directory. Regular expressions match the same paths; anchor them to avoid unintended deeper matches. The deepest match is used.
+
+For example, check PascalCase directory names below multiple source roots:
+
+```js
+'unicorn/filename-case': [
+	'error',
+	{
+		case: 'pascalCase',
+		directoryRoots: [
+			'app/javascript',
+			/^packages\/[^/]+\/src$/u,
+		],
+	},
+]
+```
+
+### multipleFileExtensions
+
+Type: `boolean`\
+Default: `true`
+
+Whether to treat additional, `.`-separated parts of a filename as parts of the extension rather than parts of the filename.
+
+Note that the parts of the filename treated as the extension will not have the filename case enforced.
+
+This only affects filenames. When `checkDirectories` is enabled, directory names are checked as full path segments.
+
+For example:
+
+```js
+'unicorn/filename-case': [
+	'error',
+	{
+		case: 'pascalCase',
+	},
+]
+
+// Results
+✅ FooBar.Test.js
+✅ FooBar.TestUtils.js
+✅ FooBar.testUtils.js
+✅ FooBar.test.js
+✅ FooBar.test-utils.js
+✅ FooBar.test_utils.js
+```
+
+```js
+'unicorn/filename-case': [
+	'error',
+	{
+		case: 'pascalCase',
+		multipleFileExtensions: false,
+	},
+]
+
+// Results
+✅ FooBar.Test.js
+✅ FooBar.TestUtils.js
+❌ FooBar.testUtils.js
+❌ FooBar.test.js
+❌ FooBar.test-utils.js
+❌ FooBar.test_utils.js
+```

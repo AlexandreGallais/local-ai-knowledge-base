@@ -1,0 +1,59 @@
+---
+title: "prefer-iterator-zip"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-iterator-zip.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# prefer-iterator-zip
+
+📝 Prefer `Iterator.zip()` over parallel-array indexing.
+
+💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+
+💡 This rule is manually fixable by editor suggestions.
+
+Prefer `Iterator.zip()` when a loop uses an index only to read corresponding values from multiple arrays and explicitly stops at the shortest array.
+
+## Examples
+
+```js
+// ❌
+for (let index = 0; index < Math.min(names.length, scores.length); index++) {
+	save(names[index], scores[index]);
+}
+
+// ✅
+for (const [name, score] of Iterator.zip([names, scores])) {
+	save(name, score);
+}
+```
+
+`Iterator.zip()` yields corresponding values and defaults to `shortest` mode, stopping when any input ends. It accepts two or more inputs.
+
+## Supported patterns
+
+The rule checks block-bodied `for` loops with a `let` index initialized to `0`, incremented by one, and bounded by the shortest input using `Math.min()` or `&&`:
+
+```js
+index < Math.min(names.length, scores.length);
+index < names.length && index < scores.length;
+```
+
+Comparisons may be reversed. The `Math.min()` result may be cached in the loop initializer or an immediately preceding `const` or `let` used only by the loop condition.
+
+Each input must be a distinct identifier read only as `input[index]` in the body. Arrays and typed arrays are supported; unknown inputs are assumed to be one of those. Known strings and plain objects are ignored.
+
+Single-input bounds, callbacks, property chains, optional indexing, offsets, mutations, other input or index uses, and captured references are ignored.
+
+## Suggestions
+
+`Iterator.zip()` is a newer part of the Iterator proposal than the rest, and no engine ships it yet. Node 26 has `Iterator.from`, `Iterator.concat` and the eleven prototype helpers, but `Iterator.zip` is `undefined`, so a suggestion will throw `TypeError: Iterator.zip is not a function` until it lands. Check the runtime supports it before accepting one.
+
+Conversions are editor suggestions because they can change when values are read. `Iterator.zip()` reads each row before the body and initializes every iterator up front, while `&&` can skip later `.length` reads. Review suggestions when calls or aliases can mutate inputs. Custom iteration behavior and shadowed built-ins are unsupported.
+
+Suggestions create unique element names and preserve the body and its declarations. If a replacement would remove or relocate a comment, the rule reports without a suggestion.
+
+Check the runtime support for `Iterator.zip()`.

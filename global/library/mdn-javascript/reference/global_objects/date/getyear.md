@@ -1,0 +1,79 @@
+---
+title: "Date.prototype.getYear()"
+tool: "mdn-javascript"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/javascript/reference/global_objects/date/getyear/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# Date.prototype.getYear()
+
+The **`getYear()`** method of `Date` instances returns the year for this date according to local time. Because `getYear()` does not return full years ("year 2000 problem"), it is deprecated and has been replaced by the `getFullYear()` method.
+
+## Syntax
+
+```js
+getYear()
+```
+
+### Parameters
+
+None.
+
+### Return value
+
+An integer representing the year for the given date according to local time, minus 1900. Returns `NaN` if the date is invalid.
+
+- For years greater than or equal to 2000, the value is 100 or greater. For example, if the year is 2026, `getYear()` returns 126.
+- For years between and including 1900 and 1999, the value returned by `getYear()` is between 0 and 99. For example, if the year is 1976, `getYear()` returns 76.
+- For years less than 1900, the value returned by `getYear()` is less than 0. For example, if the year is 1800, `getYear()` returns -100.
+
+This method essentially returns the value of `getFullYear()` minus 1900. You should use `getFullYear()` instead, so that the year is specified in full.
+
+## Examples
+
+### Years between 1900 and 1999
+
+The second statement assigns the value 95 to the variable `year`.
+
+```js
+const xmas = new Date("1995-12-25");
+const year = xmas.getYear(); // returns 95
+```
+
+### Years above 1999
+
+The second statement assigns the value 100 to the variable `year`.
+
+```js
+const xmas = new Date("2000-12-25");
+const year = xmas.getYear(); // returns 100
+```
+
+### Years below 1900
+
+The second statement assigns the value -100 to the variable `year`.
+
+```js
+const xmas = new Date("1800-12-25");
+const year = xmas.getYear(); // returns -100
+```
+
+### Setting and getting a year between 1900 and 1999
+
+The third statement assigns the value 95 to the variable `year`, representing the year 1995.
+
+```js
+const xmas = new Date("2015-12-25");
+xmas.setYear(95);
+const year = xmas.getYear(); // returns 95
+```
+
+## See also
+
+- Polyfill of `Date.prototype.getYear` in `core-js`
+- es-shims polyfill of `Date.prototype.getYear`
+- `Date.prototype.getFullYear()`
+- `Date.prototype.getUTCFullYear()`
+- `Date.prototype.setYear()`

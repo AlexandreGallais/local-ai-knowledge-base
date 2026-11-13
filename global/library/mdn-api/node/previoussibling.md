@@ -1,0 +1,73 @@
+---
+title: "Node: previousSibling property"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/node/previoussibling/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# Node: previousSibling property
+
+The read-only **`previousSibling`** property of the `Node` interface
+returns the node immediately preceding the specified one in its parent's
+`childNodes` list,
+or `null` if the specified node is the first in that list.
+
+> **Note:**
+> Browsers insert text nodes into a document to represent whitespace in the source markup.
+> Therefore a node obtained, for example, using `Node.firstChild`
+> or `Node.previousSibling`
+> may refer to a whitespace text node rather than the actual element the author intended to get.
+>
+> See Working with whitespace in the DOM for more information.
+>
+> You can use `previousElementSibling`
+> to get the previous element node (skipping text nodes and any other non-element nodes).
+>
+> To navigate the opposite way through the child nodes list use Node.nextSibling.
+
+## Value
+
+A `Node` representing the previous sibling of the current node,
+or `null` if there are none.
+
+## Examples
+
+The following examples demonstrate how `previousSibling` works with and without text nodes mixed in with elements.
+
+### First example
+
+In this example, we have a series of `` elements directly adjacent to each other, with no whitespace between them.
+
+```html
+<span id="b0"></span><span id="b1"></span><span id="b2"></span>
+```
+
+```js
+document.getElementById("b1").previousSibling; // <span id="b0">
+document.getElementById("b2").previousSibling.id; // "b1"
+```
+
+### Second example
+
+In this example, there are whitespace text nodes (line breaks) between the `` elements.
+
+```html
+<span id="b0"></span>
+<span id="b1"></span>
+<span id="b2"></span>
+```
+
+```js
+document.getElementById("b1").previousSibling; // #text
+document.getElementById("b1").previousSibling.previousSibling; // <span id="b0">
+document.getElementById("b2").previousSibling.previousSibling; // <span id="b1">
+document.getElementById("b2").previousSibling; // #text
+document.getElementById("b2").previousSibling.id; // undefined
+```
+
+## See also
+
+- `Node.nextSibling`
+- `Element.previousElementSibling`

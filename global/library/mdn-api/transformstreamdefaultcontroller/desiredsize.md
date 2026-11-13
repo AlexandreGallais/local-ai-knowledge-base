@@ -1,0 +1,30 @@
+---
+title: "TransformStreamDefaultController: desiredSize property"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/transformstreamdefaultcontroller/desiredsize/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# TransformStreamDefaultController: desiredSize property
+
+The **`desiredSize`** read-only property of the `TransformStreamDefaultController` interface returns the desired size to fill the queue of the associated `ReadableStream`.
+
+The internal queue of a `ReadableStream` contains chunks that have been enqueued, but not yet read. The browser determines the **desired size** to fill the stream, and it is this value returned by the `desiredSize` property.
+
+If the `desiredSize` is `0` then the queue is full. Therefore you can use this information to manually apply backpressure to manage the queue.
+
+## Value
+
+A number, or `null`.
+
+The number can be negative if the queue is over-full. When a custom readable queuing strategy is used, its chunk sizes can cause the number to have a fractional component. The value is `null` if the readable side has errored and `0` if it is closed.
+
+## Examples
+
+In the next example the `desiredSize` is logged to the console.
+
+```js
+console.log(controller.desiredSize);
+```

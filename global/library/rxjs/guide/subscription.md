@@ -1,0 +1,55 @@
+---
+title: "Subscription"
+tool: "rxjs"
+version: "7.8"
+source: "https://github.com/ReactiveX/rxjs/blob/e5351d02e225e275ac0e497c7b66eaa5f0c88791/docs_app/content/guide/subscription.md"
+commit: "e5351d02e225e275ac0e497c7b66eaa5f0c88791"
+license: "Apache-2.0"
+---
+
+# Subscription
+
+**What is a Subscription?** A Subscription is an object that represents a disposable resource, usually the execution of an Observable. A Subscription has one important method, `unsubscribe`, that takes no argument and just disposes the resource held by the subscription. In previous versions of RxJS, Subscription was called "Disposable".
+
+```ts
+import { interval } from 'rxjs';
+
+const observable = interval(1000);
+const subscription = observable.subscribe(x => console.log(x));
+// Later:
+// This cancels the ongoing Observable execution which
+// was started by calling subscribe with an Observer.
+subscription.unsubscribe(); 
+```
+
+A Subscription essentially just has an `unsubscribe()` function to release resources or cancel Observable executions.
+
+Subscriptions can also be put together, so that a call to an `unsubscribe()` of one Subscription may unsubscribe multiple Subscriptions. You can do this by "adding" one subscription into another:
+
+```ts
+import { interval } from 'rxjs';
+
+const observable1 = interval(400);
+const observable2 = interval(300);
+
+const subscription = observable1.subscribe(x => console.log('first: ' + x));
+const childSubscription = observable2.subscribe(x => console.log('second: ' + x));
+
+subscription.add(childSubscription);
+
+setTimeout(() => {
+  // Unsubscribes BOTH subscription and childSubscription
+  subscription.unsubscribe();
+}, 1000);
+```
+
+When executed, we see in the console:
+```none
+second: 0
+first: 0
+second: 1
+first: 1
+second: 2
+```
+
+Subscriptions also have a `remove(otherSubscription)` method, in order to undo the addition of a child Subscription.

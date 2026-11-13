@@ -1,0 +1,78 @@
+---
+title: "`unicode-range` CSS at-rule descriptor"
+tool: "mdn-css"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/css/reference/at-rules/@font-face/unicode-range/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# `unicode-range` CSS at-rule descriptor
+
+The **`unicode-range`** CSS descriptor sets the specific range of characters to be used from a font defined using the `@font-face` at-rule and made available for use on the current page. If the page doesn't use any character in this range, the font is not downloaded; if it uses at least one, the whole font is downloaded.
+
+## Syntax
+
+```css
+/* <unicode-range> values */
+unicode-range: U+26; /* single code point */
+unicode-range: U+0-7F;
+unicode-range: U+0025-00FF; /* code point range */
+unicode-range: U+4??; /* wildcard range */
+unicode-range: U+0025-00FF, U+4??; /* multiple values */
+```
+
+### Values
+
+- **_single code point_**
+    A single Unicode character code point, for example `U+26`.
+- **_code point range_**
+    A range of Unicode code points. So for example, `U+0025-00FF` means _include all characters in the range `U+0025` to `U+00FF`_.
+- **_wildcard range_**
+    A range of Unicode code points containing wildcard characters, that is using the `'?'` character, so for example `U+4??` means _include all characters in the range `U+400` to `U+4FF`_.
+
+## Description
+
+The purpose of this descriptor is to allow the font resources to be segmented so that a browser only needs to download the font resource needed for the text content of a particular page. For example, a site with many localizations could provide separate font resources for English, Greek and Japanese. For users viewing the English version of a page, the font resources for Greek and Japanese fonts wouldn't need to be downloaded, saving bandwidth.
+
+## Examples
+
+### Using a different font for a single character
+
+In this example, we create a single `` element, with a text string that includes an ampersand that we want to style with a different font. To make it obvious, we will use a sans-serif font, _Helvetica_, for the text, and a serif font, _Times New Roman_, for the ampersand.
+
+In the CSS we are in effect defining a completely separate `@font-face` that only includes a single character in it, meaning that only this character will be styled with this font. We could also have done this by wrapping the ampersand in a `` and applying a different font just to that, but that is an extra element and rule set.
+
+#### HTML
+
+```html
+<div>Me & You = Us</div>
+```
+
+#### CSS
+
+```css
+@font-face {
+  font-family: "Ampersand";
+  src: local("Times New Roman");
+  unicode-range: U+26;
+}
+
+div {
+  font-size: 4em;
+  font-family: "Ampersand", "Helvetica", sans-serif;
+}
+```
+
+#### Result
+
+## See also
+
+- `font-display`
+- `font-family`
+- `font-stretch`
+- `font-style`
+- `font-weight`
+- `font-feature-settings`
+- `font-variation-settings`
+- `src`

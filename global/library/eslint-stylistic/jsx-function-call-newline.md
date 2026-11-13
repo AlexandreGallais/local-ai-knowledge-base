@@ -1,0 +1,125 @@
+---
+title: "jsx-function-call-newline"
+tool: "eslint-stylistic"
+version: "5.10"
+source: "https://github.com/eslint-stylistic/eslint-stylistic/blob/efbb1bc0e5aaedc4695c44a03f46f4fcbbe58712/packages/eslint-plugin/rules/jsx-function-call-newline/README.md"
+commit: "efbb1bc0e5aaedc4695c44a03f46f4fcbbe58712"
+license: "MIT"
+---
+
+# jsx-function-call-newline
+
+Enforce line breaks before and after JSX elements when they are used as arguments to a function.
+
+## Rule Details
+
+This rule checks whether a line break is needed before and after all JSX elements that serve as function arguments.
+
+## Options
+
+There are the possible configurations:
+
+- `always`: Each JSX element as an argument has a line break before and after it.
+- `multiline`(default): Only line break are added before and after a JSX element when there is a newline present within the element itself.
+
+### always
+
+Examples of **incorrect** code for this rule, when configured with `"always"`:
+
+**Incorrect:**
+
+```jsx
+/* eslint @stylistic/jsx-function-call-newline: ["error", "always"] */
+
+fn(<div />)
+
+fn(<span>foo</span>)
+
+fn(<span>
+bar
+</span>)
+
+fn(<div />, <div
+  style={{ color: 'red' }}
+  />, <p>baz</p>)
+```
+
+Examples of **correct** code for this rule, when configured with `"always"`:
+
+**Correct:**
+
+```jsx
+/* eslint @stylistic/jsx-function-call-newline: ["error", "always"] */
+
+fn(
+  <div />
+)
+
+fn(
+  <span>foo</span>
+)
+fn(
+  <span>
+    bar
+  </span>
+)
+
+fn(
+  <div />,
+  <div
+    style={{ color: 'red' }}
+  />,
+  <p>baz</p>
+)
+```
+
+### multiline
+
+Examples of **incorrect** code for this rule, when configured with `"multiline"`:
+
+**Incorrect:**
+
+```jsx
+/* eslint @stylistic/jsx-function-call-newline: ["error", "multiline"] */
+
+fn(<div
+ />, <span>
+ foo</span>
+)
+
+fn (
+  <div />, <span>
+    bar
+  </span>
+)
+```
+
+Examples of **correct** code for this rule, when configured with `"multiline"`:
+
+**Correct:**
+
+```jsx
+/* eslint @stylistic/jsx-function-call-newline: ["error", "multiline"] */
+
+fn(<div />)
+
+fn(<span>foo</span>)
+
+fn(
+  <div
+ />,
+ <span>
+ foo</span>
+)
+
+fn (
+  <div />,
+  <span>
+    bar
+  </span>
+)
+```
+
+## When Not To Use It
+
+If you are not using JSX then you can disable this rule.

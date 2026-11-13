@@ -1,0 +1,73 @@
+---
+title: "ARIA: banner role"
+tool: "mdn-accessibility"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/accessibility/aria/reference/roles/banner_role/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# ARIA: banner role
+
+The `banner` role is for defining a global site header, which usually includes a logo, company name, search feature, and possibly the global navigation or a slogan. It is generally located at the top of the page.
+
+By default, the HTML's `` element has an identical meaning to the `banner` landmark, unless it is a descendant of ``, ``, ``, ``, or ``, at which point `` exposes a `generic` role, and not the equivalent of the site-wide banner.
+
+## Description
+
+A `banner` landmark role overwrites the implicit ARIA role of the container element upon which it is applied. It should be reserved for globally repeating site-wide content that is generally located at the top of every page.
+
+The banner typically includes things such as a logo or corporate identity, or possibly a site-specific search tool, and is generally what your marketing team would call the "header" or "top banner" of the site. If the `header` element technique is not being used for that banner, a declaration of `role="banner"` should be used to define a banner landmark to assistive technologies.
+
+Assistive technologies can identify the `header` element of a page as the `banner` if it is a descendant of the `body` element, and not nested within an `article`, `aside`, `main`, `nav` or `section` subsection.
+
+Each page may have a `banner` landmark, but each page should generally be limited to a single element with the role of banner. In the case of a page containing nested `document` and/or `application` roles, each nested `document` or `application` role may also have one `banner` landmark. If a page includes more than one `banner` landmark, each should have a unique accessible name.
+
+### Associated ARIA roles, states, and properties
+
+None.
+
+### Keyboard interactions
+
+None.
+
+### Required JavaScript features
+
+None.
+
+## Examples
+
+Here's a fake banner with a skip to navigation link, a logo, a title and a subtitle. As this is the main header for the site, we've added the `banner` landmark role to the container element.
+
+```html
+<div role="banner">
+  <a href="#main" id="skipToMain" class="skiptocontent">Skip To main content</a>
+  <img src="images/w3c.png" alt="W3C Logo" />
+  <h1>ARIA Landmarks</h1>
+  <p>Identifying page subsections for easy navigation</p>
+  <nav>…</nav>
+</div>
+```
+
+We could also have written the above with the HTML `header` element:
+
+```html
+<header>
+  <a href="#main" id="skipToMain" class="skiptocontent">Skip To main content</a>
+  <img src="images/w3c.png" alt="W3C Logo" />
+  <h1>ARIA Landmarks</h1>
+  <p>Identifying page subsections for easy navigation</p>
+  <nav>…</nav>
+</header>
+```
+
+## Best practices
+
+Using the `` element will automatically communicate that the element has a role of `banner`. If possible, prefer using the semantic `` element instead of the `banner` role.
+
+While it is best to use the `header` element and ensure it is not a descendant of any subsection of the page, sometimes you don't have access to the underlying HTML. If this is the case, you can add the role of `banner` to the element of the page which should be exposed as a `banner` with JavaScript. Identifying the page's banner in this way will help improve the site's accessibility.
+
+## See also
+
+- HTML `header` element
+- WC3 Landmarks Example

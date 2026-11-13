@@ -1,0 +1,186 @@
+---
+title: "no-useless-assignment"
+tool: "eslint"
+version: "10.14"
+source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-useless-assignment.md"
+commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
+license: "MIT"
+---
+
+# no-useless-assignment
+
+Wikipedia describes a "dead store" as follows:
+
+> In computer programming, a local variable that is assigned a value but is not read by any subsequent instruction is referred to as a **dead store**.
+
+"Dead stores" waste processing and memory, so it is better to remove unnecessary assignments to variables.
+
+Also, if the author intended the variable to be used, there is likely a mistake around the dead store.
+For example,
+
+* you should have used a stored value but forgot to do so.
+* you made a mistake in the name of the variable to be stored.
+
+```js
+let id = "x1234";    // this is a "dead store" - this value ("x1234") is never read
+
+id = generateId();
+
+doSomethingWith(id);
+```
+
+## Rule Details
+
+This rule aims to report variable assignments when the value is not used.
+
+Examples of **incorrect** code for this rule:
+
+**Incorrect:**
+
+```js
+/* eslint no-useless-assignment: "error" */
+
+function fn1() {
+    let v = 'used';
+    doSomething(v);
+    v = 'unused';
+}
+
+function fn2() {
+    let v = 'used';
+    if (condition) {
+        v = 'unused';
+        return
+    }
+    doSomething(v);
+}
+
+function fn3() {
+    let v = 'used';
+    if (condition) {
+        doSomething(v);
+    } else {
+        v = 'unused';
+    }
+}
+
+function fn4() {
+    let v = 'unused';
+    if (condition) {
+        v = 'used';
+        doSomething(v);
+        return
+    }
+}
+
+function fn5() {
+    let v = 'used';
+    if (condition) {
+        let v = 'used';
+        console.log(v);
+        v = 'unused';
+    }
+    console.log(v);
+}
+```
+
+Examples of **correct** code for this rule:
+
+**Correct:**
+
+```js
+/* eslint no-useless-assignment: "error" */
+
+function fn1() {
+    let v = 'used';
+    doSomething(v);
+    v = 'used-2';
+    doSomething(v);
+}
+
+function fn2() {
+    let v = 'used';
+    if (condition) {
+        v = 'used-2';
+        doSomething(v);
+        return
+    }
+    doSomething(v);
+}
+
+function fn3() {
+    let v = 'used';
+    if (condition) {
+        doSomething(v);
+    } else {
+        v = 'used-2';
+        doSomething(v);
+    }
+}
+
+function fn4() {
+    let v = 'used';
+    for (let i = 0; i < 10; i++) {
+        doSomething(v);
+        v = 'used in next iteration';
+    }
+}
+```
+
+This rule will not report variables that are never read.
+Because it's clearly an unused variable. If you want it reported, please enable the no-unused-vars rule.
+
+**Correct:**
+
+```js
+/* eslint no-useless-assignment: "error" */
+
+function fn() {
+    let v = 'unused';
+    v = 'unused-2'
+    doSomething();
+}
+```
+
+## Options
+
+This rule has no options.
+
+## Known Limitations
+
+This rule does not report certain variable reassignments when they occur inside the `try` block. This is intentional because such assignments may still be observed within the corresponding `catch` block or after the `try-catch` structure, due to potential early exits or error handling logic.
+
+```js
+function foo() {
+    let bar;
+    try {
+        bar = 2;
+        unsafeFn();
+        return { error: undefined };
+    } catch {
+        return { bar }; // `bar` is observed in the catch block
+    }
+}   
+function unsafeFn() {
+    throw new Error();
+}
+
+function foo() {
+    let bar;
+    try {
+        bar = 2; // This assignment is relevant if unsafeFn() throws an error
+        unsafeFn();
+        bar = 4;
+    } catch {
+        // Error handling
+    }
+    return bar;
+}   
+function unsafeFn() {
+    throw new Error();
+}
+```
+
+## When Not To Use It
+
+If you don't want to be notified about values that are never read, you can safely disable this rule.

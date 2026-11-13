@@ -1,0 +1,117 @@
+---
+title: "display-notation"
+tool: "stylelint"
+version: "17.16"
+source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/display-notation/README.md"
+commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+license: "MIT"
+---
+
+# display-notation
+
+Specify short or full notation for the `display` property.
+
+```css
+a { display: block; }
+/**          ↑
+ *           This notation */
+```
+
+Modern `display` property values allow you to define both the outer and inner display type separately (e.g. `inline flex`). While CSS 2 used a single-keyword, precomposed syntax for the `display` property (e.g. `inline-flex`).
+
+In the Display Module Level 3 specification the following precomposed values are defined:
+
+- `inline-block`
+- `inline-flex`
+- `inline-grid`
+- `inline-table`
+
+More recent and future inner display types (e.g. `grid-lanes`) can only be combined with the modern, multi-keyword syntax.
+
+The full notation explicitly describes the inner and outer display types of elements. This notation makes it easier to understand how an element will behave and to learn about the various display types.
+
+The short notation omits defaults or switches to precomposed values, and doesn't follow the modern principle of value composition.
+
+This rule ignores `$sass`, `@less`, and `var(--custom-property)` variable syntaxes.
+
+The `fix` option can automatically fix all of the problems reported by this rule.
+
+This rule supports 2 message arguments: the display value and its expected notation.
+
+## Options
+
+### `"full"`
+
+Applicable display values _must always_ use the full notation.
+
+```json
+{
+  "display-notation": "full"
+}
+```
+
+The following patterns are considered problems:
+
+```css
+a { display: block; }
+```
+
+```css
+a { display: grid; }
+```
+
+```css
+a { display: list-item; }
+```
+
+The following patterns are _not_ considered problems:
+
+```css
+a { display: block flow; }
+```
+
+```css
+a { display: block grid; }
+```
+
+```css
+a { display: block flow list-item; }
+```
+
+### `"short"`
+
+Applicable display values _must always_ use the short notation.
+
+```json
+{
+  "display-notation": "short"
+}
+```
+
+The following patterns are considered problems:
+
+```css
+a { display: block flow; }
+```
+
+```css
+a { display: block grid; }
+```
+
+```css
+a { display: block flow list-item; }
+```
+
+The following patterns are _not_ considered problems:
+
+```css
+a { display: block; }
+```
+
+```css
+a { display: grid; }
+```
+
+```css
+a { display: list-item; }
+```

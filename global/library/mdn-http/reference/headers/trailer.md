@@ -1,0 +1,70 @@
+---
+title: "Trailer header"
+tool: "mdn-http"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/http/reference/headers/trailer/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# Trailer header
+
+The HTTP **Trailer** request and response header allows the sender to include additional fields at the end of chunked messages in order to supply metadata that might be dynamically generated while the message body is sent.
+
+> **Note:**
+> The `TE` request header needs to be set to `trailers` to allow trailer fields.
+
+> **Warning:**
+> Developers cannot access HTTP trailers via the Fetch API or XHR.
+> Additionally, browsers ignore HTTP trailers, with the exception of `Server-Timing`.
+> See Browser compatibility for more information.
+
+       | Header type
+       |
+        Request header,
+        Response header,
+        Content header
+
+       | Forbidden request header
+       | Yes
+
+## Syntax
+
+```http
+Trailer: header-names
+```
+
+## Directives
+
+- `header-names`
+    HTTP header fields which will be present in the trailer part of chunked messages.
+    The following header names are **disallowed**:
+    - `Content-Encoding`, `Content-Type`, `Content-Range`, and `Trailer`
+    - Authentication headers (e.g., `Authorization` or `Set-Cookie`)
+    - Message framing headers (e.g., `Transfer-Encoding` and `Content-Length`)
+    - Routing headers (e.g., `Host`)
+    - Request modifiers (e.g., controls and conditionals, like `Cache-Control`, `Max-Forwards`, or `TE`)
+
+## Examples
+
+### Server-Timing as HTTP trailer
+
+Some browsers support showing server timing data in developer tools when the `Server-Timing` header is sent as a trailer.
+In the following response, the `Trailer` header is used to indicate that a `Server-Timing` header will follow the response body.
+A metric `custom-metric` with a duration of `123.4` milliseconds is sent:
+
+```http
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Trailer: Server-Timing
+
+--- response body ---
+Server-Timing: custom-metric;dur=123.4
+```
+
+## See also
+
+- `Server-Timing`
+- `Transfer-Encoding`
+- `TE`
+- Chunked transfer encoding

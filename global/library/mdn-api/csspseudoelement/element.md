@@ -1,0 +1,43 @@
+---
+title: "CSSPseudoElement: element property"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/csspseudoelement/element/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# CSSPseudoElement: element property
+
+The **`element`** read-only property of the `CSSPseudoElement` interface returns a reference to the ultimate originating element of the pseudo-element.
+
+This differs from the `CSSPseudoElement.parent` property, which returns a reference to the pseudo-element's _immediate_ originating element: This can be either an `Element`, or a `CSSPseudoElement` in the case of a nested pseudo-element.
+
+## Value
+
+An `Element` representing the pseudo-element's ultimate originating parent element.
+
+## Examples
+
+### Basic usage
+
+The example below demonstrates the relationship between `CSSPseudoElement.element` and `Element.pseudo()`:
+
+```js
+const myElement = document.querySelector("q");
+const cssPseudoElement = myElement.pseudo("::after");
+const originatingElement = cssPseudoElement.element;
+
+console.log(myElement === originatingElement); // Outputs true
+console.log(myElement.parentElement === originatingElement); // Outputs false
+console.log(myElement.lastElementChild === cssPseudoElement); // Outputs false
+console.log(myElement.lastChild === cssPseudoElement); // Outputs false
+console.log(myElement.nextElementSibling === cssPseudoElement); // Outputs false
+console.log(myElement.nextSibling === cssPseudoElement); // Outputs false
+```
+
+## See also
+
+- `CSSPseudoElement.parent`
+- `CSSPseudoElement.pseudo()`
+- `Element.pseudo()`

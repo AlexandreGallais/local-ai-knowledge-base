@@ -1,0 +1,39 @@
+---
+title: "SVGPolygonElement: animatedPoints property"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/svgpolygonelement/animatedpoints/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# SVGPolygonElement: animatedPoints property
+
+The **`animatedPoints`** read-only property of the `SVGPolygonElement` interface reflects the animated value of the element's `points` attribute. If the `points` attribute is not being animated, it contains the same value as the `points` property.
+
+## Value
+
+A `SVGPointList` object.
+
+## Examples
+
+### Accessing the `animatedPoints` property
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200">
+  <polygon id="myPolygon" points="100,10 150,50 100,90 50,50" fill="blue">
+    <animate
+      attributeName="points"
+      values="100,10 150,50 100,90 50,50; 150,10 200,50 150,90 100,50"
+      dur="2s"
+      repeatCount="indefinite" />
+  </polygon>
+</svg>
+```
+
+```js
+const polygonElement = document.getElementById("myPolygon");
+
+// Access the animatedPoints property
+console.dir(polygonElement.animatedPoints); // Output: SVGPointList object
+```

@@ -1,0 +1,148 @@
+---
+title: "comment-content"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/comment-content.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# comment-content
+
+📝 Enforce better comment content.
+
+🚫 Disabled by default.
+
+🔧 This rule is automatically fixable by the `--fix` CLI option.
+
+This rule enforces curated replacements in comments. It is useful for common name, brand, and acronym casing corrections such as `nodejs` → `Node.js`, and for project-specific prose preferences.
+
+This rule is not a spellchecker. It only checks known replacement patterns.
+
+It only reports one replacement per comment at a time.
+
+It focuses on prose-like comment text and skips obvious non-prose regions such as code snippets, including commented-out multi-line code, links, paths, structured data, and command examples.
+
+Text inside backticks is ignored, including fenced code blocks in block comments. Use backticks for literal commands and identifiers.
+
+```js
+// ✅
+// Run `git config --list`.
+```
+
+In JSDoc comments, it skips structured tag syntax such as parameter names, type expressions, and symbol references, while continuing to check prose in tag descriptions.
+
+## Examples
+
+```js
+// ❌
+// nodejs uses javascript.
+
+// ✅
+// Node.js uses JavaScript.
+```
+
+```js
+// ❌
+// See the github issue.
+
+// ✅
+// See the GitHub issue.
+```
+
+```js
+// ❌
+// The application stores png files.
+
+// ✅
+// The app stores PNG files.
+```
+
+## Options
+
+Type: `object`
+
+### ignore
+
+Type: `Array<string | RegExp>`\
+Default: `[]`
+
+Ignore matching parts of each comment. Strings are regex sources using the `v` flag; regex literals preserve their flags. All patterns are applied globally.
+
+For example, preserve text inside smart quotes and guillemets:
+
+```js
+'unicorn/comment-content': [
+	'error',
+	{
+		ignore: [
+			/“[^”]*”/v,
+			/«[^»]*»/v,
+			/»[^«]*«/v,
+		],
+	},
+]
+```
+
+### checkUniformCase
+
+Type: `boolean`\
+Default: `true`
+
+By default, the rule re-cases matching tokens regardless of their case, including all-lowercase (`json`) and all-uppercase (`JSON`) ones.
+
+Pass `checkUniformCase: false` to only correct tokens that already mix upper- and lower-case, such as `Github` → `GitHub`. All-lowercase and all-uppercase tokens are then left alone, as their casing is often intentional. Replacements that change the actual letters (such as `application` → `app`, or your own typo fixes) still apply regardless of case.
+
+```js
+'unicorn/comment-content': [
+	'error',
+	{
+		checkUniformCase: false,
+	},
+]
+```
+
+### replacements
+
+Type: `object`
+
+You can extend the default replacements by passing the `replacements` option.
+
+The key is treated as a regex. By default, custom replacements are case-sensitive.
+
+Default replacement patterns treat Unicode letters, marks, numbers, and underscores as part of a word. Custom patterns are used exactly as written.
+
+```js
+'unicorn/comment-content': [
+	'error',
+	{
+		replacements: {
+			'\\bteh\\b': 'the',
+			'\\bto do\\b': {
+				replacement: 'TODO',
+				caseSensitive: false,
+			},
+			'\\bnode\\.?js\\b': false,
+		},
+	},
+]
+```
+
+### extendDefaultReplacements
+
+Type: `boolean`\
+Default: `true`
+
+Pass `extendDefaultReplacements: false` to override the default replacements completely.
+
+```js
+'unicorn/comment-content': [
+	'error',
+	{
+		extendDefaultReplacements: false,
+		replacements: {
+			'\\bteh\\b': 'the',
+		},
+	},
+]
+```

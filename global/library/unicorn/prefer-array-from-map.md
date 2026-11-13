@@ -1,0 +1,81 @@
+---
+title: "prefer-array-from-map"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-array-from-map.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# prefer-array-from-map
+
+📝 Prefer using the `Array.from()` mapping function argument.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+
+🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+
+Prefer passing the mapping function directly to `Array.from()` instead of calling `.map()` on the created array or filling an empty array in a `for…of` loop.
+
+`Array.from(iterable, mapFunction)` avoids creating an intermediate array before mapping.
+
+When checking `.map()` calls, this rule only reports inline arrow function callbacks that do not use `Array#map`'s third callback argument.
+
+When checking `for…of` loops, this rule only reports adjacent empty-array declarations followed by a simple loop body that adds exactly one mapped value. Trivial copies are handled by `prefer-spread`.
+
+When a function that can run during the loop references the array, the loop replacement is a suggestion, because the function could run while the new initializer is built, before the array is initialized.
+
+## Examples
+
+```js
+// ❌
+const foo = Array.from(bar).map(element => element.id);
+
+// ✅
+const foo = Array.from(bar, element => element.id);
+```
+
+```js
+// ❌
+const foo = Array.from(bar).map((element, index) => `${index}:${element}`);
+
+// ✅
+const foo = Array.from(bar, (element, index) => `${index}:${element}`);
+```
+
+```js
+// ❌
+const foo = [];
+for (const element of bar) {
+	foo.push(element.id);
+}
+
+// ✅
+const foo = Array.from(bar, element => element.id);
+```
+
+```js
+// ❌
+const foo = [];
+for (const [index, element] of bar.entries()) {
+	foo.push(`${index}:${element}`);
+}
+
+// ✅
+const foo = Array.from(bar.entries(), ([index, element]) => `${index}:${element}`);
+```
+
+```js
+// ✅
+const foo = Array.from(bar).map((element, index, array) => {
+	return array.includes(element);
+});
+```
+
+```js
+// ✅
+const foo = [];
+for (const element of bar) {
+	foo.push(element);
+}
+```

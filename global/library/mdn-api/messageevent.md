@@ -1,0 +1,102 @@
+---
+title: "MessageEvent"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/messageevent/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# MessageEvent
+
+The **`MessageEvent`** interface represents a message received by a target object.
+
+This is used to represent messages in:
+
+- Server-sent events (see the `message` event of `EventSource`).
+- Web sockets (see the `message` event of `WebSocket`).
+- Cross-document messaging (see `Window.postMessage()` and the `message` event of `Window`).
+- Channel messaging (see `MessagePort.postMessage()` and the `message` event of `MessagePort`).
+- Cross-worker/document messaging (see the above two entries, but also `Worker.postMessage()`, the `message` event of `Worker`, the `message` event of `ServiceWorkerGlobalScope`, etc.)
+- Broadcast channels (see `BroadcastChannel.postMessage()` and the `message` event of `BroadcastChannel`).
+- WebRTC data channels (see the `message` event of `RTCDataChannel`).
+
+The action triggered by this event is defined in a function set as the event handler for the relevant `message` event.
+
+## Constructor
+
+- `MessageEvent()`
+    Creates a new `MessageEvent`.
+
+## Instance properties
+
+_This interface also inherits properties from its parent, `Event`._
+
+- `MessageEvent.data` (read-only)
+    The data sent by the message emitter.
+- `MessageEvent.origin` (read-only)
+    A string representing the origin of the message emitter.
+- `MessageEvent.lastEventId` (read-only)
+    A string representing a unique ID for the event.
+- `MessageEvent.source` (read-only)
+    A `MessageEventSource` (which can be a WindowProxy, `MessagePort`, or `ServiceWorker` object) representing the message emitter.
+- `MessageEvent.ports` (read-only)
+    An array of `MessagePort` objects containing all `MessagePort` objects sent with the message, in order.
+
+## Instance methods
+
+_This interface also inherits methods from its parent, `Event`._
+
+- `initMessageEvent()` (deprecated)
+    Initializes a message event. **Do not use this anymore** — **use the `MessageEvent()` constructor instead.**
+
+## Examples
+
+In our Basic <example-value> worker example (run shared worker), we have two HTML pages, each of which uses some JavaScript to perform a calculation. The different scripts are using the same worker file to perform the calculation — they can both access it, even if their pages are running inside different windows.
+
+The following code snippet shows creation of a `SharedWorker` object using the `SharedWorker()` constructor. Both scripts contain this:
+
+```js
+const myWorker = new SharedWorker("worker.js");
+```
+
+Both scripts then access the worker through a `MessagePort` object created using the `SharedWorker.port` property. If the onmessage event is attached using addEventListener, the port is manually started using its `start()` method:
+
+```js
+myWorker.port.start();
+```
+
+When the port is started, both scripts post messages to the worker and handle messages sent from it using `port.postMessage()` and `port.onmessage`, respectively:
+
+```js
+[first, second].forEach((input) => {
+  input.onchange = () => {
+    myWorker.port.postMessage([first.value, second.value]);
+    console.log("Message posted to worker");
+  };
+});
+
+myWorker.port.onmessage = (e) => {
+  result1.textContent = e.data;
+  console.log("Message received from worker");
+};
+```
+
+Inside the worker we use the `onconnect` handler to connect to the same port discussed above. The ports associated with that worker are accessible in the `connect` event's `ports` property — we then use `MessagePort` `start()` method to start the port, and the `onmessage` handler to deal with messages sent from the main threads.
+
+```js
+onconnect = (e) => {
+  const port = e.ports[0];
+
+  port.addEventListener("message", (e) => {
+    const workerResult = `Result: ${e.data[0] * e.data[1]}`;
+    port.postMessage(workerResult);
+  });
+
+  port.start(); // Required when using addEventListener. Otherwise called implicitly by onmessage setter.
+};
+```
+
+## See also
+
+- `ExtendableMessageEvent` — similar to this interface but used in interfaces that needs to give more flexibility to authors.

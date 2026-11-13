@@ -1,0 +1,103 @@
+---
+title: "consistent-class-member-order"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/consistent-class-member-order.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# consistent-class-member-order
+
+📝 Enforce consistent class member order.
+
+💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+
+💡 This rule is manually fixable by editor suggestions.
+
+A predictable member order makes classes faster to scan and keeps related static, instance, field, and method members together.
+
+This rule enforces the following class member order:
+
+1. Static fields
+2. Static blocks
+3. Static methods
+4. Private instance fields
+5. Public instance fields
+6. Constructors
+7. Private instance methods
+8. Public instance methods
+
+Static members are grouped by `static` before privacy, so `static #foo` belongs with other static fields or methods.
+
+TypeScript `protected` members follow the same order as public members.
+
+This rule does not autofix because fields and static blocks run in declaration order, and method order is observable through property reflection.
+
+It may offer a manual suggestion for simple class bodies without comments, decorators, computed keys, or unsupported members. The suggestion is not offered when it would move a static field across a static block. It can still move instance fields past each other, which changes the order their initializers run in, so check fields whose initializers have side effects or read other fields.
+
+This rule is intentionally simple. It only enforces group order and will not add options for sorting within groups, newline handling, or more detailed member categories. Use a dedicated sorting rule if you need that.
+
+## Options
+
+Type: `object`
+
+### order
+
+Type: `string[]`
+
+Default:
+
+```js
+[
+	'static-field',
+	'static-block',
+	'static-method',
+	'private-field',
+	'public-field',
+	'constructor',
+	'private-method',
+	'public-method',
+]
+```
+
+The array must contain each group exactly once.
+
+## Examples
+
+```js
+// ❌
+class Foo {
+	constructor() {}
+	#privateField = 1;
+	publicField = 1;
+}
+```
+
+```js
+// ✅
+class Foo {
+	static staticField = 1;
+	#privateField = 1;
+	publicField = 1;
+
+	constructor() {}
+}
+```
+
+```js
+// ❌
+class Foo {
+	publicMethod() {}
+	#privateMethod() {}
+}
+```
+
+```js
+// ✅
+class Foo {
+	static staticMethod() {}
+	#privateMethod() {}
+	publicMethod() {}
+}
+```

@@ -1,0 +1,99 @@
+---
+title: "prefer-string-replace-all"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-string-replace-all.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# prefer-string-replace-all
+
+📝 Prefer `String#replaceAll()` over regex searches with the global flag and `String#split().join()`.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+
+🔧 This rule is automatically fixable by the `--fix` CLI option.
+
+The `String#replaceAll()` method is both faster and safer as you don't have to use a regex and remember to escape it if the string is not a literal. And when used with a regex, it makes the intent clearer.
+
+## Examples
+
+```js
+// ❌
+string.replace(/RegExp with global flag/igu, '');
+
+// ✅
+string.replaceAll(/RegExp with global flag/igu, '');
+```
+
+```js
+// ❌
+string.replace(/RegExp without special symbols/g, '');
+
+// ✅
+string.replaceAll('RegExp without special symbols', '');
+```
+
+```js
+// ❌
+string.replace(/\(It also checks for escaped regex symbols\)/g, '');
+
+// ✅
+string.replaceAll('(It also checks for escaped regex symbols)', '');
+```
+
+```js
+// ❌
+string.replace(/Works for u flag too/gu, '');
+
+// ✅
+string.replaceAll('Works for u flag too', '');
+```
+
+Simple global literal regexes can also be converted when they use flags that do not affect literal matching, such as `d`, `m`, `s`, `u`, and `v`. Regexes with `i` or `y`, and Unicode regexes matching lone surrogates, are preserved as regexes.
+
+The rule can also simplify literal-only wrappers, such as single-item classes, noncapturing groups, and exact-one quantifiers.
+
+```js
+// ❌
+string.replaceAll(/foo/g, 'bar');
+
+// ✅
+string.replaceAll('foo', 'bar');
+```
+
+```js
+// ❌
+string.split('foo').join('bar');
+
+// ✅
+string.replaceAll('foo', 'bar');
+```
+
+```js
+// ✅
+string.replace(/Non-global regexp/iu, '');
+```
+
+```js
+// ✅
+string.replace('Not a regex expression', '')
+```
+
+```js
+// ✅
+string.replaceAll(/\s/g, '');
+```
+
+```js
+// ✅
+string.split('').join('replacement');
+```
+
+```js
+// ✅
+string.split(/(capture)/).join('replacement');
+```
+
+The rule intentionally ignores `split('')` and regex separators that can change the split output through capturing groups or empty matches.

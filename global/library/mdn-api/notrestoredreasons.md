@@ -1,0 +1,43 @@
+---
+title: "NotRestoredReasons"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/notrestoredreasons/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# NotRestoredReasons
+
+The **`NotRestoredReasons`** interface of the `Performance API` provides report data containing reasons why the current document was blocked from using the back/forward cache (bfcache) on navigation.
+
+These objects are accessed via the `PerformanceNavigationTiming.notRestoredReasons` property.
+
+## Instance properties
+
+- `children` (read-only) (experimental)
+    An array of `NotRestoredReasons` objects, one for each child `` embedded in the current document, which may contain reasons why the top-level frame was blocked relating to the child frames. Each object has the same structure as the parent object — this way, any number of levels of embedded ``s can be represented inside the object recursively. If the frame has no children, the array will be empty; if the document is in a cross-origin ``, `children` will return `null`.
+- `id` (read-only) (experimental)
+    A string representing the `id` attribute value of the `` the document is contained in (for example ``). If the document is not in an `` or the `` has no `id` set, `id` will return `null`.
+- `name` (read-only) (experimental)
+    A string representing the `name` attribute value of the `` the document is contained in (for example ``). If the document is not in an `` or the `` has no `name` set, `name` will return `null`.
+- `reasons` (read-only) (experimental)
+    An array of `NotRestoredReasonDetails` objects, each representing a reason why the navigated page was blocked from using the bfcache. If the document is in a cross-origin ``, `reasons` will return `null`, but the parent document may show a `reason` of `"masked"` if any ``s blocked bfcache usage for the top-level frame.
+- `src` (read-only) (experimental)
+    A string representing the path to the source of the `` the document is contained in (for example ``). If the document is not in an ``, `src` will return `null`.
+- `url` (read-only) (experimental)
+    A string representing the URL of the navigated page or ``. If the document is in a cross-origin ``, `url` will return `null`.
+
+## Instance methods
+
+- `toJSON()` (experimental)
+    Returns a JSON-serializable plain object representing the `NotRestoredReasons` object. Automatically called by `JSON.stringify()`.
+
+## Examples
+
+See Monitoring bfcache blocking reasons for examples.
+
+## See also
+
+- Monitoring bfcache blocking reasons
+- `PerformanceNavigationTiming.notRestoredReasons`

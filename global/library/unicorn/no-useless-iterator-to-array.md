@@ -1,0 +1,126 @@
+---
+title: "no-useless-iterator-to-array"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-useless-iterator-to-array.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# no-useless-iterator-to-array
+
+📝 Disallow unnecessary `.toArray()` on iterators.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+
+🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+
+`Iterator.prototype.toArray()` converts an iterator to an array. However, this conversion is unnecessary in the following cases:
+
+- The following builtins accept an iterable, so converting to an array first is unnecessary:
+
+  - `Map` constructor
+  - `WeakMap` constructor
+  - `Set` constructor
+  - `WeakSet` constructor
+  - `TypedArray` constructor
+  - `Array.from(…)`
+  - `TypedArray.from(…)`
+  - `Object.fromEntries(…)`
+
+- `for…of` and `for await…of` can iterate over any iterable, so converting to an array first is unnecessary.
+
+- `yield*` can delegate to any iterable, so converting to an array first is unnecessary.
+
+  `.toArray()` pulls every element before the loop or delegation starts, while the iterator itself is only pulled until a `break`, `return`, or `throw`. So these cases are reported as **suggestions** rather than autofixes.
+
+- `Promise.{all,allSettled,any,race}(…)` accept an iterable, so `.toArray()` is unnecessary. However, removing it can change a synchronous throw into an asynchronous rejection when iteration fails, so these cases are reported as **suggestions** rather than autofixes.
+
+- The spread operator (`...`) works on any iterable, so converting to an array before spreading is unnecessary:
+
+  - `[...iterator.toArray()]` → `[...iterator]`
+  - `call(...iterator.toArray())` → `call(...iterator)`
+
+- Some `Array` methods also exist on `Iterator`, so converting to an array to call them is unnecessary:
+
+  - `.every()`
+  - `.find()`
+  - `.forEach()`
+  - `.reduce()`
+  - `.some()`
+
+However, `Array` callbacks receive additional arguments (e.g., the 3rd `array` argument, or 4th for `.reduce()`) that `Iterator` callbacks do not, so removing `.toArray()` can change behavior if the callback uses those arguments. A callback that can read them, including any named callback, is not reported, and the other cases are reported as **suggestions** rather than autofixes.
+
+This rule does not flag `.filter()`, `.map()`, or `.flatMap()` because their `Iterator` versions return iterators, not arrays, so the semantics differ.
+
+## Examples
+
+```js
+// ❌
+const set = new Set(iterator.toArray());
+
+// ✅
+const set = new Set(iterator);
+```
+
+```js
+// ❌
+const results = await Promise.all(iterator.toArray());
+
+// ✅
+const results = await Promise.all(iterator);
+```
+
+```js
+// ❌
+for (const item of iterator.toArray());
+
+// ✅
+for (const item of iterator);
+```
+
+```js
+// ❌
+function * foo() {
+	yield * iterator.toArray();
+}
+
+// ✅
+function * foo() {
+	yield * iterator;
+}
+```
+
+```js
+// ❌
+const items = [...iterator.toArray()];
+
+// ✅
+const items = [...iterator];
+```
+
+```js
+// ❌
+call(...iterator.toArray());
+
+// ✅
+call(...iterator);
+```
+
+```js
+// ❌
+iterator.toArray().every(element => element > 0);
+
+// ✅
+iterator.every(element => element > 0);
+```
+
+```js
+// ✅ A named callback may read the extra `Array` callback arguments
+iterator.toArray().every(fn);
+```
+
+```js
+// ✅ `.filter()` returns an array on Array but an iterator on Iterator
+iterator.toArray().filter(fn);
+```

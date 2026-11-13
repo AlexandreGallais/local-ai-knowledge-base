@@ -1,0 +1,150 @@
+---
+title: "default-export-style"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/default-export-style.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# default-export-style
+
+📝 Enforce consistent default export declarations.
+
+💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+
+🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+
+Enforce whether default-exported functions and classes are declared inline with `export default` or separately. For functions, separate means a `const` arrow function exported by identifier. For classes, separate means a class declaration exported by identifier.
+
+A consistent declaration style makes default exports easier to scan and avoids mixing multiple declaration forms across a codebase.
+
+This rule controls whether local default exports are written inline or separately. Named exports are intentionally ignored. Use `consistent-function-style` for function syntax, including direct default-exported functions through its `defaultExport` option.
+
+Use `no-anonymous-default-export` to require names for anonymous default exports.
+
+## Examples
+
+```js
+// eslint unicorn/default-export-style: ["error", {functions: "inline"}]
+
+// ❌
+const foo = () => {};
+export default foo;
+
+// ✅
+export default function foo() {}
+```
+
+```js
+// eslint unicorn/default-export-style: ["error", {functions: "separate"}]
+
+// ❌
+export default function foo() {}
+
+// ✅
+const foo = () => {};
+export default foo;
+```
+
+```js
+// eslint unicorn/default-export-style: ["error", {functions: "ignore"}]
+
+// ✅
+export default function foo() {}
+
+// ✅
+const foo = () => {};
+export default foo;
+```
+
+```js
+// eslint unicorn/default-export-style: ["error", {classes: "inline"}]
+
+// ❌
+class Foo {}
+export default Foo;
+
+// ✅
+export default class Foo {}
+```
+
+```js
+// eslint unicorn/default-export-style: ["error", {classes: "separate"}]
+
+// ❌
+export default class Foo {}
+
+// ✅
+class Foo {}
+export default Foo;
+```
+
+```js
+// eslint unicorn/default-export-style: ["error", {classes: "ignore"}]
+
+// ✅
+export default class Foo {}
+
+// ✅
+class Foo {}
+export default Foo;
+```
+
+## Options
+
+Type: `object`
+
+Default:
+
+```js
+{
+	functions: 'inline',
+	classes: 'inline',
+}
+```
+
+### `functions`
+
+Allowed values: `'inline'`, `'separate'`, `'ignore'`
+
+`'inline'` requires named default-exported functions to be declared inline:
+
+```js
+export default function foo() {}
+```
+
+`'separate'` requires named default-exported functions to use a separate `const` arrow function declaration:
+
+```js
+const foo = () => {};
+export default foo;
+```
+
+`'ignore'` disables checks for functions.
+
+> **Note:**
+> When both rules are enabled, configure compatible styles. For example, `functions: 'inline'` pairs with `defaultExport: 'declaration'`, while `functions: 'separate'` pairs with `defaultExport: 'ignore'` when `namedFunctions` permits the separate `const` arrow function. The `defaultExport` option does not inspect `export default identifier`.
+
+### `classes`
+
+Allowed values: `'inline'`, `'separate'`, `'ignore'`
+
+`'inline'` requires named default-exported classes to be declared inline:
+
+```js
+export default class Foo {}
+```
+
+`'separate'` requires named default-exported classes to use a separate class declaration:
+
+```js
+class Foo {}
+export default Foo;
+```
+
+`'ignore'` disables checks for classes.
+
+## Limitations
+
+This rule intentionally ignores named exports, re-exports, CommonJS, anonymous defaults, non-adjacent declaration/export pairs, imported identifiers, values, objects, arrays, function expressions, `let`/`var` functions, multiple variable declarators, generators, later reassigned bindings, and TypeScript-specific syntax.

@@ -1,0 +1,121 @@
+---
+title: "IDBTransaction: objectStore() method"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/idbtransaction/objectstore/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# IDBTransaction: objectStore() method
+
+The **`objectStore()`** method of the
+`IDBTransaction` interface returns an object store that has already been
+added to the scope of this transaction.
+
+Every call to this method on the same transaction object, with the same name, returns
+the same `IDBObjectStore` instance. If this method is called on a different
+transaction object, a different `IDBObjectStore` instance is returned.
+
+## Syntax
+
+```js
+objectStore(name)
+```
+
+### Parameters
+
+- `name`
+    The name of the requested object store.
+
+### Return value
+
+An `IDBObjectStore` object for accessing an object store.
+
+### Exceptions
+
+- `NotFoundError` `DOMException`
+    Thrown if the requested object store is not in this transaction's scope.
+- `InvalidStateError` `DOMException`
+    Thrown if the request was made on a source object that has been deleted or removed, or if the transaction has finished.
+
+## Examples
+
+In the following code snippet, we open a read/write transaction on our database and add
+some data to an object store. Note also the functions attached to transaction event
+handlers to report on the outcome of the transaction opening in the event of success or
+failure. For a full working example, see our To-do Notifications app (View example live).
+
+```js
+const note = document.getElementById("notifications");
+
+// an instance of a db object for us to store the IDB data in
+let db;
+
+// Let us open our database
+const DBOpenRequest = window.indexedDB.open("toDoList", 4);
+
+DBOpenRequest.onsuccess = (event) => {
+  note.appendChild(document.createElement("li")).textContent =
+    "Database initialized.";
+
+  // store the result of opening the database in the db variable.
+  // This is used a lot below
+  db = DBOpenRequest.result;
+
+  // Run the addData() function to add the data to the database
+  addData();
+};
+
+function addData() {
+  // Create a new object ready for being inserted into the IDB
+  const newItem = [
+    {
+      taskTitle: "Walk dog",
+      hours: 19,
+      minutes: 30,
+      day: 24,
+      month: "December",
+      year: 2013,
+      notified: "no",
+    },
+  ];
+
+  // open a read/write db transaction, ready for adding the data
+  const transaction = db.transaction(["toDoList"], "readwrite");
+
+  // report on the success of opening the transaction
+  transaction.oncomplete = (event) => {
+    note.appendChild(document.createElement("li")).textContent =
+      "Transaction completed: database modification finished.";
+  };
+
+  transaction.onerror = (event) => {
+    note.appendChild(document.createElement("li")).textContent =
+      "Transaction not opened due to error. Duplicate items not allowed.";
+  };
+
+  // create an object store on the transaction
+  const objectStore = transaction.objectStore("toDoList");
+
+  // add our newItem object to the object store
+  const objectStoreRequest = objectStore.add(newItem[0]);
+
+  objectStoreRequest.onsuccess = (event) => {
+    // report the success of the request (this does not mean the item
+    // has been stored successfully in the DB - for that you need transaction.onsuccess)
+    note.appendChild(document.createElement("li")).textContent =
+      "Request successful.";
+  };
+}
+```
+
+## See also
+
+- Using IndexedDB
+- Starting transactions: `IDBDatabase`
+- Using transactions: `IDBTransaction`
+- Setting a range of keys: `IDBKeyRange`
+- Retrieving and making changes to your data: `IDBObjectStore`
+- Using cursors: `IDBCursor`
+- Reference example: To-do Notifications (View the example live).

@@ -1,0 +1,93 @@
+---
+title: "ManagedMediaSource"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/managedmediasource/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# ManagedMediaSource
+
+The **`ManagedMediaSource`** interface of the `Media Source Extensions API` is a `MediaSource` that actively manages its memory content. Unlike a regular `MediaSource`, the user agent can evict content from its `ManagedSourceBuffer` objects at any time, for reasons such as memory or hardware limitations. This makes it suitable for power-efficient streaming scenarios where the user agent needs more control over buffered media data.
+
+When `addSourceBuffer()` is called on a `ManagedMediaSource`, it creates `ManagedSourceBuffer` objects (instead of `SourceBuffer` objects), which fire `bufferedchange` events to notify the application when buffered ranges are modified by the user agent.
+
+> **Note:**
+> On Safari, `ManagedMediaSource` only activates when remote playback is explicitly disabled on the media element (by setting `HTMLMediaElement.disableRemotePlayback` to `true`), or when an AirPlay source alternative is provided (for example, an HLS `` element). Without either of these, the `sourceopen` event will not fire.
+
+## Constructor
+
+- `ManagedMediaSource()` (experimental)
+    Creates and returns a new `ManagedMediaSource` object instance with no associated source buffers.
+
+## Instance properties
+
+_Also inherits properties from its parent interface, `MediaSource`._
+
+- `ManagedMediaSource.streaming` (read-only) (experimental)
+    A boolean indicating whether the `ManagedMediaSource` object is currently streaming. When `true`, the application should actively fetch and append media data. When `false`, the application can stop fetching new data.
+
+## Instance methods
+
+_Inherits methods from its parent interface, `MediaSource`._
+
+## Events
+
+_Also inherits events from its parent interface, `MediaSource`._
+
+- `startstreaming` (experimental)
+    Fired when the `ManagedMediaSource`'s `streaming` property changes from `false` to `true`, meaning the media source has started streaming.
+- `endstreaming` (experimental)
+    Fired when the `ManagedMediaSource`'s `streaming` property changes from `true` to `false`, meaning the media source has stopped streaming.
+
+## Examples
+
+### Setting up a managed media source
+
+The following example sets up a `ManagedMediaSource`, connects it to a `` element, and listens for the `startstreaming` and `endstreaming` events to control when media data is fetched. `bufferedchange` events are logged below the video.
+
+```js
+const videoUrl =
+  "https://mdn.github.io/shared-assets/videos/flower-fragmented.mp4";
+const mediaType = 'video/mp4; codecs="avc1.64001F, mp4a.40.2"';
+const video = document.querySelector("video");
+
+if (!window.ManagedMediaSource?.isTypeSupported(mediaType)) {
+  console.log("ManagedMediaSource is not supported in this browser.");
+} else {
+  const source = new ManagedMediaSource();
+  video.disableRemotePlayback = true;
+  video.src = URL.createObjectURL(source);
+
+  source.addEventListener("sourceopen", () => {
+    const sourceBuffer = source.addSourceBuffer(mediaType);
+
+    sourceBuffer.addEventListener("bufferedchange", (event) => {
+      for (let i = 0; i < event.addedRanges.length; i++) {
+        console.log(
+          `Buffered: ${event.addedRanges.start(i).toFixed(2)}s – ${event.addedRanges.end(i).toFixed(2)}s`,
+        );
+      }
+    });
+
+    source.addEventListener("startstreaming", async () => {
+      console.log("startstreaming — fetching media data…");
+      const response = await fetch(videoUrl);
+      const data = await response.arrayBuffer();
+      sourceBuffer.appendBuffer(data);
+    });
+
+    source.addEventListener("endstreaming", () => {
+      console.log("endstreaming — enough data buffered");
+    });
+  });
+}
+```
+
+## See also
+
+- `MediaSource`
+- `ManagedSourceBuffer`
+- `BufferedChangeEvent`
+- `SourceBuffer`

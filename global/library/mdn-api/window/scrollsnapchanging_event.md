@@ -1,0 +1,89 @@
+---
+title: "Window: scrollsnapchanging event"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/window/scrollsnapchanging_event/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# Window: scrollsnapchanging event
+
+The **`scrollsnapchanging`** event of the `Window` interface is fired on the `window` when the browser determines a new scroll snap target is pending, i.e., it will be selected when the current scroll gesture ends.
+
+This event works in much the same way as the `Element` interface's `scrollsnapchanging` event, except that the overall HTML document has to be set as the scroll snap container (i.e., `scroll-snap-type` is set on the `<html>` element).
+
+## Syntax
+
+Use the event name in `addEventListener()`:
+
+```js
+addEventListener("scrollsnapchanging", (event) => { })
+```
+
+Alternatively, assign to the event handler property of the interface:
+
+```js
+onscrollsnapchanging = (event) => { }
+```
+
+## Event type
+
+A `SnapEvent`, which inherits from the generic `Event` type.
+
+## Examples
+
+### Basic usage
+
+Let's say we have a `` element containing significant content that causes it to scroll:
+
+```html
+<main>
+  <!-- Significant content -->
+</main>
+```
+
+The `` element can be turned into a scroll container using a combination of CSS properties, for example:
+
+```css
+main {
+  width: 250px;
+  height: 450px;
+  overflow: scroll;
+}
+```
+
+We can then implement scroll snapping behavior on the scrolling content by specifying the `scroll-snap-type` property on the `<html>` element:
+
+```css
+html {
+  scroll-snap-type: block mandatory;
+}
+```
+
+The following JavaScript snippet would cause the `scrollsnapchanging` event to fire on the HTML document when a child of the `` element becomes a pending snap target. In the handler function, we set a `pending` class on the child referenced by the `snapTargetBlock` property, which could be used to style it differently when the event fires.
+
+```js
+window.addEventListener("scrollsnapchanging", (event) => {
+  // remove previously-set "pending" classes
+  const pendingElems = document.querySelectorAll(".pending");
+  pendingElems.forEach((elem) => {
+    elem.classList.remove("pending");
+  });
+
+  // Set current pending snap target class to "pending"
+  event.snapTargetBlock.classList.add("pending");
+});
+```
+
+At the start of the function, we select all elements that previously had the `pending` class applied and remove it, so that only the most recent pending snap target is styled.
+
+## See also
+
+- `scrollsnapchange` event
+- `scrollend` event
+- `SnapEvent`
+- CSS `scroll-snap-type` property
+- CSS scroll snap module
+- Using scroll snap events
+- Scroll Snap Events on developer.chrome.com (2024)

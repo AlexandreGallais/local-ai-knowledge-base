@@ -1,0 +1,50 @@
+---
+title: "prefer-math-abs"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-math-abs.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# prefer-math-abs
+
+📝 Prefer `Math.abs()` over manual absolute value expressions and symmetric range checks.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+
+💡 This rule is manually fixable by editor suggestions.
+
+This rule enforces the use of `Math.abs()` instead of hand-written absolute value expressions and symmetric range checks.
+
+`Math.abs()` states the intent directly and avoids duplicating the positive and negative cases in absolute-value calculations and symmetric range checks.
+
+## Examples
+
+```js
+// ❌
+const absolute = value < 0 ? -value : value;
+
+// ❌
+const absolute = value <= 0 ? 0 - value : value;
+
+// ❌
+const absolute = value > 0 ? value : -value;
+
+// ✅
+const absolute = Math.abs(value);
+```
+
+```js
+// ❌
+if (number > MAXIMUM || number < -MAXIMUM) {
+}
+
+// ✅
+if (Math.abs(number) > MAXIMUM) {
+}
+```
+
+## Scope and limitations
+
+The rewrite is offered as a suggestion rather than an autofix. `Math.abs()` coerces its argument and normalizes `-0` to `+0`, where `number < 0 ? -number : number` returns the operand untouched. For `number = -0` the ternary yields `-0` and `Math.abs(number)` yields `0`, which `Object.is()`, `1 / value` and `Math.sign()` can tell apart. The same applies to a non-numeric operand, where the ternary returns it as is and `Math.abs()` returns a number.

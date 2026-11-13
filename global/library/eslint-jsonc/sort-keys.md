@@ -1,0 +1,160 @@
+---
+title: "jsonc/sort-keys"
+tool: "eslint-jsonc"
+version: "3.4"
+source: "https://github.com/ota-meshi/eslint-plugin-jsonc/blob/a9b64928d3c1d2500f03f126abcd1db1c13c3392/docs/rules/sort-keys.md"
+commit: "a9b64928d3c1d2500f03f126abcd1db1c13c3392"
+license: "MIT"
+---
+
+# jsonc/sort-keys
+
+> require object keys to be sorted
+
+- :wrench: The `--fix` option on the command line can automatically fix some of the problems reported by this rule.
+
+## :book: Rule Details
+
+This rule checks property definitions of object and verifies that all properties are sorted alphabetically or specified order.
+
+ℹ️ To fully sort long files, you may need to run ESLint's `--fix` option multiple times.
+The rule sorts keys incrementally, and ESLint limits the number of fixes to 10 per run.
+
+<eslint-code-block fix>
+
+```json5
+/* eslint jsonc/sort-keys: 'error' */
+{
+    /* ✓ GOOD */
+    "a": {"a": 1, "b": 2, "c": 3},
+
+    /* ✗ BAD */
+    "b": {"a": 1, "c": 3, "b": 2}
+}
+```
+
+</eslint-code-block>
+
+## :wrench: Options
+
+```json5
+{
+    "jsonc/sort-keys": ["error",
+        // For example, a definition for package.json
+        {
+            "pathPattern": "^$", // Hits the root properties
+            "order": [
+                "name",
+                "version",
+                "private",
+                "publishConfig"
+                // ...
+            ]
+        },
+        {
+            "pathPattern": "^(?:dev|peer|optional|bundled)?[Dd]ependencies$",
+            "order": { "type": "asc" }
+        }
+        // ...
+    ]
+}
+```
+
+```json5
+{
+    "jsonc/sort-keys": ["error",
+        // For example, a definition for JSON Schema
+        {
+            "pathPattern": ".*", // Hits the all properties
+            "hasProperties": ["type"],
+            "order": [
+                "type",
+                "properties",
+                "items",
+                "required",
+                "minItems",
+                "additionalProperties",
+                "additionalItems"
+                // ...
+            ]
+        }
+        // ...
+    ]
+}
+```
+
+The option receives multiple objects with the following properties:
+
+- `pathPattern` (Required) ... Defines the regular expression pattern of paths to which you want to enforce the order. If you want to apply to the top level, define `"^$"`.
+- `hasProperties` ... Defines an array of property names. Checks only objects that have the defined properties.
+- `order` (Required) ... Defines how to enforce the order. You can use an object or an array.
+  - Array ... Defines an array of properties to enforce the order.
+    - String ... Defines the property name.
+    - Object ... The object has the following properties:
+      - `keyPattern` ... Defines a pattern to match the property name. Default is to match all.
+      - `order` ... The object has the following properties:
+        - `type`:
+          - `"asc"` ... Enforce properties to be in ascending order. This is default.
+          - `"desc"` ... Enforce properties to be in descending order.
+          - `"ignore"` ... Do not enforce an order for properties matching `keyPattern`.
+        - `caseSensitive` ... If `true`, enforce properties to be in case-sensitive order. Default is `true`.
+        - `natural` ... If `true`, enforce properties to be in natural order. Default is `false`.
+  - Object ... The object has the following properties:
+    - `type`:
+      - `"asc"` ... Enforce properties to be in ascending order. This is default.
+      - `"desc"` ... Enforce properties to be in descending order.
+      - `"ignore"` ... Do not enforce an order for properties at matching paths.
+    - `caseSensitive` ... If `true`, enforce properties to be in case-sensitive order. Default is `true`.
+    - `natural` ... If `true`, enforce properties to be in natural order. Default is `false`.
+- `minKeys` ... Specifies the minimum number of keys that an object should have in order for the object's unsorted keys to produce an error. Default is `2`, which means by default all objects with unsorted keys will result in lint errors.
+- `allowLineSeparatedGroups` ... If `true`, the rule allows to group object keys through line breaks. In other words, a blank line after a property will reset the sorting of keys. Default is `false`.
+
+Use `{ "type": "ignore" }` before a fallback option to preserve the existing
+property order at specific paths. For example, package export condition order
+can affect module resolution:
+
+```json5
+{
+    "jsonc/sort-keys": ["error",
+        {
+            "pathPattern": "^exports\\[\"\\.\"\\]$",
+            "order": { "type": "ignore" }
+        },
+        {
+            "pathPattern": ".*",
+            "order": { "type": "asc" }
+        }
+    ]
+}
+```
+
+You can also define options in the same format as the [sort-keys] rule.
+
+```json5
+{
+    "jsonc/sort-keys": ["error",
+        "asc",
+        {
+            "caseSensitive": true,
+            "natural": false,
+            "minKeys": 2,
+            "allowLineSeparatedGroups": false
+        }
+    ]
+}
+```
+
+See here for details.
+
+## :couple: Related rules
+
+- [sort-keys]
+
+## :rocket: Version
+
+This rule was introduced in eslint-plugin-jsonc v0.1.0
+
+## :mag: Implementation
+
+- Rule source
+- Test source

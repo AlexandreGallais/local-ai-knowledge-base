@@ -1,0 +1,57 @@
+---
+title: "no-duplicate-if-branches"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-duplicate-if-branches.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# no-duplicate-if-branches
+
+📝 Disallow duplicate adjacent branches in if chains.
+
+💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+
+When two adjacent branches in an `if`/`else if`/`else` chain have the same body, the condition that chooses between them is often redundant. This is usually a copy-paste bug or an incomplete refactor.
+
+This rule compares branch bodies with the same tokens and AST structure. It ignores comments, formatting, and optional trailing semicolons unless they change how the code is parsed, but it does not try to prove semantic equivalence. For example, semantically equivalent code with different tokens is not reported. Empty branches are ignored.
+
+Only adjacent branches are compared. Non-adjacent duplicate bodies can be legitimate fallback behavior.
+
+## Examples
+
+```js
+// ❌
+if (isAdmin) {
+	showDashboard();
+	loadStats();
+} else {
+	showDashboard();
+	loadStats();
+}
+
+// ✅
+if (isAdmin) {
+	showDashboard();
+	loadStats();
+} else {
+	showLogin();
+}
+```
+
+```js
+// ❌
+if (value === 'a') {
+	doThing();
+} else if (value === 'b') {
+	doThing();
+}
+
+// ✅
+if (value === 'a' || value === 'b') {
+	doThing();
+}
+```
+
+This rule only checks `if` chains. It does not check `switch` cases or ternary expressions.

@@ -1,0 +1,471 @@
+---
+title: "class: Frame (part 1 of 5)"
+tool: "playwright"
+version: "1.65"
+source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-frame.md"
+commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
+license: "Apache-2.0"
+---
+
+# class: Frame
+* since: v1.8
+
+At every point of time, page exposes its current frame tree via the [`method: Page.mainFrame`] and
+[`method: Frame.childFrames`] methods.
+
+[Frame] object's lifecycle is controlled by three events, dispatched on the page object:
+* [`event: Page.frameAttached`] - fired when the frame gets attached to the page. A Frame can be attached to the page
+  only once.
+* [`event: Page.frameNavigated`] - fired when the frame commits navigation to a different URL.
+* [`event: Page.frameDetached`] - fired when the frame gets detached from the page.  A Frame can be detached from the
+  page only once.
+
+An example of dumping frame tree:
+
+```js
+const { firefox } = require('playwright');  // Or 'chromium' or 'webkit'.
+
+(async () => {
+  const browser = await firefox.launch();
+  const page = await browser.newPage();
+  await page.goto('https://www.google.com/chrome/browser/canary.html');
+  dumpFrameTree(page.mainFrame(), '');
+  await browser.close();
+
+  function dumpFrameTree(frame, indent) {
+    console.log(indent + frame.url());
+    for (const child of frame.childFrames())
+      dumpFrameTree(child, indent + '  ');
+  }
+})();
+```
+
+```java
+import com.microsoft.playwright.*;
+
+public class Example {
+  public static void main(String[] args) {
+    try (Playwright playwright = Playwright.create()) {
+      BrowserType firefox = playwright.firefox();
+      Browser browser = firefox.launch();
+      Page page = browser.newPage();
+      page.navigate("https://www.google.com/chrome/browser/canary.html");
+      dumpFrameTree(page.mainFrame(), "");
+      browser.close();
+    }
+  }
+  static void dumpFrameTree(Frame frame, String indent) {
+    System.out.println(indent + frame.url());
+    for (Frame child : frame.childFrames()) {
+      dumpFrameTree(child, indent + "  ");
+    }
+  }
+}
+```
+
+```python
+import asyncio
+from playwright.async_api import async_playwright, Playwright
+
+async def run(playwright: Playwright):
+    firefox = playwright.firefox
+    browser = await firefox.launch()
+    page = await browser.new_page()
+    await page.goto("https://www.theverge.com")
+    dump_frame_tree(page.main_frame, "")
+    await browser.close()
+
+def dump_frame_tree(frame, indent):
+    print(indent + frame.name + '@' + frame.url)
+    for child in frame.child_frames:
+        dump_frame_tree(child, indent + "    ")
+
+async def main():
+    async with async_playwright() as playwright:
+        await run(playwright)
+asyncio.run(main())
+```
+
+```python
+from playwright.sync_api import sync_playwright, Playwright
+
+def run(playwright: Playwright):
+    firefox = playwright.firefox
+    browser = firefox.launch()
+    page = browser.new_page()
+    page.goto("https://www.theverge.com")
+    dump_frame_tree(page.main_frame, "")
+    browser.close()
+
+def dump_frame_tree(frame, indent):
+    print(indent + frame.name + '@' + frame.url)
+    for child in frame.child_frames:
+        dump_frame_tree(child, indent + "    ")
+
+with sync_playwright() as playwright:
+    run(playwright)
+```
+
+```csharp
+using Microsoft.Playwright;
+using System;
+using System.Threading.Tasks;
+
+class FrameExamples
+{
+    public static async Task Main()
+    {
+        using var playwright = await Playwright.CreateAsync();
+        await using var browser = await playwright.Firefox.LaunchAsync();
+        var page = await browser.NewPageAsync();
+
+        await page.GotoAsync("https://www.bing.com");
+        DumpFrameTree(page.MainFrame, string.Empty);
+    }
+
+    private static void DumpFrameTree(IFrame frame, string indent)
+    {
+        Console.WriteLine($"{indent}{frame.Url}");
+        foreach (var child in frame.ChildFrames)
+            DumpFrameTree(child, indent + " ");
+    }
+}
+```
+
+## async method: Frame.addScriptTag
+* since: v1.8
+- returns: <[ElementHandle]>
+
+Returns the added tag when the script's onload fires or when the script content was injected into frame.
+
+Adds a `<script>` tag into the page with the desired url or content.
+
+### option: Frame.addScriptTag.url
+* since: v1.8
+- `url` <[string]>
+
+URL of a script to be added.
+
+### option: Frame.addScriptTag.path
+* since: v1.8
+- `path` <[path]>
+
+Path to the JavaScript file to be injected into frame. If `path` is a relative path, then it is resolved relative to the
+current working directory.
+
+### option: Frame.addScriptTag.content
+* since: v1.8
+- `content` <[string]>
+
+Raw JavaScript content to be injected into frame.
+
+### option: Frame.addScriptTag.type
+* since: v1.8
+- `type` <[string]>
+
+Script type. Use 'module' in order to load a JavaScript ES6 module. See
+script for more details.
+
+## async method: Frame.addStyleTag
+* since: v1.8
+- returns: <[ElementHandle]>
+
+Returns the added tag when the stylesheet's onload fires or when the CSS content was injected into frame.
+
+Adds a `<link rel="stylesheet">` tag into the page with the desired url or a `<style type="text/css">` tag with the
+content.
+
+### option: Frame.addStyleTag.url
+* since: v1.8
+- `url` <[string]>
+
+URL of the `<link>` tag.
+
+### option: Frame.addStyleTag.path
+* since: v1.8
+- `path` <[path]>
+
+Path to the CSS file to be injected into frame. If `path` is a relative path, then it is resolved relative to the
+current working directory.
+
+### option: Frame.addStyleTag.content
+* since: v1.8
+- `content` <[string]>
+
+Raw CSS content to be injected into frame.
+
+## async method: Frame.check
+* since: v1.8
+* discouraged: Use locator-based [`method: Locator.check`] instead. Read more about locators.
+
+This method checks an element matching [`param: selector`] by performing the following steps:
+1. Find an element matching [`param: selector`]. If there is none, wait until a matching element is attached to
+   the DOM.
+1. Ensure that matched element is a checkbox or a radio input. If not, this method throws. If the element is already
+   checked, this method returns immediately.
+1. Wait for actionability checks on the matched element, unless [`option: force`] option is
+   set. If the element is detached during the checks, the whole action is retried.
+1. Scroll the element into view if needed.
+1. Use [`property: Page.mouse`] to click in the center of the element.
+1. Ensure that the element is now checked. If not, this method throws.
+
+When all steps combined have not finished during the specified [`option: timeout`], this method throws a
+[TimeoutError]. Passing zero timeout disables this.
+
+### param: Frame.check.selector = %%-input-selector-%%
+* since: v1.8
+
+### option: Frame.check.force = %%-input-force-%%
+* since: v1.8
+
+### option: Frame.check.scroll = %%-input-scroll-%%
+* since: v1.62
+
+### option: Frame.check.noWaitAfter = %%-input-no-wait-after-removed-%%
+* since: v1.8
+
+### option: Frame.check.position = %%-input-position-%%
+* since: v1.11
+
+### option: Frame.check.strict = %%-input-strict-%%
+* since: v1.14
+
+### option: Frame.check.timeout = %%-input-timeout-%%
+* since: v1.8
+
+### option: Frame.check.timeout = %%-input-timeout-js-%%
+* since: v1.8
+
+### option: Frame.check.trial = %%-input-trial-%%
+* since: v1.11
+
+## method: Frame.childFrames
+* since: v1.8
+- returns: <[Array]<[Frame]>>
+
+## async method: Frame.click
+* since: v1.8
+* discouraged: Use locator-based [`method: Locator.click`] instead. Read more about locators.
+
+This method clicks an element matching [`param: selector`] by performing the following steps:
+1. Find an element matching [`param: selector`]. If there is none, wait until a matching element is attached to
+   the DOM.
+1. Wait for actionability checks on the matched element, unless [`option: force`] option is
+   set. If the element is detached during the checks, the whole action is retried.
+1. Scroll the element into view if needed.
+1. Use [`property: Page.mouse`] to click in the center of the element, or the specified [`option: position`].
+1. Wait for initiated navigations to either succeed or fail, unless [`option: noWaitAfter`] option is set.
+
+When all steps combined have not finished during the specified [`option: timeout`], this method throws a
+[TimeoutError]. Passing zero timeout disables this.
+
+### param: Frame.click.selector = %%-input-selector-%%
+* since: v1.8
+
+### option: Frame.click.button = %%-input-button-%%
+* since: v1.8
+
+### option: Frame.click.clickCount = %%-input-click-count-%%
+* since: v1.8
+
+### option: Frame.click.delay = %%-input-down-up-delay-%%
+* since: v1.8
+
+### option: Frame.click.force = %%-input-force-%%
+* since: v1.8
+
+### option: Frame.click.scroll = %%-input-scroll-%%
+* since: v1.62
+
+### option: Frame.click.modifiers = %%-input-modifiers-%%
+* since: v1.8
+
+### option: Frame.click.noWaitAfter = %%-input-no-wait-after-%%
+* since: v1.8
+
+### option: Frame.click.position = %%-input-position-%%
+* since: v1.8
+
+### option: Frame.click.strict = %%-input-strict-%%
+* since: v1.14
+
+### option: Frame.click.timeout = %%-input-timeout-%%
+* since: v1.8
+
+### option: Frame.click.timeout = %%-input-timeout-js-%%
+* since: v1.8
+
+### option: Frame.click.trial = %%-input-trial-with-modifiers-%%
+* since: v1.11
+
+## async method: Frame.content
+* since: v1.8
+- returns: <[string]>
+
+Gets the full HTML contents of the frame, including the doctype.
+
+### option: Frame.content.includeShadow = %%-content-option-include-shadow-%%
+* since: v1.64
+
+## async method: Frame.dblclick
+* since: v1.8
+* discouraged: Use locator-based [`method: Locator.dblclick`] instead. Read more about locators.
+* langs:
+  - alias-csharp: DblClickAsync
+
+This method double clicks an element matching [`param: selector`] by performing the following steps:
+1. Find an element matching [`param: selector`]. If there is none, wait until a matching element is attached to
+   the DOM.
+1. Wait for actionability checks on the matched element, unless [`option: force`] option is
+   set. If the element is detached during the checks, the whole action is retried.
+1. Scroll the element into view if needed.
+1. Use [`property: Page.mouse`] to double click in the center of the element, or the specified [`option: position`].
+   if the first click of the `dblclick()` triggers a navigation event, this method will throw.
+
+When all steps combined have not finished during the specified [`option: timeout`], this method throws a
+[TimeoutError]. Passing zero timeout disables this.
+
+:::note
+`frame.dblclick()` dispatches two `click` events and a single `dblclick` event.
+:::
+
+### param: Frame.dblclick.selector = %%-input-selector-%%
+* since: v1.8
+
+### option: Frame.dblclick.button = %%-input-button-%%
+* since: v1.8
+
+### option: Frame.dblclick.force = %%-input-force-%%
+* since: v1.8
+
+### option: Frame.dblclick.scroll = %%-input-scroll-%%
+* since: v1.62
+
+### option: Frame.dblclick.delay = %%-input-down-up-delay-%%
+* since: v1.8
+
+### option: Frame.dblclick.modifiers = %%-input-modifiers-%%
+* since: v1.8
+
+### option: Frame.dblclick.noWaitAfter = %%-input-no-wait-after-removed-%%
+* since: v1.8
+
+### option: Frame.dblclick.position = %%-input-position-%%
+* since: v1.8
+
+### option: Frame.dblclick.strict = %%-input-strict-%%
+* since: v1.14
+
+### option: Frame.dblclick.timeout = %%-input-timeout-%%
+* since: v1.8
+
+### option: Frame.dblclick.timeout = %%-input-timeout-js-%%
+* since: v1.8
+
+### option: Frame.dblclick.trial = %%-input-trial-with-modifiers-%%
+* since: v1.11
+
+## async method: Frame.dispatchEvent
+* since: v1.8
+* discouraged: Use locator-based [`method: Locator.dispatchEvent`] instead. Read more about locators.
+
+The snippet below dispatches the `click` event on the element. Regardless of the visibility state of the element, `click`
+is dispatched. This is equivalent to calling
+element.click().
+
+**Usage**
+
+```js
+await frame.dispatchEvent('button#submit', 'click');
+```
+
+```java
+frame.dispatchEvent("button#submit", "click");
+```
+
+```python
+await frame.dispatch_event("button#submit", "click")
+```
+
+```python
+frame.dispatch_event("button#submit", "click")
+```
+
+```csharp
+await frame.DispatchEventAsync("button#submit", "click");
+```
+
+Under the hood, it creates an instance of an event based on the given [`param: type`], initializes it with
+[`param: eventInit`] properties and dispatches it on the element. Events are `composed`, `cancelable` and bubble by
+default.
+
+Since [`param: eventInit`] is event-specific, please refer to the events documentation for the lists of initial
+properties:
+* DeviceMotionEvent
+* DeviceOrientationEvent
+* DragEvent
+* Event
+* FocusEvent
+* KeyboardEvent
+* MouseEvent
+* PointerEvent
+* TouchEvent
+* WheelEvent
+
+You can also specify `JSHandle` as the property value if you want live objects to be passed into the event:
+
+```js
+// Note you can only create DataTransfer in Chromium and Firefox
+const dataTransfer = await frame.evaluateHandle(() => new DataTransfer());
+await frame.dispatchEvent('#source', 'dragstart', { dataTransfer });
+```
+
+```java
+// Note you can only create DataTransfer in Chromium and Firefox
+JSHandle dataTransfer = frame.evaluateHandle("() => new DataTransfer()");
+Map<String, Object> arg = new HashMap<>();
+arg.put("dataTransfer", dataTransfer);
+frame.dispatchEvent("#source", "dragstart", arg);
+```
+
+```python
+# note you can only create data_transfer in chromium and firefox
+data_transfer = await frame.evaluate_handle("new DataTransfer()")
+await frame.dispatch_event("#source", "dragstart", { "dataTransfer": data_transfer })
+```
+
+```python
+# note you can only create data_transfer in chromium and firefox
+data_transfer = frame.evaluate_handle("new DataTransfer()")
+frame.dispatch_event("#source", "dragstart", { "dataTransfer": data_transfer })
+```
+
+```csharp
+// Note you can only create DataTransfer in Chromium and Firefox
+var dataTransfer = await frame.EvaluateHandleAsync("() => new DataTransfer()");
+await frame.DispatchEventAsync("#source", "dragstart", new { dataTransfer });
+```
+
+### param: Frame.dispatchEvent.selector = %%-input-selector-%%
+* since: v1.8
+
+### param: Frame.dispatchEvent.type
+* since: v1.8
+- `type` <[string]>
+
+DOM event type: `"click"`, `"dragstart"`, etc.
+
+### param: Frame.dispatchEvent.eventInit
+* since: v1.8
+- `eventInit` ?<[EvaluationArgument]>
+
+Optional event-specific initialization properties.
+
+### option: Frame.dispatchEvent.strict = %%-input-strict-%%
+* since: v1.14
+
+### option: Frame.dispatchEvent.timeout = %%-input-timeout-%%
+* since: v1.8
+
+### option: Frame.dispatchEvent.timeout = %%-input-timeout-js-%%
+* since: v1.8

@@ -1,0 +1,502 @@
+---
+title: "check-template-names"
+tool: "eslint-jsdoc"
+version: "65.4"
+source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/check-template-names.md"
+commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
+license: "BSD-3-Clause"
+---
+
+# `check-template-names`
+
+Checks that any `@template` names are actually used in the connected
+`@typedef`, `@callback`, `@function` or type structure.
+
+Currently checks `ClassDeclaration`, `FunctionDeclaration`,
+`TSInterfaceDeclaration` or `TSTypeAliasDeclaration` such as:
+
+```ts
+/**
+ * @template D
+ * @template V
+ */
+export type Pairs<D, V> = [D, V | undefined];
+```
+
+or
+
+```js
+/**
+ * @template D
+ * @template V
+ * @typedef {[D, V | undefined]} Pairs
+ */
+```
+
+|||
+|---|---|
+|Context|everywhere|
+|Tags|`@template`|
+|Recommended|false|
+|Settings||
+|Options||
+
+## Failing examples
+
+The following patterns are considered problems:
+
+````ts
+/**
+ * @template T
+ * @template {keyof T} K
+ * @param {string} x
+ * @returns {void}
+ */
+function quux (x) {}
+// Message: @template K not in use
+
+/**
+ * @template D
+ * @template V
+ */
+type Pairs<X, Y> = [X, Y | undefined];
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export type Pairs<X, Y> = [X, Y | undefined];
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ * @typedef {[X, Y | undefined]} Pairs
+ */
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export type Pairs = [number, undefined];
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ * @typedef {[undefined]} Pairs
+ */
+// Settings: {"jsdoc":{"mode":"permissive"}}
+// Message: @template D not in use
+
+/**
+ * @template D, U, V
+ */
+export type Extras<D, U> = [D, U | undefined];
+// Message: @template V not in use
+
+/**
+ * @template D, U, V
+ * @typedef {[D, U | undefined]} Extras
+ */
+// Message: @template V not in use
+
+/**
+ * @template D
+ * @template V
+ * @typedef Pairs
+ * @property {V} foo
+ */
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export default interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+function identity<Type>(arg: Type): Type {
+  return arg;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export function identity<Type>(arg: Type): Type {
+  return arg;
+}
+// Message: @template D not in use
+
+/**
+ * @template T
+ * @template K
+ * @typedef {T["K"]} ValueOfK
+ */
+// Message: @template K not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export default function identity<Type>(arg: Type): Type {
+  return arg;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export default class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ */
+export default class <NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ * @callback
+ * @returns {[X, Y | undefined]}
+ */
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ * @function
+ * @returns {[X, Y | undefined]}
+ */
+// Message: @template D not in use
+
+/**
+ * @template D
+ * @template V
+ * @function
+ * @param {[X, Y | undefined]} someParam
+ */
+// Message: @template D not in use
+
+/**
+ * @template
+ */
+// Settings: {"jsdoc":{"tagNamePreference":{"template":false}}}
+// Message: Unexpected tag `@template`
+
+/**
+ * @template [T = string]
+ * @template [U = number]
+ * @typedef {[T]} Single
+ */
+// Message: @template U not in use
+````
+
+## Passing examples
+
+The following patterns are not considered problems:
+
+````ts
+/**
+ * @template D
+ * @template V
+ */
+export type Pairs<D, V> = [D, V | undefined];
+
+/**
+ * @template D
+ * @template V
+ * @typedef {[D, V | undefined]} Pairs
+ */
+
+/**
+ * @template D, U, V
+ */
+export type Extras<D, U, V> = [D, U, V | undefined];
+
+/**
+ * @template D, U, V
+ * @typedef {[D, U, V | undefined]} Extras
+ */
+
+/**
+ * @template X
+ * @typedef {[D, U, V | undefined]} Extras
+ * @typedef {[D, U, V | undefined]} Extras
+ */
+
+/**
+ * @typedef Foo
+ * @prop {string} bar
+ */
+
+/**
+ * @template T
+ * @template {keyof T} K
+ * @typedef {T[K]} ValueOf
+ */
+
+/**
+ * @template D
+ * @template V
+ * @typedef Pairs
+ * @property {D} foo
+ * @property {V} bar
+ */
+
+/**
+ * @template Type
+ */
+interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+
+/**
+ * @template Type
+ */
+export interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+
+/**
+ * @template Type
+ */
+export default interface GenericIdentityFn<Type> {
+  (arg: Type): Type;
+}
+
+/**
+ * @template Type
+ */
+function identity<Type>(arg: Type): Type {
+  return arg;
+}
+
+/**
+ * @template Type
+ */
+export function identity<Type>(arg: Type): Type {
+  return arg;
+}
+
+/**
+ * @template Type
+ */
+export default function identity<Type>(arg: Type): Type {
+  return arg;
+}
+
+/**
+ * @template NumType
+ */
+class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+
+/**
+ * @template NumType
+ */
+export class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+
+/**
+ * @template NumType
+ */
+export default class GenericNumber<NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+
+/**
+ * @template NumType
+ */
+export default class <NumType> {
+  zeroValue: NumType;
+  add: (x: NumType, y: NumType) => NumType;
+}
+
+/**
+ * Uses the provided callback to group the given array into the keys of a map.
+ * Based on the array grouping proposal: https://github.com/tc39/proposal-array-grouping/
+ *
+ * @template T
+ * @param {T[]} array
+ * @param {(value: T, index: number) => string} callbackFn
+ * @returns {Map<string, T[]>}
+ */
+export function mapGroupBy(array, callbackFn) {
+}
+
+/**
+ * @template D
+ * @template V
+ * @callback
+ * @returns {[D, V | undefined]}
+ */
+
+/**
+ * @template D
+ * @template V
+ * @function
+ * @returns {[D, V | undefined]}
+ */
+
+/**
+ * @template D
+ * @template V
+ * @function
+ * @param {[D, V | undefined]} someParam
+ */
+
+/**
+ * @template {string} U
+ */
+export class User {
+  /**
+   * @type {U}
+   */
+  name;
+}
+
+/**
+ * @template {string} U
+ */
+export class User {
+  /**
+   * @param {U} name
+   */
+  constructor(name) {
+    this.name = name;
+  }
+  methodToIgnore() {}
+}
+
+/**
+ * @template [ChannelDataType=undefined]
+ * @param {string} messageType - A key used for sending and receiving messages.
+ * @returns {MessageChannel<ChannelDataType>} A channel that can create messages of its
+ * own type.
+ */
+export function createMessageChannel(messageType) {
+  // Note: It should also infer the type if the new channel is returned
+  // directly rather than returned as a typed variable.
+
+  /** @type {MessageChannel<ChannelDataType>} */
+  const messageChannel = new MessageChannel(messageType);
+
+  return messageChannel;
+}
+
+/**
+ * @template [T = "json"]
+ * @template {string} [ U = string ] - A key
+ * @typedef {(this: T, key: U) => void} SimpleCallback
+ */
+
+/**
+ * @template T
+ * @augments {Set<T>}
+ */
+export class MySet extends Set {}
+
+/**
+ * @template U
+ * @extends {Set<U>}
+ */
+export class MySet extends Set {}
+
+/**
+ * @template T
+ * @implements {Iterable<T>}
+ */
+export class MyIterable {}
+
+/**
+ * @template {Record<string, unknown>} T
+ * @template {keyof T} K
+ * @param {K} key
+ * @returns {void}
+ */
+function quux (key) {}
+
+/**
+ * @template T
+ * @template [U=T[]]
+ * @param {U} x
+ * @returns {void}
+ */
+function quux (x) {}
+
+/**
+ * @template {B} A
+ * @template B
+ * @typedef {A} AssertExtends
+ */
+
+/**
+ * @template T
+ * @param {{bar: string, [Symbol.dispose](): T}} Single
+ */
+function quux () {}
+````

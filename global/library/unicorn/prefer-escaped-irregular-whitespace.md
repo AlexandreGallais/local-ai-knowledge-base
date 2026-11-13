@@ -1,0 +1,47 @@
+---
+title: "prefer-escaped-irregular-whitespace"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-escaped-irregular-whitespace.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# prefer-escaped-irregular-whitespace
+
+📝 Prefer escape sequences for irregular whitespace characters.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, 🧩 `recommended-json`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, ☑️ `unopinionated`.
+
+🔧 This rule is automatically fixable by the `--fix` CLI option.
+
+Supports JavaScript, TypeScript, JSON, JSONC, JSON5, SOML, and TOML.
+
+Escape irregular whitespace in strings, regular expressions, and untagged templates to make invisible characters reviewable. The character set matches ESLint's `no-irregular-whitespace` rule.
+
+Comments, JSX text and quoted attributes, tagged templates, and backslash-continued U+2028/U+2029 are ignored. TOML checks only basic <example-value>, including double-quoted keys; literal strings cannot use escapes.
+
+Strings, untagged templates, and `u`/`v` regular expressions are autofixed. Other regular expressions are reported without a fix because adding `u` can change their meaning. JSON and TOML use four-digit escapes. SOML checks escaped strings and keys and uses lowercase braced escapes; literal strings and keys are ignored.
+
+## Examples
+
+```js
+// ❌
+const nonBreakingSpace = ' ';
+// ✅
+const nonBreakingSpace = '\u{A0}';
+```
+
+```js
+// ❌
+const zeroWidthSpacePattern = /​/u;
+// ✅
+const zeroWidthSpacePattern = /\u{200B}/u;
+```
+
+```js
+// ❌
+const narrowNoBreakSpace = ` `;
+// ✅
+const narrowNoBreakSpace = `\u{202F}`;
+```

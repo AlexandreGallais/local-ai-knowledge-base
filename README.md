@@ -50,4 +50,5 @@ node scripts/check-base.ts
 ## License
 
 MIT, see [LICENSE](LICENSE). Third-party documentation in `global/library/` keeps its own license,
-listed in `global/library/THIRD_PARTY_NOTICES.md`.
+listed in `global/THIRD_PARTY_NOTICES.md`. MDN Web Docs content stays under CC BY-SA 2.5 in its own
+folders.

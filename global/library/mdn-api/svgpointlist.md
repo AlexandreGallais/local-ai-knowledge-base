@@ -1,0 +1,59 @@
+---
+title: "SVGPointList"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/svgpointlist/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# SVGPointList
+
+The **`SVGPointList`** interface represents a list of `DOMPoint` objects.
+
+An `SVGPointList` can be designated as read-only, which means that attempts to modify the object will result in an exception being thrown.
+
+An `SVGPointList` object is indexable and can be accessed like an array using bracket notation. Reading an index is equivalent to calling `getItem()`. Assigning to an index is equivalent to calling `replaceItem()`, including the exceptions it throws.
+
+## Instance properties
+
+- `SVGPointList.length` (read-only)
+    Returns the number of points in the list.
+- `SVGPointList.numberOfItems` (read-only)
+    Returns the number of points in the list.
+
+## Instance methods
+
+- `SVGPointList.clear()`
+    Removes all items in the list.
+- `SVGPointList.initialize()`
+    First removes all items in the list, then adds a single value to the list.
+- `SVGPointList.getItem()`
+    Gets an item from the list at a specified position.
+- `SVGPointList.insertItemBefore()`
+    Inserts an element into the list at a specified position.
+- `SVGPointList.replaceItem()`
+    Replaces an item in the list with a new item.
+- `SVGPointList.removeItem()`
+    Removes an item from the list.
+- `SVGPointList.appendItem()`
+    Adds an item to the end of the list.
+
+## Examples
+
+The following example shows an SVG which contains a `<polyline>` with five coordinate pairs. The `points` property returns an `SVGPointList`.
+
+```html
+<svg viewBox="-10 -10 120 120" xmlns="http://www.w3.org/2000/svg">
+  <polyline
+    id="example"
+    stroke="black"
+    fill="none"
+    points="50,0 21,90 98,35 2,35 79,90" />
+</svg>
+```
+
+```js
+const example = document.getElementById("example");
+console.log(example.points); // An SVGPointList
+```

@@ -1,0 +1,51 @@
+---
+title: "Reason: CORS header 'Access-Control-Allow-Origin' does not match 'xyz'"
+tool: "mdn-http"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/http/guides/cors/errors/corsalloworiginnotmatchingorigin/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# Reason: CORS header 'Access-Control-Allow-Origin' does not match 'xyz'
+
+## Reason
+
+```plain
+Reason: CORS header 'Access-Control-Allow-Origin' does not match 'xyz'
+```
+
+## What went wrong?
+
+The origin making the request does not match the origin permitted by the `Access-Control-Allow-Origin` header. This error can also occur if the response includes more than one `Access-Control-Allow-Origin` header.
+
+If the service your code is accessing uses a CORS request under your control, make
+sure it is configured to include your origin in its `Access-Control-Allow-Origin` header. In addition, confirm that only one such header is
+included in responses, and that it includes only a single origin.
+
+For example, in Apache, add a line such as the following to the server's configuration
+(within the appropriate `<Directory>`, `<Location>`,
+`<Files>`, or `<VirtualHost>` section). The
+configuration is typically found in a `.conf` file (`httpd.conf`
+and `apache.conf` are common names for these), or in an
+`.htaccess` file.
+
+> **Warning:**
+> You must include the HTTPS or HTTP protocol as part of the origin.
+
+```apacheconf
+Header set Access-Control-Allow-Origin 'origin'
+```
+
+For Nginx, the command to set up this header is:
+
+```nginx
+add_header 'Access-Control-Allow-Origin' 'origin'
+```
+
+## See also
+
+- CORS errors
+- Glossary: CORS
+- CORS introduction
+- Enable CORS: I want to add CORS support to my server

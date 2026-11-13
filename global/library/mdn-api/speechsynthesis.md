@@ -1,0 +1,117 @@
+---
+title: "SpeechSynthesis"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/speechsynthesis/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# SpeechSynthesis
+
+The **`SpeechSynthesis`** interface of the Web Speech API is the controller interface for the speech service; this can be used to retrieve information about the synthesis voices available on the device, start and pause speech, and other commands besides.
+
+## Instance properties
+
+_`SpeechSynthesis` also inherits properties from its parent interface, `EventTarget`._
+
+- `SpeechSynthesis.paused` (read-only)
+    A boolean value that returns `true` if the `SpeechSynthesis` object is in a paused state.
+- `SpeechSynthesis.pending` (read-only)
+    A boolean value that returns `true` if the utterance queue contains as-yet-unspoken utterances.
+- `SpeechSynthesis.speaking` (read-only)
+    A boolean value that returns `true` if an utterance is currently in the process of being spoken — even if `SpeechSynthesis` is in a paused state.
+
+## Instance methods
+
+_`SpeechSynthesis` also inherits methods from its parent interface, `EventTarget`._
+
+- `SpeechSynthesis.cancel()`
+    Removes all utterances from the utterance queue.
+- `SpeechSynthesis.getVoices()`
+    Returns a list of `SpeechSynthesisVoice` objects representing all the available voices on the current device.
+- `SpeechSynthesis.pause()`
+    Puts the `SpeechSynthesis` object into a paused state.
+- `SpeechSynthesis.resume()`
+    Puts the `SpeechSynthesis` object into a non-paused state: resumes it if it was already paused.
+- `SpeechSynthesis.speak()`
+    Adds an `utterance` to the utterance queue; it will be spoken when any other utterances queued before it have been spoken.
+
+## Events
+
+Listen to this event using `addEventListener()` or by assigning an event listener to the `oneventname` property of this interface.
+
+- `voiceschanged`
+    Fired when the list of `SpeechSynthesisVoice` objects that would be returned by the `SpeechSynthesis.getVoices()` method has changed.
+    Also available via the `onvoiceschanged` property.
+
+## Examples
+
+First, an example:
+
+```js
+let utterance = new SpeechSynthesisUtterance("Hello world!");
+speechSynthesis.speak(utterance);
+```
+
+Now we'll look at a more fully-fledged example. In our Speech synthesizer demo, we first grab a reference to the SpeechSynthesis controller using `window.speechSynthesis`. After defining some necessary variables, we retrieve a list of the voices available using `SpeechSynthesis.getVoices()` and populate a select menu with them so the user can choose what voice they want.
+
+Inside the `inputForm.onsubmit` handler, we stop the form submitting with preventDefault(), create a new `SpeechSynthesisUtterance` instance containing the text from the text ``, set the utterance's voice to the voice selected in the `<select>` element, and start the utterance speaking via the `SpeechSynthesis.speak()` method.
+
+```js
+const synth = window.speechSynthesis;
+
+const inputForm = document.querySelector("form");
+const inputTxt = document.querySelector(".txt");
+const voiceSelect = document.querySelector("select");
+const pitch = document.querySelector("#pitch");
+const pitchValue = document.querySelector(".pitch-value");
+const rate = document.querySelector("#rate");
+const rateValue = document.querySelector(".rate-value");
+
+let voices = [];
+
+function populateVoiceList() {
+  voices = synth.getVoices();
+
+  for (const voice of voices) {
+    const option = document.createElement("option");
+    option.textContent = `${voice.name} (${voice.lang})`;
+
+    if (voice.default) {
+      option.textContent += " — DEFAULT";
+    }
+
+    option.setAttribute("data-lang", voice.lang);
+    option.setAttribute("data-name", voice.name);
+    voiceSelect.appendChild(option);
+  }
+}
+
+populateVoiceList();
+if (speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = populateVoiceList;
+}
+
+inputForm.onsubmit = (event) => {
+  event.preventDefault();
+
+  const utterThis = new SpeechSynthesisUtterance(inputTxt.value);
+  const selectedOption =
+    voiceSelect.selectedOptions[0].getAttribute("data-name");
+  for (const voice of voices) {
+    if (voice.name === selectedOption) {
+      utterThis.voice = voice;
+    }
+  }
+  utterThis.pitch = pitch.value;
+  utterThis.rate = rate.value;
+  synth.speak(utterThis);
+
+  inputTxt.blur();
+};
+```
+
+## See also
+
+- Web Speech API

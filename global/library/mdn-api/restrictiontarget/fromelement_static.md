@@ -1,0 +1,73 @@
+---
+title: "RestrictionTarget: fromElement() static method"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/restrictiontarget/fromelement_static/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# RestrictionTarget: fromElement() static method
+
+The **`fromElement()`** static method of the `RestrictionTarget` interface returns a `RestrictionTarget` instance that can be used to restrict a captured video track to a specified DOM element (plus its descendants).
+
+## Syntax
+
+```js
+RestrictionTarget.fromElement(element)
+```
+
+### Parameters
+
+- `element`
+    A reference to an `Element` that you want to use as a restriction target. For an element to be used as a restriction target, it must:
+    - Form a stacking context.
+    - Be flattened in 3D space (for example, it is not subjected to any 3D transforms).
+    - Be rendered (for example, not be off-screen or hidden via `display: none`).
+    - Contain only one box fragment (for example, not be broken across multiple lines).
+
+    If it does not meet the above criteria, it is considered to be **not eligible for restriction**.
+
+    In addition, the element will not be captured if the track being restricted has clones (that is, created by `BrowserCaptureMediaStreamTrack.clone()`) or is captured from a different tab to the current user's tab (passed via `Window.postMessage()`, for example).
+
+> **Note:**
+> When the element is captured, any alpha-channel value set on it is not included. If the restriction target element is semi-transparent, it will end up completely opaque in the capture and therefore end up looking different.
+
+### Return value
+
+A `Promise` that resolves to a `RestrictionTarget` object instance, which can then be passed to `BrowserCaptureMediaStreamTrack.restrictTo()` to restrict the video captured in the track to just the particular DOM element the `RestrictionTarget` was created with.
+
+`RestrictionTarget` objects are serializable. They can be passed to another document using mechanisms such as `Window.postMessage()`.
+
+The promise will reject if the restriction target element is not eligible for restriction.
+
+## Examples
+
+```js
+// Options for getDisplayMedia()
+const displayMediaOptions = {
+  preferCurrentTab: true,
+};
+
+// Create restriction target from DOM element
+const demoElem = document.querySelector("#demo");
+const restrictionTarget = await RestrictionTarget.fromElement(demoElem);
+
+// Capture video stream from user's webcam and isolate video track
+const stream =
+  await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+const [track] = stream.getVideoTracks();
+
+// Restrict video track
+await track.restrictTo(restrictionTarget);
+
+// Broadcast restricted stream in <video> element
+videoElem.srcObject = stream;
+```
+
+See Using the Element Capture and Region Capture APIs for in-context example code.
+
+## See also
+
+- Screen Capture API
+- Using the Element Capture and Region Capture APIs

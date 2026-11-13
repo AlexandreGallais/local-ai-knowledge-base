@@ -1,0 +1,505 @@
+{
+  "sources": [
+    {
+      "tool": "mdn-javascript",
+      "title": "MDN Web Docs: JavaScript guide and reference",
+      "repository": "https://github.com/mdn/content.git",
+      "ref": "main",
+      "version": "2026-11",
+      "license": "CC-BY-SA-2.5",
+      "attribution": "Mozilla Contributors",
+      "flavor": "mdn",
+      "core": true,
+      "paths": ["files/en-us/web/javascript/"],
+      "docs": ["files/en-us/web/javascript"]
+    },
+    {
+      "tool": "mdn-html",
+      "title": "MDN Web Docs: HTML elements, attributes and guides",
+      "repository": "https://github.com/mdn/content.git",
+      "ref": "main",
+      "version": "2026-11",
+      "license": "CC-BY-SA-2.5",
+      "attribution": "Mozilla Contributors",
+      "flavor": "mdn",
+      "core": true,
+      "paths": ["files/en-us/web/html/"],
+      "docs": ["files/en-us/web/html"]
+    },
+    {
+      "tool": "mdn-css",
+      "title": "MDN Web Docs: CSS properties, selectors, values and guides",
+      "repository": "https://github.com/mdn/content.git",
+      "ref": "main",
+      "version": "2026-11",
+      "license": "CC-BY-SA-2.5",
+      "attribution": "Mozilla Contributors",
+      "flavor": "mdn",
+      "core": true,
+      "paths": ["files/en-us/web/css/"],
+      "docs": ["files/en-us/web/css"]
+    },
+    {
+      "tool": "mdn-api",
+      "title": "MDN Web Docs: Web APIs (DOM, SVG DOM, Canvas, Fetch, Workers, WebSocket, events, storage, animations)",
+      "repository": "https://github.com/mdn/content.git",
+      "ref": "main",
+      "version": "2026-11",
+      "license": "CC-BY-SA-2.5",
+      "attribution": "Mozilla Contributors",
+      "flavor": "mdn",
+      "core": true,
+      "paths": ["files/en-us/web/api/"],
+      "docs": ["files/en-us/web/api"]
+    },
+    {
+      "tool": "mdn-http",
+      "title": "MDN Web Docs: HTTP headers, methods, status codes and guides",
+      "repository": "https://github.com/mdn/content.git",
+      "ref": "main",
+      "version": "2026-11",
+      "license": "CC-BY-SA-2.5",
+      "attribution": "Mozilla Contributors",
+      "flavor": "mdn",
+      "core": true,
+      "paths": ["files/en-us/web/http/"],
+      "docs": ["files/en-us/web/http"]
+    },
+    {
+      "tool": "mdn-svg",
+      "title": "MDN Web Docs: SVG elements, attributes and guides",
+      "repository": "https://github.com/mdn/content.git",
+      "ref": "main",
+      "version": "2026-11",
+      "license": "CC-BY-SA-2.5",
+      "attribution": "Mozilla Contributors",
+      "flavor": "mdn",
+      "core": true,
+      "paths": ["files/en-us/web/svg/"],
+      "docs": ["files/en-us/web/svg"]
+    },
+    {
+      "tool": "mdn-accessibility",
+      "title": "MDN Web Docs: accessibility, ARIA roles, states and properties",
+      "repository": "https://github.com/mdn/content.git",
+      "ref": "main",
+      "version": "2026-11",
+      "license": "CC-BY-SA-2.5",
+      "attribution": "Mozilla Contributors",
+      "flavor": "mdn",
+      "core": true,
+      "paths": ["files/en-us/web/accessibility/"],
+      "docs": ["files/en-us/web/accessibility"]
+    },
+    {
+      "tool": "angular",
+      "title": "Angular documentation (angular.dev), without Material, CDK nor Angular Aria",
+      "repository": "https://github.com/angular/angular.git",
+      "ref": "v22.2.6",
+      "version": "22.2",
+      "license": "CC-BY-4.0",
+      "attribution": "Google LLC and the Angular contributors",
+      "flavor": "angular",
+      "core": true,
+      "profiles": [
+        "angular-app",
+        "angular-lib"
+      ],
+      "paths": ["adev/src/content/"],
+      "docs": ["adev/src/content"],
+      "exclude": [
+        "adev/src/content/examples",
+        "adev/src/content/tutorials",
+        "adev/src/content/aria",
+        "adev/src/content/events"
+      ]
+    },
+    {
+      "tool": "typescript",
+      "title": "TypeScript Handbook, reference and release notes",
+      "repository": "https://github.com/microsoft/TypeScript-Website.git",
+      "ref": "v2",
+      "version": "6.0",
+      "license": "CC-BY-4.0",
+      "attribution": "Microsoft and the TypeScript Website contributors",
+      "flavor": "typescript",
+      "core": true,
+      "paths": ["packages/documentation/copy/en/"],
+      "docs": ["packages/documentation/copy/en"]
+    },
+    {
+      "tool": "rxjs",
+      "title": "RxJS 7 guides, operators and deprecations",
+      "repository": "https://github.com/ReactiveX/rxjs.git",
+      "ref": "7.8.2",
+      "version": "7.8",
+      "license": "Apache-2.0",
+      "attribution": "Google, Inc., Netflix, Inc., Microsoft Corp. and contributors",
+      "flavor": "markdown",
+      "core": true,
+      "profiles": [
+        "angular-app",
+        "angular-lib"
+      ],
+      "paths": ["docs_app/content/"],
+      "docs": ["docs_app/content"],
+      "exclude": [
+        "docs_app/content/marketing",
+        "docs_app/content/images",
+        "docs_app/content/blackLivesMatter.md",
+        "docs_app/content/file-not-found.md",
+        "docs_app/content/code-of-conduct.md",
+        "docs_app/content/maintainer-guidelines.md"
+      ]
+    },
+    {
+      "tool": "ngrx-signals",
+      "title": "NgRx Signals guide (SignalStore, features, entities, events, testing) and the NgRx ESLint rules",
+      "repository": "https://github.com/ngrx/platform.git",
+      "ref": "22.0.1",
+      "version": "22.0",
+      "license": "MIT",
+      "attribution": "Brandon Roberts, Mike Ryan, Victor Savkin, Rob Wormald and the NgRx contributors",
+      "flavor": "mdx",
+      "core": true,
+      "profiles": [
+        "angular-app",
+        "angular-lib"
+      ],
+      "paths": [
+        "projects/www/src/app/pages/guide/signals/",
+        "projects/www/src/app/pages/guide/eslint-plugin/"
+      ],
+      "docs": [
+        "projects/www/src/app/pages/guide/signals",
+        "projects/www/src/app/pages/guide/eslint-plugin"
+      ]
+    },
+    {
+      "tool": "node",
+      "title": "Node.js API reference",
+      "repository": "https://github.com/nodejs/node.git",
+      "ref": "v26.13.1",
+      "version": "26.13",
+      "license": "MIT",
+      "attribution": "Node.js contributors",
+      "flavor": "node",
+      "core": true,
+      "paths": ["doc/api/"],
+      "docs": ["doc/api"]
+    },
+    {
+      "tool": "npm",
+      "title": "npm commands, package.json and configuration",
+      "repository": "https://github.com/npm/cli.git",
+      "ref": "v12.2.2",
+      "version": "12.2",
+      "license": "Artistic-2.0",
+      "attribution": "GitHub Inc. and the npm contributors",
+      "flavor": "markdown",
+      "core": true,
+      "paths": ["docs/lib/content/"],
+      "docs": ["docs/lib/content"]
+    },
+    {
+      "tool": "vite",
+      "title": "Vite guide, configuration and API",
+      "repository": "https://github.com/vitejs/vite.git",
+      "ref": "v8.3.8",
+      "version": "8.3",
+      "license": "MIT",
+      "attribution": "VoidZero Inc. and Vite contributors",
+      "flavor": "mdx",
+      "core": true,
+      "paths": ["docs/"],
+      "docs": ["docs"],
+      "exclude": [
+        "docs/blog",
+        "docs/team.md",
+        "docs/team",
+        "docs/releases.md"
+      ]
+    },
+    {
+      "tool": "vitest",
+      "title": "Vitest guide, API and configuration",
+      "repository": "https://github.com/vitest-dev/vitest.git",
+      "ref": "v5.1.0",
+      "version": "5.1",
+      "license": "MIT",
+      "attribution": "VoidZero Inc. and Vitest contributors",
+      "flavor": "mdx",
+      "core": true,
+      "paths": ["docs/"],
+      "docs": ["docs"],
+      "exclude": [
+        "docs/blog",
+        "docs/team.md",
+        "docs/team"
+      ]
+    },
+    {
+      "tool": "playwright",
+      "title": "Playwright for TypeScript: guides and API",
+      "repository": "https://github.com/microsoft/playwright.git",
+      "ref": "v1.65.0",
+      "version": "1.65",
+      "license": "Apache-2.0",
+      "attribution": "Microsoft Corporation and the Playwright contributors",
+      "flavor": "markdown",
+      "core": true,
+      "profiles": [
+        "angular-app",
+        "angular-lib"
+      ],
+      "paths": ["docs/src/"],
+      "docs": ["docs/src"],
+      "exclude": [
+        "docs/src/*-python.md",
+        "docs/src/*-java.md",
+        "docs/src/*-csharp.md",
+        "docs/src/mobile-api"
+      ]
+    },
+    {
+      "tool": "eslint",
+      "title": "ESLint: using it, configuring it, and its core rules",
+      "repository": "https://github.com/eslint/eslint.git",
+      "ref": "v10.14.0",
+      "version": "10.14",
+      "license": "MIT",
+      "attribution": "OpenJS Foundation and other contributors",
+      "flavor": "eslint",
+      "core": true,
+      "paths": [
+        "docs/src/rules/",
+        "docs/src/use/"
+      ],
+      "docs": [
+        "docs/src/rules",
+        "docs/src/use"
+      ]
+    },
+    {
+      "tool": "typescript-eslint",
+      "title": "typescript-eslint rules",
+      "repository": "https://github.com/typescript-eslint/typescript-eslint.git",
+      "ref": "v8.72.2",
+      "version": "8.72",
+      "license": "MIT",
+      "attribution": "typescript-eslint and other contributors",
+      "flavor": "mdx",
+      "core": true,
+      "paths": ["packages/eslint-plugin/docs/rules/"],
+      "docs": ["packages/eslint-plugin/docs/rules"]
+    },
+    {
+      "tool": "angular-eslint",
+      "title": "angular-eslint rules for TypeScript and templates",
+      "repository": "https://github.com/angular-eslint/angular-eslint.git",
+      "ref": "v22.6.0",
+      "version": "22.6",
+      "license": "MIT",
+      "attribution": "James Henry and the angular-eslint contributors",
+      "flavor": "markdown",
+      "core": true,
+      "profiles": [
+        "angular-app",
+        "angular-lib"
+      ],
+      "paths": [
+        "packages/eslint-plugin/docs/rules/",
+        "packages/eslint-plugin-template/docs/rules/"
+      ],
+      "docs": [
+        "packages/eslint-plugin/docs/rules",
+        "packages/eslint-plugin-template/docs/rules"
+      ]
+    },
+    {
+      "tool": "eslint-stylistic",
+      "title": "ESLint Stylistic rules, the formatting pass",
+      "repository": "https://github.com/eslint-stylistic/eslint-stylistic.git",
+      "ref": "v5.10.0",
+      "version": "5.10",
+      "license": "MIT",
+      "attribution": "Anthony Fu and the ESLint Stylistic contributors",
+      "flavor": "mdx",
+      "core": true,
+      "paths": ["packages/eslint-plugin/rules/"],
+      "docs": ["packages/eslint-plugin/rules"]
+    },
+    {
+      "tool": "perfectionist",
+      "title": "eslint-plugin-perfectionist rules: sort everything",
+      "repository": "https://github.com/azat-io/eslint-plugin-perfectionist.git",
+      "ref": "v5.13.0",
+      "version": "5.13",
+      "license": "MIT",
+      "attribution": "Azat S. and the perfectionist contributors",
+      "flavor": "mdx",
+      "core": true,
+      "paths": ["docs/content/rules/"],
+      "docs": ["docs/content/rules"]
+    },
+    {
+      "tool": "unicorn",
+      "title": "eslint-plugin-unicorn rules",
+      "repository": "https://github.com/sindresorhus/eslint-plugin-unicorn.git",
+      "ref": "v79.0.0",
+      "version": "79.0",
+      "license": "MIT",
+      "attribution": "Sindre Sorhus and the unicorn contributors",
+      "flavor": "markdown",
+      "core": true,
+      "paths": ["docs/rules/"],
+      "docs": ["docs/rules"]
+    },
+    {
+      "tool": "eslint-regexp",
+      "title": "eslint-plugin-regexp rules",
+      "repository": "https://github.com/ota-meshi/eslint-plugin-regexp.git",
+      "ref": "v3.3.3",
+      "version": "3.3",
+      "license": "MIT",
+      "attribution": "Yosuke Ota and the eslint-plugin-regexp contributors",
+      "flavor": "mdx",
+      "core": true,
+      "paths": ["docs/rules/"],
+      "docs": ["docs/rules"]
+    },
+    {
+      "tool": "import-x",
+      "title": "eslint-plugin-import-x rules",
+      "repository": "https://github.com/un-ts/eslint-plugin-import-x.git",
+      "ref": "v4.18.1",
+      "version": "4.18",
+      "license": "MIT",
+      "attribution": "JounQin, Ben Mosher and the import-x contributors",
+      "flavor": "markdown",
+      "core": true,
+      "paths": ["docs/rules/"],
+      "docs": ["docs/rules"]
+    },
+    {
+      "tool": "eslint-jsdoc",
+      "title": "eslint-plugin-jsdoc rules",
+      "repository": "https://github.com/gajus/eslint-plugin-jsdoc.git",
+      "ref": "v65.4.6",
+      "version": "65.4",
+      "license": "BSD-3-Clause",
+      "attribution": "Gajus Kuizinas and the eslint-plugin-jsdoc contributors",
+      "flavor": "markdown",
+      "core": true,
+      "profiles": [
+        "angular-lib",
+        "ts-lib",
+        "ts-pure-lib"
+      ],
+      "paths": ["docs/rules/"],
+      "docs": ["docs/rules"]
+    },
+    {
+      "tool": "eslint-functional",
+      "title": "eslint-plugin-functional rules",
+      "repository": "https://github.com/eslint-functional/eslint-plugin-functional.git",
+      "ref": "v10.0.1",
+      "version": "10.0",
+      "license": "MIT",
+      "attribution": "Jonathan Haines and the eslint-plugin-functional contributors",
+      "flavor": "markdown",
+      "core": true,
+      "profiles": ["ts-pure-lib"],
+      "paths": ["docs/rules/"],
+      "docs": ["docs/rules"]
+    },
+    {
+      "tool": "eslint-vitest",
+      "title": "@vitest/eslint-plugin rules",
+      "repository": "https://github.com/vitest-dev/eslint-plugin-vitest.git",
+      "ref": "v1.6.28",
+      "version": "1.6",
+      "license": "MIT",
+      "attribution": "Verite Mugabo and the eslint-plugin-vitest contributors",
+      "flavor": "markdown",
+      "core": true,
+      "paths": ["docs/rules/"],
+      "docs": ["docs/rules"]
+    },
+    {
+      "tool": "rxjs-x",
+      "title": "eslint-plugin-rxjs-x rules",
+      "repository": "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x.git",
+      "ref": "v1.0.6",
+      "version": "1.0",
+      "license": "MIT",
+      "attribution": "Jason Weinzierl, Nicholas Jamieson and the eslint-plugin-rxjs-x contributors",
+      "flavor": "markdown",
+      "core": true,
+      "profiles": [
+        "angular-app",
+        "angular-lib"
+      ],
+      "paths": ["docs/rules/"],
+      "docs": ["docs/rules"]
+    },
+    {
+      "tool": "eslint-jsonc",
+      "title": "eslint-plugin-jsonc rules",
+      "repository": "https://github.com/ota-meshi/eslint-plugin-jsonc.git",
+      "ref": "v3.4.2",
+      "version": "3.4",
+      "license": "MIT",
+      "attribution": "Yosuke Ota and the eslint-plugin-jsonc contributors",
+      "flavor": "mdx",
+      "core": true,
+      "paths": ["docs/rules/"],
+      "docs": ["docs/rules"]
+    },
+    {
+      "tool": "stylelint",
+      "title": "Stylelint user guide and rules",
+      "repository": "https://github.com/stylelint/stylelint.git",
+      "ref": "17.16.0",
+      "version": "17.16",
+      "license": "MIT",
+      "attribution": "Maxime Thirouin, David Clark and the Stylelint contributors",
+      "flavor": "markdown",
+      "core": true,
+      "paths": [
+        "docs/user-guide/",
+        "lib/rules/*/README.md"
+      ],
+      "docs": [
+        "docs/user-guide",
+        "lib/rules"
+      ]
+    },
+    {
+      "tool": "stylelint-stylistic",
+      "title": "@stylistic/stylelint-plugin rules, the formatting pass for CSS and SCSS",
+      "repository": "https://github.com/stylelint-stylistic/stylelint-stylistic.git",
+      "ref": "v5.3.1",
+      "version": "5.3",
+      "license": "MIT",
+      "attribution": "Stylelint Stylistic contributors",
+      "flavor": "markdown",
+      "core": true,
+      "paths": ["lib/rules/*/README.md"],
+      "docs": ["lib/rules"]
+    },
+    {
+      "tool": "stylelint-order",
+      "title": "stylelint-order rules",
+      "repository": "https://github.com/hudochenkov/stylelint-order.git",
+      "ref": "8.1.3",
+      "version": "8.1",
+      "license": "MIT",
+      "attribution": "Aleks Hudochenkov and the stylelint-order contributors",
+      "flavor": "markdown",
+      "core": true,
+      "paths": ["rules/*/README.md"],
+      "docs": ["rules"]
+    }
+  ]
+}

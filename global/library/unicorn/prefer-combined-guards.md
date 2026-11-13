@@ -1,0 +1,204 @@
+---
+title: "prefer-combined-guards"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-combined-guards.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# prefer-combined-guards
+
+📝 Prefer combining consecutive guards with identical exit statements.
+
+💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+
+🔧 This rule is automatically fixable by the `--fix` CLI option.
+
+Consecutive guard clauses with identical exits can be combined using `||`, removing duplication while preserving condition evaluation order. By default, only simple conditions and `||` chains of simple conditions are checked.
+
+This rule checks adjacent `if` statements without `else`. By default, each body, with or without braces, must consist of one `return`, `throw`, `break`, `continue`, or direct call to the global `process.exit()` function. Both exits must have the same kind, and their values, labels, or `process.exit()` calls must match.
+
+Exit values, labels, and calls are compared by source text, ignoring surrounding parentheses where applicable. The rule does not normalize internal formatting or infer semantic equivalence. Braces, surrounding whitespace, and optional trailing semicolons may differ.
+
+When using the TypeScript parser, type information is optional but enables combining exits containing references, including in JavaScript with JSDoc types. Every reference must have the same type in both bodies to preserve control-flow narrowing. Enable typed linting with `parserOptions.projectService: true`.
+
+Without type information, the TypeScript parser requires exit expressions to contain no variable references, `this`, `super`, or JSX references. Arrays, objects with constant values, and constant untagged templates are allowed, including type assertions such as `[] as const`. Exits containing tagged templates are always ignored because each source location has its own cached template object.
+
+Comments before, inside, or between guards prevent fixes.
+
+## Examples
+
+```js
+// ❌
+function check(context) {
+	if (context.finished) {
+		return;
+	}
+
+	if (context.cancelled) {
+		return;
+	}
+}
+
+// ✅
+function check(context) {
+	if (context.finished || context.cancelled) {
+		return;
+	}
+}
+```
+
+```js
+// ❌
+function validate(value) {
+	if (value < 0) {
+		throw invalidValue;
+	}
+
+	if (!Number.isFinite(value)) {
+		throw invalidValue;
+	}
+}
+
+// ✅
+function validate(value) {
+	if ((value < 0) || !Number.isFinite(value)) {
+		throw invalidValue;
+	}
+}
+```
+
+```js
+// ❌
+for (const item of items) {
+	if (item.hidden) {
+		continue;
+	}
+
+	if (item.disabled) {
+		continue;
+	}
+
+	processItem(item);
+}
+
+// ✅
+for (const item of items) {
+	if (item.hidden || item.disabled) {
+		continue;
+	}
+
+	processItem(item);
+}
+```
+
+With type information, exits containing references can also be combined:
+
+```ts
+// ❌
+function check(value: number, finished: boolean, cancelled: boolean) {
+	if (finished) {
+		return value;
+	}
+	if (cancelled) {
+		return value;
+	}
+}
+
+// ✅
+function check(value: number, finished: boolean, cancelled: boolean) {
+	if (finished || cancelled) {
+		return value;
+	}
+}
+```
+
+Bodies with additional statements or nested control flow are ignored by default (see `checkMultiStatementBodies`). Arbitrary identical bodies cannot generally be combined: both original bodies could execute when both conditions are true.
+
+```js
+// ✅
+if (firstCondition) {
+	count++;
+}
+
+if (secondCondition) {
+	count++;
+}
+```
+
+## Options
+
+### checkCompoundConditions
+
+Type: `boolean`\
+Default: `false`
+
+Also check compound conditions, such as `&&`, `??`, ternaries, and negated groups.
+
+```js
+// With {checkCompoundConditions: true}:
+
+// ❌
+function check(context) {
+	if (context.finished) {
+		return;
+	}
+
+	if (!context.hasResult && !context.hasError) {
+		return;
+	}
+}
+
+// ✅
+function check(context) {
+	if (context.finished || (!context.hasResult && !context.hasError)) {
+		return;
+	}
+}
+```
+
+### checkMultiStatementBodies
+
+Type: `boolean`\
+Default: `false`
+
+Also check guards whose bodies have identical statements, compared by source text, before the same exit. Only one body can run, so combining them does not change behavior. Statements containing tagged templates are never combined.
+
+With the TypeScript parser, multi-statement bodies require type information and matching reference types. Objects or functions declared separately in each body can have distinct types, so those bodies may not be combined even when their source text matches.
+
+```js
+// With {checkMultiStatementBodies: true}:
+
+// ❌
+for (const item of items) {
+	if (item.hidden) {
+		logSkip(item);
+		continue;
+	}
+
+	if (item.disabled) {
+		logSkip(item);
+		continue;
+	}
+
+	processItem(item);
+}
+
+// ✅
+for (const item of items) {
+	if (item.hidden || item.disabled) {
+		logSkip(item);
+		continue;
+	}
+
+	processItem(item);
+}
+```
+
+## Related rules
+
+- `no-duplicate-if-branches` checks duplicate bodies within `if`/`else if`/`else` chains.
+- `no-lonely-if` combines nested conditions using `&&`.
+- `no-useless-else` removes `else` after exiting branches, which can expose consecutive guards.
+- `prefer-boolean-return` can further simplify a combined boolean guard followed by the opposite boolean return.

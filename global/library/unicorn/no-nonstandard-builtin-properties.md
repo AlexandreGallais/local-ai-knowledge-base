@@ -1,0 +1,74 @@
+---
+title: "no-nonstandard-builtin-properties"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-nonstandard-builtin-properties.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# no-nonstandard-builtin-properties
+
+📝 Disallow non-standard properties on built-in objects.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+
+JavaScript lets code read or call any property name, even when the property is not part of a built-in object. This often hides typos like `Object.entires()` or relies on native objects being extended at runtime.
+
+This rule checks known built-in constructors, namespaces, prototypes, and obvious built-in instances against a static string-named built-in property list. It reports properties that are not part of that standard property surface, and reports built-in properties that exist but are called, tagged, or used as constructors when that use is not valid. Calls and construction through `constructor` are ignored to keep the rule focused on non-standard property names.
+
+## Examples
+
+```js
+// ❌
+Object.entires(object);
+
+// ✅
+Object.entries(object);
+```
+
+```js
+// ❌
+Math.NON_EXISTS_PROPERTY;
+
+// ✅
+Math.PI;
+```
+
+```js
+// ❌
+Promise.nonExistsMethod();
+
+// ✅
+Promise.race(promises);
+```
+
+```js
+// ❌
+Array.prototype.customMethod = function () {};
+
+// ✅
+Array.prototype.map.call(array, callback);
+```
+
+```js
+// ❌
+'text'.length();
+
+// ✅
+'text'.length;
+```
+
+```js
+// ❌
+new Math.PI();
+
+// ✅
+Math.PI;
+```
+
+## Limitations
+
+The static list primarily tracks the latest published ECMAScript edition, Stage 4 proposals, and selected web-standard built-ins. Runtime-specific extensions and earlier-stage proposal drafts are generally excluded.
+
+The rule only checks direct references to known built-ins. It does not track aliases, infer return types from function calls, or check dynamic computed properties.

@@ -1,0 +1,314 @@
+---
+title: "isolated-functions"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/isolated-functions.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# isolated-functions
+
+📝 Prevent usage of variables from outside the scope of isolated functions.
+
+💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+
+Some functions need to be isolated from their surrounding scope due to execution context constraints. For example, functions passed to `makeSynchronous()` are executed in a worker or subprocess and cannot access variables from outside their scope. This rule helps identify when functions are using external variables that may cause runtime errors.
+
+Common scenarios where functions must be isolated:
+
+- Functions passed to `makeSynchronous()` (executed in a worker)
+- Functions passed to `workerize()`
+- Functions passed to `page.evaluate()` in Puppeteer or Playwright style code
+- Functions that will be serialized via `Function.prototype.toString()`
+- Server actions or other remote execution contexts
+- Functions with specific JSDoc annotations
+
+By default, this rule allows ES globals like `Array` and `Map`, and ESLint-resolved global variables from configuration or `/* global */` comments like `console` and `fetch`, in isolated functions, but prevents usage of variables from the surrounding scope.
+
+## Examples
+
+```js
+/* global fetch, console */
+import makeSynchronous from 'make-synchronous';
+
+const url = 'https://example.com';
+
+const getText = makeSynchronous(async () => {
+	const response = await fetch(url); // ❌ 'url' is not defined in isolated function scope
+	return response.text();
+});
+
+// ✅ Define all variables within isolated function's scope
+const getText = makeSynchronous(async () => {
+	const url = 'https://example.com'; // Variable defined within function scope
+	const response = await fetch(url);
+	return response.text();
+});
+
+// ✅ Alternative: Pass as parameter
+const getText = makeSynchronous(async (url) => { // Variable passed as parameter
+	const response = await fetch(url);
+	return response.text();
+});
+
+console.log(getText('https://example.com'));
+```
+
+```js
+const foo = 'hi';
+
+/** @isolated */
+function abc() {
+	return foo.slice(); // ❌ 'foo' is not defined in isolated function scope
+}
+
+const object = {
+	/** @isolated */
+	method() {
+		return this.foo; // ❌ 'this' depends on external object state
+	},
+};
+
+// ✅
+/** @isolated */
+function abc() {
+	const foo = 'hi'; // Variable defined within function scope
+	return foo.slice();
+}
+```
+
+## Options
+
+Type: `object`
+
+### functions
+
+Type: `string[]`\
+Default: `['makeSynchronous', 'workerize']`
+
+Array of function names that create isolated execution contexts. Functions passed as arguments to these functions will be considered isolated.
+
+The rule also detects these common isolated execution APIs by default:
+
+- `browser.execute(fn)`
+- `page.evaluate(fn)`
+- `chrome.scripting.executeScript({func: () => {}})`
+- `browser.scripting.executeScript({func: () => {}})`
+
+Generic names like `serialize`, `isolate`, and `memoize` are not enabled by default. Add project-specific serializer names to `functions` when they should be treated as isolated.
+
+Other `evaluate` calls are not enabled by default. Use `selectors` to opt into project-specific APIs that do not use the variable name `page`.
+
+### selectors
+
+Type: `string[]`\
+Default: `[]`
+
+Array of ESLint selectors to identify isolated functions. Useful for custom naming conventions or framework-specific patterns.
+
+Selectors must match the function node that should be treated as isolated. To isolate functions passed to a matching call expression, use ESLint selector syntax to select the function argument:
+
+```js
+{
+	'unicorn/isolated-functions': [
+		'error',
+		{
+			selectors: [
+				'FunctionDeclaration[id.name=/lambdaHandler.*/]',
+				'CallExpression[callee.property.name=/CodemodScript/] > :function'
+			]
+		}
+	]
+}
+```
+
+### comments
+
+Type: `string[]`\
+Default: `['@isolated']`
+
+Array of comment strings that mark functions as isolated. Functions with inline, block, or JSDoc comments tagged with these strings will be considered isolated. (Definition of "tagged": either the comment consists solely of the tag, or starts with it, and has an explanation following a hyphen, like `// @isolated - this function will be stringified`).
+
+Tagged comments also apply to object methods, object properties whose value is a function expression or arrow function, and class methods. Isolated functions cannot use `this` or `super`; pass <example-value> state as parameters instead.
+
+```js
+{
+	'unicorn/isolated-functions': [
+		'error',
+		{
+			comments: [
+				'@isolated',
+				'@remote'
+			]
+		}
+	]
+}
+```
+
+### overrideGlobals
+
+Type: `object`\
+Default: `{}`
+
+Overrides how specific global variables are handled. An empty object means no overrides; ES globals and ESLint-resolved globals from configuration or `/* global */` comments still apply. When specified as an object, each key is a global variable name and the value controls its behavior:
+
+- `'readonly'`: Global variable is allowed but cannot be written to
+- `'writable'`: Global variable is allowed and can be read/written
+- `'off'`: Global variable is not allowed
+
+```js
+{
+	'unicorn/isolated-functions': [
+		'error',
+		{
+			overrideGlobals: {
+				console: 'writable',     // Allowed and writable
+				fetch: 'readonly',       // Allowed but readonly
+				process: 'off'           // Not allowed
+			}
+		}
+	]
+}
+```
+
+## Configuration examples
+
+### Custom function names
+
+```js
+{
+	'unicorn/isolated-functions': [
+		'error',
+		{
+			functions: [
+				'makeSynchronous',
+				'workerize',
+				'createWorker',
+				'serializeFunction'
+			]
+		}
+	]
+}
+```
+
+### Lambda function naming convention
+
+```js
+{
+	'unicorn/isolated-functions': [
+		'error',
+		{
+			selectors: [
+				'FunctionDeclaration[id.name=/lambdaHandler.*/]'
+			]
+		}
+	]
+}
+```
+
+```js
+const foo = 'hi';
+
+function lambdaHandlerFoo() { // ❌ Will be flagged as isolated
+	return foo.slice();
+}
+
+function someOtherFunction() { // ✅ Not flagged
+	return foo.slice();
+}
+
+createLambda({
+	name: 'fooLambda',
+	code: lambdaHandlerFoo.toString(), // Function will be serialized
+});
+```
+
+### Configured globals
+
+```js
+/* global console, fetch */
+
+makeSynchronous(async () => {
+	console.log('Starting...'); // ✅ Allowed if console is configured as a global
+	const response = await fetch('https://api.example.com'); // ✅ Allowed if fetch is configured as a global
+	return response.text();
+});
+```
+
+### Overriding specific globals
+
+`overrideGlobals` only overrides the listed names. It does not replace ES globals or ESLint-resolved globals from configuration or `/* global */` comments.
+
+```js
+{
+	'unicorn/isolated-functions': [
+		'error',
+		{
+			overrideGlobals: {
+				console: 'writable',     // Allowed and writable
+				fetch: 'readonly',       // Allowed but readonly
+				URL: 'readonly'          // Allowed but readonly
+			}
+		}
+	]
+}
+```
+
+```js
+// ✅ All globals used are ES globals, ESLint-resolved globals, or explicitly overridden
+makeSynchronous(async () => {
+	console.log('Starting...'); // ✅ Allowed global
+	const response = await fetch('https://api.example.com'); // ✅ Allowed global
+	const url = new URL(response.url); // ✅ Allowed global
+	return response.text();
+});
+
+makeSynchronous(async () => {
+	const response = await fetch('https://api.example.com', {
+		headers: {
+			'Authorization': `Bearer ${process.env.API_TOKEN}` // ❌ '<example-value>' is not configured as an ESLint global or overrideGlobals entry
+		}
+	});
+
+	const url = new URL(response.url);
+
+	return response.text();
+});
+
+// ❌ Attempting to write to readonly global
+makeSynchronous(async () => {
+	fetch = null; // ❌ 'fetch' is readonly
+	console.log('Starting...');
+});
+```
+
+### Predefined global variables
+
+To enable a predefined set of globals, use the `globals` package similarly to how you would use it in `languageOptions` (see ESLint docs on globals):
+
+```js
+import {defineConfig} from 'eslint/config';
+import unicorn from 'eslint-plugin-unicorn';
+import globals from 'globals';
+
+export default defineConfig([
+	{
+		plugins: {
+			unicorn,
+		},
+		languageOptions: {
+			globals: {
+				...globals.builtin,
+				...globals.applescript,
+				...globals.greasemonkey,
+			},
+		},
+		rules: {
+			'unicorn/isolated-functions': [
+				'error',
+			],
+		},
+	},
+]);
+```

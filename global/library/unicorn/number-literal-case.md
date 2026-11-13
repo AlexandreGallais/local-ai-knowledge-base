@@ -1,0 +1,164 @@
+---
+title: "number-literal-case"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/number-literal-case.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# number-literal-case
+
+📝 Enforce proper case for numeric literals.
+
+💼🚫 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, 🧩 `recommended-json`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`. This rule is _disabled_ in the ☑️ `unopinionated` config.
+
+🔧 This rule is automatically fixable by the `--fix` CLI option.
+
+Differentiating the casing of the identifier and value clearly separates them and makes your code more readable.
+
+- Lowercase radix identifier `0x` `0o` `0b` for `Number` and `BigInt`.
+- Uppercase or lowercase hexadecimal value for `Number` and `BigInt`.
+- Lowercase `e` for exponential notation.
+
+This rule also supports JSON, JSONC, JSON5, and TOML numeric literals. In CSS, it lowercases the exponent marker in numbers, percentages, dimensions, and custom property values while preserving units.
+
+In SOML, `hexadecimalValue` is ignored because hexadecimal digits must be uppercase; radix prefixes and the exponent marker must be lowercase.
+
+```toml
+# ❌
+hexadecimal = 0xdead_beef
+exponent = -1.2E+3
+
+# ✅
+hexadecimal = 0xDEAD_BEEF
+exponent = -1.2e+3
+```
+
+## Examples
+
+Hexadecimal
+
+```js
+// ❌
+const foo = 0XFF;
+
+// ❌
+const foo = 0xff;
+
+// ❌
+const foo = 0Xff;
+
+// ✅
+const foo = 0xFF;
+```
+
+```js
+// ❌
+const foo = 0Xffn;
+
+// ✅
+const foo = 0xFFn;
+```
+
+Binary
+
+```js
+// ❌
+const foo = 0B10;
+
+// ✅
+const foo = 0b10;
+```
+
+```js
+// ❌
+const foo = 0B10n;
+
+// ✅
+const foo = 0b10n;
+```
+
+Octal
+
+```js
+// ❌
+const foo = 0O76;
+
+// ✅
+const foo = 0o76;
+```
+
+```js
+// ❌
+const foo = 0O76n;
+
+// ✅
+const foo = 0o76n;
+```
+
+Exponential notation
+
+```js
+// ❌
+const foo = 2E-5;
+
+// ✅
+const foo = 2e-5;
+```
+
+```js
+// ❌
+const foo = 2E+5;
+
+// ✅
+const foo = 2e+5;
+```
+
+```js
+// ❌
+const foo = 2E5;
+
+// ✅
+const foo = 2e5;
+```
+
+In YAML, this rule checks numeric scalars, including hexadecimal values and exponents. Explicitly tagged scalars, strings, and special `.inf` and `.nan` values are ignored.
+
+## Options
+
+Type: `object`
+
+### hexadecimalValue
+
+Type: `'uppercase' | 'lowercase'`\
+Default: `'uppercase'`
+
+Specify whether the hexadecimal number value (ABCDEF) should be in `uppercase` or `lowercase`.
+
+Note: `0x` is always lowercase and not controlled by this option to maintain readable code.
+
+Example:
+
+```js
+{
+	'unicorn/number-literal-case': [
+		'error',
+		{
+			hexadecimalValue: 'lowercase',
+		}
+	]
+}
+```
+
+```js
+// ❌
+const foo = 0XFF;
+const foo = 0xFF;
+const foo = 0XFFn;
+const foo = 0xFFn;
+
+// ✅
+const foo = 0xff;
+const foo = 0xffn;
+```

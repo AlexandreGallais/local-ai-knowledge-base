@@ -1,0 +1,93 @@
+---
+title: "FontFace"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/fontface/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# FontFace
+
+The **`FontFace`** interface of the CSS Font Loading API represents a single usable font face.
+
+This interface defines the source of a font face, either a URL to an external resource or a buffer, and font properties such as `style`, `weight`, and so on.
+For URL font sources it allows authors to trigger when the remote font is fetched and loaded, and to track loading status.
+
+## Constructor
+
+- `FontFace()`
+    Constructs and returns a new `FontFace` object, built from an external resource described by a URL or from an `ArrayBuffer`.
+
+## Instance properties
+
+- `FontFace.ascentOverride`
+    A string that retrieves or sets the _ascent metric_ of the font. It is equivalent to the `ascent-override` descriptor.
+- `FontFace.descentOverride`
+    A string that retrieves or sets the _descent metric_ of the font. It is equivalent to the `descent-override` descriptor.
+- `FontFace.display`
+    A string that determines how a font face is displayed based on whether and when it is downloaded and ready to use.
+- `FontFace.family`
+    A string that retrieves or sets the _family_ of the font. It is equivalent to the `font-family` descriptor.
+- `FontFace.featureSettings`
+    A string that retrieves or sets infrequently used font features that are not available from a font's variant properties. It is equivalent to the CSS `font-feature-settings` property.
+- `FontFace.lineGapOverride`
+    A string that retrieves or sets the _line-gap metric_ of the font. It is equivalent to the `line-gap-override` descriptor.
+- `FontFace.loaded` (read-only)
+    Returns a `Promise` that resolves with the current `FontFace` object when the font specified in the object's constructor is done loading or rejects with a `SyntaxError` `DOMException`.
+- `FontFace.sizeAdjust`
+    A string that retrieves or sets a multiplier for the font's glyph outlines and metrics. It is equivalent to the `size-adjust` descriptor.
+- `FontFace.status` (read-only)
+    Returns an enumerated value indicating the status of the font, one of `"unloaded"`, `"loading"`, `"loaded"`, or `"error"`.
+- `FontFace.stretch`
+    A string that retrieves or sets how the font _stretches_. It is equivalent to the `font-stretch` descriptor.
+- `FontFace.style`
+    A string that retrieves or sets the _style_ of the font. It is equivalent to the `font-style` descriptor.
+- `FontFace.unicodeRange`
+    A string that retrieves or sets the _range of unicode code points_ encompassing the font. It is equivalent to the `unicode-range` descriptor.
+- `FontFace.variant` (non-standard)
+    A string that retrieves or sets the _variant_ of the font.
+- `FontFace.variationSettings`
+    A string that retrieves or sets the _variation settings_ of the font. It is equivalent to the `font-variation-settings` descriptor.
+- `FontFace.weight`
+    A string that contains the _weight_ of the font. It is equivalent to the `font-weight` descriptor.
+- `FontFace.load()`
+    Loads a font based on current object's constructor-passed requirements, including a location or source buffer, and returns a `Promise` that resolves with the current FontFace object.
+
+## Examples
+
+The code below defines a font face using data at the URL "my-font.woff" with a few font descriptors.
+Just to show how it works, we then define the `stretch` descriptor using a property.
+
+```js
+// Define a FontFace
+const font = new FontFace("my-font", 'url("my-font.woff")', {
+  style: "italic",
+  weight: "400",
+});
+
+font.stretch = "condensed";
+```
+
+Next we load the font using `FontFace.load()` and use the returned promise to track completion or report an error.
+
+```js
+// Load the font
+font.load().then(
+  () => {
+    // Resolved - add font to document.fonts
+  },
+  (err) => {
+    console.error(err);
+  },
+);
+```
+
+To actually _use_ the font we will need to add it to a `FontFaceSet`.
+We could do that before or after loading the font.
+
+For additional examples see CSS Font Loading API > Examples.
+
+## See also
+
+- `@font-face`

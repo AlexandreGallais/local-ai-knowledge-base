@@ -1,0 +1,71 @@
+---
+title: "no-typeof-undefined"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-typeof-undefined.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# no-typeof-undefined
+
+📝 Disallow comparing `undefined` using `typeof`.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+
+🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+
+Checking if a value is `undefined` by using `typeof value === 'undefined'` is needlessly verbose. It's generally better to compare against `undefined` directly. The only time `typeof` is needed is when a global variable potentially does not exist, in which case, using `globalThis.value === undefined` may be better.
+
+Historical note: Comparing against `undefined` without `typeof` was frowned upon until ES5. This is no longer a problem since all engines currently in use no longer allow reassigning the `undefined` global.
+
+## Examples
+
+```js
+// ❌
+function foo(bar) {
+	if (typeof bar === 'undefined') {}
+}
+
+// ✅
+function foo(bar) {
+	if (bar === undefined) {}
+}
+```
+
+```js
+import foo from './foo.js';
+
+// ❌
+if (typeof foo.bar !== 'undefined') {}
+
+// ✅
+if (foo.bar !== undefined) {}
+```
+
+## Options
+
+### checkGlobalVariables
+
+Type: `boolean`\
+Default: `false`
+
+The rule ignores variables not defined in the file by default. If the variable was never defined, checking for its existence without `typeof` will cause a `ReferenceError`.
+
+Set it to `true` to accept this risk and check global variables. Ambient `declare const`, `declare let`, and `declare var` variables remain ignored because they may not exist at runtime.
+
+```js
+/* eslint unicorn/no-typeof-undefined: ["error", {"checkGlobalVariables": true}] */
+
+// ❌
+if (typeof undefinedVariable === 'undefined') {}
+
+// ✅
+if (globalThis.undefinedVariable === undefined) {}
+
+// ❌
+if (typeof Array === 'undefined') {}
+
+// ✅
+if (Array === undefined) {}
+```

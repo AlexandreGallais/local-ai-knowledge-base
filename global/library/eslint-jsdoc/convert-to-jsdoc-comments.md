@@ -1,0 +1,295 @@
+---
+title: "convert-to-jsdoc-comments"
+tool: "eslint-jsdoc"
+version: "65.4"
+source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/convert-to-jsdoc-comments.md"
+commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
+license: "BSD-3-Clause"
+---
+
+# `convert-to-jsdoc-comments`
+
+Converts single line or non-JSDoc, multiline comments into JSDoc comments.
+
+Note that this rule is experimental. As usual with fixers, please confirm
+the results before committing.
+
+## Fixer
+
+Converts comments into JSDoc comments.
+
+## Options
+
+A single options object has the following properties.
+
+### `allowedPrefixes`
+
+An array of prefixes to allow at the beginning of a comment.
+
+Defaults to `['@ts-', '@license', '@license-end', 'istanbul ', 'c8 ', 'v8 ', 'eslint', 'prettier-']`.
+
+Supplying your own value overrides the defaults.
+
+### `contexts`
+
+The contexts array which will be checked for preceding content.
+
+Can either be strings or an object with a `context` string and an optional, default `false` `inlineCommentBlock` boolean.
+
+Defaults to `ArrowFunctionExpression`, `FunctionDeclaration`,
+`FunctionExpression`, `TSDeclareFunction`.
+
+### `contextsAfter`
+
+The contexts array which will be checked for content on the same line after.
+
+Can either be strings or an object with a `context` string and an optional, default `false` `inlineCommentBlock` boolean.
+
+Defaults to an empty array.
+
+### `contextsBeforeAndAfter`
+
+The contexts array which will be checked for content before and on the same
+line after.
+
+Can either be strings or an object with a `context` string and an optional, default `false` `inlineCommentBlock` boolean.
+
+Defaults to `VariableDeclarator`, `TSPropertySignature`, `PropertyDefinition`.
+
+### `enableFixer`
+
+Set to `false` to disable fixing.
+
+### `enforceJsdocLineStyle`
+
+What policy to enforce on the conversion of non-JSDoc comments without
+line breaks. (Non-JSDoc (mulitline) comments with line breaks will always
+be converted to `multi` style JSDoc comments.)
+
+- `multi` - Convert to multi-line style
+```js
+/**
+ * Some text
+ */
+```
+- `single` - Convert to single-line style
+```js
+/** Some text */
+```
+
+Defaults to `multi`.
+
+### `lineOrBlockStyle`
+
+What style of comments to which to apply JSDoc conversion.
+
+- `block` - Applies to block-style comments (`/* ... */`)
+- `line` - Applies to line-style comments (`// ...`)
+- `both` - Applies to both block and line-style comments
+
+Defaults to `both`.
+
+|||
+|---|---|
+|Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
+|Tags|(N/A)|
+|Recommended|false|
+|Settings|`minLines`, `maxLines`|
+|Options|`enableFixer`, `enforceJsdocLineStyle`, `lineOrBlockStyle`, `allowedPrefixes`, `contexts`, `contextsAfter`, `contextsBeforeAndAfter`|
+
+## Failing examples
+
+The following patterns are considered problems:
+
+````ts
+// A single line comment
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single"}]
+// Message: Line comments should be JSDoc-style.
+
+// A single line comment
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contexts":[{"context":"FunctionDeclaration","inlineCommentBlock":true}]}]
+// Message: Line comments should be JSDoc-style.
+
+// A single line comment
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enableFixer":false,"enforceJsdocLineStyle":"single"}]
+// Message: Line comments should be JSDoc-style.
+
+// A single line comment
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single","lineOrBlockStyle":"line"}]
+// Message: Line comments should be JSDoc-style.
+
+/* A single line comment */
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single"}]
+// Message: Block comments should be JSDoc-style.
+
+/* A single line comment */
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single","lineOrBlockStyle":"block"}]
+// Message: Block comments should be JSDoc-style.
+
+// A single line comment
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"multi"}]
+// Message: Line comments should be JSDoc-style.
+
+// A single line comment
+function quux () {}
+// Message: Line comments should be JSDoc-style.
+
+/* A single line comment */
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"multi"}]
+// Message: Block comments should be JSDoc-style.
+
+// Single line comment
+function quux() {
+
+}
+// Settings: {"jsdoc":{"structuredTags":{"see":{"name":false,"required":["name"]}}}}
+// Message: Cannot add "name" to `require` with the tag's `name` set to `false`
+
+/* Entity to represent a user in the system. */
+@Entity('users', getVal())
+export class User {
+}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contexts":["ClassDeclaration"]}]
+// Message: Block comments should be JSDoc-style.
+
+/* A single line comment */ function quux () {}
+// Settings: {"jsdoc":{"maxLines":0,"minLines":0}}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single"}]
+// Message: Block comments should be JSDoc-style.
+
+var a = []; // Test comment
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsAfter":["VariableDeclarator"],"contextsBeforeAndAfter":[]}]
+// Message: Line comments should be JSDoc-style.
+
+var a = []; // Test comment
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsAfter":[{"context":"VariableDeclarator","inlineCommentBlock":true}],"contextsBeforeAndAfter":[]}]
+// Message: Line comments should be JSDoc-style.
+
+var a = []; // Test comment
+// Settings: {"jsdoc":{"maxLines":0,"minLines":0}}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsAfter":[{"context":"VariableDeclarator","inlineCommentBlock":true}],"contextsBeforeAndAfter":[]}]
+// Message: Line comments should be JSDoc-style.
+
+// Test comment
+var a = [];
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":["VariableDeclaration"]}]
+// Message: Line comments should be JSDoc-style.
+
+var a = []; // Test comment
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":["VariableDeclaration"]}]
+// Message: Line comments should be JSDoc-style.
+
+interface B {
+  g: () => string; // Test comment
+}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":["TSPropertySignature"]}]
+// Message: Line comments should be JSDoc-style.
+
+class TestClass {
+  public Test: (id: number) => string; // Test comment
+}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":["PropertyDefinition"]}]
+// Message: Line comments should be JSDoc-style.
+
+var a = []; // Test comment
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsBeforeAndAfter":["VariableDeclarator"]}]
+// Message: Line comments should be JSDoc-style.
+
+/*
+ * Seniority levels that participate in distribution, in display
+ * order. `custom` is never a real distribution key. Every test shown in this
+ * modal can recruit each of these levels, so all three are always editable.
+ */
+const SENIORITY_ORDER = ['senior', 'middle', 'specialist'];
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contexts":["any"],"lineOrBlockStyle":"block"}]
+// Message: Block comments should be JSDoc-style.
+
+// one
+// two
+// three
+type Foo = string;
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contexts":["TSTypeAliasDeclaration"]}]
+// Message: Line comments should be JSDoc-style.
+
+// one
+// two
+// three
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single"}]
+// Message: Line comments should be JSDoc-style.
+
+// separate paragraph
+
+// one
+// two
+function quux () {}
+// Message: Line comments should be JSDoc-style.
+
+// eslint-disable-next-line no-magic-numbers
+// one
+// two
+function quux () {}
+// Message: Line comments should be JSDoc-style.
+
+// Matches every compiled file, e.g. dist/**/*.js
+function quux () {}
+// Message: Line comments should be JSDoc-style.
+
+// see the pattern a*/b used by parsers
+function quux () {}
+// Message: Line comments should be JSDoc-style.
+
+// first line
+// closes */ here
+function quux () {}
+// Message: Line comments should be JSDoc-style.
+````
+
+## Passing examples
+
+The following patterns are not considered problems:
+
+````ts
+/** A single line comment */
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single"}]
+
+/** A single line comment */
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"multi"}]
+
+/** A single line comment */
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"lineOrBlockStyle":"line"}]
+
+/** A single line comment */
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"lineOrBlockStyle":"block"}]
+
+/* A single line comment */
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single","lineOrBlockStyle":"line"}]
+
+// A single line comment
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"enforceJsdocLineStyle":"single","lineOrBlockStyle":"block"}]
+
+// @ts-expect-error
+function quux () {}
+
+// @custom-something
+function quux () {}
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"allowedPrefixes":["@custom-"]}]
+
+// Test comment
+var a = [];
+// "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsAfter":["VariableDeclarator"],"contextsBeforeAndAfter":[]}]
+````

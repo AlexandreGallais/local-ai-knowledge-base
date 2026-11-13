@@ -1,0 +1,75 @@
+---
+title: "prefer-array-find"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-array-find.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# prefer-array-find
+
+📝 Prefer `.find(…)` and `.findLast(…)` over the first or last element from `.filter(…)`.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+
+🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+
+`Array#find()` and `Array#findLast()` breaks the loop as soon as it finds a match and doesn't create a new array.
+
+This rule is fixable when the callback is an inline function without side effects, unless default values are used in declaration or assignment. When the callback is a reference or has side effects, the replacement is a suggestion instead, because `.filter()` calls the callback for every element in ascending order, while `.find()` and `.findLast()` stop at a match.
+
+## Examples
+
+```js
+// ❌
+const item = array.filter(x => isUnicorn(x))[0];
+
+// ❌
+const item = array.filter(x => isUnicorn(x)).shift();
+
+// ❌
+const [item] = array.filter(x => isUnicorn(x));
+
+// ✅
+const item = array.find(x => isUnicorn(x));
+```
+
+```js
+// ❌
+const item = array.filter(x => isUnicorn(x)).at(-1);
+
+// ❌
+const item = array.filter(x => isUnicorn(x)).pop();
+
+// ❌
+const item = array.filter(x => isUnicorn(x)).slice(-1)[0];
+
+// ✅
+const item = array.findLast(x => isUnicorn(x));
+```
+
+## Options
+
+Type: `object`
+
+### checkFromLast
+
+Type: `boolean`\
+Default: `true`
+
+Pass `checkFromLast: false` to disable check cases searching from last.
+
+```js
+/* eslint unicorn/prefer-array-find: ["error", {"checkFromLast": false}] */
+
+// ✅
+const item = array.filter(x => isUnicorn(x)).at(-1);
+
+// ✅
+const item = array.filter(x => isUnicorn(x)).pop();
+```
+
+## Caveats
+
+A destructuring default (`const [foo = bar] = array.filter(baz)`) is reported but not fixed or suggested. A destructuring default only applies to `undefined`, while `??` also applies to `null` and `||` to every falsy value, so no replacement operator preserves the found element.

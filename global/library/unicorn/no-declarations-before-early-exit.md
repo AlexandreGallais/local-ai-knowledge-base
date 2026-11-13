@@ -1,0 +1,92 @@
+---
+title: "no-declarations-before-early-exit"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-declarations-before-early-exit.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# no-declarations-before-early-exit
+
+📝 Disallow declarations before conditional early exits when they are only used after the exit.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+
+🔧 This rule is automatically fixable by the `--fix` CLI option.
+
+Declare variables as close as possible to where they are used. If a variable is declared before a guard clause but only used after it, the declaration can be moved below the guard. This avoids unnecessary initialization on the early-exit path and keeps the variable scope tighter.
+
+This rule reports declarations before `return`, `throw`, `break`, `continue`, and terminal calls to the global `process.exit()` function.
+
+## Examples
+
+```js
+// ❌
+function foo(bar) {
+	const result = 1;
+	if (!bar) {
+		return;
+	}
+
+	console.log(result);
+}
+```
+
+```js
+// ✅
+function foo(bar) {
+	if (!bar) {
+		return;
+	}
+
+	const result = 1;
+	console.log(result);
+}
+```
+
+```js
+// ❌
+function foo(bar) {
+	const result = 1;
+	if (!bar) {
+		throw new Error();
+	}
+
+	console.log(result);
+}
+```
+
+```js
+// ✅
+function foo(bar) {
+	if (!bar) {
+		throw new Error();
+	}
+
+	const result = 1;
+	console.log(result);
+}
+```
+
+```js
+// ❌
+function foo(bar) {
+	const result = getResult();
+	if (!bar) {
+		return;
+	}
+
+	console.log(result);
+}
+```
+
+The last example is reported without an autofix because moving a function call can change observable behavior.
+
+## Limitations
+
+This rule intentionally uses a simple statement-list scan instead of full data-flow analysis. It only checks declarations and guard clauses that are direct children of the same block or top-level program. Switch cases are only checked when the case body is wrapped in a block. Non-adjacent declarations with nontrivial initializers are ignored because moving them across intervening statements can change values or timing. Declarations are also ignored when the initializer and the guard share a variable that either side mutates, since reordering them would change behavior (for example, `const x = array.pop()` before `if (array.length > 0)`).
+
+Declarations whose initializer contains `await` or `yield` are ignored: moving them below the guard would evaluate the guard condition before the suspension instead of after it, which can change observable timing.
+
+Declarations initialized by a React hook call (for example, `const value = useMemo(…)`) are ignored, because hooks must run unconditionally and moving one below an early exit would violate the Rules of Hooks.

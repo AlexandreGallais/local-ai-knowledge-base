@@ -1,0 +1,50 @@
+---
+title: "prefer-literal-ascii"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-literal-ascii.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# prefer-literal-ascii
+
+📝 Prefer literal printable ASCII characters over escape sequences.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, 🧩 `recommended-json`, 💎 `recommended-soml`, ☑️ `unopinionated`.
+
+🔧 This rule is automatically fixable by the `--fix` CLI option.
+
+Prefer literal printable ASCII (U+0020–U+007E) over numeric escapes in JavaScript strings and untagged templates, in JSON, JSONC, and JSON5 strings and quoted keys, and in CSS strings and identifiers. This covers each language's valid `\xXX`, `\uXXXX`, and `\u{X…}` escapes, plus CSS hexadecimal escapes. Quotes, backslashes, and template delimiters stay escaped when needed.
+
+In JSON, JSONC, and JSON5, `\/` becomes `/`. For `\/` in JavaScript, use ESLint's `no-useless-escape`. Tagged templates, regex literals, and JSX attribute strings are ignored. Use `prefer-unicode-code-point-escapes` for other legacy escapes.
+
+In untagged templates, escaped spaces (`\u{20}`) at physical line endings are allowed to keep trailing whitespace visible and prevent editor trimming. They may be mixed with literal spaces or tabs.
+
+Autofix is omitted for directive prologues, digits that would extend a preceding `\0` or legacy octal escape, and TypeScript template literal types without substitutions when they contain a literal backslash. In HTML-embedded content, making `<` or `/` literal may affect HTML parsing.
+
+In CSS, this rule checks quoted strings and identifiers for one- to six-digit hexadecimal escapes. Escape-terminating whitespace is removed with the escape. Identifier escapes are reported and fixed only when the resulting tokens have the same values and types. Comments and `url()` values are ignored. An initial `@charset` statement is also ignored because its literal bytes can determine the stylesheet encoding.
+
+In SOML, this rule checks escaped single-line strings and quoted keys. Literal keys and literal or block strings are ignored.
+
+## Examples
+
+```css
+/* ❌ */
+.\41 { content: "\42"; }
+
+/* ✅ */
+.A { content: "B"; }
+```
+
+```js
+// ❌
+const letter = '\x41';
+const word = '\u0042\u{43}';
+const template = `\u0024\u007Bvalue}`;
+
+// ✅
+const letter = 'A';
+const word = 'BC';
+const template = `\${value}`;
+```

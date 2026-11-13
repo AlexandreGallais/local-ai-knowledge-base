@@ -1,0 +1,81 @@
+---
+title: "SVGAElement: rel property"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/svgaelement/rel/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# SVGAElement: rel property
+
+The **`rel`** property of the `SVGAElement` interface returns a string reflecting the value of the `rel` attribute of the SVG `` element.
+
+The `rel` attribute specifies the space-separated list of link types, the `<list-of-Link-Types>`, indicating the relationship between the target or resource represented by the `` element and the current document. The property can get or set the `rel` attribute value.
+
+## Value
+
+A string; the value of the `rel` attribute.
+
+## Examples
+
+Given the following SVG:
+
+```html
+<svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
+  <!-- A link around a text -->
+  <a href="/docs/Web/SVG/Reference/Element/text" rel="terms-of-service">
+    <text x="30" y="10">Link text.</text>
+  </a>
+</svg>
+```
+
+```html
+<pre id="log"></pre>
+```
+
+```css
+#log {
+  height: 70px;
+  overflow: scroll;
+  padding: 0.5rem;
+  border: 1px solid black;
+}
+svg {
+  height: 50px;
+}
+text {
+  font-size: 1rem;
+}
+```
+
+```js
+const logElement = document.querySelector("#log");
+function log(text) {
+  logElement.innerText = `${logElement.innerText}${text}\n`;
+  logElement.scrollTop = logElement.scrollHeight;
+}
+```
+
+We can retrieve and set the `rel` attribute:
+
+```js
+// Select an SVG <a> element
+const svgLink = document.querySelector("svg a");
+
+// Access the rel property
+log(`Rel: ${svgLink.rel}`);
+
+// Set the rel property
+svgLink.rel = "alternate bookmark";
+
+// Access the rel property again
+log(`New rel: "${svgLink.rel}"`); // New rel: "alternate bookmark"
+```
+
+## See also
+
+- `rel`
+- `SVGAElement.relList`
+- `HTMLAnchorElement.rel`
+- `HTMLLinkElement.rel`

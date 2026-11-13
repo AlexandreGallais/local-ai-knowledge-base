@@ -1,0 +1,68 @@
+---
+title: "WindowSharedStorage: run() method"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/windowsharedstorage/run/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# WindowSharedStorage: run() method
+
+The **`run()`** method of the
+`WindowSharedStorage` interface executes a run operation that is registered in a module added to the current origin's `SharedStorageWorklet`.
+
+> **Note:**
+> The Run output gate is intended as a generic way to process some shared storage data.
+
+## Syntax
+
+```js
+run(name)
+run(name, options)
+```
+
+### Parameters
+
+- `name`
+    A string representing the registered operation's name within the shared storage worklet module. It must match the name given to the operation when it is registered with `SharedStorageWorkletGlobalScope.register()`.
+- `options` (optional)
+    An options object that can contain the following properties:
+    - `data` (optional)
+        An object representing any data required for executing the operation.
+    - `keepAlive` (optional)
+        A boolean value. If set to `true`, the `SharedStorageWorkletGlobalScope` of the associated worklet is kept alive, and the operation can be run again. Therefore, you need to set `keepAlive` to `true` for each operation that is not intended to be the last one. The default value, `false`, means that the `SharedStorageWorkletGlobalScope` is terminated after the operation is run and cannot be run again.
+
+### Return value
+
+A `Promise` that fulfills with `undefined`.
+
+### Exceptions
+
+- `TypeError`
+    Thrown if:
+    - The worklet module has not yet been added with `addModule()`.
+    - Shared storage is disabled (for example via a browser setting).
+    - The calling site does not have the Shared Storage API included in a successful privacy sandbox enrollment process.
+
+## Examples
+
+```js
+async function measureUniqueReach() {
+  // Load the Shared Storage worklet
+  await window.sharedStorage.worklet.addModule("reach-measurement-worklet.js");
+
+  // Run the reach measurement operation
+  await window.sharedStorage.run("reach-measurement", {
+    data: { contentId: "1234" },
+  });
+}
+
+measureUniqueReach();
+```
+
+See Unique reach measurement for a full explanation of this example. See Shared Storage API for more examples.
+
+## See also
+
+- Shared Storage API

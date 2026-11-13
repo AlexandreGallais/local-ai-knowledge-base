@@ -1,0 +1,95 @@
+---
+title: "no-unnecessary-polyfills"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-unnecessary-polyfills.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# no-unnecessary-polyfills
+
+📝 Enforce the use of built-in methods instead of unnecessary polyfills.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+
+Unneeded polyfills add dependencies and code paths while providing no benefit on targets that already support the method.
+
+## Examples
+
+package.json
+
+```js
+// package.json
+{
+	"engines": {
+		"node": ">=8"
+	}
+}
+
+// ❌
+import assign from 'object-assign';
+const object = assign(target, source);
+```
+
+```js
+// ✅
+const object = Object.assign(target, source);
+```
+
+```js
+// package.json
+{
+	"engines": {
+		"node": "4"
+	}
+}
+
+// ✅
+import assign from 'object-assign'; // Passes as Object.assign is not supported
+```
+
+## Options
+
+Type: `object`
+
+### targets
+
+Type: `string | string[] | object`
+
+Specify the target versions, which could be a Browserslist query or a targets object. See the core-js-compat `targets` option for more info.
+
+If the option is not specified, the target versions are defined using standard `Browserslist` config discovery with the `production` environment, or as a last resort, the `engines` field in package.json.
+
+```js
+'unicorn/no-unnecessary-polyfills': [
+	'error',
+	{
+		targets: 'node >=12',
+	},
+]
+```
+
+```js
+'unicorn/no-unnecessary-polyfills': [
+	'error',
+	{
+		targets: [
+			'node 14.1.0',
+			'chrome 95',
+		],
+	},
+]
+```
+
+```js
+'unicorn/no-unnecessary-polyfills': [
+	'error',
+	{
+		targets: {
+			node: 'current',
+			firefox: '15',
+		},
+	},
+]
+```

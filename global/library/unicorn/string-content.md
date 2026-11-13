@@ -1,0 +1,166 @@
+---
+title: "string-content"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/string-content.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# string-content
+
+📝 Enforce better string content.
+
+🚫 Disabled by default.
+
+🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+
+Enforce certain things about the contents of strings. For example, you can enforce using `’` instead of `'` to avoid escaping. Or you could block some words. The possibilities are endless.
+
+_It only reports one pattern per AST node at the time._
+
+This rule ignores the following tagged template literals as they're known to contain code:
+
+- ``gql`…` ``
+- ``html`…` ``
+- ``sql`…` ``
+- ``svg`…` ``
+- ``styled`…` ``
+
+A property access or call on one of these tags is ignored too, like ``styled.div`…` ``, ``styled(Button)`…` ``, and ``styled.div.attrs({})`…` ``.
+
+In template literals, patterns match the raw text, and a match that overlaps an escape sequence, such as `\n`, is ignored.
+
+**This rule has no effect by default. You need to set `patterns` to check string content.**
+
+SOML string values, including literal and block strings, are supported; keys are left unchanged. Replacements use escaped strings. Fixes and suggestions are omitted when a replacement contains a carriage return or lone surrogate, which SOML cannot represent.
+
+## Examples
+
+```js
+/* eslint unicorn/string-content: ["error", { "patterns": { "'": "’" } }] */
+
+// ❌
+const foo = 'Someone\'s coming!';
+
+// ✅
+const foo = 'Someone’s coming!';
+```
+
+## TOML
+
+This rule also supports string values in TOML files when linting with `eslint-plugin-toml`. Patterns match decoded content in basic, literal, and multiline strings. Keys and comments are not checked.
+
+Fixes and suggestions write double-quoted basic <example-value> with TOML-compatible escaping, including when the original is a literal or multiline string. Replacements containing unpaired Unicode surrogates are reported without a fix or suggestion because TOML cannot represent them.
+
+```js
+'unicorn/string-content': ['error', {patterns: {unicorn: '🦄'}}]
+```
+
+```toml
+# ❌
+name = 'unicorn'
+
+# ✅
+name = "🦄"
+```
+
+## Other languages
+
+In JSON, JSONC, and JSON5, patterns match decoded string values and quoted keys, but not unquoted JSON5 keys. Fixes use JSON-compatible double quotes.
+
+In CSS, patterns match decoded strings and `url()` values, including quoted selectors and font families. Unquoted identifiers, comments, and custom property values are skipped. Fixes use CSS-compatible double quotes; URLs containing comments and replacements with null characters or unpaired surrogates are reported without a fix or suggestion.
+
+In YAML, patterns match decoded string values and keys in plain or quoted scalars, including anchored scalars. Block scalars, tagged scalars, and aliases are skipped. Fixes use YAML-compatible double quotes; unpaired surrogates are reported without a fix. Use `YAMLScalar` selectors to limit checks.
+
+## Options
+
+Type: `object`
+
+### patterns
+
+Type: `object`
+
+The example below:
+
+- Adds a custom `unicorn` → `🦄` replacement.
+- Adds a custom `awesome` → `😎` replacement and a custom message.
+- Adds a custom `cool` → `😎` replacement, but disables auto fix.
+
+```js
+'unicorn/string-content': [
+	'error',
+	{
+		patterns: {
+			unicorn: '🦄',
+			awesome: {
+				suggest: '😎',
+				message: 'Please use `😎` instead of `awesome`.',
+			},
+			cool: {
+				suggest: '😎',
+				fix: false,
+			},
+		},
+	},
+]
+```
+
+Set `caseSensitive` to `false` to match regardless of case:
+
+```js
+'unicorn/string-content': [
+	'error',
+	{
+		patterns: {
+			'end of day': {
+				suggest: 'EOD',
+				caseSensitive: false,
+			},
+		},
+	},
+]
+```
+
+The key of `patterns` is treated as a regex, so you must escape special characters.
+
+For example, if you want to enforce `...` → `…`:
+
+```js
+{
+	patterns: {
+		'\\.\\.\\.': '…',
+	},
+}
+```
+
+### selectors
+
+Type: `string[]`
+Default: `[]`
+
+Only check string nodes matching one of these ESLint selectors. When empty, all supported string nodes are checked.
+
+The selector must match the string node itself: `Literal` for JavaScript string literals, `TemplateElement` for template literal content, `TOMLValue[kind="string"]` for TOML string values, `YAMLScalar` for YAML scalars, `String` for JSON, SOML, or CSS strings, or `Url` for CSS URLs.
+
+```js
+'unicorn/string-content': [
+	'error',
+	{
+		patterns: {
+			'\\.\\.\\.': '…',
+		},
+		selectors: [
+			'VariableDeclarator[id.name="description"] > Literal',
+			'Property[key.name="description"] > Literal',
+		],
+	},
+]
+```
+
+## Pattern ideas
+
+- Enforce `’` over `'` to avoid escape.
+- Enforce `…` over `...` for better typography.
+- Enforce `→` over `->` for better typography.
+- Enforce `^https:\\/\\/` over `^http:\\/\\/` to secure your links.

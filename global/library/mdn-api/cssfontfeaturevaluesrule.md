@@ -1,0 +1,111 @@
+---
+title: "CSSFontFeatureValuesRule"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/cssfontfeaturevaluesrule/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# CSSFontFeatureValuesRule
+
+The **`CSSFontFeatureValuesRule`** interface represents an `@font-feature-values` at-rule. The values of its instance properties can be accessed with the `CSSFontFeatureValuesMap` interface.
+
+`@font-feature-values` allows developers to associate, for a given font face, a human-readable name with a numeric index that controls a particular OpenType font feature.
+For features that select alternative glyphs (stylistic, styleset, character-variant, swash, ornament or annotation), the `font-variant-alternates` property can then reference the human-readable name in order to apply the associated feature.
+This is convenient, because it allows the same name to be used of represent a set of alternative glyphs across a number of fonts.
+
+## Instance properties
+
+_Inherits properties from its ancestor `CSSRule`._
+
+- `CSSFontFeatureValuesRule.annotation` (read-only) (experimental)
+    A user-defined value definition and value that applies an alternate annotation of the font.
+- `CSSFontFeatureValuesRule.characterVariant` (read-only) (experimental)
+    A user-defined value definition and value that applies stylistic alternatives for characters of the font.
+- `CSSFontFeatureValuesRule.fontFamily`
+    A string that identifies the font family this rule applies to.
+- `CSSFontFeatureValuesRule.ornaments` (read-only) (experimental)
+    A user-defined value definition and value that applies alternative ornaments of the font.
+- `CSSFontFeatureValuesRule.styleset` (read-only) (experimental)
+    A user-defined value definition and value that applies alternate style sets of the font.
+- `CSSFontFeatureValuesRule.stylistic` (read-only) (experimental)
+    A user-defined value definition and value that applies alternative glyphs of the font.
+- `CSSFontFeatureValuesRule.swash` (read-only) (experimental)
+    A user-defined value definition and value that applies alternative swashes of the font.
+
+## Instance methods
+
+_Inherits methods from its ancestor `CSSRule`._
+
+## Examples
+
+### Read font family
+
+In this example, we declare two `@font-feature-values` one for the _Font One_ font family, and the other for _Font Two_.
+In both declarations we define that the name "nice-style" can be used to represent the styleset alternate glyphs for both of the fonts, specifying the index for that alternate in each font family.
+The alternate glyphs are then applied for any `.nice-look` class, using `font-variant-alternates` and passing the name to the `styleset()` function.
+
+We then use the CSSOM to read these declaration as `CSSFontFeatureValuesRule` instances, displaying them into the log.
+
+#### CSS
+
+```css
+/* At-rule for "nice-style" in Font One */
+@font-feature-values Font One {
+  @styleset {
+    nice-style: 12; /* name used to represent the alternate set of glyphs at index 12 */
+  }
+}
+
+/* At-rule for "nice-style" in Font Two */
+@font-feature-values Font Two {
+  @styleset {
+    nice-style: 4;
+  }
+}
+
+/* Apply the at-rules with a single declaration */
+.nice-look {
+  font-variant-alternates: styleset(
+    nice-style
+  ); /* name selects different index for same alternate in different fonts */
+}
+```
+
+```html
+<pre id="log"></pre>
+```
+
+```css
+#log {
+  height: 40px;
+  overflow: scroll;
+  padding: 0.5rem;
+  border: 1px solid black;
+}
+```
+
+#### JavaScript
+
+```js
+const logElement = document.querySelector("#log");
+function log(text) {
+  logElement.innerText = `${logElement.innerText}${text}\n`;
+  logElement.scrollTop = logElement.scrollHeight;
+}
+```
+
+```js
+const rules = document.getElementById("css-output").sheet.cssRules;
+
+const fontOne = rules[0]; // A CSSFontFeatureValuesRule
+log(`The 1st '@font-feature-values' family: "${fontOne.fontFamily}".`);
+
+const fontTwo = rules[1]; // Another CSSFontFeatureValuesRule
+log(`The 2nd '@font-feature-values' family: "${fontTwo.fontFamily}"`);
+```
+
+## See also
+
+- `@font-feature-values`

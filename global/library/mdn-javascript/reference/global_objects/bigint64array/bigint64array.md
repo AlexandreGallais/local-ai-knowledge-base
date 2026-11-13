@@ -1,0 +1,77 @@
+---
+title: "BigInt64Array() constructor"
+tool: "mdn-javascript"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/javascript/reference/global_objects/bigint64array/bigint64array/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# BigInt64Array() constructor
+
+The **`BigInt64Array()`** constructor creates `BigInt64Array` objects. The contents are initialized to `0n` unless initialization data is explicitly provided.
+
+## Syntax
+
+```js
+new BigInt64Array()
+new BigInt64Array(length)
+new BigInt64Array(typedArray)
+new BigInt64Array(object)
+
+new BigInt64Array(buffer)
+new BigInt64Array(buffer, byteOffset)
+new BigInt64Array(buffer, byteOffset, length)
+```
+
+> **Note:**
+> `BigInt64Array()` can only be constructed with `new`. Attempting to call it without `new` throws a `TypeError`.
+
+### Parameters
+
+See `TypedArray`.
+
+### Exceptions
+
+See `TypedArray`.
+
+## Examples
+
+### Different ways to create a BigInt64Array
+
+```js
+// From a length
+const bigint64 = new BigInt64Array(2);
+bigint64[0] = 42n;
+console.log(bigint64[0]); // 42n
+console.log(bigint64.length); // 2
+console.log(bigint64.BYTES_PER_ELEMENT); // 8
+
+// From an array
+const x = new BigInt64Array([21n, 31n]);
+console.log(x[1]); // 31n
+
+// From another TypedArray
+const y = new BigInt64Array(x);
+console.log(y[0]); // 21n
+
+// From an ArrayBuffer
+const buffer = new ArrayBuffer(64);
+const z = new BigInt64Array(buffer, 8, 4);
+console.log(z.byteOffset); // 8
+
+// From an iterable
+const iterable = (function* () {
+  yield* [1n, 2n, 3n];
+})();
+const bigint64FromIterable = new BigInt64Array(iterable);
+console.log(bigint64FromIterable);
+// BigInt64Array [1n, 2n, 3n]
+```
+
+## See also
+
+- JavaScript typed arrays guide
+- `TypedArray`
+- `ArrayBuffer`
+- `DataView`

@@ -1,0 +1,173 @@
+---
+title: "Guide to the Fullscreen API"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/fullscreen_api/guide/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# Guide to the Fullscreen API
+
+This article demonstrates how to use the Fullscreen API to place a given element into fullscreen mode, as well as how to detect when the browser enters or exits fullscreen mode.
+
+## Activating fullscreen mode
+
+Given an element that you'd like to present in fullscreen mode (such as a ``, for example), you can present it in fullscreen mode by calling its `requestFullscreen()` method.
+The user has to interact with the page or a UI element in order for this feature to work (it requires Transient user activation).
+
+Let's consider this `` element:
+
+```html
+<video controls id="my-video">
+  <source src="somevideo.webm" />
+  <source src="somevideo.mp4" />
+</video>
+```
+
+We can put that video into fullscreen mode as follows:
+
+```js
+const elem = document.getElementById("my-video");
+if (elem.requestFullscreen) {
+  elem.requestFullscreen();
+}
+```
+
+This code checks for the existence of the `requestFullscreen()` method before calling it.
+
+Once an element is in fullscreen mode, it is matched by `:fullscreen`, which gives it some default styles like taking up the entire screen. It is also placed in the top layer.
+
+If multiple elements are requested to be displayed in fullscreen mode, they all get matched by `:fullscreen` and are all in the top layer. They stack on top each other, with more recently requested elements on top of older ones. The most recently requested element gets displayed and is returned by `Document.fullscreenElement`.
+
+### Notification
+
+When fullscreen mode is successfully engaged, the document which contains the element receives a `fullscreenchange` event. When fullscreen mode is exited, the document again receives a `fullscreenchange` event. Note that the `fullscreenchange` event doesn't provide any information itself as to whether the document is entering or exiting fullscreen mode, but if the document has a non null `fullscreenElement`, you know you're in fullscreen mode.
+
+### When a fullscreen request fails
+
+It's not guaranteed that you'll be able to switch into fullscreen mode. For example, `` elements have the `allowfullscreen` attribute in order to opt-in to allowing their content to be displayed in fullscreen mode. In addition, certain kinds of content, such as windowed plug-ins, cannot be presented in fullscreen mode. Attempting to put an element which can't be displayed in fullscreen mode (or the parent or descendant of such an element) won't work. Instead, the element which requested fullscreen will receive a `fullscreenerror` event. When a fullscreen request fails, Firefox will log an error message to the Web Console explaining why the request failed. In Chrome and newer versions of Opera however, no such warning is generated.
+
+> **Note:**
+> Fullscreen requests need to be called from within an event handler or otherwise they will be denied.
+
+## Browser keyboard locking
+
+Keyboard locking allows a web app to receive and handle keys or key-combinations that are normally handled by the browser or the underlying OS.
+
+Some of these keys might normally be used by the browser to exit fullscreen mode.
+In this case the browser is expected to give the user an alternative way to exit: commonly a long-press of the same key.
+
+For example, browsers typically use the `Esc` key to exit fullscreen mode, but a web app might want to use it to show a menu.
+With keyboard lock, the app can intercept `Esc` and call `preventDefault()` to stop it from exiting fullscreen.
+The user can still exit with a long-press of `Esc`.
+
+To enable keyboard locking, set the `keyboardLock` option to `"browser"` in your call to `requestFullscreen()`.
+
+The HTML below shows a video element we might want to display full screen.
+
+```html
+<p>
+  The video element below shows a time-lapse of a flower blooming. You can
+  toggle fullscreen on and off using <kbd>Enter</kbd> or
+  <kbd>Shift+F</kbd> (uppercase "F"). The embedded document needs to have
+  <a
+    href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event">
+    focus
+  </a>
+  for the example to work.
+</p>
+
+<video controls loop src="/shared-assets/videos/flower.mp4" width="420"></video>
+```
+
+```css
+body {
+  font-family:
+    "Benton Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  margin: 2em;
+}
+
+video::backdrop {
+  background-color: #444488;
+}
+button {
+  display: block;
+}
+kbd {
+  border: 2px solid #cdcdcd;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 0 #cdcdcd;
+  font-size: 0.825rem;
+  padding: 0.25rem;
+}
+```
+
+The following code adds a `keydown` event handler to the document.
+The handler calls `requestFullscreen({ keyboardLock: "browser" })` on the video element if `Enter` or `Shift+F` are pressed when not in fullscreen mode.
+When we're in fullscreen mode we check if the `Esc` key was pressed and call `event.preventDefault()` to disable the default action (which would be to exit fullscreen mode).
+
+```js
+const video = document.querySelector("video");
+document.addEventListener("keydown", (event) => {
+  // Check if we're in fullscreen mode
+  if (document.fullscreenElement) {
+    // Cancel exiting via the Escape key
+    if (event.key === "Escape") {
+      event.preventDefault();
+      // Do whatever else you might want to do when escape is pressed
+    }
+  } else if (event.key === "Enter" || event.key === "F") {
+    // Open full screen if Enter or F is pressed and not already fullscreen.
+    // Note that "F" is case-sensitive (uppercase).
+    video.requestFullscreen({ keyboardLock: "browser" }).catch((err) => {
+      console.error(`Error enabling fullscreen: ${err.message}`);
+    });
+  }
+});
+```
+
+You can see this in operation below.
+Select the frame and press `Shift+F` to enter fullscreen mode.
+Note the temporary notification that appears at the top of the fullscreen page explaining how to exit full screen mode.
+
+## Getting out of full screen mode
+
+Browsers provide a mechanism for users to manually exit fullscreen mode, and the method is displayed in a transient notification when fullscreen mode is entered.
+This method is commonly the `Esc` key (or a long-press of the `Esc` when in browser keyboard lock mode).
+
+A browser may support other keys or key-combinations for exiting fullscreen mode, such as `F11` or `Alt+Tab`.
+It can also exit fullscreen mode for any other reason it chooses, such as when navigating to another page, changing tabs, or switching to another application.
+
+You can programmatically exit fullscreen mode by calling the `Document.exitFullscreen()` method.
+If there are multiple elements in fullscreen mode, calling `exitFullscreen()` only exits the topmost element, revealing the next element below it.
+Pressing the browser-specific exit key that was shown in the notification when entering fullscreen mode (usually `Esc`) exits all fullscreen elements.
+
+## Other information
+
+The `Document` provides some additional information that can be useful when developing fullscreen web applications:
+
+- `Document.fullscreenElement` / `ShadowRoot.fullscreenElement`
+    The `fullscreenElement` property tells you the `Element` that's currently being displayed fullscreen. If this is non-null, the document (or shadow DOM) is in fullscreen mode. If this is null, the document (or shadow DOM) is not in fullscreen mode.
+- `Document.fullscreenEnabled`
+    The `fullscreenEnabled` property tells you whether or not the document is currently in a state that would allow fullscreen mode to be requested.
+
+### Viewport scaling in mobile browsers
+
+Some mobile browsers while in fullscreen mode ignore viewport meta-tag settings and block user scaling; for example: a "pinch to zoom" gesture may not work on a page presented in fullscreen mode — even if, when not in fullscreen mode, the page can be scaled using pinch to zoom.
+
+## Example
+
+The mdn/dom-examples GitHub repo has a complete example of the Fullscreen API.
+
+Run the example and browse the source code.
+
+## See also
+
+- Using fullscreen mode
+- `Element.requestFullscreen()`
+- `Document.exitFullscreen()`
+- `Document.fullscreen`
+- `Document.fullscreenElement`
+- `:fullscreen`, `::backdrop`
+- `allowfullscreen`

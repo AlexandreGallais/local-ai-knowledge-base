@@ -1,0 +1,218 @@
+---
+title: "npm-sbom"
+tool: "npm"
+version: "12.2"
+source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/commands/npm-sbom.md"
+commit: "60e11343e61316d966c86805d803df5a0eb99230"
+license: "Artistic-2.0"
+---
+
+# npm-sbom
+
+### Description
+
+The `npm sbom` command generates a Software Bill of Materials (SBOM) listing the dependencies for the current project.
+SBOMs can be generated in either SPDX or CycloneDX format.
+
+### Example CycloneDX SBOM
+
+```json
+{
+  "$schema": "http://cyclonedx.org/schema/bom-1.5.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:09f55116-97e1-49cf-b3b8-44d0207e7730",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2023-09-01T00:00:00.001Z",
+    "lifecycles": [
+      {
+        "phase": "build"
+      }
+    ],
+    "tools": [
+      {
+        "vendor": "npm",
+        "name": "cli",
+        "version": "10.1.0"
+      }
+    ],
+    "component": {
+      "bom-ref": "user@example.com",
+      "type": "library",
+      "name": "simple",
+      "version": "1.0.0",
+      "scope": "required",
+      "author": "John Doe",
+      "description": "simple react app",
+      "purl": "pkg:npm/user@example.com",
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": ""
+        }
+      ],
+      "externalReferences": [],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "user@example.com",
+      "type": "library",
+      "name": "lodash",
+      "version": "4.17.21",
+      "scope": "required",
+      "author": "John-David Dalton",
+      "description": "Lodash modular utilities.",
+      "purl": "pkg:npm/user@example.com",
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/lodash"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
+        },
+        {
+          "type": "vcs",
+          "url": "git+https://github.com/lodash/lodash.git"
+        },
+        {
+          "type": "website",
+          "url": "https://lodash.com/"
+        },
+        {
+          "type": "issue-tracker",
+          "url": "https://github.com/lodash/lodash/issues"
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "bf690311ee7b95e713ba568322e3533f2dd1cb880b189e99d4edef13592b81764daec43e2c54c61d5c558dc5cfb35ecb85b65519e74026ff17675b6f8f916f4a"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "user@example.com",
+      "dependsOn": [
+        "user@example.com"
+      ]
+    },
+    {
+      "ref": "user@example.com",
+      "dependsOn": []
+    }
+  ]
+}
+```
+
+### Example SPDX SBOM
+
+```json
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "user@example.com",
+  "documentNamespace": "http://spdx.org/spdxdocs/simple-1.0.0-bf81090e-8bbc-459d-bec9-abeb794e096a",
+  "creationInfo": {
+    "created": "2023-09-01T00:00:00.001Z",
+    "creators": [
+      "Tool: npm/cli-10.1.0"
+    ]
+  },
+  "documentDescribes": [
+    "SPDXRef-Package-simple-1.0.0"
+  ],
+  "packages": [
+    {
+      "name": "simple",
+      "SPDXID": "SPDXRef-Package-simple-1.0.0",
+      "versionInfo": "1.0.0",
+      "packageFileName": "",
+      "description": "simple react app",
+      "primaryPackagePurpose": "LIBRARY",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "homepage": "NOASSERTION",
+      "licenseDeclared": "MIT",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/user@example.com"
+        }
+      ]
+    },
+    {
+      "name": "lodash",
+      "SPDXID": "SPDXRef-Package-lodash-4.17.21",
+      "versionInfo": "4.17.21",
+      "packageFileName": "node_modules/lodash",
+      "description": "Lodash modular utilities.",
+      "downloadLocation": "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz",
+      "filesAnalyzed": false,
+      "homepage": "https://lodash.com/",
+      "licenseDeclared": "MIT",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/user@example.com"
+        }
+      ],
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "bf690311ee7b95e713ba568322e3533f2dd1cb880b189e99d4edef13592b81764daec43e2c54c61d5c558dc5cfb35ecb85b65519e74026ff17675b6f8f916f4a"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relatedSpdxElement": "SPDXRef-Package-simple-1.0.0",
+      "relationshipType": "DESCRIBES"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-simple-1.0.0",
+      "relatedSpdxElement": "SPDXRef-Package-lodash-4.17.21",
+      "relationshipType": "DEPENDS_ON"
+    }
+  ]
+}
+```
+
+### Package lock only mode
+
+If package-lock-only is enabled, only the information in the package lock is loaded.
+This means that information from the package.json files of your dependencies will not be included in the result set (e.g.
+description, homepage, engines).
+
+## See Also
+
+* package spec
+* dependency selectors
+* package.json
+* workspaces

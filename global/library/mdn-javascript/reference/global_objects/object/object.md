@@ -1,0 +1,87 @@
+---
+title: "Object() constructor"
+tool: "mdn-javascript"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/javascript/reference/global_objects/object/object/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# Object() constructor
+
+The **`Object()`** constructor turns the input into an object. Its behavior depends on the input's type.
+
+## Syntax
+
+```js
+new Object()
+new Object(value)
+
+Object()
+Object(value)
+```
+
+> **Note:**
+> `Object()` can be called with or without `new`, but sometimes with different effects. See Return value.
+
+### Parameters
+
+- `value` (optional)
+    Any value.
+
+### Return value
+
+When the `Object()` constructor itself is called or constructed, its return value is an object:
+
+- If the value is `null` or `undefined`, it creates and returns an empty object.
+- If the value is an object already, it returns the value.
+- Otherwise, it returns an object of a type that corresponds to the given value. For example, passing a `BigInt` primitive returns a `BigInt` wrapper object.
+
+When `Object()` is constructed but `new.target` is not the `Object` constructor itself, the behavior is slightly different — it initializes a new object with `new.target.prototype` as its prototype. Any argument value is ignored. This may happen, for example, when `Object()` is implicitly called via `super()` in the constructor of a class that extends `Object`. In this case, even if you pass a number to `super()`, the `this` value inside the constructor does not become a `Number` instance.
+
+## Examples
+
+### Creating a new Object
+
+```js
+const o = new Object();
+o.foo = 42;
+
+console.log(o);
+// { foo: 42 }
+```
+
+### Using Object given undefined and null types
+
+The following examples store an empty `Object` object in `o`:
+
+```js
+const o = new Object();
+```
+
+```js
+const o = new Object(undefined);
+```
+
+```js
+const o = new Object(null);
+```
+
+### Obtaining wrapper objects for BigInt and Symbol
+
+The `BigInt()` and `Symbol()` constructors throw an error when called with `new`, to prevent the common mistake of creating a wrapper object instead of the primitive value. The only way to create a wrapper object for these types is to call `Object()` with them:
+
+```js
+const numberObj = new Number(1);
+console.log(typeof numberObj); // "object"
+
+const bigintObj = Object(1n);
+console.log(typeof bigintObj); // "object"
+
+const symbolObj = Object(Symbol("foo"));
+console.log(typeof symbolObj); // "object"
+```
+
+## See also
+
+- Object initializer

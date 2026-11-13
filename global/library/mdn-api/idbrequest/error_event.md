@@ -1,0 +1,132 @@
+---
+title: "IDBRequest: error event"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/idbrequest/error_event/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# IDBRequest: error event
+
+The `error` handler is executed when an error caused a request to fail. In the `error` event handler, you can access the error of the request, as well as place more requests to the same transaction.
+
+## Syntax
+
+Use the event name in `addEventListener()`:
+
+```js
+addEventListener("error", (event) => { })
+```
+
+Alternatively, assign to the event handler property of the interface:
+
+```js
+onerror = (event) => { }
+```
+
+## Event type
+
+A generic `Event`.
+
+## Examples
+
+This example opens a database and tries to add a record, listening for the `error` event for the `add()` operation (this will occur if, for example, a record with the given `taskTitle` already exists):
+
+```js
+// Open the database
+const DBOpenRequest = window.indexedDB.open("toDoList", 4);
+
+DBOpenRequest.addEventListener("upgradeneeded", (event) => {
+  const db = event.target.result;
+
+  db.onerror = () => {
+    console.log("Error creating database");
+  };
+
+  // Create an objectStore for this database
+  const objectStore = db.createObjectStore("toDoList", {
+    keyPath: "taskTitle",
+  });
+
+  // define what data items the objectStore will contain
+  objectStore.createIndex("hours", "hours", { unique: false });
+  objectStore.createIndex("minutes", "minutes", { unique: false });
+  objectStore.createIndex("day", "day", { unique: false });
+  objectStore.createIndex("month", "month", { unique: false });
+  objectStore.createIndex("year", "year", { unique: false });
+});
+
+DBOpenRequest.addEventListener("success", (event) => {
+  const db = DBOpenRequest.result;
+
+  // open a read/write db transaction, ready for adding the data
+  const transaction = db.transaction(["toDoList"], "readwrite");
+  const objectStore = transaction.objectStore("toDoList");
+  const newItem = {
+    taskTitle: "my task",
+    hours: 10,
+    minutes: 10,
+    day: 10,
+    month: "January",
+    year: 2020,
+  };
+
+  const objectStoreRequest = objectStore.add(newItem);
+  objectStoreRequest.addEventListener("error", () => {
+    console.log(`Error adding new item: ${newItem.taskTitle}`);
+  });
+});
+```
+
+The same example, using the `onerror` property instead of `addEventListener()` (but note that this replaces other event listeners added using `onerror`, `onupgradeneeded`, and `onsuccess`, if any):
+
+```js
+// Open the database
+const DBOpenRequest = window.indexedDB.open("toDoList", 4);
+
+DBOpenRequest.onupgradeneeded = (event) => {
+  const db = event.target.result;
+
+  db.onerror = () => {
+    console.log("Error creating database");
+  };
+
+  // Create an objectStore for this database
+  const objectStore = db.createObjectStore("toDoList", {
+    keyPath: "taskTitle",
+  });
+
+  // define what data items the objectStore will contain
+  objectStore.createIndex("hours", "hours", { unique: false });
+  objectStore.createIndex("minutes", "minutes", { unique: false });
+  objectStore.createIndex("day", "day", { unique: false });
+  objectStore.createIndex("month", "month", { unique: false });
+  objectStore.createIndex("year", "year", { unique: false });
+};
+
+DBOpenRequest.onsuccess = (event) => {
+  const db = DBOpenRequest.result;
+
+  // open a read/write db transaction, ready for adding the data
+  const transaction = db.transaction(["toDoList"], "readwrite");
+  const objectStore = transaction.objectStore("toDoList");
+  const newItem = {
+    taskTitle: "my task",
+    hours: 10,
+    minutes: 10,
+    day: 10,
+    month: "January",
+    year: 2020,
+  };
+
+  const objectStoreRequest = objectStore.add(newItem);
+  objectStoreRequest.onerror = () => {
+    console.log(`Error adding new item: ${newItem.taskTitle}`);
+  };
+};
+```
+
+## See also
+
+- Using IndexedDB

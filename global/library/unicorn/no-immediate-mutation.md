@@ -1,0 +1,191 @@
+---
+title: "no-immediate-mutation"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-immediate-mutation.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# no-immediate-mutation
+
+📝 Disallow immediate mutation after assignment and initialization immediately after declaration.
+
+💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+
+🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+
+When you create a variable and immediately mutate it, you should instead include those changes in the initial value.
+
+- Assign a variable to an array literal and immediately mutate it with `Array#{push,unshift}(…)`.
+- Assign a variable to an object literal and immediately assign another property.
+- Assign a variable to an object literal and immediately mutate it with `Object.assign(…)`.
+- Assign a variable to a `Set` or `WeakSet` created without an iterable or from an array literal, and immediately add a new element with `{Set,WeakSet}.add(…)`.
+- Assign a variable to a `Map` or `WeakMap` created without an iterable or from an array literal, and immediately set a new key with `{Map,WeakMap}.set(…, …)`.
+
+## Examples
+
+```js
+// ❌
+const array = [1, 2];
+array.push(3, 4);
+
+// ✅
+const array = [1, 2, 3, 4];
+```
+
+```js
+// ❌
+const array = [3, 4];
+array.unshift(1, 2);
+
+// ✅
+const array = [1, 2, 3, 4];
+```
+
+```js
+// ❌
+const object = {foo: 1};
+object.bar = 2;
+
+// ✅
+const object = {foo: 1, bar: 2};
+```
+
+```js
+// ❌
+const object = {foo: 1};
+Object.assign(object, {bar: 2});
+
+// ✅
+const object = {foo: 1, bar: 2};
+```
+
+```js
+// ❌
+const object = {foo: 1};
+Object.assign(object, bar);
+
+// ✅
+const object = {foo: 1, ...bar};
+```
+
+```js
+// ❌
+const set = new Set([1, 2]);
+set.add(3);
+
+// ✅
+const set = new Set([1, 2, 3]);
+```
+
+```js
+// ❌
+const weakSet = new WeakSet([foo, bar]);
+weakSet.add(baz);
+
+// ✅
+const weakSet = new WeakSet([foo, bar, baz]);
+```
+
+```js
+// ❌
+const map = new Map([
+	['foo', 1],
+]);
+map.set('bar', 2);
+
+// ✅
+const map = new Map([
+	['foo', 1],
+	['bar', 2],
+]);
+```
+
+```js
+// ❌
+const weakMap = new WeakMap([
+	[foo, 1],
+]);
+weakMap.set(bar, 2);
+
+// ✅
+const weakMap = new WeakMap([
+	[foo, 1],
+	[bar, 2],
+]);
+```
+
+No fix or suggestion is offered when a comment would be lost, when the object literal or the `Object.assign()` source has a getter or setter, or for a `__proto__` key, since an object literal handles these differently from an assignment or `Object.assign()`.
+
+## Consecutive initialization
+
+Combine uninitialized `let` and `var` declarations with an immediately following assignment:
+
+```js
+// ❌
+let foo;
+foo = 1;
+
+// ✅
+let foo = 1;
+```
+
+Flat array destructuring also works for variables in the preceding declaration:
+
+```js
+// ❌
+let r, g, b, foo;
+[r, g, b] = RGB.map(c => c / 255);
+
+// ✅
+let foo;
+let [r, g, b] = RGB.map(c => c / 255);
+```
+
+Direct assignments with simple initializers can be autofixed; other cases may offer suggestions. Edits preserve comments and TypeScript annotations.
+
+Exports, partly initialized declarations, redeclarations, self-references, and complex patterns are ignored. `checkConditionals` does not affect this check. Without the TypeScript parser, autofixes can change `checkJs` inference.
+
+## Options
+
+Type: `object`
+
+### checkConditionals
+
+Type: `boolean`\
+Default: `false`
+
+Set to `true` to check mutations in an `if` statement, `&&` expression, or ternary expression immediately following initialization:
+
+```js
+{
+	rules: {
+		'unicorn/no-immediate-mutation': [
+			'error',
+			{
+				checkConditionals: true,
+			},
+		],
+	},
+}
+```
+
+Each branch must contain one mutation, optionally enclosed in a block for `if` statements. When both branches are present, they must use the same mutation type and variable. Conditional `Object.assign()` supports one source.
+
+```js
+// ❌
+const array = [1, 2];
+if (enabled) {
+	array.push(3, 4);
+}
+
+// ✅
+const array = [1, 2, ...(enabled ? [3, 4] : [])];
+```
+
+Conditions and mutation inputs that reference the initialized variable are ignored. Nested conditionals, `else if`, multiple statements per branch, mixed mutations, `||`, and `??` are not supported.
+
+Potential side effects in the condition or mutation inputs and `unshift()` on a nonempty array produce suggestions instead of automatic fixes. No fix or suggestion is offered when comments would move or disappear, for statically named `__proto__` keys in property assignments or `Object.assign()` object-literal sources, or when the object literal has a getter or setter.
+
+In TypeScript files or with the TypeScript parser, conditional mutations are reported without fixes or suggestions because the spread can lose contextual typing. Unconditional mutations retain their existing behavior.

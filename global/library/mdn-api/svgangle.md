@@ -1,0 +1,52 @@
+---
+title: "SVGAngle"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/svgangle/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# SVGAngle
+
+The `SVGAngle` interface is used to represent a value that can be an `<angle>` or `<number>` value.
+
+The `SVGAngle` returned from `SVGAnimatedAngle.animVal` and `SVGAnimatedAngle.baseVal` is read only, but the `SVGAngle` returned from `SVGSVGElement.createSVGAngle()` is writable. When designated as read only, attempts to modify the object will result in an exception being thrown.
+
+An `SVGAngle` object can be associated with a particular element. The associated element is used to determine which element's content attribute to update if the object reflects an attribute. Unless otherwise described, an `SVGAngle` object is not associated with any element.
+
+Every `SVGAngle` object operates in one of two modes:
+
+1. **_Reflect the base value_** of a reflected animatable attribute (being exposed through the `baseVal` member of an `SVGAnimatedAngle`),
+2. **_Be detached_,** which is the case for `SVGAngle` objects created with `SVGSVGElement.createSVGAngle()`.
+
+## Static properties
+
+- `SVG_ANGLETYPE_UNKNOWN` (0)
+    Some unknown type of value.
+- `SVG_ANGLETYPE_UNSPECIFIED` (1)
+    A unitless `<number>` interpreted as a value in degrees.
+- `SVG_ANGLETYPE_DEG` (2)
+    An `<angle>` with a `deg` unit.
+- `SVG_ANGLETYPE_RAD` (3)
+    An `<angle>` with a `rad` unit.
+- `SVG_ANGLETYPE_GRAD` (4)
+    An `<angle>` with a `grad` unit.
+
+## Instance properties
+
+- `SVGAngle.unitType` (read-only)
+    The type of the value as specified by one of the `SVG_ANGLETYPE_*` constants defined on this interface.
+- `SVGAngle.value`
+    The value as a floating point value, in user units. Setting this attribute will cause `valueInSpecifiedUnits` and `valueAsString` to be updated automatically to reflect this setting.
+- `SVGAngle.valueInSpecifiedUnits`
+    The value as a floating point value, in the units expressed by `unitType`. Setting this attribute will cause `value` and `valueAsString` to be updated automatically to reflect this setting.
+- `SVGAngle.valueAsString`
+    The value as a string value, in the units expressed by `unitType`. Setting this attribute will cause `value`, `valueInSpecifiedUnits`, and `unitType` to be updated automatically to reflect this setting.
+
+## Instance methods
+
+- `SVGAngle.convertToSpecifiedUnits()`
+    Preserve the same underlying stored value, but reset the stored unit identifier to the given `unitType`. Object attributes `unitType`, `valueInSpecifiedUnits`, and `valueAsString` might be modified as a result of this method.
+- `SVGAngle.newValueSpecifiedUnits()`
+    Reset the value as a number with an associated unitType, thereby replacing the values for all of the attributes on the object.

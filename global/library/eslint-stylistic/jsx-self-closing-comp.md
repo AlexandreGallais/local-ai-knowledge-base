@@ -1,0 +1,125 @@
+---
+title: "jsx-self-closing-comp"
+tool: "eslint-stylistic"
+version: "5.10"
+source: "https://github.com/eslint-stylistic/eslint-stylistic/blob/efbb1bc0e5aaedc4695c44a03f46f4fcbbe58712/packages/eslint-plugin/rules/jsx-self-closing-comp/README.md"
+commit: "efbb1bc0e5aaedc4695c44a03f46f4fcbbe58712"
+license: "MIT"
+---
+
+# jsx-self-closing-comp
+
+Disallow extra closing tags for components without children.
+
+Components without children can be self-closed to avoid unnecessary extra closing tag.
+
+## Rule Details
+
+Examples of **incorrect** code for this rule:
+
+**Incorrect:**
+
+```jsx
+/* eslint @stylistic/jsx-self-closing-comp: "error" */
+
+var contentContainer = <div className="content"></div>;
+
+var HelloJohn = <Hello name="John"></Hello>;
+
+var HelloJohnCompound = <Hello.Compound name="John"></Hello.Compound>;
+```
+
+Examples of **correct** code for this rule:
+
+**Correct:**
+
+```jsx
+/* eslint @stylistic/jsx-self-closing-comp: "error" */
+
+var intentionalSpace = <div>{' '}</div>;
+
+var HelloJohn = <Hello name="John" />;
+
+var HelloJohnCompound = <Hello.Compound name="John" />;
+
+var Profile = <Hello name="John"><img src="picture.png" /></Hello>;
+
+var ProfileCompound = <Hello.Compound name="John"><img src="picture.png" /></Hello.Compound>;
+
+var HelloSpace = <Hello>{' '}</Hello>;
+```
+
+## Options
+
+The rule can take one argument to select types of tags, which should be self-closed when this is possible. By default custom components tags and html tags should be self-closed.
+
+```js
+...
+"@stylistic/jsx-self-closing-comp": ["error", {
+  "component": true,
+  "html": true
+}]
+...
+```
+
+### `component`
+
+When `true`, custom components tags should be self-closed.
+
+Examples of **incorrect** code for this rule:
+
+**Incorrect:**
+
+```jsx
+/* eslint @stylistic/jsx-self-closing-comp: ["error", { "component": true }] */
+
+var contentContainer = <div className="content"></div>;
+
+var HelloJohn = <Hello name="John"></Hello>;
+```
+
+Examples of **correct** code for this rule:
+
+**Correct:**
+
+```jsx
+/* eslint @stylistic/jsx-self-closing-comp: ["error", { "component": true }] */
+
+var intentionalSpace = <div>{' '}</div>;
+
+var HelloJohn = <Hello name="John" />;
+
+var HelloJohnCompound = <Hello.Compound name="John" />;
+
+var Profile = <Hello name="John"><img src="picture.png" /></Hello>;
+
+var ProfileCompound = <Hello.Compound name="John"><img src="picture.png" /></Hello.Compound>;
+```
+
+### `html`
+
+When `true`, html components tags should be self-closed.
+
+Examples of **incorrect** code for this rule:
+
+**Incorrect:**
+
+```jsx
+/* eslint @stylistic/jsx-self-closing-comp: ["error", { "html": true }] */
+
+var contentContainer = <div className="content"></div>;
+```
+
+Examples of **correct** code for this rule:
+
+**Correct:**
+
+```jsx
+/* eslint @stylistic/jsx-self-closing-comp: ["error", { "html": true }] */
+
+var contentContainer = <div className="content" />;
+
+var contentContainer = <div className="content"><div /></div>;
+
+var intentionalSpace = <div>{' '}</div>;
+```

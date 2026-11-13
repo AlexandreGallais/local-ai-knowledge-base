@@ -1,0 +1,390 @@
+---
+title: "custom-property-empty-line-before"
+tool: "stylelint"
+version: "17.16"
+source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/custom-property-empty-line-before/README.md"
+commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+license: "MIT"
+---
+
+# custom-property-empty-line-before
+
+Require or disallow an empty line before custom properties.
+
+```css
+a {
+  top: 10px;
+                          /* ← */
+  --foo: pink;            /* ↑ */
+}                         /* ↑ */
+/**                          ↑
+ *                   This line */
+```
+
+The `fix` option can automatically fix all of the problems reported by this rule.
+
+This rule doesn't have any message arguments.
+
+## Options
+
+### `"always"`
+
+```json
+{
+  "custom-property-empty-line-before": "always"
+}
+```
+
+The following patterns are considered problems:
+
+```css
+a {
+  top: 10px;
+  --foo: pink;
+  --bar: red;
+}
+```
+
+The following patterns are _not_ considered problems:
+
+```css
+a {
+  top: 10px;
+
+  --foo: pink;
+
+  --bar: red;
+}
+```
+
+### `"never"`
+
+```json
+{
+  "custom-property-empty-line-before": "never"
+}
+```
+
+The following patterns are considered problems:
+
+```css
+a {
+  top: 10px;
+
+  --foo: pink;
+
+  --bar: red;
+}
+```
+
+```css
+a {
+
+  --foo: pink;
+  --bar: red;
+}
+```
+
+The following patterns are _not_ considered problems:
+
+```css
+a {
+  top: 10px;
+  --foo: pink;
+  --bar: red;
+}
+```
+
+```css
+a {
+  --foo: pink;
+  --bar: red;
+}
+```
+
+## Optional secondary options
+
+### `except`
+
+```json
+{ "except": ["array", "of", "options"] }
+```
+
+#### `"after-block"`
+
+Reverse the primary option for custom properties that follow a block.
+
+Given:
+
+```json
+{
+  "custom-property-empty-line-before": ["never", { "except": ["after-block"] }]
+}
+```
+
+The following patterns are _not_ considered problems:
+
+```css
+a {
+  a {}
+
+  --foo: red;
+}
+```
+
+```css
+a {
+  @media all {}
+
+  --foo: red;
+}
+```
+
+#### `"after-comment"`
+
+Reverse the primary option for custom properties that follow a comment.
+
+Shared-line comments do not trigger this option.
+
+Given:
+
+```json
+{
+  "custom-property-empty-line-before": [
+    "always",
+    { "except": ["after-comment"] }
+  ]
+}
+```
+
+The following patterns are considered problems:
+
+```css
+a {
+
+  --foo: pink;
+  /* comment */
+
+  --bar: red;
+}
+```
+
+```css
+a {
+
+  --foo: pink; /* comment */
+  --bar: red;
+}
+```
+
+The following patterns are _not_ considered problems:
+
+```css
+a {
+
+  --foo: pink;
+  /* comment */
+  --bar: red;
+}
+```
+
+```css
+a {
+
+  --foo: pink; /* comment */
+
+  --bar: red;
+}
+```
+
+#### `"after-custom-property"`
+
+Reverse the primary option for custom properties that follow another custom property.
+
+Shared-line comments do not affect this option.
+
+Given:
+
+```json
+{
+  "custom-property-empty-line-before": [
+    "always",
+    { "except": ["after-custom-property"] }
+  ]
+}
+```
+
+The following patterns are considered problems:
+
+```css
+a {
+
+  --foo: pink;
+
+  --bar: red;
+}
+```
+
+```css
+a {
+
+  --foo: pink; /* comment */
+
+  --bar: red;
+}
+```
+
+The following patterns are _not_ considered problems:
+
+```css
+a {
+
+  --foo: pink;
+  --bar: red;
+}
+```
+
+```css
+a {
+
+  --foo: pink; /* comment */
+  --bar: red;
+}
+```
+
+#### `"first-nested"`
+
+Reverse the primary option for custom properties that are nested and the first child of their parent node.
+
+Given:
+
+```json
+{
+  "custom-property-empty-line-before": [
+    "always",
+    { "except": ["first-nested"] }
+  ]
+}
+```
+
+The following patterns are considered problems:
+
+```css
+a {
+
+  --foo: pink;
+
+  --bar: red;
+}
+```
+
+The following patterns are _not_ considered problems:
+
+```css
+a {
+  --foo: pink;
+
+  --bar: red;
+}
+```
+
+### `ignore`
+
+```json
+{ "ignore": ["array", "of", "options"] }
+```
+
+#### `"after-comment"`
+
+Ignore custom properties that follow a comment.
+
+Given:
+
+```json
+{
+  "custom-property-empty-line-before": [
+    "always",
+    { "ignore": ["after-comment"] }
+  ]
+}
+```
+
+The following patterns are _not_ considered problems:
+
+```css
+a {
+  /* comment */
+  --foo: pink;
+}
+```
+
+#### `"after-custom-property"`
+
+Ignore custom properties that follow another custom property.
+
+Given:
+
+```json
+{
+  "custom-property-empty-line-before": [
+    "always",
+    { "ignore": ["after-custom-property"] }
+  ]
+}
+```
+
+The following patterns are _not_ considered problems:
+
+```css
+a {
+
+  --foo: pink;
+  --bar: red;
+}
+```
+
+#### `"first-nested"`
+
+Ignore custom properties that are nested and the first child of their parent node.
+
+Given:
+
+```json
+{
+  "custom-property-empty-line-before": [
+    "always",
+    { "ignore": ["first-nested"] }
+  ]
+}
+```
+
+The following patterns are _not_ considered problems:
+
+```css
+a {
+  --foo: pink;
+
+  --bar: red;
+}
+```
+
+#### `"inside-single-line-block"`
+
+Ignore custom properties that are inside single-line blocks.
+
+Given:
+
+```json
+{
+  "custom-property-empty-line-before": [
+    "always",
+    { "ignore": ["inside-single-line-block"] }
+  ]
+}
+```
+
+The following patterns are _not_ considered problems:
+
+```css
+a { --foo: pink; --bar: red; }
+```

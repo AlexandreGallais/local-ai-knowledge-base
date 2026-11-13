@@ -1,0 +1,59 @@
+---
+title: "SVGElement"
+tool: "mdn-api"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/svgelement/index.md"
+commit: "c44f591049bc129b356acb0a9ce281974c035113"
+license: "CC-BY-SA-2.5"
+---
+
+# SVGElement
+
+All of the SVG DOM interfaces that correspond directly to elements in the SVG language derive from the `SVGElement` interface.
+
+## Instance properties
+
+_Also inherits properties from the `Element` interface._
+
+- `SVGElement.attributeStyleMap` (read-only)
+    A `StylePropertyMap` representing the declarations of the element's `style` attribute.
+- `SVGElement.autofocus`
+    Whether the control should be focused when the page loads, or when a `<dialog>` or popover become shown.
+- `SVGElement.className` (deprecated) (read-only)
+    An `SVGAnimatedString` that reflects the value of the `class` attribute on the given element, or the empty string if `class` is not present. This attribute is deprecated and may be removed in a future version of this specification. Authors are advised to use `Element.classList` instead.
+- `SVGElement.dataset` (read-only)
+    A `DOMStringMap` object which provides a list of key/value pairs of named data attributes which correspond to custom data attributes attached to the element. These can also be defined in SVG using attributes of the form `data-*`, where `*` is the key name for the pair. This works just like HTML's `HTMLElement.dataset` property and HTML's `data-*` global attribute.
+- `SVGElement.nonce`
+    Returns the cryptographic number used once that is used by Content Security Policy to determine whether a given fetch will be allowed to proceed.
+- `SVGElement.ownerSVGElement` (read-only)
+    An `SVGSVGElement` referring to the nearest ancestor `` element. `null` if the given element is the outermost `` element.
+- `SVGElement.style`
+    A `CSSStyleDeclaration` representing the declarations of the element's `style` attribute.
+- `SVGElement.tabIndex`
+    The position of the element in the tabbing order.
+- `SVGElement.viewportElement` (read-only)
+    The `SVGElement` which established the current viewport. Often the nearest ancestor `` element. `null` if the given element is the outermost `` element.
+
+## Instance methods
+
+_This interface also inherits methods from `Element`._
+
+- `SVGElement.blur()`
+    Removes keyboard focus from the currently focused element.
+- `SVGElement.focus()`
+    Makes the element the current keyboard focus.
+
+## Events
+
+Listen to these events using `addEventListener()` or by assigning an event listener to the equivalent `on...` handler property.
+
+- `error`
+    Fired when an SVG element does not load properly or when an error occurs during script execution.
+- `load`
+    Fires on an `SVGElement` when it is loaded in the browser.
+
+## See also
+
+- HTML `data-*` attribute
+- SVG `data-*` attribute
+- Using custom data attributes in HTML

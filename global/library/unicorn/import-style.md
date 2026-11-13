@@ -1,0 +1,126 @@
+---
+title: "import-style"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/import-style.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# import-style
+
+📝 Enforce specific import styles per module.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+
+Sometimes a module contains unrelated functions, like `util`, thus it is a good practice to enforce destructuring or named imports here. Other times, in modules like `path`, it is good to use default import as they have similar functions, all likely to be utilized.
+
+This rule applies to modules listed in the `styles` option and the default styles below. Other imports are not affected.
+
+This rule defines 4 import styles:
+
+- `unassigned` - `import 'foo'` or `require('foo')`
+- `default` - `import path from 'path'` or `const path = require('path')`
+- `namespace` - `import * as path from 'path'` or `const path = require('path')`
+- `named` - `import {inspect} from 'util'` or `const {inspect} = require('util')`
+
+## Examples
+
+```js
+// ❌
+const util = require('node:util');
+
+// ✅
+const {promisify} = require('node:util');
+```
+
+```js
+// ❌
+import util from 'node:util';
+
+// ❌
+import * as util from 'node:util';
+
+// ✅
+import {promisify} from 'node:util';
+```
+
+```js
+// ❌
+import * as path from 'node:path';
+
+// ✅
+import path from 'node:path';
+```
+
+## Options
+
+### styles
+
+Type: `object`
+
+You can extend default import styles per module by passing the `styles` option.
+
+Default options per module are:
+
+- `chalk` - `default` only
+- `path` - `default` only
+- `util` - `named` only
+
+Imports with the `node:` protocol are matched as if the protocol were omitted. For example, `node:util` uses the same style as `util`. Configure these modules by their bare name, like `util` or `path`.
+
+The example below:
+
+- Disables any restrictions on the `util` module imports.
+- Allows `named` import (leaving `default` allowed too) from the `path` module (by default only `default` import of `path` is allowed).
+
+```js
+'unicorn/import-style': [
+	'error',
+	{
+		styles: {
+			util: false,
+			path: {
+				named: true,
+			},
+		},
+	},
+]
+```
+
+Do not set all styles to `false` for a module. To disallow a module entirely, use the `no-restricted-imports` rule instead.
+
+### extendDefaultStyles
+
+Type: `boolean`\
+Default: `true`
+
+Pass `"extendDefaultStyles": false` to override the default `styles` option completely.
+
+### checkImport
+
+Type: `boolean`\
+Default: `true`
+
+Pass `"checkImport": false` to disable linting of static import statements (like `import ... from 'foo'` or `import 'foo'`) completely.
+
+### checkDynamicImport
+
+Type: `boolean`\
+Default: `true`
+
+Pass `"checkDynamicImport": false` to disable linting of dynamic import statements (like `await import('foo')`) completely.
+
+### checkExportFrom
+
+Type: `boolean`\
+Default: `false`
+
+Pass `"checkExportFrom": true` to enable linting of export-from statements (like `export ... from 'foo'`).
+
+### checkRequire
+
+Type: `boolean`\
+Default: `true`
+
+Pass `"checkRequire": false` to disable linting of `require` calls completely.

@@ -1,0 +1,103 @@
+---
+title: "prefer-await"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-await.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# prefer-await
+
+📝 Prefer `await` over promise chaining.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+
+💡 This rule is manually fixable by editor suggestions.
+
+Using `await` makes asynchronous control flow read like synchronous code and avoids nesting callback chains.
+
+This rule reports promise chaining with `.then()`, `.catch()`, and `.finally()`. Type-aware receiver checks also report promise-like thenables, since `await` assimilates them. When TypeScript type information is available, receivers known not to be promises are ignored. Without type information, the rule falls back to method-name heuristics.
+
+Chains explicitly discarded with the `void` operator are ignored, since `void` is the idiomatic way to opt out of awaiting an intentional fire-and-forget promise.
+
+Constructors cannot be `async`, so use an async IIFE to initialize promise-valued properties.
+
+For a standalone `.then()` with an inline arrow callback, the rule can suggest rewriting it as a `void` async IIFE. Other promise chains are still reported without a suggestion.
+
+This rule intentionally has no options. Use an inline disable for library-specific chains that should remain callback-based.
+
+## Examples
+
+```js
+// ❌
+promise.then(value => {
+	return transform(value);
+});
+
+// ✅
+const value = await promise;
+return transform(value);
+
+// ✅ Wrap in an async block if you don't want to await it
+(async () => {
+	const value = await promise;
+	alert(value);
+})();
+```
+
+```js
+// ❌
+promise.catch(error => {
+	handleError(error);
+});
+
+// ✅
+// Use an async IIFE when the surrounding scope cannot use `await` and the work should remain fire-and-forget.
+void (async () => {
+	const value = await promise;
+	alert(value);
+})();
+
+// ✅
+try {
+	await promise;
+} catch (error) {
+	handleError(error);
+}
+
+// ✅
+// Intentional fire-and-forget, opted out with `void`.
+void promise.catch(() => {});
+```
+
+```js
+// ✅ Use an async IIFE in a constructor.
+class Loader {
+	constructor(source) {
+		this.asset = (async () => {
+			const raw = await source;
+			raw.prepare();
+			return raw;
+		})();
+	}
+}
+```
+
+```js
+// ❌
+promise.finally(cleanup);
+
+// ✅
+try {
+	await promise;
+} finally {
+	cleanup();
+}
+```
+
+## Comparison with `eslint-plugin-promise/prefer-await-to-then`
+
+This rule is intentionally stricter. It reports promise chains in places where `eslint-plugin-promise/prefer-await-to-then` allows them by default, including chains whose result is awaited or yielded, chains in constructors, and untyped Cypress-style chains.
+
+It also uses TypeScript type information when available. Known non-promise receivers are ignored, while promise-like thenables are still reported because `await` assimilates them. Without type information, it falls back to simple method-name heuristics, so JavaScript projects still get useful coverage.

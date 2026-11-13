@@ -1,0 +1,423 @@
+---
+title: "Release notes (part 12 of 12)"
+tool: "playwright"
+version: "1.65"
+source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/release-notes-js.md"
+commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
+license: "Apache-2.0"
+---
+
+# Release notes (part 12 of 12)
+
+## Version 1.14
+
+<LiteYouTube
+  id="LczBDR0gOhk"
+  title="Playwright 1.14"
+/>
+
+### 🎭 Playwright Library
+
+#### ⚡️ New "strict" mode
+
+Selector ambiguity is a common problem in automation testing. **"strict" mode**
+ensures that your selector points to a single element and throws otherwise.
+
+Pass `strict: true` into your action calls to opt in.
+
+```js
+// This will throw if you have more than one button!
+await page.click('button', { strict: true });
+```
+
+#### 📍 New **Locators API**
+
+Locator represents a view to the element(s) on the page. It captures the logic sufficient to retrieve the element at any given moment.
+
+The difference between the Locator and ElementHandle is that the latter points to a particular element, while Locator captures the logic of how to retrieve that element.
+
+Also, locators are **"strict" by default**!
+
+```js
+const locator = page.locator('button');
+await locator.click();
+```
+
+Learn more in the documentation.
+
+#### 🧩 Experimental **React** and **Vue** selector engines
+
+React and Vue selectors allow selecting elements by its component name and/or property values. The syntax is very similar to attribute selectors and supports all attribute selector operators.
+
+```js
+await page.locator('_react=SubmitButton[enabled=true]').click();
+await page.locator('_vue=submit-button[enabled=true]').click();
+```
+
+Learn more in the react selectors documentation and the vue selectors documentation.
+
+#### ✨ New **`nth`** and **`visible`** selector engines
+
+- `nth` selector engine is equivalent to the `:nth-match` pseudo class, but could be combined with other selector engines.
+- `visible` selector engine is equivalent to the `:visible` pseudo class, but could be combined with other selector engines.
+
+```js
+// select the first button among all buttons
+await button.click('button >> nth=0');
+// or if you are using locators, you can use first(), nth() and last()
+await page.locator('button').first().click();
+
+// click a visible button
+await button.click('button >> visible=true');
+```
+
+### 🎭 Playwright Test
+
+#### ✅ Web-First Assertions
+
+`expect` now supports lots of new web-first assertions.
+
+Consider the following example:
+
+```js
+await expect(page.locator('.status')).toHaveText('Submitted');
+```
+
+Playwright Test will be re-testing the node with the selector `.status` until fetched Node has the `"Submitted"` text. It will be re-fetching the node and checking it over and over, until the condition is met or until the timeout is reached. You can either pass this timeout or configure it once via the `testProject.expect` value in test config.
+
+By default, the timeout for assertions is not set, so it'll wait forever, until the whole test times out.
+
+List of all new assertions:
+
+- `expect(locator).toBeChecked()`
+- `expect(locator).toBeDisabled()`
+- `expect(locator).toBeEditable()`
+- `expect(locator).toBeEmpty()`
+- `expect(locator).toBeEnabled()`
+- `expect(locator).toBeFocused()`
+- `expect(locator).toBeHidden()`
+- `expect(locator).toBeVisible()`
+- `expect(locator).toContainText(text, options?)`
+- `expect(locator).toHaveAttribute(name, value)`
+- `expect(locator).toHaveClass(expected)`
+- `expect(locator).toHaveCount(count)`
+- `expect(locator).toHaveCSS(name, value)`
+- `expect(locator).toHaveId(id)`
+- `expect(locator).toHaveJSProperty(name, value)`
+- `expect(locator).toHaveText(expected, options)`
+- `expect(page).toHaveTitle(title)`
+- `expect(page).toHaveURL(url)`
+- `expect(locator).toHaveValue(value)`
+
+#### ⛓ Serial mode with `describe.serial`
+
+Declares a group of tests that should always be run serially. If one of the tests fails, all subsequent tests are skipped. All tests in a group are retried together.
+
+```js
+test.describe.serial('group', () => {
+  test('runs first', async ({ page }) => { /* ... */ });
+  test('runs second', async ({ page }) => { /* ... */ });
+});
+```
+
+Learn more in the documentation.
+
+#### 🐾 Steps API with `test.step`
+
+Split long tests into multiple steps using `test.step()` API:
+
+```js
+import { test, expect } from '@playwright/test';
+
+test('test', async ({ page }) => {
+  await test.step('Log in', async () => {
+    // ...
+  });
+  await test.step('news feed', async () => {
+    // ...
+  });
+});
+```
+
+Step information is exposed in reporters API.
+
+#### 🌎 Launch web server before running tests
+
+To launch a server during the tests, use the `webServer` option in the configuration file. The server will wait for a given url to be available before running the tests, and the url will be passed over to Playwright as a `baseURL` when creating a context.
+
+```js
+import { defineConfig } from '@playwright/test';
+export default defineConfig({
+  webServer: {
+    command: 'npm run start', // command to launch
+    url: 'http://127.0.0.1:3000', // url to await for
+    timeout: 120 * 1000,
+    reuseExistingServer: !process.env.CI,
+  },
+});
+```
+
+Learn more in the documentation.
+
+### Browser Versions
+
+- Chromium 94.0.4595.0
+- Mozilla Firefox 91.0
+- WebKit 15.0
+
+## Version 1.13
+
+#### Playwright Test
+
+- **⚡️ Introducing Reporter API** which is already used to create an Allure Playwright reporter.
+- **⛺️ New `baseURL` fixture** to support relative paths in tests.
+
+#### Playwright
+
+- **🖖 Programmatic drag-and-drop support** via the [`method: Page.dragAndDrop`] API.
+- **🔎 Enhanced HAR** with body sizes for requests and responses. Use via `recordHar` option in [`method: Browser.newContext`].
+
+#### Tools
+
+- Playwright Trace Viewer now shows parameters, returned values and `console.log()` calls.
+- Playwright Inspector can generate Playwright Test tests.
+
+#### New and Overhauled Guides
+
+- Intro
+- Authentication
+- Chrome Extensions
+- Playwright Test Annotations
+- Playwright Test Configuration
+- Playwright Test Fixtures
+
+#### Browser Versions
+
+- Chromium 93.0.4576.0
+- Mozilla Firefox 90.0
+- WebKit 14.2
+
+#### New Playwright APIs
+
+- new `baseURL` option in [`method: Browser.newContext`] and [`method: Browser.newPage`]
+- [`method: Response.securityDetails`] and [`method: Response.serverAddr`]
+- [`method: Page.dragAndDrop`] and [`method: Frame.dragAndDrop`]
+- [`method: Download.cancel`]
+- [`method: Page.inputValue`], [`method: Frame.inputValue`] and [`method: ElementHandle.inputValue`]
+- new `force` option in [`method: Page.fill`], [`method: Frame.fill`], and [`method: ElementHandle.fill`]
+- new `force` option in [`method: Page.selectOption`], [`method: Frame.selectOption`], and [`method: ElementHandle.selectOption`]
+
+## Version 1.12
+
+#### ⚡️ Introducing Playwright Test
+
+Playwright Test is a **new test runner** built from scratch by Playwright team specifically to accommodate end-to-end testing needs:
+
+- Run tests across all browsers.
+- Execute tests in parallel.
+- Enjoy context isolation and sensible defaults out of the box.
+- Capture videos, screenshots and other artifacts on failure.
+- Integrate your POMs as extensible fixtures.
+
+Installation:
+```bash
+npm i -D @playwright/test
+```
+
+Simple test `tests/foo.spec.ts`:
+
+```js
+import { test, expect } from '@playwright/test';
+
+test('basic test', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
+  const name = await page.innerText('.navbar__title');
+  expect(name).toBe('Playwright');
+});
+```
+
+Running:
+
+```bash
+npx playwright test
+```
+
+👉  Read more in Playwright Test documentation.
+
+#### 🧟‍♂️ Introducing Playwright Trace Viewer
+
+Playwright Trace Viewer is a new GUI tool that helps exploring recorded Playwright traces after the script ran. Playwright traces let you examine:
+- page DOM before and after each Playwright action
+- page rendering before and after each Playwright action
+- browser network during script execution
+
+Traces are recorded using the new [`property: BrowserContext.tracing`] API:
+
+```js
+const browser = await chromium.launch();
+const context = await browser.newContext();
+
+// Start tracing before creating / navigating a page.
+await context.tracing.start({ screenshots: true, snapshots: true });
+
+const page = await context.newPage();
+await page.goto('https://playwright.dev');
+
+// Stop tracing and export it into a zip archive.
+await context.tracing.stop({ path: 'trace.zip' });
+```
+
+Traces are examined later with the Playwright CLI:
+
+```sh
+npx playwright show-trace trace.zip
+```
+
+That will open the following GUI:
+
+👉 Read more in trace viewer documentation.
+
+#### Browser Versions
+
+- Chromium 93.0.4530.0
+- Mozilla Firefox 89.0
+- WebKit 14.2
+
+This version of Playwright was also tested against the following stable channels:
+
+- Google Chrome 91
+- Microsoft Edge 91
+
+#### New APIs
+
+- `reducedMotion` option in [`method: Page.emulateMedia`], [`method: BrowserType.launchPersistentContext`], [`method: Browser.newContext`] and [`method: Browser.newPage`]
+- [`event: BrowserContext.request`]
+- [`event: BrowserContext.requestFailed`]
+- [`event: BrowserContext.requestFinished`]
+- [`event: BrowserContext.response`]
+- `tracesDir` option in [`method: BrowserType.launch`] and [`method: BrowserType.launchPersistentContext`]
+- new [`property: BrowserContext.tracing`] API namespace
+- new [`method: Download.page`] method
+
+## Version 1.11
+
+🎥  New video: Playwright: A New Test Automation Framework for the Modern Web (slides)
+- We talked about Playwright
+- Showed engineering work behind the scenes
+- Did live demos with new features ✨
+- **Special thanks** to applitools for hosting the event and inviting us!
+
+#### Browser Versions
+
+- Chromium 92.0.4498.0
+- Mozilla Firefox 89.0b6
+- WebKit 14.2
+
+#### New APIs
+
+- support for **async predicates** across the API in methods such as [`method: Page.waitForRequest`] and others
+- new **emulation devices**: Galaxy S8, Galaxy S9+, Galaxy Tab S4, Pixel 3, Pixel 4
+- new methods:
+    * [`method: Page.waitForURL`] to await navigations to URL
+    * [`method: Video.delete`] and [`method: Video.saveAs`] to manage screen recording
+- new options:
+    * `screen` option in the [`method: Browser.newContext`] method to emulate `window.screen` dimensions
+    * `position` option in [`method: Page.check`] and [`method: Page.uncheck`] methods
+    * `trial` option to dry-run actions in [`method: Page.check`], [`method: Page.uncheck`], [`method: Page.click`], [`method: Page.dblclick`], [`method: Page.hover`] and [`method: Page.tap`]
+
+## Version 1.10
+
+- Playwright for Java v1.10 is **now stable**!
+- Run Playwright against **Google Chrome** and **Microsoft Edge** stable channels with the new channels API.
+- Chromium screenshots are **fast** on Mac & Windows.
+
+#### Bundled Browser Versions
+
+- Chromium 90.0.4430.0
+- Mozilla Firefox 87.0b10
+- WebKit 14.2
+
+This version of Playwright was also tested against the following stable channels:
+
+- Google Chrome 89
+- Microsoft Edge 89
+
+#### New APIs
+
+- [`method: BrowserType.launch`] now accepts the new `'channel'` option. Read more in our documentation.
+
+## Version 1.9
+
+- Playwright Inspector is a **new GUI tool** to author and debug your tests.
+  - **Line-by-line debugging** of your Playwright scripts, with play, pause and step-through.
+  - Author new scripts by **recording user actions**.
+  - **Generate element selectors** for your script by hovering over elements.
+  - Set the `PWDEBUG=1` environment variable to launch the Inspector
+
+- **Pause script execution** with [`method: Page.pause`] in headed mode. Pausing the page launches Playwright Inspector for debugging.
+
+- **New has-text pseudo-class** for CSS selectors. `:has-text("example")` matches any element containing `"example"` somewhere inside, possibly in a child or a descendant element. See more examples.
+
+- **Page dialogs are now auto-dismissed** during execution, unless a listener for `dialog` event is configured. Learn more about this.
+
+- Playwright for Python is **now stable** with an idiomatic snake case API and pre-built Docker image to run tests in CI/CD.
+
+#### Browser Versions
+
+- Chromium 90.0.4421.0
+- Mozilla Firefox 86.0b10
+- WebKit 14.1
+
+#### New APIs
+- [`method: Page.pause`].
+
+## Version 1.8
+
+- Selecting elements based on layout with `:left-of()`, `:right-of()`, `:above()` and `:below()`.
+- Playwright now includes command line interface, former playwright-cli.
+  ```bash
+  npx playwright --help
+  ```
+- [`method: Page.selectOption`] now waits for the options to be present.
+- New methods to assert element state like [`method: Page.isEditable`].
+
+#### New APIs
+
+- [`method: ElementHandle.isChecked`].
+- [`method: ElementHandle.isDisabled`].
+- [`method: ElementHandle.isEditable`].
+- [`method: ElementHandle.isEnabled`].
+- [`method: ElementHandle.isHidden`].
+- [`method: ElementHandle.isVisible`].
+- [`method: Page.isChecked`].
+- [`method: Page.isDisabled`].
+- [`method: Page.isEditable`].
+- [`method: Page.isEnabled`].
+- [`method: Page.isHidden`].
+- [`method: Page.isVisible`].
+- New option `'editable'` in [`method: ElementHandle.waitForElementState`].
+
+#### Browser Versions
+
+- Chromium 90.0.4392.0
+- Mozilla Firefox 85.0b5
+- WebKit 14.1
+
+## Version 1.7
+
+- **New Java SDK**: Playwright for Java is now on par with JavaScript, Python and .NET bindings.
+- **Browser storage API**: New convenience APIs to save and load browser storage state (cookies, local storage) to simplify automation scenarios with authentication.
+- **New CSS selectors**: We heard your feedback for more flexible selectors and have revamped the selectors implementation. Playwright 1.7 introduces new CSS extensions and there's more coming soon.
+- **New website**: The docs website at playwright.dev has been updated and is now built with Docusaurus.
+- **Support for Apple Silicon**: Playwright browser binaries for WebKit and Chromium are now built for Apple Silicon.
+
+#### New APIs
+
+- [`method: BrowserContext.storageState`] to get current state for later reuse.
+- `storageState` option in [`method: Browser.newContext`] and [`method: Browser.newPage`] to setup browser context state.
+
+#### Browser Versions
+
+- Chromium 89.0.4344.0
+- Mozilla Firefox 84.0b9
+- WebKit 14.1

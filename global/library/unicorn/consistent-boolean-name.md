@@ -1,0 +1,383 @@
+---
+title: "consistent-boolean-name"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/consistent-boolean-name.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# consistent-boolean-name
+
+📝 Enforce consistent naming for boolean names.
+
+💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+
+🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+
+By default, this rule checks boolean variables, parameters, and functions. Object, class, and TypeScript property and method names are ignored unless enabled with their respective options.
+
+Each `check*` option accepts one of these modes:
+
+- `always`: require prefixes for booleans and reject misleading prefixes on non-booleans.
+- `prohibit`: only reject misleading prefixes on non-booleans.
+- `never`: skip the occurrence entirely.
+
+Boolean names should start with a prefix that makes the boolean meaning clear.
+
+Names that start with a boolean prefix should also refer to booleans or boolean-returning functions. Unknown values are ignored.
+
+Functions and callable type annotations returning `boolean`, `Promise<boolean>`, `PromiseLike<boolean>`, or unions of these are considered boolean-returning, whether or not the function is `async`.
+
+Getters returning promises are treated as non-boolean values.
+
+When type information is unavailable, a type annotation is needed to require prefixes for promise-returning functions.
+
+Configured wrapper bindings may use boolean prefixes when a configured property or method provides a boolean-like value. This applies only to variables and parameters that are not reassigned.
+
+Reports for property and method names, and reports for non-boolean values using boolean prefixes, do not provide rename suggestions.
+
+The default prefixes are:
+
+- `is`
+- `are`
+- `has`
+- `have`
+- `can`
+- `should`
+- `was`
+- `were`
+- `does`
+- `did`
+- `will`
+- `requires`
+
+The `do` prefix is excluded because it also starts action names like `doWork()`, which would then be reserved for boolean-like values. Use `doesChecksPass` instead of `doChecksPass`, or `didChecksPass` for a past result; identifiers need not follow English grammar. To allow `do`, set `prefixes: {do: true}`.
+
+The plural prefixes (`are`, `have`, `were`) allow names for boolean collections, like `areFilesValid`.
+
+The prefix must be a distinct word part. `isReady`, `is_ready`, and `IS_READY` are allowed, but `island` is not considered to have the `is` prefix.
+
+React hook function bindings are checked after the required `use` prefix. For example, `useIsReady` is treated as a boolean hook name, while `useReady` is not. `ignore` patterns still match the original source name, like `useReady`.
+
+React refs initialized with a boolean-like value may use boolean prefixes when the binding name ends in `Ref` or `Reference`, such as `isMountedRef`, `hasConsentRef`, or `hasConsentReference`. The suffix identifies the binding as a ref object. The binding must not be reassigned after initialization.
+
+Direct Vue `ref()` calls with boolean-like values and `computed()` calls with synchronous getters returning booleans may use boolean prefixes, such as `isBranch` or `hasDepartment`. The binding must not be reassigned after initialization. For refs returned by other calls, such as composables returning `ShallowRef<boolean>`, use type-aware `wrappers` with `{Ref: 'value'}`, which also covers `ComputedRef`.
+
+This rule intentionally does not check destructuring bindings, imports, class names, or catch parameters.
+
+TypeScript type annotation checks resolve local type aliases and callable interfaces, including generic type parameters, but not qualified or namespaced type references.
+
+JSDoc `@type`, `@param`, and `@returns` annotations are supported without TypeScript configuration. Rename suggestions update matching `@param` names. Inference is best effort; advanced types, typedefs, and imports are not resolved.
+
+Without TypeScript type information, nested generic alias resolution is best effort. Some finite nested instantiations may be treated as unknown.
+
+This rule is only automatically fixable when a non-global, non-exported, non-ambient variable binding can be safely renamed to the first enabled prefix without adding a collision suffix. Other safe rename candidates are still provided as editor suggestions.
+
+## Examples
+
+```js
+// ❌
+const completed = true;
+
+// ✅
+const isCompleted = true;
+```
+
+```js
+// ❌
+const hasName = 'Sindre';
+
+// ✅
+const name = 'Sindre';
+```
+
+```js
+// ❌
+function hasTitle() {
+	return 'Unicorn';
+}
+
+// ✅
+function getTitle() {
+	return 'Unicorn';
+}
+```
+
+```js
+// ❌
+const completed = progress === 100;
+
+// ✅
+const hasCompleted = progress === 100;
+```
+
+```js
+// ❌
+const completed = Boolean(value);
+
+// ✅
+const isCompleted = Boolean(value);
+```
+
+```js
+// ❌
+function download(showProgress = false) {}
+
+// ✅
+function download(shouldShowProgress = false) {}
+```
+
+```js
+// ❌
+/** @param {boolean} showProgress */
+function download(showProgress) {}
+
+// ✅
+/** @param {boolean} shouldShowProgress */
+function download(shouldShowProgress) {}
+```
+
+```ts
+// ❌
+const completed: boolean = true;
+
+// ✅
+const isCompleted: boolean = true;
+```
+
+```js
+// ❌
+function completed() {
+	return true;
+}
+
+// ✅
+function isCompleted() {
+	return true;
+}
+```
+
+```ts
+// ❌
+function download(showProgress: boolean) {}
+
+// ✅
+function download(shouldShowProgress: boolean) {}
+```
+
+```js
+// ✅
+// Object fields are ignored unless `checkFields` is set to a mode other than `never`.
+// Methods and getters use `checkMethods`. Setter names are ignored because setters do not return values.
+const task = {
+	completed: progress === 100,
+};
+```
+
+## Options
+
+### checkVariables
+
+Type: `'always' | 'prohibit' | 'never'`\
+Default: `'always'`
+
+How to check variable names.
+
+```js
+'unicorn/consistent-boolean-name': [
+	'error',
+	{
+		checkVariables: 'prohibit',
+	},
+]
+```
+
+With `checkVariables: 'prohibit'`, this would fail:
+
+```js
+const hasName = 'Sindre';
+```
+
+And these would pass:
+
+```js
+const completed = true;
+const isCompleted = true;
+```
+
+### checkArguments
+
+Type: `'always' | 'prohibit' | 'never'`\
+Default: `'always'`
+
+How to check parameter names, including TypeScript constructor parameter properties. Setter parameters are ignored because their names are positional. For example, `checkArguments: 'never'` allows both forms:
+
+```js
+function download(showProgress = false) {}
+function download(shouldShowProgress = false) {}
+```
+
+### checkFunctions
+
+Type: `'always' | 'prohibit' | 'never'`\
+Default: `'always'`
+
+How to check function names.
+
+### checkMethods
+
+Type: `'always' | 'prohibit' | 'never'`\
+Default: `'never'`
+
+How to check object and class methods, getters, and TypeScript method signatures. Setter names are ignored because setters do not return values.
+
+### checkFields
+
+Type: `'always' | 'prohibit' | 'never'`\
+Default: `'never'`
+
+How to check object properties, class fields, TypeScript property signatures, and TypeScript constructor parameter properties. Constructor parameter properties are checked as both arguments and fields.
+
+```js
+'unicorn/consistent-boolean-name': [
+	'error',
+	{
+		checkMethods: 'always',
+		checkFields: 'never',
+	},
+]
+```
+
+With the above config, this would fail:
+
+```js
+class Task {
+	hasTitle() {
+		return 'Unicorn';
+	}
+}
+```
+
+And this would pass:
+
+```js
+class Task {
+	completed = true;
+	isCompleted() {
+		return true;
+	}
+}
+```
+
+### prefixes
+
+Type: `Record<string, boolean>`\
+Default:
+
+```js
+{
+	is: true,
+	are: true,
+	has: true,
+	have: true,
+	can: true,
+	should: true,
+	was: true,
+	were: true,
+	does: true,
+	did: true,
+	will: true,
+	requires: true,
+}
+```
+
+The `prefixes` option is merged with the defaults. Set a prefix to `true` to allow it for boolean names and reserve it for boolean-like values. Set a prefix to `false` to disable it in both directions.
+
+```js
+'unicorn/consistent-boolean-name': [
+	'error',
+	{
+		prefixes: {
+			needs: true,
+			did: false,
+		},
+	},
+]
+```
+
+With the above config, this would pass:
+
+```js
+const needsUpdate = true;
+```
+
+And this would fail:
+
+```js
+const didUpdate = true;
+```
+
+### wrappers
+
+Type: `Record<string, string>`\
+Default: `{}`
+
+Map unqualified TypeScript wrapper type names to the property or method that provides a boolean-like value. Same-named types share configuration. Derived types, intersections, and constrained type parameters are supported. Members may provide `boolean`, `Promise<boolean>`, or `PromiseLike<boolean>`; nullable results are accepted. Requires TypeScript type information.
+
+```js
+'unicorn/consistent-boolean-name': [
+	'error',
+	{
+		wrappers: {
+			StorageItem: 'get',
+		},
+	},
+]
+```
+
+With the above configuration, this would pass:
+
+```ts
+interface StorageItem<Base, Return = Base | undefined> {
+	get(): Promise<Return>;
+}
+
+declare const isUnicorn: StorageItem<unknown, boolean>;
+```
+
+But this would still fail because `get()` returns a string:
+
+```ts
+interface StorageItem<Base, Return = Base | undefined> {
+	get(): Promise<Return>;
+}
+
+declare const isUnicorn: StorageItem<unknown, string>;
+```
+
+### ignore
+
+Type: `Array<string | RegExp>`\
+Default: `[]`
+
+Names matching any of these patterns are not checked. Strings are treated as regular expressions, so they match anywhere in the name unless anchored with `^` and `$`.
+
+```js
+'unicorn/consistent-boolean-name': [
+	'error',
+	{
+		ignore: [
+			'value',
+			'^completed$',
+		],
+	},
+]
+```
+
+With the above config, these would pass:
+
+```js
+const value = true;
+const completed = true;
+```

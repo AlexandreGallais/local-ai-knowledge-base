@@ -1,0 +1,193 @@
+---
+title: "no-useless-undefined"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-useless-undefined.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# no-useless-undefined
+
+📝 Disallow useless `undefined`.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+
+🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+
+`undefined` is the default value for new variables, parameters, return statements, etc… so specifying it doesn't make any difference.
+
+`var` initializers are ignored because they can reset an existing binding, including on each loop iteration.
+
+This rule does not check function call arguments in TypeScript files because TypeScript can require an explicit `undefined` argument when the parameter type includes `undefined`.
+
+Using `undefined` as arrow function body sometimes makes the purpose more explicit. You can use the `checkArrowFunctionBody: false` option to allow this.
+
+In TypeScript, when a function has an explicit return type, `return undefined` is only reported if that type is `undefined` or `void`. When the return type is a union with a real value type, such as `number | undefined`, the explicit `undefined` is kept, since it can document intent and avoid conflicts with the `consistent-return` rule.
+
+## Examples
+
+```js
+// ❌
+let foo = undefined;
+
+// ✅
+let foo;
+```
+
+```js
+// ❌
+const {foo = undefined} = bar;
+
+// ✅
+const {foo} = bar;
+```
+
+```js
+// ❌
+const noop = () => undefined;
+
+// ✅
+const noop = () => {};
+```
+
+```js
+// ❌
+function foo() {
+	return undefined;
+}
+
+// ✅
+function foo() {
+	return;
+}
+```
+
+```js
+// ❌
+function* foo() {
+	yield undefined;
+}
+
+// ✅
+function* foo() {
+	yield;
+}
+```
+
+```js
+// ❌
+function foo(bar = undefined) {
+}
+
+// ✅
+function foo(bar) {
+}
+```
+
+```js
+// ❌
+function foo({bar = undefined}) {
+}
+
+// ✅
+function foo({bar}) {
+}
+```
+
+```js
+// ❌
+foo(undefined);
+
+// ✅
+foo();
+```
+
+```js
+// ❌
+const foo = index >= 0 ? array[index] : undefined;
+
+// ✅
+const foo = array[index];
+```
+
+Guarded indexed access is reported with an editor suggestion instead of an autofix because removing the guard changes when the access is evaluated.
+
+## Options
+
+Type: `object`
+
+### checkArguments
+
+Type: `boolean`\
+Default: `true`
+
+Disallow the use of `undefined` at the end of function call arguments in JavaScript files. TypeScript files are not checked because the compiler determines whether an argument can be omitted. Pass `checkArguments: false` to disable checking them in JavaScript files.
+
+Calls where a trailing `undefined` is not the same as no argument, like `array.push(undefined)`, `array.splice(start, undefined)`, `Math.max(undefined)`, and `String(undefined)`, are ignored. These functions are matched by name.
+
+```js
+// ❌
+/* eslint unicorn/no-useless-undefined: ["error", {"checkArguments": true}] */
+foo(bar, baz, undefined);
+
+// ✅
+foo(bar, baz);
+```
+
+```js
+// ✅
+/* eslint unicorn/no-useless-undefined: ["error", {"checkArguments": false}] */
+foo(bar, baz, undefined);
+```
+
+### checkArrowFunctionBody
+
+Type: `boolean`\
+Default: `true`
+
+Disallow the use of `undefined` as arrow function body. Pass `checkArrowFunctionBody: false` to disable checking them.
+
+```js
+/* eslint unicorn/no-useless-undefined: ["error", {"checkArrowFunctionBody": true}] */
+// ❌
+const foo = () => undefined;
+```
+
+```js
+/* eslint unicorn/no-useless-undefined: ["error", {"checkArrowFunctionBody": true}] */
+// ✅
+const foo = () => {};
+```
+
+```js
+/* eslint unicorn/no-useless-undefined: ["error", {"checkArrowFunctionBody": false}] */
+// ✅
+const foo = () => undefined;
+```
+
+## Conflict with ESLint `array-callback-return` and `getter-return` rules
+
+We recommend setting `allowImplicit` option to `true` for these ESLint rules:
+
+- `array-callback-return`
+- `getter-return`
+
+```js
+{
+	rules: {
+		'array-callback-return': [
+			'error',
+			{
+				allowImplicit: true,
+			},
+		],
+		'getter-return': [
+			'error',
+			{
+				allowImplicit: true,
+			},
+		],
+	},
+}
+```

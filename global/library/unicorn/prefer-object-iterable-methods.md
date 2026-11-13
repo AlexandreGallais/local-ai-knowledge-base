@@ -1,0 +1,92 @@
+---
+title: "prefer-object-iterable-methods"
+tool: "unicorn"
+version: "79.0"
+source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-object-iterable-methods.md"
+commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
+license: "MIT"
+---
+
+# prefer-object-iterable-methods
+
+📝 Prefer the most specific `Object` iterable method.
+
+💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+
+🔧 This rule is automatically fixable by the `--fix` CLI option.
+
+Prefer the most direct `Object` iterable method for the data being used.
+
+Choosing the method that matches the values consumed avoids creating keys or entries that the loop or callback never uses.
+
+Use `Object.values()` when only values are needed, `Object.entries()` when both keys and values are needed, and `Object.keys()` when only keys are needed.
+
+This rule reports `for…of` loops, `Object.keys().map()` callbacks, and `Object.entries()` callbacks for `.map()`, `.every()`, `.some()`, `.findIndex()`, `.findLastIndex()`, `.flatMap()`, `.forEach()`, `.reduce()`, and `.reduceRight()`.
+
+`Object.entries().reduce()` and `Object.entries().reduceRight()` are only reported when an initial value is provided.
+
+`Object.values()` and `Object.entries()` read every value before iteration, while `object[key]` reads it during iteration, so after the fix, a loop or callback that changes the object can see different values.
+
+## Examples
+
+```js
+// ❌
+for (const key of Object.keys(object)) {
+	foo(object[key]);
+}
+
+// ✅
+for (const value of Object.values(object)) {
+	foo(value);
+}
+```
+
+```js
+// ❌
+Object.keys(object).map(key => foo(object[key], key));
+
+// ✅
+Object.entries(object).map(([key, value]) => foo(value, key));
+```
+
+```js
+// ❌
+const doubled = Object.keys(object).map(key => object[key] * 2);
+
+// ✅
+const doubled = Object.values(object).map(value => value * 2);
+```
+
+```js
+// ❌
+Object.entries(object).reduce((result, [key, value]) => result + value, 0);
+
+// ✅
+Object.values(object).reduce((result, value) => result + value, 0);
+```
+
+```js
+// ❌
+for (const [key] of Object.entries(object)) {
+	foo(key);
+}
+
+// ✅
+for (const key of Object.keys(object)) {
+	foo(key);
+}
+```
+
+When a value access uses a TypeScript cast on the object, the cast is moved onto the iterable method argument so the inferred element type is preserved.
+
+```ts
+// ❌
+for (const key of Object.keys(object)) {
+	foo((object as Record<string, unknown>)[key]);
+}
+
+// ✅
+for (const value of Object.values(object as Record<string, unknown>)) {
+	foo(value);
+}
+```
