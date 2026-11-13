@@ -1,5 +1,5 @@
 // Checks that a repository can be made public: it holds only the base (no spec/ folder, no file of the
-// project tool, no research report, no trial guide), and none of the forbidden terms appears in its
+// project tool, no research report, no work note of a feature), and none of the forbidden terms appears in its
 // files or in its history (contents and commit messages).
 //
 // Usage: node scripts/check-public.ts [repository] [--terms-file <file>]
@@ -21,8 +21,9 @@ const FORBIDDEN_PATHS: [RegExp, string][] = [
   [/^spec\//, 'file of the private specification'],
   [/^\.arsenal\//, 'file of the project tool'],
   [/(?:^|\/)CLAUDE\.md$/, 'file of the project tool'],
+  [/^research\/(?!\.gitignore$)/, 'research report or annex'],
   [/^t\d+-[^/]+\/(?!\.gitignore$)/, 'research report or annex'],
-  [/^f\d+-[^/]+\/(?!\.gitignore$)/, 'trial guide of a feature'],
+  [/^f\d+-[^/]+\/(?!\.gitignore$)/, 'work note of a feature'],
 ];
 
 function git(repository: string, args: string[]): string {

@@ -8,8 +8,8 @@ target/
 # Extracts of heavy files, written by the read-heavy-file skill
 .extract/
 
-# Export of the base, built by scripts/export.ts; local state of the chat adapter
-export/
+# Local state of the chat adapter. The export/ folder is kept: it holds the export of the last
+# delivery, built by scripts/export.ts --trial.
 state.local.json
 
 # Measures of an evaluation on the workstation

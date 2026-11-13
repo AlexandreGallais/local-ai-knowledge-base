@@ -95,6 +95,13 @@ describe('public repository check', () => {
   });
   it('refuses a research report tracked by Git', () => {
     assert.match(messages(repository({ 't3-some-research/rapport.md': '# Report\n' })), /t3-some-research\/rapport\.md: research report/);
+    assert.match(messages(repository({ 'research/t3-some-research/rapport.md': '# Report\n' })), /research\/t3-some-research\/rapport\.md: research report/);
+  });
+  it('accepts the .gitignore of the research folder and the trial guides', () => {
+    assert.equal(messages(repository({
+      'research/.gitignore': '*\n!.gitignore\n',
+      'trials/README.md': '# Trials\n',
+    })), '');
   });
   it('refuses a forbidden term in a file, naming the term by number only', () => {
     const result = messages(repository({ 'README.md': 'Built for Acme Marine.\n' }));

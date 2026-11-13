@@ -151,7 +151,8 @@ anglais.
 - `--opencode 2` (ou `1` pour OpenCode 1.x) écrit en plus `opencode.json` à la racine : la lecture
   directe des fichiers lourds y est refusée, et les trois agents y sont déclarés.
 - `node scripts/export.ts --trial` ajoute à l'export le matériel des essais sur le poste :
-  `trials.md`, les guides d'essai, les projets exemples et le jeu d'évaluation.
+  le dossier `trials/` (guides d'essai), les projets exemples et le jeu d'évaluation. Le dossier
+  `export/` du dépôt contient l'export de la dernière livraison.
 - L'export produit aussi la version pour le chat : chaque skill sans ses étapes qui lancent des
   commandes, et les documents de chaque sujet, sans les résumés en français.
 
@@ -159,8 +160,10 @@ anglais.
 
 - `chat/` : le profil pour une interface de chat sans accès aux fichiers. Les consignes de base des
   modèles de chat sont dans `chat/models/` ; le reste est produit par l'export.
-- `trials.md` : la séance d'essais sur le poste, dans l'ordre, avec les faits à relever d'abord
+- `trials/README.md` : la séance d'essais sur le poste, dans l'ordre, avec les faits à relever d'abord
   (versions d'OpenCode et d'Open WebUI, fenêtre de contexte, appel d'outils).
+- `research/` : les rapports de recherche d'où viennent les documents. Son `.gitignore` les garde
+  hors de Git : ils ne sont jamais publiés.
 - `chat/models/commit-assistant.md` : un assistant de commits pour les personnes qui ne sont pas
   développeurs. Il propose le message de commit, explique le type choisi, et refuse tout autre
   sujet en une phrase.

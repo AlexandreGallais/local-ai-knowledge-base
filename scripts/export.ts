@@ -5,8 +5,8 @@
 //   node scripts/export.ts                   writes export/base-<n>.txt and export/import.ts
 //   node scripts/export.ts --max-kb 100      parts of 100 KB at most
 //   node scripts/export.ts --chat <folder>   writes only the generated chat profile into <folder>
-//   node scripts/export.ts --trial           adds what the trials on the workstation need: trials.md,
-//                                            the trial guides, samples/, evaluation/ and their scripts
+//   node scripts/export.ts --trial           adds what the trials on the workstation need: trials/,
+//                                            samples/, evaluation/ and their scripts
 import { spawnSync } from 'node:child_process';
 import {
   copyFileSync,
@@ -52,12 +52,12 @@ const TREE_FOLDERS = [
 ];
 // Trial material: taken from the files Git tracks, so that build outputs and copies stay out.
 const TRIAL_PATHS = [
-  'trials.md',
+  'trials',
   'samples',
   'evaluation',
   'scripts/fixtures.ts',
+  'scripts/paste-sample.ts',
   'scripts/evaluation-summary.ts',
-  ':(glob)f*/trial.md',
 ];
 const SKIPPED = new Set([
   '.DS_Store',

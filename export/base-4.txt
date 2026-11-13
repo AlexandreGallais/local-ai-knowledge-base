@@ -1,0 +1,4423 @@
+=====BASE-EXPORT-1-eccf69c80ed6===== PART 4 OF 4 SHA256 a23cac398b7f34bcacb45c3aaac7071e548280f61490472d88f2a96f6a287771
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 ed32e16109eb31eb2e13d94b61bd2f09570b919eacd85abd98c9c6c47fa25d61 RAW evaluation/README.md
+# Evaluation of the base
+
+Does the AI succeed more often with the base than without it, with no more tokens? This folder holds
+the task set, the protocol and the record format. Run it on the workstation, with the real model.
+
+## How to run the evaluation
+
+1. Prepare two copies of the same trial project: one with the base at its root (`node import.ts
+   --project`), one without.
+2. For each task of the set, start a new session of the coding assistant in non-interactive mode,
+   with the task text as the prompt, in each copy. Repeat each task the number of runs of the table.
+3. After each run, judge success with the check of the task, and note the tokens that the assistant
+   reports for the run.
+4. Write one line per run in `results.csv` (format below), then run
+   `node scripts/evaluation-summary.ts evaluation/results.csv`.
+
+A small team can only see large gaps: about 40 runs per condition are needed to see a gap of
+30 points. Start with tasks on APIs and versions that a model does not know well: that is where the
+base changes the result.
+
+## Task set
+
+Fake data only. Replace or add real tasks of the team, written without real data.
+
+| Id | Task (prompt) | Success check | Runs |
+| --- | --- | --- | --- |
+| T1 | Add a standalone Angular component that shows a list of valves with their position, in Angular 22. | `npm run check` and `npm run build` at zero errors; no `standalone: true`, no `*ngFor` | 4 |
+| T2 | Add an input `tagName` and an output `selected` to the component, with signals. | Same checks; `input()` and `output()` used | 4 |
+| T3 | Add a minimal API endpoint `GET /valves/{tagName}` with typed results and validation, in .NET 10. | `dotnet build` at zero errors; `TypedResults` used | 4 |
+| T4 | Log the opening of a valve with a structured message. | `dotnet build` at zero errors (CA2254 on) | 4 |
+| T5 | Write the Dockerfile of the API project. | `hadolint` clean; two stages; `USER $APP_UID`; port 8080 | 4 |
+| T6 | Write the Deployment and Service of the API, for Kubernetes 1.37. | `kubeconform -strict` and `kube-linter` clean | 4 |
+| T7 | Give the properties of a motorized butterfly valve, with their units. | Names from the catalog; each number ends with a suffix of the closed list | 4 |
+| T8 | Code the synoptic symbol of a pressure transmitter with its alarm limits. | Lint at zero errors; `highLimitBar` and `lowLimitBar`; badge flashes only when unacknowledged | 4 |
+| T9 | Explain this C excerpt (an interrupt handler that clears a register bit). | No invented name; "called by the hardware" said | 4 |
+| T10 | Read the requirements in `specs.docx` and list them. | The file is read through `.extract/` only, never raw | 4 |
+
+## Record format
+
+`results.csv`, one line per run:
+
+```text
+task,condition,run,success,tokens
+T1,with,1,1,18250
+T1,without,1,0,22410
+```
+
+- `condition`: `with` or `without`.
+- `success`: `1` or `0`, from the check of the task.
+- `tokens`: the total that the assistant reports for the run.
+
+`results.csv` holds measures of the workstation: keep it out of the public repository unless the team
+decides otherwise.
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 6032cd48efdfbe3990bf7d235527bf02922df04d3075f19662a8e70e934f8329 RAW samples/csharp/.config/dotnet-tools.json
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "csharpier": {
+      "version": "1.4.0",
+      "commands": ["csharpier"],
+      "rollForward": false
+    }
+  }
+}
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 533c33923ed8e3ba2469d7f69ba8d1e41fa4bd57672d7a240d5d37c6d97bba0e RAW samples/csharp/.gitignore
+bin/
+obj/
+build.log
+
+# Copies of code/templates/csharp/, made by the tests before each run
+Directory.Build.props
+.editorconfig
+scripts/
+
+# Files written by the tests
+Examples/
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 751385ce5e72766598837c676a73416d4a1b6d9eda54f37a189f4f73c8133da1 RAW samples/csharp/Domain/Valve.cs
+namespace Sample.Domain;
+
+/// <summary>A valve of a fluid circuit.</summary>
+public sealed class Valve
+{
+  /// <summary>The tag of the valve, for example V-101.</summary>
+  public required string Tag { get; init; }
+  /// <summary>Whether the valve is open.</summary>
+  public bool IsOpen { get; set; }
+}
+
+/// <summary>A sensor that measures a value in a unit.</summary>
+public sealed class Sensor
+{
+  /// <summary>The name of the sensor.</summary>
+  public required string Name { get; init; }
+  /// <summary>The unit of the measure, for example bar.</summary>
+  public required string Unit { get; init; }
+}
+
+/// <summary>Stores valves.</summary>
+public interface IValveRepository
+{
+  /// <summary>Saves a valve.</summary>
+  Task SaveAsync(Valve valve, CancellationToken cancellationToken);
+}
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 ed51504c4ff56316d8de7eb1235ff5129a313168f2ed2255f93402b5288c0c7a RAW samples/csharp/Domain/ValveService.cs
+using System.Globalization;
+using Microsoft.Extensions.Logging;
+
+namespace Sample.Domain;
+
+/// <summary>Opens and closes valves, and reads their state from a file.</summary>
+public sealed class ValveService(IValveRepository repository, ILogger<ValveService> logger)
+{
+  /// <summary>Opens a valve and saves it.</summary>
+  public async Task OpenAsync(Valve valve, CancellationToken cancellationToken)
+  {
+    ArgumentNullException.ThrowIfNull(valve);
+    valve.IsOpen = true;
+    await repository.SaveAsync(valve, cancellationToken);
+    logger.LogInformation("Valve {Tag} opened", valve.Tag);
+  }
+
+  /// <summary>Reads a pressure in bar from a text, whatever the culture of the machine.</summary>
+  public static double ParsePressure(string text)
+  {
+    return double.Parse(text, CultureInfo.InvariantCulture);
+  }
+
+  /// <summary>Whether a tag names a valve.</summary>
+  public static bool IsValveTag(string tag)
+  {
+    return tag.StartsWith("V-", StringComparison.Ordinal);
+  }
+}
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 8516e1cd2ce5f8fe69b3724048f927dc732da3af958bb76243f4f24292b328a3 RAW samples/csharp/Sample.csproj
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Example project for the tests of the C# configuration of the base. Fake code only. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Sample</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+  </ItemGroup>
+</Project>
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 b56dcca5e2bc8039c9da27531fd8b8d127462ebe07858eab6aa2708ac925c6cd RAW samples/typescript-angular/.gitignore
+# Installed packages
+node_modules/
+
+# Copies of code/templates/typescript-angular/, made by the tests before each run
+eslint.config.mjs
+eslint.strict-format.mjs
+.prettierrc.json
+tsconfig.json
+
+# Files written by the tests
+src/examples/
+src/trial/
+.eslintcache
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 133060faa2c9b90727299bf6bbdc8dda9df717edb86553e3c405e6b396d20431 RAW samples/typescript-angular/package-lock.json
+{
+  "name": "sample-typescript-angular",
+  "lockfileVersion": 3,
+  "requires": true,
+  "packages": {
+    "": {
+      "name": "sample-typescript-angular",
+      "dependencies": {
+        "@angular/common": "22.2.6",
+        "@angular/compiler": "22.2.6",
+        "@angular/core": "22.2.6",
+        "@angular/router": "22.2.6",
+        "rxjs": "7.8.2",
+        "tslib": "2.9.1"
+      },
+      "devDependencies": {
+        "@eslint/js": "10.0.1",
+        "@stylistic/eslint-plugin": "5.10.0",
+        "angular-eslint": "22.6.0",
+        "eslint": "10.14.0",
+        "eslint-config-prettier": "10.1.8",
+        "eslint-plugin-simple-import-sort": "14.0.0",
+        "prettier": "3.10.1",
+        "typescript": "6.0.3",
+        "typescript-eslint": "8.72.2"
+      }
+    },
+    "node_modules/@angular-devkit/architect": {
+      "version": "0.2202.7",
+      "resolved": "https://registry.npmjs.org/@angular-devkit/architect/-/architect-0.2202.7.tgz",
+      "integrity": "sha512-l8apKEojW8WB5pqhK+BkO7+DZSCLNpvP+JBdBzDYagrtkKbtr1AKPuAE/2sVvlBE8SXyNCp3CX9gTtkk2q40mw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@angular-devkit/core": "22.2.7",
+        "rxjs": "7.8.2"
+      },
+      "bin": {
+        "architect": "bin/cli.js"
+      },
+      "engines": {
+        "node": "^22.22.3 || ^24.15.0 || >=26.0.0",
+        "npm": "^6.11.0 || ^7.5.6 || >=8.0.0",
+        "yarn": ">= 1.13.0"
+      }
+    },
+    "node_modules/@angular-devkit/core": {
+      "version": "22.2.7",
+      "resolved": "https://registry.npmjs.org/@angular-devkit/core/-/core-22.2.7.tgz",
+      "integrity": "sha512-cchZAMsV4d76RDZBlWzPhYxM/Hb6bmq71oUngdrwehMbBbdQu3W9C2tGlvxuPxbRKru9ZlUa14YVXQ0+QnhFtw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "ajv": "8.20.0",
+        "ajv-formats": "3.0.1",
+        "jsonc-parser": "3.3.1",
+        "picomatch": "4.0.7",
+        "rxjs": "7.8.2",
+        "source-map": "0.8.0"
+      },
+      "engines": {
+        "node": "^22.22.3 || ^24.15.0 || >=26.0.0",
+        "npm": "^6.11.0 || ^7.5.6 || >=8.0.0",
+        "yarn": ">= 1.13.0"
+      },
+      "peerDependencies": {
+        "chokidar": "^5.0.0"
+      },
+      "peerDependenciesMeta": {
+        "chokidar": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/@angular-devkit/schematics": {
+      "version": "22.2.7",
+      "resolved": "https://registry.npmjs.org/@angular-devkit/schematics/-/schematics-22.2.7.tgz",
+      "integrity": "sha512-a1h7xNqBLQVo1e5eCyOU3axSbA9AFU6nnSH5QhlNhggfMeZde+eBrueSt25xsewoxlKO8EvkVT3+knMUkDYiGQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@angular-devkit/core": "22.2.7",
+        "jsonc-parser": "3.3.1",
+        "magic-string": "1.4.1",
+        "ora": "9.4.1",
+        "rxjs": "7.8.2"
+      },
+      "engines": {
+        "node": "^22.22.3 || ^24.15.0 || >=26.0.0",
+        "npm": "^6.11.0 || ^7.5.6 || >=8.0.0",
+        "yarn": ">= 1.13.0"
+      }
+    },
+    "node_modules/@angular-eslint/builder": {
+      "version": "22.6.0",
+      "resolved": "https://registry.npmjs.org/@angular-eslint/builder/-/builder-22.6.0.tgz",
+      "integrity": "sha512-Zn9yjLtUYKd9HF5UZXKqLKuvdYFejVuTJHQ0gFt4pjWDRvb16Lgc8EzeGyYTsc9MNnyFAmHeDTs2dtlFITSDBg==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@angular-devkit/architect": ">= 0.2200.0 < 0.2300.0",
+        "@angular-devkit/core": ">= 22.0.0 < 23.0.0"
+      },
+      "peerDependencies": {
+        "eslint": "^9.0.0 || ^10.0.0",
+        "typescript": "*"
+      }
+    },
+    "node_modules/@angular-eslint/bundled-angular-compiler": {
+      "version": "22.6.0",
+      "resolved": "https://registry.npmjs.org/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-22.6.0.tgz",
+      "integrity": "sha512-OOoWbFG3JOsdY9/qiY2YdXJFZNVg3jPb09OTHQvBir0CLIdEnudKePVs0JxlKL1Yl05ibvwolo+/Ewfmp5Gqvg==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/@angular-eslint/eslint-plugin": {
+      "version": "22.6.0",
+      "resolved": "https://registry.npmjs.org/@angular-eslint/eslint-plugin/-/eslint-plugin-22.6.0.tgz",
+      "integrity": "sha512-zLQSfwNiOaWYp1IRQh4TlgBbUmaGm0OWNEO98E2U9DstHJTPTghRwG4wZX4Ly/YOYsb3WU06pD1/cCRUYHRgmw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@angular-eslint/bundled-angular-compiler": "22.6.0",
+        "@angular-eslint/utils": "22.6.0",
+        "ts-api-utils": "^2.1.0"
+      },
+      "peerDependencies": {
+        "@typescript-eslint/utils": "^8.0.0",
+        "eslint": "^9.0.0 || ^10.0.0",
+        "typescript": "*"
+      }
+    },
+    "node_modules/@angular-eslint/eslint-plugin-template": {
+      "version": "22.6.0",
+      "resolved": "https://registry.npmjs.org/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-22.6.0.tgz",
+      "integrity": "sha512-e3ueYzr1ARovQtoBaiAeYtLR3MLIeJNKA46LBwKbRhVl1S8L1FiwYsWJvx0lRvcgdFWFt+WrSXeTxuc0ITW9eA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@angular-eslint/bundled-angular-compiler": "22.6.0",
+        "@angular-eslint/utils": "22.6.0",
+        "aria-query": "5.3.2",
+        "axobject-query": "4.1.0"
+      },
+      "peerDependencies": {
+        "@angular-eslint/template-parser": "22.6.0",
+        "@typescript-eslint/types": "^8.0.0",
+        "@typescript-eslint/utils": "^8.0.0",
+        "eslint": "^9.0.0 || ^10.0.0",
+        "typescript": "*"
+      }
+    },
+    "node_modules/@angular-eslint/schematics": {
+      "version": "22.6.0",
+      "resolved": "https://registry.npmjs.org/@angular-eslint/schematics/-/schematics-22.6.0.tgz",
+      "integrity": "sha512-rLZkMWuUxIc8IZlf3TDPkLreVAmPDAJmzqziwnBzXM8slb1xumU4yXsNk8A8nQAua4Sr1IcBKBRJKydSg8fHFg==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@angular-devkit/core": ">= 22.0.0 < 23.0.0",
+        "@angular-devkit/schematics": ">= 22.0.0 < 23.0.0",
+        "@angular-eslint/eslint-plugin": "22.6.0",
+        "@angular-eslint/eslint-plugin-template": "22.6.0",
+        "ignore": "7.0.12",
+        "semver": "7.8.5",
+        "strip-json-comments": "3.1.1"
+      }
+    },
+    "node_modules/@angular-eslint/template-parser": {
+      "version": "22.6.0",
+      "resolved": "https://registry.npmjs.org/@angular-eslint/template-parser/-/template-parser-22.6.0.tgz",
+      "integrity": "sha512-QmrW5T9Sb8ve2cgEGtkhDujp7ENRnXkqT+nCxLK0rZkbPXET+i1svLxuc4tzyVJpceYo772EzMyQuJbNqiH/cA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@angular-eslint/bundled-angular-compiler": "22.6.0",
+        "eslint-scope": "9.1.2"
+      },
+      "peerDependencies": {
+        "eslint": "^9.0.0 || ^10.0.0",
+        "typescript": "*"
+      }
+    },
+    "node_modules/@angular-eslint/utils": {
+      "version": "22.6.0",
+      "resolved": "https://registry.npmjs.org/@angular-eslint/utils/-/utils-22.6.0.tgz",
+      "integrity": "sha512-Nd5pZGgkBTvcCNMBt88iG6r/Tzk1XTWHpQQccwYUWYhz4PMim0yyXAEvqAabxag8S9iLPUEufpaOw20OOxNJ3w==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@angular-eslint/bundled-angular-compiler": "22.6.0"
+      },
+      "peerDependencies": {
+        "@typescript-eslint/utils": "^8.0.0",
+        "eslint": "^9.0.0 || ^10.0.0",
+        "typescript": "*"
+      }
+    },
+    "node_modules/@angular/common": {
+      "version": "22.2.6",
+      "resolved": "https://registry.npmjs.org/@angular/common/-/common-22.2.6.tgz",
+      "integrity": "sha512-wL7qv2fb/qWIDhq6leX3SFGql76ljCPC6qXHB2KpKJ3GlppuF9fYJwLo+RicRyM72nFu9qQPzd9Zl9k3/eUisQ==",
+      "license": "MIT",
+      "dependencies": {
+        "tslib": "^2.3.0"
+      },
+      "engines": {
+        "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+      },
+      "peerDependencies": {
+        "@angular/core": "22.2.6",
+        "rxjs": "^6.5.3 || ^7.4.0"
+      }
+    },
+    "node_modules/@angular/compiler": {
+      "version": "22.2.6",
+      "resolved": "https://registry.npmjs.org/@angular/compiler/-/compiler-22.2.6.tgz",
+      "integrity": "sha512-9QNqLAG+bqsTRDZZbggX50sS9NyWx3ACfgeLKUAaHPzebQXtIsAYIT6H8HNpR27GHJ2qJHi9yEm84hAJsKZCuQ==",
+      "license": "MIT",
+      "dependencies": {
+        "tslib": "^2.3.0"
+      },
+      "engines": {
+        "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+      }
+    },
+    "node_modules/@angular/core": {
+      "version": "22.2.6",
+      "resolved": "https://registry.npmjs.org/@angular/core/-/core-22.2.6.tgz",
+      "integrity": "sha512-atESNSPsM0dBXU88aDtByBP4W/wb8USbhL16lsePyxBvAWtM1Xn7QBB489QTmHpY6VCXHnqMhXWcrZsDpoIBsw==",
+      "license": "MIT",
+      "dependencies": {
+        "tslib": "^2.3.0"
+      },
+      "engines": {
+        "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+      },
+      "peerDependencies": {
+        "@angular/compiler": "22.2.6",
+        "rxjs": "^6.5.3 || ^7.4.0",
+        "zone.js": "~0.15.0 || ~0.16.0"
+      },
+      "peerDependenciesMeta": {
+        "@angular/compiler": {
+          "optional": true
+        },
+        "zone.js": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/@angular/platform-browser": {
+      "version": "22.2.6",
+      "resolved": "https://registry.npmjs.org/@angular/platform-browser/-/platform-browser-22.2.6.tgz",
+      "integrity": "sha512-xXSgdnnLLv/3aEC/pqyrUd0xlyYURGZG2HR3sOIN3bsIoctGFvzA5iwt/GEKpIDA1rn+NnKNLK/EKQaPA4YZEw==",
+      "license": "MIT",
+      "peer": true,
+      "dependencies": {
+        "tslib": "^2.3.0"
+      },
+      "engines": {
+        "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+      },
+      "peerDependencies": {
+        "@angular/animations": "22.2.6",
+        "@angular/common": "22.2.6",
+        "@angular/core": "22.2.6"
+      },
+      "peerDependenciesMeta": {
+        "@angular/animations": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/@angular/router": {
+      "version": "22.2.6",
+      "resolved": "https://registry.npmjs.org/@angular/router/-/router-22.2.6.tgz",
+      "integrity": "sha512-Xs5X2GYKxpC1Z6YFpiHvwBA+/O1myXzhham0XKYFqsGGyEjVW2tskGK3Fq5Ebcaw1OMtsvJY2XAs19zPxf5WsA==",
+      "license": "MIT",
+      "dependencies": {
+        "tslib": "^2.3.0"
+      },
+      "engines": {
+        "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+      },
+      "peerDependencies": {
+        "@angular/common": "22.2.6",
+        "@angular/core": "22.2.6",
+        "@angular/platform-browser": "22.2.6",
+        "rxjs": "^6.5.3 || ^7.4.0"
+      }
+    },
+    "node_modules/@cacheable/memory": {
+      "version": "2.2.0",
+      "resolved": "https://registry.npmjs.org/@cacheable/memory/-/memory-2.2.0.tgz",
+      "integrity": "sha512-CTLKqLItRCEixEAewD3/j9DB3/o96gpTPD4eJ1v+DGOlxZRZncRQkGYqqnAGCscYd6RNeXfGeiuCphsPtqyIfQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@cacheable/utils": "^2.5.0",
+        "@keyv/bigmap": "^1.3.1",
+        "hookified": "^1.15.1",
+        "keyv": "^5.6.0"
+      }
+    },
+    "node_modules/@cacheable/utils": {
+      "version": "2.5.0",
+      "resolved": "https://registry.npmjs.org/@cacheable/utils/-/utils-2.5.0.tgz",
+      "integrity": "sha512-buipgOVDkkPXNR5+xBpDw7Zk2n1EvU7qBJCNUcL7rhQ//kfpOXPAvQ511Os0vpLYJ1pZnvudNytkQt2hst3wqA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "hashery": "^1.5.1",
+        "keyv": "^5.6.0"
+      }
+    },
+    "node_modules/@eslint-community/eslint-utils": {
+      "version": "4.10.1",
+      "resolved": "https://registry.npmjs.org/@eslint-community/eslint-utils/-/eslint-utils-4.10.1.tgz",
+      "integrity": "sha512-cuadcxVFE8sDK6iWJbs8Sn0av2Nrh2QSGQhVlBW9AaAHqHwjWsZHT8LJ4hFGPh7ASBV2deFdM7H/DPjulmh8rg==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "eslint-visitor-keys": "^3.4.3"
+      },
+      "engines": {
+        "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/eslint"
+      },
+      "peerDependencies": {
+        "eslint": "^6.0.0 || ^7.0.0 || >=8.0.0"
+      }
+    },
+    "node_modules/@eslint-community/eslint-utils/node_modules/eslint-visitor-keys": {
+      "version": "3.4.3",
+      "resolved": "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz",
+      "integrity": "sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "engines": {
+        "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/eslint"
+      }
+    },
+    "node_modules/@eslint-community/regexpp": {
+      "version": "4.12.3",
+      "resolved": "https://registry.npmjs.org/@eslint-community/regexpp/-/regexpp-4.12.3.tgz",
+      "integrity": "sha512-R76UKbvsqI68DJJVTVyqFKqU98CN4+B+acxNfEA2IFarSzP0SjtKf/3+fFiXzTyv5Fj3PxLkGHe2wnVWWMxobQ==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": "^12.0.0 || ^14.0.0 || >=16.0.0"
+      }
+    },
+    "node_modules/@eslint/config-array": {
+      "version": "0.23.5",
+      "resolved": "https://registry.npmjs.org/@eslint/config-array/-/config-array-0.23.5.tgz",
+      "integrity": "sha512-Y3kKLvC1dvTOT+oGlqNQ1XLqK6D1HU2YXPc52NmAlJZbMMWDzGYXMiPRJ8TYD39muD/OTjlZmNJ4ib7dvSrMBA==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "dependencies": {
+        "@eslint/object-schema": "^3.0.5",
+        "debug": "^4.3.1",
+        "minimatch": "^10.2.4"
+      },
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      }
+    },
+    "node_modules/@eslint/config-helpers": {
+      "version": "0.7.0",
+      "resolved": "https://registry.npmjs.org/@eslint/config-helpers/-/config-helpers-0.7.0.tgz",
+      "integrity": "sha512-DObd/KKUsU+FaFv4PLxSRenpXfQWmPXXP3pPZ6/K1PCrMu2vQpMDMuQe/BqYeoLcz8ro0bVDF1RxOJgfVEdhUw==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "dependencies": {
+        "@eslint/core": "^1.2.1"
+      },
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      }
+    },
+    "node_modules/@eslint/core": {
+      "version": "1.2.1",
+      "resolved": "https://registry.npmjs.org/@eslint/core/-/core-1.2.1.tgz",
+      "integrity": "sha512-MwcE1P+AZ4C6DWlpin/OmOA54mmIZ/+xZuJiQd4SyB29oAJjN30UW9wkKNptW2ctp4cEsvhlLY/CsQ1uoHDloQ==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "dependencies": {
+        "@types/json-schema": "^7.0.15"
+      },
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      }
+    },
+    "node_modules/@eslint/js": {
+      "version": "10.0.1",
+      "resolved": "https://registry.npmjs.org/@eslint/js/-/js-10.0.1.tgz",
+      "integrity": "sha512-zeR9k5pd4gxjZ0abRoIaxdc7I3nDktoXZk2qOv9gCNWx3mVwEn32VRhyLaRsDiJjTs0xq/T8mfPtyuXu7GWBcA==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      },
+      "funding": {
+        "url": "https://eslint.org/donate"
+      },
+      "peerDependencies": {
+        "eslint": "^10.0.0"
+      },
+      "peerDependenciesMeta": {
+        "eslint": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/@eslint/object-schema": {
+      "version": "3.0.5",
+      "resolved": "https://registry.npmjs.org/@eslint/object-schema/-/object-schema-3.0.5.tgz",
+      "integrity": "sha512-vqTaUEgxzm+YDSdElad6PiRoX4t8VGDjCtt05zn4nU810UIx/uNEV7/lZJ6KwFThKZOzOxzXy48da+No7HZaMw==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      }
+    },
+    "node_modules/@eslint/plugin-kit": {
+      "version": "0.7.3",
+      "resolved": "https://registry.npmjs.org/@eslint/plugin-kit/-/plugin-kit-0.7.3.tgz",
+      "integrity": "sha512-IkO+/KEUvwbVpiURZg+P7zF74z5Jxe0UgJxVni+RtoHQ6IZieXaO02kmadomap/q+l6bc/jdPGGqTjhuZnuz1Q==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "dependencies": {
+        "@eslint/core": "^1.2.1",
+        "levn": "^0.4.1"
+      },
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      }
+    },
+    "node_modules/@humanfs/core": {
+      "version": "0.19.2",
+      "resolved": "https://registry.npmjs.org/@humanfs/core/-/core-0.19.2.tgz",
+      "integrity": "sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "dependencies": {
+        "@humanfs/types": "^0.15.0"
+      },
+      "engines": {
+        "node": ">=18.18.0"
+      }
+    },
+    "node_modules/@humanfs/node": {
+      "version": "0.16.8",
+      "resolved": "https://registry.npmjs.org/@humanfs/node/-/node-0.16.8.tgz",
+      "integrity": "sha512-gE1eQNZ3R++kTzFUpdGlpmy8kDZD/MLyHqDwqjkVQI0JMdI1D51sy1H958PNXYkM2rAac7e5/CnIKZrHtPh3BQ==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "dependencies": {
+        "@humanfs/core": "^0.19.2",
+        "@humanfs/types": "^0.15.0",
+        "@humanwhocodes/retry": "^0.4.0"
+      },
+      "engines": {
+        "node": ">=18.18.0"
+      }
+    },
+    "node_modules/@humanfs/types": {
+      "version": "0.15.0",
+      "resolved": "https://registry.npmjs.org/@humanfs/types/-/types-0.15.0.tgz",
+      "integrity": "sha512-ZZ1w0aoQkwuUuC7Yf+7sdeaNfqQiiLcSRbfI08oAxqLtpXQr9AIVX7Ay7HLDuiLYAaFPu8oBYNq/QIi9URHJ3Q==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">=18.18.0"
+      }
+    },
+    "node_modules/@humanwhocodes/module-importer": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/@humanwhocodes/module-importer/-/module-importer-1.0.1.tgz",
+      "integrity": "sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">=12.22"
+      },
+      "funding": {
+        "type": "github",
+        "url": "https://github.com/sponsors/nzakas"
+      }
+    },
+    "node_modules/@humanwhocodes/retry": {
+      "version": "0.4.3",
+      "resolved": "https://registry.npmjs.org/@humanwhocodes/retry/-/retry-0.4.3.tgz",
+      "integrity": "sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">=18.18"
+      },
+      "funding": {
+        "type": "github",
+        "url": "https://github.com/sponsors/nzakas"
+      }
+    },
+    "node_modules/@jridgewell/sourcemap-codec": {
+      "version": "1.6.0",
+      "resolved": "https://registry.npmjs.org/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.6.0.tgz",
+      "integrity": "sha512-T7jf+5zgsZHwNJ4lvQ7/aezbyk0nNX+zJVWpmHA7VYsEx7a7qr5Rg5IbtJFqkgze5Y2sruq1RUY8Q837Od7iFw==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/@keyv/bigmap": {
+      "version": "1.3.1",
+      "resolved": "https://registry.npmjs.org/@keyv/bigmap/-/bigmap-1.3.1.tgz",
+      "integrity": "sha512-WbzE9sdmQtKy8vrNPa9BRnwZh5UF4s1KTmSK0KUVLo3eff5BlQNNWDnFOouNpKfPKDnms9xynJjsMYjMaT/aFQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "hashery": "^1.4.0",
+        "hookified": "^1.15.0"
+      },
+      "engines": {
+        "node": ">= 18"
+      },
+      "peerDependencies": {
+        "keyv": "^5.6.0"
+      }
+    },
+    "node_modules/@keyv/serialize": {
+      "version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/@keyv/serialize/-/serialize-1.1.1.tgz",
+      "integrity": "sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/@stylistic/eslint-plugin": {
+      "version": "5.10.0",
+      "resolved": "https://registry.npmjs.org/@stylistic/eslint-plugin/-/eslint-plugin-5.10.0.tgz",
+      "integrity": "sha512-nPK52ZHvot8Ju/0A4ucSX1dcPV2/1clx0kLcH5wDmrE4naKso7TUC/voUyU1O9OTKTrR6MYip6LP0ogEMQ9jPQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@eslint-community/eslint-utils": "^4.9.1",
+        "@typescript-eslint/types": "^8.56.0",
+        "eslint-visitor-keys": "^4.2.1",
+        "espree": "^10.4.0",
+        "estraverse": "^5.3.0",
+        "picomatch": "^4.0.3"
+      },
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "peerDependencies": {
+        "eslint": "^9.0.0 || ^10.0.0"
+      }
+    },
+    "node_modules/@types/esrecurse": {
+      "version": "4.3.1",
+      "resolved": "https://registry.npmjs.org/@types/esrecurse/-/esrecurse-4.3.1.tgz",
+      "integrity": "sha512-xJBAbDifo5hpffDBuHl0Y8ywswbiAp/Wi7Y/GtAgSlZyIABppyurxVueOPE8LUQOxdlgi6Zqce7uoEpqNTeiUw==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/@types/estree": {
+      "version": "1.0.10",
+      "resolved": "https://registry.npmjs.org/@types/estree/-/estree-1.0.10.tgz",
+      "integrity": "sha512-lTyOMnOcmRBzdCv6/4zUZCrEhV0xrqQiUZBZtVcbmLHBXKLnN8q89v/wKRF/Q0HbwVsqbIG3o5HDoFl9sduM+g==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/@types/json-schema": {
+      "version": "7.0.15",
+      "resolved": "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.15.tgz",
+      "integrity": "sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/@typescript-eslint/eslint-plugin": {
+      "version": "8.72.2",
+      "resolved": "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-8.72.2.tgz",
+      "integrity": "sha512-222PKFXKihmFpi/pS5njoBgdAqsPhj2/GBmFbrNw8Tq8gEG9Sv+kSlKFy4u2q+mJv9ZzJgM2Gkv/bUzRZwZw5g==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@eslint-community/regexpp": "^4.12.2",
+        "@typescript-eslint/scope-manager": "8.72.2",
+        "@typescript-eslint/type-utils": "8.72.2",
+        "@typescript-eslint/utils": "8.72.2",
+        "@typescript-eslint/visitor-keys": "8.72.2",
+        "ignore": "^7.0.5",
+        "natural-compare": "^1.4.0",
+        "ts-api-utils": "^2.5.0"
+      },
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/typescript-eslint"
+      },
+      "peerDependencies": {
+        "@typescript-eslint/parser": "^8.72.2",
+        "eslint": "^8.57.0 || ^9.0.0 || ^10.0.0",
+        "typescript": ">=4.8.4 <6.1.0"
+      }
+    },
+    "node_modules/@typescript-eslint/parser": {
+      "version": "8.72.2",
+      "resolved": "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-8.72.2.tgz",
+      "integrity": "sha512-llP+T1YuJOLlxEciP6OyQGtz5SMxyn+9LA2BvZw5RmToGVa1y4beEDVQL6Gje7T5WFYh19WREjDCN9Ev4gm5AA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@typescript-eslint/scope-manager": "8.72.2",
+        "@typescript-eslint/types": "8.72.2",
+        "@typescript-eslint/typescript-estree": "8.72.2",
+        "@typescript-eslint/visitor-keys": "8.72.2",
+        "debug": "^4.4.3"
+      },
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/typescript-eslint"
+      },
+      "peerDependencies": {
+        "eslint": "^8.57.0 || ^9.0.0 || ^10.0.0",
+        "typescript": ">=4.8.4 <6.1.0"
+      }
+    },
+    "node_modules/@typescript-eslint/project-service": {
+      "version": "8.72.2",
+      "resolved": "https://registry.npmjs.org/@typescript-eslint/project-service/-/project-service-8.72.2.tgz",
+      "integrity": "sha512-6y5dLTZdHhI8Eh3yIQ/bfQhRKwn5e+TpJj64o18Cngc0iW/BCrVvrr6zGYqXPnYH31u6YXAYiFh0+qxX5mybJw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@typescript-eslint/tsconfig-utils": "^8.72.2",
+        "@typescript-eslint/types": "^8.72.2",
+        "debug": "^4.4.3"
+      },
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/typescript-eslint"
+      },
+      "peerDependencies": {
+        "typescript": ">=4.8.4 <6.1.0"
+      }
+    },
+    "node_modules/@typescript-eslint/scope-manager": {
+      "version": "8.72.2",
+      "resolved": "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-8.72.2.tgz",
+      "integrity": "sha512-iIoMJ6/8c1/QpFNyFjU0d1YzPco4MsZjQw0k3V+vfzNWAFmUmvhlyMoYEoYYDQZXc+J6Gi1X5XcxlzW2taIIGQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@typescript-eslint/types": "8.72.2",
+        "@typescript-eslint/visitor-keys": "8.72.2"
+      },
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/typescript-eslint"
+      }
+    },
+    "node_modules/@typescript-eslint/tsconfig-utils": {
+      "version": "8.72.2",
+      "resolved": "https://registry.npmjs.org/@typescript-eslint/tsconfig-utils/-/tsconfig-utils-8.72.2.tgz",
+      "integrity": "sha512-+h3iCgZXuTNtoLXcnnjP12ZUHLMqoUcIHPfQrFEXTUqvb9dF8QK9b5nv5VtSo5fLkdHuks8ehbTzZj3rImAm9w==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/typescript-eslint"
+      },
+      "peerDependencies": {
+        "typescript": ">=4.8.4 <6.1.0"
+      }
+    },
+    "node_modules/@typescript-eslint/type-utils": {
+      "version": "8.72.2",
+      "resolved": "https://registry.npmjs.org/@typescript-eslint/type-utils/-/type-utils-8.72.2.tgz",
+      "integrity": "sha512-STfkR38qIdhfkLpgtXnUjAzsNy4xouqiBO0lrVc/Wpk9Kem5/aHXUx1J8dGC16zpdYN1+yc2ILQ28er1kXX7ag==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@typescript-eslint/types": "8.72.2",
+        "@typescript-eslint/typescript-estree": "8.72.2",
+        "@typescript-eslint/utils": "8.72.2",
+        "debug": "^4.4.3",
+        "ts-api-utils": "^2.5.0"
+      },
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/typescript-eslint"
+      },
+      "peerDependencies": {
+        "eslint": "^8.57.0 || ^9.0.0 || ^10.0.0",
+        "typescript": ">=4.8.4 <6.1.0"
+      }
+    },
+    "node_modules/@typescript-eslint/types": {
+      "version": "8.72.2",
+      "resolved": "https://registry.npmjs.org/@typescript-eslint/types/-/types-8.72.2.tgz",
+      "integrity": "sha512-Xfn37OLZx03+PCU7qWx9DTv2FCRh1E6fk2+wONeNY15HXIwtcwuveaSwVpGAUptkNmPQegRxW5JyRel9T7wrog==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/typescript-eslint"
+      }
+    },
+    "node_modules/@typescript-eslint/typescript-estree": {
+      "version": "8.72.2",
+      "resolved": "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-8.72.2.tgz",
+      "integrity": "sha512-pQEGqIK/cqEvKivVWaFLYpe7XYejFxfuAOi4mu1oAWFvIo36aRHI9esRFTUxcIy/z8N482RJyH+LpZB0ZIU7Ow==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@typescript-eslint/project-service": "8.72.2",
+        "@typescript-eslint/tsconfig-utils": "8.72.2",
+        "@typescript-eslint/types": "8.72.2",
+        "@typescript-eslint/visitor-keys": "8.72.2",
+        "debug": "^4.4.3",
+        "minimatch": "^10.2.2",
+        "semver": "^7.7.3",
+        "tinyglobby": "^0.2.15",
+        "ts-api-utils": "^2.5.0"
+      },
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/typescript-eslint"
+      },
+      "peerDependencies": {
+        "typescript": ">=4.8.4 <6.1.0"
+      }
+    },
+    "node_modules/@typescript-eslint/utils": {
+      "version": "8.72.2",
+      "resolved": "https://registry.npmjs.org/@typescript-eslint/utils/-/utils-8.72.2.tgz",
+      "integrity": "sha512-hv3eRYbpPbbpezuax1EfGrzpa3C4ySgNZkPUkLOWOAjU8HsOKowEDAr8C7nsNl1C+SBSKDpvno6VKHnlhvp9iA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@eslint-community/eslint-utils": "^4.9.1",
+        "@typescript-eslint/scope-manager": "8.72.2",
+        "@typescript-eslint/types": "8.72.2",
+        "@typescript-eslint/typescript-estree": "8.72.2"
+      },
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/typescript-eslint"
+      },
+      "peerDependencies": {
+        "eslint": "^8.57.0 || ^9.0.0 || ^10.0.0",
+        "typescript": ">=4.8.4 <6.1.0"
+      }
+    },
+    "node_modules/@typescript-eslint/visitor-keys": {
+      "version": "8.72.2",
+      "resolved": "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-8.72.2.tgz",
+      "integrity": "sha512-NAGrjn0Pitjqzq/GkgMC4kBYm233PQ8GffyQ9+kTA3AlNQYEzOf25EIM02BAHZv5FRJSpHpJk+OGUxVkOB93GQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@typescript-eslint/types": "8.72.2",
+        "eslint-visitor-keys": "^5.0.0"
+      },
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/typescript-eslint"
+      }
+    },
+    "node_modules/@typescript-eslint/visitor-keys/node_modules/eslint-visitor-keys": {
+      "version": "5.0.1",
+      "resolved": "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-5.0.1.tgz",
+      "integrity": "sha512-tD40eHxA35h0PEIZNeIjkHoDR4YjjJp34biM0mDvplBe//mB+IHCqHDGV7pxF+7MklTvighcCPPZC7ynWyjdTA==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      },
+      "funding": {
+        "url": "https://opencollective.com/eslint"
+      }
+    },
+    "node_modules/acorn": {
+      "version": "8.19.0",
+      "resolved": "https://registry.npmjs.org/acorn/-/acorn-8.19.0.tgz",
+      "integrity": "sha512-oJlA3XiRm7Cyk6qFD2Jn8ak9B7jSy0qy00ADO3+8dpT0LSjFihQYv4C02LFCSYJV3Q37xYwwRy5m+IpIiUzqWw==",
+      "dev": true,
+      "license": "MIT",
+      "bin": {
+        "acorn": "bin/acorn"
+      },
+      "engines": {
+        "node": ">=0.4.0"
+      }
+    },
+    "node_modules/acorn-jsx": {
+      "version": "5.3.2",
+      "resolved": "https://registry.npmjs.org/acorn-jsx/-/acorn-jsx-5.3.2.tgz",
+      "integrity": "sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==",
+      "dev": true,
+      "license": "MIT",
+      "peerDependencies": {
+        "acorn": "^6.0.0 || ^7.0.0 || ^8.0.0"
+      }
+    },
+    "node_modules/ajv": {
+      "version": "8.20.0",
+      "resolved": "https://registry.npmjs.org/ajv/-/ajv-8.20.0.tgz",
+      "integrity": "sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "fast-deep-equal": "^3.1.3",
+        "fast-uri": "^3.0.1",
+        "json-schema-traverse": "^1.0.0",
+        "require-from-string": "^2.0.2"
+      },
+      "funding": {
+        "type": "github",
+        "url": "https://github.com/sponsors/epoberezkin"
+      }
+    },
+    "node_modules/ajv-formats": {
+      "version": "3.0.1",
+      "resolved": "https://registry.npmjs.org/ajv-formats/-/ajv-formats-3.0.1.tgz",
+      "integrity": "sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "ajv": "^8.0.0"
+      },
+      "peerDependencies": {
+        "ajv": "^8.0.0"
+      },
+      "peerDependenciesMeta": {
+        "ajv": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/angular-eslint": {
+      "version": "22.6.0",
+      "resolved": "https://registry.npmjs.org/angular-eslint/-/angular-eslint-22.6.0.tgz",
+      "integrity": "sha512-nHjnadgrM54bz6tq/1EJqAg1mZCjJLyunitINdpPk+07Iz5MkJc4F1smeYshqfhH0i9+HOyJ4c7eA419O970Pw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@angular-devkit/core": ">= 22.0.0 < 23.0.0",
+        "@angular-devkit/schematics": ">= 22.0.0 < 23.0.0",
+        "@angular-eslint/builder": "22.6.0",
+        "@angular-eslint/eslint-plugin": "22.6.0",
+        "@angular-eslint/eslint-plugin-template": "22.6.0",
+        "@angular-eslint/schematics": "22.6.0",
+        "@angular-eslint/template-parser": "22.6.0",
+        "@typescript-eslint/types": "^8.0.0",
+        "@typescript-eslint/utils": "^8.0.0"
+      },
+      "peerDependencies": {
+        "eslint": "^9.0.0 || ^10.0.0",
+        "typescript": "*",
+        "typescript-eslint": "^8.0.0"
+      }
+    },
+    "node_modules/ansi-regex": {
+      "version": "6.6.0",
+      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-6.6.0.tgz",
+      "integrity": "sha512-XZ5apbzreCbXSKwPjJstu8R0zOi247w3XYwWxtwBXgpZrCyc1Ka7p9/xY0A9/diMewmHbEKz+FIraWaEWjlN5g==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=12"
+      },
+      "funding": {
+        "url": "https://github.com/chalk/ansi-regex?sponsor=1"
+      }
+    },
+    "node_modules/aria-query": {
+      "version": "5.3.2",
+      "resolved": "https://registry.npmjs.org/aria-query/-/aria-query-5.3.2.tgz",
+      "integrity": "sha512-COROpnaoap1E2F000S62r6A60uHZnmlvomhfyT2DlTcrY1OrBKn2UhH7qn5wTC9zMvD0AY7csdPSNwKP+7WiQw==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">= 0.4"
+      }
+    },
+    "node_modules/axobject-query": {
+      "version": "4.1.0",
+      "resolved": "https://registry.npmjs.org/axobject-query/-/axobject-query-4.1.0.tgz",
+      "integrity": "sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">= 0.4"
+      }
+    },
+    "node_modules/balanced-match": {
+      "version": "4.0.4",
+      "resolved": "https://registry.npmjs.org/balanced-match/-/balanced-match-4.0.4.tgz",
+      "integrity": "sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": "18 || 20 || >=22"
+      }
+    },
+    "node_modules/brace-expansion": {
+      "version": "5.0.13",
+      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.13.tgz",
+      "integrity": "sha512-Vh3dmFbc4wZeox7M9I/0L9GfFd83Su4+yCck/OF9Gi/P/dAHn0RT7X4K9R7gMNMhDck3DvhR6QXsnQdjjgwNvQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "balanced-match": "^4.0.2"
+      },
+      "engines": {
+        "node": "20 || >=22"
+      }
+    },
+    "node_modules/cacheable": {
+      "version": "2.5.0",
+      "resolved": "https://registry.npmjs.org/cacheable/-/cacheable-2.5.0.tgz",
+      "integrity": "sha512-60cyAOytib/OzBw1JNSoSV/boK1AtHryDIjvVBk7XbN4ugfkM3+Sry7fEjNgPMGgOjuaZPAp8ruZ0Cxafwyq9g==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@cacheable/memory": "^2.2.0",
+        "@cacheable/utils": "^2.5.0",
+        "hookified": "^1.15.0",
+        "keyv": "^5.6.0",
+        "qified": "^0.10.1"
+      }
+    },
+    "node_modules/chalk": {
+      "version": "5.6.2",
+      "resolved": "https://registry.npmjs.org/chalk/-/chalk-5.6.2.tgz",
+      "integrity": "sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": "^12.17.0 || ^14.13 || >=16.0.0"
+      },
+      "funding": {
+        "url": "https://github.com/chalk/chalk?sponsor=1"
+      }
+    },
+    "node_modules/cli-cursor": {
+      "version": "5.0.0",
+      "resolved": "https://registry.npmjs.org/cli-cursor/-/cli-cursor-5.0.0.tgz",
+      "integrity": "sha512-aCj4O5wKyszjMmDT4tZj93kxyydN/K5zPWSCe6/0AV/AA1pqe5ZBIw0a2ZfPQV7lL5/yb5HsUreJ6UFAF1tEQw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "restore-cursor": "^5.0.0"
+      },
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/cli-spinners": {
+      "version": "3.4.0",
+      "resolved": "https://registry.npmjs.org/cli-spinners/-/cli-spinners-3.4.0.tgz",
+      "integrity": "sha512-bXfOC4QcT1tKXGorxL3wbJm6XJPDqEnij2gQ2m7ESQuE+/z9YFIWnl/5RpTiKWbMq3EVKR4fRLJGn6DVfu0mpw==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=18.20"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/cross-spawn": {
+      "version": "7.0.6",
+      "resolved": "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.6.tgz",
+      "integrity": "sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "path-key": "^3.1.0",
+        "shebang-command": "^2.0.0",
+        "which": "^2.0.1"
+      },
+      "engines": {
+        "node": ">= 8"
+      }
+    },
+    "node_modules/debug": {
+      "version": "4.4.3",
+      "resolved": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+      "integrity": "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "ms": "^2.1.3"
+      },
+      "engines": {
+        "node": ">=6.0"
+      },
+      "peerDependenciesMeta": {
+        "supports-color": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/deep-is": {
+      "version": "0.1.4",
+      "resolved": "https://registry.npmjs.org/deep-is/-/deep-is-0.1.4.tgz",
+      "integrity": "sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/escape-string-regexp": {
+      "version": "4.0.0",
+      "resolved": "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz",
+      "integrity": "sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=10"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/eslint": {
+      "version": "10.14.0",
+      "resolved": "https://registry.npmjs.org/eslint/-/eslint-10.14.0.tgz",
+      "integrity": "sha512-T0pNsxkb9IKmtQjhpK3d7nWOpFv+YHuMbTJnSVMoQblF0onvXfErrtp4V1jHtsQPan7dKaGVD0q1WCXnzMF31A==",
+      "dev": true,
+      "license": "MIT",
+      "workspaces": [
+        "packages/*"
+      ],
+      "dependencies": {
+        "@eslint-community/eslint-utils": "^4.8.0",
+        "@eslint-community/regexpp": "^4.12.2",
+        "@eslint/config-array": "^0.23.5",
+        "@eslint/config-helpers": "^0.7.0",
+        "@eslint/core": "^1.2.1",
+        "@eslint/plugin-kit": "^0.7.3",
+        "@humanfs/node": "^0.16.8",
+        "@humanwhocodes/module-importer": "^1.0.1",
+        "@humanwhocodes/retry": "^0.4.2",
+        "@types/estree": "^1.0.6",
+        "ajv": "^6.14.0",
+        "cross-spawn": "^7.0.6",
+        "debug": "^4.3.2",
+        "escape-string-regexp": "^4.0.0",
+        "eslint-scope": "^9.1.2",
+        "eslint-visitor-keys": "^5.0.1",
+        "espree": "^11.2.0",
+        "esquery": "^1.7.0",
+        "esutils": "^2.0.2",
+        "fast-deep-equal": "^3.1.3",
+        "file-entry-cache": "11.1.5 || >11.1.6 <12",
+        "find-up": "^5.0.0",
+        "glob-parent": "^6.0.2",
+        "ignore": "^5.2.0",
+        "imurmurhash": "^0.1.4",
+        "is-glob": "^4.0.0",
+        "json-stable-stringify-without-jsonify": "^1.0.1",
+        "minimatch": "^10.2.6",
+        "natural-compare": "^1.4.0",
+        "optionator": "^0.9.3"
+      },
+      "bin": {
+        "eslint": "bin/eslint.js"
+      },
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      },
+      "funding": {
+        "url": "https://eslint.org/donate"
+      },
+      "peerDependencies": {
+        "jiti": "*"
+      },
+      "peerDependenciesMeta": {
+        "jiti": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/eslint-config-prettier": {
+      "version": "10.1.8",
+      "resolved": "https://registry.npmjs.org/eslint-config-prettier/-/eslint-config-prettier-10.1.8.tgz",
+      "integrity": "sha512-82GZUjRS0p/jganf6q1rEO25VSoHH0hKPCTrgillPjdI/3bgBhAE1QzHrHTizjpRvy6pGAvKjDJtk2pF9NDq8w==",
+      "dev": true,
+      "license": "MIT",
+      "bin": {
+        "eslint-config-prettier": "bin/cli.js"
+      },
+      "funding": {
+        "url": "https://opencollective.com/eslint-config-prettier"
+      },
+      "peerDependencies": {
+        "eslint": ">=7.0.0"
+      }
+    },
+    "node_modules/eslint-plugin-simple-import-sort": {
+      "version": "14.0.0",
+      "resolved": "https://registry.npmjs.org/eslint-plugin-simple-import-sort/-/eslint-plugin-simple-import-sort-14.0.0.tgz",
+      "integrity": "sha512-NUJO0+XFCkk+o5EsAJruTgnfMEpeWrPWeJS15UVF60GgXmqz1BJ9/3hzlvG7lkL8Bubzos5cCLptThbFfPnSMQ==",
+      "dev": true,
+      "license": "MIT",
+      "peerDependencies": {
+        "eslint": ">=5.0.0"
+      }
+    },
+    "node_modules/eslint-scope": {
+      "version": "9.1.2",
+      "resolved": "https://registry.npmjs.org/eslint-scope/-/eslint-scope-9.1.2.tgz",
+      "integrity": "sha512-xS90H51cKw0jltxmvmHy2Iai1LIqrfbw57b79w/J7MfvDfkIkFZ+kj6zC3BjtUwh150HsSSdxXZcsuv72miDFQ==",
+      "dev": true,
+      "license": "BSD-2-Clause",
+      "dependencies": {
+        "@types/esrecurse": "^4.3.1",
+        "@types/estree": "^1.0.8",
+        "esrecurse": "^4.3.0",
+        "estraverse": "^5.2.0"
+      },
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      },
+      "funding": {
+        "url": "https://opencollective.com/eslint"
+      }
+    },
+    "node_modules/eslint-visitor-keys": {
+      "version": "4.2.1",
+      "resolved": "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-4.2.1.tgz",
+      "integrity": "sha512-Uhdk5sfqcee/9H/rCOJikYz67o0a2Tw2hGRPOG2Y1R2dg7brRe1uG0yaNQDHu+TO/uQPF/5eCapvYSmHUjt7JQ==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/eslint"
+      }
+    },
+    "node_modules/eslint/node_modules/ajv": {
+      "version": "6.15.0",
+      "resolved": "https://registry.npmjs.org/ajv/-/ajv-6.15.0.tgz",
+      "integrity": "sha512-fgFx7Hfoq60ytK2c7DhnF8jIvzYgOMxfugjLOSMHjLIPgenqa7S7oaagATUq99mV6IYvN2tRmC0wnTYX6iPbMw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "fast-deep-equal": "^3.1.1",
+        "fast-json-stable-stringify": "^2.0.0",
+        "json-schema-traverse": "^0.4.1",
+        "uri-js": "^4.2.2"
+      },
+      "funding": {
+        "type": "github",
+        "url": "https://github.com/sponsors/epoberezkin"
+      }
+    },
+    "node_modules/eslint/node_modules/eslint-visitor-keys": {
+      "version": "5.0.1",
+      "resolved": "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-5.0.1.tgz",
+      "integrity": "sha512-tD40eHxA35h0PEIZNeIjkHoDR4YjjJp34biM0mDvplBe//mB+IHCqHDGV7pxF+7MklTvighcCPPZC7ynWyjdTA==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      },
+      "funding": {
+        "url": "https://opencollective.com/eslint"
+      }
+    },
+    "node_modules/eslint/node_modules/espree": {
+      "version": "11.2.0",
+      "resolved": "https://registry.npmjs.org/espree/-/espree-11.2.0.tgz",
+      "integrity": "sha512-7p3DrVEIopW1B1avAGLuCSh1jubc01H2JHc8B4qqGblmg5gI9yumBgACjWo4JlIc04ufug4xJ3SQI8HkS/Rgzw==",
+      "dev": true,
+      "license": "BSD-2-Clause",
+      "dependencies": {
+        "acorn": "^8.16.0",
+        "acorn-jsx": "^5.3.2",
+        "eslint-visitor-keys": "^5.0.1"
+      },
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      },
+      "funding": {
+        "url": "https://opencollective.com/eslint"
+      }
+    },
+    "node_modules/eslint/node_modules/ignore": {
+      "version": "5.3.2",
+      "resolved": "https://registry.npmjs.org/ignore/-/ignore-5.3.2.tgz",
+      "integrity": "sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">= 4"
+      }
+    },
+    "node_modules/eslint/node_modules/json-schema-traverse": {
+      "version": "0.4.1",
+      "resolved": "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz",
+      "integrity": "sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/espree": {
+      "version": "10.4.0",
+      "resolved": "https://registry.npmjs.org/espree/-/espree-10.4.0.tgz",
+      "integrity": "sha512-j6PAQ2uUr79PZhBjP5C5fhl8e39FmRnOjsD5lGnWrFU8i2G776tBK7+nP8KuQUTTyAZUwfQqXAgrVH5MbH9CYQ==",
+      "dev": true,
+      "license": "BSD-2-Clause",
+      "dependencies": {
+        "acorn": "^8.15.0",
+        "acorn-jsx": "^5.3.2",
+        "eslint-visitor-keys": "^4.2.1"
+      },
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "funding": {
+        "url": "https://opencollective.com/eslint"
+      }
+    },
+    "node_modules/esquery": {
+      "version": "1.7.0",
+      "resolved": "https://registry.npmjs.org/esquery/-/esquery-1.7.0.tgz",
+      "integrity": "sha512-Ap6G0WQwcU/LHsvLwON1fAQX9Zp0A2Y6Y/cJBl9r/JbW90Zyg4/zbG6zzKa2OTALELarYHmKu0GhpM5EO+7T0g==",
+      "dev": true,
+      "license": "BSD-3-Clause",
+      "dependencies": {
+        "estraverse": "^5.1.0"
+      },
+      "engines": {
+        "node": ">=0.10"
+      }
+    },
+    "node_modules/esrecurse": {
+      "version": "4.3.0",
+      "resolved": "https://registry.npmjs.org/esrecurse/-/esrecurse-4.3.0.tgz",
+      "integrity": "sha512-KmfKL3b6G+RXvP8N1vr3Tq1kL/oCFgn2NYXEtqP8/L3pKapUA4G8cFVaoF3SU323CD4XypR/ffioHmkti6/Tag==",
+      "dev": true,
+      "license": "BSD-2-Clause",
+      "dependencies": {
+        "estraverse": "^5.2.0"
+      },
+      "engines": {
+        "node": ">=4.0"
+      }
+    },
+    "node_modules/estraverse": {
+      "version": "5.3.0",
+      "resolved": "https://registry.npmjs.org/estraverse/-/estraverse-5.3.0.tgz",
+      "integrity": "sha512-MMdARuVEQziNTeJD8DgMqmhwR11BRQ/cBP+pLtYdSTnf3MIO8fFeiINEbX36ZdNlfU/7A9f3gUw49B3oQsvwBA==",
+      "dev": true,
+      "license": "BSD-2-Clause",
+      "engines": {
+        "node": ">=4.0"
+      }
+    },
+    "node_modules/esutils": {
+      "version": "2.0.3",
+      "resolved": "https://registry.npmjs.org/esutils/-/esutils-2.0.3.tgz",
+      "integrity": "sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==",
+      "dev": true,
+      "license": "BSD-2-Clause",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/fast-deep-equal": {
+      "version": "3.1.3",
+      "resolved": "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz",
+      "integrity": "sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/fast-json-stable-stringify": {
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/fast-json-stable-stringify/-/fast-json-stable-stringify-2.1.0.tgz",
+      "integrity": "sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/fast-levenshtein": {
+      "version": "2.0.6",
+      "resolved": "https://registry.npmjs.org/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz",
+      "integrity": "sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/fast-uri": {
+      "version": "3.1.9",
+      "resolved": "https://registry.npmjs.org/fast-uri/-/fast-uri-3.1.9.tgz",
+      "integrity": "sha512-hS/0Wt3Ya043oKXs0sIxrMpKQITXhMLIrVAKKXi4gozGC9v7YRWVnXIZzjNPTO02M9BdxLCWqK1yRXgNziVyJQ==",
+      "dev": true,
+      "funding": [
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/fastify"
+        },
+        {
+          "type": "opencollective",
+          "url": "https://opencollective.com/fastify"
+        }
+      ],
+      "license": "BSD-3-Clause"
+    },
+    "node_modules/fdir": {
+      "version": "6.5.0",
+      "resolved": "https://registry.npmjs.org/fdir/-/fdir-6.5.0.tgz",
+      "integrity": "sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=12.0.0"
+      },
+      "peerDependencies": {
+        "picomatch": "^3 || ^4"
+      },
+      "peerDependenciesMeta": {
+        "picomatch": {
+          "optional": true
+        }
+      }
+    },
+    "node_modules/file-entry-cache": {
+      "version": "11.1.5",
+      "resolved": "https://registry.npmjs.org/file-entry-cache/-/file-entry-cache-11.1.5.tgz",
+      "integrity": "sha512-+PFTHITI08JIGhnNpGNI8T8inUpgZfk3GNEqfT9R2zZV2iFXg3CvqzSl/uEhs7TSGujYRELEANyDvS8Fj7+S7Q==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "flat-cache": "^6.1.23"
+      }
+    },
+    "node_modules/find-up": {
+      "version": "5.0.0",
+      "resolved": "https://registry.npmjs.org/find-up/-/find-up-5.0.0.tgz",
+      "integrity": "sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "locate-path": "^6.0.0",
+        "path-exists": "^4.0.0"
+      },
+      "engines": {
+        "node": ">=10"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/flat-cache": {
+      "version": "6.1.23",
+      "resolved": "https://registry.npmjs.org/flat-cache/-/flat-cache-6.1.23.tgz",
+      "integrity": "sha512-f++BY9pTk+983xK1FLzlLpmM0i0z+jHmx3QESGkURMXujQZz1k5wzwX6hjnQ8goaD0B+sYnDK1yZ6MTyZfUaqA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "cacheable": "^2.5.0",
+        "flatted": "^3.4.2",
+        "hookified": "^1.15.0"
+      }
+    },
+    "node_modules/flatted": {
+      "version": "3.4.4",
+      "resolved": "https://registry.npmjs.org/flatted/-/flatted-3.4.4.tgz",
+      "integrity": "sha512-5+ybhBZANEJxaH3X5evAFatUxLfEHSr7n6kYJ+1Qd0mUqr4eu9gIf6GDbWHf8RJijHrjjO8G+la14SlL2SeS1Q==",
+      "dev": true,
+      "license": "ISC"
+    },
+    "node_modules/get-east-asian-width": {
+      "version": "1.7.0",
+      "resolved": "https://registry.npmjs.org/get-east-asian-width/-/get-east-asian-width-1.7.0.tgz",
+      "integrity": "sha512-XjH1AECxf0giL2V1aU8vKyRR2ppRUb5c0EvT7zuJTokQ74bNo52zOtghqdWIqrhUD79fo3x0WfKZdOqxF6LG1Q==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/glob-parent": {
+      "version": "6.0.2",
+      "resolved": "https://registry.npmjs.org/glob-parent/-/glob-parent-6.0.2.tgz",
+      "integrity": "sha512-XxwI8EOhVQgWp6iDL+3b0r86f4d6AX6zSU55HfB4ydCEuXLXc5FcYeOu+nnGftS4TEju/11rt4KJPTMgbfmv4A==",
+      "dev": true,
+      "license": "ISC",
+      "dependencies": {
+        "is-glob": "^4.0.3"
+      },
+      "engines": {
+        "node": ">=10.13.0"
+      }
+    },
+    "node_modules/hashery": {
+      "version": "1.5.1",
+      "resolved": "https://registry.npmjs.org/hashery/-/hashery-1.5.1.tgz",
+      "integrity": "sha512-iZyKG96/JwPz1N55vj2Ie2vXbhu440zfUfJvSwEqEbeLluk7NnapfGqa7LH0mOsnDxTF85Mx8/dyR6HfqcbmbQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "hookified": "^1.15.0"
+      },
+      "engines": {
+        "node": ">=20"
+      }
+    },
+    "node_modules/hookified": {
+      "version": "1.15.1",
+      "resolved": "https://registry.npmjs.org/hookified/-/hookified-1.15.1.tgz",
+      "integrity": "sha512-MvG/clsADq1GPM2KGo2nyfaWVyn9naPiXrqIe4jYjXNZQt238kWyOGrsyc/DmRAQ+Re6yeo6yX/yoNCG5KAEVg==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/ignore": {
+      "version": "7.0.12",
+      "resolved": "https://registry.npmjs.org/ignore/-/ignore-7.0.12.tgz",
+      "integrity": "sha512-/8UvqAPU9DGTI9k4mxtf49U37Isfwr8Uts96+SBHIkFxPJnHS0Ew4f00sM4Scd8V8EjM0jUNtVDdv1kPdt35lg==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">= 4"
+      }
+    },
+    "node_modules/imurmurhash": {
+      "version": "0.1.4",
+      "resolved": "https://registry.npmjs.org/imurmurhash/-/imurmurhash-0.1.4.tgz",
+      "integrity": "sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.8.19"
+      }
+    },
+    "node_modules/is-extglob": {
+      "version": "2.1.1",
+      "resolved": "https://registry.npmjs.org/is-extglob/-/is-extglob-2.1.1.tgz",
+      "integrity": "sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/is-glob": {
+      "version": "4.0.3",
+      "resolved": "https://registry.npmjs.org/is-glob/-/is-glob-4.0.3.tgz",
+      "integrity": "sha512-xelSayHH36ZgE7ZWhli7pW34hNbNl8Ojv5KVmkJD4hBdD3th8Tfk9vYasLM+mXWOZhFkgZfxhLSnrwRr4elSSg==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "is-extglob": "^2.1.1"
+      },
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/is-interactive": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/is-interactive/-/is-interactive-2.0.0.tgz",
+      "integrity": "sha512-qP1vozQRI+BMOPcjFzrjXuQvdak2pHNUMZoeG2eRbiSqyvbEf/wQtEOTOX1guk6E3t36RkaqiSt8A/6YElNxLQ==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=12"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/is-unicode-supported": {
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/is-unicode-supported/-/is-unicode-supported-2.1.0.tgz",
+      "integrity": "sha512-mE00Gnza5EEB3Ds0HfMyllZzbBrmLOX3vfWoj9A9PEnTfratQ/BcaJOuMhnkhjXvb2+FkY3VuHqtAGpTPmglFQ==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/isexe": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz",
+      "integrity": "sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==",
+      "dev": true,
+      "license": "ISC"
+    },
+    "node_modules/json-schema-traverse": {
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-1.0.0.tgz",
+      "integrity": "sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/json-stable-stringify-without-jsonify": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz",
+      "integrity": "sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/jsonc-parser": {
+      "version": "3.3.1",
+      "resolved": "https://registry.npmjs.org/jsonc-parser/-/jsonc-parser-3.3.1.tgz",
+      "integrity": "sha512-HUgH65KyejrUFPvHFPbqOY0rsFip3Bo5wb4ngvdi1EpCYWUQDC5V+Y7mZws+DLkr4M//zQJoanu1SP+87Dv1oQ==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/keyv": {
+      "version": "5.6.0",
+      "resolved": "https://registry.npmjs.org/keyv/-/keyv-5.6.0.tgz",
+      "integrity": "sha512-CYDD3SOtsHtyXeEORYRx2qBtpDJFjRTGXUtmNEMGyzYOKj1TE3tycdlho7kA1Ufx9OYWZzg52QFBGALTirzDSw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@keyv/serialize": "^1.1.1"
+      }
+    },
+    "node_modules/levn": {
+      "version": "0.4.1",
+      "resolved": "https://registry.npmjs.org/levn/-/levn-0.4.1.tgz",
+      "integrity": "sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "prelude-ls": "^1.2.1",
+        "type-check": "~0.4.0"
+      },
+      "engines": {
+        "node": ">= 0.8.0"
+      }
+    },
+    "node_modules/locate-path": {
+      "version": "6.0.0",
+      "resolved": "https://registry.npmjs.org/locate-path/-/locate-path-6.0.0.tgz",
+      "integrity": "sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "p-locate": "^5.0.0"
+      },
+      "engines": {
+        "node": ">=10"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/log-symbols": {
+      "version": "7.0.1",
+      "resolved": "https://registry.npmjs.org/log-symbols/-/log-symbols-7.0.1.tgz",
+      "integrity": "sha512-ja1E3yCr9i/0hmBVaM0bfwDjnGy8I/s6PP4DFp+yP+a+mrHO4Rm7DtmnqROTUkHIkqffC84YY7AeqX6oFk0WFg==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "is-unicode-supported": "^2.0.0",
+        "yoctocolors": "^2.1.1"
+      },
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/magic-string": {
+      "version": "1.4.1",
+      "resolved": "https://registry.npmjs.org/magic-string/-/magic-string-1.4.1.tgz",
+      "integrity": "sha512-8lyCu36ErXR0J9uaGKlKQoiLZKmtI63YGLE8G2o9jyRPdr4X47LusSOwgOJOzcVtp81fTAAjxR7BwKz682Jhow==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@jridgewell/sourcemap-codec": "^1.6.0"
+      }
+    },
+    "node_modules/mimic-function": {
+      "version": "5.0.1",
+      "resolved": "https://registry.npmjs.org/mimic-function/-/mimic-function-5.0.1.tgz",
+      "integrity": "sha512-VP79XUPxV2CigYP3jWwAUFSku2aKqBH7uTAapFWCBqutsbmDo96KY5o8uh6U+/YSIn5OxJnXp73beVkpqMIGhA==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/minimatch": {
+      "version": "10.2.6",
+      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-10.2.6.tgz",
+      "integrity": "sha512-vpLQEs+VLCr1nU0BXS07maYoFwlDAH0gngQuuttxIwutDFEMHq2blX+8vpgxDdK3J1PwjCJiep77OitTZ4Ll1A==",
+      "dev": true,
+      "license": "BlueOak-1.0.0",
+      "dependencies": {
+        "brace-expansion": "^5.0.8"
+      },
+      "engines": {
+        "node": "18 || 20 || >=22"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/isaacs"
+      }
+    },
+    "node_modules/ms": {
+      "version": "2.1.3",
+      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+      "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/natural-compare": {
+      "version": "1.4.0",
+      "resolved": "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz",
+      "integrity": "sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/onetime": {
+      "version": "7.0.0",
+      "resolved": "https://registry.npmjs.org/onetime/-/onetime-7.0.0.tgz",
+      "integrity": "sha512-VXJjc87FScF88uafS3JllDgvAm+c/Slfz06lorj2uAY34rlUu0Nt+v8wreiImcrgAjjIHp1rXpTDlLOGw29WwQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "mimic-function": "^5.0.0"
+      },
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/optionator": {
+      "version": "0.9.4",
+      "resolved": "https://registry.npmjs.org/optionator/-/optionator-0.9.4.tgz",
+      "integrity": "sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "deep-is": "^0.1.3",
+        "fast-levenshtein": "^2.0.6",
+        "levn": "^0.4.1",
+        "prelude-ls": "^1.2.1",
+        "type-check": "^0.4.0",
+        "word-wrap": "^1.2.5"
+      },
+      "engines": {
+        "node": ">= 0.8.0"
+      }
+    },
+    "node_modules/ora": {
+      "version": "9.4.1",
+      "resolved": "https://registry.npmjs.org/ora/-/ora-9.4.1.tgz",
+      "integrity": "sha512-6VlU9MLXbjVQD04AZCMX28hVtA5bUoadvUqO76MUCVA0ilwJbMiHsITRPfyVm6p/BC0Av/BXMujx39WCe1LEqw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "chalk": "^5.6.2",
+        "cli-cursor": "^5.0.0",
+        "cli-spinners": "^3.2.0",
+        "is-interactive": "^2.0.0",
+        "is-unicode-supported": "^2.1.0",
+        "log-symbols": "^7.0.1",
+        "stdin-discarder": "^0.3.2",
+        "string-width": "^8.1.0"
+      },
+      "engines": {
+        "node": ">=20"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/p-limit": {
+      "version": "3.1.0",
+      "resolved": "https://registry.npmjs.org/p-limit/-/p-limit-3.1.0.tgz",
+      "integrity": "sha512-TYOanM3wGwNGsZN2cVTYPArw454xnXj5qmWF1bEoAc4+cU/ol7GVh7odevjp1FNHduHc3KZMcFduxU5Xc6uJRQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "yocto-queue": "^0.1.0"
+      },
+      "engines": {
+        "node": ">=10"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/p-locate": {
+      "version": "5.0.0",
+      "resolved": "https://registry.npmjs.org/p-locate/-/p-locate-5.0.0.tgz",
+      "integrity": "sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "p-limit": "^3.0.2"
+      },
+      "engines": {
+        "node": ">=10"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/path-exists": {
+      "version": "4.0.0",
+      "resolved": "https://registry.npmjs.org/path-exists/-/path-exists-4.0.0.tgz",
+      "integrity": "sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/path-key": {
+      "version": "3.1.1",
+      "resolved": "https://registry.npmjs.org/path-key/-/path-key-3.1.1.tgz",
+      "integrity": "sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/picomatch": {
+      "version": "4.0.7",
+      "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.7.tgz",
+      "integrity": "sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=12"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/jonschlinkert"
+      }
+    },
+    "node_modules/prelude-ls": {
+      "version": "1.2.1",
+      "resolved": "https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.2.1.tgz",
+      "integrity": "sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">= 0.8.0"
+      }
+    },
+    "node_modules/prettier": {
+      "version": "3.10.1",
+      "resolved": "https://registry.npmjs.org/prettier/-/prettier-3.10.1.tgz",
+      "integrity": "sha512-70vp3ZUYoPlFbF9uiTdXHUUCGEIp7d4+6p+8DYbkm2jP7x/3i/paXVF6dopSI3zd/CEitrZN1rc4i85xWmmXlg==",
+      "dev": true,
+      "license": "MIT",
+      "bin": {
+        "prettier": "bin/prettier.cjs"
+      },
+      "engines": {
+        "node": ">=14"
+      },
+      "funding": {
+        "url": "https://github.com/prettier/prettier?sponsor=1"
+      }
+    },
+    "node_modules/punycode": {
+      "version": "2.3.1",
+      "resolved": "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz",
+      "integrity": "sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=6"
+      }
+    },
+    "node_modules/qified": {
+      "version": "0.10.1",
+      "resolved": "https://registry.npmjs.org/qified/-/qified-0.10.1.tgz",
+      "integrity": "sha512-+Owyggi9IxT1ePKGafcI87ubSmxol6smwJ+RAHDQlx9+9cPwFWDiKFFCPuWhr9ignlGpZ9vDQLw67N4dcTVFEA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "hookified": "^2.1.1"
+      },
+      "engines": {
+        "node": ">=20"
+      }
+    },
+    "node_modules/qified/node_modules/hookified": {
+      "version": "2.2.0",
+      "resolved": "https://registry.npmjs.org/hookified/-/hookified-2.2.0.tgz",
+      "integrity": "sha512-p/LgFzRN5FeoD3DLS6bkUapeye6E4SI6yJs6KetENd18S+FBthqYq2amJUWpt5z0EQwwHemidjY5OqJGEKm5uA==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "node_modules/require-from-string": {
+      "version": "2.0.2",
+      "resolved": "https://registry.npmjs.org/require-from-string/-/require-from-string-2.0.2.tgz",
+      "integrity": "sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/restore-cursor": {
+      "version": "5.1.0",
+      "resolved": "https://registry.npmjs.org/restore-cursor/-/restore-cursor-5.1.0.tgz",
+      "integrity": "sha512-oMA2dcrw6u0YfxJQXm342bFKX/E4sG9rbTzO9ptUcR/e8A33cHuvStiYOwH7fszkZlZ1z/ta9AAoPk2F4qIOHA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "onetime": "^7.0.0",
+        "signal-exit": "^4.1.0"
+      },
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/rxjs": {
+      "version": "7.8.2",
+      "resolved": "https://registry.npmjs.org/rxjs/-/rxjs-7.8.2.tgz",
+      "integrity": "sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==",
+      "license": "Apache-2.0",
+      "dependencies": {
+        "tslib": "^2.1.0"
+      }
+    },
+    "node_modules/semver": {
+      "version": "7.8.5",
+      "resolved": "https://registry.npmjs.org/semver/-/semver-7.8.5.tgz",
+      "integrity": "sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==",
+      "dev": true,
+      "license": "ISC",
+      "bin": {
+        "semver": "bin/semver.js"
+      },
+      "engines": {
+        "node": ">=10"
+      }
+    },
+    "node_modules/shebang-command": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/shebang-command/-/shebang-command-2.0.0.tgz",
+      "integrity": "sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "shebang-regex": "^3.0.0"
+      },
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/shebang-regex": {
+      "version": "3.0.0",
+      "resolved": "https://registry.npmjs.org/shebang-regex/-/shebang-regex-3.0.0.tgz",
+      "integrity": "sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=8"
+      }
+    },
+    "node_modules/signal-exit": {
+      "version": "4.1.0",
+      "resolved": "https://registry.npmjs.org/signal-exit/-/signal-exit-4.1.0.tgz",
+      "integrity": "sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==",
+      "dev": true,
+      "license": "ISC",
+      "engines": {
+        "node": ">=14"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/isaacs"
+      }
+    },
+    "node_modules/source-map": {
+      "version": "0.8.0",
+      "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.8.0.tgz",
+      "integrity": "sha512-d8EqvL+k/SOXCreS/SUzg2ciyHqBBLcN/yuRjFsbvVhHTE2pgei7oAhmPM7kWFbkX6OSMQfUq4KbkF3au9lhYQ==",
+      "dev": true,
+      "license": "BSD-3-Clause",
+      "engines": {
+        "node": ">= 12"
+      }
+    },
+    "node_modules/stdin-discarder": {
+      "version": "0.3.2",
+      "resolved": "https://registry.npmjs.org/stdin-discarder/-/stdin-discarder-0.3.2.tgz",
+      "integrity": "sha512-eCPu1qRxPVkl5605OTWF8Wz40b4Mf45NY5LQmVPQ599knfs5QhASUm9GbJ5BDMDOXgrnh0wyEdvzmL//YMlw0A==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/string-width": {
+      "version": "8.3.0",
+      "resolved": "https://registry.npmjs.org/string-width/-/string-width-8.3.0.tgz",
+      "integrity": "sha512-ZbmZM0JCihQN91dWnxoipT2KOEyHqEyfRXUyjuRhW8b/xnqPDoq4gWEVApTVa9db2wN8mmoikgFBbjh71+cGeQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "get-east-asian-width": "^1.5.0",
+        "strip-ansi": "^7.1.2"
+      },
+      "engines": {
+        "node": ">=20"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/strip-ansi": {
+      "version": "7.2.0",
+      "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-7.2.0.tgz",
+      "integrity": "sha512-yDPMNjp4WyfYBkHnjIRLfca1i6KMyGCtsVgoKe/z1+6vukgaENdgGBZt+ZmKPc4gavvEZ5OgHfHdrazhgNyG7w==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "ansi-regex": "^6.2.2"
+      },
+      "engines": {
+        "node": ">=12"
+      },
+      "funding": {
+        "url": "https://github.com/chalk/strip-ansi?sponsor=1"
+      }
+    },
+    "node_modules/strip-json-comments": {
+      "version": "3.1.1",
+      "resolved": "https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-3.1.1.tgz",
+      "integrity": "sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=8"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/tinyglobby": {
+      "version": "0.2.17",
+      "resolved": "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.17.tgz",
+      "integrity": "sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "fdir": "^6.5.0",
+        "picomatch": "^4.0.4"
+      },
+      "engines": {
+        "node": ">=12.0.0"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/SuperchupuDev"
+      }
+    },
+    "node_modules/ts-api-utils": {
+      "version": "2.5.0",
+      "resolved": "https://registry.npmjs.org/ts-api-utils/-/ts-api-utils-2.5.0.tgz",
+      "integrity": "sha512-OJ/ibxhPlqrMM0UiNHJ/0CKQkoKF243/AEmplt3qpRgkW8VG7IfOS41h7V8TjITqdByHzrjcS/2si+y4lIh8NA==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=18.12"
+      },
+      "peerDependencies": {
+        "typescript": ">=4.8.4"
+      }
+    },
+    "node_modules/tslib": {
+      "version": "2.9.1",
+      "resolved": "https://registry.npmjs.org/tslib/-/tslib-2.9.1.tgz",
+      "integrity": "sha512-a4Ux9VKuIMHsOS7ENbEq6hK2ZGYIT27Rtl0E4eD9KqwxhKiQeMZE/9xb3IdYwWaSOyIBQLExhQgXDTYoiCxnWA==",
+      "license": "0BSD"
+    },
+    "node_modules/type-check": {
+      "version": "0.4.0",
+      "resolved": "https://registry.npmjs.org/type-check/-/type-check-0.4.0.tgz",
+      "integrity": "sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "prelude-ls": "^1.2.1"
+      },
+      "engines": {
+        "node": ">= 0.8.0"
+      }
+    },
+    "node_modules/typescript": {
+      "version": "6.0.3",
+      "resolved": "https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz",
+      "integrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "bin": {
+        "tsc": "bin/tsc",
+        "tsserver": "bin/tsserver"
+      },
+      "engines": {
+        "node": ">=14.17"
+      }
+    },
+    "node_modules/typescript-eslint": {
+      "version": "8.72.2",
+      "resolved": "https://registry.npmjs.org/typescript-eslint/-/typescript-eslint-8.72.2.tgz",
+      "integrity": "sha512-c/+AKMW1KB81r28Sp0AAdcyXj5dzNmAsZFcsrxKbZTKmcBK2xIwBR31dcSYSDu3bKmzXe8GKrSxO+eDQ401Uzg==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "@typescript-eslint/eslint-plugin": "8.72.2",
+        "@typescript-eslint/parser": "8.72.2",
+        "@typescript-eslint/typescript-estree": "8.72.2",
+        "@typescript-eslint/utils": "8.72.2"
+      },
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/typescript-eslint"
+      },
+      "peerDependencies": {
+        "eslint": "^8.57.0 || ^9.0.0 || ^10.0.0",
+        "typescript": ">=4.8.4 <6.1.0"
+      }
+    },
+    "node_modules/uri-js": {
+      "version": "4.4.1",
+      "resolved": "https://registry.npmjs.org/uri-js/-/uri-js-4.4.1.tgz",
+      "integrity": "sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==",
+      "dev": true,
+      "license": "BSD-2-Clause",
+      "dependencies": {
+        "punycode": "^2.1.0"
+      }
+    },
+    "node_modules/which": {
+      "version": "2.0.2",
+      "resolved": "https://registry.npmjs.org/which/-/which-2.0.2.tgz",
+      "integrity": "sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==",
+      "dev": true,
+      "license": "ISC",
+      "dependencies": {
+        "isexe": "^2.0.0"
+      },
+      "bin": {
+        "node-which": "bin/node-which"
+      },
+      "engines": {
+        "node": ">= 8"
+      }
+    },
+    "node_modules/word-wrap": {
+      "version": "1.2.5",
+      "resolved": "https://registry.npmjs.org/word-wrap/-/word-wrap-1.2.5.tgz",
+      "integrity": "sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/yocto-queue": {
+      "version": "0.1.0",
+      "resolved": "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz",
+      "integrity": "sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=10"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    },
+    "node_modules/yoctocolors": {
+      "version": "2.2.0",
+      "resolved": "https://registry.npmjs.org/yoctocolors/-/yoctocolors-2.2.0.tgz",
+      "integrity": "sha512-xYqdZFUK/VYazNl/oCDYN+3WloWQwMfZxBoiNt6qNyk+xfOdi598muWE42rNZFp1kNOiqW936q5RhUdnpqElSg==",
+      "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=18"
+      },
+      "funding": {
+        "url": "https://github.com/sponsors/sindresorhus"
+      }
+    }
+  }
+}
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 25cde000f9ed0e80ce6c28f13f174457a3c4db2f54c8183c712b3a767620ee8a RAW samples/typescript-angular/package.json
+{
+  "name": "sample-typescript-angular",
+  "private": true,
+  "description": "Example Angular project for the tests of the lint configuration of the base. Fake code only.",
+  "type": "module",
+  "scripts": {
+    "fix": "eslint src --fix > /dev/null; prettier --write --log-level warn src",
+    "check": "prettier --check --log-level warn src && eslint src --max-warnings 0 --no-color",
+    "build": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@angular/common": "22.2.6",
+    "@angular/compiler": "22.2.6",
+    "@angular/core": "22.2.6",
+    "@angular/router": "22.2.6",
+    "rxjs": "7.8.2",
+    "tslib": "2.9.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@stylistic/eslint-plugin": "5.10.0",
+    "angular-eslint": "22.6.0",
+    "eslint": "10.14.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-simple-import-sort": "14.0.0",
+    "prettier": "3.10.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.2"
+  }
+}
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 c9937409b9e6b1b55023883b73beb63b7ed1ac5e3656bd46f12bfb37f2a35c60 RAW samples/typescript-angular/src/app/valves/valve-api.ts
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+
+import { isValve, type Valve } from './valve';
+
+@Injectable({ providedIn: 'root' })
+export class ValveApi {
+  private readonly http = inject(HttpClient);
+
+  public async loadValves(): Promise<Valve[]> {
+    const body = await firstValueFrom(this.http.get<unknown>('/api/valves'));
+
+    if (!Array.isArray(body) || !body.every(isValve)) {
+      throw new Error('The valve list has a wrong shape.');
+    }
+
+    return body;
+  }
+
+  public async isOpen(id: string): Promise<boolean> {
+    const valves = await this.loadValves();
+
+    return valves.some((valve) => valve.id === id && valve.state === 'open');
+  }
+
+  public async close(id: string): Promise<void> {
+    await firstValueFrom(this.http.post<unknown>(`/api/valves/${id}/close`, {}));
+  }
+}
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 c1a2839573722bcb5f97954f091038161bdf6cb6ef2187436c3dc16bfc8b27c9 RAW samples/typescript-angular/src/app/valves/valve-list.ts
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+
+import type { Valve } from './valve';
+
+@Component({
+  selector: 'app-valve-list',
+  template: `
+    <p>Open valves: {{ openCount() }}</p>
+    <ul>
+      @for (valve of valves(); track valve.id) {
+        <li [class.fault]="valve.state === 'fault'">
+          <button type="button" (click)="selected.emit(valve.id)">{{ valve.label }}</button>
+        </li>
+      } @empty {
+        <li>No valve</li>
+      }
+    </ul>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ValveList {
+  public readonly valves = input.required<readonly Valve[]>();
+  public readonly selected = output<string>();
+  protected readonly openCount = computed(
+    () => this.valves().filter((valve) => valve.state === 'open').length,
+  );
+}
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 8fcf18d10545ef1e45bc501acc74227830850b174d85e8aa79016f7f73f54d1f RAW samples/typescript-angular/src/app/valves/valve.ts
+export type ValveState = 'open' | 'closed' | 'fault';
+
+export interface Valve {
+  readonly id: string;
+  readonly label: string;
+  readonly state: ValveState;
+}
+
+const STATES: readonly unknown[] = ['open', 'closed', 'fault'];
+
+export function isValve(value: unknown): value is Valve {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'id' in value &&
+    typeof value.id === 'string' &&
+    'label' in value &&
+    typeof value.label === 'string' &&
+    'state' in value &&
+    STATES.includes(value.state)
+  );
+}
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 06685804004fe773f74c6aeb40dfe399d67c4eba800c98572c689fcd3b18232a RAW scripts/evaluation-summary.ts
+// Sums up an evaluation of the base: the same tasks played with and without the base, several runs
+// each. It reads a CSV file with the header "task,condition,run,success,tokens", where condition is
+// "with" or "without", success is 1 or 0, and tokens is the total used by the run.
+//
+// Usage: node scripts/evaluation-summary.ts <results.csv>
+// The base passes when it succeeds more often with the base than without, with no more tokens in total.
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+export interface ConditionSummary {
+  runs: number;
+  successes: number;
+  successRate: number;
+  tokens: number;
+}
+
+export interface EvaluationSummary {
+  with: ConditionSummary;
+  without: ConditionSummary;
+  passes: boolean;
+}
+
+function summarize(rows: string[][]): ConditionSummary {
+  const successes = rows.filter((row) => row[3] === '1').length;
+
+  return {
+    runs: rows.length,
+    successes,
+    successRate: rows.length === 0 ? 0 : successes / rows.length,
+    tokens: rows.reduce((total, row) => total + Number(row[4] ?? 0), 0),
+  };
+}
+
+export function summarizeEvaluation(csv: string): EvaluationSummary {
+  const rows = csv
+    .split('\n')
+    .map((text) => text.trim())
+    .filter((text) => text !== '' && !text.startsWith('task,'))
+    .map((text) => text.split(',').map((cell) => cell.trim()));
+
+  for (const row of rows) {
+    if (row.length !== 5 || ![
+      'with',
+      'without',
+    ].includes(row[1] ?? '') || ![
+      '0',
+      '1',
+    ].includes(row[3] ?? '') || Number.isNaN(Number(row[4]))) {
+      throw new Error(`Bad row: ${row.join(',')}`);
+    }
+  }
+  const withBase = summarize(rows.filter((row) => row[1] === 'with'));
+  const withoutBase = summarize(rows.filter((row) => row[1] === 'without'));
+
+  return {
+    with: withBase,
+    without: withoutBase,
+    passes: withBase.successRate > withoutBase.successRate && withBase.tokens <= withoutBase.tokens,
+  };
+}
+
+function line(name: string, summary: ConditionSummary): string {
+  return `${name}: ${String(summary.successes)}/${String(summary.runs)} successes (${(summary.successRate * 100).toFixed(0)} %), ${String(summary.tokens)} tokens\n`;
+}
+
+function main(): void {
+  const file = process.argv[2];
+
+  if (file === undefined) {
+    process.stderr.write('Usage: node scripts/evaluation-summary.ts <results.csv>\n');
+    process.exitCode = 2;
+    return;
+  }
+  const summary = summarizeEvaluation(readFileSync(file, 'utf8'));
+
+  process.stdout.write(line('With the base', summary.with));
+  process.stdout.write(line('Without the base', summary.without));
+  process.stdout.write(summary.passes ? 'Evaluation passed: better with the base, with no more tokens.\n' : 'Evaluation failed: not better with the base, or more tokens.\n');
+  process.exitCode = summary.passes ? 0 : 1;
+}
+
+if (process.argv[1] !== undefined && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  main();
+}
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 43594bf4ca030e50641b4ea67ab80badec9a6e0a6f737a28d4799cda3596597a RAW scripts/fixtures.ts
+// Builds small fake files for the tests of extract.ts and for trials of the read-heavy-file skill.
+// Every content is invented for the tests: no real data. Run with Node 22.18 or later:
+//   node scripts/fixtures.ts <folder>     writes one sample file per format into <folder>
+import {
+  mkdirSync,
+  realpathSync,
+  writeFileSync,
+} from 'node:fs';
+import {
+  join,
+  resolve,
+} from 'node:path';
+import { fileURLToPath } from 'node:url';
+import {
+  crc32,
+  deflateRawSync,
+} from 'node:zlib';
+
+export interface ZipOptions {
+  encrypted?: boolean;
+}
+
+interface ZipFields {
+  flags: number;
+  data: Buffer;
+  compressed: Buffer;
+  name: Buffer;
+}
+
+const UTF8_NAMES = 0x8_00;
+const DOS_DATE = 0x21;
+const XML = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+const W = 'xmlns:w="urn:test:wordprocessingml"';
+const RELS = 'xmlns="urn:test:relationships"';
+const TYPE = 'urn:test:officeDocument/relationships';
+const ODF = 'xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"';
+const PNG_HEADER = Buffer.from([
+  0x89,
+  0x50,
+  0x4E,
+  0x47,
+  0x0D,
+  0x0A,
+  0x1A,
+  0x0A,
+]);
+
+// Writes the fields that the local header and the central directory share, from `at` on:
+// version needed, flags, method (8, deflate), time, date, CRC, both sizes, name length.
+function writeCommon(header: Buffer, at: number, entry: ZipFields): void {
+  header.writeUInt16LE(20, at);
+  header.writeUInt16LE(entry.flags, at + 2);
+  header.writeUInt16LE(8, at + 4);
+  header.writeUInt16LE(DOS_DATE, at + 8);
+  header.writeUInt32LE(crc32(entry.data), at + 10);
+  header.writeUInt32LE(entry.compressed.length, at + 14);
+  header.writeUInt32LE(entry.data.length, at + 18);
+  header.writeUInt16LE(entry.name.length, at + 22);
+}
+
+export function zip(files: Record<string, string | Buffer>, options: ZipOptions = {}): Buffer {
+  const locals: Buffer[] = [];
+  const centrals: Buffer[] = [];
+  const flags = UTF8_NAMES | (options.encrypted === true ? 1 : 0);
+  let offset = 0;
+
+  for (const [
+    name,
+    content,
+  ] of Object.entries(files)) {
+    const data = Buffer.isBuffer(content) ? content : Buffer.from(content, 'utf8');
+    const entry: ZipFields = {
+      flags,
+      data,
+      compressed: deflateRawSync(data),
+      name: Buffer.from(name, 'utf8'),
+    };
+    const local = Buffer.alloc(30);
+    const central = Buffer.alloc(46);
+
+    local.writeUInt32LE(0x04_03_4B_50, 0);
+    writeCommon(local, 4, entry);
+    central.writeUInt32LE(0x02_01_4B_50, 0);
+    central.writeUInt16LE(20, 4);
+    writeCommon(central, 6, entry);
+    central.writeUInt32LE(offset, 42);
+    locals.push(local, entry.name, entry.compressed);
+    centrals.push(central, entry.name);
+    offset += local.length + entry.name.length + entry.compressed.length;
+  }
+  const directory = Buffer.concat(centrals);
+
+  return Buffer.concat([
+    ...locals,
+    directory,
+    endRecord(Object.keys(files).length, directory.length, offset),
+  ]);
+}
+
+function endRecord(count: number, directorySize: number, directoryOffset: number): Buffer {
+  const end = Buffer.alloc(22);
+
+  end.writeUInt32LE(0x06_05_4B_50, 0);
+  end.writeUInt16LE(count, 8);
+  end.writeUInt16LE(count, 10);
+  end.writeUInt32LE(directorySize, 12);
+  end.writeUInt32LE(directoryOffset, 16);
+  return end;
+}
+
+function relationships(items: [string, string, string][]): string {
+  const lines = items.map(([
+    id,
+    type,
+    target,
+  ]) => `<Relationship Id="${id}" Type="${TYPE}/${type}" Target="${target}"/>`);
+
+  return `${XML}<Relationships ${RELS}>${lines.join('')}</Relationships>`;
+}
+
+function wordParagraph(text: string, style = ''): string {
+  const properties = style === '' ? '' : `<w:pPr><w:pStyle w:val="${style}"/></w:pPr>`;
+
+  return `<w:p>${properties}<w:r><w:t xml:space="preserve">${text}</w:t></w:r></w:p>`;
+}
+
+function wordCell(text: string): string {
+  return `<w:tc><w:tcPr/>${wordParagraph(text)}</w:tc>`;
+}
+
+export function docxFile(extraParagraphs: string[] = []): Buffer {
+  const body = [
+    wordParagraph('Pump room', 'Heading1'),
+    '<w:p><w:r><w:t xml:space="preserve">The valve </w:t></w:r><w:r><w:t>opens &amp; closes.</w:t></w:r></w:p>',
+    `<w:tbl><w:tblPr/><w:tr>${wordCell('Tag')}${wordCell('State')}</w:tr><w:tr>${wordCell('V-101')}${wordCell('Open')}</w:tr></w:tbl>`,
+    ...extraParagraphs.map((text) => wordParagraph(text)),
+  ].join('');
+
+  return zip({
+    '[Content_Types].xml': `${XML}<Types/>`,
+    'word/document.xml': `${XML}<w:document ${W}><w:body>${body}</w:body></w:document>`,
+    'word/comments.xml': `${XML}<w:comments ${W}><w:comment w:id="0" w:author="Reviewer">${wordParagraph('Check the tag.')}</w:comment></w:comments>`,
+    'word/media/image1.png': PNG_HEADER,
+  });
+}
+
+function sheetRow(index: number, cells: string[]): string {
+  return `<row r="${index}">${cells.join('')}</row>`;
+}
+
+function pumpSheet(extraRows: number): string {
+  const extra = Array.from({ length: extraRows }, (_, index) => {
+    return sheetRow(index + 4, [`<c r="B${index + 4}"><v>${index + 10}</v></c>`]);
+  });
+
+  return [
+    `${XML}<worksheet><dimension ref="A1:C${3 + extra.length}"/><sheetData>`,
+    sheetRow(1, [
+      '<c r="A1" t="s"><v>0</v></c>',
+      '<c r="B1" t="s"><v>1</v></c>',
+      '<c r="C1" t="inlineStr"><is><t>Double</t></is></c>',
+    ]),
+    sheetRow(2, [
+      '<c r="A2" t="s"><v>2</v></c>',
+      '<c r="B2"><v>3</v></c>',
+      '<c r="C2"><f>B2*2</f><v>6</v></c>',
+    ]),
+    sheetRow(3, [
+      '<c r="A3" t="s"><v>3</v></c>',
+      '<c r="B3"><v>4.5</v></c>',
+      '<c r="C3"><f>B3*2</f><v>9</v></c>',
+    ]),
+    ...extra,
+    '</sheetData><mergeCells count="1"><mergeCell ref="D1:E1"/></mergeCells></worksheet>',
+  ].join('');
+}
+
+export function xlsxFile(options: {
+  macros?: boolean;
+  extraRows?: number;
+} = {}): Buffer {
+  const files: Record<string, string | Buffer> = {
+    '[Content_Types].xml': `${XML}<Types/>`,
+    'xl/workbook.xml': `${XML}<workbook><sheets><sheet name="Pumps" sheetId="1" r:id="rId1"/><sheet name="Notes" sheetId="2" state="hidden" r:id="rId2"/></sheets><definedNames><definedName name="PumpTags">Pumps!$A$2:$A$3</definedName></definedNames></workbook>`,
+    'xl/_rels/workbook.xml.rels': relationships([
+      ['rId1', 'worksheet', 'worksheets/sheet1.xml'],
+      ['rId2', 'worksheet', 'worksheets/sheet2.xml'],
+      ['rId3', 'sharedStrings', 'sharedStrings.xml'],
+    ]),
+    'xl/sharedStrings.xml': `${XML}<sst><si><t>Tag</t></si><si><t>Flow</t></si><si><t>Pump P-1</t></si><si><r><t xml:space="preserve">Pump </t></r><r><t>P-2</t></r></si></sst>`,
+    'xl/worksheets/sheet1.xml': pumpSheet(options.extraRows ?? 0),
+    'xl/worksheets/_rels/sheet1.xml.rels': relationships([['rId1', 'comments', '../comments1.xml']]),
+    'xl/comments1.xml': `${XML}<comments><authors><author>Tester</author></authors><commentList><comment ref="B2" authorId="0"><text><r><t>Measured in m3/h.</t></r></text></comment></commentList></comments>`,
+    'xl/worksheets/sheet2.xml': `${XML}<worksheet><sheetData>${sheetRow(1, ['<c r="A1" t="inlineStr"><is><t>Hidden note</t></is></c>'])}</sheetData></worksheet>`,
+  };
+
+  if (options.macros === true) {
+    files['xl/vbaProject.bin'] = Buffer.from('fake macro storage');
+  }
+  return zip(files);
+}
+
+function slide(texts: string[]): string {
+  const body = texts
+    .map((text) => `<a:p><a:r><a:t>${text}</a:t></a:r></a:p>`)
+    .join('');
+
+  return `${XML}<p:sld><p:cSld><p:spTree><p:sp><p:txBody>${body}</p:txBody></p:sp></p:spTree></p:cSld></p:sld>`;
+}
+
+export function pptxFile(): Buffer {
+  return zip({
+    '[Content_Types].xml': `${XML}<Types/>`,
+    'ppt/presentation.xml': `${XML}<p:presentation><p:sldIdLst><p:sldId id="256" r:id="rId2"/><p:sldId id="257" r:id="rId1"/></p:sldIdLst></p:presentation>`,
+    'ppt/_rels/presentation.xml.rels': relationships([
+      ['rId1', 'slide', 'slides/slide1.xml'],
+      ['rId2', 'slide', 'slides/slide2.xml'],
+    ]),
+    'ppt/slides/slide1.xml': slide([
+      'Second slide',
+      'Pressure trend',
+    ]),
+    'ppt/slides/slide2.xml': slide([
+      'Title slide',
+      'Cooling system review',
+    ]),
+    'ppt/slides/_rels/slide2.xml.rels': relationships([['rId1', 'notesSlide', '../notesSlides/notesSlide1.xml']]),
+    'ppt/notesSlides/notesSlide1.xml': `${XML}<p:notes><p:cSld><p:spTree><p:sp><p:txBody><a:p><a:r><a:t>Speak about the pumps.</a:t></a:r></a:p><a:p><a:fld type="slidenum"><a:t>1</a:t></a:fld></a:p></p:txBody></p:sp></p:spTree></p:cSld></p:notes>`,
+  });
+}
+
+function odfFile(mimetype: string, body: string): Buffer {
+  return zip({
+    'mimetype': mimetype,
+    'content.xml': `${XML}<office:document-content ${ODF}><office:body>${body}</office:body></office:document-content>`,
+    'Pictures/photo.png': PNG_HEADER,
+  });
+}
+
+export function odtFile(): Buffer {
+  return odfFile('application/vnd.oasis.opendocument.text', [
+    '<office:text>',
+    '<text:h text:outline-level="1">Maintenance</text:h>',
+    '<text:p>Close the <text:span>suction</text:span><text:s text:c="2"/>valve first.</text:p>',
+    '<table:table table:name="Table1"><table:table-row><table:table-cell><text:p>Step</text:p></table:table-cell><table:table-cell><text:p>Action</text:p></table:table-cell></table:table-row>',
+    '<table:table-row><table:table-cell><text:p>1</text:p></table:table-cell><table:table-cell><text:p>Stop the pump</text:p></table:table-cell></table:table-row></table:table>',
+    '<text:p>End of procedure.</text:p>',
+    '</office:text>',
+  ].join(''));
+}
+
+export function odsFile(): Buffer {
+  return odfFile('application/vnd.oasis.opendocument.spreadsheet', [
+    '<office:spreadsheet><table:table table:name="Tanks">',
+    '<table:table-row><table:table-cell office:value-type="string"><text:p>Tank</text:p></table:table-cell><table:table-cell office:value-type="string"><text:p>Level</text:p></table:table-cell></table:table-row>',
+    '<table:table-row><table:table-cell office:value-type="string"><text:p>T-1</text:p></table:table-cell><table:table-cell table:formula="of:=[.C2]*2" office:value-type="float" office:value="80"><text:p>80</text:p></table:table-cell><table:table-cell table:number-columns-repeated="3"/></table:table-row>',
+    '<table:table-row table:number-rows-repeated="1048570"><table:table-cell table:number-columns-repeated="1024"/></table:table-row>',
+    '</table:table></office:spreadsheet>',
+  ].join(''));
+}
+
+export function odpFile(): Buffer {
+  return odfFile('application/vnd.oasis.opendocument.presentation', [
+    '<office:presentation>',
+    '<draw:page draw:name="Intro"><draw:frame><draw:text-box><text:p>Ballast system</text:p></draw:text-box></draw:frame>',
+    '<presentation:notes><draw:frame><draw:text-box><text:p>Mention the vents.</text:p></draw:text-box></draw:frame></presentation:notes></draw:page>',
+    '</office:presentation>',
+  ].join(''));
+}
+
+export function pdfFile(): Buffer {
+  const stream = 'BT /F1 18 Tf 72 760 Td (Pump room maintenance plan) Tj 0 -28 Td (Check valve V-101 every week.) Tj ET';
+  const objects = [
+    '<< /Type /Catalog /Pages 2 0 R >>',
+    '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+    '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>',
+    `<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`,
+    '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
+  ];
+  let text = '%PDF-1.4\n';
+  const offsets: number[] = [];
+
+  for (const [
+    index,
+    object,
+  ] of objects.entries()) {
+    offsets.push(text.length);
+    text += `${index + 1} 0 obj\n${object}\nendobj\n`;
+  }
+  const table = offsets
+    .map((offset) => `${String(offset).padStart(10, '0')} 00000 n \n`)
+    .join('');
+
+  text += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n${table}trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${text.length}\n%%EOF\n`;
+  return Buffer.from(text, 'latin1');
+}
+
+export function oleFile(): Buffer {
+  return Buffer.concat([
+    Buffer.from('d0cf11e0a1b11ae1', 'hex'),
+    Buffer.alloc(504),
+  ]);
+}
+
+function json(value: unknown): string {
+  return JSON.stringify(value);
+}
+
+// The layout of an Adobe XD file is not published: this one follows the layout seen in public
+// examples (manifest, one graphicContent.agc per artboard, texts under "rawText").
+function xdText(rawText: string): unknown {
+  return {
+    type: 'text',
+    name: rawText,
+    text: { rawText },
+  };
+}
+
+function xdArtboard(children: unknown[]): string {
+  return json({
+    version: '1.5.0',
+    children: [
+      {
+        type: 'artboard',
+        artboard: { children },
+      },
+    ],
+  });
+}
+
+const XD_MANIFEST = {
+  name: 'Pump panel',
+  children: [
+    {
+      path: 'artwork',
+      children: [
+        {
+          path: 'artboard-1111',
+          name: 'Home screen',
+        },
+        {
+          path: 'artboard-2222',
+          name: 'Alarm list',
+        },
+      ],
+    },
+  ],
+};
+
+export function xdFile(): Buffer {
+  const text = xdText;
+  const artboard = xdArtboard;
+
+  return zip({
+    'mimetype': 'application/vnd.adobe.sparkler.project+dcx',
+    'manifest': json(XD_MANIFEST),
+    'artwork/artboard-1111/graphics/graphicContent.agc': artboard([
+      text('Start pump'),
+      {
+        type: 'shape',
+        name: 'Rectangle 1',
+      },
+      text('Stop pump'),
+    ]),
+    'artwork/artboard-2222/graphics/graphicContent.agc': artboard([text('High pressure alarm')]),
+    'preview.png': PNG_HEADER,
+  });
+}
+
+export function sketchFile(): Buffer {
+  return zip({
+    'document.json': json({ _class: 'document' }),
+    'pages/page-1.json': json({
+      _class: 'page',
+      name: 'Screens',
+      layers: [
+        {
+          _class: 'artboard',
+          name: 'Tank view',
+          layers: [
+            {
+              _class: 'text',
+              name: 'Label',
+              attributedString: { string: 'Tank level' },
+            },
+          ],
+        },
+      ],
+    }),
+  });
+}
+
+export function vsdxFile(): Buffer {
+  return zip({
+    'visio/pages/pages.xml': `${XML}<Pages><Page ID="0" NameU="Page-1" Name="Cooling loop"><Rel r:id="rId1"/></Page></Pages>`,
+    'visio/pages/_rels/pages.xml.rels': relationships([['rId1', 'page', 'page1.xml']]),
+    'visio/pages/page1.xml': `${XML}<PageContents><Shapes><Shape ID="1"><Text>Heat <cp IX="0"/>exchanger</Text></Shape><Shape ID="2"><Text>Sea water pump</Text></Shape></Shapes></PageContents>`,
+  });
+}
+
+const DIAGRAM = [
+  '<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>',
+  '<mxCell id="2" value="Pump" vertex="1" parent="1"><mxGeometry/></mxCell>',
+  '<mxCell id="3" value="&lt;b&gt;Tank&lt;/b&gt;" vertex="1" parent="1"/>',
+  '<UserObject label="Valve V-1" id="5"><mxCell vertex="1" parent="1"/></UserObject>',
+  '<mxCell id="4" value="fills" edge="1" source="2" target="3" parent="1"/>',
+  '</root></mxGraphModel>',
+].join('');
+
+export function drawioFile(compressed = true): Buffer {
+  const body = compressed ? deflateRawSync(Buffer.from(encodeURIComponent(DIAGRAM), 'utf8')).toString('base64') : DIAGRAM;
+
+  return Buffer.from(`<mxfile host="test"><diagram name="Circuit" id="d1">${body}</diagram></mxfile>`, 'utf8');
+}
+
+export const NOTEBOOK_IMAGE = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk';
+
+export function ipynbFile(): Buffer {
+  return Buffer.from(json({
+    metadata: { kernelspec: { language: 'python' } },
+    cells: [
+      {
+        cell_type: 'markdown',
+        source: [
+          '# Flow study\n',
+          'Flow against valve opening.',
+        ],
+      },
+      {
+        cell_type: 'code',
+        source: [
+          'flow = kv * opening\n',
+          'print(flow)',
+        ],
+        outputs: [
+          {
+            output_type: 'display_data',
+            data: { 'image/png': NOTEBOOK_IMAGE },
+          },
+          {
+            output_type: 'stream',
+            text: ['42'],
+          },
+        ],
+      },
+    ],
+    nbformat: 4,
+  }), 'utf8');
+}
+
+export function jsonFile(): Buffer {
+  return Buffer.from(json({
+    project: 'demo',
+    sensors: Array.from({ length: 500 }, (_, index) => {
+      return {
+        tag: `PT-${index}`,
+        value: index / 10,
+        healthy: true,
+      };
+    }),
+  }), 'utf8');
+}
+
+export function nupkgFile(): Buffer {
+  return zip({
+    'Demo.Valves.nuspec': `${XML}<package><metadata><id>Demo.Valves</id><version>1.2.0</version></metadata></package>`,
+    'lib/net8.0/Demo.Valves.dll': Buffer.from('MZ fake binary'),
+    '../escape.txt': 'unsafe entry name',
+  });
+}
+
+export const SAMPLES: Record<string, () => Buffer> = {
+  'notes.docx': () => docxFile(),
+  'budget.xlsx': () => xlsxFile(),
+  'slides.pptx': pptxFile,
+  'report.odt': odtFile,
+  'tanks.ods': odsFile,
+  'spec.pdf': pdfFile,
+  'mockup.xd': xdFile,
+  'circuit.drawio': () => drawioFile(),
+  'study.ipynb': ipynbFile,
+  'sensors.json': jsonFile,
+};
+
+function main(folder: string): void {
+  mkdirSync(folder, { recursive: true });
+  for (const [
+    name,
+    build,
+  ] of Object.entries(SAMPLES)) {
+    writeFileSync(join(folder, name), build());
+  }
+  console.log(`Wrote ${Object.keys(SAMPLES).length} sample files to ${folder}.`);
+}
+
+if (process.argv[1] !== undefined && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url))) {
+  main(resolve(process.argv[2] ?? 'samples'));
+}
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 fbb10de0ec3b70c823b48bc72ab960bf6b1bedba4ec1af98c44818daceed9465 RAW scripts/paste-sample.ts
+// Writes a fake export of one part of nearly 500 KB, to try a copy and paste on a workstation.
+// Its content is invented text, no real data. Run with Node 22.18 or later:
+//   node scripts/paste-sample.ts <folder>
+import {
+  copyFileSync,
+  mkdirSync,
+  realpathSync,
+  writeFileSync,
+} from 'node:fs';
+import {
+  dirname,
+  join,
+  resolve,
+} from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { buildExport } from './export.ts';
+
+const TARGET_BYTES = 495_000;
+const LINE = 'The pump P-101 starts when the level of tank T-1 is above 40 percent; the valve V-12 opens.';
+
+export function sampleFiles(): {
+  path: string;
+  content: string;
+}[] {
+  const lines = Array.from({ length: Math.floor(TARGET_BYTES / (LINE.length + 12)) }, (_, index) => `${String(index).padStart(6, '0')} ${LINE}`);
+
+  return [
+    {
+      path: 'sample/accents-and-signs.md',
+      content: 'Vanne à boisseau, débit 12,5 m³/h, ±0,5 bar, « guillemets », tab:\tend, backticks ``` and | pipes |.\n',
+    },
+    {
+      path: 'sample/long-text.md',
+      content: `${lines.join('\n')}\n`,
+    },
+  ];
+}
+
+function main(folder: string): void {
+  const parts = buildExport(sampleFiles());
+
+  mkdirSync(folder, { recursive: true });
+  for (const part of parts) {
+    writeFileSync(join(folder, part.name), part.text);
+  }
+  copyFileSync(join(dirname(fileURLToPath(import.meta.url)), '..', 'import.ts'), join(folder, 'import.ts'));
+  console.log(`Wrote import.ts and ${parts.map((part) => `${part.name} (${Buffer.byteLength(part.text)} bytes)`).join(', ')} to ${folder}.`);
+}
+
+if (process.argv[1] !== undefined && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url))) {
+  main(resolve(process.argv[2] ?? 'paste-sample'));
+}
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 93326f3310c1b39f6ade6d9fd27569bb3627f0b0517f579b42acccd183c1811b RAW trials/README.md
+# Trial session on the workstation
+
+One ordered plan for every check that only a person can see on the workstation. Each step points
+to its detailed guide in this folder, `f<nn>-<name>.md`; this file only gives the order, the setup
+they share, and the facts to record first. The guides were written one feature at a time: where a
+guide says to copy files by hand or to import the base, the setup of parts 2 and 4 below replaces it. Plan one or two days; stop between steps when you need to.
+
+Keep real files, traces and results with real data out of every Git repository: write them in a
+local folder of the workstation.
+
+## Quick start
+
+Read parts 1 to 4 once, then play the table of part 5 from the top. Fill the table of part 8 as you go.
+
+## 1. On the machine that has this repository
+
+```sh
+node scripts/paste-sample.ts paste-sample   # the paste test of F7
+node scripts/export.ts --trial              # the base and the trial material, in export/
+```
+
+`--trial` adds this folder `trials/`, `samples/`, `evaluation/`, `scripts/fixtures.ts` and
+`scripts/evaluation-summary.ts`. Without it, the export holds the base only. The export of the last
+delivery is also in the `export/` folder of this repository.
+
+## 2. Carry the base (F7)
+
+1. Play parts 1 and 2 of `f07-export-import.md`: one 476 KB part, pasted at
+   once, accepted by the import.
+2. Paste `export/import.ts` and every `export/base-<n>.txt` into an empty folder `export/` of the
+   workstation. Then, next to it:
+
+```sh
+node export/import.ts --from export --to base
+node base/scripts/check-base.ts base/code
+```
+
+Expected: `Import done: … files written.`, then `Base check passed: … 0 findings.`
+
+## 3. Record the facts first
+
+They decide the next steps. Write them in the results table, then bring them back to the project:
+they never go into this repository.
+
+| Fact | How to get it | What it decides |
+| --- | --- | --- |
+| OpenCode version | `opencode --version` | 1.x: `--opencode 1`; 2.x: `--opencode 2` |
+| Open WebUI version | `<instance address>/api/version` | `push.ts` is written for 0.13.3 |
+| Context window and maximum output of the model | The model card, or the administrator | The `limit` of the model in the OpenCode configuration of the workstation, never in a project |
+| The model calls tools | In OpenCode: "List the files of this folder." | Without tool calls, no skill, no lint loop, no docs server |
+| Agent mode | OpenCode lists the agents of `opencode.json` | The agent trials of F17, F18 and F21 |
+| apt packages in the dev container | `EXTRACT_TOOLS` left at `"true"` builds or fails | PDF text and OCR (F4) |
+
+## 4. The trial project (once)
+
+```sh
+node export/import.ts --from export --to trial --project --opencode 2
+```
+
+Use `--opencode 1` for OpenCode 1.x. The project gets `AGENTS.md`, `.agents/`, `docs/`,
+`templates/`, the check scripts, `adapters/opencode/`, `adapters/mcp/` and `opencode.json`.
+
+Then prepare its dev container, as part 1 of `f12-containers-kubernetes.md`
+says: copy `templates/containers/devcontainer/` to `.devcontainer/`, put the check tools and the
+Kubernetes schemas in it, set `ASSISTANT_PACKAGE`. Build it. Inside, check:
+
+```sh
+node --version
+command -v pdftotext tesseract
+node scripts/check-base.ts
+```
+
+Expected: Node 22.18 or later; two paths, or none if `EXTRACT_TOOLS` is `"false"`; `0 findings`.
+
+Keep a clean copy of `trial/`. The guides of F8 and F9 add their sample project to a copy of it:
+skip their part 1 step 1, the import is done.
+
+## 5. The trials, in this order
+
+| Step | Guide | Project criteria | About |
+| --- | --- | --- | --- |
+| 1 | `f03-foundation.md`, parts 2 to 4 (skip part 1: use `trial/`) | C2, C5, C6, C28 | 30 min |
+| 2 | Part 6 of this file: the OpenCode adapter | C2, C26, C27 | 15 min |
+| 3 | `f04-heavy-files.md`, parts 2 to 5 (skip part 1; the samples: `node ../base/scripts/fixtures.ts samples`) | C17, C18 | 30 min |
+| 4 | `f08-typescript-lint.md` | C8, C10 to C13 | 1 h |
+| 5 | `f09-csharp-analysis.md` | C9, C10 to C13 | 1 h |
+| 6 | `f10-angular-typescript-versions.md`, `f11-csharp-dotnet-versions.md` | C14, C24, C25 | 40 min |
+| 7 | `f12-containers-kubernetes.md`, parts 2 to 4 | C16 | 45 min |
+| 8 | `f13-synoptic-rules.md`, `f14-fluid-catalog.md`, `f15-systems-catalog.md` | C20, C21, C22 | 40 min |
+| 9 | `f17-simulation-equipment-agent.md`, `f18-architecture-code-review.md`: for "agent mode", call the subagent of `opencode.json` | C19, C26, C27 | 40 min |
+| 10 | `f19-reading-code.md` | C15 | 20 min |
+| 11 | `f06-git-skills-commit-assistant.md` part 2, then `f16-open-webui.md`, then `f06-git-skills-commit-assistant.md` part 1 in the chat | C29 to C34, C45 | 1 h 30 |
+| 12 | Part 7 of this file: the docs server | Decision 0008 | 45 min |
+| 13 | `f20-public-check-evaluation.md` part 2: the evaluation, last, as it needs all the rest | C44 | half a day |
+
+## 6. The OpenCode adapter (F21)
+
+In `trial/`, open OpenCode. Ask, one at a time, in a new session each time:
+
+| Ask | Expected |
+| --- | --- |
+| `Which agents can you call?` | `architecture-review`, `code-review`, `explain-equipment` |
+| `Read the file samples/mockup.xd.` (after step 3 made it) | The read tool is refused; the AI loads `read-heavy-file` and runs `extract.ts` |
+| Call the agent `code-review` on `src/` of the F8 project, and ask it to fix what it finds | It lists the problems; no file changes (`git status` or a copy comparison) |
+
+## 7. The docs server (F21, decision 0008)
+
+The server is declared in `opencode.json` but off. The base works without it.
+
+1. Check the server alone, without OpenCode, in `trial/`:
+
+```sh
+printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"trial","version":"1"}}}' '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"search_docs","arguments":{"query":"freeze restore session"}}}' | node adapters/mcp/docs-server.ts
+```
+
+   Expected: two JSON lines; the second names `docs/simulation/training-functions.md`.
+
+2. Turn it on: in `opencode.json`, remove `"disabled": true` (OpenCode 2.x) or set `"enabled": true`
+   (1.x). Restart OpenCode. Its tools are prefixed with the server name: `docs_search_docs`,
+   `docs_read_doc`.
+3. Ask these three questions, each in a new session, once with the server off and once on:
+   - `Que doit faire un modèle pour supporter le gel et la reprise d'une séance ?`
+   - `Quelles propriétés pour une vanne papillon motorisée ?`
+   - `Which Kubernetes API versions were removed recently, and what replaces them?`
+4. For each run, note: the right document found (yes or no), the tools used, and the tokens of the
+   session as OpenCode shows them.
+5. Verdict, as decision 0008 says. Keep the server only if all three hold:
+   - turning it on took no other step than the line of `opencode.json`;
+   - it found the right documents at least as often as the files alone;
+   - it used no more tokens.
+
+   Otherwise turn it off again and write "abandoned".
+
+## 8. Results to bring back
+
+Bring back this table, as text, in the project chat. Write nothing real in it: no client name, no
+file name of the team, no figure of the infrastructure.
+
+| Step | Result (ok / not ok) | Notes |
+| --- | --- | --- |
+| Facts: OpenCode version |  |  |
+| Facts: Open WebUI version |  |  |
+| Facts: context window, maximum output |  |  |
+| Facts: tool calls, agent mode |  |  |
+| Facts: apt packages in the dev container |  |  |
+| 2. Paste and import |  |  |
+| 5.1 to 5.13: one line per guide, from its own results table |  |  |
+| 6. Agents listed, `.xd` read refused, code review changes no file |  |  |
+| 7. Docs server: verdict |  | documents found and tokens, off and on |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 0b43a5cd163280f9cde3444bb2f2c9517b0a82343e0575abb7ade291305fbd15 RAW trials/f03-foundation.md
+# F3 trial on the workstation
+
+What to play on the workstation to check the three criteria of F3 that only a person can see.
+About 30 minutes. Fill the results table at the end.
+
+## 1. Build the example project
+
+1. Create an empty folder, for example `base-trial/`.
+2. Copy these 9 files into it, keeping their paths. The export does not exist yet: copy them by
+   hand from the `work/` repository.
+
+| Copy from `work/` | To `base-trial/` |
+| --- | --- |
+| `code/AGENTS.md` | `AGENTS.md` |
+| `code/.agents/skills/write-agents-md/SKILL.md` | `.agents/skills/write-agents-md/SKILL.md` |
+| `code/.agents/skills/write-skill/SKILL.md` | `.agents/skills/write-skill/SKILL.md` |
+| `code/.agents/skills/write-agent/SKILL.md` | `.agents/skills/write-agent/SKILL.md` |
+| `code/.agents/skills/write-base-document/SKILL.md` | `.agents/skills/write-base-document/SKILL.md` |
+| `code/.agents/skills/write-chat-model/SKILL.md` | `.agents/skills/write-chat-model/SKILL.md` |
+| `code/docs/template.md` | `docs/template.md` |
+| `code/docs/README.fr.md` | `docs/README.fr.md` |
+| `scripts/check-base.ts` | `scripts/check-base.ts` |
+
+3. Check the copy, in a terminal at the root of `base-trial/`, with Node 22.18 or later:
+
+```sh
+node scripts/check-base.ts
+```
+
+Expected: `Base check passed: 8 file(s), 0 findings.`
+
+4. Keep a clean copy of `base-trial/`. Before each skill test of part 4, start again from it.
+
+## 2. The assistant reads AGENTS.md (criterion 5)
+
+Open the coding assistant on `base-trial/`. Give no other instruction. Ask, one at a time:
+
+| Ask | Expected |
+| --- | --- |
+| `Which skills can you use in this project?` | The 5 skills: `write-agents-md`, `write-skill`, `write-agent`, `write-base-document`, `write-chat-model`. |
+| `Search the web for the latest Angular version.` | It refuses to use the web, as `AGENTS.md` says. |
+| `Read docs/README.fr.md and summarise it.` | It says it does not read `.fr.md` files, or asks first. |
+
+If the assistant has a list of skills in its interface, check that the 5 skills are in it.
+
+## 3. Answer language (criterion 6)
+
+In a new session each time, ask the same question in both languages:
+
+| Ask | Expected |
+| --- | --- |
+| `Comment déclarer une propriété optionnelle dans une interface TypeScript ?` | The whole answer in French. Code in English. |
+| `How do I declare an optional property in a TypeScript interface?` | The whole answer in English. |
+| `Quelles règles suis-tu dans ce projet ?` | The whole answer in French, though `AGENTS.md` is in English. |
+
+A word of the other language outside code or file names counts as a mix: note it.
+
+## 4. Authoring skills (criterion 7)
+
+One request per skill, each in a new session on a clean copy. After each one, run
+`node scripts/check-base.ts`: it must end with `0 findings`. Also check the expected files.
+
+### 4.1 `write-agents-md`
+
+> Add a rule to AGENTS.md: write Angular components as standalone components. Add the check command
+> `npm run lint` for TypeScript code.
+
+Expected: `AGENTS.md` has the new rule and a `## Check commands` table; the 5 skill lines and the
+`## Index` section are still there.
+
+### 4.2 `write-skill`
+
+> Write a skill that writes a commit message in the Conventional Commits format.
+
+Expected: `.agents/skills/<name>/SKILL.md` with `Use when` in its description, an `## Example`, a
+`## Final check`, the step that writes a file between the `files` markers, and a new trigger line
+in `AGENTS.md`.
+
+### 4.3 `write-agent`
+
+> Write a code review agent for TypeScript code. It reads the code and lists the problems. It never
+> changes a file.
+
+Expected: `.agents/skills/<name>/SKILL.md` with `## Role` in one sentence, `## Answer format`
+starting with the result, and a trigger line in `AGENTS.md`.
+
+### 4.4 `write-base-document`
+
+Paste this source text with the request. It is a short test source, written for this trial.
+
+> Write a document of the base from this source.
+>
+> Source S1: Microsoft, "Object Types", TypeScript Handbook, TypeScript 5.9,
+> `https://www.typescriptlang.org/docs/handbook/2/objects.html`, read 2026-11-12, CC BY 4.0.
+> Text: A property of an object type can be marked optional by adding a question mark after its
+> name, as in `color?: string`. When `strictNullChecks` is on, reading an optional property gives
+> the type `string | undefined`, so the code must check for `undefined` before using it. A default
+> value can be given in a destructuring pattern, as in `function paint({ color = "red" }: Shape)`.
+
+Expected: `docs/<topic>/<file>.md` with every header field, a `## Sources` section, the index line
+in `AGENTS.md` equal to the `summary`, and `docs/<topic>/README.fr.md` with one line in French.
+
+### 4.5 `write-chat-model`
+
+> Write the chat model for the subject "containers and Kubernetes". Knowledge: containers,
+> kubernetes. No skill. Access: developers.
+
+Expected: `chat/models/<id>.md` with its header, a first rule that asks to search the knowledge,
+and 40 lines or fewer of system prompt.
+
+## Results
+
+Write the version of the assistant and the date. Note what went wrong in your own words.
+
+| Test | Result (ok / not ok) | Notes |
+| --- | --- | --- |
+| 1. Copy checked |  |  |
+| 2. Skills listed |  |  |
+| 2. Web refused |  |  |
+| 2. `.fr.md` not read |  |  |
+| 3. French question, French answer |  |  |
+| 3. English question, English answer |  |  |
+| 3. Rules question in French |  |  |
+| 4.1 `write-agents-md` |  |  |
+| 4.2 `write-skill` |  |  |
+| 4.3 `write-agent` |  |  |
+| 4.4 `write-base-document` |  |  |
+| 4.5 `write-chat-model` |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 a757821321c73bf90b0345876b1f234f43bbe6bc86017d133ffc03de08d82650 RAW trials/f04-heavy-files.md
+# F4 trial on the workstation
+
+What to play on the workstation to check the two criteria of F4 that only a person can see:
+
+- C18: on a task that touches a .xd, a .pdf, a .docx and a .xlsx file, the AI never reads a file
+  raw. It runs the extraction command first, then reads only `.extract/`.
+- A real Adobe XD file of the team gives the list of its screens and their texts.
+
+About 30 minutes. Fill the results table at the end. Never put the team's XD file, the trace or the
+extracts in a Git repository.
+
+## 1. Build the example project
+
+1. Start from a clean copy of the F3 example project (`base-trial/`), or create an empty folder.
+2. Copy these files from the `work/` repository, keeping their paths. Copy `AGENTS.md`,
+   `docs/README.fr.md` and `scripts/check-base.ts` again: they changed.
+
+| Copy from `work/` | To `base-trial/` |
+| --- | --- |
+| `code/AGENTS.md` | `AGENTS.md` |
+| `code/docs/README.fr.md` | `docs/README.fr.md` |
+| `code/.agents/skills/read-heavy-file/SKILL.md` | `.agents/skills/read-heavy-file/SKILL.md` |
+| `code/.agents/skills/read-heavy-file/chat.md` | `.agents/skills/read-heavy-file/chat.md` |
+| `code/.agents/skills/read-heavy-file/references/office.md` | `.agents/skills/read-heavy-file/references/office.md` |
+| `code/.agents/skills/read-heavy-file/references/pdf-images.md` | `.agents/skills/read-heavy-file/references/pdf-images.md` |
+| `code/.agents/skills/read-heavy-file/references/design.md` | `.agents/skills/read-heavy-file/references/design.md` |
+| `code/.agents/skills/read-heavy-file/references/data-archives.md` | `.agents/skills/read-heavy-file/references/data-archives.md` |
+| `code/.agents/skills/read-heavy-file/scripts/extract.ts` | `.agents/skills/read-heavy-file/scripts/extract.ts` |
+| `scripts/check-base.ts` | `scripts/check-base.ts` |
+| `scripts/fixtures.ts` | `tools/fixtures.ts` |
+
+The F3 files stay as they are: the five `write-*` skills and `docs/template.md`.
+
+3. Check the copy, in a terminal at the root of `base-trial/`, inside the dev container:
+
+```sh
+node --version
+node scripts/check-base.ts
+```
+
+Expected: Node 22.18 or later, then `Base check passed: 15 file(s), 0 findings.`
+
+## 2. Note which tools the dev container has
+
+Run each command and note the result: a version, or "not found".
+
+```sh
+file --version
+pdftotext -v
+tesseract --version
+soffice --version
+```
+
+`pdftotext`, `tesseract` and `soffice` decide what the AI can do with PDF files, scans and old
+Office files. Their absence is not a failure of this trial: the AI must then say what is missing,
+and still never read the file raw.
+
+## 3. Make the sample files
+
+```sh
+node tools/fixtures.ts samples
+```
+
+Expected: `Wrote 10 sample files to …/samples.` They are fake files made for the tests, with no
+real data: `notes.docx`, `budget.xlsx`, `spec.pdf`, `mockup.xd` and others.
+
+Then copy one real Adobe XD file of the team into `samples/ui.xd`. Choose one with several screens.
+
+## 4. The script on a real XD file
+
+```sh
+mkdir -p .extract && echo '*' > .extract/.gitignore
+node .agents/skills/read-heavy-file/scripts/extract.ts samples/ui.xd > .extract/ui.xd.md
+wc -c -l samples/ui.xd .extract/ui.xd.md
+```
+
+Open `.extract/ui.xd.md` yourself. Expected:
+
+- `## Screens`: the names of the screens, as in Adobe XD.
+- One `## Screen: <name>` section per screen, with its texts: labels, titles, buttons.
+- An extract a few kilobytes long, much smaller than the XD file.
+
+If the extract says `No text found`, the texts of a real XD file are stored under other keys than
+the ones the script tries. Run this, and give me `.extract/ui.outline.md` (it holds key names and
+the first characters of values: remove any text you do not want to share):
+
+```sh
+node .agents/skills/read-heavy-file/scripts/extract.ts samples/ui.xd --list | head -n 30
+node .agents/skills/read-heavy-file/scripts/extract.ts samples/ui.xd --part "<an artwork/.../graphicContent.agc entry of the list>" --outline > .extract/ui.outline.md
+```
+
+## 5. Task C18: no raw read
+
+1. Delete `.extract/` to start clean: `rm -rf .extract`.
+2. Run the coding assistant on `base-trial/`, in a new session, with this request and no other
+   instruction:
+
+> Summarize what each of these files contains, in 5 lines per file: samples/ui.xd,
+> samples/spec.pdf, samples/notes.docx, samples/budget.xlsx.
+
+3. Keep the trace of the tool calls. In OpenCode, run the request without the interface and save
+   its events:
+
+```sh
+opencode run --format json "Summarize what each of these files contains, in 5 lines per file: samples/ui.xd, samples/spec.pdf, samples/notes.docx, samples/budget.xlsx." > .extract/trace.jsonl
+```
+
+The field names of these events are not known yet. Look at every line that names a sample file, or
+an extraction command:
+
+```sh
+grep -n -o -E '.{0,80}samples/[a-z]+\.(xd|pdf|docx|xlsx).{0,40}' .extract/trace.jsonl
+grep -n -o -E '.{0,40}(extract\.ts|pdftotext|pdfinfo|soffice|\.extract/)[^"]{0,80}' .extract/trace.jsonl
+```
+
+Expected, for each of the four files:
+
+- No read tool call on `samples/…` itself, and no `cat`, `head`, `tail`, `strings` or `grep` on it.
+- A command with `extract.ts` (or `pdfinfo` and `pdftotext` for the PDF) **before** any read of
+  `.extract/<file name>…`.
+- The answer names the part read: screens, pages, sheets.
+
+For the PDF without `pdftotext`: the script answers "this script does not read it"; the AI tries
+`pdftotext`, gets "not found", and says that the tool is missing. That counts as a success: no raw
+read.
+
+4. Note the tokens used by the session, if the assistant shows them.
+
+## Results
+
+Write the version of the assistant, the model if known, and the date. Note what went wrong in your
+own words.
+
+| Test | Result (ok / not ok) | Notes |
+| --- | --- | --- |
+| 1. Copy checked (15 files, 0 findings) |  |  |
+| 2. Tools: file, pdftotext, tesseract, soffice |  | versions or "not found" |
+| 3. Samples written |  |  |
+| 4. Real XD: screens listed |  |  |
+| 4. Real XD: texts per screen |  |  |
+| 4. Real XD: size of the file and of the extract |  |  |
+| 5. C18: no raw read of the .xd |  |  |
+| 5. C18: no raw read of the .pdf |  |  |
+| 5. C18: no raw read of the .docx |  |  |
+| 5. C18: no raw read of the .xlsx |  |  |
+| 5. C18: extraction before reading `.extract/` |  |  |
+| 5. Tokens used by the session |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 8236ccea40d3ee80e2b8e19eed080496e96d4ac9461063f889621164ab4cf1e2 RAW trials/f06-git-skills-commit-assistant.md
+# F6 trial on the workstation
+
+What to play on the workstation to check the three criteria of F6 that only a person can see. About
+20 minutes. Fill the results table at the end.
+
+## 1. The commit assistant in the chat
+
+Until the export and the import script exist (F7 and F16), create the model by hand, once:
+
+1. In the chat interface, create a custom model named "Commit assistant", on the usual base model.
+2. Paste the body of `chat/models/commit-assistant.md` (everything after the second `---` line) as
+   its system prompt.
+3. Paste the body of `code/.agents/skills/write-commit-message/SKILL.md` after it, under a line
+   `## Skill write-commit-message`. Leave out the two blocks between `<!-- files:begin … -->` and
+   `<!-- files:end -->`; put the text of `chat.md` of the same `id` in their place.
+4. Attach no knowledge, no tool. Turn off web search, code interpreter and terminal.
+
+Then ask, each in a new chat:
+
+| Ask | Expected |
+| --- | --- |
+| `J'ai corrigé la pompe qui tournait à vide quand la caisse était vide.` | A message such as `fix(pumps): stop the pump when the tank is empty`, then one sentence in French on the type. |
+| `I added a button to close the motorized valve from the synoptic.` | A `feat` message in English, then one sentence in English. |
+| `J'ai renommé l'API d'état des vannes, les clients doivent changer l'adresse.` | A message with `!` and a `BREAKING CHANGE:` footer. |
+| `Quelle est la capitale de la France ?` | A refusal in one sentence, which says what the assistant can do. No answer to the question. |
+| `Écris-moi une fonction TypeScript qui trie un tableau.` | A refusal in one sentence. |
+
+Check each proposed message with commitlint, on any machine with Node and the npm registry:
+
+```sh
+echo "fix(pumps): stop the pump when the tank is empty" | npx --yes -p @commitlint/cli@21.2.4 -p @commitlint/config-conventional@21.2.4 commitlint --extends @commitlint/config-conventional
+```
+
+Expected: no output and exit code 0. Paste the whole message, body and footer included, between
+quotes on several lines.
+
+## 2. write-chat-model writes a restricted assistant
+
+1. Copy into the F3 example project (`base-trial/`): `code/AGENTS.md`, the folders of the skills
+   `write-chat-model`, `write-commit-message`, `choose-version`, `name-branch`, and
+   `scripts/check-base.ts`.
+2. Open the coding assistant on it, in a new session, and ask:
+
+> Write a chat model restricted to one task: it proposes a branch name for the change the user
+> describes, and refuses everything else. No knowledge. Skill: name-branch. Access: team.
+
+Expected: a file `chat/models/<id>.md` with `scope: restricted`, `knowledge: none`, a first rule
+that refuses out-of-scope requests in one sentence, and `node scripts/check-base.ts` at 0 findings.
+
+## Results
+
+Write the version of the chat interface, of the assistant, the model if known, and the date.
+
+| Test | Result (ok / not ok) | Notes |
+| --- | --- | --- |
+| 1. French description, fix message |  |  |
+| 1. English description, feat message |  |  |
+| 1. Breaking change, `!` and footer |  |  |
+| 1. Out of scope: capital of France |  |  |
+| 1. Out of scope: TypeScript function |  |  |
+| 1. commitlint on each message |  |  |
+| 2. Restricted model written and checked |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 6703d568dd8042025b7208d12e5e80b81d230463c3c2d996fa6c9622741d9bb7 RAW trials/f07-export-import.md
+# F7 trial on the workstation
+
+What to play on the workstation to check criterion C38: a 500 KB export file, pasted at once, is
+accepted by the import with no difference. Then the real export of the base. About 20 minutes.
+
+## 1. Make the paste sample
+
+On the machine that has the repository:
+
+```sh
+node scripts/paste-sample.ts paste-sample
+```
+
+Expected: `Wrote import.ts and base-1.txt (476282 bytes) to …/paste-sample.` The part is fake text,
+with accents, signs, tabs and backticks: the characters a copy is most likely to change.
+
+## 2. Paste it on the workstation
+
+1. On the workstation, create an empty folder `paste-trial/`.
+2. Create `paste-trial/import.ts`, open `paste-sample/import.ts`, copy all of it, paste it, save.
+3. Create `paste-trial/base-1.txt`, copy all of `paste-sample/base-1.txt` in one go, paste it,
+   save. Note whether the paste took one try, and how long.
+4. In a terminal in `paste-trial/`:
+
+```sh
+node --version
+node import.ts
+```
+
+Expected: `Import done: 2 files written.` If the import says that `base-1.txt` was damaged by the
+copy, the paste changed at least one character: note it, and try again with `--max-kb 250` on the
+first machine (`node scripts/export.ts --max-kb 250` for the real export).
+
+5. Check that the pasted text kept its signs:
+
+```sh
+cat sample/accents-and-signs.md
+wc -l sample/long-text.md
+```
+
+Expected: `Vanne à boisseau, débit 12,5 m³/h, ±0,5 bar, « guillemets »…` and `4805 sample/long-text.md`.
+
+## 3. The real export
+
+On the first machine: `node scripts/export.ts`. Then paste `export/import.ts` and each
+`export/base-<n>.txt` into an empty folder of the workstation, as in part 2, and run:
+
+```sh
+node import.ts
+node scripts/check-base.ts code
+```
+
+Expected: `Import done: … files written.`, then `Base check passed: … 0 findings.`
+
+## Results
+
+Write the date, the version of Node on the workstation, and the editor used to paste.
+
+| Test | Result (ok / not ok) | Notes |
+| --- | --- | --- |
+| 2. Paste of 476 KB in one go |  | time, tries |
+| 2. `node import.ts` accepts the part |  |  |
+| 2. Accents and signs kept |  |  |
+| 3. Real export pasted and imported |  | number of parts |
+| 3. Base check on the imported base |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 278399c040a265ff9cff346dc52198a1cab4e27a9198cdeda85cbe2e8bc853d1 RAW trials/f08-typescript-lint.md
+# F8 trial on the workstation
+
+What to play on the workstation, in the dev container, for the two criteria of F8 that only a
+person can see:
+
+- C12: on 5 test tasks, the code the AI writes without running the lint passes `npm run check`.
+- C13: after writing code, the AI runs `npm run fix` and `npm run check` by itself and fixes every
+  error.
+
+About one hour. Fill the results table at the end.
+
+## 1. Build the trial project
+
+1. Import the base into an empty folder `ts-trial/` with `node import.ts --project` (F7).
+2. Copy into `ts-trial/` the example project of the repository: `samples/typescript-angular/`
+   (`package.json`, `package-lock.json`, `src/`), and the four files of
+   `templates/typescript-angular/` (`eslint.config.mjs`, `eslint.strict-format.mjs`,
+   `.prettierrc.json`, `tsconfig.json`).
+3. Run `npm ci`, then `npm run fix` and `npm run check`. Expected: no error.
+4. Add the types the tasks use, in `src/app/pumps/pump.ts`:
+
+```ts
+export interface Pump {
+  readonly id: string;
+  readonly label: string;
+  readonly running: boolean;
+}
+```
+
+5. Keep a clean copy of `ts-trial/`. Start each run from it.
+
+## 2. The five tasks (C12)
+
+For each task: a new session, the text below alone, no other instruction. Each text ends with "Do
+not run any command." Then, yourself: `npm run fix`, `npm run check`, `npm run build`. Note the exit
+code of `check`, and the rule names it lists.
+
+Play each task twice: with the base (as built above), and without it (delete `AGENTS.md`,
+`.agents/` and `docs/` from the copy).
+
+### Task 1 · Typed HTTP service
+
+> Create `src/app/valves/valve-store.ts`. Export an injectable service `ValveStore` with one method
+> `countOpen()`. It calls `GET /api/valves` with `HttpClient` and returns `Promise<number>`, the
+> number of open valves. The response body is unknown JSON: check its shape with `isValve` from
+> `src/app/valves/valve.ts`. Throw an `Error` when the shape is wrong. Do not run any command.
+
+### Task 2 · Signal component
+
+> Create `src/app/valves/valve-summary.ts` with an inline template. The component `ValveSummary`
+> has a required input `valves`, an array of `Valve`, and an output `selected` that emits the valve
+> id when the user chooses a valve. Show each valve label in a list, with the CSS class `fault` on a
+> valve whose state is 'fault'. Show "No valve" when the list is empty. Do not run any command.
+
+### Task 3 · Rewrite an old component
+
+> Rewrite this component for Angular 22, in `src/app/pumps/pump-panel.ts` with an inline template.
+> Keep its behaviour. Do not run any command.
+>
+> ```ts
+> @Component({ selector: 'pump-panel', templateUrl: './pump-panel.component.html', standalone: false })
+> export class PumpPanelComponent implements OnInit {
+>   @Input() pump: any;
+>   @Output() onStop = new EventEmitter<string>();
+>   constructor(private http: HttpClient) {}
+>   async ngOnInit() { this.pump = await firstValueFrom(this.http.get('/api/pump')); }
+>   @HostListener('window:keydown.escape') stop() { this.onStop.emit(this.pump.id); }
+> }
+> ```
+>
+> Template: `<div *ngIf="pump" [ngClass]="{ running: pump.running }"><span>{{ pump.label }}</span><button (click)="stop()">Stop</button></div>`
+
+### Task 4 · Save, navigate, end a stream
+
+> Create `src/app/pumps/pump-editor.ts` with an inline template. The component `PumpEditor` saves a
+> pump with `HttpClient` (`PUT /api/pumps/:id`), then goes to the route `/pumps` with `Router`.
+> When the save fails, it shows the error message from a signal and stays on the page. It also shows
+> the last message of an `Observable<string>` named `messages$` of a service `PumpFeed` that you
+> create, and ends that subscription when the component is destroyed. Do not run any command.
+
+### Task 5 · Pure function, index and union
+
+> Create `src/app/sensors/sensor-summary.ts`. Export the type `Reading`, a union of
+> `{ kind: 'pressure'; bar: number }`, `{ kind: 'temperature'; celsius: number }` and
+> `{ kind: 'level'; percent: number; tank?: string }`. Export
+> `summarize(readings: readonly Reading[]): string`, one line per reading such as
+> `pressure 2.5 bar`, with the tank name of a level reading when it exists, and `no reading` for an
+> empty array. Export `first(readings: readonly Reading[])`, the first reading or `undefined`.
+> Do not run any command.
+
+## 3. The AI runs the lint by itself (C13)
+
+In a new session on a clean copy, ask task 2 again, without the last sentence "Do not run any
+command." Expected in the trace: `npm run fix`, then `npm run check`, then a fix of each error, then
+`npm run check` again with no error, and `npm run build`.
+
+## Results
+
+Write the version of the assistant, the model if known, and the date.
+
+| Task | With the base: check exit code, rules listed | Without the base: check exit code, rules listed |
+| --- | --- | --- |
+| 1 |  |  |
+| 2 |  |  |
+| 3 |  |  |
+| 4 |  |  |
+| 5 |  |  |
+
+| C13 | Result (ok / not ok) | Notes |
+| --- | --- | --- |
+| The AI ran fix, check and build by itself, until zero errors |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 96b2cb51a9063440c12fabb0a79454e31f9dbe3b77378758704d1963b650ba33 RAW trials/f09-csharp-analysis.md
+# F9 trial on the workstation
+
+What to play on the workstation, in the dev container, for the two criteria of F9 that only a
+person can see:
+
+- C12: on 5 test tasks, the C# code the AI writes without running the analysis passes the build.
+- C13: after writing C#, the AI runs the format command and `dotnet build` by itself, and fixes
+  every error.
+
+The configuration itself was checked on this repository's machine with the .NET 10.0.201 SDK: the
+example project builds with zero errors, both formatting modes behave as expected, and every example
+of the rule documents gives its rule ID. About one hour. Fill the results table at the end.
+
+## 1. Build the trial project
+
+1. Import the base into an empty folder `cs-trial/` with `node import.ts --project` (F7).
+2. Copy into `cs-trial/` the example project `samples/csharp/` of the repository, then
+   `Directory.Build.props` and `.editorconfig` of `templates/csharp/`, and `format-csharp.sh` into
+   `cs-trial/scripts/`.
+3. Run `dotnet restore`, `dotnet tool restore`, `bash scripts/format-csharp.sh`, then
+   `dotnet build --no-restore -tl:off -nologo -v:q`. Expected: no error.
+4. Keep a clean copy of `cs-trial/`. Start each run from it.
+
+## 2. The five tasks (C12)
+
+For each task: a new session, the text below alone. Each text ends with "Do not run any command."
+Then, yourself: `bash scripts/format-csharp.sh`, then the build. Note the build result and the rule
+IDs it lists. Play each task with the base, then without it (delete `AGENTS.md`, `.agents/` and
+`docs/`).
+
+1. > In `Domain/ValveLoader.cs`, add a class `ValveLoader` with a method
+   > `LoadTagsAsync(string path, CancellationToken cancellationToken)` that returns the lines of the
+   > file as a list of tags. Do not run any command.
+2. > In `Domain/PressureReport.cs`, add a static method that reads a pressure in bar from a text,
+   > and writes it with two decimals, for a CSV file. Do not run any command.
+3. > In `Domain/ValveIndex.cs`, add a class that keeps valves in a dictionary by tag, with a method
+   > that returns the valve of a tag, or nothing when the tag is unknown. Do not run any command.
+4. > In `Domain/AlarmLog.cs`, add a class that receives an `ILogger<AlarmLog>` and logs a message
+   > with the tag and the level of an alarm. When writing a file fails, it logs the error and lets
+   > the error go up. Do not run any command.
+5. > In `Domain/PumpMonitor.cs`, add a class that owns a `StreamWriter` to a log file, writes one line
+   > per pump start, and saves the pump with `IValveRepository` without blocking. Do not run any
+   > command.
+
+## 3. The AI runs the analysis by itself (C13)
+
+In a new session on a clean copy, ask task 4 again, without "Do not run any command." Expected in
+the trace: the format command, `dotnet build`, the fix of each reported ID after reading its
+section, a new build with `exit=0`, the `async void` check, then the format check.
+
+## Results
+
+Write the version of the assistant, the model if known, and the date.
+
+| Task | With the base: build result, IDs listed | Without the base: build result, IDs listed |
+| --- | --- | --- |
+| 1 |  |  |
+| 2 |  |  |
+| 3 |  |  |
+| 4 |  |  |
+| 5 |  |  |
+
+| C13 | Result (ok / not ok) | Notes |
+| --- | --- | --- |
+| The AI ran format and build by itself, until zero errors |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 560f33e5f837fa4e8da905f30bd64a54de6e4368780c235aee746ec268f0ce02 RAW trials/f10-angular-typescript-versions.md
+# F10 trial on the workstation
+
+What to play on the workstation for the criterion of F10 that only a person can see: on a test task
+in an Angular project, the AI reads the version in `package.json` and writes code at that version.
+About 20 minutes.
+
+## 1. Two projects
+
+Use the trial project of F8 (`ts-trial/`, Angular 22). Make a copy `ts-trial-19/` and, in its
+`package.json`, set `@angular/core`, `@angular/common`, `@angular/compiler` and `@angular/router` to
+`19.2.0`. Do not install it: the AI only reads the version.
+
+## 2. The task
+
+In a new session in each folder, ask:
+
+> Create `src/app/pumps/pump-store.ts`: a service that loads the pumps from `GET /api/pumps` and
+> keeps them in a signal. Then create `src/app/pumps/pump-list.ts`, a component that shows them.
+> Do not run any command.
+
+Expected:
+
+| Folder | The service | The component |
+| --- | --- | --- |
+| `ts-trial/` (Angular 22) | `@Service()`, `inject(HttpClient)`, or `httpResource()` | no `standalone`, no `changeDetection`, `@for`, `input()` |
+| `ts-trial-19/` (Angular 19) | `@Injectable({ providedIn: 'root' })`, `inject(HttpClient)`, no `@Service()`, no `httpResource()` | no `standalone`, `@for`, `input()` |
+
+In the trace, the AI reads `package.json` before it writes, and opens `docs/angular/old-to-new.md`.
+
+## 3. The version check
+
+```sh
+node scripts/check-versions.ts ts-trial
+```
+
+Expected: `Versions check passed: no document is behind the project.` Then set `@angular/core` to
+`^23.0.0` in a copy and run it again: it lists the two documents of `docs/angular/`.
+
+## Results
+
+| Test | Result (ok / not ok) | Notes |
+| --- | --- | --- |
+| Angular 22: version read, code at 22 |  |  |
+| Angular 19: version read, no API of 20 or later |  |  |
+| Version check on the trial project |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 3f2c315931a993856af68b843c932a33170cb1cbe27b611c548569be1b3fe8c5 RAW trials/f11-csharp-dotnet-versions.md
+# F11 trial on the workstation
+
+What to play on the workstation for the two criteria of F11 that only a person can see. About 20
+minutes.
+
+## 1. Two projects
+
+Use the trial project of F9 (`cs-trial/`, `net10.0`). Make a copy `cs-trial-8/` and set
+`<TargetFramework>net8.0</TargetFramework>` in its `Sample.csproj`.
+
+## 2. No syntax above the C# version (net8.0 project)
+
+In a new session in `cs-trial-8/`, ask:
+
+> Add a class `PressureGauge` in `Domain/PressureGauge.cs`, with a `Value` property in bar that
+> stays between 0 and 400, and a list of the last readings. Do not run any command.
+
+Expected: no `field` keyword, no `extension` block, no `Lock` type, no `params ReadOnlySpan`;
+a primary constructor and collection expressions are allowed (C# 12). Then run `dotnet build` in the
+copy: no error.
+
+## 3. No paid package without its license
+
+In a new session in `cs-trial/`, ask, one at a time:
+
+> Add a mapper between `Valve` and a `ValveDto` class.
+
+> Add a mediator so that the API sends commands to handlers.
+
+Expected: the AI does not add AutoMapper or MediatR, or, if it proposes them, says their license
+first and asks; it can propose a mapping written by hand.
+
+## Results
+
+| Test | Result (ok / not ok) | Notes |
+| --- | --- | --- |
+| net8.0: no syntax of C# 13 or later |  |  |
+| net8.0: `dotnet build` passes |  |  |
+| Mapper: no AutoMapper without its license |  |  |
+| Mediator: no MediatR without its license |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 2312eba8eba0d78634d6d75505b16368f50d42d31586dee122cff7fadf294aed RAW trials/f12-containers-kubernetes.md
+# F12 trial on the workstation
+
+What to play on the workstation for the two criteria of F12 that only a person can see, and the
+points the research left to check. About 45 minutes.
+
+## 1. Prepare the dev container (once)
+
+1. In a trial project (the one of F8 or F9), copy `templates/containers/devcontainer/` as
+   `.devcontainer/`.
+2. Put the Linux binaries of `hadolint`, `kubeconform`, `kube-linter` and `helm` in
+   `.devcontainer/tools/`, from wherever your team gets its tools.
+3. Put the Kubernetes JSON schemas of the cluster version in `.devcontainer/kubernetes-schemas/`.
+4. Set `ASSISTANT_PACKAGE` in `devcontainer.json` to the npm package of the coding assistant, with
+   its version.
+5. Build and open the dev container. `onCreateCommand` must print the four tool versions.
+
+To check on the way:
+
+- `kubeconform -v` prints the version (else change the creation command to the right flag).
+- Node.js copied from the Node.js image runs in the .NET image: `node --version`, `npm --version`.
+- `devcontainer read-configuration --workspace-folder .` from the host: it needs a container engine.
+- The NGINX image runs as UID 101: `docker run --rm docker.io/nginx/nginx-unprivileged:<version> id -u`.
+- `.hadolint.yaml`: DL3008 is shown as info and does not fail; DL3009 and DL3015 fail.
+
+## 2. The templates pass the tools
+
+In the dev container, from a copy of `templates/containers/`:
+
+```sh
+hadolint dotnet.Dockerfile angular.Dockerfile devcontainer/Dockerfile
+kubeconform -strict -summary -schema-location '/opt/kubernetes-schemas/{{ .ResourceKind }}{{ .KindSuffix }}.json' deployment.yaml
+kube-linter lint deployment.yaml
+```
+
+Expected: no error. Note every warning of `kube-linter` in the results table.
+
+## 3. The faulty templates are refused
+
+Save this file as `bad.Dockerfile`, then run `hadolint bad.Dockerfile`:
+
+```dockerfile
+FROM mcr.microsoft.com/dotnet/aspnet
+WORKDIR app
+ADD publish/ /app
+CMD dotnet App.dll
+```
+
+Expected codes: DL3006 (no tag), DL3000 (relative `WORKDIR`), DL3020 (`ADD`), DL3025 (`CMD` not
+in JSON form).
+
+Save this file as `bad.yaml`, then run kubeconform with the same options as above:
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  replicas: 2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+spec:
+  selector:
+    app: api
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocl: TCP
+```
+
+Expected: the Deployment is refused (no schema for `extensions/v1beta1`), the Service is refused
+for the unknown field `protocl` (`-strict`).
+
+## 4. The AI writes a .NET Dockerfile
+
+In a new session in the trial project, ask:
+
+> Write the Dockerfile of the API project `Api`, for .NET 10.
+
+Expected: two stages (`sdk` then `aspnet`), `USER $APP_UID`, `EXPOSE 8080`, `ENTRYPOINT` in JSON
+form, and the AI runs `hadolint` on its own, then gives the result with a `Not checked:` line.
+
+## Results
+
+| Test | Result (ok / not ok) | Notes |
+| --- | --- | --- |
+| Dev container built, four tools found |  |  |
+| hadolint passes on the three Dockerfile templates |  |  |
+| kubeconform and kube-linter pass on `deployment.yaml` |  |  |
+| `bad.Dockerfile` refused with DL3006, DL3000, DL3020, DL3025 |  |  |
+| `bad.yaml` refused by kubeconform |  |  |
+| AI: multi-stage, non-root, port 8080 |  |  |
+| AI: runs hadolint on its own |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 fcf4a13d516b00774a3f21b0db21d7d2e85825cccfd369df83712ce3dd8eef61 RAW trials/f13-synoptic-rules.md
+# F13 trial on the workstation
+
+What to play on the workstation for the criterion of F13 that only a person can see. About 20
+minutes.
+
+## 1. Project
+
+Use the Angular trial project of F8, with the base at its root.
+
+## 2. The motorized valve symbol
+
+In a new session, ask:
+
+> Code the synoptic symbol of a motorized valve: its inputs, its view function and its SVG markup.
+> It shows the commanded and the actual position, the control location and an alarm.
+
+Expected:
+
+- The AI opens `docs/synoptics/index.md`, then the three documents of the topic, and no other
+  topic.
+- Inputs follow the naming convention: `tagName`, `positionState`, `commandedPositionPercent`,
+  `actualPositionPercent`, `controlLocation`, `alarmPriority`, `alarmState`, booleans in `is`,
+  `has` or `can`.
+- The view function is pure: no timer, no colour in the inputs; colours are CSS variables.
+- The state is shown by a fill and a word, never by red and green; only the badge of an
+  unacknowledged alert flashes, from one clock of the view.
+- The AI runs `npm run fix`, `npm run check` and `npm run build`, and ends with zero errors.
+
+## Results
+
+| Test | Result (ok / not ok) | Notes |
+| --- | --- | --- |
+| Opened only the synoptics documents |  |  |
+| Property names follow the convention |  |  |
+| Pure view function, CSS variables |  |  |
+| Fill and word, no red and green for the position |  |  |
+| Lint and build at zero errors |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 4db454775e566915b14aac091c778c01c286f05820738f0dfcf580d932371bb0 RAW trials/f14-fluid-catalog.md
+# F14 trial on the workstation
+
+What to play on the workstation for the criterion of F14 that only a person can see. About 10
+minutes.
+
+## 1. The question test
+
+In a new session of the coding assistant, in a project that holds the base, ask in French:
+
+> Quelles propriétés pour une vanne papillon motorisée ?
+
+Expected:
+
+- The AI opens `docs/synoptics/index.md`, then `index-fr-en-fluids.md` or the valve catalogs, and
+  `fluid-common.md`; no other topic.
+- It answers in French, with the English names of the catalog: the sets `onOffValve` or
+  `modulatingValve` and `controlMode`, plus `actualPositionPercent`, `hasTorqueFault`,
+  `hasPowerFault`, `failPosition`, `travelTimeS`.
+- It explains the real working (butterfly disk turned 90 degrees, self-locking worm gear, stays in
+  place without power), then the model (ramp over `travelTimeS`, Kv law when throttling).
+
+## 2. Check a few pairs of the index
+
+Pick five pairs of `docs/synoptics/index-fr-en-fluids.md` and compare them with the glossary
+of the team. Note the pairs to change: they change in the card and in the index together.
+
+## Results
+
+| Test | Result (ok / not ok) | Notes |
+| --- | --- | --- |
+| Opened only the synoptics documents |  |  |
+| Answer in French, names from the catalog |  |  |
+| Real working, then model |  |  |
+| Five index pairs match the glossary of the team |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 d9235fd1cce0d2819957e8b9bc5ac0652c2749fe08a24be83cf6d9dcded0473c RAW trials/f15-systems-catalog.md
+# F15 trial on the workstation
+
+What to play on the workstation for the criterion of F15 that only a person can see. About 10
+minutes.
+
+## 1. The question test
+
+In a new session, in a project that holds the base, ask in French:
+
+> Comment s'appelle en anglais un déclencheur manuel d'alarme incendie, et quelles propriétés lui
+> donner ?
+
+Expected:
+
+- The AI opens `docs/synoptics/index.md`, then `index-fr-en-systems.md` and
+  `catalog-fire-detection.md`; no other topic.
+- It answers in French: "Manual call point", IMO symbol 2.40, and the properties `isActivated`,
+  `hasFault`, `isDisabled`, `isLocalResetCommanded`, with `loopId`, `deviceAddress`, `zoneId` when
+  addressable.
+- It explains the real working (button or glass, reset by key, one at each exit, no corridor point
+  more than 20 m away), then the model (latched boolean until the local reset, then the panel
+  reset).
+
+## 2. Check a few pairs of the index
+
+Pick five pairs of `index-fr-en-systems.md` and compare them with the glossary of the team.
+
+## Results
+
+| Test | Result (ok / not ok) | Notes |
+| --- | --- | --- |
+| Opened only the synoptics documents |  |  |
+| English name and properties from the catalog |  |  |
+| Real working, then model |  |  |
+| Five index pairs match the glossary of the team |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 c870a9fc30555b32ef17901b6dd1db49a79406480d481246f5f2d0098bbffb78 RAW trials/f16-open-webui.md
+# F16 trial on the workstation
+
+What to play on the workstation for the two criteria of F16 that only a person can see. About one
+hour. The script was tested against a fake server only (Open WebUI 0.13.3 endpoints).
+
+## 1. Before the push (once, by an administrator)
+
+1. Note the version of Open WebUI (`/api/version`). The script is written for 0.13.3; another
+   version may need changes: note any error.
+2. Create the group of the team, and give it access to the base model.
+3. Create an API key for the account that carries the import. One account only: skill names are
+   unique on the instance.
+
+## 2. The push
+
+From the base imported on the workstation (F7): the import rebuilds `chat/skills/`,
+`chat/knowledge/` and `adapters/open-webui/manifest.json`.
+
+```sh
+export OPEN_WEBUI_URL="<instance address>"
+export OPEN_WEBUI_TOKEN="<API key>"
+export OPEN_WEBUI_BASE_MODEL="<id of the base model>"
+export OPEN_WEBUI_SHARE="group:<group name>"
+node adapters/open-webui/push.ts --dry-run
+node adapters/open-webui/push.ts
+```
+
+Expected: one line per skill, knowledge base and model, then `Done.`; run it a second time: nothing
+is created twice, unchanged files are not sent again.
+
+## 3. Seen by a member of the group
+
+Log in as a member of the group, not as the administrator: the five models, their knowledge bases
+and their skills are visible and usable, with no manual change.
+
+## 4. Ten questions per model
+
+Ask each question in a new chat with the model. Count a success when the answer comes from the
+knowledge and the last line `Sources:` names a document of the knowledge. Expected: 8 out of 10 at
+least per model. Below 8, set `OPEN_WEBUI_MODE=legacy`, push again, and play the ten questions
+again.
+
+TypeScript and Angular:
+
+1. Should I still write `standalone: true` on a component in Angular 22?
+2. How do I write an input with a signal?
+3. What replaces `*ngIf`?
+4. How do I end a subscription with the component?
+5. Why does my code fail with `noUncheckedIndexedAccess`?
+6. What does Angular 22 change for services?
+7. Can Angular 22 use TypeScript 7?
+8. What replaces `toPromise()` in RxJS 7?
+9. Which Node.js versions does Angular 22 accept?
+10. What does `STRICT_FORMAT=0` change?
+
+C# and .NET:
+
+1. Which C# version does `net8.0` allow?
+2. Why does CA2016 fail my build?
+3. Can I add MediatR to the project?
+4. How do I log without CA2254?
+5. What replaces Swashbuckle in ASP.NET Core 10?
+6. What changed for `Contains` in EF Core 8?
+7. How do I fix CS8618?
+8. What is the `field` keyword of C# 14?
+9. How do I switch on strict formatting?
+10. Which .NET versions are still supported?
+
+Containers and Kubernetes:
+
+1. Which port does an ASP.NET Core image listen on?
+2. Why does my Service have no endpoints?
+3. Which `apiVersion` for an Ingress?
+4. Why does Podman refuse `FROM nginx`?
+5. Where do I put `npm ci` in a dev container?
+6. What does `OOMKilled` with code 137 mean?
+7. How do I check a manifest without a cluster?
+8. How do I reserve whole CPU cores for a real-time process?
+9. Which folder of `dist/` do I copy for an Angular image?
+10. How do I go back to the previous Deployment revision?
+
+Simulation and naval:
+
+1. Which properties for a motorized butterfly valve?
+2. What is the English name of "déclencheur manuel", and its properties?
+3. How does a pressure relief valve work, and how do I model it?
+4. How do I name a high-high pressure limit?
+5. Which colours for open and closed on a synoptic?
+6. How fast does an unacknowledged alarm flash?
+7. How does a controllable-pitch propeller work?
+8. What are the four positions of a circuit breaker?
+9. How does a submarine ballast tank fill and empty?
+10. What is the law of a valve flow coefficient?
+
+## Results
+
+| Model | Successes out of 10 | Mode | Notes |
+| --- | --- | --- | --- |
+| TypeScript and Angular |  |  |  |
+| C# and .NET |  |  |  |
+| Containers and Kubernetes |  |  |  |
+| Simulation and naval |  |  |  |
+| Commit assistant (F6 trial) |  |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 39dc83d60c743cbfe8ab825438cacf6f1b408e7cfcfee0ebbfbdd2df3e598b84 RAW trials/f17-simulation-equipment-agent.md
+# F17 trial on the workstation
+
+What to play on the workstation for the three criteria of F17 that only a person can see. About 20
+minutes.
+
+## 1. The agent, in agent mode
+
+If the coding assistant has an agent mode, start it with: "Load the skill `explain-equipment`.
+Follow it exactly." Then ask in French:
+
+> Comment fonctionne une vanne à commande hydraulique, et comment la modéliser ?
+
+Expected: the real working first (fluid pressure on a piston, fail-safe position, hand back-up),
+then the model (order, ramp over `travelTimeS`, no motion without pressure, `failPosition` on
+pressure loss), then a table of properties from the card (`isOpenCommanded`, `isOpen`, `isClosed`,
+`isHydraulicPressureAvailable`, `isHandOperated`, `travelTimeS`, `failPosition`), then the documents
+used. The answer is in French; names stay in English.
+
+## 2. The same question with the skill alone
+
+In a normal session, ask the same question. Expected: the AI loads `explain-equipment` from the
+`## Skills` table and answers in the same form.
+
+In the chat (model "Simulation and naval equipment", after the push of F16), the same question gets
+the same form, with a `Sources:` line.
+
+## 3. Freeze and restore
+
+Ask:
+
+> Que doit faire un modèle pour supporter le gel et la reprise d'une séance ?
+
+Expected: the AI opens `docs/simulation/index.md`, then `training-functions.md` (and possibly
+`time-management.md`), cites them, and tells "run" from "restore" apart.
+
+## Results
+
+| Test | Result (ok / not ok) | Notes |
+| --- | --- | --- |
+| Agent mode: real working, model, properties, documents |  |  |
+| Skill alone: same form |  |  |
+| Chat model: same form, `Sources:` line |  |  |
+| Freeze and restore answered from the simulation documents |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 788064fe425ea6ac26456d2d8e8e83f1ea27c70faea29ffc89d88bdc8182ce4e RAW trials/f18-architecture-code-review.md
+# F18 trial on the workstation
+
+What to play on the workstation for the three criteria of F18 that only a person can see. About 30
+minutes.
+
+## 1. Architecture review, agent mode
+
+In a trial project, start the agent with: "Load the skill `architecture-review`. Follow it
+exactly." Then ask:
+
+> Should we split the server into microservices? We are five developers, one release a month,
+> one simulation service and one API.
+
+Expected: the agent asks for or states the quality goals, reads only the project files and the
+architecture documents, advises a modular monolith by default, gives each risk with its evidence
+and the smallest fix, and proposes a decision to record (decision, reason, rejected alternative).
+It changes no file.
+
+## 2. Code review, agent mode
+
+Give the agent `code-review` this excerpt and ask for a review:
+
+```typescript
+export class ValveView {
+  private readonly state = signal({ positionState: 'closed' });
+
+  open(): void {
+    this.state().positionState = 'open';
+  }
+}
+```
+
+Expected: the agent reports the check result, then the problem with its line (state changed in
+place: the view does not refresh) and the fix (write a new value to the signal), one line on what
+is well done, and the documents used. It changes no file.
+
+## 3. Same questions with the skills alone
+
+In a normal session, ask the two questions again without the agent sentence. Expected: the AI loads
+the skill from the `## Skills` table and answers in the same form.
+
+## Results
+
+| Test | Result (ok / not ok) | Notes |
+| --- | --- | --- |
+| Architecture review: goals, monolith by default, decision recorded |  |  |
+| Code review: problem, line, fix, no file changed |  |  |
+| Same form with the skills alone |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 b2dc68254063077984c111bbab27672921307b67f8a833956579a7312b909edb RAW trials/f19-reading-code.md
+# F19 trial on the workstation
+
+What to play on the workstation for the criterion of F19 that only a person can see. About 20
+minutes. Ask "Explain this code." with each excerpt, in a new session each time.
+
+## 1. C (embedded)
+
+```c
+#define REG32(addr) (*(volatile uint32_t *)(addr))
+#define PUMP_CTRL   REG32(0x40002000u)
+
+void SysTick_Handler(void)
+{
+    if (PUMP_CTRL & (1u << 2)) {
+        PUMP_CTRL &= ~(1u << 2);
+    }
+}
+```
+
+Expected: `SysTick_Handler` is called by the hardware (never "dead code"); `PUMP_CTRL` is a macro on
+a hardware register; bit 2 is read then cleared; what bit 2 means is "not visible in this excerpt".
+
+## 2. C++
+
+```cpp
+std::unique_ptr<Valve> make_valve(std::string tag) {
+    auto valve = std::make_unique<Valve>(std::move(tag));
+    return valve;
+}
+```
+
+Expected: one owner, moved out on return; `std::move(tag)` casts, the constructor moves; `Valve`
+and its constructor are "not visible in this excerpt".
+
+## 3. Java
+
+```java
+@Service
+@RequiredArgsConstructor
+public class PumpService {
+    private final PumpRepository repository;
+}
+```
+
+Expected: Spring creates the object and injects `repository`; Lombok generates the constructor;
+no `new` in the code is normal.
+
+## 4. Rust
+
+```rust
+fn read_level(path: &str) -> Result<f64, std::io::Error> {
+    let text = std::fs::read_to_string(path)?;
+    Ok(text.trim().parse().unwrap_or(0.0))
+}
+```
+
+Expected: `?` returns the error at once (not `?.`); `unwrap_or(0.0)` gives 0.0 when parsing fails.
+
+For each answer: no name that is absent from the excerpt; the order "What it does", "Step by step",
+"C# equivalents", "False friends", "Not visible in this excerpt".
+
+## Results
+
+| Excerpt | Follows the skill | No invented name | Notes |
+| --- | --- | --- | --- |
+| C |  |  |  |
+| C++ |  |  |  |
+| Java |  |  |  |
+| Rust |  |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END
+=====BASE-EXPORT-1-eccf69c80ed6===== FILE 1/1 e89e7593a5d00aeb096be5aa0352d69440c5140380e09726217ded61082dc714 RAW trials/f20-public-check-evaluation.md
+# F20 trial
+
+## 1. Before each push to a public repository
+
+1. Write the list of forbidden terms in a local file outside the repository, one term per line:
+   every name, figure or detail specific to your organisation that must stay private.
+2. Run, from the root of this repository:
+
+   ```sh
+   node scripts/check-public.ts . --terms-file <local file>
+   ```
+
+3. Expected: `Public check passed`. Any finding names the file or the commit, and the term by its
+   number only. A term found in the history needs a rewrite of the history before the next push.
+
+## 2. The evaluation on the workstation
+
+Follow `evaluation/README.md`: two copies of a trial project, ten tasks, four runs each, with
+and without the base, in non-interactive mode. Then:
+
+```sh
+node scripts/evaluation-summary.ts evaluation/results.csv
+```
+
+Expected: `Evaluation passed: better with the base, with no more tokens.` If not, note which tasks
+fail with the base and which documents the AI opened: they say what to change in the base.
+
+## Results
+
+| Test | Result | Notes |
+| --- | --- | --- |
+| Public check with the final list |  |  |
+| Evaluation: successes with / without |  |  |
+| Evaluation: tokens with / without |  |  |
+=====BASE-EXPORT-1-eccf69c80ed6===== END

@@ -1,11 +1,16 @@
 # Trial session on the workstation
 
 One ordered plan for every check that only a person can see on the workstation. Each step points
-to its detailed guide, `f<n>-…/trial.md`; this file only gives the order, the setup they share, and
-the facts to record first. Plan one or two days; stop between steps when you need to.
+to its detailed guide in this folder, `f<nn>-<name>.md`; this file only gives the order, the setup
+they share, and the facts to record first. The guides were written one feature at a time: where a
+guide says to copy files by hand or to import the base, the setup of parts 2 and 4 below replaces it. Plan one or two days; stop between steps when you need to.
 
 Keep real files, traces and results with real data out of every Git repository: write them in a
 local folder of the workstation.
+
+## Quick start
+
+Read parts 1 to 4 once, then play the table of part 5 from the top. Fill the table of part 8 as you go.
 
 ## 1. On the machine that has this repository
 
@@ -14,12 +19,13 @@ node scripts/paste-sample.ts paste-sample   # the paste test of F7
 node scripts/export.ts --trial              # the base and the trial material, in export/
 ```
 
-`--trial` adds this file, the trial guides, `samples/`, `evaluation/`, `scripts/fixtures.ts` and
-`scripts/evaluation-summary.ts`. Without it, the export holds the base only.
+`--trial` adds this folder `trials/`, `samples/`, `evaluation/`, `scripts/fixtures.ts` and
+`scripts/evaluation-summary.ts`. Without it, the export holds the base only. The export of the last
+delivery is also in the `export/` folder of this repository.
 
 ## 2. Carry the base (F7)
 
-1. Play parts 1 and 2 of `f7-exporter-la-base-et-la-recreer/trial.md`: one 476 KB part, pasted at
+1. Play parts 1 and 2 of `f07-export-import.md`: one 476 KB part, pasted at
    once, accepted by the import.
 2. Paste `export/import.ts` and every `export/base-<n>.txt` into an empty folder `export/` of the
    workstation. Then, next to it:
@@ -54,7 +60,7 @@ node export/import.ts --from export --to trial --project --opencode 2
 Use `--opencode 1` for OpenCode 1.x. The project gets `AGENTS.md`, `.agents/`, `docs/`,
 `templates/`, the check scripts, `adapters/opencode/`, `adapters/mcp/` and `opencode.json`.
 
-Then prepare its dev container, as part 1 of `f12-conteneurs-dev-containers-et-kubernetes/trial.md`
+Then prepare its dev container, as part 1 of `f12-containers-kubernetes.md`
 says: copy `templates/containers/devcontainer/` to `.devcontainer/`, put the check tools and the
 Kubernetes schemas in it, set `ASSISTANT_PACKAGE`. Build it. Inside, check:
 
@@ -73,19 +79,19 @@ skip their part 1 step 1, the import is done.
 
 | Step | Guide | Project criteria | About |
 | --- | --- | --- | --- |
-| 1 | `f3-le-socle-de-la-base/trial.md`, parts 2 to 4 (skip part 1: use `trial/`) | C2, C5, C6, C28 | 30 min |
+| 1 | `f03-foundation.md`, parts 2 to 4 (skip part 1: use `trial/`) | C2, C5, C6, C28 | 30 min |
 | 2 | Part 6 of this file: the OpenCode adapter | C2, C26, C27 | 15 min |
-| 3 | `f4-lire-les-fichiers-lourds-sans-les/trial.md`, parts 2 to 5 (skip part 1; the samples: `node ../base/scripts/fixtures.ts samples`) | C17, C18 | 30 min |
-| 4 | `f8-lint-et-formatage-typescript-angular/trial.md` | C8, C10 to C13 | 1 h |
-| 5 | `f9-analyse-et-formatage-c-net/trial.md` | C9, C10 to C13 | 1 h |
-| 6 | `f10-angular-et-typescript-a-la-version/trial.md`, `f11-c-et-net-a-la-version/trial.md` | C14, C24, C25 | 40 min |
-| 7 | `f12-conteneurs-dev-containers-et-kubernetes/trial.md`, parts 2 to 4 | C16 | 45 min |
-| 8 | `f13-…/trial.md`, `f14-…/trial.md`, `f15-…/trial.md` | C20, C21, C22 | 40 min |
-| 9 | `f17-la-simulation-et-l-agent-equipements/trial.md`, `f18-architecture-net-angular-et-revue-de/trial.md`: for "agent mode", call the subagent of `opencode.json` | C19, C26, C27 | 40 min |
-| 10 | `f19-lire-du-c-du-c-du/trial.md` | C15 | 20 min |
-| 11 | `f6-les-skills-git-et-un-assistant/trial.md` part 2, then `f16-le-profil-chat-dans-open-webui/trial.md`, then `f6-…/trial.md` part 1 in the chat | C29 to C34, C45 | 1 h 30 |
+| 3 | `f04-heavy-files.md`, parts 2 to 5 (skip part 1; the samples: `node ../base/scripts/fixtures.ts samples`) | C17, C18 | 30 min |
+| 4 | `f08-typescript-lint.md` | C8, C10 to C13 | 1 h |
+| 5 | `f09-csharp-analysis.md` | C9, C10 to C13 | 1 h |
+| 6 | `f10-angular-typescript-versions.md`, `f11-csharp-dotnet-versions.md` | C14, C24, C25 | 40 min |
+| 7 | `f12-containers-kubernetes.md`, parts 2 to 4 | C16 | 45 min |
+| 8 | `f13-synoptic-rules.md`, `f14-fluid-catalog.md`, `f15-systems-catalog.md` | C20, C21, C22 | 40 min |
+| 9 | `f17-simulation-equipment-agent.md`, `f18-architecture-code-review.md`: for "agent mode", call the subagent of `opencode.json` | C19, C26, C27 | 40 min |
+| 10 | `f19-reading-code.md` | C15 | 20 min |
+| 11 | `f06-git-skills-commit-assistant.md` part 2, then `f16-open-webui.md`, then `f06-git-skills-commit-assistant.md` part 1 in the chat | C29 to C34, C45 | 1 h 30 |
 | 12 | Part 7 of this file: the docs server | Decision 0008 | 45 min |
-| 13 | `f20-verifier-le-depot-public-et-mesurer/trial.md` part 2: the evaluation, last, as it needs all the rest | C44 | half a day |
+| 13 | `f20-public-check-evaluation.md` part 2: the evaluation, last, as it needs all the rest | C44 | half a day |
 
 ## 6. The OpenCode adapter (F21)
 

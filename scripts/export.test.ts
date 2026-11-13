@@ -246,8 +246,8 @@ describe('export and import', () => {
 describe('trial export', () => {
   it('adds the trial guides, samples and evaluation that Git tracks, and nothing else', () => {
     const root = testBase({
-      'trials.md': '# Trials\n',
-      'f3-base/trial.md': '# F3 trial\n',
+      'trials/README.md': '# Trials\n',
+      'trials/f03-base.md': '# F3 trial\n',
       'f3-base/notes.md': 'Not a trial guide.\n',
       'samples/demo/app.ts': 'export {};\n',
       'samples/demo/bin/out.txt': 'build output\n',
@@ -267,8 +267,8 @@ describe('trial export', () => {
       [
         'add',
         '--',
-        'trials.md',
-        'f3-base/trial.md',
+        'trials/README.md',
+        'trials/f03-base.md',
         'f3-base/notes.md',
         'samples/demo/app.ts',
         'evaluation/README.md',
@@ -281,9 +281,9 @@ describe('trial export', () => {
         .toSorted(),
       [
         'evaluation/README.md',
-        'f3-base/trial.md',
         'samples/demo/app.ts',
-        'trials.md',
+        'trials/README.md',
+        'trials/f03-base.md',
       ],
     );
     const target = mkdtempSync(join(tmpdir(), 'import-'));
@@ -292,7 +292,7 @@ describe('trial export', () => {
       project: false,
       force: false,
     });
-    assert.equal(readFileSync(join(target, 'f3-base/trial.md'), 'utf8'), '# F3 trial\n');
+    assert.equal(readFileSync(join(target, 'trials/f03-base.md'), 'utf8'), '# F3 trial\n');
   });
 });
 describe('import refusals', () => {

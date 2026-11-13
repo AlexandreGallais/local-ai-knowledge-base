@@ -9,7 +9,7 @@ two profiles, each independent of any software:
   today's target.
 
 Status: every topic below is written and checked, version 0.1.0 is ready for its trial on a
-workstation (`trials.md`).
+workstation (`trials/README.md`).
 
 - Foundation: `code/AGENTS.md` with a map of topics, the five authoring skills, the document
   template, the French summaries and the base check.
@@ -30,8 +30,10 @@ On a machine that has this repository, with Node 22.18 or later:
 ```sh
 node scripts/export.ts               # writes export/import.ts and export/base-1.txt, base-2.txt…
 node scripts/export.ts --max-kb 100  # parts of 100 KB at most instead of 500
-node scripts/export.ts --trial       # also the trial guides, samples and evaluation (trials.md)
+node scripts/export.ts --trial       # also the trial guides, samples and evaluation (trials/)
 ```
+
+The `export/` folder of this repository holds the export of the last delivery, built with `--trial`.
 
 On the workstation, in an empty folder:
 
@@ -92,8 +94,9 @@ scripts/
   evaluation-summary.ts      Sums up an evaluation with and without the base
 evaluation/                  The task set and protocol of the evaluation
 samples/                     Sample projects for the tests and the trials
-f<n>-…/trial.md              The trial guide of each feature
-trials.md                    The trial session on the workstation, in order
+trials/                      The trial session on a workstation (README.md), one guide per feature
+export/                      The export of the last delivery: import.ts and base-<n>.txt
+research/                    Research reports, kept local: its .gitignore keeps them out of Git
 import.ts                    Rebuilds the base from its export, one file, no package
 ```
 
