@@ -4,8 +4,8 @@ name: TypeScript and Angular
 description: Answers TypeScript and Angular questions from the knowledge of the team, at the version of the project.
 subject: TypeScript, Angular, RxJS and Node.js code
 scope: subject
-knowledge: typescript-lint, angular, typescript
-skills: lint-typescript, look-up-api
+knowledge: typescript-lint, angular, typescript, architecture
+skills: lint-typescript, look-up-api, architecture-review, code-review
 access: team
 ---
 

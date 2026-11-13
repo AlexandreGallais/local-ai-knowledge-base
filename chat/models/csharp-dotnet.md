@@ -4,8 +4,8 @@ name: C# and .NET
 description: Answers C# and .NET questions from the knowledge of the team, at the version of the project.
 subject: C#, .NET, ASP.NET Core and EF Core code
 scope: subject
-knowledge: csharp-analysis, dotnet
-skills: analyze-csharp, look-up-api
+knowledge: csharp-analysis, dotnet, architecture
+skills: analyze-csharp, look-up-api, architecture-review, code-review
 access: team
 ---
 

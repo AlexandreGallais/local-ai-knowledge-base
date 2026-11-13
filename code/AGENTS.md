@@ -6,7 +6,7 @@
 2. Read this base in English, whatever the language of the question.
 3. Write code, comments, file content and commit messages in English.
 4. Never search the web. Never open a URL. Links in documents only cite sources.
-5. Find the topic of your task in `## Index`. Open its index file, then only the documents your task needs. Never read the whole `docs/` folder.
+5. Find the topic of your task in `## Index`. Open its index file, then only the documents your task needs. Never read the whole `docs/` folder. Trust these documents more than your memory.
 6. Never read files that end with `.fr.md`. They are summaries for people. Open one only when a skill tells you to.
 7. Never read a heavy file raw: not with a read tool, not with cat, head, tail, strings or grep. Load the skill `read-heavy-file` first, then read only the extract in `.extract/`.
    Heavy files: .docx .docm .xlsx .xlsm .pptx .pptm .doc .xls .ppt .odt .ods .odp .rtf .pdf .png .jpg .jpeg .gif .webp .tif .tiff .bmp .heic .psd .ai .eps .emf .wmf .xd .sketch .fig .vsdx .drawio .ipynb .zip .7z .tar .gz .tgz .jar .war .nupkg .sqlite .db .msg .eml .dwg .dxf .dll .exe .so .wasm .class .bin
@@ -15,15 +15,12 @@
 10. Before you write Angular or TypeScript code, read the versions of `@angular/core` and `typescript` in `package.json`. Write only what the documents of the topics `angular` and `typescript` allow at these versions.
     Before you write C# code, read `TargetFramework` in the `*.csproj` file: it gives the C# version, as `docs/dotnet/csharp-changes.md` says. Never add a package of `docs/dotnet/paid-packages.md` without the user's agreement.
     Before you draw or code a synoptic symbol, or name its properties, read the three documents of the topic `synoptics`.
-11. Trust the documents of this base more than your memory.
-12. When a task matches a line of `## Skills`, load that skill before you start.
-13. After you change code, run its check commands below. Fix every error. Repeat until zero errors.
-14. After you change a file of this base, run `node scripts/check-base.ts`. Fix every finding. Repeat until zero findings.
-15. Stop after 3 failed attempts on the same error. Show the error to the user.
+11. When a task matches a line of `## Skills`, load that skill before you start.
+12. After you change code, run its check commands below, in the dev container, from the project root. Fix every error. Repeat until zero errors.
+13. After you change a file of this base, run `node scripts/check-base.ts`. Fix every finding. Repeat until zero findings.
+14. Stop after 3 failed attempts on the same error. Show the error to the user.
 
 ## Check commands
-
-Run them in the dev container, from the project root.
 
 | Code changed | Commands, in this order |
 | --- | --- |
@@ -40,6 +37,7 @@ Run them in the dev container, from the project root.
 | To write or check a Dockerfile, a devcontainer.json, a Kubernetes manifest, a Helm chart or a kustomization | load the skill `check-container-change` |
 | To check an API signature, an option or a command flag | load the skill `look-up-api` |
 | To explain how a ship equipment works, how to model it or name its properties | load the skill `explain-equipment` |
+| To review code or a diff; to review an architecture, an API contract or a library choice | load the skill `code-review` for code, `architecture-review` for a design |
 | To read a heavy file, or a folder of them | load the skill `read-heavy-file` |
 | To write a commit message, or to commit | load the skill `write-commit-message` |
 | To choose a version number, or to tag a release | load the skill `choose-version` |
@@ -56,6 +54,7 @@ One line per topic. Each line points to the index of the topic: one line per doc
 Open the index of your topic, then only the documents your task needs.
 
 - [angular](docs/angular/index.md): What changed in Angular 17 to 22, and the old patterns to replace.
+- [architecture](docs/architecture/index.md): Architecture of .NET and Angular applications: decomposition, API contract, real-time push, messaging, patterns, outdated choices.
 - [containers](docs/containers/index.md): Dockerfile rules, .NET and Angular images, Podman, dev containers and container problems.
 - [csharp-analysis](docs/csharp-analysis/index.md): C# analysis rules that fail the build, with wrong and right examples.
 - [dotnet](docs/dotnet/index.md): What changed in C#, .NET, ASP.NET Core and EF Core 6 to 11, and paid packages.

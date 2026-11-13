@@ -309,6 +309,8 @@ describe('Open WebUI manifest', () => {
     assert.deepEqual(byId.get('csharp-dotnet')?.skills, [
       'analyze-csharp',
       'look-up-api',
+      'architecture-review',
+      'code-review',
     ]);
     assert.equal(manifest.models.length, 5);
   });
