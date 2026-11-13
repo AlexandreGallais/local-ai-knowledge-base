@@ -9,6 +9,16 @@ production code.
   history. It covers TypeScript, Angular, C#, containers and other topics.
 - Version 0.2 is being planned. It covers JavaScript, TypeScript, Angular, HTML and CSS only.
 
+## Run
+
+Version 0.2 has nothing to run yet. To use version 0.1, follow the steps of
+[`archive/v0.1/README.md`](archive/v0.1/README.md), from the folder `archive/v0.1/`:
+
+```sh
+cd archive/v0.1
+node scripts/check-base.ts
+```
+
 ## License
 
 MIT, see [LICENSE](LICENSE). Third-party documentation in the archive keeps its own license,
