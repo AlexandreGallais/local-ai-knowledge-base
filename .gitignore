@@ -19,7 +19,7 @@ target/
 state.local.json
 
 # Measures of an evaluation on the workstation
-evaluation/results.csv
+**/evaluation/results.csv
 
 # Local secrets
 .env
