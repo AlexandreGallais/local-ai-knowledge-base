@@ -1,9 +1,9 @@
 ---
 title: "hue-degree-notation"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/hue-degree-notation/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/hue-degree-notation/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,7 +17,12 @@ Specify number or angle notation for degree hues.
  *                 This notation */
 ```
 
-Because hues are so often given in degrees, a hue can also be given as a number, which is interpreted as a number of degrees.
+Use this rule to enforce a convention. A hue can be an angle or a number, which is interpreted as degrees.
+
+Choose:
+
+- `"angle"` for clarity
+- `"number"` for brevity
 
 The `fix` option can automatically fix all of the problems reported by this rule.
 

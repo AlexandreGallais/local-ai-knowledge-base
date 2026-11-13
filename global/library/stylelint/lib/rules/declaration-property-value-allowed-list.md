@@ -1,9 +1,9 @@
 ---
 title: "declaration-property-value-allowed-list"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/declaration-property-value-allowed-list/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/declaration-property-value-allowed-list/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,11 @@ a { text-transform: uppercase; }
 /** ↑               ↑
  * These properties and these values */
 ```
+
+Use this rule to enforce a subset of values for a property as a convention. For example, allow only:
+
+- `/^(1|10|100|1000)$/` for `z-index`, so that stacking order follows a scale
+- `400` and `700` for `font-weight`, so that only the weights you load are used
 
 This rule supports 2 message arguments: the property name and the disallowed value.
 

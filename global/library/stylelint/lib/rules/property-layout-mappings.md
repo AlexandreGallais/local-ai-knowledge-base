@@ -1,9 +1,9 @@
 ---
 title: "property-layout-mappings"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/property-layout-mappings/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/property-layout-mappings/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,11 +17,16 @@ a { margin-left: 0; }
  * This property */
 ```
 
-Physical layout properties like `margin-left` are tied to the physical dimensions of the screen. Flow-relative properties like `margin-inline-start` adapt to different writing modes and text directions, making them useful for internationalization. They are also consistent with other layout concepts like flexbox and grid, which already use flow-relative logic.
+Use this rule to enforce a convention. Physical properties like `margin-left` are tied to the screen, while flow-relative properties like `margin-inline-start` follow the writing mode.
+
+Choose:
+
+- `"flow-relative"` to support right-to-left and vertical writing modes
+- `"physical"` if you support only one writing mode, or for older browsers
 
 The `fix` option can automatically fix problems reported by this rule when both the primary option is `"flow-relative"` and the `languageOptions.directionality` configuration property is configured.
 
-This rule supports 2 message arguments: the disallowed mapping and the property, or the physical property and its flow-relative equivalent.
+This rule supports up to 3 message arguments: the disallowed mapping and the property, or the physical property and its flow-relative equivalents.
 
 Prior art:
 
@@ -70,6 +75,10 @@ a { width: 0; }
 ```
 
 ```css
+a { margin: 0 1px; }
+```
+
+```css
 a { transition: margin-left 0 ease; }
 ```
 
@@ -81,6 +90,10 @@ a { margin-inline-start: 0; }
 
 ```css
 a { inline-size: 0; }
+```
+
+```css
+a { margin: 0; }
 ```
 
 ```css

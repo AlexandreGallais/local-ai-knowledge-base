@@ -1,9 +1,9 @@
 ---
 title: "string-quotes"
 tool: "stylelint-stylistic"
-version: "5.3"
-source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/d61d92538fce80f9e25ad9fee7b8018bf7f33e92/lib/rules/string-quotes/README.md"
-commit: "d61d92538fce80f9e25ad9fee7b8018bf7f33e92"
+version: "6.0"
+source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/3cd01e1c32e87a7d92b99c3a35e869bc36c019bb/lib/rules/string-quotes/README.md"
+commit: "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb"
 license: "MIT"
 ---
 
@@ -24,12 +24,7 @@ Quotes within comments are ignored.
 /* 'And this is also fine' */
 ```
 
-Single quotes in a charset @-rule are ignored as using single quotes in this context is incorrect according the CSS specification.
-
-```css
-@charset "utf-8"
-/* fine regardless of configuration */
-```
+The rule passes over `@charset`, whose spelling Stylelint's `at-charset-rule-no-invalid` rule judges; a CSS file holding one gets a warning asking for that rule where the configuration leaves it off.
 
 The `fix` option can automatically fix most of the problems reported by this rule.
 
@@ -53,7 +48,7 @@ a { content: "x"; }
 a[id="foo"] {}
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { content: 'x'; }
@@ -81,7 +76,7 @@ a { content: 'x'; }
 a[id='foo'] {}
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { content: "x"; }
@@ -113,7 +108,7 @@ a { content: "x'y'z"; }
 a[id="foo'bar'baz"] {}
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { content: 'x'; }

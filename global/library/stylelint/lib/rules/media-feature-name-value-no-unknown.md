@@ -1,9 +1,9 @@
 ---
 title: "media-feature-name-value-no-unknown"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/media-feature-name-value-no-unknown/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/media-feature-name-value-no-unknown/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,6 +17,8 @@ Disallow unknown values for media features.
  * feature and value pairs like these */
 ```
 
+Use this rule to avoid values unknown to their media feature. Browsers evaluate the query to `unknown`, so its block never applies.
+
 This rule considers values for media features defined within the CSS specifications to be known.
 
 > **Warning:**
@@ -27,7 +29,7 @@ This rule considers values for media features defined within the CSS specificati
 >
 > - `unit-no-unknown`
 
-If duplicate problems are flagged, you can turn off the corresponding rule.
+If duplicate problems are reported, you can turn off the corresponding rule.
 
 This rule supports 2 message arguments: the media feature name and the unknown value.
 

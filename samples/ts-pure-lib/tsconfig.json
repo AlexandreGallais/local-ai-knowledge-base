@@ -1,0 +1,8 @@
+{
+  "extends": "./.agents/lint/tsconfig.strict.json",
+  "compilerOptions": {
+    "declaration": true,
+    "isolatedDeclarations": true
+  },
+  "include": ["src"]
+}

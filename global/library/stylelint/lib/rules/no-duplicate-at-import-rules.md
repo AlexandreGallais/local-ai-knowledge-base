@@ -1,9 +1,9 @@
 ---
 title: "no-duplicate-at-import-rules"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/no-duplicate-at-import-rules/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/no-duplicate-at-import-rules/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,6 +17,8 @@ Disallow duplicate `@import` rules.
 /** ↑
  * These are duplicates */
 ```
+
+Use this rule to avoid importing a stylesheet more than once. Browsers apply it at each position, so a later copy can override the imports between them.
 
 This rule supports 1 message argument: the duplicate URL.
 

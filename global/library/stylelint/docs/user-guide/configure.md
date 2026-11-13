@@ -1,9 +1,9 @@
 ---
 title: "Configuring (part 1 of 2)"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/docs/user-guide/configure.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/docs/user-guide/configure.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -528,9 +528,6 @@ For a right-to-left language, set `"inline": "right-to-left"`. The mapping chang
 
 ## `referenceFiles`
 
-> **Warning:**
-> This is an experimental feature. The API may change in the future.
-
 You can specify reference files that provide additional information (like animations, custom properties, and custom media queries) that are useful to rules, such as those that check for unknown things like `no-unknown-custom-properties`.
 
 For example:
@@ -551,6 +548,8 @@ For CSS bundles, you can specify a PostCSS plugin with the `loader` property:
   }
 }
 ```
+
+Rules use the bundle's source order, including for the linted file when the bundle includes it.
 
 For non-CSS files, you should use an object form with a `customSyntax` property:
 

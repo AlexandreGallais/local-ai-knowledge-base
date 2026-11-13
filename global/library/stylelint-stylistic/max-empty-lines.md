@@ -1,9 +1,9 @@
 ---
 title: "max-empty-lines"
 tool: "stylelint-stylistic"
-version: "5.3"
-source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/d61d92538fce80f9e25ad9fee7b8018bf7f33e92/lib/rules/max-empty-lines/README.md"
-commit: "d61d92538fce80f9e25ad9fee7b8018bf7f33e92"
+version: "6.0"
+source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/3cd01e1c32e87a7d92b99c3a35e869bc36c019bb/lib/rules/max-empty-lines/README.md"
+commit: "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb"
 license: "MIT"
 ---
 
@@ -19,6 +19,10 @@ a {} /* ↑ */
 /**     ↑
  * These lines */
 ```
+
+Where the option allows an empty line at all, the one a file ends on is counted like any other, spaces or tabs behind the last line break included. The `0` option does not count the end of the file, so a file closed by a single break is no problem to it. A file holding nothing but whitespace counts each of its line breaks as an empty line.
+
+Inside an embedded stylesheet, the line breaks a `<style>` element's block opens with count as a file's do, while the first break of an inline `style` attribute or a CSS-in-JS template closes the host's line rather than an empty one.
 
 The `fix` option can automatically fix all of the problems reported by this rule.
 
@@ -48,7 +52,7 @@ Comment strings are also checked -- so the following is a problem:
  */
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a {}
@@ -84,7 +88,7 @@ a {}
 b {}
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 /*

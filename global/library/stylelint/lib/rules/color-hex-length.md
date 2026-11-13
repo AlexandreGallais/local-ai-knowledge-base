@@ -1,9 +1,9 @@
 ---
 title: "color-hex-length"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/color-hex-length/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/color-hex-length/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,13 @@ a { color: #fff }
 /**        ↑
  * This hex color */
 ```
+
+Use this rule to enforce a convention. A hex color can be shortened when each pair of digits repeats, e.g. `#fff` for `#ffffff`.
+
+Choose:
+
+- `"short"` for brevity
+- `"long"` to match colors copied from design tools
 
 The `fix` option can automatically fix all of the problems reported by this rule.
 

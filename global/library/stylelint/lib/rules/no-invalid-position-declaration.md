@@ -1,9 +1,9 @@
 ---
 title: "no-invalid-position-declaration"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/no-invalid-position-declaration/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/no-invalid-position-declaration/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ color: red;
 /** ↑
  * This declaration */
 ```
+
+Use this rule to avoid rules that browsers ignore. A declaration outside a block becomes the prelude of the next rule and invalidates it.
 
 Declarations can only be positioned within the `<declaration-list>`, `<declaration-rule-list>` and `<block-contents>` productions.
 

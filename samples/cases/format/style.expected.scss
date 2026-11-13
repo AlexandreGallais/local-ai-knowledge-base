@@ -1,0 +1,11 @@
+$gap: 8px;
+
+.panel {
+  gap: $gap;
+
+  .title {
+    color: red;
+    display: block;
+    padding: $gap;
+  }
+}

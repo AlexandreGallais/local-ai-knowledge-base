@@ -1,9 +1,9 @@
 ---
 title: "shorthand-property-no-redundant-values"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/shorthand-property-no-redundant-values/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/shorthand-property-no-redundant-values/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,9 +17,7 @@ a { margin: 1px 1px 1px 1px; }
  *           These values */
 ```
 
-You can use shorthand properties to set multiple values at once. For example, you can use the `margin` property to set the `margin-top`, `margin-right`, `margin-bottom`, and `margin-left` properties at once.
-
-For some shorthand properties, e.g. those related to the edges of a box, you can safely omit some values.
+Use this rule to enforce a convention. For example, require `margin: 1px` rather than `margin: 1px 1px 1px 1px`, as a shorthand repeats the values you omit.
 
 This rule checks the following shorthand properties:
 

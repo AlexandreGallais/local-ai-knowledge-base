@@ -1,9 +1,9 @@
 ---
 title: "no-descending-specificity"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/no-descending-specificity/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/no-descending-specificity/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,11 +17,10 @@ Disallow selectors of lower specificity from coming after overriding selectors o
  * The order of these selectors represents descending specificity */
 ```
 
-Source order is important in CSS, and when two selectors have the _same_ specificity, the one that occurs _last_ will take priority. However, the situation is different when one of the selectors has a _higher_ specificity. In that case, source order does _not_ matter: the selector with higher specificity will win out even if it comes first.
+Use this rule to avoid overriding selectors that come before the ones they override. Browsers apply specificity before source order, so a later rule can lose to an earlier one.
 
-The clashes of these two mechanisms for prioritization, source order and specificity, can cause some confusion when reading stylesheets. If a selector with higher specificity comes _before_ the selector it overrides, we have to think harder to understand it, because it violates the source order expectation. **Stylesheets are most legible when overriding selectors always come _after_ the selectors they override.** That way both mechanisms, source order and specificity, work together nicely.
-
-This rule enforces that practice _as best it can_, reporting fewer errors than it should. It cannot catch every _actual_ overriding selector, but it can catch certain common mistakes.
+> **Note:**
+> This rule reports fewer problems than it should. It can't find every overriding selector, but it does report common mistakes.
 
 ## How it works
 

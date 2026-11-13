@@ -1,9 +1,9 @@
 ---
 title: "function-linear-gradient-no-nonstandard-direction"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/function-linear-gradient-no-nonstandard-direction/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/function-linear-gradient-no-nonstandard-direction/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,12 +17,12 @@ Disallow non-standard direction values for linear gradient functions.
  * This (optional) first argument is the "direction" */
 ```
 
+Use this rule to avoid declarations that browsers ignore. A direction without `to`, e.g. `linear-gradient(top, red, blue)`, invalidates the whole declaration.
+
 A valid and standard direction value is one of the following:
 
 - an angle
 - `to` plus a side-or-corner (`to top`, `to bottom`, `to left`, `to right`; `to top right`, `to right top`, `to bottom left`, etc.)
-
-A common mistake (matching outdated non-standard syntax) is to use just a side-or-corner without the preceding `to`.
 
 > **Note:**
 > We recommend only using this rule for CSS-like languages, such as SCSS and Less. For CSS, we recommend using these more capable and overlapping rules instead:

@@ -1,9 +1,9 @@
 ---
 title: "function-whitespace-after"
 tool: "stylelint-stylistic"
-version: "5.3"
-source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/d61d92538fce80f9e25ad9fee7b8018bf7f33e92/lib/rules/function-whitespace-after/README.md"
-commit: "d61d92538fce80f9e25ad9fee7b8018bf7f33e92"
+version: "6.0"
+source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/3cd01e1c32e87a7d92b99c3a35e869bc36c019bb/lib/rules/function-whitespace-after/README.md"
+commit: "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb"
 license: "MIT"
 ---
 
@@ -18,6 +18,10 @@ a { transform: translate(1, 1) scale(3); }
 ```
 
 This rule does not check for space immediately after `)` if the very next character is `,`, `)`, `/` or `}`, allowing some of the patterns exemplified below.
+
+Under `never`, whitespace in front of a `+` or a `-` used as an operator is kept, as in `a { width: calc(var(--x) + 1px); }`; a sign followed by a digit or a decimal point starts a number, so `a { width: url(x) -1px; }` is closed up. Under Sass and Less the whitespace in front of any `+` or `-` is kept, since it decides between a list and a subtraction. A `*` and a `/` are closed up under all three.
+
+A parenthesis that opens no call is not read: `a { width: calc((100% - 20px) - 1rem); }` and `h1 { width: (@a * 2) px; }` are left as written under either option.
 
 The `fix` option can automatically fix all of the problems reported by this rule.
 
@@ -35,7 +39,7 @@ The following patterns are considered problems:
 a { transform: translate(1, 1)scale(3); }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { transform: translate(1, 1) scale(3); }
@@ -54,7 +58,7 @@ a {
 ```
 
 ```css
-/* notice the two closing parentheses without a space between */
+/* the inner parentheses group an expression and open no call, and the outer ones close the value */
 a { top: calc(1 * (1 + 3)); }
 ```
 
@@ -73,7 +77,7 @@ The following patterns are considered problems:
 a { transform: translate(1, 1) scale(3); }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { transform: translate(1, 1)scale(3); }

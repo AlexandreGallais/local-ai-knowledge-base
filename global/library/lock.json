@@ -126,15 +126,15 @@
     "built": "2026-11-13"
   },
   "stylelint": {
-    "commit": "bc06c7cdb1413de3d8dc939b33af138ab7e59df1",
-    "files": 163,
-    "bytes": 383357,
+    "commit": "7c49e1828311b9d413826cb47703ef1c6ccae4ef",
+    "files": 166,
+    "bytes": 407113,
     "built": "2026-11-13"
   },
   "stylelint-stylistic": {
-    "commit": "d61d92538fce80f9e25ad9fee7b8018bf7f33e92",
-    "files": 78,
-    "bytes": 147506,
+    "commit": "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb",
+    "files": 86,
+    "bytes": 194800,
     "built": "2026-11-13"
   },
   "stylelint-order": {

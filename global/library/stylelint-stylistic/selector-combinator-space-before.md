@@ -1,9 +1,9 @@
 ---
 title: "selector-combinator-space-before"
 tool: "stylelint-stylistic"
-version: "5.3"
-source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/d61d92538fce80f9e25ad9fee7b8018bf7f33e92/lib/rules/selector-combinator-space-before/README.md"
-commit: "d61d92538fce80f9e25ad9fee7b8018bf7f33e92"
+version: "6.0"
+source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/3cd01e1c32e87a7d92b99c3a35e869bc36c019bb/lib/rules/selector-combinator-space-before/README.md"
+commit: "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb"
 license: "MIT"
 ---
 
@@ -17,9 +17,7 @@ Require a single space or disallow whitespace before the combinators of sel
  * These are combinators */
 ```
 
-Combinators are used to combine several different selectors into new and more specific ones. There are several types of combinators, including: child (`>`), adjacent sibling (`+`), general sibling (`~`), and descendant (which is represented by a blank space between two selectors).
-
-The descendant combinator is _not_ checked by this rule.
+The descendant combinator is _not_ checked by this rule.
 
 Also, `+` and `-` signs within `:nth-*()` arguments are not checked (e.g. `a:nth-child(2n+1)`).
 
@@ -43,7 +41,7 @@ a+ b { color: pink; }
 a>b { color: pink; }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a + b { color: pink; }
@@ -67,7 +65,7 @@ a + b { color: pink; }
 a >b { color: pink; }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a+ b { color: pink; }

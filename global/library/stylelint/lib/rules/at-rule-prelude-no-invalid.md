@@ -1,9 +1,9 @@
 ---
 title: "at-rule-prelude-no-invalid"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/at-rule-prelude-no-invalid/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/at-rule-prelude-no-invalid/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ Disallow invalid preludes for at-rules.
 /**       ↑
  * Preludes like this */
 ```
+
+Use this rule to avoid at-rules that browsers ignore. An invalid prelude invalidates the whole block.
 
 This rule considers preludes for at-rules defined within the CSS specifications, up to and including Editor's Drafts, to be valid.
 

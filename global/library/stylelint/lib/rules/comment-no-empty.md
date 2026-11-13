@@ -1,9 +1,9 @@
 ---
 title: "comment-no-empty"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/comment-no-empty/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/comment-no-empty/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ Disallow empty comments.
 /** ↑
  * Comments like this */
 ```
+
+Use this rule to avoid leftovers from edits. An empty comment says nothing.
 
 This rule ignores SCSS-like comments.
 

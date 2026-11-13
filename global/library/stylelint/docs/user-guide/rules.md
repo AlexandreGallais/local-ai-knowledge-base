@@ -1,24 +1,21 @@
 ---
 title: "Rules (part 1 of 2)"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/docs/user-guide/rules.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/docs/user-guide/rules.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
 # Rules
 
-There are over one hundred built-in rules to help you:
+There are over 150 built-in rules to help you avoid errors and enforce conventions.
 
-- avoid errors
-- enforce conventions
-
-We turn on most of the rules in our standard config (✅) and many can be autofixed (🔧).
+Key: ✅ in the standard config, 🔧 can be fixed automatically.
 
 ## Avoid errors
 
-You can avoid errors with these `no` rules.
+These rules help you avoid common and subtle mistakes. For example, browsers silently ignore a misspelled property. The standard config turns on most of them.
 
 ### Deprecated
 
@@ -30,7 +27,7 @@ Disallow deprecated things with these `no-deprecated` rules.
 | `declaration-property-value-keyword-no-deprecated`Disallow deprecated keywords for properties within declarations. | ✅ | 🔧 |
 | `media-type-no-deprecated`Disallow deprecated media types. | ✅ | |
 | `property-no-deprecated`Disallow deprecated properties. | ✅ | 🔧 |
-| `selector-no-deprecated`Disallow deprecated selectors. | | 🔧 |
+| `selector-no-deprecated`Disallow deprecated selectors. | ✅ | 🔧 |
 
 ### Descending
 
@@ -69,6 +66,7 @@ Disallow invalid syntax with these (sometimes implicit) `no-invalid` rules.
 
 | | | |
 | :-- | :-: | :-: |
+| `at-charset-rule-no-invalid`Disallow invalid `@charset` rules. | ✅ | |
 | `at-rule-prelude-no-invalid`Disallow invalid preludes for at-rules. | ✅ | |
 | `color-no-invalid-hex`Disallow invalid hex colors. | | |
 | `function-calc-no-unspaced-operator`Disallow invalid unspaced operator within `calc` functions. | ✅ | 🔧 |
@@ -78,9 +76,10 @@ Disallow invalid syntax with these (sometimes implicit) `no-invalid` rules.
 | `no-invalid-double-slash-comments`Disallow invalid double-slash comments. | ✅ | |
 | `no-invalid-position-at-import-rule`Disallow invalid position `@import` rules. | ✅ | |
 | `no-invalid-position-declaration`Disallow invalid position declarations. | ✅ | |
-| `selector-no-invalid`Disallow invalid selectors. | | |
+| `selector-no-invalid`Disallow invalid selectors. | ✅ | |
 | `string-no-newline`Disallow invalid newlines within strings. | ✅ | |
 | `syntax-string-no-invalid`Disallow invalid syntax strings. | ✅ | |
+| `value-no-invalid`Disallow invalid values. | ✅ | |
 
 ### Irregular
 
@@ -123,7 +122,7 @@ Disallow unmatchable things with these `no-unmatchable` rules.
 | | | |
 | :-- | :-: | :-: |
 | `selector-anb-no-unmatchable`Disallow unmatchable An+B selectors. | ✅ | |
-| `selector-no-unmatchable`Disallow unmatchable selectors. | | |
+| `selector-no-unmatchable`Disallow unmatchable selectors. | ✅ | |
 
 ### Unknown
 

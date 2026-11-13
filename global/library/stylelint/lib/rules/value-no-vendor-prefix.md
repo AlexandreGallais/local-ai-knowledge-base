@@ -1,9 +1,9 @@
 ---
 title: "value-no-vendor-prefix"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/value-no-vendor-prefix/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/value-no-vendor-prefix/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ a { display: -webkit-flex; }
 /**           ↑
  *  This prefix */
 ```
+
+Use this rule to enforce a convention. For example, leave prefixing to a tool such as Autoprefixer, so that your styles only have the prefixes your browsers need.
 
 This rule does not fix vendor-prefixed values that weren't handled by Autoprefixer version 10.2.5. Exceptions may be added on a case by case basis.
 

@@ -1,9 +1,9 @@
 ---
 title: "no-empty-source"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/no-empty-source/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/no-empty-source/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -14,6 +14,8 @@ Disallow empty sources.
 ```css
 
 ```
+
+Use this rule to avoid leftovers from edits. An empty source does nothing.
 
 A source containing only whitespace, e.g., spaces, tabs, or newlines, is considered empty.
 

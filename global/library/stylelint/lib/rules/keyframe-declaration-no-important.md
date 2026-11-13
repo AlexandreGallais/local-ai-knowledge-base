@@ -1,9 +1,9 @@
 ---
 title: "keyframe-declaration-no-important"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/keyframe-declaration-no-important/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/keyframe-declaration-no-important/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -20,7 +20,7 @@ Disallow invalid `!important` within keyframe declarations.
 *   This !important */
 ```
 
-Using `!important` within keyframes declarations is completely ignored in some browsers.
+Use this rule to avoid `!important` that has no effect. Some browsers ignore the entire declaration when it contains `!important`.
 
 This rule doesn't have any message arguments.
 

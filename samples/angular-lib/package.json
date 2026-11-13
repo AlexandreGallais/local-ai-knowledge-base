@@ -1,0 +1,12 @@
+{
+  "name": "sample-angular-lib",
+  "private": true,
+  "type": "module",
+  "peerDependencies": {
+    "@angular/core": "22.2.6"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3",
+    "vitest": "5.1.0"
+  }
+}

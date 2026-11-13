@@ -1,9 +1,9 @@
 ---
 title: "annotation-no-unknown"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/annotation-no-unknown/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/annotation-no-unknown/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ a { color: green !imprtant; }
 /**              ↑
  * This annotation */
 ```
+
+Use this rule to avoid mistyped annotations, e.g. `!imprtant`. Browsers ignore declarations with unknown annotations.
 
 This rule considers annotations defined in the CSS Specifications, up to and including Editor's Drafts, to be known.
 

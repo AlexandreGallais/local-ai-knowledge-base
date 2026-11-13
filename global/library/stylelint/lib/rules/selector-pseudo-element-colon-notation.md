@@ -1,9 +1,9 @@
 ---
 title: "selector-pseudo-element-colon-notation"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/selector-pseudo-element-colon-notation/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/selector-pseudo-element-colon-notation/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,9 +17,12 @@ Specify single or double colon notation for applicable pseudo-element selectors.
  * This notation */
 ```
 
-The `::` notation was chosen for _pseudo-elements_ to establish a discrimination between _pseudo-classes_ (which subclass existing elements) and _pseudo-elements_ (which are elements not represented in the document tree).
+Use this rule to enforce a convention. Pseudo-elements use two colons to tell them apart from pseudo-classes, but browsers also accept one colon for the four from CSS 2: `:before`, `:after`, `:first-line` and `:first-letter`.
 
-However, for compatibility with existing style sheets, user agents also accept the previous one-colon notation for _pseudo-elements_ introduced in CSS levels 1 and 2 (namely, `:first-line`, `:first-letter`, `:before` and `:after`).
+Choose:
+
+- `"double"` for clarity
+- `"single"` for older browsers, which don't recognize `::`
 
 The `fix` option can automatically fix all of the problems reported by this rule.
 

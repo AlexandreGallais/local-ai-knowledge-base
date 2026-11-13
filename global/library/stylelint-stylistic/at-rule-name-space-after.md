@@ -1,9 +1,9 @@
 ---
 title: "at-rule-name-space-after"
 tool: "stylelint-stylistic"
-version: "5.3"
-source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/d61d92538fce80f9e25ad9fee7b8018bf7f33e92/lib/rules/at-rule-name-space-after/README.md"
-commit: "d61d92538fce80f9e25ad9fee7b8018bf7f33e92"
+version: "6.0"
+source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/3cd01e1c32e87a7d92b99c3a35e869bc36c019bb/lib/rules/at-rule-name-space-after/README.md"
+commit: "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb"
 license: "MIT"
 ---
 
@@ -17,7 +17,9 @@ Require a single space after at-rule names.
  * The space after at-rule names */
 ```
 
-The `fix` option can automatically fix all of the problems reported by this rule.
+The `fix` option can automatically fix most of the problems reported by this rule. Under Less it writes no space behind an `@import` or `@plugin` with no whitespace behind the name, since Less takes the two as directives only with whitespace there. The warning stands.
+
+The rule passes over `@charset`, whose spelling Stylelint's `at-charset-rule-no-invalid` rule judges; a CSS file holding one gets a warning asking for that rule where the configuration leaves it off.
 
 ## Options
 
@@ -30,7 +32,7 @@ There _must always_ be a single space after at-rule names.
 The following patterns are considered problems:
 
 ```css
-@charset"UTF-8";
+@import"x.css";
 ```
 
 ```css
@@ -46,10 +48,10 @@ The following patterns are considered problems:
 (min-width: 700px) {}
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
-@charset "UTF-8";
+@import "x.css";
 ```
 
 ```css
@@ -67,7 +69,7 @@ There _must always_ be a single space after at-rule names in single-line decl
 The following patterns are considered problems:
 
 ```css
-@charset"UTF-8";
+@import"x.css";
 ```
 
 ```css
@@ -78,10 +80,10 @@ The following patterns are considered problems:
 @media  (min-width: 700px) {}
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
-@charset "UTF-8";
+@import "x.css";
 ```
 
 ```css

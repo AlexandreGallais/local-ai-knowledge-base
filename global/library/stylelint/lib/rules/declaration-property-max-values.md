@@ -1,15 +1,26 @@
 ---
 title: "declaration-property-max-values"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/declaration-property-max-values/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/declaration-property-max-values/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
 # declaration-property-max-values
 
 Limit the number of values for a list of properties within declarations.
+
+```css
+a { margin: 1px 2px 3px 4px; }
+/**         ↑   ↑   ↑   ↑
+ *          These values */
+```
+
+Use this rule to enforce a convention. For example, limit:
+
+- `/^(margin|padding)$/` to `2` values, as four-value forms are easy to misread
+- `font-family` to `3` values, so that font stacks stay short
 
 This rule supports 2 message arguments: the property name and the configured maximum.
 

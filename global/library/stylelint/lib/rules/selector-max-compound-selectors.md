@@ -1,9 +1,9 @@
 ---
 title: "selector-max-compound-selectors"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/selector-max-compound-selectors/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/selector-max-compound-selectors/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,6 +17,8 @@ Limit the number of compound selectors in a selector.
    ↑   ↑                ↑       ↑       ↑
   Lv1 Lv2              Lv3     Lv4     Lv5  -- these are compound selectors */
 ```
+
+Use this rule to enforce a convention. For example, limit selectors to `3` compound selectors, so that moving an element doesn't break its styles.
 
 A compound selector is a chain of one or more simple (tag, class, ID, universal, attribute) selectors. If there is more than one compound selector in a complete selector, they will be separated by combinators (e.g. ` `, `+`, `>`). One reason why you might want to limit the number of compound selectors is described in the SMACSS book.
 

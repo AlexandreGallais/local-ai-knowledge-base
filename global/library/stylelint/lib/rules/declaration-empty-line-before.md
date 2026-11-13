@@ -1,9 +1,9 @@
 ---
 title: "declaration-empty-line-before"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/declaration-empty-line-before/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/declaration-empty-line-before/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -21,7 +21,9 @@ a {
  *      This line */
 ```
 
-This rule only applies to standard property declarations. Use the `custom-property-empty-line-before` rule for custom property declarations.
+Use this rule to enforce a convention. For example, require an empty line before the first declaration after custom properties, so that they stand apart.
+
+This rule only checks standard property declarations. Use the `custom-property-empty-line-before` rule for custom property declarations.
 
 The `fix` option can automatically fix all of the problems reported by this rule.
 

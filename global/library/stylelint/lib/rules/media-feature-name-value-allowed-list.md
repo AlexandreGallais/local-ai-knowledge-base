@@ -1,9 +1,9 @@
 ---
 title: "media-feature-name-value-allowed-list"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/media-feature-name-value-allowed-list/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/media-feature-name-value-allowed-list/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ Specify a list of allowed media feature name and value pairs.
 /**                ↑          ↑
  *    These features and values */
 ```
+
+Use this rule to enforce a subset of values for a media feature as a convention. For example, allow only `48em` and `64em` for `min-width`, so that every query uses one of your breakpoints.
 
 This rule supports 2 message arguments: the media feature name and the disallowed value.
 

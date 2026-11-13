@@ -1,9 +1,9 @@
 ---
 title: "selector-pseudo-element-disallowed-list"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/selector-pseudo-element-disallowed-list/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/selector-pseudo-element-disallowed-list/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ Specify a list of disallowed pseudo-element selectors.
 /**  ↑
  * This pseudo-element selector */
 ```
+
+Use this rule to enforce a convention. For example, disallow `/^-webkit-scrollbar/` in favor of `scrollbar-color` and `scrollbar-width`, to follow the specification.
 
 This rule ignores:
 

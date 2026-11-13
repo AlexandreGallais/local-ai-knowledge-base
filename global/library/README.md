@@ -47,6 +47,6 @@ node scripts/check-library.ts                 # headers, index, 16 KB at most, n
 | [eslint-vitest](eslint-vitest/index.md) | @vitest/eslint-plugin rules | 1.6 | MIT | all | 82 files, 0.1 MB |
 | [rxjs-x](rxjs-x/index.md) | eslint-plugin-rxjs-x rules | 1.0 | MIT | angular-app, angular-lib | 44 files, 0.1 MB |
 | [eslint-jsonc](eslint-jsonc/index.md) | eslint-plugin-jsonc rules | 3.4 | MIT | all | 45 files, 0.1 MB |
-| [stylelint](stylelint/index.md) | Stylelint user guide and rules | 17.16 | MIT | all | 163 files, 0.4 MB |
-| [stylelint-stylistic](stylelint-stylistic/index.md) | @stylistic/stylelint-plugin rules, the formatting pass for CSS and SCSS | 5.3 | MIT | all | 78 files, 0.1 MB |
+| [stylelint](stylelint/index.md) | Stylelint user guide and rules | 18.0 | MIT | all | 166 files, 0.4 MB |
+| [stylelint-stylistic](stylelint-stylistic/index.md) | @stylistic/stylelint-plugin rules, the formatting pass for CSS and SCSS | 6.0 | MIT | all | 86 files, 0.2 MB |
 | [stylelint-order](stylelint-order/index.md) | stylelint-order rules | 8.1 | MIT | all | 4 files, 0.0 MB |

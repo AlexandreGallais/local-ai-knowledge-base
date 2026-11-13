@@ -1,9 +1,9 @@
 ---
 title: "declaration-block-semicolon-newline-before"
 tool: "stylelint-stylistic"
-version: "5.3"
-source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/d61d92538fce80f9e25ad9fee7b8018bf7f33e92/lib/rules/declaration-block-semicolon-newline-before/README.md"
-commit: "d61d92538fce80f9e25ad9fee7b8018bf7f33e92"
+version: "6.0"
+source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/3cd01e1c32e87a7d92b99c3a35e869bc36c019bb/lib/rules/declaration-block-semicolon-newline-before/README.md"
+commit: "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb"
 license: "MIT"
 ---
 
@@ -20,7 +20,7 @@ Require a newline or disallow whitespace before the semicolons of declarati
  * The newline before this semicolon */
 ```
 
-This rule ignores semicolons that are preceded by Less mixins.
+This rule also applies to the declarations of an inline `style` attribute in an HTML-like document.
 
 The `fix` option can automatically fix all of the problems reported by this rule.
 
@@ -44,7 +44,7 @@ a {
 }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { color: pink
@@ -70,7 +70,7 @@ a {
 }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { color: pink; }
@@ -100,7 +100,7 @@ a {
 }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { color: pink; }

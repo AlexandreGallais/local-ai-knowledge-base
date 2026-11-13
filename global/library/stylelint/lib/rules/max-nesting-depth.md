@@ -1,9 +1,9 @@
 ---
 title: "max-nesting-depth"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/max-nesting-depth/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/max-nesting-depth/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ a { & > b { top: 0; } }
 /** ↑
  * This nesting */
 ```
+
+Use this rule to enforce a convention. For example, limit nesting to `2` levels, so that nested rules stay readable.
 
 This rule works by checking rules' and at-rules' actual "nesting depth" against your specified max. Here's how nesting depths works:
 

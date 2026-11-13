@@ -1,9 +1,9 @@
 ---
 title: "function-name-case"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/function-name-case/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/function-name-case/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ a { width: calc(5% - 10em); }
 /**        ↑
  * This function */
 ```
+
+Use this rule to enforce a convention, as function names are case-insensitive. For example, require lowercase, as the specifications write them.
 
 Camel case function names, e.g. `translateX`, are accounted for when the `lower` option is used.
 

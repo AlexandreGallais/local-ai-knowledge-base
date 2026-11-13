@@ -1,9 +1,9 @@
 ---
 title: "value-keyword-layout-mappings"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/value-keyword-layout-mappings/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/value-keyword-layout-mappings/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,7 +17,12 @@ a { float: left; }
  *         This keyword */
 ```
 
-Physical keywords like `left`, `top` and `horizontal` are tied to the physical dimensions of the screen. Flow-relative keywords like `inline-start`, `block-start` and `inline` adapt to different writing modes and text directions, making them useful for internationalization. They are the keyword-level counterpart to flow-relative properties and units.
+Use this rule to enforce a convention. Physical keywords like `left` and `top` are tied to the screen, while flow-relative keywords like `inline-start` and `block-start` follow the writing mode.
+
+Choose:
+
+- `"flow-relative"` to support right-to-left and vertical writing modes
+- `"physical"` if you support only one writing mode, or for older browsers
 
 The `fix` option can automatically fix problems reported by this rule when both the primary option is `"flow-relative"` and the `languageOptions.directionality` configuration property is configured.
 

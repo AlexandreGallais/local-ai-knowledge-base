@@ -1,9 +1,9 @@
 ---
 title: "declaration-block-semicolon-space-after"
 tool: "stylelint-stylistic"
-version: "5.3"
-source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/d61d92538fce80f9e25ad9fee7b8018bf7f33e92/lib/rules/declaration-block-semicolon-space-after/README.md"
-commit: "d61d92538fce80f9e25ad9fee7b8018bf7f33e92"
+version: "6.0"
+source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/3cd01e1c32e87a7d92b99c3a35e869bc36c019bb/lib/rules/declaration-block-semicolon-space-after/README.md"
+commit: "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb"
 license: "MIT"
 ---
 
@@ -17,10 +17,9 @@ a { color: pink; top: 0; }
  * The space after this semicolon */
 ```
 
-This rule ignores:
+This rule also applies to the declarations of an inline `style` attribute in an HTML-like document.
 
-- semicolons that are preceded by Less mixins
-- the last semicolon of declaration blocks
+This rule ignores the last semicolon of declaration blocks.
 
 Use the `block-closing-brace-*-before` rules to control the whitespace between the last semicolon and the closing brace instead.
 
@@ -47,7 +46,7 @@ a {
 }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { color: pink;}
@@ -78,7 +77,7 @@ a {
 }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { color: pink;}
@@ -102,7 +101,7 @@ The following patterns are considered problems:
 a { color: pink;top: 0; }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { color: pink; top: 0; }
@@ -125,7 +124,7 @@ The following patterns are considered problems:
 a { color: pink; top: 0; }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { color: pink;top: 0; }

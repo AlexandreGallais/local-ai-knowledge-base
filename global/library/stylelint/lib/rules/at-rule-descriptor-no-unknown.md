@@ -1,9 +1,9 @@
 ---
 title: "at-rule-descriptor-no-unknown"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/at-rule-descriptor-no-unknown/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/at-rule-descriptor-no-unknown/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -18,6 +18,8 @@ Disallow unknown descriptors for at-rules.
  * Descriptors like this */
 }
 ```
+
+Use this rule to avoid mistyped descriptors. Browsers ignore unknown descriptors, so a `@font-face` with `srcc` instead of `src` loads nothing.
 
 This rule considers descriptors defined in the CSS Specifications, up to and including Editor's Drafts, to be known.
 

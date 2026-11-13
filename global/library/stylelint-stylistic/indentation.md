@@ -1,9 +1,9 @@
 ---
 title: "indentation"
 tool: "stylelint-stylistic"
-version: "5.3"
-source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/d61d92538fce80f9e25ad9fee7b8018bf7f33e92/lib/rules/indentation/README.md"
-commit: "d61d92538fce80f9e25ad9fee7b8018bf7f33e92"
+version: "6.0"
+source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/3cd01e1c32e87a7d92b99c3a35e869bc36c019bb/lib/rules/indentation/README.md"
+commit: "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb"
 license: "MIT"
 ---
 
@@ -98,7 +98,12 @@ a {
 }
 ```
 
-The following patterns are _not_ considered problems:
+```css
+@media (min-width: 100px
+  ) {}
+```
+
+The following patterns are _not_ considered problems:
 
 ```css
 @media print {
@@ -144,13 +149,22 @@ a {
 }
 ```
 
+```css
+@media (min-width: 100px
+) {}
+```
+
+A closing bracket standing at the beginning of a line is indented one level out from the lines inside the brackets — but only while a bracket opened at the end of a line is still open. A bracket opened in the middle of a line indents nothing, so the one closing it asks for the outermost level of the selector, the value or the set of parameters it belongs to: the first column for an at-rule at the root, the level of the at-rule itself for one nested in a rule, the level of the declaration for a value. This holds for the brace of a Sass interpolation as it does for a parenthesis, save under `indentClosingBrace` below: that option keeps a closing parenthesis at the level of the lines inside the parentheses, and has never been asked about a brace.
+
+That outermost level is the level of the node itself wherever the text is measured there rather than one level above it: `@nest` and Sass's `@at-root`, whose parameters are a selector, and anything the `except` option below takes a level away from. The brackets inside such a text still indent the lines they open, since `except` is about the level of the text and not about what stands inside it.
+
 ## Optional secondary options
 
 ### `baseIndentLevel: int|"auto"`
 
-By default, the indent level of the CSS code block in non-CSS-like files is determined by the shortest indent of non-empty line. The setting `baseIndentLevel` allows you to define a relative indent level based on CSS code block opening or closing line.
+By default, the indent level of the CSS code block in non-CSS-like files is determined by the shortest indent of the lines standing at the block's own level — the lines its statements open on and, unless `indentClosingBrace` is on, the lines their blocks close on — and, where the block has no such line of its own, by the indent of the line of the tag it opens on; a line's indent is counted in levels of the width the primary option names, rounded to the nearest level, or, under `"tab"`, in a width read off the page's lines. The setting `baseIndentLevel` allows you to define a relative indent level based on CSS code block opening or closing line.
 
-For example, with `[ 2, { baseIndentLevel: 1 } ]`, CSS should be indented 1 levels higher than `<style>` tag:
+For example, with `[ 2, { baseIndentLevel: 1 } ]`, CSS should be indented 1 levels higher than `<style>` tag:
 
 ```html
 <!doctype html>
@@ -223,7 +237,7 @@ a {
 }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a {
@@ -241,7 +255,7 @@ a {
 
 ### `except: ["block", "param", "value"]`
 
-Do _not_ indent for these things.
+Do _not_ indent for these things.
 
 For example, with `2`.
 
@@ -258,7 +272,7 @@ The following patterns are considered problems:
 }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 @media print,
@@ -279,7 +293,7 @@ Ignore the indentation inside parentheses.
 
 For example, with `2`.
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a {
@@ -298,7 +312,7 @@ Ignore the indentation of at-rule params.
 
 For example, with `2`.
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 @media print,
@@ -313,7 +327,7 @@ Ignore the indentation of values.
 
 For example, with `2`.
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a {

@@ -1,9 +1,9 @@
 ---
 title: "Rules (part 2 of 2)"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/docs/user-guide/rules.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/docs/user-guide/rules.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -11,7 +11,7 @@ license: "MIT"
 
 ## Enforce conventions
 
-You can enforce conventions with these `no` and `list` rules. They are powerful rules for making your code consistent. You'll need to configure most of them to suit your needs.
+These rules help you write consistent code and limit its complexity. The standard config turns on fewer than half of them, as conventions are specific to you and your project. You'll need to customize most of them to suit your needs.
 
 ### Allowed, disallowed & required
 
@@ -45,6 +45,7 @@ Allow, disallow or require things with these `allowed-list`, `disallowed-list`, 
 | | | |
 | :-- | :-: | :-: |
 | `declaration-no-important`Disallow `!important` within declarations. | | |
+| `declaration-property-custom-property-allowed-list`Specify a list of allowed property and custom property pairs within declarations. | | |
 | `declaration-property-unit-allowed-list`Specify a list of allowed property and unit pairs within declarations. | | |
 | `declaration-property-unit-disallowed-list`Specify a list of disallowed property and unit pairs within declarations. | | |
 | `declaration-property-value-allowed-list`Specify a list of allowed property and value pairs within declarations. | | |
@@ -120,6 +121,7 @@ Allow, disallow or require things with these `allowed-list`, `disallowed-list`, 
 | | | |
 | :-- | :-: | :-: |
 | `value-no-vendor-prefix`Disallow vendor prefixes for values. | ✅ | 🔧 |
+| `value-type-custom-property-required-list`Specify a list of value types that require custom properties. | | |
 
 ### Case
 
@@ -159,7 +161,6 @@ Apply limits with these `max` and `min` rules.
 
 | | | |
 | :-- | :-: | :-: |
-| `declaration-block-single-line-max-declarations`Limit the number of declarations within a single-line declaration block. | ✅ | |
 | `declaration-property-max-values`Limit the number of values for a list of properties within declarations. | | |
 | `max-nesting-depth`Limit the depth of nesting. | | |
 | `number-max-precision`Limit the number of decimal places allowed in numbers. | ✅ | |

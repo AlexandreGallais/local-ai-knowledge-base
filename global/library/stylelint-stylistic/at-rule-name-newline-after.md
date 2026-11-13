@@ -1,9 +1,9 @@
 ---
 title: "at-rule-name-newline-after"
 tool: "stylelint-stylistic"
-version: "5.3"
-source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/d61d92538fce80f9e25ad9fee7b8018bf7f33e92/lib/rules/at-rule-name-newline-after/README.md"
-commit: "d61d92538fce80f9e25ad9fee7b8018bf7f33e92"
+version: "6.0"
+source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/3cd01e1c32e87a7d92b99c3a35e869bc36c019bb/lib/rules/at-rule-name-newline-after/README.md"
+commit: "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb"
 license: "MIT"
 ---
 
@@ -18,6 +18,10 @@ Require a newline after at-rule names.
  * The newline after this at-rule name */
 ```
 
+The `fix` option can automatically fix most of the problems reported by this rule. Under Less it writes no break behind an `@import` or `@plugin` with no whitespace behind the name, since Less takes the two as directives only with whitespace there. The warning stands.
+
+The rule passes over `@charset`, whose spelling Stylelint's `at-charset-rule-no-invalid` rule judges; a CSS file holding one gets a warning asking for that rule where the configuration leaves it off.
+
 ## Options
 
 `string`: `"always"|"always-multi-line"`
@@ -29,7 +33,7 @@ There _must always_ be a newline after at-rule names.
 The following patterns are considered problems:
 
 ```css
-@charset "UTF-8";
+@import "x.css";
 ```
 
 ```css
@@ -37,11 +41,11 @@ The following patterns are considered problems:
   (orientation: landscape) {}
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
-@charset
-  "UTF-8";
+@import
+  "x.css";
 ```
 
 ```css
@@ -77,15 +81,15 @@ The following patterns are considered problems:
  (orientation: landscape) {}
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
-@charset "UTF-8";
+@import "x.css";
 ```
 
 ```css
-@charset
-  "UTF-8";
+@import
+  "x.css";
 ```
 
 ```css

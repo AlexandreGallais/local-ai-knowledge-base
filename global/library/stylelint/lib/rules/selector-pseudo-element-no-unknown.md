@@ -1,9 +1,9 @@
 ---
 title: "selector-pseudo-element-no-unknown"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/selector-pseudo-element-no-unknown/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/selector-pseudo-element-no-unknown/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ Disallow unknown pseudo-element selectors.
 /**  ↑
  * This pseudo-element selector */
 ```
+
+Use this rule to avoid mistyped pseudo-elements, e.g. `::befor`. Browsers ignore the whole rule, as an unknown pseudo-element invalidates the selector.
 
 This rule considers pseudo-element selectors defined in the CSS Specifications, up to and including Editor's Drafts, to be known.
 

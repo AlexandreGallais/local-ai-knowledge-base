@@ -1,9 +1,9 @@
 ---
 title: "selector-no-unmatchable"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/selector-no-unmatchable/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/selector-no-unmatchable/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,9 +17,9 @@ label:enabled {}
  * Selectors like this */
 ```
 
-Unmatchable selectors are valid, but can never match anything.
+Use this rule to avoid selectors that are valid but can never match anything. Browsers never apply their declarations.
 
-This rule flags selectors that:
+This rule reports selectors that:
 
 - pair a pseudo-class with elements it never matches, e.g. `label:enabled`
 - pair pseudo-classes that never match the same element, e.g. `:any-link:checked`

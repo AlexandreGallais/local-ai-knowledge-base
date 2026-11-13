@@ -1,9 +1,9 @@
 ---
 title: "comment-whitespace-inside"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/comment-whitespace-inside/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/comment-whitespace-inside/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ Require or disallow whitespace on the inside of comment markers.
 /**  ↑         ↑
  * The space inside these two markers */
 ```
+
+Use this rule to enforce a convention. For example, require a space inside comment markers for readability.
 
 Any number of asterisks are allowed at the beginning or end of the comment. So `/** comment **/` is treated the same way as `/* comment */`.
 

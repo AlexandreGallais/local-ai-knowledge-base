@@ -1,9 +1,9 @@
 ---
 title: "no-invalid-position-at-import-rule"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/no-invalid-position-at-import-rule/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/no-invalid-position-at-import-rule/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -18,7 +18,7 @@ a {}
   * This @import */
 ```
 
-Any `@import` rules must precede all other valid at-rules and style rules in a stylesheet (ignoring `@charset` and `@layer`), or else the `@import` rule is invalid.
+Use this rule to avoid stylesheets that never load. An `@import` after other rules, except `@charset` and `@layer`, is ignored.
 
 This rule doesn't have any message arguments.
 
@@ -57,7 +57,7 @@ a {}
 ```
 
 ```css
-@charset 'utf-8';
+@charset "utf-8";
 @import 'foo.css';
 ```
 

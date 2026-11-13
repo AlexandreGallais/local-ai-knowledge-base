@@ -1,9 +1,9 @@
 ---
 title: "color-no-invalid-hex"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/color-no-invalid-hex/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/color-no-invalid-hex/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ a { color: #y3 }
 /**        ↑
  * This hex color */
 ```
+
+Use this rule to avoid declarations that browsers ignore. An invalid hex color, e.g. `#ff`, invalidates the whole declaration.
 
 Longhand hex colors can be either 6 or 8 (with alpha channel) hexadecimal characters. And their shorthand variants are 3 and 4 characters respectively.
 

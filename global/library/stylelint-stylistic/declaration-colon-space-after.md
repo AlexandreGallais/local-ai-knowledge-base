@@ -1,9 +1,9 @@
 ---
 title: "declaration-colon-space-after"
 tool: "stylelint-stylistic"
-version: "5.3"
-source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/d61d92538fce80f9e25ad9fee7b8018bf7f33e92/lib/rules/declaration-colon-space-after/README.md"
-commit: "d61d92538fce80f9e25ad9fee7b8018bf7f33e92"
+version: "6.0"
+source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/3cd01e1c32e87a7d92b99c3a35e869bc36c019bb/lib/rules/declaration-colon-space-after/README.md"
+commit: "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb"
 license: "MIT"
 ---
 
@@ -37,7 +37,7 @@ a { color :pink }
 a { color:pink }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { color : pink }
@@ -61,7 +61,7 @@ a { color : pink }
 a { color: pink }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { color :pink }
@@ -73,7 +73,7 @@ a { color:pink }
 
 ### `"always-single-line"`
 
-There _must always_ be a single space after the colon _if the declaration's value is single-line_.
+There _must always_ be a single space after the colon _if the declaration's value is single-line_.
 
 The following patterns are considered problems:
 
@@ -83,7 +83,7 @@ a {
 }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a {

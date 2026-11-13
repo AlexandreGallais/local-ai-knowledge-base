@@ -1,9 +1,9 @@
 ---
 title: "declaration-block-no-shorthand-property-overrides"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/declaration-block-no-shorthand-property-overrides/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/declaration-block-no-shorthand-property-overrides/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,7 +17,9 @@ a { background-repeat: repeat; background: green; }
  * This overrides the longhand property before it */
 ```
 
-In almost every case, this is just an authorial oversight. For more about this behavior, see MDN's documentation of shorthand properties.
+Use this rule to avoid longhands that a later shorthand silently undoes. Browsers reset every longhand a shorthand covers.
+
+This rule reports physical shorthands, like `padding`, that override flow-relative properties, such as `padding-inline`.
 
 This rule supports 2 message arguments: the shorthand property and the overridden longhand declaration.
 
@@ -36,6 +38,13 @@ The following patterns are considered problems:
 ```css
 a {
   padding-left: 10px;
+  padding: 20px;
+}
+```
+
+```css
+a {
+  padding-inline: 10px;
   padding: 20px;
 }
 ```
@@ -67,6 +76,10 @@ The following patterns are _not_ considered problems:
 
 ```css
 a { padding: 10px; padding-left: 20px; }
+```
+
+```css
+a { padding: 10px; padding-inline: 20px; }
 ```
 
 ```css

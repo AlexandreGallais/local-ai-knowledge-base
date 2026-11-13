@@ -1,9 +1,9 @@
 ---
 title: "display-notation"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/display-notation/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/display-notation/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,20 +17,12 @@ a { display: block; }
  *           This notation */
 ```
 
-Modern `display` property values allow you to define both the outer and inner display type separately (e.g. `inline flex`). While CSS 2 used a single-keyword, precomposed syntax for the `display` property (e.g. `inline-flex`).
+Use this rule to enforce a convention. The `display` property accepts a multi-keyword syntax that names the outer and inner display types separately, e.g. `inline flex`. Each single keyword maps to such a pair, e.g. `inline-flex` to `inline flex` and `block` to `block flow`.
 
-In the Display Module Level 3 specification the following precomposed values are defined:
+Choose:
 
-- `inline-block`
-- `inline-flex`
-- `inline-grid`
-- `inline-table`
-
-More recent and future inner display types (e.g. `grid-lanes`) can only be combined with the modern, multi-keyword syntax.
-
-The full notation explicitly describes the inner and outer display types of elements. This notation makes it easier to understand how an element will behave and to learn about the various display types.
-
-The short notation omits defaults or switches to precomposed values, and doesn't follow the modern principle of value composition.
+- `"full"` to compose values from their outer and inner display types, which makes it easier to understand how an element will behave
+- `"short"` for brevity and older browsers, which accept only the single-keyword syntax
 
 This rule ignores `$sass`, `@less`, and `var(--custom-property)` variable syntaxes.
 

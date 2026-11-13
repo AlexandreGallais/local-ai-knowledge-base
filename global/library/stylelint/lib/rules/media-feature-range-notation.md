@@ -1,9 +1,9 @@
 ---
 title: "media-feature-range-notation"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/media-feature-range-notation/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/media-feature-range-notation/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,9 +17,12 @@ Specify context or prefix notation for media feature ranges.
  *     These media feature notations */
 ```
 
-Media features of the range type can be written using prefixes or the more modern context notation.
+Use this rule to enforce a convention. A range media feature can be written with a `min-` or `max-` prefix, or in the context notation with a comparison operator.
 
-Because `min-` and `max-` both equate to range comparisons that include the value, they may be limiting in certain situations.
+Choose:
+
+- `"context"` to write ranges as comparisons, including the exclusive ones that prefixes can't express
+- `"prefix"` for older browsers, which don't support the context notation
 
 The `fix` option can automatically fix some of the problems reported by this rule.
 

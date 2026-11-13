@@ -1,9 +1,9 @@
 ---
 title: "selector-anb-no-unmatchable"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/selector-anb-no-unmatchable/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/selector-anb-no-unmatchable/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,7 +17,7 @@ a:nth-child(0n+0) {}
  * This unmatchable An+B selector */
 ```
 
-An+B selectors are one-indexed. Selectors that always evaluate to `0` will not match any elements.
+Use this rule to avoid selectors that never match. An `An+B` argument that always evaluates to `0`, e.g. `:nth-child(0n)`, matches nothing, as `An+B` is one-indexed.
 
 This rule supports 1 message argument: the unmatchable selector.
 

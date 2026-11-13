@@ -1,9 +1,9 @@
 ---
 title: "media-feature-name-no-unknown"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/media-feature-name-no-unknown/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/media-feature-name-no-unknown/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ Disallow unknown media feature names.
 /**     ↑
  * This media feature name */
 ```
+
+Use this rule to avoid mistyped media feature names, e.g. `min-widht`. Browsers evaluate the query to `unknown`, so its block never applies.
 
 This rule considers media feature names defined in the CSS Specifications, up to and including Editor's Drafts, to be known.
 

@@ -1,15 +1,15 @@
 ---
 title: "named-grid-areas-alignment"
 tool: "stylelint-stylistic"
-version: "5.3"
-source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/d61d92538fce80f9e25ad9fee7b8018bf7f33e92/lib/rules/named-grid-areas-alignment/README.md"
-commit: "d61d92538fce80f9e25ad9fee7b8018bf7f33e92"
+version: "6.0"
+source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/3cd01e1c32e87a7d92b99c3a35e869bc36c019bb/lib/rules/named-grid-areas-alignment/README.md"
+commit: "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb"
 license: "MIT"
 ---
 
 # named-grid-areas-alignment
 
-Require cell tokens (and optionally ending quotes) within `grid-template-areas` to be aligned.
+Require cell tokens (and optionally ending quotes) within the rows of `grid-template-areas`, and of the `grid-template` and `grid` shorthands, to be aligned.
 
 ```css
 div {
@@ -22,6 +22,28 @@ div {
 ```
 
 The `fix` option can automatically fix all of the problems reported by this rule.
+
+The `message` secondary option can accept the arguments of this rule.
+
+The property is read in any case. The rows of the `grid-template` and `grid` shorthands are read as the longhand's: every string at the top level of the value is a row. Row sizes, line names, the solidus and the columns are left as written, except that a size behind a row moves with the row's closing quote, which `alignQuotes` lines up:
+
+```css
+div {
+  grid-template:
+    [header-left] "head head" minmax(30px, 1fr) [header-right]
+                  "nav  main" 1fr               [main-right]
+    [footer]      "nav  foot" 30px
+    / 120px 1fr;
+}
+```
+
+The `alignColumns` option below lays the sizes and the line names out as columns of their own.
+
+A declaration spans lines when a line break stands in its value outside every row. The fix keeps everything outside the rows as written, line breaks included, and puts each row on one line.
+
+A row holding no cell token is written back empty, or, under `alignQuotes` in a declaration spanning lines, padded to the width of the others.
+
+A cell's width is counted in code points: a character outside the Basic <example-value> Plane counts once, and a grapheme cluster of several code points counts as several.
 
 ## Options
 
@@ -47,7 +69,7 @@ div {
 }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 /* ✅ Aligned cell tokens */
@@ -87,7 +109,7 @@ div {
 }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 /* ✅ Two spaces between cell tokens */
@@ -118,7 +140,7 @@ div {
 }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 /* ✅ Ending quotes are properly aligned */
@@ -130,3 +152,71 @@ div {
     'long-one long-one'
 }
 ```
+
+### `alignColumns: boolean`
+
+Whether the line names and the sizes beside the rows of a `grid-template` or `grid` shorthand are laid out as columns of a table (default is `false`).
+
+Every line of the value that holds one row is read as four columns — the line names in front of the row, the row, its size, and the line names behind it — and every column is as wide as the widest text standing in it. The padding is written between the tokens of a line and never in front of its first one: the first token of every line stands where the indentation puts it, so the indentation stays what the `indentation` rule asks for, and a row that has no line name in front of it stands at the indentation while its size and its closing names still reach their columns. Two names of one line stand a single space apart. The solidus and the columns behind it, a comment and everything behind it on its line, and a line holding two rows or none are left as they stand, and so is a value that spans no line outside its rows — the longhand has nothing to lay out.
+
+Where the configuration lists this option, the `no-multiple-whitespaces` rule leaves the runs between the tokens of such a line alone, whichever order the two rules are listed in and whether this rule'<example-value>'s as before. The padding lengthens a line, which `max-line-length` may report.
+
+Under `alignQuotes` the padding of a short row stands inside its quotation marks, and the sizes line up behind the closing quotes; without it the padding stands behind the closing quote, and the sizes line up all the same.
+
+**Given rule configuration: `named-grid-areas-alignment: [true, { alignColumns: true }]`**
+
+The following patterns are considered problems:
+
+```css
+/* ❌ Line names, rows and sizes not laid out as columns */
+
+div {
+  grid-template:
+    [header-left] "head head" minmax(30px, 1fr) [header-right]
+    [] "nav main" 1fr [main-right]
+    [footer] "nav foot" 30px
+    / 120px 1fr;
+}
+```
+
+The following patterns are _not_ considered problems:
+
+```css
+/* ✅ Every column laid out */
+
+div {
+  grid-template:
+    [header-left] "head head" minmax(30px, 1fr) [header-right]
+    []            "nav  main" 1fr               [main-right]
+    [footer]      "nav  foot" 30px
+    / 120px 1fr;
+}
+```
+
+```css
+/* ✅ A row without a line name in front of it, standing at the indentation */
+
+div {
+  grid-template:
+    [header-left] "head head" 30px [header-right]
+    "nav  main"               1fr  [main-right]
+    / 120px 1fr;
+}
+```
+
+#### A row without a line name
+
+The rule never writes in front of the first token of a line, so a row that has no line name in front of it cannot be moved under the rows that have one: it stays at the indentation, and only its size and the names behind it reach their columns, as the last example above shows. To put such a row under the others, give it an empty list of line names, `[]`. The grammar of `<line-names>` is `'<example-value>' <custom-ident>* '<example-value>'`, a list of no names included; `lightningcss` 1.33 compiles `grid-template: [] "<example-value>" 1fr / auto` with the brackets dropped, Sass hands them through, and the `[]` behind the names closing the row above merges with them, so the grid is the one it was:
+
+```css
+/* ✅ The same grid, its second row given an empty list of line names and laid out under the first */
+
+div {
+  grid-template:
+    [header-left] "head head" 30px [header-right]
+    []            "nav  main" 1fr  [main-right]
+    / 120px 1fr;
+}
+```
+
+The rule writes no `[]` itself: it writes whitespace and nothing else, and whether the column of the names is worth an empty list is the author's to decide. **Less does not read an empty list**: Less 4.9.1 refuses `[]` and `[ ]` alike as unrecognized input, so a stylesheet written in Less keeps such a row at the indentation, and the `less` namespace says so.

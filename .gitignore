@@ -24,6 +24,9 @@ state.local.json
 # Search indexes: built on each machine by global/tools/build-index.ts, never in Git
 global/index/
 
+# Lint configs of the samples: copied from global/lint/ by the tests
+samples/*/.agents/lint/
+
 # Settings of one machine, such as the Node binaries the tests also run
 *.local.txt
 

@@ -1,9 +1,9 @@
 ---
 title: "number-max-precision"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/number-max-precision/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/number-max-precision/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ a { top: 3.245634px; }
 /**           ↑
  * This decimal place */
 ```
+
+Use this rule to enforce a convention. For example, limit numbers to `4` decimal places, as the extra digits rarely change what's rendered.
 
 This rule supports 2 message arguments: the number and its rounded equivalent.
 

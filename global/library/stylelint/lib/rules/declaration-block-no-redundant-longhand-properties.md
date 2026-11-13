@@ -1,9 +1,9 @@
 ---
 title: "declaration-block-no-redundant-longhand-properties"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/declaration-block-no-redundant-longhand-properties/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/declaration-block-no-redundant-longhand-properties/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -21,7 +21,7 @@ Disallow redundant longhand properties within declaration-block.
  *  These longhand properties */
 ```
 
-The longhand properties in the example above can be more concisely written as:
+Use this rule to enforce a convention. For example, require the shorthand when every longhand is set:
 
 ```css
 a {
@@ -53,6 +53,7 @@ This rule complains when the following shorthand properties can be used:
 - `border-width`
 - `column-rule`
 - `columns`
+- `contain-intrinsic-size`
 - `flex`
 - `flex-flow`
 - `font`

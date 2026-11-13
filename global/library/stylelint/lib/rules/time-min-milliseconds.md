@@ -1,9 +1,9 @@
 ---
 title: "time-min-milliseconds"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/time-min-milliseconds/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/time-min-milliseconds/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ a { animation: slip-n-slide 150ms linear; }
 /**                         ↑
  *                  This time */
 ```
+
+Use this rule to enforce a convention. For example, require at least `100` milliseconds, as shorter transitions and animations cost work for no visible effect.
 
 This rule checks positive numbers in `transition-duration`, `transition-delay`, `animation-duration`, `animation-delay`, and those times as they manifest in the `transition` and `animation` shorthands.
 

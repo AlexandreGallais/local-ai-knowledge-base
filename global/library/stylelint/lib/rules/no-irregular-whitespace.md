@@ -1,9 +1,9 @@
 ---
 title: "no-irregular-whitespace"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/no-irregular-whitespace/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/no-irregular-whitespace/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ Disallow irregular whitespaces.
 /**            ↑
  * Irregular whitespace. Selector would fail to match '.firstClass' */
 ```
+
+Use this rule to avoid names that browsers misread. A space-like character, e.g. a no-break space, isn't whitespace and joins the name beside it.
 
 This rule doesn't have any message arguments.
 

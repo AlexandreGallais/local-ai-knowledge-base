@@ -1,9 +1,9 @@
 ---
 title: "selector-nested-pattern"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/selector-nested-pattern/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/selector-nested-pattern/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -18,6 +18,8 @@ Specify a pattern for the selectors of rules nested within rules.
 /**   ↑
  * This nested selector */
 ```
+
+Use this rule to enforce a convention. For example, require `^&:`, so that only states are nested and descendants get their own rules.
 
 Non-standard selectors (e.g. selectors with Sass or Less interpolation) and selectors of rules nested within at-rules are ignored.
 

@@ -1,9 +1,9 @@
 ---
 title: "no-invalid-double-slash-comments"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/no-invalid-double-slash-comments/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/no-invalid-double-slash-comments/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -19,7 +19,7 @@ a {
  *  This comment */
 ```
 
-Disallow double-slash comments (`//...`) are not supported by CSS and could lead to unexpected results.
+Use this rule to avoid declarations that browsers ignore. CSS doesn't support `//` comments, so a comment becomes part of the next declaration or selector and invalidates it.
 
 If you are using a preprocessor that allows `//` single-line comments (e.g. Sass, Less, Stylus), this rule will not complain about those. They are compiled into standard CSS comments by your preprocessor, so Stylelint will consider them valid. This rule only complains about the lesser-known method of using `//` to "comment out" a single-line of code in regular CSS. (If you didn't know this was possible, have a look at "Single Line Comments (//) in CSS").
 

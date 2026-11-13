@@ -1,9 +1,9 @@
 ---
 title: "selector-max-specificity"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/selector-max-specificity/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/selector-max-specificity/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ Limit the specificity of selectors.
 /** ↑     ↑              ↑
  * Each of these selectors */
 ```
+
+Use this rule to enforce a convention. For example, limit specificity to `"0,2,0"`, so that styles stay easy to override.
 
 Visit the Specificity Calculator for visual representation of selector specificity.
 
@@ -82,61 +84,4 @@ div {}
 .foo {
   & .baz {}
 }
-```
-
-## Optional secondary options
-
-### `ignoreSelectors`
-
-```json
-{ "ignoreSelectors": ["array", "of", "selectors", "/regex/"] }
-```
-
-Given:
-
-```json
-{
-  "selector-max-specificity": [
-    "0,2,0",
-    {
-      "ignoreSelectors": [":host", ":host-context", "/^my-/"]
-    }
-  ]
-}
-```
-
-The following patterns are _not_ considered problems:
-
-```css
-:host(.foo) .bar {}
-```
-
-```css
-:host-context(.foo.bar) {}
-```
-
-```css
-:host-context(.foo, :host(.bar).baz) {}
-```
-
-```css
-my-element.foo.bar {}
-```
-
-The following patterns are considered problems:
-
-```css
-:host(.foo) .bar.baz {}
-```
-
-```css
-:host-context(.foo.bar.baz) {}
-```
-
-```css
-:host-context(.foo, :host(.bar), .foo.bar.baz) {}
-```
-
-```css
-my-element.foo.bar.baz {}
 ```

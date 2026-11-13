@@ -1,9 +1,9 @@
 ---
 title: "max-line-length"
 tool: "stylelint-stylistic"
-version: "5.3"
-source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/d61d92538fce80f9e25ad9fee7b8018bf7f33e92/lib/rules/max-line-length/README.md"
-commit: "d61d92538fce80f9e25ad9fee7b8018bf7f33e92"
+version: "6.0"
+source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/3cd01e1c32e87a7d92b99c3a35e869bc36c019bb/lib/rules/max-line-length/README.md"
+commit: "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb"
 license: "MIT"
 ---
 
@@ -19,7 +19,9 @@ a { color: red }
 
 Lines that exceed the maximum length but contain no whitespace (other than at the beginning of the line) are ignored.
 
-When evaluating the line length, the arguments of any `url(...)` functions are excluded from the calculation, because typically you have no control over the length of these arguments. This means that long `url()` functions should not contribute to problems.
+The address of a `url()` does not count toward the length: an unquoted `url()` drops out whole, the whitespace at its edges aside, while a quoted one drops only the address, so a second argument, a comment or a `format(…)` behind it counts.
+
+The string an `@import` names drops out the same way.
 
 The `message` secondary option can accept the arguments of this rule.
 
@@ -41,7 +43,7 @@ a {
 }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a {
@@ -104,7 +106,7 @@ a { color: pink; } /* comment that is too long */
 a { /* this comment is too long for the max length */ }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 /* comment that is too long for my rule*/
@@ -130,7 +132,7 @@ Given:
 "/^@import\\s+/"
 ```
 
-The following pattern is _not_ considered a problem:
+The following pattern is _not_ considered a problem:
 
 ```css
 @import "../../../../another/css/or/scss/file/or/something.css";
@@ -142,8 +144,36 @@ Given the following, with a maximum length of `20`.
 ["/https?://[0-9,a-z]*.*/"];
 ```
 
-The following pattern is _not_ considered a problem:
+The following pattern is _not_ considered a problem:
 
 ```css
 /* ignore urls https://www.example.com */
+```
+
+### `tabSize: int`
+
+Measure a tab as reaching the next tab stop of the given width, the way an editor with that tab size shows it, instead of as a single character.
+
+The option is named after the CSS `tab-size` property and counts the way it does: a tab takes as many columns as are left up to the next tab stop, so a tab standing in the middle of a line may take fewer than a whole tab size. Without the option a tab is one character like any other, and a file indented with tabs measures shorter than it looks in the editor, which is what the option is for alongside `indentation: "tab"`.
+
+For example, with a maximum length of `20` and `tabSize: 4`.
+
+The following pattern is considered a problem, the second line being indented with two tabs and measuring 8 + 13 = 21 columns:
+
+```css
+a {
+		color: black;
+}
+```
+
+The following patterns are _not_ considered problems, the first measuring 8 + 12 = 20 columns and the second 3 + 1 + 14 = 18, since its tab reaches the next tab stop after one column:
+
+```css
+a {
+		color: pink;
+}
+```
+
+```css
+a {	color: pink; }
 ```

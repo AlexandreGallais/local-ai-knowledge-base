@@ -1,0 +1,12 @@
+{
+  "profile": "angular-app",
+  "subject": "Invented sample: a list of users",
+  "baseVersion": "0.2.0",
+  "prefix": "app",
+  "checks": {
+    "format": "node /opt/local-ai-base/tools/format-file.ts --all",
+    "lint": "node /opt/local-ai-base/tools/lint-file.ts --all",
+    "build": "npx --no tsc -p tsconfig.json",
+    "test": "npx --no vitest run"
+  }
+}

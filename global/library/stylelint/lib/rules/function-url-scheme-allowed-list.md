@@ -1,9 +1,9 @@
 ---
 title: "function-url-scheme-allowed-list"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/function-url-scheme-allowed-list/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/function-url-scheme-allowed-list/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ a { background-image: url('http://www.example.com/file.jpg'); }
 /**                        ↑
  *           This URL scheme */
 ```
+
+Use this rule to enforce a subset of URL schemes as a convention. For example, allow only `https` and `data`, as browsers block `http` assets in `url()` on secure pages.
 
 A URL scheme consists of alphanumeric, `+`, `-`, and `.` characters. It can appear at the start of a URL and is followed by `:`.
 

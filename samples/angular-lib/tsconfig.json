@@ -1,0 +1,4 @@
+{
+  "extends": "./.agents/lint/tsconfig.strict.json",
+  "include": ["src"]
+}

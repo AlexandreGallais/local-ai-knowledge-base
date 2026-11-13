@@ -1,15 +1,19 @@
 ---
 title: "linebreaks"
 tool: "stylelint-stylistic"
-version: "5.3"
-source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/d61d92538fce80f9e25ad9fee7b8018bf7f33e92/lib/rules/linebreaks/README.md"
-commit: "d61d92538fce80f9e25ad9fee7b8018bf7f33e92"
+version: "6.0"
+source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/3cd01e1c32e87a7d92b99c3a35e869bc36c019bb/lib/rules/linebreaks/README.md"
+commit: "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb"
 license: "MIT"
 ---
 
 # linebreaks
 
 Specify unix or windows linebreaks.
+
+The setting is read by every other rule that writes a line break — one behind a brace, a comma, a colon or a semicolon — so a break such a rule writes is spelled as this rule asks for from the start, whatever order the configuration lists the rules in. Without this rule, those rules spell a break the way the file spells its lines, and a file that ends no line at all is given a line feed.
+
+A bare carriage return and a form feed are whitespace to this rule, as they are to PostCSS: only a line feed, alone or behind a carriage return, is a line break.
 
 The `fix` option can automatically fix all of the problems reported by this rule.
 

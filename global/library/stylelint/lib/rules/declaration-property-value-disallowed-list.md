@@ -1,9 +1,9 @@
 ---
 title: "declaration-property-value-disallowed-list"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/declaration-property-value-disallowed-list/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/declaration-property-value-disallowed-list/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,13 @@ a { text-transform: uppercase; }
 /** ↑               ↑
  * These properties and these values */
 ```
+
+Use this rule to enforce a convention. For example, disallow:
+
+- `none` and `0` for `outline`, which remove the focus indicator
+- `0` for `border` in favor of `none`
+- `justify` for `text-align`, which spaces words unevenly
+- `/all/` for `/^transition/` to avoid transitioning everything
 
 This rule supports 2 message arguments: the property name and the disallowed value.
 

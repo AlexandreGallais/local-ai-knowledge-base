@@ -10,8 +10,12 @@
       "attribution": "Mozilla Contributors",
       "flavor": "mdn",
       "core": true,
-      "paths": ["files/en-us/web/javascript/"],
-      "docs": ["files/en-us/web/javascript"]
+      "paths": [
+        "files/en-us/web/javascript/"
+      ],
+      "docs": [
+        "files/en-us/web/javascript"
+      ]
     },
     {
       "tool": "mdn-html",
@@ -23,8 +27,12 @@
       "attribution": "Mozilla Contributors",
       "flavor": "mdn",
       "core": true,
-      "paths": ["files/en-us/web/html/"],
-      "docs": ["files/en-us/web/html"]
+      "paths": [
+        "files/en-us/web/html/"
+      ],
+      "docs": [
+        "files/en-us/web/html"
+      ]
     },
     {
       "tool": "mdn-css",
@@ -36,8 +44,12 @@
       "attribution": "Mozilla Contributors",
       "flavor": "mdn",
       "core": true,
-      "paths": ["files/en-us/web/css/"],
-      "docs": ["files/en-us/web/css"]
+      "paths": [
+        "files/en-us/web/css/"
+      ],
+      "docs": [
+        "files/en-us/web/css"
+      ]
     },
     {
       "tool": "mdn-api",
@@ -49,8 +61,12 @@
       "attribution": "Mozilla Contributors",
       "flavor": "mdn",
       "core": true,
-      "paths": ["files/en-us/web/api/"],
-      "docs": ["files/en-us/web/api"]
+      "paths": [
+        "files/en-us/web/api/"
+      ],
+      "docs": [
+        "files/en-us/web/api"
+      ]
     },
     {
       "tool": "mdn-http",
@@ -62,8 +78,12 @@
       "attribution": "Mozilla Contributors",
       "flavor": "mdn",
       "core": true,
-      "paths": ["files/en-us/web/http/"],
-      "docs": ["files/en-us/web/http"]
+      "paths": [
+        "files/en-us/web/http/"
+      ],
+      "docs": [
+        "files/en-us/web/http"
+      ]
     },
     {
       "tool": "mdn-svg",
@@ -75,8 +95,12 @@
       "attribution": "Mozilla Contributors",
       "flavor": "mdn",
       "core": true,
-      "paths": ["files/en-us/web/svg/"],
-      "docs": ["files/en-us/web/svg"]
+      "paths": [
+        "files/en-us/web/svg/"
+      ],
+      "docs": [
+        "files/en-us/web/svg"
+      ]
     },
     {
       "tool": "mdn-accessibility",
@@ -88,8 +112,12 @@
       "attribution": "Mozilla Contributors",
       "flavor": "mdn",
       "core": true,
-      "paths": ["files/en-us/web/accessibility/"],
-      "docs": ["files/en-us/web/accessibility"]
+      "paths": [
+        "files/en-us/web/accessibility/"
+      ],
+      "docs": [
+        "files/en-us/web/accessibility"
+      ]
     },
     {
       "tool": "angular",
@@ -105,8 +133,12 @@
         "angular-app",
         "angular-lib"
       ],
-      "paths": ["adev/src/content/"],
-      "docs": ["adev/src/content"],
+      "paths": [
+        "adev/src/content/"
+      ],
+      "docs": [
+        "adev/src/content"
+      ],
       "exclude": [
         "adev/src/content/examples",
         "adev/src/content/tutorials",
@@ -124,8 +156,12 @@
       "attribution": "Microsoft and the TypeScript Website contributors",
       "flavor": "typescript",
       "core": true,
-      "paths": ["packages/documentation/copy/en/"],
-      "docs": ["packages/documentation/copy/en"]
+      "paths": [
+        "packages/documentation/copy/en/"
+      ],
+      "docs": [
+        "packages/documentation/copy/en"
+      ]
     },
     {
       "tool": "rxjs",
@@ -141,8 +177,12 @@
         "angular-app",
         "angular-lib"
       ],
-      "paths": ["docs_app/content/"],
-      "docs": ["docs_app/content"],
+      "paths": [
+        "docs_app/content/"
+      ],
+      "docs": [
+        "docs_app/content"
+      ],
       "exclude": [
         "docs_app/content/marketing",
         "docs_app/content/images",
@@ -185,8 +225,12 @@
       "attribution": "Node.js contributors",
       "flavor": "node",
       "core": true,
-      "paths": ["doc/api/"],
-      "docs": ["doc/api"]
+      "paths": [
+        "doc/api/"
+      ],
+      "docs": [
+        "doc/api"
+      ]
     },
     {
       "tool": "npm",
@@ -198,8 +242,12 @@
       "attribution": "GitHub Inc. and the npm contributors",
       "flavor": "markdown",
       "core": true,
-      "paths": ["docs/lib/content/"],
-      "docs": ["docs/lib/content"]
+      "paths": [
+        "docs/lib/content/"
+      ],
+      "docs": [
+        "docs/lib/content"
+      ]
     },
     {
       "tool": "vite",
@@ -211,8 +259,12 @@
       "attribution": "VoidZero Inc. and Vite contributors",
       "flavor": "mdx",
       "core": true,
-      "paths": ["docs/"],
-      "docs": ["docs"],
+      "paths": [
+        "docs/"
+      ],
+      "docs": [
+        "docs"
+      ],
       "exclude": [
         "docs/blog",
         "docs/team.md",
@@ -230,8 +282,12 @@
       "attribution": "VoidZero Inc. and Vitest contributors",
       "flavor": "mdx",
       "core": true,
-      "paths": ["docs/"],
-      "docs": ["docs"],
+      "paths": [
+        "docs/"
+      ],
+      "docs": [
+        "docs"
+      ],
       "exclude": [
         "docs/blog",
         "docs/team.md",
@@ -252,8 +308,12 @@
         "angular-app",
         "angular-lib"
       ],
-      "paths": ["docs/src/"],
-      "docs": ["docs/src"],
+      "paths": [
+        "docs/src/"
+      ],
+      "docs": [
+        "docs/src"
+      ],
       "exclude": [
         "docs/src/*-python.md",
         "docs/src/*-java.md",
@@ -290,8 +350,12 @@
       "attribution": "typescript-eslint and other contributors",
       "flavor": "mdx",
       "core": true,
-      "paths": ["packages/eslint-plugin/docs/rules/"],
-      "docs": ["packages/eslint-plugin/docs/rules"]
+      "paths": [
+        "packages/eslint-plugin/docs/rules/"
+      ],
+      "docs": [
+        "packages/eslint-plugin/docs/rules"
+      ]
     },
     {
       "tool": "angular-eslint",
@@ -326,8 +390,12 @@
       "attribution": "Anthony Fu and the ESLint Stylistic contributors",
       "flavor": "mdx",
       "core": true,
-      "paths": ["packages/eslint-plugin/rules/"],
-      "docs": ["packages/eslint-plugin/rules"]
+      "paths": [
+        "packages/eslint-plugin/rules/"
+      ],
+      "docs": [
+        "packages/eslint-plugin/rules"
+      ]
     },
     {
       "tool": "perfectionist",
@@ -339,8 +407,12 @@
       "attribution": "Azat S. and the perfectionist contributors",
       "flavor": "mdx",
       "core": true,
-      "paths": ["docs/content/rules/"],
-      "docs": ["docs/content/rules"]
+      "paths": [
+        "docs/content/rules/"
+      ],
+      "docs": [
+        "docs/content/rules"
+      ]
     },
     {
       "tool": "unicorn",
@@ -352,8 +424,12 @@
       "attribution": "Sindre Sorhus and the unicorn contributors",
       "flavor": "markdown",
       "core": true,
-      "paths": ["docs/rules/"],
-      "docs": ["docs/rules"]
+      "paths": [
+        "docs/rules/"
+      ],
+      "docs": [
+        "docs/rules"
+      ]
     },
     {
       "tool": "eslint-regexp",
@@ -365,8 +441,12 @@
       "attribution": "Yosuke Ota and the eslint-plugin-regexp contributors",
       "flavor": "mdx",
       "core": true,
-      "paths": ["docs/rules/"],
-      "docs": ["docs/rules"]
+      "paths": [
+        "docs/rules/"
+      ],
+      "docs": [
+        "docs/rules"
+      ]
     },
     {
       "tool": "import-lite",
@@ -378,8 +458,12 @@
       "attribution": "Vida Xie and the eslint-plugin-import-lite contributors",
       "flavor": "markdown",
       "core": true,
-      "paths": ["src/rules/*/README.md"],
-      "docs": ["src/rules"]
+      "paths": [
+        "src/rules/*/README.md"
+      ],
+      "docs": [
+        "src/rules"
+      ]
     },
     {
       "tool": "eslint-jsdoc",
@@ -396,8 +480,12 @@
         "ts-lib",
         "ts-pure-lib"
       ],
-      "paths": ["docs/rules/"],
-      "docs": ["docs/rules"]
+      "paths": [
+        "docs/rules/"
+      ],
+      "docs": [
+        "docs/rules"
+      ]
     },
     {
       "tool": "eslint-functional",
@@ -409,9 +497,15 @@
       "attribution": "Jonathan Haines and the eslint-plugin-functional contributors",
       "flavor": "markdown",
       "core": true,
-      "profiles": ["ts-pure-lib"],
-      "paths": ["docs/rules/"],
-      "docs": ["docs/rules"]
+      "profiles": [
+        "ts-pure-lib"
+      ],
+      "paths": [
+        "docs/rules/"
+      ],
+      "docs": [
+        "docs/rules"
+      ]
     },
     {
       "tool": "eslint-vitest",
@@ -423,8 +517,12 @@
       "attribution": "Verite Mugabo and the eslint-plugin-vitest contributors",
       "flavor": "markdown",
       "core": true,
-      "paths": ["docs/rules/"],
-      "docs": ["docs/rules"]
+      "paths": [
+        "docs/rules/"
+      ],
+      "docs": [
+        "docs/rules"
+      ]
     },
     {
       "tool": "rxjs-x",
@@ -440,8 +538,12 @@
         "angular-app",
         "angular-lib"
       ],
-      "paths": ["docs/rules/"],
-      "docs": ["docs/rules"]
+      "paths": [
+        "docs/rules/"
+      ],
+      "docs": [
+        "docs/rules"
+      ]
     },
     {
       "tool": "eslint-jsonc",
@@ -453,15 +555,19 @@
       "attribution": "Yosuke Ota and the eslint-plugin-jsonc contributors",
       "flavor": "mdx",
       "core": true,
-      "paths": ["docs/rules/"],
-      "docs": ["docs/rules"]
+      "paths": [
+        "docs/rules/"
+      ],
+      "docs": [
+        "docs/rules"
+      ]
     },
     {
       "tool": "stylelint",
       "title": "Stylelint user guide and rules",
       "repository": "https://github.com/stylelint/stylelint.git",
-      "ref": "17.16.0",
-      "version": "17.16",
+      "ref": "18.0.0",
+      "version": "18.0",
       "license": "MIT",
       "attribution": "Maxime Thirouin, David Clark and the Stylelint contributors",
       "flavor": "markdown",
@@ -479,14 +585,18 @@
       "tool": "stylelint-stylistic",
       "title": "@stylistic/stylelint-plugin rules, the formatting pass for CSS and SCSS",
       "repository": "https://github.com/stylelint-stylistic/stylelint-stylistic.git",
-      "ref": "v5.3.1",
-      "version": "5.3",
+      "ref": "v6.0.1",
+      "version": "6.0",
       "license": "MIT",
       "attribution": "Stylelint Stylistic contributors",
       "flavor": "markdown",
       "core": true,
-      "paths": ["lib/rules/*/README.md"],
-      "docs": ["lib/rules"]
+      "paths": [
+        "lib/rules/*/README.md"
+      ],
+      "docs": [
+        "lib/rules"
+      ]
     },
     {
       "tool": "stylelint-order",
@@ -498,8 +608,12 @@
       "attribution": "Aleks Hudochenkov and the stylelint-order contributors",
       "flavor": "markdown",
       "core": true,
-      "paths": ["rules/*/README.md"],
-      "docs": ["rules"]
+      "paths": [
+        "rules/*/README.md"
+      ],
+      "docs": [
+        "rules"
+      ]
     }
   ]
 }

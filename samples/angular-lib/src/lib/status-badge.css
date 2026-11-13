@@ -1,0 +1,10 @@
+.status-badge {
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  padding: 0.125rem 0.5rem;
+}
+
+.status-badge[data-state="fault"] {
+  background-color: #b00020;
+  color: #fff;
+}

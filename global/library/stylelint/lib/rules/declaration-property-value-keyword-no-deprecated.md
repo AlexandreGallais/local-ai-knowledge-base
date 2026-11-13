@@ -1,9 +1,9 @@
 ---
 title: "declaration-property-value-keyword-no-deprecated"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/declaration-property-value-keyword-no-deprecated/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/declaration-property-value-keyword-no-deprecated/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,7 +17,9 @@ Disallow deprecated keywords for properties within declarations.
  * property and value pairs like these */
 ```
 
-This rule flags keywords that were removed or deprecated after being in the CSS specifications, including editor drafts, and were subsequently either:
+Use this rule to avoid keywords that browsers may remove at any time, e.g. the deprecated system colors. Some already have, and a removed keyword invalidates the whole declaration.
+
+This rule reports keywords that were removed or deprecated after being in the CSS specifications, including editor drafts, and were subsequently either:
 
 - shipped in a stable version of a browser
 - shipped by a developer channel/edition browser

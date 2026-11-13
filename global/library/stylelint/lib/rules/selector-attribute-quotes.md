@@ -1,9 +1,9 @@
 ---
 title: "selector-attribute-quotes"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/selector-attribute-quotes/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/selector-attribute-quotes/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,13 @@ Require or disallow quotes for attribute values.
 /**     ↑      ↑
  * These quotes */
 ```
+
+Use this rule to enforce a convention. Quotes around an attribute value are required when it contains spaces or special characters, and optional otherwise.
+
+Choose:
+
+- `"always"` so that any value works, e.g. `[href="/"]`
+- `"never"` for brevity, as this rule allows the quotes a value needs
 
 The `fix` option can automatically fix most of the problems reported by this rule.
 

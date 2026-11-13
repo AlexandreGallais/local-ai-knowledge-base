@@ -1,9 +1,9 @@
 ---
 title: "Command Line Interface (CLI)"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/docs/user-guide/cli.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/docs/user-guide/cli.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -33,7 +33,7 @@ Use `stylelint --help` to print the CLI documentation.
 
 The CLI accepts:
 
-### `--allow-empty-input, --aei`
+### `--allow-empty-input`
 
 The process exits without throwing an error when glob pattern matches no files. More info.
 
@@ -51,13 +51,13 @@ Store the results of processed files so that Stylelint only operates on the chan
 
 ### `--color, --no-color`
 
-Force enabling/disabling of color.
+Force enabling/disabling of color. More info.
 
 ### `--config-basedir`
 
-Absolute path to the directory that relative paths defining "extends", "plugins", and "customSyntax" are _relative to_. Only necessary if these values are relative paths. More info.
+Absolute path to the directory that relative paths defining `extends`, `plugins`, and `customSyntax` are _relative to_. More info.
 
-### `--config, -c`
+### `--config`
 
 Path to a JSON, YAML, or JS file that contains your configuration object. More info.
 
@@ -65,7 +65,7 @@ Path to a JSON, YAML, or JS file that contains your configuration object. More i
 
 Specify a custom syntax to use on your code. More info.
 
-### `--disable-default-ignores, --di`
+### `--disable-default-ignores`
 
 Disable the default ignores. Stylelint will not automatically ignore the contents of `node_modules`. More info.
 
@@ -73,35 +73,35 @@ Disable the default ignores. Stylelint will not automatically ignore the content
 
 Automatically fix, where possible, problems reported by rules. More info.
 
-### `--compute-edit-info, --cei`
+### `--compute-edit-info`
 
 Compute edit information for fixable problems. More info.
 
-### `--formatter, -f` | `--custom-formatter`
+### `--formatter` | `--custom-formatter`
 
 Specify the formatter to format your results. More info.
 
-### `--globbyOptions, --go`
+### `--globby-options`
 
-Options in JSON format passed to globby. More info.
+Options in JSON format for matching the input globs, e.g. `'{"dot":true}'`. More info.
 
-### `--ignore-disables, --id`
+### `--ignore-disables`
 
 Ignore `stylelint-disable` (e.g. `/* stylelint-disable block-no-empty */`) comments. More info.
 
-### `--ignore-path, -i`
+### `--ignore-path`
 
 Path to a file containing patterns that describe files to ignore. The path can be absolute or relative to `process.cwd()`. You can repeat the option to provide multiple paths. By default, Stylelint looks for `.stylelintignore` in `process.cwd()`. More info.
 
-### `--ignore-pattern, --ip`
+### `--ignore-pattern`
 
 Pattern of files to ignore (in addition to those in `.stylelintignore`).
 
-### `--max-warnings, --mw`
+### `--max-warnings`
 
 Set a limit to the number of warnings accepted. More info.
 
-### `--output-file, -o`
+### `--output-file`
 
 Path of file to write a report. Stylelint outputs the report to the specified `filename` in addition to `process.stderr`.
 
@@ -109,7 +109,7 @@ Path of file to write a report. Stylelint outputs the report to the specified `f
 
 Print the configuration for the given input path. Globs are unsupported.
 
-### `--quiet, -q`
+### `--quiet`
 
 Only register problems for rules with an "error"-level severity (ignore "warning"-level). More info.
 
@@ -117,19 +117,19 @@ Only register problems for rules with an "error"-level severity (ignore "warning
 
 Ignore deprecation warnings. More info.
 
-### `--report-descriptionless-disables, --rdd`
+### `--report-descriptionless-disables`
 
 Produce a report of the `stylelint-disable` comments without a description. More info.
 
-### `--report-invalid-scope-disables, --risd`
+### `--report-invalid-scope-disables`
 
 Produce a report of the `stylelint-disable` comments that used for rules that don't exist within the configuration object. More info.
 
-### `--report-needless-disables, --rd`
+### `--report-needless-disables`
 
 Produce a report to clean up your codebase, keeping only the `stylelint-disable` comments that serve a purpose. More info.
 
-### `--report-unscoped-disables, --rud`
+### `--report-unscoped-disables`
 
 Produce a report of the configuration comments that are not scoped to one or more rules. More info.
 
@@ -153,7 +153,7 @@ Path to a file or directory for the suppressions location. More info.
 
 Force enable/disable the validation of the rules' options. More info.
 
-### `--version, -v`
+### `--version`
 
 Show the currently installed version of Stylelint.
 
@@ -165,29 +165,18 @@ When `TIMING` is set to `all` or a positive integer (`n >= 1`), it displays the 
 
 ```console
 $ TIMING=10 stylelint "**/*.css"
-╔════╤════════════════════════════════════════════════════╤═══════════╤══════════╗
-║  # │ Rule                                               │ Time (ms) │ Relative ║
-╟────┼────────────────────────────────────────────────────┼───────────┼──────────╢
-║  1 │ no-descending-specificity                          │     1.154 │    19.3% ║
-╟────┼────────────────────────────────────────────────────┼───────────┼──────────╢
-║  2 │ no-duplicate-selectors                             │     0.357 │     6.0% ║
-╟────┼────────────────────────────────────────────────────┼───────────┼──────────╢
-║  3 │ length-zero-no-unit                                │     0.300 │     5.0% ║
-╟────┼────────────────────────────────────────────────────┼───────────┼──────────╢
-║  4 │ selector-type-no-unknown                           │     0.265 │     4.4% ║
-╟────┼────────────────────────────────────────────────────┼───────────┼──────────╢
-║  5 │ alpha-value-notation                               │     0.251 │     4.2% ║
-╟────┼────────────────────────────────────────────────────┼───────────┼──────────╢
-║  6 │ declaration-block-no-redundant-longhand-properties │     0.217 │     3.6% ║
-╟────┼────────────────────────────────────────────────────┼───────────┼──────────╢
-║  7 │ selector-class-pattern                             │     0.187 │     3.1% ║
-╟────┼────────────────────────────────────────────────────┼───────────┼──────────╢
-║  8 │ value-keyword-case                                 │     0.151 │     2.5% ║
-╟────┼────────────────────────────────────────────────────┼───────────┼──────────╢
-║  9 │ declaration-block-no-duplicate-custom-properties   │     0.146 │     2.4% ║
-╟────┼────────────────────────────────────────────────────┼───────────┼──────────╢
-║ 10 │ declaration-empty-line-before                      │     0.140 │     2.3% ║
-╚════╧════════════════════════════════════════════════════╧═══════════╧══════════╝
+|  # | Rule                                               | Time (ms) | Relative |
+|---:|:---------------------------------------------------|----------:|---------:|
+|  1 | no-descending-specificity                          |     1.154 |    19.3% |
+|  2 | no-duplicate-selectors                             |     0.357 |     6.0% |
+|  3 | length-zero-no-unit                                |     0.300 |     5.0% |
+|  4 | selector-type-no-unknown                           |     0.265 |     4.4% |
+|  5 | alpha-value-notation                               |     0.251 |     4.2% |
+|  6 | declaration-block-no-redundant-longhand-properties |     0.217 |     3.6% |
+|  7 | selector-class-pattern                             |     0.187 |     3.1% |
+|  8 | value-keyword-case                                 |     0.151 |     2.5% |
+|  9 | declaration-block-no-duplicate-custom-properties   |     0.146 |     2.4% |
+| 10 | declaration-empty-line-before                      |     0.140 |     2.3% |
 ```
 
 You can adjust the number of results by setting a different value for `TIMING`.

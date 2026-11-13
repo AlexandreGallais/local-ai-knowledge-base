@@ -1,9 +1,9 @@
 ---
 title: "selector-no-deprecated"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/selector-no-deprecated/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/selector-no-deprecated/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,7 +17,9 @@ nobr {}
  * This selector */
 ```
 
-This rule flags selectors that were removed or deprecated after being in the CSS specifications, including Editor Drafts, and were either:
+Use this rule to avoid selectors that browsers may remove at any time, e.g. `::shadow`. Some already have, and a removed selector invalidates the whole rule.
+
+This rule reports selectors that were removed or deprecated after being in the CSS specifications, including Editor Drafts, and were either:
 
 - shipped in a release browser version
 - shipped in a pre-release browser version

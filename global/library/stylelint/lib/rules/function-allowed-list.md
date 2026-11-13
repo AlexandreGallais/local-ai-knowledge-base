@@ -1,9 +1,9 @@
 ---
 title: "function-allowed-list"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/function-allowed-list/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/function-allowed-list/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ a { transform: scale(1); }
 /**            ↑
  * This function */
 ```
+
+Use this rule to enforce a subset of functions as a convention. For example, allow only `calc`, `clamp` and `color-mix`.
 
 This rule supports 1 message argument: the disallowed function.
 

@@ -1,9 +1,9 @@
 ---
 title: "rule-empty-line-before"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/rule-empty-line-before/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/rule-empty-line-before/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -18,6 +18,8 @@ b {}  /* ↑ */
 /**      ↑
  * This line */
 ```
+
+Use this rule to enforce a convention. For example, require an empty line before each multi-line rule for readability.
 
 This rule ignores rules that are the very first node in a source.
 

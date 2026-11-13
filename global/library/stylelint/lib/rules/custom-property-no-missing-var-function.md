@@ -1,9 +1,9 @@
 ---
 title: "custom-property-no-missing-var-function"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/custom-property-no-missing-var-function/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/custom-property-no-missing-var-function/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -18,10 +18,11 @@ Disallow missing `var` function for custom properties.
  *             This custom property */
 ```
 
-This rule has the following limitations:
+Use this rule to avoid declarations that browsers ignore. A custom property without `var()`, e.g. `--foo` alone, is a plain identifier that most properties reject.
 
-- It only reports custom properties that are defined within the same source.
-- It does not check properties that can contain author-defined identifiers, e.g. `transition-property`.
+This rule ignores properties that accept a `<custom-ident>` or `<dashed-ident>` as their whole value, e.g. `transition-property`.
+
+You can filter the CSSTree Syntax Reference to find out what properties accept them, and use the `languageOptions` configuration property to extend it.
 
 This rule supports 1 message argument: the custom property.
 

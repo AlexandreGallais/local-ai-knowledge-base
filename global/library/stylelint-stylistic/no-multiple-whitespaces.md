@@ -1,9 +1,9 @@
 ---
 title: "no-multiple-whitespaces"
 tool: "stylelint-stylistic"
-version: "5.3"
-source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/d61d92538fce80f9e25ad9fee7b8018bf7f33e92/lib/rules/no-multiple-whitespaces/README.md"
-commit: "d61d92538fce80f9e25ad9fee7b8018bf7f33e92"
+version: "6.0"
+source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/3cd01e1c32e87a7d92b99c3a35e869bc36c019bb/lib/rules/no-multiple-whitespaces/README.md"
+commit: "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb"
 license: "MIT"
 ---
 
@@ -19,6 +19,10 @@ Disallow multiple whitespaces.
 ```
 
 The `fix` option can automatically fix most of the problems reported by this rule.
+
+Where the configuration lists `named-grid-areas-alignment` with its `alignColumns` option, this rule leaves alone the runs between the tokens of a row line of a `grid-template` or `grid` shorthand, which that rule pads into columns.
+
+A run inside a comment is left alone. Where an unquoted address opens straight behind a lower-case `url(`, plain CSS and Less read comment delimiters as part of the address, so a run written there is collapsed.
 
 ## Options
 
@@ -46,7 +50,7 @@ a { border: 1px  solid   black }
 a { color: rgb(0  0   0    /    0) }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { gap: 1em 2em }

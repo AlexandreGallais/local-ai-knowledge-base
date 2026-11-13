@@ -1,9 +1,9 @@
 ---
 title: "no-duplicate-selectors"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/no-duplicate-selectors/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/no-duplicate-selectors/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,7 +17,9 @@ Disallow duplicate selectors.
  * These duplicates */
 ```
 
-This rule checks for two types of duplication:
+Use this rule to avoid splitting a selector's declarations across two rules, which makes them harder to find.
+
+This rule reports two types of duplication:
 
 - Duplication of a single selector with a rule's selector list, e.g. `a, b, a {}`.
 - Duplication of a selector list within a stylesheet, e.g. `a, b {} a, b {}`. Duplicates are found even if the selectors come in different orders or have different spacing, e.g. `a d, b > c {} b>c, a d {}`.

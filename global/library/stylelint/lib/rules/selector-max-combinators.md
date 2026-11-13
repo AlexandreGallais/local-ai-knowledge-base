@@ -1,9 +1,9 @@
 ---
 title: "selector-max-combinators"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/selector-max-combinators/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/selector-max-combinators/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -16,6 +16,8 @@ Limit the number of combinators in a selector.
 /** ↑   ↑   ↑  ↑
  * These are combinators */
 ```
+
+Use this rule to enforce a convention. For example, limit selectors to `1` combinator, so that styles can't reach deep into the markup.
 
 Each selector in a selector list is evaluated separately.
 

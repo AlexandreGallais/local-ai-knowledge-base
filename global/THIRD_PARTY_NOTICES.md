@@ -240,7 +240,7 @@ official documentation of other projects, each under its own license, listed bel
 
 - Work: Stylelint user guide and rules
 - Authors: Maxime Thirouin, David Clark and the Stylelint contributors
-- Source: <https://github.com/stylelint/stylelint>, 17.16.0, commit bc06c7cdb1413de3d8dc939b33af138ab7e59df1
+- Source: <https://github.com/stylelint/stylelint>, 18.0.0, commit 7c49e1828311b9d413826cb47703ef1c6ccae4ef
 - License: MIT
 - Changes: converted to plain Markdown, site markup removed, code samples inlined, pages cut into files of 16 KB at most.
 
@@ -248,7 +248,7 @@ official documentation of other projects, each under its own license, listed bel
 
 - Work: @stylistic/stylelint-plugin rules, the formatting pass for CSS and SCSS
 - Authors: Stylelint Stylistic contributors
-- Source: <https://github.com/stylelint-stylistic/stylelint-stylistic>, v5.3.1, commit d61d92538fce80f9e25ad9fee7b8018bf7f33e92
+- Source: <https://github.com/stylelint-stylistic/stylelint-stylistic>, v6.0.1, commit 3cd01e1c32e87a7d92b99c3a35e869bc36c019bb
 - License: MIT
 - Changes: converted to plain Markdown, site markup removed, code samples inlined, pages cut into files of 16 KB at most.
 

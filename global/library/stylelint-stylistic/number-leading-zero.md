@@ -1,9 +1,9 @@
 ---
 title: "number-leading-zero"
 tool: "stylelint-stylistic"
-version: "5.3"
-source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/d61d92538fce80f9e25ad9fee7b8018bf7f33e92/lib/rules/number-leading-zero/README.md"
-commit: "d61d92538fce80f9e25ad9fee7b8018bf7f33e92"
+version: "6.0"
+source: "https://github.com/stylelint-stylistic/stylelint-stylistic/blob/3cd01e1c32e87a7d92b99c3a35e869bc36c019bb/lib/rules/number-leading-zero/README.md"
+commit: "3cd01e1c32e87a7d92b99c3a35e869bc36c019bb"
 license: "MIT"
 ---
 
@@ -16,8 +16,6 @@ a { line-height: 0.5; }
 /**              ↑
  * This leading zero */
 ```
-
-This rule ignores mixin parameters in Less.
 
 The `fix` option can automatically fix all of the problems reported by this rule.
 
@@ -39,7 +37,7 @@ a { line-height: .5; }
 a { transform: translate(2px, .4px); }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { line-height: 0.5; }
@@ -63,7 +61,7 @@ a { line-height: 0.5; }
 a { transform: translate(2px, 0.4px); }
 ```
 
-The following patterns are _not_ considered problems:
+The following patterns are _not_ considered problems:
 
 ```css
 a { line-height: .5; }

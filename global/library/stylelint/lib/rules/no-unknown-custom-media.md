@@ -1,9 +1,9 @@
 ---
 title: "no-unknown-custom-media"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/no-unknown-custom-media/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/no-unknown-custom-media/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -20,6 +20,8 @@ Disallow unknown custom media queries.
 /**      ↑
 *   And this one */
 ```
+
+Use this rule to avoid custom media queries that match no `@custom-media` rule. Browsers can't evaluate them, so their `@media` blocks never apply.
 
 This rule considers custom media queries defined within the same source or within the files specified in the `referenceFiles` configuration property to be known.
 

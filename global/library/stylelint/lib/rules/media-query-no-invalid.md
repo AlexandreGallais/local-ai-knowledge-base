@@ -1,9 +1,9 @@
 ---
 title: "media-query-no-invalid"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/media-query-no-invalid/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/media-query-no-invalid/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,9 +17,9 @@ Disallow invalid media queries.
  * This media query */
 ```
 
-Media queries must be grammatically valid according to the Media Queries Level 5 specification.
+Use this rule to avoid `@media` blocks that never apply. An invalid query is replaced by `not all`.
 
-It works well with other rules that validate feature names and values:
+It works well with other rules that check feature names and values:
 
 - `media-feature-name-no-unknown`
 - `media-feature-name-value-no-unknown`

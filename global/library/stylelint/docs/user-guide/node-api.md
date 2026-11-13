@@ -1,9 +1,9 @@
 ---
 title: "Node.js API"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/docs/user-guide/node-api.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/docs/user-guide/node-api.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -62,17 +62,22 @@ The directory from which Stylelint will look for files. Defaults to the current 
 
 A file glob, or array of file globs.
 
-Relative globs are considered relative to `globbyOptions.cwd`.
+Relative globs are considered relative to `cwd`.
 
 Though both `files` and `code` are "optional", you _must_ have one and _cannot_ have both.
 
 ### `globbyOptions`
 
-The options that are passed with `files`.
+The options used to match `files`. Stylelint supports a subset of globby's options:
 
-For example, you can set a specific `cwd` to use when globbing paths. Relative globs in `files` are considered relative to this path. By default, `globbyOptions.cwd` will be set by `cwd`.
+- `braceExpansion`: expand braces, e.g. `{a,b}`. Defaults to `true`.
+- `caseSensitiveMatch`: match case-sensitively. Defaults to `true`.
+- `dot`: match files and directories whose names begin with a dot. Defaults to `false`.
+- `extglob`: support extglobs, e.g. `+(a|b)`. Defaults to `true`.
+- `followSymbolicLinks`: traverse symbolic links to directories. Defaults to `true`.
+- `ignore`: a glob, or array of globs, of files to exclude. Relative globs are considered relative to `cwd`.
 
-For more detail usage, see Globby Guide.
+Stylelint throws a configuration error for any other option.
 
 ## The returned promise
 
@@ -110,6 +115,10 @@ An array containing all the Stylelint result objects (the objects that formatter
 ### `maxWarningsExceeded`
 
 An object containing the maximum number of warnings and the amount found, e.g. `{ maxWarnings: 0, foundWarnings: 12 }`.
+
+### `color`
+
+The value of the `color` option, if it was set.
 
 ## Result object
 

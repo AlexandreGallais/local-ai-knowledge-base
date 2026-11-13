@@ -18,5 +18,11 @@
     "angular-lib",
     "ts-lib",
     "ts-pure-lib"
+  ],
+  "practices": [
+    "angular-app",
+    "angular-lib",
+    "ts-lib",
+    "ts-pure-lib"
   ]
 }

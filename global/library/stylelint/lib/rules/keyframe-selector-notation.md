@@ -1,9 +1,9 @@
 ---
 title: "keyframe-selector-notation"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/keyframe-selector-notation/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/keyframe-selector-notation/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,7 +17,13 @@ Specify keyword or percentage notation for keyframe selectors.
  *               These notations */
 ```
 
-The keyword `from` is equivalent to the value `0%`. The keyword `to` is equivalent to the value `100%`.
+Use this rule to enforce a convention. In `@keyframes`, `from` and `to` are equivalent to `0%` and `100%`.
+
+Choose:
+
+- `"keyword"` for clarity
+- `"percentage"` for consistency with intermediate steps, e.g. `50%`
+- `"percentage-unless-within-keyword-only-block"` for both, with `from` and `to` only in two-step animations
 
 The `fix` option can automatically fix all of the problems reported by this rule.
 

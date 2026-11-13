@@ -1,9 +1,9 @@
 ---
 title: "color-function-alias-notation"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/color-function-alias-notation/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/color-function-alias-notation/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -17,7 +17,12 @@ Specify alias notation for color-functions.
  *             This notation */
 ```
 
-Color functions `rgb()` and `hsl()` have aliases `rgba()` and `hsla()`. Those are exactly equivalent, and it's preferable to use the first variant without `a`.
+Use this rule to enforce a convention. `rgba()` and `hsla()` are aliases of `rgb()` and `hsl()`, which accept an alpha value themselves.
+
+Choose:
+
+- `"without-alpha"` to follow the specification, which keeps the aliases only for compatibility
+- `"with-alpha"` for older browsers, which accept an alpha value only in `rgba()` and `hsla()`
 
 The `fix` option can automatically fix all of the problems reported by this rule.
 

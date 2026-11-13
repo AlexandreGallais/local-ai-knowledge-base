@@ -1,9 +1,9 @@
 ---
 title: "font-weight-notation"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/lib/rules/font-weight-notation/README.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/lib/rules/font-weight-notation/README.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -24,6 +24,13 @@ a { font: italic small-caps 600 16px/3 cursive; }
 /**                       ↑
  *                        Multiple notations are available in @font-face */
 ```
+
+Use this rule to enforce a convention. `normal` and `bold` are names for `400` and `700`.
+
+Choose:
+
+- `"numeric"` for one scale across every weight, including the fine steps of variable fonts
+- `"named-where-possible"` for clarity
 
 This rule ignores `$sass`, `@less`, and `var(--custom-property)` variable syntaxes.
 

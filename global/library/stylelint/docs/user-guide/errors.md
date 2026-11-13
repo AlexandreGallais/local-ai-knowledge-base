@@ -1,9 +1,9 @@
 ---
 title: "Errors & warnings"
 tool: "stylelint"
-version: "17.16"
-source: "https://github.com/stylelint/stylelint/blob/bc06c7cdb1413de3d8dc939b33af138ab7e59df1/docs/user-guide/errors.md"
-commit: "bc06c7cdb1413de3d8dc939b33af138ab7e59df1"
+version: "18.0"
+source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/docs/user-guide/errors.md"
+commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
 license: "MIT"
 ---
 
@@ -22,8 +22,8 @@ You should balance your _curly braces_, typically of _declaration blocks_.
 For example:
 
 ```diff
-- a { color: red;
-+ a { color: red; }
+-a { color: red;
++a { color: red; }
 ```
 
 ### Unclosed bracket
@@ -33,8 +33,8 @@ You should balance your _square brackets_, typically of _attribute selectors_ an
 For example:
 
 ```diff
-- a[foo { grid: [bar; }
-+ a[foo] { grid: [bar]; }
+-a[foo { grid: [bar; }
++a[foo] { grid: [bar]; }
 ```
 
 ### Unclosed string
@@ -44,8 +44,8 @@ You should balance your _quotation marks_.
 For example:
 
 ```diff
-- a { content: " }
-+ a { content: "" }
+-a { content: " }
++a { content: "" }
 ```
 
 ### Unknown word
@@ -60,12 +60,12 @@ You should:
 For example:
 
 ```diff
-a {
-- margin top: 1px
-- color red
-+ margin-top: 1px;
-+ color: red
-}
+ a {
+-  margin top: 1px
+-  color red
++  margin-top: 1px;
++  color: red
+ }
 ```
 
 ## Parse error
