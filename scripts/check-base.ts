@@ -1190,6 +1190,116 @@ export function checkPropertyNames(text: string, file: string, suffixes: string[
   return findings;
 }
 
+// An equipment card of a catalog document: "### <English name> (<French name>)", then five bullets.
+const CARD_HEADING = /^### (.+) \((.+)\)$/;
+const CARD_FIELDS = [
+  'Symbol',
+  'Real working',
+  'States',
+  'Properties',
+  'Model',
+];
+// In a "- Properties:" bullet: "`a`, `b` (number" or "`c` (boolean".
+const TYPED_NAMES = /((?:`\w+`(?:, )?)+) \((number|boolean)\b/g;
+
+export interface Card {
+  english: string;
+  french: string;
+  fields: Set<string>;
+  properties: {
+    name: string;
+    type: string;
+  }[];
+}
+
+function addBullet(card: Card, text: string): void {
+  const label = /^- ([A-Z][a-z]+(?: [a-z]+)?):/.exec(text)?.[1];
+
+  if (label === undefined) {
+    return;
+  }
+  card.fields.add(label);
+  if (label === 'Properties') {
+    for (const match of text.matchAll(TYPED_NAMES)) {
+      for (const name of match[1].match(/\w+/g) ?? []) {
+        card.properties.push({
+          name,
+          type: match[2],
+        });
+      }
+    }
+  }
+}
+
+export function readCards(text: string): Card[] {
+  const cards: Card[] = [];
+
+  for (const line of analyseLines(text).filter((item) => !item.inCode)) {
+    const heading = CARD_HEADING.exec(line.text);
+
+    if (heading !== null) {
+      cards.push({
+        english: heading[1],
+        french: heading[2],
+        fields: new Set(),
+        properties: [],
+      });
+    } else if (line.text.startsWith('### ') || line.text.startsWith('## ')) {
+      cards.push({
+        english: '',
+        french: '',
+        fields: new Set(CARD_FIELDS),
+        properties: [],
+      });
+    } else {
+      const card = cards.at(-1);
+
+      if (card !== undefined) {
+        addBullet(card, line.text);
+      }
+    }
+  }
+  return cards.filter((card) => card.english !== '');
+}
+
+// The rows "| French | English | Document |" of the French to English indexes.
+export function readFrenchIndex(text: string): Map<string, string> {
+  const rows = new Map<string, string>();
+
+  for (const line of splitLines(text).filter((item) => item.startsWith('| ') && !item.startsWith('| French'))) {
+    const cells = line
+      .split('|')
+      .map((cell) => cell.trim());
+
+    if (cells.length > 3 && cells[1] !== '' && !cells[1].startsWith('---')) {
+      rows.set(cells[1].toLowerCase(), cells[2]);
+    }
+  }
+  return rows;
+}
+
+// The English name of a French term, as the French to English indexes give it.
+export function lookUpFrench(indexTexts: string[], french: string): string | undefined {
+  for (const text of indexTexts) {
+    const english = readFrenchIndex(text).get(french.toLowerCase());
+
+    if (english !== undefined) {
+      return english;
+    }
+  }
+  return undefined;
+}
+
+function checkCards(text: string, file: string, suffixes: string[], indexTexts: string[]): Finding[] {
+  return readCards(text).flatMap((card) => [
+    ...CARD_FIELDS
+      .filter((field) => !card.fields.has(field))
+      .map((field) => finding(file, `card "${card.english}" has no "- ${field}:" line`)),
+    ...card.properties.flatMap((property) => checkPropertyName(property.name, property.type, file, suffixes)),
+    ...(lookUpFrench(indexTexts, card.french) === card.english ? [] : [finding(file, `card "${card.english}" has no row "| ${card.french} | ${card.english} |" in a French to English index`)]),
+  ]);
+}
+
 function checkSynopticNames(base: string): BaseResult {
   const folder = join(base, 'docs', 'synoptics');
   const namingPath = join(folder, 'symbol-property-naming.md');
@@ -1198,11 +1308,17 @@ function checkSynopticNames(base: string): BaseResult {
     return merge([]);
   }
   const suffixes = unitSuffixes(read(namingPath));
+  const files = markdownFiles(folder).filter((path) => !path.endsWith('.fr.md'));
+  const indexTexts = files
+    .filter((path) => basename(path).startsWith('index-fr-en'))
+    .map((path) => read(path));
+  const catalogs = files.filter((path) => basename(path).startsWith('catalog-'));
 
   return {
-    findings: markdownFiles(folder)
-      .filter((path) => !path.endsWith('.fr.md'))
-      .flatMap((path) => checkPropertyNames(read(path), shown(path), suffixes)),
+    findings: [
+      ...files.flatMap((path) => checkPropertyNames(read(path), shown(path), suffixes)),
+      ...catalogs.flatMap((path) => checkCards(read(path), shown(path), suffixes, indexTexts)),
+    ],
     files: 0,
   };
 }

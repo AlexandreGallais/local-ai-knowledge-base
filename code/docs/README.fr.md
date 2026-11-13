@@ -61,7 +61,7 @@ anglais.
 | `docs/dotnet/` | Ce qui a changé dans C#, .NET, ASP.NET Core et EF Core de la 6 à la 11, et les bibliothèques devenues payantes. |
 | `docs/containers/` | Les règles d'un `Dockerfile`, les images .NET et Angular, Podman, les dev containers et les problèmes de conteneur. |
 | `docs/kubernetes/` | Les manifestes Kubernetes, les `apiVersion`, les sondes, les ressources et le temps réel, le déploiement, le contrôle sans cluster et le dépannage d'un Pod. |
-| `docs/synoptics/` | Les règles pour représenter un équipement sur un synoptique, la convention de nommage des propriétés des symboles, et la structure d'un composant symbole (gabarit `templates/typescript-angular/synoptic-symbol.ts`). |
+| `docs/synoptics/` | Les règles pour représenter un équipement sur un synoptique, la convention de nommage des propriétés des symboles, la structure d'un composant symbole (gabarit `templates/typescript-angular/synoptic-symbol.ts`), et le catalogue des équipements de fluides avec son index français → anglais. |
 | `docs/maintenance/` | La procédure pour mettre à jour les documents d'un outil qui change de version. |
 | `docs/csharp-analysis/` | Les règles d'analyse C# que le build fait échouer, chacune avec un exemple faux et un juste. |
 | `docs/typescript-lint/` | Les règles de lint TypeScript et Angular que l'outil ne corrige pas seul, chacune avec un exemple faux et un juste. |

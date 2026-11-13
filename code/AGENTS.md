@@ -60,7 +60,7 @@ Open the index of your topic, then only the documents your task needs.
 - [dotnet](docs/dotnet/index.md): What changed in C#, .NET, ASP.NET Core and EF Core 6 to 11, and paid packages.
 - [kubernetes](docs/kubernetes/index.md): Manifests, API versions, probes, resources, rollout, validation without a cluster and debugging.
 - [maintenance](docs/maintenance/index.md): Update the documents of a tool to a new version.
-- [synoptics](docs/synoptics/index.md): Draw, code and name the symbols of a synoptic view: display rules, property names, symbol component.
+- [synoptics](docs/synoptics/index.md): Synoptic display rules, property names, symbol component, equipment catalogs with real working and model, French to English names.
 - [typescript](docs/typescript/index.md): What changed in TypeScript 5.0 to 7.0, RxJS 7 and Node.js 22 to 26.
 - [typescript-lint](docs/typescript-lint/index.md): TypeScript and Angular lint rules the tool does not fix, with wrong and right examples.
 

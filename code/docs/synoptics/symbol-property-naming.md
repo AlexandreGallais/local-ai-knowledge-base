@@ -71,9 +71,14 @@ options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 | Battery charge | `Ah` | `batteryChargeAh` |
 | Turn rate | `DegPerS` | `rateOfTurnDegPerS` |
 | Torque | `Nm`, `Knm` | `shaftTorqueKnm` |
+| Force | `N` | `rodForceN` |
 | Run time | `H` | `runTimeH` |
 | Inertia | `KgM2` | `shaftInertiaKgM2` |
 | Ratio, count | `Ratio`, `Count` | `gearRatio`, `startCount` |
+| Displacement, area | `Cm3`, `Cm2`, `M2` | `displacementCm3`, `pistonAreaCm2` |
+| Low pressure | `Pa` | `filterDifferentialPressurePa` |
+| Concentration | `Ppm` | `oilContentPpm` |
+| Kinematic viscosity | `Cst` | `fuelViscosityCst` |
 
 Write each unit with one spelling only: `Percent`, never `Pct`; `DegC`, never `C`; `M3PerH`, never `M3h`.
 

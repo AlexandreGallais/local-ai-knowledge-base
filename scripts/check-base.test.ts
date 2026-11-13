@@ -23,7 +23,9 @@ import {
   checkPropertyNames,
   checkSkill,
   findWebRequests,
+  lookUpFrench,
   looksFrench,
+  readCards,
   unitSuffixes,
 } from './check-base.ts';
 
@@ -554,6 +556,73 @@ describe('property names of the synoptics documents', () => {
     ]) {
       assert.ok(suffixes.includes(suffix), suffix);
     }
+  });
+});
+const CARD = [
+  '### Gate valve (robinet-vanne)',
+  '',
+  '- Symbol: ASTM F1000. Two triangles point to point.',
+  '- Real working: A gate slides across the flow.',
+  '- States: `open`, `closed`',
+  '- Properties: set `onOffValve`; `travelTimeS` (number, s, P); `isLocked` (boolean, M).',
+  '- Model: Open or closed after the travel time.',
+  '',
+].join(NEWLINE);
+const FRENCH_INDEX = [
+  '| French | English | Document |',
+  '| --- | --- | --- |',
+  '| robinet-vanne | Gate valve | catalog-piping-valves.md |',
+  '',
+].join(NEWLINE);
+
+function catalogBase(card: string, index: string): string {
+  const root = mkdtempSync(join(tmpdir(), 'check-base-'));
+  const naming = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '..', 'code', 'docs', 'synoptics', 'symbol-property-naming.md'), 'utf8');
+
+  writeTree(root, {
+    'AGENTS.md': VALID_AGENTS,
+    'docs/synoptics/symbol-property-naming.md': naming,
+    'docs/synoptics/catalog-piping-valves.md': card,
+    'docs/synoptics/index-fr-en-fluids.md': index,
+  });
+  return messages(checkBase(root).findings);
+}
+
+describe('catalog cards and the French to English index', () => {
+  it('accepts a complete card listed in the French index', () => {
+    assert.doesNotMatch(catalogBase(CARD, FRENCH_INDEX), /card "Gate valve"/);
+  });
+  it('refuses a card without its model line', () => {
+    assert.match(catalogBase(CARD.replace('- Model: Open or closed after the travel time.\n', ''), FRENCH_INDEX), /card "Gate valve" has no "- Model:" line/);
+  });
+  it('refuses a card property outside the naming convention', () => {
+    assert.match(catalogBase(CARD.replace('`isLocked`', '`locked`'), FRENCH_INDEX), /boolean property "locked"/);
+  });
+  it('refuses a card missing from the French index', () => {
+    assert.match(catalogBase(CARD, FRENCH_INDEX.replace('robinet-vanne', 'vanne')), /card "Gate valve" has no row/);
+  });
+  it('gives, for each card of the fluid catalogs of the base, its English name from its French name', () => {
+    const folder = join(dirname(fileURLToPath(import.meta.url)), '..', 'code', 'docs', 'synoptics');
+    const indexes = [readFileSync(join(folder, 'index-fr-en-fluids.md'), 'utf8')];
+    const cards = [
+      'catalog-hydraulics.md',
+      'catalog-compressed-air.md',
+      'catalog-piping-valves.md',
+      'catalog-actuated-valves.md',
+      'catalog-ship-equipment.md',
+      'catalog-ship-circuits.md',
+      'catalog-hvac.md',
+    ].flatMap((file) => readCards(readFileSync(join(folder, file), 'utf8')));
+
+    assert.ok(cards.length >= 56, `${String(cards.length)} cards`);
+    for (const card of cards) {
+      assert.equal(lookUpFrench(indexes, card.french), card.english, card.french);
+    }
+    assert.equal(lookUpFrench(indexes, 'vanne papillon'), 'Butterfly valve');
+  });
+  it('gives the English name of a French term, whatever its case', () => {
+    assert.equal(lookUpFrench([FRENCH_INDEX], 'Robinet-vanne'), 'Gate valve');
+    assert.equal(lookUpFrench([FRENCH_INDEX], 'pompe'), undefined);
   });
 });
 const TOPIC_INDEX_TEXT = [
