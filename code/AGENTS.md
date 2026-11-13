@@ -27,6 +27,7 @@
 | TypeScript or Angular | `npm run fix`, `npm run check`, `npm run build` |
 | C# | `bash scripts/format-csharp.sh`, `dotnet build --no-restore -tl:off -nologo -v:q` |
 | Dockerfile, dev container or Kubernetes | The commands of the skill `check-container-change` |
+| Tests | Angular: `npx ng test --no-watch --no-progress --include <spec file>`; C#: `dotnet test` as `docs/dotnet-testing/run-tests.md` says. Your tests first, then all |
 
 ## Skills
 
@@ -34,6 +35,7 @@
 | --- | --- |
 | To write or change TypeScript or Angular code | load the skill `lint-typescript` |
 | To write or change C# code, or to fix a build error | load the skill `analyze-csharp` |
+| To write, fix or run tests in C#, Angular or TypeScript | load the skill `write-tests` |
 | To write or check a Dockerfile, a devcontainer.json, a Kubernetes manifest, a Helm chart or a kustomization | load the skill `check-container-change` |
 | To check an API signature, an option or a command flag | load the skill `look-up-api` |
 | To explain or summarize code in C, C++, Java or Rust, or their build files | load the skill `explain-code` |
@@ -41,11 +43,9 @@
 | To review code or a diff; to review an architecture, an API contract or a library choice | load the skill `code-review` for code, `architecture-review` for a design |
 | To read a heavy file, or a folder of them | load the skill `read-heavy-file` |
 | To write a commit message, or to commit | load the skill `write-commit-message` |
-| To choose a version number, or to tag a release | load the skill `choose-version` |
-| To name a branch, or to create one | load the skill `name-branch` |
+| To choose a version number or tag a release; to name or create a branch | load the skill `choose-version` for a version, `name-branch` for a branch |
 | To write or shorten `AGENTS.md` | load the skill `write-agents-md` |
-| To write a skill | load the skill `write-skill` |
-| To write an agent | load the skill `write-agent` |
+| To write a skill or an agent | load the skill `write-skill`, or `write-agent` for an agent |
 | To add or update a document of the base | load the skill `write-base-document` |
 | To write the system prompt of a chat model | load the skill `write-chat-model` |
 
@@ -55,10 +55,12 @@ One line per topic. Each line points to the index of the topic: one line per doc
 Open the index of your topic, then only the documents your task needs.
 
 - [angular](docs/angular/index.md): What changed in Angular 17 to 22, and the old patterns to replace.
+- [angular-testing](docs/angular-testing/index.md): Write and run Angular and TypeScript tests with the runner of the project, and test SVG classes.
 - [architecture](docs/architecture/index.md): Architecture of .NET and Angular applications: decomposition, API contract, real-time push, messaging, patterns, outdated choices.
 - [containers](docs/containers/index.md): Dockerfile rules, .NET and Angular images, Podman, dev containers and container problems.
 - [csharp-analysis](docs/csharp-analysis/index.md): C# analysis rules that fail the build, with wrong and right examples.
 - [dotnet](docs/dotnet/index.md): What changed in C#, .NET, ASP.NET Core and EF Core 6 to 11, and paid packages.
+- [dotnet-testing](docs/dotnet-testing/index.md): Write and run C# tests that check something, at the runner and version of the project.
 - [kubernetes](docs/kubernetes/index.md): Manifests, API versions, probes, resources, rollout, validation without a cluster and debugging.
 - [maintenance](docs/maintenance/index.md): Update the documents of a tool to a new version.
 - [reading-code](docs/reading-code/index.md): Read C, C++, Java and Rust as a C# developer, with embedded idioms and build files.

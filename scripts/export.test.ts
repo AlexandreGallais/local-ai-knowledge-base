@@ -453,11 +453,21 @@ describe('Open WebUI manifest', () => {
     ]);
     assert.deepEqual(byId.get('csharp-dotnet')?.skills, [
       'analyze-csharp',
+      'write-tests',
       'look-up-api',
       'architecture-review',
       'code-review',
       'explain-code',
     ]);
+    assert.ok(byId
+      .get('csharp-dotnet')?.knowledge
+      .includes('dotnet-testing'));
+    assert.ok(!byId
+      .get('csharp-dotnet')?.knowledge
+      .includes('angular-testing'));
+    assert.ok(byId
+      .get('typescript-angular')?.knowledge
+      .includes('angular-testing'));
     assert.equal(manifest.models.length, 5);
   });
   it('lists each knowledge base and skill that a model uses, and nothing else', () => {

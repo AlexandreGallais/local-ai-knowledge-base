@@ -2,11 +2,11 @@
 id: dotnet-paid-packages
 title: .NET packages that became paid
 topic: dotnet
-summary: AutoMapper, MediatR, MassTransit, FluentAssertions and Polly changed license; their free replacements. Checked 2026-11.
+summary: AutoMapper, MediatR, MassTransit, FluentAssertions, Verify and Polly changed license; their free replacements. Checked 2026-11.
 tool: dotnet
 version: "11"
 checked: 2026-11-13
-sources: [S1, S2, S3, S4, S5]
+sources: [S1, S2, S3, S4, S5, S6]
 license: MIT, written for this base; this is not legal advice
 variant: files
 ---
@@ -17,7 +17,7 @@ Contents: 1. The rule · 2. The packages · 3. Example · Sources
 
 ## 1. The rule (.NET package licenses)
 
-- Never add AutoMapper, MediatR, MassTransit, FluentAssertions or Polly to a project without the user's agreement. Say their license first.
+- Never add AutoMapper, MediatR, MassTransit, FluentAssertions, Verify or Polly to a project without the user's agreement. Say their license first.
 - In a project that already has one of them, never raise it to the version of the table below or later.
 - Read the versions in `Directory.Packages.props` or in the `PackageReference` of the project.
 - Licenses change often: when in doubt, say that the user must check the license of the version. This is not legal advice.
@@ -30,6 +30,7 @@ Contents: 1. The rule · 2. The packages · 3. Example · Sources
 | MediatR | Version 13.0 (2025-07-02): same terms as AutoMapper | 12.x | Mediator, Brighter, a handler interface written by hand |
 | MassTransit | Version 9: commercial product, license required | 8.x | Rebus, Brighter, Wolverine |
 | FluentAssertions | Version 8 (2025-01): proprietary license, paid for commercial use | 7.x (Apache 2.0) | AwesomeAssertions, Shouldly, plain `Assert` |
+| Verify | Code still MIT; a maintenance fee for the versions released after 2026-09-01, for organizations with revenue; version 33 checks the sponsorship at build time | versions below 33 | `Assert` of the test framework, expected values written in the test [S6] |
 | Polly | Open Source Maintenance Fee for companies that earn from a product using it, from 2026-11-16; code still BSD-3-Clause | versions before that date | `Microsoft.Extensions.Http.Resilience`, which uses Polly underneath |
 | Swashbuckle | No license change: removed from the project templates of .NET 9 | — | `Microsoft.AspNetCore.OpenApi` |
 
@@ -60,3 +61,4 @@ public static class ValveMapping
 - [S3] InfoQ, article on the license of Fluent Assertions 8, 2025-01-30, <https://www.infoq.com/news/2025/01/fluent-assertions-v8-license>, read 2026-11-12, summarized.
 - [S4] App-vNext, "Polly", README of the repository, <https://github.com/App-vNext/Polly>, read 2026-11-12, BSD-3-Clause, summarized.
 - [S5] ASP.NET Core team, "Announcement: Swashbuckle.AspNetCore is being removed in .NET 9", issue 54599, <https://github.com/dotnet/aspnetcore/issues/54599>, read 2026-11-12, summarized.
+- [S6] VerifyTests, "Verify", README of the repository, <https://github.com/VerifyTests/Verify>, read 2026-11-13, MIT with a maintenance fee, summarized.

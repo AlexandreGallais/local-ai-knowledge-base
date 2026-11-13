@@ -45,6 +45,7 @@ anglais.
 | `write-commit-message` | Écrit un message de commit au format Conventional Commits, qui passe commitlint. |
 | `choose-version` | Choisit le prochain numéro de version (SemVer) d'après les commits depuis la dernière version. |
 | `name-branch` | Nomme une branche au format Conventional Branch (`feature/…`, `bugfix/…`). |
+| `write-tests` | Écrit et lance des tests C#, Angular ou TypeScript avec le lanceur et les bibliothèques du projet ; corrige le code, jamais le test, pour qu'ils passent. |
 
 ## Les skills de rédaction
 
@@ -72,6 +73,8 @@ anglais.
 | `docs/maintenance/` | La procédure pour mettre à jour les documents d'un outil qui change de version. |
 | `docs/csharp-analysis/` | Les règles d'analyse C# que le build fait échouer, chacune avec un exemple faux et un juste. |
 | `docs/typescript-lint/` | Les règles de lint TypeScript et Angular que l'outil ne corrige pas seul, chacune avec un exemple faux et un juste. |
+| `docs/dotnet-testing/` | Écrire et lancer des tests C# : les deux modes de `dotnet test`, ce qui a changé (xUnit v3, MSTest 4, NUnit 5, paquets payants), les règles d'un test qui vérifie, les tests d'intégration. |
+| `docs/angular-testing/` | Écrire et lancer des tests Angular : `ng test` avec Vitest ou Karma, ce qui a changé, le `TestBed` sans zone, et les tests des classes qui animent du SVG. |
 
 ## Écrire à la version du projet
 

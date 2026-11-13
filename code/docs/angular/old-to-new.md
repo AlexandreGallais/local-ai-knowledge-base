@@ -104,7 +104,7 @@ Read a resource with `user.hasValue()`, `user.value()`, `user.isLoading()` and `
 | --- | --- | --- | --- |
 | `TestBed.get(X)` | `TestBed.inject(X)` | 17 | Removed in 20 [S6] |
 | `async(() => …)` in a test | `waitForAsync(() => …)` | 17 | Removed in 18 |
-| `TestBed.flushEffects()` | `TestBed.tick()` | 20 | Removed in 20 [S6] |
+| `TestBed.flushEffects()` | `TestBed.tick()` | 20 | Deprecated in 20, still in the API of 22 [S6] |
 | `RouterTestingModule` | `provideRouter()` and `provideLocationMocks()` | 17 | Deprecated in 21 [S8] |
 | Karma and Jasmine in a new project | Vitest, builder `@angular/build:unit-test` | 21 | Karma is still supported [S7] |
 | Builders of `@angular-devkit/build-angular` (Webpack) | Builders of `@angular/build` | 18 | Deprecated in 22 |
