@@ -1,7 +1,7 @@
 # eslint-functional library index
 
 eslint-plugin-functional rules. Version 10.0, from <https://github.com/eslint-functional/eslint-plugin-functional> at v10.0.1, commit d7aa1dd4ae4ef804f3010a92d3e7b385153415d8.
-License: MIT, by Jonathan Haines and the eslint-plugin-functional contributors; see THIRD_PARTY_NOTICES.md. The text was converted to plain Markdown and cut into files of 16 KB at most.
+License: MIT, by Jonas Kello and the eslint-plugin-functional contributors; see THIRD_PARTY_NOTICES.md. The text was converted to plain Markdown and cut into files of 16 KB at most.
 
 This index is long: search it with grep for your words, never read it whole. Then open one file and read only the section you need.
 

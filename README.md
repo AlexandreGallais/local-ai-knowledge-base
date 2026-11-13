@@ -46,8 +46,10 @@ once, then linted; "done" comes only after format, lint, build and tests at zero
 8. **Measure it.** Play the ten tasks of the evaluation without a base, with the 0.1 and with the 0.2:
    [guides/run-evaluation.md](guides/run-evaluation.md).
 
-Other trials: heavy files ([guides/try-heavy-files.md](guides/try-heavy-files.md)), update a tool of
-the documentation ([guides/update-a-tool.md](guides/update-a-tool.md)).
+Other trials: one request with and without the base, side by side
+([guides/compare-with-and-without.md](guides/compare-with-and-without.md)), heavy files
+([guides/try-heavy-files.md](guides/try-heavy-files.md)), update a tool of the documentation
+([guides/update-a-tool.md](guides/update-a-tool.md)).
 
 ## Layout
 
@@ -88,5 +90,7 @@ node scripts/export.ts
 ## License
 
 MIT, see [LICENSE](LICENSE). Third-party documentation in `global/library/` keeps its own license,
-listed in `global/THIRD_PARTY_NOTICES.md`. MDN Web Docs content stays under CC BY-SA 2.5 in its own
-folders.
+listed in `global/THIRD_PARTY_NOTICES.md` with its copyright; the license files of each source are
+copied unchanged in `global/licenses/<tool>/` by `node scripts/fetch-licenses.ts`. MDN Web Docs
+content stays under CC BY-SA 2.5 in its own folders. The archive of version 0.1 has the same files in
+`archive/v0.1/`.

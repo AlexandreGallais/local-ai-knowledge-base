@@ -1,7 +1,7 @@
 # eslint-vitest library index
 
 @vitest/eslint-plugin rules. Version 1.6, from <https://github.com/vitest-dev/eslint-plugin-vitest> at v1.6.28, commit c5df1054a25044a7ca5baf07461b7aee1f15f5f2.
-License: MIT, by Verite Mugabo and the eslint-plugin-vitest contributors; see THIRD_PARTY_NOTICES.md. The text was converted to plain Markdown and cut into files of 16 KB at most.
+License: MIT, by Verité Mugabo Makuza and the eslint-plugin-vitest contributors; see THIRD_PARTY_NOTICES.md. The text was converted to plain Markdown and cut into files of 16 KB at most.
 
 This index is long: search it with grep for your words, never read it whole. Then open one file and read only the section you need.
 

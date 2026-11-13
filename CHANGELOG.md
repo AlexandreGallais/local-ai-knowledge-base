@@ -5,6 +5,24 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 
 ## [Unreleased]
 
+### Added
+
+- The license files of every documentation source, copied unchanged at the commit of the library, in
+  `global/licenses/<tool>/` and `archive/v0.1/licenses/<tool>/`, by `node scripts/fetch-licenses.ts`.
+  `scripts/fetch-library.ts` now copies them too.
+- A guide to give one request to a project with the base and to the same project without it:
+  `guides/compare-with-and-without.md`.
+
+### Changed
+
+- `THIRD_PARTY_NOTICES.md` gives the copyright lines of each source, its license address and its
+  license files, and what share-alike (MDN) and the Artistic License (npm) ask. The check of the
+  library refuses a tool without copyright or without its license file.
+
+### Fixed
+
+- The authors of eslint-plugin-functional and of @vitest/eslint-plugin, as their licenses name them.
+
 ## [0.2.0] - 2026-11-13
 
 A new base for front-end work only, made of a global base shared by every dev container and a small

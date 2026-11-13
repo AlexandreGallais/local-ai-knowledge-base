@@ -1,7 +1,8 @@
 // Checks the official documentation library: every source of library/sources.json is complete and
 // has a license; every file of library/<tool>/ has its header (title, tool, version, source, commit,
 // license), is listed in the index of its tool and is 16 KB at most; every tool has its notice in
-// THIRD_PARTY_NOTICES.md. Run with Node 22.18 or later, no package:
+// THIRD_PARTY_NOTICES.md, with its copyright, and its license files in licenses/<tool>/. Run with
+// Node 22.18 or later, no package:
 //   node scripts/check-library.ts [repository-root]
 import {
   existsSync,
@@ -18,6 +19,7 @@ import {
   sep,
 } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { LICENSE_FILE } from './library-licenses.ts';
 import {
   type Source,
   sourceProblems,
@@ -125,7 +127,20 @@ function checkFiles(folder: string, tool: string, shown: (path: string) => strin
   ];
 }
 
-function checkNotice(notices: string, source: Source): LibraryFinding[] {
+// The license files of the tool, kept in licenses/<tool>/, each named by its notice.
+function checkLicenseFiles(root: string, section: string, source: Source): LibraryFinding[] {
+  const folder = join(root, 'licenses', source.tool);
+  const files = existsSync(folder) ? readdirSync(folder).filter((name) => LICENSE_FILE.test(name)) : [];
+
+  if (files.length === 0) {
+    return [finding(`licenses/${source.tool}`, 'no license file; run node scripts/fetch-licenses.ts')];
+  }
+  return files
+    .filter((name) => statSync(join(folder, name)).size === 0 || !section.includes(`(licenses/${source.tool}/${name})`))
+    .map((name) => finding(`licenses/${source.tool}/${name}`, 'empty, or not named by its notice in THIRD_PARTY_NOTICES.md'));
+}
+
+function checkNotice(root: string, notices: string, source: Source): LibraryFinding[] {
   const section = notices
     .split(/^## /m)
     .find((part) => part.startsWith(`${source.tool}\n`));
@@ -133,7 +148,14 @@ function checkNotice(notices: string, source: Source): LibraryFinding[] {
   if (section === undefined) {
     return [finding('THIRD_PARTY_NOTICES.md', `no notice for ${source.tool}`)];
   }
-  return section.includes(`- License: ${source.license}`) ? [] : [finding('THIRD_PARTY_NOTICES.md', `the notice of ${source.tool} does not give its license ${source.license}`)];
+  const license = section.includes(`- License: ${source.license}`) ? [] : [finding('THIRD_PARTY_NOTICES.md', `the notice of ${source.tool} does not give its license ${source.license}`)];
+  const copyright = section.includes('- Copyright: ') ? [] : [finding('THIRD_PARTY_NOTICES.md', `the notice of ${source.tool} gives no copyright`)];
+
+  return [
+    ...license,
+    ...copyright,
+    ...checkLicenseFiles(root, section, source),
+  ];
 }
 
 function checkSource(root: string, source: Source, notices: string): LibraryFinding[] {
@@ -147,7 +169,7 @@ function checkSource(root: string, source: Source, notices: string): LibraryFind
   }
   return [
     ...checkFiles(folder, source.tool, shown),
-    ...checkNotice(notices, source),
+    ...checkNotice(root, notices, source),
   ];
 }
 
@@ -187,7 +209,7 @@ function main(): void {
     process.exitCode = 1;
     return;
   }
-  console.log('Library check passed: every file has its header, is indexed and is 16 KB at most.');
+  console.log('Library check passed: every file has its header, is indexed and is 16 KB at most; every tool has its copyright and its license text.');
 }
 
 if (process.argv[1] !== undefined && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url))) {

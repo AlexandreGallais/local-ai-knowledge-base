@@ -1,6 +1,7 @@
 // Fetches the official documentation listed in global/library/sources.json, each source at its
 // pinned reference, and rebuilds global/library/: cleaned Markdown cut into files of 16 KB at most,
-// an index per tool, lock.json, README.md and global/THIRD_PARTY_NOTICES.md. Needs git and network
+// an index per tool, lock.json, README.md, the license files of each source in global/licenses/<tool>/
+// and global/THIRD_PARTY_NOTICES.md. Needs git and network
 // access; no package. Run from the root of this repository:
 //   node scripts/fetch-library.ts                    every source
 //   node scripts/fetch-library.ts --tool angular,mdn-svg
@@ -24,6 +25,11 @@ import {
   renderNotices,
   writeTool,
 } from './library-build.ts';
+import {
+  licenseFiles,
+  readLicenses,
+  writeLicenses,
+} from './library-licenses.ts';
 import {
   cachedSource,
   fetchSource,
@@ -74,12 +80,13 @@ function main(): void {
     const fetched = values.offline === true ? cachedSource(source, cache) : fetchSource(source, cache);
     const entry = writeTool(fetched, libraryRoot);
 
+    writeLicenses(join(ROOT, 'licenses'), source.tool, licenseFiles(fetched.folder, fetched.commit));
     lock[source.tool] = entry;
     console.log(`${source.tool}: ${entry.files} files, ${(entry.bytes / 1_000_000).toFixed(1)} MB, commit ${entry.commit.slice(0, 12)}`);
   }
   writeFileSync(join(libraryRoot, 'lock.json'), `${JSON.stringify(lock, null, 2)}\n`);
   writeFileSync(join(libraryRoot, 'README.md'), renderLibraryReadme(sources, lock));
-  writeFileSync(join(ROOT, 'THIRD_PARTY_NOTICES.md'), renderNotices(sources, lock));
+  writeFileSync(join(ROOT, 'THIRD_PARTY_NOTICES.md'), renderNotices(sources, lock, readLicenses(join(ROOT, 'licenses'))));
 }
 
 if (process.argv[1] !== undefined && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url))) {

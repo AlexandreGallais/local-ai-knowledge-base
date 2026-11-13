@@ -48,29 +48,40 @@ const INDEX = renderIndex(SOURCE, COMMIT, [
     content: page('Guide'),
   },
 ]);
-const NOTICES = renderNotices([SOURCE], {
+const LOCK = {
   demo: {
     commit: COMMIT,
     files: 1,
     bytes: 100,
     built: '2026-11-13',
   },
+};
+const LICENSE_TEXT = 'MIT License\n\nCopyright (c) 2026 Demo authors\n\nPermission is hereby granted...\n';
+const NOTICES = renderNotices([SOURCE], LOCK, {
+  demo: {
+    files: ['LICENSE'],
+    copyright: ['Copyright (c) 2026 Demo authors'],
+  },
 });
 
-function library(files: Record<string, string>, source: Partial<Source> = SOURCE): string {
+function library(files: Record<string, string>, source: Partial<Source> = SOURCE, without: string[] = []): string {
   const root = mkdtempSync(join(tmpdir(), 'library-'));
-  const all: Record<string, string> = {
+  const every: Record<string, string> = {
     'library/sources.json': JSON.stringify({ sources: [source] }),
     'library/demo/guide.md': page('Guide'),
     'library/demo/index.md': INDEX,
     'THIRD_PARTY_NOTICES.md': NOTICES,
+    'licenses/demo/LICENSE': LICENSE_TEXT,
     ...files,
   };
+  const all = Object
+    .entries(every)
+    .filter(([path]) => !without.includes(path));
 
   for (const [
     path,
     content,
-  ] of Object.entries(all)) {
+  ] of all) {
     mkdirSync(dirname(join(root, path)), { recursive: true });
     writeFileSync(join(root, path), content);
   }
@@ -105,6 +116,23 @@ describe('check of the library', () => {
   });
   it('refuses a tool without its notice in THIRD_PARTY_NOTICES.md', () => {
     assert.deepEqual(messages(library({ 'THIRD_PARTY_NOTICES.md': '# Third-party notices\n' })), ['THIRD_PARTY_NOTICES.md: no notice for demo']);
+  });
+  it('refuses a tool without its license text in licenses/<tool>/', () => {
+    assert.deepEqual(messages(library({ 'licenses/demo/LICENSE': '' })), ['licenses/demo/LICENSE: empty, or not named by its notice in THIRD_PARTY_NOTICES.md']);
+    assert.deepEqual(messages(library({ 'licenses/demo/README.md': 'x' }, SOURCE, ['licenses/demo/LICENSE'])), ['licenses/demo: no license file; run node scripts/fetch-licenses.ts']);
+  });
+  it('refuses a notice without copyright', () => {
+    const withoutCopyright = NOTICES
+      .split('\n')
+      .filter((line) => !line.startsWith('- Copyright: '))
+      .join('\n');
+
+    assert.deepEqual(messages(library({ 'THIRD_PARTY_NOTICES.md': withoutCopyright })), ['THIRD_PARTY_NOTICES.md: the notice of demo gives no copyright']);
+  });
+  it('names in the notice the copyright, the license address and the license file', () => {
+    assert.match(NOTICES, /^- Copyright: `Copyright \(c\) 2026 Demo authors`$/m);
+    assert.match(NOTICES, /^- License: MIT, <https:\/\/opensource\.org\/license\/mit>$/m);
+    assert.match(NOTICES, /^- License text: \[licenses\/demo\/LICENSE\]\(licenses\/demo\/LICENSE\)$/m);
   });
 });
 describe('paths of the library', () => {

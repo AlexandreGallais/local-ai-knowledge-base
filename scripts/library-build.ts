@@ -1,6 +1,7 @@
 // Builds library/<tool>/ from a fetched source: each page cleaned, cut into files of 16 KB at most,
 // each with its header; then the index of the tool, library/lock.json, library/README.md and
-// THIRD_PARTY_NOTICES.md. Used by scripts/fetch-library.ts.
+// THIRD_PARTY_NOTICES.md, with the license files kept in licenses/<tool>/. Used by
+// scripts/fetch-library.ts and scripts/fetch-licenses.ts.
 import {
   existsSync,
   mkdirSync,
@@ -19,6 +20,11 @@ import {
   sep,
 } from 'node:path';
 import { cleanDocument } from './library-clean.ts';
+import {
+  type LicenseRecord,
+  type Licenses,
+  licenseUrls,
+} from './library-licenses.ts';
 import {
   bytes,
   splitMarkdown,
@@ -272,20 +278,45 @@ function megabytes(count: number): string {
   return `${(count / 1_000_000).toFixed(1)} MB`;
 }
 
-export function renderNotices(sources: Source[], lock: Lock): string {
+// What a license asks beyond its text, said once in the notice of each source under it.
+const LICENSE_TERMS: Record<string, string> = {
+  'Artistic-2.0': 'Modified Version under section 4 of the license: its changes are listed above, and this folder stays under the Artistic License 2.0; anyone who receives it may redistribute it under that license.',
+  'CC-BY-SA-2.5': 'Share-alike: these files, and any work adapted from them, stay under CC BY-SA 2.5. MDN code examples are under CC0 1.0 when added on or after 2010-08-20, under MIT before, as the license text says.',
+};
+
+function noticeSection(source: Source, entry: LockEntry, license: LicenseRecord | undefined): string[] {
+  const urls = licenseUrls(source.license);
+  const files = license?.files ?? [];
+  // Quoted as code: the line stays as the license states it, links and all.
+  const copyright = license === undefined || license.copyright.length === 0 ? [`- Copyright: as stated in the license text, by ${source.attribution}`] : license.copyright.map((line) => `- Copyright: \`${line}\``);
+  const terms = LICENSE_TERMS[source.license];
+  const addresses = urls
+    .map((url) => `<${url}>`)
+    .join(' or ');
+  const texts = files
+    .map((name) => `[licenses/${source.tool}/${name}](licenses/${source.tool}/${name})`)
+    .join(', ');
+
+  return [
+    `## ${source.tool}`,
+    '',
+    `- Work: ${source.title}`,
+    `- Authors: ${source.attribution}`,
+    ...copyright,
+    `- Source: <${source.repository.replace(/\.git$/, '')}>, ${source.ref}, commit ${entry.commit}`,
+    urls.length === 0 ? `- License: ${source.license}` : `- License: ${source.license}, ${addresses}`,
+    files.length === 0 ? '- License text: missing; run node scripts/fetch-licenses.ts' : `- License text: ${texts}`,
+    ...terms === undefined ? [] : [`- Terms: ${terms}`],
+    '- Changes: converted to plain Markdown, site markup removed, code samples inlined, pages cut into files of 16 KB at most.',
+    '',
+  ];
+}
+
+export function renderNotices(sources: Source[], lock: Lock, licenses: Licenses): string {
   const sections = sources.flatMap((source) => {
     const entry = lock[source.tool];
 
-    return entry === undefined ? [] : [
-      `## ${source.tool}`,
-      '',
-      `- Work: ${source.title}`,
-      `- Authors: ${source.attribution}`,
-      `- Source: <${source.repository.replace(/\.git$/, '')}>, ${source.ref}, commit ${entry.commit}`,
-      `- License: ${source.license}`,
-      '- Changes: converted to plain Markdown, site markup removed, code samples inlined, pages cut into files of 16 KB at most.',
-      '',
-    ];
+    return entry === undefined ? [] : noticeSection(source, entry, licenses[source.tool]);
   });
 
   return [
@@ -293,7 +324,8 @@ export function renderNotices(sources: Source[], lock: Lock): string {
     '',
     'Everything written for this base is under the MIT License (`LICENSE` of the repository). The folder `library/` holds',
     'official documentation of other projects, each under its own license, listed below. Each file of',
-    '`library/` names its source, commit and license in its header.',
+    '`library/` names its source, commit and license in its header. The license files of each source, copied',
+    'unchanged at its commit with their copyright notices, are in `licenses/<tool>/`.',
     '',
     ...sections,
   ].join(NEWLINE);
