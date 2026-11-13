@@ -52,6 +52,7 @@ options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 | --- | --- | --- |
 | Pressure | `Bar`, `Mbar`, `Kpa` | `dischargePressureBar` |
 | Temperature | `DegC` | `oilTemperatureDegC` |
+| Temperature rise | `DegCPerMin` | `rateOfRiseThresholdDegCPerMin` |
 | Level, opening, load | `Percent` | `tankLevelPercent` |
 | Volume flow | `M3PerH`, `LPerMin` | `coolingFlowM3PerH` |
 | Rotation speed | `Rpm` | `shaftSpeedRpm` |
@@ -78,6 +79,7 @@ options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 | Displacement, area | `Cm3`, `Cm2`, `M2` | `displacementCm3`, `pistonAreaCm2` |
 | Low pressure | `Pa` | `filterDifferentialPressurePa` |
 | Concentration | `Ppm` | `oilContentPpm` |
+| Density, mass flow | `KgPerM3`, `KgPerS` | `densityKgPerM3`, `massFlowRateKgPerS` |
 | Kinematic viscosity | `Cst` | `fuelViscosityCst` |
 
 Write each unit with one spelling only: `Percent`, never `Pct`; `DegC`, never `C`; `M3PerH`, never `M3h`.

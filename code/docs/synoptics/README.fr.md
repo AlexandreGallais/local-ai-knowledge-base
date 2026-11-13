@@ -19,6 +19,13 @@ réel, ses états, les noms de ses propriétés et un modèle simple de simulati
 | `catalog-ship-circuits.md` | 5 circuits d'un navire de surface (combustible, huile, refroidissement, assèchement, ballastage) et 4 fiches de sous-marin au niveau d'un manuel public. |
 | `catalog-hvac.md` | 7 fiches de ventilation et de climatisation. |
 | `index-fr-en-fluids.md` | Le nom anglais de chaque terme français des catalogues de fluides, avec le document qui le décrit. |
+| `catalog-electrical-power.md` | 9 fiches électriques : groupe électrogène, alternateur, tableaux principal et de secours, disjoncteur, contacteur, sectionneur, transformateur, convertisseur. |
+| `catalog-electrical-loads.md` | 6 fiches : batterie, chargeur, moteur et démarreur, prise de quai, délestage, couplage. |
+| `catalog-fire-detection.md` | Les symboles des plans de lutte contre l'incendie (résolution OMI A.952(23)) et 6 fiches de détection : détecteurs, déclencheur manuel, sirène, centrale. |
+| `catalog-fire-extinguishing.md` | 5 fiches : extinction au CO2, brouillard d'eau, mousse, sprinkleurs, porte coupe-feu ; le clapet coupe-feu renvoie à la ventilation. |
+| `catalog-propulsion.md` | 11 fiches : moteur diesel, turbines, moteur de propulsion, ligne d'arbres, réducteur, hélices, appareil à gouverner, propulseur d'étrave, propulsion d'un sous-marin au niveau public. |
+| `catalog-instrumentation.md` | Les lettres de repérage ISA 5.1 et 10 fiches : six transmetteurs, contacts, boucle 4-20 mA, seuils d'alarme, état de diagnostic. |
+| `index-fr-en-systems.md` | Le nom anglais de chaque terme français des catalogues électrique, incendie, propulsion et instrumentation. |
 
 Le gabarit TypeScript du symbole est `templates/typescript-angular/synoptic-symbol.ts`. Le contrôle de
 la base refuse un nombre sans suffixe d'unité de la liste, un booléen qui ne commence pas par `is`,

@@ -620,6 +620,37 @@ describe('catalog cards and the French to English index', () => {
     }
     assert.equal(lookUpFrench(indexes, 'vanne papillon'), 'Butterfly valve');
   });
+  it('gives, for each card of the electrical, fire, propulsion and instrumentation catalogs, its English name', () => {
+    const folder = join(dirname(fileURLToPath(import.meta.url)), '..', 'code', 'docs', 'synoptics');
+    const indexes = [readFileSync(join(folder, 'index-fr-en-systems.md'), 'utf8')];
+    const cards = [
+      'catalog-electrical-power.md',
+      'catalog-electrical-loads.md',
+      'catalog-fire-detection.md',
+      'catalog-fire-extinguishing.md',
+      'catalog-propulsion.md',
+      'catalog-instrumentation.md',
+    ].flatMap((file) => readCards(readFileSync(join(folder, file), 'utf8')));
+
+    assert.ok(cards.length >= 47, `${String(cards.length)} cards`);
+    for (const card of cards) {
+      assert.equal(lookUpFrench(indexes, card.french), card.english, card.french);
+    }
+    assert.equal(lookUpFrench(indexes, 'déclencheur manuel'), 'Manual call point');
+  });
+  it('gives one English name only for each French term of the two indexes', () => {
+    const folder = join(dirname(fileURLToPath(import.meta.url)), '..', 'code', 'docs', 'synoptics');
+    const texts = [
+      'index-fr-en-fluids.md',
+      'index-fr-en-systems.md',
+    ].map((file) => readFileSync(join(folder, file), 'utf8'));
+    const rows = texts.flatMap((text) => text.split(NEWLINE).filter((line) => line.startsWith('| ') && !line.startsWith('| French') && !line.startsWith('| ---')).map((line) => line.split('|').map((cell) => cell.trim())));
+
+    assert.ok(rows.length >= 150, `${String(rows.length)} terms`);
+    for (const row of rows) {
+      assert.equal(lookUpFrench(texts, row[1]), row[2], row[1]);
+    }
+  });
   it('gives the English name of a French term, whatever its case', () => {
     assert.equal(lookUpFrench([FRENCH_INDEX], 'Robinet-vanne'), 'Gate valve');
     assert.equal(lookUpFrench([FRENCH_INDEX], 'pompe'), undefined);

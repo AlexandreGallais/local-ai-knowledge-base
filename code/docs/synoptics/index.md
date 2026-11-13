@@ -15,3 +15,10 @@ One line per document. Open only the documents your task needs.
 - [Ship fluid circuits and submarine tanks catalog](docs/synoptics/catalog-ship-circuits.md): Five surface ship circuits and four public submarine ballast, trim and air cards, with properties and simple models.
 - [Ventilation and air conditioning catalog](docs/synoptics/catalog-hvac.md): Seven ventilation and air conditioning components, fan to fan coil, with symbol, real working, states, properties and model.
 - [French to English index, fluid circuits](docs/synoptics/index-fr-en-fluids.md): The English name of each French term of the fluid circuit catalogs, with the document that describes it.
+- [Electrical generation and distribution catalog](docs/synoptics/catalog-electrical-power.md): Generator set to converter, nine electrical cards with symbol, real working, states, property names and simple model.
+- [Electrical storage, loads and power functions catalog](docs/synoptics/catalog-electrical-loads.md): Battery, charger, motor and starter, shore connection, load shedding and synchronizing, with properties and simple model.
+- [Fire control plan symbols and fire detection catalog](docs/synoptics/catalog-fire-detection.md): Fire control plan symbols and codes, then detectors, call point, sounder and fire detection panel, with properties and model.
+- [Fire extinguishing systems and fire doors catalog](docs/synoptics/catalog-fire-extinguishing.md): CO2, water mist, foam and sprinkler systems and fire doors, with fire plan symbols, real working, properties and model.
+- [Propulsion and steering catalog](docs/synoptics/catalog-propulsion.md): Engines, turbines, propulsion motor, shaft, gear, propellers, steering gear, bow thruster and a public submarine plant card.
+- [Sensors and instrumentation catalog](docs/synoptics/catalog-instrumentation.md): Instrument tags, six transmitters, switches, the 4 to 20 mA loop, alarm limits and device health, with properties and model.
+- [French to English index, ship systems](docs/synoptics/index-fr-en-systems.md): The English name of each French term of the electrical, fire, propulsion and instrumentation catalogs, with its document.
