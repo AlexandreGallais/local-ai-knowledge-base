@@ -24,7 +24,7 @@ The preceding discussion of how to provision scopes for Graph API access when th
 * Apps that adopt the Graph SDK.
 * Apps that use a named `System.Net.Http.HttpClient` for Graph API access that asks users to consent to Graph scopes on their first sign in to the app.
 
-When using a named `System.Net.Http.HttpClient` that doesn't ask users to consent to Graph scopes on their first sign in, users are redirected to the Azure consent UI for Graph API scopes consent *when they first request access to Graph API* via the `System.Net.Http.DelegatingHandler` of the preconfigured, named `System.Net.Http.HttpClient`. When Graph scopes aren't consented initially with the named `System.Net.Http.HttpClient` approach, neither `Microsoft.Authentication.WebAssembly.Msal.Models.MsalProviderOptions.DefaultAccessTokenScopes` nor `Microsoft.Authentication.WebAssembly.Msal.Models.MsalProviderOptions.AdditionalScopesToConsent` are called by the app. For more information, see the named `HttpClient` coverage in this article.
+When using a named `System.Net.Http.HttpClient` that doesn'<example-value>'t consented initially with the named `System.Net.Http.HttpClient` approach, neither `Microsoft.Authentication.WebAssembly.Msal.Models.MsalProviderOptions.DefaultAccessTokenScopes` nor `Microsoft.Authentication.WebAssembly.Msal.Models.MsalProviderOptions.AdditionalScopesToConsent` are called by the app. For more information, see the named `HttpClient` coverage in this article.
 
 ## Related content
 

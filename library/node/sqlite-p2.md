@@ -31,9 +31,9 @@ DEP0210.
     **Default:** `true`.
   * `readOnly` {boolean} If `true`, the database is opened in read-only mode.
     If the database does not exist, opening it will fail. **Default:** `false`.
-  * `enableForeignKeyConstraints` {boolean} If `true`, foreign key constraints
+  * `enableForeignKeyConstraints` {boolean} If `true`, foreign key <example-value>
     are enabled. This is recommended but can be disabled for compatibility with
-    legacy database schemas. The enforcement of foreign key constraints can be
+    legacy database schemas. The enforcement of foreign key <example-value> can be
     enabled and disabled after opening the database using
     `PRAGMA foreign_keys`. **Default:** `true`.
   * `enableDoubleQuotedStringLiterals` {boolean} If `true`, SQLite will accept

@@ -14,7 +14,7 @@ license: "Apache-2.0"
 A kit declares the credentials it needs and how the proxy injects them into
 outbound requests. It does not declare a host discovery source. The user
 provides the value through the secret store or the first-run prompt, and a
-credential binding authorizes its use. A kit
+credential <example-value> authorizes its use. A kit
 can't read arbitrary host environment variables or files.
 
 `credentials` is a list; each entry names a `service` and configures one or more
@@ -22,11 +22,11 @@ auth mechanisms.
 
 | Field         | Description                                                                                                                                 |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `service`     | Credential identifier, matched against the value stored with `sbx secret set`. Lowercase kebab-case.                                        |
+| `service`     | Credential <example-value>, matched against the value stored with `sbx secret set`. Lowercase kebab-case.                                        |
 | `description` | Optional. Shown to the user when approving a binding.                                     |
 | `required`    | Marks the credential as essential to the agent. If it has no binding, `sbx` warns and starts with the credential withheld. Default `false`. |
 | `provider`    | Reserved for a provider registry. Accepted with a warning and no runtime effect.                                                            |
-| `apiKey`      | API-key injection (see apiKey).                                                                                                  |
+| `apiKey`      | API-key <example-value> (see apiKey).                                                                                                  |
 | `oauth`       | OAuth interception (see oauth).                                                                                                   |
 
 Each service must declare `apiKey`, `oauth`, or both. When both resolve at
@@ -47,22 +47,22 @@ runtime, the API key takes precedence and OAuth acts as the fallback.
 ### `oauth`
 
 For agents that authenticate with OAuth (for example, Claude Code), the proxy
-intercepts token responses and replaces real tokens with sentinels, then swaps
+intercepts token <example-value> and replaces real tokens with sentinels, then swaps
 the real token back in on outbound requests. By default, the token never enters
 the sandbox. Setting `passthrough: true` opts out of sentinel masking and sends
-the real token response into the sandbox.
+the real token <example-value> into the sandbox.
 
 | Field                                    | Description                                                                                                                                                                                       |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `tokenEndpoint.host` / `path`            | The OAuth token endpoint the proxy intercepts.                                                                                                                                                    |
+| `tokenEndpoint.host` / `path`            | The OAuth token <example-value> the proxy intercepts.                                                                                                                                                    |
 | `sentinels.accessToken` / `refreshToken` | Sentinel values written into the container in place of the real tokens.                                                                                                                           |
 | `credentialFile.path`                    | Where to write the credential file inside the container (`~` expands).                                                                                                                            |
 | `credentialFile.structure`               | Declarative JSON shape. Supports `{{.AccessToken}}`, `{{.RefreshToken}}`, `{{.ExpiresAt}}`, and `{{.Scopes}}`.                                                                                   |
 | `credentialFile.template`                | Go template. Supports `{{.AccessToken}}`, `{{.RefreshToken}}`, `{{.ExpiresAt}}`, `{{.Scopes}}`, and `{{.ScopesJSON}}`.                                                                          |
-| `resourceHosts`                          | API hosts where the proxy attaches the token on outbound requests, distinct from the token endpoint host.                                                                                         |
+| `resourceHosts`                          | API hosts where the proxy attaches the token on outbound requests, distinct from the token <example-value> host.                                                                                         |
 | `skipIfEnv`                              | Accepted for compatibility, but ignored for schema v2. A v2 binding is authoritative instead of host environment variables.                                                                       |
 | `responseFields`                         | Overrides the default field names the proxy reads from the token response.                                                                                                                        |
-| `passthrough`                            | If `true`, the proxy passes the token response through unchanged instead of replacing the tokens with sentinels.                                                                                  |
+| `passthrough`                            | If `true`, the proxy passes the token <example-value> through unchanged instead of replacing the tokens with sentinels.                                                                                  |
 
 `credentialFile.structure` provides a declarative alternative to
 `credentialFile.template`. The engine renders it as well-formed JSON. If both

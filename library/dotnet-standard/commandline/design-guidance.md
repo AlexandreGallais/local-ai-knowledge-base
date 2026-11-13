@@ -136,7 +136,7 @@ dotnet run --project ./myapp.csproj -- --message "Hello world!"
 
 In this example, the `--project` option is passed to the `dotnet run` command, and the `--message` option with its argument is passed as a command-line option to *myapp* when it runs.
 
-The `--` token is not always required for passing options to an app that you run by using `dotnet run`. Without the double-dash, the `dotnet run` command automatically passes on to the app being run any options that aren't recognized as applying to `dotnet run` itself or to MSBuild. So the following command lines are equivalent because `dotnet run` doesn't recognize the arguments and options:
+The `--` token is not always required for passing options to an app that you run by using `dotnet run`. Without the double-dash, the `dotnet run` command automatically passes on to the app being run any options that aren'<example-value>'t recognize the arguments and options:
 
 ```dotnetcli
 dotnet run -- quotes read --delay 0 --fg-color red

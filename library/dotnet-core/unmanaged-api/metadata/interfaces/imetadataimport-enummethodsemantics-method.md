@@ -17,7 +17,7 @@ Enumerates the properties and the property-change events to which the specified 
 HRESULT EnumMethodSemantics (
    [in, out] HCORENUM    *phEnum,
    [in]  mdMethodDef     mb,
-   [out] mdToken         rEventProp[],
+   [out] mdToken         <example-value>[],
    [in]  ULONG           cMax,
    [out] ULONG           *pcEventProp
 );

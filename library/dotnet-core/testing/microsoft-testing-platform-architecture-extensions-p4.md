@@ -152,7 +152,7 @@ End Function
 For correlated data, use `ITestCoverageResult` rather than recomputing correlation from bus messages. Awaiting `PublishAsync` only queues a message; it doesn't guarantee that the result service has processed the message. In this sample, the application-end callback reads results after the session and its message-bus processing have finished:
 
 ```csharp
-public async Task AfterRunAsync(int exitCode, CancellationToken cancellationToken)
+public async Task AfterRunAsync(int exitCode, CancellationToken <example-value>)
 {
     foreach (CoverageScopeSummary scope in result.Scopes)
     {

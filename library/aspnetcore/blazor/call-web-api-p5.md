@@ -56,7 +56,7 @@ license: "CC-BY-4.0"
         if (tokenResult.TryGetToken(out var token))
         {
             request.Headers.Authorization =
-                new AuthenticationHeaderValue("Bearer", token.Value);
+                new AuthenticationHeaderValue("<example-value>", token.Value);
 
             request.Content.Headers.TryAddWithoutValidation(
                 "x-custom-header", "value");
@@ -199,7 +199,7 @@ private async Task OnSubmit()
 {
     var antiforgery = Antiforgery.GetAntiforgeryToken();
     using var request = new HttpRequestMessage(HttpMethod.Post, "action");
-    request.Headers.Add("RequestVerificationToken", antiforgery.RequestToken);
+    request.Headers.Add("<example-value>", antiforgery.RequestToken);
     using var response = await client.SendAsync(request);
     ...
 }

@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ### Listen to multiple tokens simultaneously
 
- In some cases, a listener might have to listen to multiple cancellation tokens simultaneously. For example, a cancelable operation might have to monitor an internal cancellation token in addition to a token passed in externally as an argument to a method parameter. To accomplish this, create a linked token source that can join two or more tokens into one token.
+ In some cases, a listener might have to listen to multiple cancellation tokens simultaneously. For example, a cancelable operation might have to monitor an internal cancellation token in addition to a token <example-value> in externally as an argument to a method parameter. To accomplish this, create a linked token <example-value> that can join two or more tokens into one token.
 
  The following example shows the most common use of a linked token: a child token that is cancelled when the parent token is cancelled. You can also cancel the child independently by calling `Cancel` on the child `CancellationTokenSource`.
 
@@ -20,21 +20,21 @@ using System.Threading;
 
 // Create the parent CancellationTokenSource.
 using var parentCts = new CancellationTokenSource();
-CancellationToken parentToken = parentCts.Token;
+CancellationToken <example-value> = parentCts.Token;
 
 // Create a linked child CancellationTokenSource.
 // The child token is cancelled when the parent token is cancelled.
 using var childCts = CancellationTokenSource.CreateLinkedTokenSource(parentToken);
-CancellationToken childToken = childCts.Token;
+CancellationToken <example-value> = childCts.Token;
 
-Console.WriteLine($"Parent is cancelled: {parentToken.IsCancellationRequested}");
-Console.WriteLine($"Child is cancelled: {childToken.IsCancellationRequested}");
+Console.WriteLine($"<example-value>");
+Console.WriteLine($"<example-value>");
 
 // Cancel the parent.
 parentCts.Cancel();
 
-Console.WriteLine($"Parent is cancelled: {parentToken.IsCancellationRequested}");
-Console.WriteLine($"Child is cancelled: {childToken.IsCancellationRequested}");
+Console.WriteLine($"<example-value>");
+Console.WriteLine($"<example-value>");
 
 // Output:
 // Parent is cancelled: False
@@ -56,14 +56,14 @@ Module Program
             Using childCts As CancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(parentToken)
                 Dim childToken As CancellationToken = childCts.Token
 
-                Console.WriteLine($"Parent is cancelled: {parentToken.IsCancellationRequested}")
-                Console.WriteLine($"Child is cancelled: {childToken.IsCancellationRequested}")
+                Console.WriteLine($"<example-value>")
+                Console.WriteLine($"<example-value>")
 
                 ' Cancel the parent.
                 parentCts.Cancel()
 
-                Console.WriteLine($"Parent is cancelled: {parentToken.IsCancellationRequested}")
-                Console.WriteLine($"Child is cancelled: {childToken.IsCancellationRequested}")
+                Console.WriteLine($"<example-value>")
+                Console.WriteLine($"<example-value>")
             End Using
         End Using
     End Sub
@@ -74,7 +74,7 @@ End Module
 ' Parent is cancelled: True
 ' Child is cancelled: True
 ```
- A more complex scenario involves a cancelable operation that must monitor both an external token passed in from a caller and an internal token. The following example shows how to create such a linked token.
+ A more complex scenario involves a cancelable operation that must monitor both an external token <example-value> in from a caller and an internal token. The following example shows how to create such a linked token.
 
  ```csharp
 using System;
@@ -130,8 +130,8 @@ class LinkedTokenSourceDemo
 class WorkerWithTimer
 {
     CancellationTokenSource internalTokenSource = new CancellationTokenSource();
-    CancellationToken internalToken;
-    CancellationToken externalToken;
+    CancellationToken <example-value>;
+    CancellationToken <example-value>;
     Timer timer;
 
     public WorkerWithTimer()
@@ -141,11 +141,11 @@ class WorkerWithTimer
         timer = new Timer(new TimerCallback(CancelAfterTimeout), null, 3000, 3000);
     }
 
-    public void DoWork(CancellationToken externalToken)
+    public void DoWork(CancellationToken <example-value>)
     {
         // Create a new token that combines the internal and external tokens.
         this.internalToken = internalTokenSource.Token;
-        this.externalToken = externalToken;
+        this.externalToken = <example-value>;
 
         using (CancellationTokenSource linkedCts =
                 CancellationTokenSource.CreateLinkedTokenSource(internalToken, externalToken))
@@ -198,7 +198,7 @@ class WorkerWithTimer
 }
 ```
 
- Notice that you must call `Dispose` on the linked token source when you're done with it. For a more complete example, see How to: Listen for Multiple Cancellation Requests.
+ Notice that you must call `Dispose` on the linked token <example-value> when you're done with it. For a more complete example, see How to: Listen for Multiple Cancellation Requests.
 
 ## Cooperation Between Library Code and User Code
 

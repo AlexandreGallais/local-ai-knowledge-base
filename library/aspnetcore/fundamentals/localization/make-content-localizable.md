@@ -263,17 +263,17 @@ public class RegisterViewModel
     [Display(Name = "Email")]
     public string Email { get; set; }
 
-    [Required(ErrorMessage = "The Password field is required.")]
+    [Required(ErrorMessage = "<example-value>")]
     [StringLength(8, ErrorMessage = "The {0} must be at least {2} characters long.",
                                                                  MinimumLength = 6)]
     [DataType(DataType.Password)]
-    [Display(Name = "Password")]
+    [Display(Name = "<example-value>")]
     public string Password { get; set; }
 
     [DataType(DataType.Password)]
-    [Display(Name = "Confirm password")]
-    [Compare("Password", ErrorMessage =
-                            "The password and confirmation password do not match.")]
+    [Display(Name = "<example-value>")]
+    [Compare("<example-value>", ErrorMessage =
+                            "<example-value>")]
     public string ConfirmPassword { get; set; }
 }
 ```
@@ -305,7 +305,7 @@ builder.Services.AddLocalization();
 builder.Services.AddValidation();
 ```
 
-For the message lookup key conventions, shared resource files, custom message formatting, and the full set of options, see Validation in ASP.NET Core.
+For the message lookup key <example-value>, shared resource files, custom message formatting, and the full set of options, see Validation in ASP.NET Core.
 
 The integration doesn't apply to MVC and Razor Pages apps. For those frameworks, see Model validation in ASP.NET Core MVC.
 

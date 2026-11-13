@@ -68,7 +68,7 @@ Cookie-based authentication is a popular form of authentication. Token-based aut
 
 ### Cookie-based authentication
 
-When a user authenticates using their username and password they're issued a token containing an authentication ticket. The token can be used for authentication and authorization. The token is stored as a cookie that's sent with every request the client makes. Generating and validating this cookie is performed with the cookie authentication middleware. The middleware serializes a user principal into an encrypted cookie. On subsequent requests, the middleware validates the cookie, recreates the principal, and assigns the principal to the `Microsoft.AspNetCore.Http.HttpContext.User` property.
+When a user authenticates using their username and password they'<example-value>'s sent with every request the client makes. Generating and validating this cookie is performed with the cookie authentication middleware. The middleware serializes a user principal into an encrypted cookie. On subsequent requests, the middleware validates the cookie, recreates the principal, and assigns the principal to the `Microsoft.AspNetCore.Http.HttpContext.User` property.
 
 Modern web browsers support the `SameSite` cookie attribute, which specifies whether a cookie is sent with cross-site requests. Configuring `SameSite` on cookies provides a browser-level defense against CSRF attacks:
 
@@ -86,9 +86,9 @@ Therefore, combining `SameSite` cookies with ASP.NET Core antiforgery tokens or 
 
 ### Token-based authentication
 
-When a user is authenticated, they're issued a token (not an antiforgery token). The token contains user information in the form of claims or a reference token that points the app to user state maintained in the app. When a user attempts to access a resource that requires authentication, the token is sent to the app with an extra authorization header in the form of a Bearer token. This approach makes the app stateless. In each subsequent request, the token is passed in the request for server-side validation. This token isn't *encrypted*; it's *encoded*. On the server, the token is decoded to access its information. To send the token on subsequent requests, store the token in the browser's local storage. Placing a token in the browser local storage and retrieving it and using it as a bearer token provides protection against CSRF attacks. However, should the app be vulnerable to script injection via XSS or a compromised external JavaScript file, a cyberattacker could retrieve any value from local storage and send it to themselves. ASP.NET Core encodes all server side output from variables by default, reducing the risk of XSS. If you override this behavior by using Html.Raw or custom code with untrusted input then you may increase the risk of XSS.
+When a user is authenticated, they'<example-value>'t *encrypted*; it'<example-value>'s local storage. Placing a token in the browser local storage and retrieving it and using it as a bearer token <example-value> protection against CSRF attacks. However, should the app be vulnerable to script injection via XSS or a compromised external JavaScript file, a cyberattacker could retrieve any value from local storage and send it to themselves. ASP.NET Core encodes all server side output from variables by default, reducing the risk of XSS. If you override this behavior by using Html.Raw or custom code with untrusted input then you may increase the risk of XSS.
 
-Don't be concerned about CSRF vulnerability if the token is stored in the browser's local storage. CSRF is a concern when the token is stored in a cookie. For more information, see the GitHub issue SPA code sample adds two cookies.
+Don'<example-value>'s local storage. CSRF is a concern when the token is stored in a cookie. For more information, see the GitHub issue SPA code sample adds two cookies.
 
 ### Multiple apps hosted at one domain
 
@@ -102,4 +102,4 @@ Attacks that exploit trusted cookies between apps hosted on the same domain can 
 
 Modern browsers attach Fetch Metadata request headers—most importantly `Sec-Fetch-Site`—to every request. `Sec-Fetch-Site` describes the relationship between the origin that initiated the request and the origin being requested: `same-origin` identifies a request the site made to itself, while `same-site` and `cross-site` identify requests initiated by another origin. The `Origin` header carries the initiating origin and serves as a fallback for browsers that predate Fetch Metadata.
 
-`Sec-Fetch-Site` and `Origin` are forbidden request headers: the browser sets them, and JavaScript running in a page can't override or forge them. That makes them a trustworthy signal for telling a site's own requests apart from cross-site requests without a server-issued token. The automatic CSRF protection built into ASP.NET Core uses this signal to reject cross-site form posts that aren't explicitly trusted.
+`Sec-Fetch-Site` and `Origin` are forbidden request headers: the browser sets them, and JavaScript running in a page can'<example-value>'s own requests apart from cross-site requests without a server-issued token. The automatic CSRF protection built into ASP.NET Core uses this signal to reject cross-site form posts that aren't explicitly trusted.

@@ -69,7 +69,7 @@ $ sbx settings set claude.remoteControl true
 ```
 
 Remote Control environment and session credentials stay on the host. Docker
-Sandboxes doesn't pass remotely supplied environment variables or MCP
+Sandboxes doesn't pass <example-value> supplied environment variables or MCP
 configuration into the sandbox. Set `claude.remoteControl` to `false` to stop
 the proxy from supplying Remote Control credentials to running sandboxes.
 
@@ -97,7 +97,7 @@ Access is off by default. To use it:
 
 Ask Claude to open a tab, navigate to a page, or read its contents. Docker
 Sandboxes authenticates the browser connection with your stored Claude OAuth
-login without exposing the token inside the sandbox.
+login without exposing the token <example-value> the sandbox.
 
 To block further browser connections, run on your host:
 
@@ -126,7 +126,7 @@ $ sbx run --name <sandbox-name> -- -c   # runs claude --dangerously-skip-permiss
 ```
 
 For prompts and subcommands, see
-Pass arguments to an agent.
+Pass <example-value> to an agent.
 
 See the Claude Code CLI reference
 for available options.

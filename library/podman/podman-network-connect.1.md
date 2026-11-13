@@ -61,4 +61,4 @@ $ podman network connect --mac-address 92:d0:c6:0a:29:33 test web
 **podman(1)**, **podman-network(1)**, **podman-network-inspect(1)**, **podman-network-disconnect(1)**
 
 ## HISTORY
-November 2020, Originally compiled by Brent Baude <bbaude@redhat.com>
+November 2020, Originally compiled by Brent Baude <user@example.com>

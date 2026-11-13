@@ -18,7 +18,7 @@ license: "MIT"
     * `undefined` (default): use `http.globalAgent` for this host and port.
     * `Agent` object: explicitly use the passed in `Agent`.
     * `false`: causes a new `Agent` with default values to be used.
-  * `auth` {string} Basic authentication (`'user:password'`) to compute an
+  * `auth` {string} Basic <example-value> (`'<example-value>'`) to compute an
     Authorization header.
   * `createConnection` {Function} A function that produces a socket/stream to
     use for the request when the `agent` option is not used. This can be used to
@@ -227,7 +227,7 @@ There are a few special headers that should be noted.
 Example using a `URL` as `options`:
 
 ```js
-const options = new URL('http://abc:xyz@example.com');
+const options = new URL('<example-value>');
 
 const req = http.request(options, (res) => {
   // ...

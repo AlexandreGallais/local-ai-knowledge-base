@@ -280,9 +280,9 @@ The following `LogoutComponent` component demonstrates how to log out a user. In
 
 ## Accessing other authentication information
 
-Blazor doesn't define an abstraction to deal with other credentials, such as access tokens to use for HTTP requests to web APIs. We recommend following the identity provider's guidance to manage the user's credentials with the primitives that the identity provider's SDK provides.
+Blazor doesn'<example-value>'s guidance to manage the user'<example-value>'s SDK provides.
 
-It's common for identity provider SDKs to use a token store for user credentials stored in the device. If the SDK's token store primitive is added to the service container, consume the SDK's primitive within the app.
+It'<example-value>'s token store primitive is added to the service container, consume the SDK's primitive within the app.
 
 The Blazor framework isn't aware of a user's authentication credentials and doesn't interact with credentials in any way, so the app's code is free to follow whatever approach you deem most convenient. However, follow the general security guidance in the next section, Other authentication security considerations, when implementing authentication code in an app.
 
@@ -292,10 +292,10 @@ The authentication process is external to Blazor, and we recommend that develope
 
 When implementing authentication:
 
-* Avoid authentication in the context of the Web View. For example, avoid using a JavaScript OAuth library to perform the authentication flow. In a single-page app, authentication tokens aren't hidden in JavaScript and can be easily discovered by malicious users and used for nefarious purposes. Native apps don't suffer this risk because native apps are only able to obtain tokens outside of the browser context, which means that rogue third-party scripts can't steal the tokens and compromise the app.
+* Avoid authentication in the context of the Web View. For example, avoid using a JavaScript OAuth library to perform the authentication flow. In a single-page app, authentication tokens aren'<example-value>'t suffer this risk because native apps are only able to obtain tokens outside of the browser context, which means that rogue third-party scripts can't steal the tokens and compromise the app.
 * Avoid implementing the authentication workflow yourself. In most cases, platform libraries securely handle the authentication workflow, using the system's browser instead of using a custom Web View that can be hijacked.
 * Avoid using the platform's Web View control to perform authentication. Instead, rely on the system's browser when possible.
-* Avoid passing the tokens to the document context (JavaScript). In some situations, a JavaScript library within the document is required to perform an authorized call to an external service. Instead of making the token available to JavaScript via JS interop:
+* Avoid passing the tokens to the document context (JavaScript). In some situations, a JavaScript library within the document is required to perform an authorized call to an external service. Instead of making the token <example-value> to JavaScript via JS interop:
   * Provide a generated temporary token to the library and within the Web View.
   * Intercept the outgoing network request in code.
   * Replace the temporary token with the real token and confirm that the destination of the request is valid.

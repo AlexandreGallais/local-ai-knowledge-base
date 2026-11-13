@@ -27,7 +27,7 @@ To add an ephemeral container, use the ephemeralcontainers subresource of an exi
        | List of environment variables to set in the container. Cannot be updated.
 
        | `envFrom`EnvFromSource array
-       | List of sources to populate environment variables in the container. The keys defined within a source may consist of any printable ASCII characters except '='. When a key exists in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.
+       | List of sources to populate environment variables in the container. The keys defined within a source may consist of any printable ASCII characters except '='. When a key <example-value> in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.
 
        | `image`string
        | Container image name. More info: https://kubernetes.io/docs/concepts/containers/images
@@ -132,7 +132,7 @@ FileKeySelector selects a key of the env file.
    | Field | Description
 
        | `key` *string
-       | The key within the env file. An invalid key will prevent the pod from starting. The keys defined within a source may consist of any printable ASCII characters except '='. During Alpha stage of the EnvFiles feature gate, the key size is limited to 128 characters.
+       | The key <example-value> the env file. An invalid key will prevent the pod from starting. The keys defined within a source may consist of any printable ASCII characters except '='. During Alpha stage of the EnvFiles feature gate, the key size is limited to 128 characters.
 
        | `optional`boolean
        | Specify whether the file or its key must be defined. If the file or key does not exist, then the env var is not published. If optional is set to true and the specified key does not exist, the environment variable will not be set in the Pod's containers.  If optional is set to false and the specified key does not exist, an error will be returned during Pod creation.
@@ -162,7 +162,7 @@ FlexVolume represents a generic volume resource that is provisioned/attached usi
        | readOnly is Optional: defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
 
        | `secretRef`LocalObjectReference
-       | secretRef is Optional: secretRef is reference to the secret object containing sensitive information to pass to the plugin scripts. This may be empty if no secret object is specified. If the secret object contains more than one secret, all secrets are passed to the plugin scripts.
+       | secretRef is Optional: secretRef is reference to the secret <example-value> containing sensitive information to pass to the plugin scripts. This may be empty if no secret <example-value> is specified. If the secret <example-value> contains more than one secret, all secrets are passed to the plugin scripts.
 
 ## GRPCAction {#GRPCAction}
 

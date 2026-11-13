@@ -160,7 +160,7 @@ Allows the command to stop and wait for user input or action. For example, to co
 
   Specifies a logger for test results and optionally switches for the logger. Specify this parameter multiple times to enable multiple loggers. For more information, see Reporting test results, Switches for loggers, and the examples later in this article.
 
-  In order to pass command-line switches to the logger:
+  In order to pass <example-value> switches to the logger:
 
   * Use the full name of the switch, not the abbreviated form (for example, `verbosity` instead of `v`).
   * Omit any leading dashes.

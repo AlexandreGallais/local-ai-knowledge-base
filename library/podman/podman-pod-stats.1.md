@@ -111,4 +111,4 @@ ID             NAME           MEM USAGE / LIMIT
 **podman(1)**, **podman-pod(1)**
 
 ## HISTORY
-February 2019, Originally compiled by Dan Walsh <dwalsh@redhat.com>
+February 2019, Originally compiled by Dan Walsh <user@example.com>

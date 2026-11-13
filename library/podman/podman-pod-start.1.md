@@ -65,4 +65,4 @@ $ podman pod start --pod-id-file /path/to/id/file
 **podman(1)**, **podman-pod(1)**, **podman-pod-stop(1)**
 
 ## HISTORY
-July 2018, Adapted from podman start man page by Peter Hunt <pehunt@redhat.com>
+July 2018, Adapted from podman start man page by Peter Hunt <user@example.com>

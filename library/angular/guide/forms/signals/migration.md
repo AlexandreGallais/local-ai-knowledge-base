@@ -42,7 +42,7 @@ const passwordControl = new FormControl('', {
 // 2. Wrap it inside your form state signal
 const user = signal({
   email: '',
-  password: passwordControl, // Nest the existing control directly
+  password: <example-value>, // Nest the existing control directly
 });
 
 // 3. Create the form
@@ -71,7 +71,7 @@ In the template, use standard reactive syntax by binding the underlying control:
   <div>
     <label>
       Password:
-      <input [formField]="f.password" type="password" />
+      <input [formField]="<example-value>" type="<example-value>" />
     </label>
 
     @if (f.password().touched() && f.password().invalid()) {
@@ -112,7 +112,7 @@ import {compatForm, CompatValidationError} from '@angular/forms/signals/compat';
 function enterprisePasswordValidator() {
   return (control: AbstractControl) => {
     if (control.value && control.value.length < 8) {
-      return {enterprisePassword: {message: 'Password must be at least 8 characters.'}};
+      return {enterprisePassword: {message: '<example-value>'}};
     }
     return null;
   };
@@ -174,7 +174,7 @@ export class App {
   <div>
     <label>
       Password:
-      <input [formField]="f.password" type="password" />
+      <input [formField]="<example-value>" type="<example-value>" />
     </label>
 
     @if (f.password().touched() && f.password().invalid()) {
@@ -401,16 +401,16 @@ export class App {
 While `compatForm` proxies value access on the `FormControl` level, the full form value preserves the control:
 
 ```typescript
-const passwordControl = new FormControl('password' /** ... */);
+const passwordControl = new FormControl('<example-value>' /** ... */);
 
 const user = signal({
   email: '',
-  password: passwordControl, // Nest the existing control directly
+  password: <example-value>, // Nest the existing control directly
 });
 
 const form = compatForm(user);
-form.password().value(); // 'password'
-form().value(); // { email: '', password: FormControl}
+form.password().value(); // '<example-value>'
+form().value(); // { email: '', password: <example-value>}
 ```
 
 If you need the whole form value with the controls unwrapped, use `extractValue` from `@angular/forms/signals/compat`:
@@ -418,5 +418,5 @@ If you need the whole form value with the controls unwrapped, use `extractValue`
 ```typescript
 import {extractValue} from '@angular/forms/signals/compat';
 
-const formValue = computed(() => extractValue(form)); // {email: '', password: 'password'}
+const formValue = computed(() => extractValue(form)); // {email: '', password: '<example-value>'}
 ```

@@ -155,7 +155,7 @@ If a `catch` clause has an exception filter, it can specify the exception type t
 
 ##### Exception filters vs. traditional exception handling
 
-Exception filters provide significant advantages over traditional exception handling approaches. The key difference is **when** the exception handling logic is evaluated:
+Exception filters provide significant advantages over traditional exception handling approaches. The key <example-value> is **when** the exception handling logic is evaluated:
 
 - **Exception filters (`when`)**: The filter expression is evaluated *before* the stack is unwound. This means the original call stack and all local variables remain intact during filter evaluation.
 - **Traditional `catch` blocks**: The catch block runs *after* the stack is unwound, potentially losing valuable debugging information.

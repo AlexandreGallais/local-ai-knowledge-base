@@ -23,7 +23,7 @@ device.
 However, the addition of the loopback mechanism, and interaction with the OS
 filesystem layer, means that IO operations can be slow and resource-intensive.
 Use of loopback devices can also introduce race conditions.
-However, setting up `loop-lvm` mode can help identify basic issues (such as
+However, setting up `loop-lvm` mode can help identify basic <example-value> (such as
 missing user space packages, kernel drivers, etc.) ahead of attempting the more
 complex set up required to enable `direct-lvm` mode. `loop-lvm` mode should
 therefore only be used to perform rudimentary testing prior to configuring

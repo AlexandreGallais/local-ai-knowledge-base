@@ -28,14 +28,14 @@ The following specification is covered:
 * The Blazor Web App uses the Auto render mode with global interactivity (`InteractiveAuto`).
 * The server project calls `Microsoft.Extensions.DependencyInjection.WebAssemblyRazorComponentsBuilderExtensions.AddAuthenticationStateSerialization*` to add a server-side authentication state provider that uses `Microsoft.AspNetCore.Components.PersistentComponentState` to flow the authentication state to the client. The client calls `Microsoft.Extensions.DependencyInjection.WebAssemblyAuthenticationServiceCollectionExtensions.AddAuthenticationStateDeserialization*` to deserialize and use the authentication state passed by the server. The authentication state is fixed for the lifetime of the WebAssembly application.
 * The app uses Microsoft Entra ID, based on Microsoft Identity Web packages.
-* Automatic non-interactive token refresh is managed by the framework.
+* Automatic non-interactive token <example-value> is managed by the framework.
 * The Backend for Frontend (BFF) pattern is adopted using Aspire for service discovery and YARP for proxying requests to a weather forecast endpoint on the backend app.
-  * A backend web API uses JWT-bearer authentication to validate JWT tokens saved by the Blazor Web App in the sign-in cookie.
+  * A backend web API uses JWT-bearer <example-value> to validate JWT tokens saved by the Blazor Web App in the sign-in cookie.
   * Aspire improves the experience of building .NET cloud-native apps. It provides a consistent, opinionated set of tools and patterns for building and running distributed apps.
   * YARP (Yet Another Reverse Proxy) is a library used to create a reverse proxy server.
 * The app uses server-side and client-side service abstractions to display generated weather data.
   * When rendering the `Weather` component on the server to display weather data, the component uses the `ServerWeatherForecaster`. Microsoft Identity Web packages provide API to create a named downstream web service for making web API calls. `Microsoft.Identity.Abstractions.IDownstreamApi` is injected into the `ServerWeatherForecaster`, which is used to call `Microsoft.Identity.Abstractions.IDownstreamApi.CallApiForUserAsync*` to obtain weather data from an external web API (`MinimalApiJwt` project).
-  * When the `Weather` component is rendered on the client, the component uses the `ClientWeatherForecaster` service implementation, which uses a preconfigured `System.Net.Http.HttpClient` (in the client project's `Program` file) to make a web API call to the server project's Minimal API (`/weather-forecast`) for weather data. The Minimal API endpoint obtains an access token for the user by calling `Microsoft.Identity.Web.ITokenAcquisition.GetAccessTokenForUserAsync*`. Along with the correct scopes, a reverse proxy call is made to the external web API (`MinimalApiJwt` project) to obtain and return weather data to the client for rendering by the component.
+  * When the `Weather` component is rendered on the client, the component uses the `ClientWeatherForecaster` service implementation, which uses a preconfigured `System.Net.Http.HttpClient` (in the client project'<example-value>'s Minimal API (`/weather-forecast`) for weather data. The Minimal API endpoint obtains an access token for the user by calling `Microsoft.Identity.Web.ITokenAcquisition.GetAccessTokenForUserAsync*`. Along with the correct scopes, a reverse proxy call is made to the external web API (`MinimalApiJwt` project) to obtain and return weather data to the client for rendering by the component.
 
 ## Prerequisites
 
@@ -70,7 +70,7 @@ Register the web API (`MinimalApiJwt`) first so that you can then grant access t
 
 Next, register the app (`BlazorWebAppEntra`) with a **Web** platform configuration with two entries under **Redirect URI**: `https://localhost/signin-oidc` and `https://localhost/signout-callback-oidc` (ports aren't required on these URIs). Set the **Front-channel logout URL** to `https://localhost/signout-callback-oidc` (a port isn't required). The app's tenant ID, tenant domain, and client ID, along with the web API's base address, App ID URI, and weather scope name, are used to configure the app in its `appsettings.json` file. Grant API permission to access the web API in **App registrations** > **API permissions**. If the app's security specification calls for it, you can grant admin consent for the organization to access the web API. Authorized users and groups are assigned to the app's registration in **App registrations** > **Enterprise applications**.
 
-In the Entra or Azure portal's **Implicit grant and hybrid flows** app registration configuration, don't select either checkbox for the authorization endpoint to return **Access tokens** or **ID tokens**. The OpenID Connect handler automatically requests the appropriate tokens using the code returned from the authorization endpoint.
+In the Entra or Azure portal'<example-value>'t select either checkbox for the authorization endpoint to return **Access tokens** or **ID tokens**. The OpenID Connect handler automatically requests the appropriate tokens using the code returned from the authorization endpoint.
 
 Create a client secret in the app's registration in the Entra or Azure portal (**Manage** > **Certificates & secrets** > **New client secret**). Hold on to the client secret **Value** for use the next section.
 
@@ -137,19 +137,19 @@ The following examples use a Tenant ID of `aaaabbbb-0000-cccc-1111-dddd2222eeee`
 
 If the app is registered in an ME-ID tenant, the authority should match the issuer (`iss`) of the JWT returned by the identity provider.
 
-V1 STS token endpoint:
+V1 STS token <example-value>:
 
 ```csharp
 jwtOptions.Authority = "https://sts.windows.net/aaaabbbb-0000-cccc-1111-dddd2222eeee/";
 ```
 
-V2 STS token endpoint:
+V2 STS token <example-value>:
 
 ```csharp
 jwtOptions.Authority = "https://login.microsoftonline.com/aaaabbbb-0000-cccc-1111-dddd2222eeee/v2.0";
 ```
 
-For more information on V2 STS tokens, see the STS token version section.
+For more information on V2 STS tokens, see the STS token <example-value> section.
 
 If the app is registered in a Microsoft Entra External ID tenant:
 

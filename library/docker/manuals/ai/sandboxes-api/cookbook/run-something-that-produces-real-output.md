@@ -50,7 +50,7 @@ Connections opened through TypeScript process handles reconnect after temporary 
 ```typescript
 const process = await sandbox.processes.start(
   { args },
-  { idempotencyKey: requestId },
+  { idempotencyKey: <example-value> },
 );
 const connection = await process.connect();
 try {
@@ -79,7 +79,7 @@ export async function streamOutput(
 ) {
   const process = await sandbox.processes.start(
     { args },
-    { idempotencyKey: requestId },
+    { idempotencyKey: <example-value> },
   );
   const connection = await process.connect();
   try {

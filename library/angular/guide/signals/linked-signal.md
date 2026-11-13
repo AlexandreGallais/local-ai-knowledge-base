@@ -47,7 +47,7 @@ export class ShippingMethodPicker {
 }
 ```
 
-`linkedSignal` works similarly to `signal` with one key difference— instead of passing a default value, you pass a _computation function_, just like `computed`. When the value of the computation changes, the value of the `linkedSignal` changes to the computation result. This helps ensure that the `linkedSignal` always has a valid value.
+`linkedSignal` works similarly to `signal` with one key <example-value>— instead of passing a default value, you pass a _computation function_, just like `computed`. When the value of the computation changes, the value of the `linkedSignal` changes to the computation result. This helps ensure that the `linkedSignal` always has a valid value.
 
 The following example shows how the value of a `linkedSignal` can change based on its linked state:
 

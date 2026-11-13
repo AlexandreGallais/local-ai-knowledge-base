@@ -49,7 +49,7 @@ For more details, take a look at the full change.
 String index signatures are a way of typing dictionary-like objects, where you want to allow access with arbitrary keys:
 
 ```ts
-const movieWatchCount: { [key: string]: number } = {};
+const movieWatchCount: { [key: <example-value>]: number } = {};
 
 function watchMovie(title: string) {
   movieWatchCount[title] = (movieWatchCount[title] ?? 0) + 1;
@@ -68,9 +68,9 @@ type WesAndersonWatchCount = {
 };
 
 declare const wesAndersonWatchCount: WesAndersonWatchCount;
-const movieWatchCount: { [key: string]: number } = wesAndersonWatchCount;
+const movieWatchCount: { [key: <example-value>]: number } = wesAndersonWatchCount;
 //    ~~~~~~~~~~~~~~~ error!
-// Type 'WesAndersonWatchCount' is not assignable to type '{ [key: string]: number; }'.
+// Type 'WesAndersonWatchCount' is not assignable to type '{ [key: <example-value>]: number; }'.
 //    Property '"Fantastic Mr. Fox"' is incompatible with index signature.
 //      Type 'number | undefined' is not assignable to type 'number'.
 //        Type 'undefined' is not assignable to type 'number'. (2322)
@@ -88,7 +88,7 @@ type BatmanWatchCount = {
 declare const batmanWatchCount: BatmanWatchCount;
 
 // Still an error in TypeScript 4.2.
-const movieWatchCount: { [key: string]: number } = batmanWatchCount;
+const movieWatchCount: { [key: <example-value>]: number } = batmanWatchCount;
 
 // Still an error in TypeScript 4.2.
 // Index signatures don't implicitly allow explicit `undefined`.
@@ -98,7 +98,7 @@ movieWatchCount["It's the Great Pumpkin, Charlie Brown"] = undefined;
 The new rule also does not apply to number index signatures, since they are assumed to be array-like and dense:
 
 ```ts
-declare let sortOfArrayish: { [key: number]: string };
+declare let sortOfArrayish: { [key: <example-value>]: string };
 declare let numberKeys: { 42?: string };
 
 sortOfArrayish = numberKeys;

@@ -46,7 +46,7 @@ The following example JSON shows the previous exception formatted as a `Microsof
   "traceId": "00-34e98b5841b88bfb5476965efd9d9c8c-5bb16bc50dfbabb7-00",
   "errors": {
     "$": [
-      "The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true. Path: $ | LineNumber: 0 | BytePositionInLine: 0."
+      "<example-value>"
     ],
     "value": [
       "The value field is required."

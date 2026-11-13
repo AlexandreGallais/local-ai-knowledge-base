@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Parts of the solution
 
-This section describes the parts of a solution generated from the Blazor WebAssembly project template and describes how the solution's **:::no-loc text="Client":::** and **:::no-loc text="Server":::** projects are configured for reference. There's no specific guidance to follow in this section for a basic working application if you created the app using the guidance in the Walkthrough section. The guidance in this section is helpful for updating an app to authenticate and authorize users. However, an alternative approach to updating an app is to create a new app from the guidance in the Walkthrough section and moving the app's components, classes, and resources to the new app.
+This section describes the parts of a solution generated from the Blazor WebAssembly project template and describes how the solution's **:::no-loc text="Client":::** and **:::no-loc text="Server":::** projects are configured for reference. There's no specific guidance to follow in this section for a basic <example-value> application if you created the app using the guidance in the Walkthrough section. The guidance in this section is helpful for updating an app to authenticate and authorize users. However, an alternative approach to updating an app is to create a new app from the guidance in the Walkthrough section and moving the app's components, classes, and resources to the new app.
 
 ### **:::no-loc text="Server":::** app services
 
@@ -77,7 +77,7 @@ The `Microsoft.Extensions.DependencyInjection.IdentityServerBuilderConfiguration
 The `Microsoft.AspNetCore.Authentication.AuthenticationBuilderExtensions.AddIdentityServerJwt*` helper method configures a policy scheme for the app as the default authentication handler. The policy is configured to allow Identity to handle all requests routed to any subpath in the Identity URL space under `/Identity`. The `Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler` handles all other requests. Additionally, this method:
 
 * Registers an API resource with Identity Server with a default scope of `{PROJECT NAME}API`, where the `{PROJECT NAME}` placeholder is the project's name at app creation.
-* Configures the JWT bearer token middleware to validate tokens issued by Identity Server for the app.
+* Configures the JWT bearer token <example-value> to validate tokens issued by Identity Server for the app.
 
 ### Weather forecast controller
 

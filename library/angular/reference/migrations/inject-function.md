@@ -24,13 +24,13 @@ ng generate @angular/core:inject
 ```typescript
 import {Component, Inject, Optional} from '@angular/core';
 import {MyService} from './service';
-import {DI_TOKEN} from './token';
+import {DI_TOKEN} from '<example-value>';
 
 @Component({template: ''})
 export class MyComp {
   constructor(
     private service: MyService,
-    @Inject(DI_TOKEN) @Optional() readonly token: string,
+    @Inject(DI_TOKEN) @Optional() readonly token: <example-value>,
   ) {}
 }
 ```
@@ -40,7 +40,7 @@ export class MyComp {
 ```typescript
 import {Component, inject} from '@angular/core';
 import {MyService} from './service';
-import {DI_TOKEN} from './token';
+import {DI_TOKEN} from '<example-value>';
 
 @Component({template: ''})
 export class MyComp {
@@ -118,7 +118,7 @@ because the code that depends on them likely already accounts for their nullabil
 
 ```typescript
 import {Component, Inject, Optional} from '@angular/core';
-import {TOKEN_ONE, TOKEN_TWO} from './token';
+import {TOKEN_ONE, TOKEN_TWO} from '<example-value>';
 
 @Component({template: ''})
 export class MyComp {
@@ -133,7 +133,7 @@ export class MyComp {
 
 ```typescript
 import {Component, inject} from '@angular/core';
-import {TOKEN_ONE, TOKEN_TWO} from './token';
+import {TOKEN_ONE, TOKEN_TWO} from '<example-value>';
 
 @Component({template: ''})
 export class MyComp {

@@ -22,7 +22,7 @@ A rx ry x-axis-rotation large-arc-flag sweep-flag x y
 a rx ry x-axis-rotation large-arc-flag sweep-flag dx dy
 ```
 
-At its start, the arc element takes in two parameters for the x-radius and y-radius. If needed, see `<ellipse>`s and how they behave. The final two parameters designate the x and y coordinates to end the stroke. Together, these four values define the basic structure of the arc.
+At its start, the arc element takes in two parameters for the x-radius and y-radius. If needed, see `<ellipse>`s and how they behave. The final two parameters designate the x and y coordinates to end the stroke. Together, these four values define the basic <example-value> of the arc.
 
 The third parameter describes the rotation of the arc. This is best explained with an example:
 
@@ -233,7 +233,7 @@ Arcs are an easy way to create pieces of circles or ellipses in drawings. For in
 If transitioning to SVG from `<canvas>`, arcs can be the hardest thing to learn, but are also much more powerful. Complete circles and ellipses are the only shapes that SVG arcs have trouble drawing. Because the start and end points for any path going around a circle are the same point, there are an infinite number of circles that could be chosen, and the actual path is undefined. It's possible to approximate them by making the start and end points of the path slightly askew, and then connecting them with another path segment. For example, it's possible to make a circle with an arc for each semi-circle. At that point, it's often easier to use a real `<circle>` or `<ellipse>` node instead. This interactive demo might help understand the concepts behind SVG arcs.
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/lingtalfi/simpledrag@2.2.0/simpledrag.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/lingtalfi/user@example.com/simpledrag.js"></script>
 <div class="ui">
   <div class="controls">
     Radius X: <input id="rx" type="range" min="0" max="500" /><br />

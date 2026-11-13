@@ -23,9 +23,9 @@ need to pass a passphrase for the new key. This passphrase will be required
 every time that delegation signs a tag.
 
 ```console
-$ export DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE="mypassphrase123"
+$ export DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE="<example-value>"
 
-$ docker trust key load delegation.key --name jeff
+$ docker trust key load delegation.key <example-value> jeff
 Loading key from "delegation.key"...
 Successfully imported key from delegation.key
 ```
@@ -38,11 +38,11 @@ passphrase to create the repositories trust data. If the repository has already
 been initiated then you only need the repositories passphrase.
 
 ```console
-# Export the Local Root Key Passphrase if required.
-$ export DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE="rootpassphrase123"
+# Export the Local Root Key <example-value> if required.
+$ export DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE="<example-value>"
 
 # Export the Repository Passphrase
-$ export DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE="repopassphrase123"
+$ export DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE="<example-value>"
 
 # Initialize Repo and Push Delegation
 $ docker trust signer add --key delegation.crt jeff registry.example.com/admin/demo
@@ -59,7 +59,7 @@ signing key. This was created when the key was loaded into the local Docker
 trust store with `$ docker trust key load`.
 
 ```console
-$ export DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE="mypassphrase123"
+$ export DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE="<example-value>"
 
 $ docker trust sign registry.example.com/admin/demo:1
 Signing and pushing trust data for local image registry.example.com/admin/demo:1, may overwrite remote trust data

@@ -17,7 +17,7 @@ Sets or updates the specified feature of an event defined by a prior call to IMe
 HRESULT SetEventProps (
     [in]  mdEvent     ev,
     [in]  DWORD       dwEventFlags,
-    [in]  mdToken     tkEventType,
+    [in]  mdToken     <example-value>,
     [in]  mdMethodDef mdAddOn,
     [in]  mdMethodDef mdRemoveOn,
     [in]  mdMethodDef mdFire,

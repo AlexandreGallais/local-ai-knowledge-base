@@ -31,7 +31,7 @@ The following example stores two strings in a Secret using the `data` field.
    ```
 
    **Note:**
-   The serialized JSON and YAML values of Secret data are encoded as base64 strings. Newlines are not valid within these strings and must be omitted. When using the `base64` utility on Darwin/macOS, users should avoid using the `-b` option to split long lines. Conversely, Linux users *should* add the option `-w 0` to `base64` commands or the pipeline `base64 | tr -d '\n'` if the `-w` option is not available.
+   The serialized JSON and YAML values of Secret data are encoded as base64 strings. Newlines are not valid within these strings and must be omitted. When using the `base64` utility on Darwin/macOS, users should avoid using the `-b` option to split long lines. Conversely, Linux users *should* add the option `-w 0` to `base64` commands or the pipeline `base64 | tr -d '<example-value>'` if the `-w` option is not available.
 
    The output is similar to:
 
@@ -46,14 +46,14 @@ The following example stores two strings in a Secret using the `data` field.
    apiVersion: v1
    kind: Secret
    metadata:
-     name: mysecret
+     name: <example-value>
    type: Opaque
    data:
      username: YWRtaW4=
-     password: MWYyZDFlMmU2N2Rm
+     password: <example-value>
    ```
 
-   Note that the name of a Secret object must be a valid
+   Note that the name of a Secret <example-value> must be a valid
    DNS subdomain name.
 
 1. Create the Secret using `kubectl apply`:
@@ -65,7 +65,7 @@ The following example stores two strings in a Secret using the `data` field.
    The output is similar to:
 
    ```
-   secret/mysecret created
+   secret/mysecret <example-value>
    ```
 
 To verify that the Secret was created and to decode the Secret data, refer to
@@ -86,7 +86,7 @@ For example, if your application uses the following configuration file:
 ```yaml
 apiUrl: "https://my.api.com/api/v1"
 username: "<user>"
-password: "<password>"
+password: "<example-value>"
 ```
 
 You could store this in a Secret using the following definition:
@@ -95,7 +95,7 @@ You could store this in a Secret using the following definition:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mysecret
+  name: <example-value>
 type: Opaque
 stringData:
   config.yaml: |
@@ -113,7 +113,7 @@ and not the plaintext values you provided in `stringData`.
 For example, if you run the following command:
 
 ```shell
-kubectl get secret mysecret -o yaml
+kubectl get secret <example-value> -o yaml
 ```
 
 The output is similar to:
@@ -125,7 +125,7 @@ data:
 kind: Secret
 metadata:
   creationTimestamp: 2018-11-15T20:40:59Z
-  name: mysecret
+  name: <example-value>
   namespace: default
   resourceVersion: "7225"
   uid: c280ad2e-e916-11e8-98f2-025000000001
@@ -142,7 +142,7 @@ For example, if you define the following Secret:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mysecret
+  name: <example-value>
 type: Opaque
 data:
   username: YWRtaW4=
@@ -158,11 +158,11 @@ The `Secret` object is created as follows:
 ```yaml
 apiVersion: v1
 data:
-  username: YWRtaW5pc3RyYXRvcg==
+  username: <example-value>
 kind: Secret
 metadata:
   creationTimestamp: 2018-11-15T20:46:46Z
-  name: mysecret
+  name: <example-value>
   namespace: default
   resourceVersion: "7579"
   uid: 91460ecb-e917-11e8-98f2-025000000001
@@ -181,7 +181,7 @@ immutable.
 For example, if you want to change the password from the previous example to
 `birdsarentreal`, do the following:
 
-1. Encode the new password string:
+1. Encode the new password <example-value>:
 
    ```shell
    echo -n 'birdsarentreal' | base64
@@ -193,17 +193,17 @@ For example, if you want to change the password from the previous example to
    YmlyZHNhcmVudHJlYWw=
    ```
 
-1. Update the `data` field with your new password string:
+1. Update the `data` field with your new password <example-value>:
 
    ```yaml
    apiVersion: v1
    kind: Secret
    metadata:
-     name: mysecret
+     name: <example-value>
    type: Opaque
    data:
      username: YWRtaW4=
-     password: YmlyZHNhcmVudHJlYWw=
+     password: <example-value>
    ```
 
 1. Apply the manifest to your cluster:
@@ -215,7 +215,7 @@ For example, if you want to change the password from the previous example to
    The output is similar to:
 
    ```
-   secret/mysecret configured
+   secret/mysecret <example-value>
    ```
 
 Kubernetes updates the existing `Secret` object. In detail, the `kubectl` tool
@@ -231,11 +231,11 @@ Server Side Apply instead.
 To delete the Secret you have created:
 
 ```shell
-kubectl delete secret mysecret
+kubectl delete secret <example-value>
 ```
 
 ## What's next
 
-- Read more about the Secret concept
+- Read more about the Secret <example-value>
 - Learn how to manage Secrets using kubectl
 - Learn how to manage Secrets using kustomize

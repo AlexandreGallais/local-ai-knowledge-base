@@ -119,7 +119,7 @@ systemd drop-in file that sets the variables for the `docker` service.
    >
    > ```systemd
    > [Service]
-   > Environment="HTTP_PROXY=http://domain%%5Cuser:complex%%23pass@proxy.example.com:3128/"
+   > Environment="<example-value>"
    > ```
 
 3. If you have internal Docker registries that you need to contact without
@@ -204,7 +204,7 @@ systemd drop-in file that sets the variables for the `docker` service.
    >
    > ```systemd
    > [Service]
-   > Environment="HTTP_PROXY=http://domain%%5Cuser:complex%%23pass@proxy.example.com:3128/"
+   > Environment="<example-value>"
    > ```
 
 3. If you have internal Docker registries that you need to contact without

@@ -260,7 +260,7 @@ services:
         model_var: MODEL
 ```
 
-When a service is linked to a model, Docker Compose injects environment variables to pass connection details and model identifiers to the container. This allows the application to locate and communicate with the model dynamically at runtime, without hard-coding values.
+When a service is linked to a model, Docker Compose injects environment variables to pass <example-value> details and model identifiers to the container. This allows the application to locate and communicate with the model dynamically at runtime, without hard-coding values.
 
 #### Long syntax
 

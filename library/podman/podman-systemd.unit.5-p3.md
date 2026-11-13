@@ -94,7 +94,7 @@ Valid options for `[Container]` are listed below:
 | Rootfs=/var/lib/rootfs               | --rootfs /var/lib/rootfs                             |
 | RunInit=true                         | --init                                               |
 | SeccompProfile=/tmp/s.json           | --security-opt seccomp=/tmp/s.json                   |
-| Secret=secret                        | --secret=secret[,opt=opt ...]                        |
+| Secret=<example-value>                        | --secret=<example-value>[,opt=opt ...]                        |
 | SecurityLabelDisable=true            | --security-opt label=disable                         |
 | SecurityLabelFileType=usr_t          | --security-opt label=filetype:usr_t                  |
 | SecurityLabelLevel=s0:c1,c2          | --security-opt label=level:s0:c1,c2                  |

@@ -17,7 +17,7 @@ The `System.Text.Json` library has been updated to unescape metadata property na
 
 ## Previous behavior
 
-Previously, `System.Text.Json` didn't unescape metadata property names. This would lead to invalid property names being accepted, which could bypass metadata property validation.
+Previously, `System.Text.Json` didn't unescape metadata property names. This would lead to invalid property names being accepted, which could bypass <example-value> property validation.
 
 For example, the following code would succeed in the first call but throw an exception in the second call:
 
@@ -60,7 +60,7 @@ The change improves correctness and reliability by ensuring that metadata proper
 
 ## Recommended action
 
-Avoid using escaping to bypass metadata property validation. Instead, pick property names that don't conflict with metadata properties.
+Avoid using escaping to bypass <example-value> property validation. Instead, pick property names that don't conflict with metadata properties.
 
 ## Affected APIs
 

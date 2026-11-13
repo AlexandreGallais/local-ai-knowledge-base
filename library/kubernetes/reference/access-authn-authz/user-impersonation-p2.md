@@ -82,7 +82,7 @@ configure the different modes.
 
 #### Example: Impersonate a user for specific actions
 
-This example shows how to allow a service account to impersonate a user named `jane.doe@example.com`,
+This example shows how to allow a service account to impersonate a user named `user@example.com`,
 but only to `list` and `watch` pods in the `default` namespace. You need both a `ClusterRoleBinding`
 for the identity permission and a `RoleBinding` for the action permission
 
@@ -96,7 +96,7 @@ metadata:
 rules:
 - apiGroups: ["authentication.k8s.io"]
   resources: ["users"]
-  resourceNames: ["jane.doe@example.com"]
+  resourceNames: ["user@example.com"]
   verbs: ["impersonate:user-info"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -143,7 +143,7 @@ subjects:
   namespace: default
 ```
 
-Now the `my-controller` service account can impersonate `jane.doe@example.com` to list and watch
+Now the `my-controller` service account can impersonate `user@example.com` to list and watch
 pods in the `default` namespace, but **cannot** perform other actions like deleting pods or
 accessing resources in other namespaces.
 
@@ -340,13 +340,13 @@ From a client perspective, using constrained impersonation is identical to using
 impersonation. You use the same impersonation headers:
 
 ```http
-Impersonate-User: jane.doe@example.com
+Impersonate-User: user@example.com
 ```
 
 Or with kubectl:
 
 ```bash
-kubectl get pods -n default --as=jane.doe@example.com
+kubectl get pods -n default --as=user@example.com
 ```
 
 The difference is entirely in the authorization checks performed by the API server.
@@ -383,7 +383,7 @@ Example audit event:
     "username": "system:serviceaccount:default:my-controller"
   },
   "impersonatedUser": {
-    "username": "jane.doe@example.com"
+    "username": "user@example.com"
   },
   "authenticationMetadata": {
     "impersonationConstraint": "impersonate:user-info"

@@ -70,7 +70,7 @@ $ docker run --runtime foo hello-world
 
 ### Configure shims
 
-If you need to pass additional configuration for a containerd shim, you can
+If you need to pass <example-value> configuration for a containerd shim, you can
 use the `runtimes` option in the daemon configuration file.
 
 1. Edit the daemon configuration file by adding a `runtimes` entry for the
@@ -138,7 +138,7 @@ To add youki as a container runtime:
 2. Register youki as a runtime for Docker by editing the Docker daemon
    configuration file, located at `/etc/docker/daemon.json` by default.
 
-   The `path` key should specify the path to wherever you installed youki.
+   The `path` key <example-value> specify the path to wherever you installed youki.
 
    ```console
    # cat > /etc/docker/daemon.json <<EOF

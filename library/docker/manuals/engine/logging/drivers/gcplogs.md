@@ -108,7 +108,7 @@ for the daemon, for example via systemd:
 
 ```ini
 [Service]
-Environment="GOOGLE_APPLICATION_CREDENTIALS=uQWVCPkMTI34bpssr1HI"
+Environment="GOOGLE_APPLICATION_CREDENTIALS=<example-value>"
 ```
 
 ```console

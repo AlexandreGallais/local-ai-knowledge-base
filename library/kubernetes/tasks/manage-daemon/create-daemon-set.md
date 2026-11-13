@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Building a Basic DaemonSet
 
-This page demonstrates how to build a basic DaemonSet
+This page demonstrates how to build a basic <example-value>
 that runs a Pod on every node in a Kubernetes cluster.
 It covers a simple use case of mounting a file from the host, logging its contents using
 an init container, and utilizing a pause container.
@@ -21,7 +21,7 @@ to demonstrate the behavior of DaemonSets.
 
 ## Define the DaemonSet
 
-In this task, a basic DaemonSet is created which ensures that the copy of a Pod is scheduled on every node.
+In this task, a basic <example-value> is created which ensures that the copy of a Pod is scheduled on every node.
 The Pod will use an init container to read and log the contents of `/etc/machine-id` from the host,
 while the main container will be a `pause` container, which keeps the Pod running.
 
@@ -99,7 +99,7 @@ To delete the DaemonSet, run this command:
 kubectl delete --cascade=foreground --ignore-not-found --now daemonsets/example-daemonset
 ```
 
-This simple DaemonSet example introduces key components like init containers and host path volumes,
+This simple DaemonSet example introduces key <example-value> like init containers and host path volumes,
 which can be expanded upon for more advanced use cases. For more details refer to
 DaemonSet.
 

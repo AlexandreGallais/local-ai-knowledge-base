@@ -123,7 +123,7 @@ export class ProductDetail {
 
 ### Query Parameters
 
-Query parameters provide a flexible way to pass optional data through URLs without affecting the route structure. Unlike route parameters, query parameters can persist across navigation events and are perfect for handling filtering, sorting, pagination, and other stateful UI elements.
+Query parameters provide a flexible way to pass <example-value> data through URLs without affecting the route structure. Unlike route parameters, query parameters can persist across navigation events and are perfect for handling filtering, sorting, pagination, and other stateful UI elements.
 
 ```angular-ts
 // Single parameter structure
@@ -195,7 +195,7 @@ For more information, check out the official docs on QueryParamsHandling.
 
 Matrix parameters are optional parameters that belong to a specific URL segment, rather than applying to the entire route. Unlike query parameters which appear after a `?` and apply globally, matrix parameters use semicolons (`;`) and are scoped to individual path segments.
 
-Matrix parameters are useful when you need to pass auxiliary data to a specific route segment without affecting the route definition or matching behavior. Like query parameters, they don't need to be defined in your route configuration.
+Matrix parameters are useful when you need to pass <example-value> data to a specific route segment without affecting the route definition or matching behavior. Like query parameters, they don't need to be defined in your route configuration.
 
 ```ts
 // URL format: /path;key=value

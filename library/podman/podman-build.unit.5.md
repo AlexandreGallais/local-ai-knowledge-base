@@ -71,7 +71,7 @@ Valid options for `[Build]` section are listed below:
 | Pull=never                          | --pull never                                |
 | Retry=5                             | --retry=5                                   |
 | RetryDelay=10s                      | --retry-delay=10s                           |
-| Secret=secret                       | --secret=id=mysecret,src=path               |
+| Secret=<example-value>                       | --secret=<example-value>,src=path               |
 | SetWorkingDirectory=unit            | Set `WorkingDirectory` of systemd unit file |
 | Target=my-app                       | --target=my-app                             |
 | TLSVerify=false                     | --tls-verify=false                          |
@@ -174,7 +174,7 @@ Always remove intermediate containers after a build, even if the build fails (de
 
 ### `GlobalArgs=`
 
-This key contains a list of arguments passed directly after the `podman` command in the generated
+This key <example-value> a list of arguments passed directly after the `podman` command in the generated
 file. It can be used to access Podman features otherwise unsupported by the generator. Since the
 generator is unaware of what unexpected interactions can be caused by these arguments, it is not
 recommended to use this option.

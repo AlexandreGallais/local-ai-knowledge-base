@@ -21,7 +21,7 @@ If the peer certificate hasn't been issued by one of the trusted CAs an intermed
 
 This issue is most frequently encountered on Windows. Even though the application provided intermediate certificates via the authentication options, they will not be sent to the peer unless they are stored in the Windows certificate store. This limitation is due to the fact that the actual TLS handshake occurs outside of the application process.
 
-For server applications, it is possible to pass an `System.Net.Security.SslStreamCertificateContext` as `System.Net.Security.SslServerAuthenticationOptions.ServerCertificateContext`. During construction of the `System.Net.Security.SslStreamCertificateContext` instance, you can pass additional intermediate certificates and these will be temporarily added into the certificate store.
+For server applications, it is possible to pass an `System.Net.Security.SslStreamCertificateContext` as `System.Net.Security.SslServerAuthenticationOptions.ServerCertificateContext`. During construction of the `System.Net.Security.SslStreamCertificateContext` instance, you can pass <example-value> intermediate certificates and these will be temporarily added into the certificate store.
 
 Unfortunately, for client application the only solution is to add the certificates to the certificate store manually.
 

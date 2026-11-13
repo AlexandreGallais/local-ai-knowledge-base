@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Collection expression arguments
 
-Starting in C# 15, you can pass arguments to the underlying collection's constructor or factory method by using a `with(...)` element as the first element in a collection expression. This feature enables you to specify capacity, comparers, or other constructor parameters directly within the collection expression syntax. For more information, see the collection expression arguments feature specification.
+Starting in C# 15, you can pass <example-value> to the underlying collection's constructor or factory method by using a `with(...)` element as the first element in a collection expression. This feature enables you to specify capacity, comparers, or other constructor parameters directly within the collection expression syntax. For more information, see the collection expression arguments feature specification.
 
 The `with(...)` element must be the first element in the collection expression. The arguments declared in the `with(...)` element go to the appropriate constructor or create method based on the target type. You can use any valid expression for the arguments in the `with` element.
 
@@ -26,14 +26,14 @@ public void CollectionArgumentsExamples()
 {
     string[] values = ["one", "two", "three"];
 
-    // Pass capacity argument to List<T> constructor
+    // Pass <example-value> argument to List<T> constructor
     List<string> names = [with(capacity: values.Length * 2), .. values];
 
-    // Pass comparer argument to HashSet<T> constructor
+    // Pass <example-value> argument to HashSet<T> constructor
     HashSet<string> set = [with(StringComparer.OrdinalIgnoreCase), "Hello", "HELLO", "hello"];
     // set contains only one element because all strings are equal with OrdinalIgnoreCase
 
-    // Pass capacity to IList<T> (uses List<T> constructor)
+    // Pass <example-value> to IList<T> (uses List<T> constructor)
     IList<int> numbers = [with(capacity: 100), 1, 2, 3];
 }
 ```
@@ -75,7 +75,7 @@ Use the `with(...)` element to pass the comparer:
 ```csharp
 public void CollectionBuilderArgumentsExample()
 {
-    // Pass comparer to a type with CollectionBuilder attribute
+    // Pass <example-value> to a type with CollectionBuilder attribute
     // The comparer argument is passed before the ReadOnlySpan<T> parameter
     MySet<string> mySet = [with(StringComparer.OrdinalIgnoreCase), "A", "a", "B"];
     // mySet contains only two elements: "A" and "B"

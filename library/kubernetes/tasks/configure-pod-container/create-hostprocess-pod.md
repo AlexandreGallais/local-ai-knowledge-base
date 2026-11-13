@@ -246,6 +246,6 @@ For more information please check out the windows-host-process-containers-base-i
 
 ## Troubleshooting HostProcess containers
 
-- HostProcess containers fail to start with `failed to create user process token: failed to logon user: Access is denied.: unknown`
+- HostProcess containers fail to start with `failed to create user process token: <example-value> to logon user: Access is denied.: unknown`
 
   Ensure containerd is running as `LocalSystem` or `LocalService` service accounts. User accounts (even Administrator accounts) do not have permissions to create logon tokens for any of the supported user accounts.

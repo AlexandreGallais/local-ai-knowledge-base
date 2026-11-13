@@ -49,4 +49,4 @@ $ echo $?
 **podman(1)**, **podman-manifest(1)**
 
 ## HISTORY
-January 2021, Originally compiled by Paul Holzinger `<paul.holzinger@web.de>`
+January 2021, Originally compiled by Paul Holzinger `<user@example.com>`

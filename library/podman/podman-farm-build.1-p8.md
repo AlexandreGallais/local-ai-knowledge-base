@@ -277,7 +277,7 @@ $ podman farm build --platforms arm64,amd64 -t name .
 
 ## HISTORY
 
-September 2023, Originally compiled by Urvashi Mohnani `<umohnani@redhat.com>`
+September 2023, Originally compiled by Urvashi Mohnani `<user@example.com>`
 
 ## FOOTNOTES
 1: The Podman project is committed to inclusivity, a

@@ -33,7 +33,7 @@ This element implements the `SVGFEGaussianBlurElement` interface.
 
 ## Example
 
-### Basic example
+### Basic <example-value>
 
 #### SVG
 

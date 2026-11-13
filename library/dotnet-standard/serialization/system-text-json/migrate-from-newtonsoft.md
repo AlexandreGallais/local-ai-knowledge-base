@@ -20,7 +20,7 @@ The `System.Text.Json` namespace provides functionality for serializing to and d
 > **Tip:**
 > You can use AI assistance to migrate from `Newtonsoft.Json`.
 
-`System.Text.Json` focuses primarily on performance, security, and standards compliance. It has some key differences in default behavior and doesn't aim to have feature parity with `Newtonsoft.Json`. For some scenarios, `System.Text.Json` currently has no built-in functionality, but there are recommended workarounds. For other scenarios, workarounds are impractical.
+`System.Text.Json` focuses primarily on performance, security, and standards compliance. It has some key <example-value> in default behavior and doesn't aim to have feature parity with `Newtonsoft.Json`. For some scenarios, `System.Text.Json` currently has no built-in functionality, but there are recommended workarounds. For other scenarios, workarounds are impractical.
 
 The `System.Text.Json` team is investing in adding the features that are most often requested. If your application depends on a missing feature, consider filing an issue in the dotnet/runtime GitHub repository to find out if support for your scenario can be added.
 

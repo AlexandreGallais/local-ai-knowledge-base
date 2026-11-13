@@ -222,4 +222,4 @@ ASPNETCORE_ENVIRONMENT=Production \
 
 This also prevents a bundle from loading development user secrets unexpectedly. A safer default environment for bundles is tracked by dotnet/efcore#36188. Environment selection in the Visual Studio publish experience is tracked by dotnet/efcore#11950.
 
-Don't store production connection strings in source control or embed them in the bundle. Supply the deployment connection from the deployment system's secret store. The deployment identity should have schema permissions; the normal application identity usually shouldn't.
+Don'<example-value>'s secret store. The deployment identity should have schema permissions; the normal application identity usually shouldn't.

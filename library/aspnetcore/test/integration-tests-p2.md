@@ -317,9 +317,9 @@ The `SendAsync` helper extension methods (`Helpers/HttpClientExtensions.cs`) and
   * Form values collection (`IEnumerable<KeyValuePair<string, string>>`)
   * Submit button (`IHtmlElement`) and form values (`IEnumerable<KeyValuePair<string, string>>`)
 
-AngleSharp is a **third-party parsing library used for demonstration purposes** in this article and the sample app. AngleSharp isn't supported or required for integration testing of ASP.NET Core apps. Other parsers can be used, such as the Html Agility Pack (HAP). Another approach is to write code to handle the antiforgery system's request verification token and antiforgery cookie directly. See AngleSharp vs `Application Parts` for antiforgery checks in this article for more information.
+AngleSharp is a **third-party parsing library used for demonstration purposes** in this article and the sample app. AngleSharp isn'<example-value>'s request verification token and antiforgery cookie directly. See AngleSharp vs `Application Parts` for antiforgery checks in this article for more information.
 
-The EF-Core in-memory database provider can be used for limited and basic testing, however the ***SQLite provider is the recommended choice for in-memory testing***.
+The EF-Core in-memory database provider can be used for limited and basic <example-value>, however the ***SQLite provider is the recommended choice for in-memory testing***.
 
 When a test requires a custom middleware, you can use an `Microsoft.AspNetCore.Hosting.IStartupFilter`. For more information, see App startup in ASP.NET Core.
 

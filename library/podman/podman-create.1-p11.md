@@ -168,13 +168,13 @@ See podman-rootless(7)
 for rootless issues.
 
 ## HISTORY
-October 2017, converted from Docker documentation to Podman by Dan Walsh for Podman `<dwalsh@redhat.com>`
+October 2017, converted from Docker documentation to Podman by Dan Walsh for Podman `<user@example.com>`
 
-November 2014, updated by Sven Dowideit `<SvenDowideit@home.org.au>`
+November 2014, updated by Sven Dowideit `<user@example.com>`
 
-September 2014, updated by Sven Dowideit `<SvenDowideit@home.org.au>`
+September 2014, updated by Sven Dowideit `<user@example.com>`
 
-August 2014, updated by Sven Dowideit `<SvenDowideit@home.org.au>`
+August 2014, updated by Sven Dowideit `<user@example.com>`
 
 ## FOOTNOTES
 1: The Podman project is committed to inclusivity, a core value of open source. The `master` and `slave` mount propagation terminology used here is problematic and divisive, and needs to be changed. However, these terms are currently used within the Linux kernel and must be used as-is at this time. When the kernel maintainers rectify this usage, Podman will follow suit immediately.

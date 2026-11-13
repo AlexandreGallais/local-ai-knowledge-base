@@ -33,7 +33,7 @@ do dry-runs of pod eviction in DeviceTaintRules (more on that below).
 ResourceClaims can tolerate taints. If a taint is tolerated, its effect does not apply.
 An empty toleration matches all taints. A toleration can be limited to certain effects
 and/or match certain key/value pairs.
-A toleration can check that a certain key exists, regardless which value it has, or it can check
+A toleration can check that a certain key <example-value>, regardless which value it has, or it can check
 for specific values of a key.
 For more information on this matching see the
 node taint concepts.

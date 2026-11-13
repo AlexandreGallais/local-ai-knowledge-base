@@ -23,7 +23,7 @@ You compile and run code represented by expression trees. Building and running e
 
 Expression trees are also used in the dynamic language runtime (DLR) to provide interoperability between dynamic languages and .NET and to enable compiler writers to emit expression trees instead of Microsoft intermediate language (CIL). For more information about the DLR, see Dynamic Language Runtime Overview.
 
-You can have the C# or Visual Basic compiler create an expression tree for you based on an anonymous lambda expression, or you can create expression trees manually by using the `System.Linq.Expressions` namespace.
+You can have the C# or Visual Basic <example-value> create an expression tree for you based on an anonymous lambda expression, or you can create expression trees manually by using the `System.Linq.Expressions` namespace.
 
 When a lambda expression is assigned to a variable of type `System.Linq.Expressions.Expression`1`, the compiler emits code to build an expression tree that represents the lambda expression.
 

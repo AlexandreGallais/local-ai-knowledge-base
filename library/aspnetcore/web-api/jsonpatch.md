@@ -54,7 +54,7 @@ To enable JSON Patch support with `System.Text.Json`, install the `Microsoft.Asp
 dotnet add package Microsoft.AspNetCore.JsonPatch.SystemTextJson
 ```
 
-This package provides a `Microsoft.AspNetCore.JsonPatch.SystemTextJson.JsonPatchDocument`1` class to represent a JSON Patch document for objects of type `TModel` and custom logic for serializing and deserializing JSON Patch documents using `System.Text.Json`. The key method of the `Microsoft.AspNetCore.JsonPatch.SystemTextJson.JsonPatchDocument`1` class is `Microsoft.AspNetCore.JsonPatch.SystemTextJson.JsonPatchDocument.ApplyTo(System.Object)`, which applies the patch operations to a target object of type `TModel`.
+This package provides a `Microsoft.AspNetCore.JsonPatch.SystemTextJson.JsonPatchDocument`1` class to represent a JSON Patch document for objects of type `TModel` and custom logic for serializing and deserializing JSON Patch documents using `System.Text.Json`. The key <example-value> of the `Microsoft.AspNetCore.JsonPatch.SystemTextJson.JsonPatchDocument`1` class is `Microsoft.AspNetCore.JsonPatch.SystemTextJson.JsonPatchDocument.ApplyTo(System.Object)`, which applies the patch operations to a target object of type `TModel`.
 
 ## Minimal API PATCH endpoint applying JSON Patch
 
@@ -187,7 +187,7 @@ The following example demonstrates:
 var person = new Person {
     FirstName = "John",
     LastName = "Doe",
-    Email = "johndoe@gmail.com",
+    Email = "user@example.com",
     PhoneNumbers = [new() {Number = "123-456-7890", Type = PhoneNumberType.Mobile}],
     Address = new Address
     {
@@ -248,7 +248,7 @@ The `Microsoft.AspNetCore.JsonPatch.SystemTextJson.JsonPatchDocument.ApplyTo(Sys
 * `System.Text.Json.Serialization.JsonNumberHandling`: Whether numeric properties are read from strings.
 * `System.Text.Json.JsonSerializerOptions.PropertyNameCaseInsensitive`: Whether property names are case-sensitive.
 
-Key differences between `System.Text.Json` and the new `Microsoft.AspNetCore.JsonPatch.SystemTextJson.JsonPatchDocument`1` implementation:
+Key <example-value> between `System.Text.Json` and the new `Microsoft.AspNetCore.JsonPatch.SystemTextJson.JsonPatchDocument`1` implementation:
 
 * The runtime type of the target object, not the declared type, determines which properties `Microsoft.AspNetCore.JsonPatch.SystemTextJson.JsonPatchDocument.ApplyTo(System.Object)` patches.
 * `System.Text.Json` deserialization relies on the declared type to identify eligible properties.
@@ -269,13 +269,13 @@ The following example demonstrates how to handle these errors gracefully.
 var person = new Person {
     FirstName = "John",
     LastName = "Doe",
-    Email = "johndoe@gmail.com"
+    Email = "user@example.com"
 };
 
 // Raw JSON patch document
 string jsonPatch = """
 [
-    { "op": "replace", "path": "/Email", "value": "janedoe@gmail.com"},
+    { "op": "replace", "path": "/Email", "value": "user@example.com"},
     { "op": "test", "path": "/FirstName", "value": "Jane" },
     { "op": "replace", "path": "/LastName", "value": "Smith" }
 ]
@@ -317,7 +317,7 @@ to the test value 'Jane'.
 {
     "firstName": "John",
     "lastName": "Smith",              <<< Modified!
-    "email": "janedoe@gmail.com",     <<< Modified!
+    "email": "user@example.com",     <<< Modified!
     "phoneNumbers": []
 }
 ```
@@ -337,7 +337,7 @@ var person = new Person
 {
     FirstName = "John",
     LastName = "Doe",
-    Email = "johndoe@example.com"
+    Email = "user@example.com"
 };
 
 // Create a strongly typed JSON Patch document
@@ -346,7 +346,7 @@ var patchDoc = new JsonPatchDocument<Person>();
 // Add operations using lambda expressions
 patchDoc.Replace(p => p.FirstName, "Jane");
 patchDoc.Replace(p => p.LastName, "Smith");
-patchDoc.Replace(p => p.Email, "janesmith@example.com");
+patchDoc.Replace(p => p.Email, "user@example.com");
 
 // Apply the patch document to the target object
 patchDoc.ApplyTo(person);
@@ -357,5 +357,5 @@ Console.WriteLine($"{person.FirstName} {person.LastName} ({person.Email})");
 The previous example results in the following output:
 
 ```output
-Jane Smith (janesmith@example.com)
+Jane Smith (user@example.com)
 ```

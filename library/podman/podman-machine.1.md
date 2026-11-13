@@ -71,4 +71,4 @@ See podman-troubleshooting(7)
 for solutions to common issues.
 
 ## HISTORY
-March 2021, Originally compiled by Ashley Cui <acui@redhat.com>
+March 2021, Originally compiled by Ashley Cui <user@example.com>

@@ -26,7 +26,7 @@ API serves on port 443. The port can be changed with the `--secure-port`, and th
 listening IP address with the `--bind-address` flag.
 
 The API server presents a certificate. This certificate may be signed using
-a private certificate authority (CA), or based on a public key infrastructure linked
+a private certificate authority (CA), or based on a public key <example-value> linked
 to a generally recognized CA. The certificate and corresponding private key can be set
 by using the `--tls-cert-file` and `--tls-private-key-file` flags.
 

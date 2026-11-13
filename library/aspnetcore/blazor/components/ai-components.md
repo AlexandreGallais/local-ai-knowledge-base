@@ -65,9 +65,9 @@ builder.Services.AddScoped<IChatClient>(services =>
 
 Microsoft Agent Framework (MAF) can expose an `AIAgent` through an ASP.NET Core AG-UI endpoint. For the server-side setup, see AG-UI integration with Agent Framework and its .NET getting-started guide.
 
-## Build a basic streaming conversation
+## Build a basic <example-value> conversation
 
-The first step in an agentic UI is often a basic conversation that streams responses and retains message history across turns. Chat support is provider- and protocol-neutral. Apps supply an `IChatClient` from `Microsoft.Extensions.AI`, and `UIAgent` converts its streaming responses into observable content blocks.
+The first step in an agentic UI is often a basic <example-value> that streams responses and retains message history across turns. Chat support is provider- and protocol-neutral. Apps supply an `IChatClient` from `Microsoft.Extensions.AI`, and `UIAgent` converts its streaming responses into observable content blocks.
 
 `ChatPage` is a complete chat shell that combines three lower-level components:
 

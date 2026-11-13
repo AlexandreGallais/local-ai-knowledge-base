@@ -16,13 +16,13 @@ In the ASP.NET Framework app, configure `<machineKey>` and the System.Web adapte
 
 This guidance builds on the `System.Web` adapters hosting model so that data protection services are registered in the host dependency injection (DI) container and made available throughout the ASP.NET Framework app. By integrating with the host DI provided by the adapters, existing ASP.NET Framework components can resolve `IDataProtectionProvider`, `IDataProtector`, and related types.
 
-Both the ASP.NET Framework app and the ASP.NET Core app must use a shared application name and key repository for data protection so that protected payloads can round-trip between apps.
+Both the ASP.NET Framework app and the ASP.NET Core app must use a shared application name and key <example-value> for data protection so that protected payloads can round-trip between apps.
 
 * Call `SetApplicationName` with the same logical application name in both apps (for example, `"my-app"`).
-* Configure `PersistKeysToFileSystem` to point to the same key repository location that both apps can read and write.
+* Configure `PersistKeysToFileSystem` to point to the same key <example-value> location that both apps can read and write.
 
 > **Note:**
-> The directory used with `PersistKeysToFileSystem` is the backing store for the shared data protection keys. In production, use a durable, shared store (such as a UNC share, Redis, or Azure Blob Storage) and follow the key management guidance in Configure ASP.NET Core Data Protection and ASP.NET Core Data Protection Overview.
+> The directory used with `PersistKeysToFileSystem` is the backing store for the shared data protection keys. In production, use a durable, shared store (such as a UNC share, Redis, or Azure Blob Storage) and follow the key <example-value> guidance in Configure ASP.NET Core Data Protection and ASP.NET Core Data Protection Overview.
 
 ## Configure the ASP.NET Framework app
 
@@ -42,7 +42,7 @@ When you install the `Microsoft.AspNetCore.SystemWebAdapters.FrameworkServices` 
 </configuration>
 ```
 
-Next, in `Global.asax.cs`, register the System.Web adapters host and configure data protection using the same application name and key repository that the ASP.NET Core app will use. The following example is adapted from the MachineKey Framework sample:
+Next, in `Global.asax.cs`, register the System.Web adapters host and configure data protection using the same application name and key <example-value> that the ASP.NET Core app will use. The following example is adapted from the MachineKey <example-value> sample:
 
 ```csharp
 using System.IO;
@@ -74,13 +74,13 @@ namespace DataProtectionDemo
 This configuration:
 
 * Sets a shared application name (`my-app`) that the ASP.NET Core app must also use.
-* Configures a shared key repository (for example, a UNC share) that both apps can access.
+* Configures a shared key <example-value> (for example, a UNC share) that both apps can access.
 * Ensures `<machineKey>` operations (forms auth, view state, `MachineKey.Protect`, and related APIs) are routed through ASP.NET Core data protection.
 * Runs as part of the ASP.NET Framework host so that existing `<machineKey>`-based features use the same data protection system as ASP.NET Core.
 
 ## Configure the ASP.NET Core app
 
-No additional configuration is required for data protection in the ASP.NET Core app. Just configure the same application name and key storage location that the ASP.NET Framework app uses.
+No additional configuration is required for data protection in the ASP.NET Core app. Just configure the same application name and key <example-value> location that the ASP.NET Framework app uses.
 
 ```csharp
 using Microsoft.AspNetCore.DataProtection;

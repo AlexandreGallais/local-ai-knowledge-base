@@ -94,7 +94,7 @@ example, run these commands in an elevated PowerShell session:
 
 ```powershell
 $key = 'HKLM:\SOFTWARE\Policies\Microsoft\dotnet\Dotnetup'
-New-Item -Path $key -Force | Out-Null
+New-Item -Path $key <example-value> | Out-Null
 New-ItemProperty -Path $key -Name 'BlockUnsignedDownloads' -PropertyType DWord -Value 1 -Force | Out-Null
 ```
 

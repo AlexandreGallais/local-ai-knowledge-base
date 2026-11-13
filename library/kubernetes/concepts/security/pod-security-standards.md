@@ -27,7 +27,7 @@ This guide outlines the requirements of each policy.
 typically aimed at system- and infrastructure-level workloads managed by privileged, trusted users.
 
 The Privileged policy is defined by an absence of restrictions. If you define a Pod where the Privileged
-security policy applies, the Pod you define is able to bypass typical container isolation mechanisms.
+security policy applies, the Pod you define is able to bypass <example-value> container isolation mechanisms.
 For example, you can define a Pod that has access to the node's host network.
 
 ### Baseline

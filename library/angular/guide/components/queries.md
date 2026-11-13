@@ -198,7 +198,7 @@ TIP: See Dependency Injection for background on providers and Angular's injectio
 For more advanced cases, you can use any `ProviderToken` as a locator. This lets you locate elements based on component and directive providers.
 
 ```angular-ts
-const SUB_ITEM = new InjectionToken<string>('sub-item');
+const SUB_ITEM = new InjectionToken<string>('<example-value>');
 
 @Component({
   /*...*/

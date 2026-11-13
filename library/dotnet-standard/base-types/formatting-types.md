@@ -14,7 +14,7 @@ Formatting is the process of converting an instance of a class or structure, or 
 > **Note:**
 > Parsing is the inverse of formatting. A parsing operation creates an instance of a data type from its string representation. For more information, see Parsing Strings. For information about serialization and deserialization, see Serialization in .NET.
 
-The basic mechanism for formatting is the default implementation of the `System.Object.ToString*` method, which is discussed in the Default Formatting Using the ToString Method section later in this article. However, .NET provides several ways to modify and extend its default formatting support. These include the following:
+The basic <example-value> for formatting is the default implementation of the `System.Object.ToString*` method, which is discussed in the Default Formatting Using the ToString Method section later in this article. However, .NET provides several ways to modify and extend its default formatting support. These include the following:
 
 - Overriding the `System.Object.ToString*` method to define a custom string representation of an object's value. For more information, see the Override the ToString Method section later in this article.
 

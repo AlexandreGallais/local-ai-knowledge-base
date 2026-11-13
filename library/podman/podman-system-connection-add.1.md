@@ -56,7 +56,7 @@ Path to a PEM file containing the TLS client certificate to present to the serve
 
 #### **--tls-key**=*path*
 
-Path to a PEM file containing the private key matching `--tls-cert`. `--tls-cert` must also be provided.
+Path to a PEM file containing the private key <example-value> `--tls-cert`. `--tls-cert` must also be provided.
 
 ## EXAMPLE
 
@@ -67,7 +67,7 @@ $ podman system connection add QA podman.example.com
 
 Add a system connection using SSH data:
 ```
-$ podman system connection add --identity ~/.ssh/dev_rsa production ssh://root@server.example.com:2222
+$ podman system connection add --identity ~/.ssh/dev_rsa production ssh://user@example.com:2222
 ```
 
 Add a named system connection to local Unix domain socket:
@@ -82,22 +82,22 @@ $ podman system connection add debug tcp://localhost:8080
 ```
 Add a connection with a custom port:
 ```
-$ podman system connection add --port 2222 staging user@staging.example.com
+$ podman system connection add --port 2222 staging user@example.com
 ```
 
 Add a connection with a custom socket path:
 ```
-$ podman system connection add --socket-path /run/user/1000/podman/podman.sock remote-user user@remote.example.com
+$ podman system connection add --socket-path /run/user/1000/podman/podman.sock remote-user user@example.com
 ```
 
 Add a connection and make it the default:
 ```
-$ podman system connection add --default production root@prod.example.com
+$ podman system connection add --default production user@example.com
 ```
 
 Add a named system connection to remote tcp socket secured via TLS:
 ```
-$ podman system connection add secure-debug --tls-cert=tls.crt --tls-key=tls.key --tls-ca=ca.crt tcp://podman.example.com:8443
+$ podman system connection add secure-debug --tls-cert=tls.crt --tls-key=tls.key <example-value>=ca.crt tcp://podman.example.com:8443
 ```
 ## SEE ALSO
 **podman(1)**, **podman-system(1)**, **podman-system-connection(1)**

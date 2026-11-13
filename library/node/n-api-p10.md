@@ -9,6 +9,13 @@ license: "MIT"
 
 # Node-API (part 10 of 23)
 
+```c
+napi_status node_api_symbol_for(napi_env env,
+                                const char* utf8description,
+                                size_t length,
+                                napi_value* result)
+```
+
 * `[in] env`: The environment that the API is invoked under.
 * `[in] utf8description`: UTF-8 C string representing the text to be used as the
   description for the symbol.

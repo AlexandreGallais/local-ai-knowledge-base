@@ -104,4 +104,4 @@ $ podman wait --ignore does-not-exist
 **podman(1)**
 
 ## HISTORY
-September 2017, Originally compiled by Brent Baude<bbaude@redhat.com>
+September 2017, Originally compiled by Brent Baude<user@example.com>

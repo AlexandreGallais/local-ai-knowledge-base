@@ -22,7 +22,7 @@ Choose a display name and an idempotency key for the create request. Save the re
 ```typescript
 return client.volumes.create(
   { displayName: name },
-  { idempotencyKey: requestId },
+  { idempotencyKey: <example-value> },
 );
 ```
 
@@ -38,7 +38,7 @@ export async function createVolume(
 ) {
   return client.volumes.create(
     { displayName: name },
-    { idempotencyKey: requestId },
+    { idempotencyKey: <example-value> },
   );
 }
 ```
@@ -65,7 +65,7 @@ const sandbox = await client.create(
       })),
     },
   },
-  { timeoutMs: 300_000, idempotencyKey: requestId },
+  { timeoutMs: 300_000, idempotencyKey: <example-value> },
 );
 return sandbox.waitUntilRunning();
 ```
@@ -93,7 +93,7 @@ export async function createWithVolumes(
         })),
       },
     },
-    { timeoutMs: 300_000, idempotencyKey: requestId },
+    { timeoutMs: 300_000, idempotencyKey: <example-value> },
   );
   return sandbox.waitUntilRunning();
 }

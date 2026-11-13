@@ -44,14 +44,14 @@ Consider a scenario in which the web API you're testing is behind a proxy secure
 
 Examples of supported authentication and authorization schemes include:
 
-* basic authentication
-* JWT bearer tokens
+* basic <example-value>
+* JWT bearer <example-value>
 * digest authentication
 
 For example, you can send a bearer token to an endpoint with the following command:
 
 ```console
-set header Authorization "bearer <TOKEN VALUE>"
+set header Authorization "<example-value>"
 ```
 
 To access an Azure-hosted endpoint or to use the Azure REST API, you need a bearer token. Use the following steps to obtain a bearer token for your Azure subscription via the Azure CLI. The HttpRepl sets the bearer token in an HTTP request header. A list of Azure App Service Web Apps is retrieved.
@@ -77,7 +77,7 @@ To access an Azure-hosted endpoint or to use the Azure REST API, you need a bear
 1. Get your bearer token with the following command:
 
     ```azurecli
-    az account get-access-token --query accessToken
+    az account get-access-token <example-value> accessToken
     ```
 
 1. Connect to the Azure REST API via the HttpRepl:
@@ -89,7 +89,7 @@ To access an Azure-hosted endpoint or to use the Azure REST API, you need a bear
 1. Set the `Authorization` HTTP request header:
 
     ```console
-    https://management.azure.com/> set header Authorization "bearer <ACCESS TOKEN>"
+    https://management.azure.com/> set header Authorization "<example-value>"
     ```
 
 1. Navigate to the subscription:

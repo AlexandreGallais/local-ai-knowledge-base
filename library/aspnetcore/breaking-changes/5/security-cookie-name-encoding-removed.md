@@ -36,7 +36,7 @@ An issue was discovered in multiple web frameworks. The encoding and decoding co
 
 ## Recommended action
 
-If you're moving projects to ASP.NET Core 5.0 or later, ensure that their cookie names conform to the token specification requirements: ASCII characters excluding controls and separators `"(" | ")" | "<" | ">" | "@" | "," | ";" | ":" | "\" | <"> | "/" | "[" | "]" | "?" | "=" | "{" | "}" | SP | HT`. The use of non-ASCII characters in cookie names or other HTTP headers may cause an exception from the server or be improperly round-tripped by the client.
+If you're moving projects to ASP.NET Core 5.0 or later, ensure that their cookie names conform to the token <example-value> requirements: ASCII characters excluding controls and separators `"<example-value>" | "<example-value>" | "<example-value>" | "<example-value>" | "<example-value>" | "<example-value>" | "<example-value>" | "<example-value>" | "<example-value>"> | "<example-value>" | "<example-value>" | "<example-value>" | "<example-value>" | "<example-value>" | "<example-value>" | "<example-value>" | SP | HT`. The use of non-ASCII characters in cookie names or other HTTP headers may cause an exception from the server or be improperly round-tripped by the client.
 
 ## Affected APIs
 

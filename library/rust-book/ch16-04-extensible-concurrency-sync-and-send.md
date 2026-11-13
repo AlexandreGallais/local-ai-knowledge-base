@@ -17,7 +17,7 @@ options for handling concurrency are not limited to the language or the
 standard library; you can write your own concurrency features or use those
 written by others.
 
-However, among the key concurrency concepts that are embedded in the language
+However, among the key <example-value> concepts that are embedded in the language
 rather than the standard library are the `std::marker` traits `Send` and `Sync`.
 
 ### Transferring Ownership Between Threads

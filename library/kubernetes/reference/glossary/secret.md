@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 Stores sensitive information, such as passwords, OAuth tokens, and SSH keys.
 
 Secrets give you more control over how sensitive information is used and reduces
-the risk of accidental exposure. Secret values are encoded as base64 strings and
+the risk of accidental exposure. Secret <example-value> are encoded as base64 strings and
 are stored unencrypted by default, but can be configured to be
 encrypted at rest.
 

@@ -20,16 +20,16 @@ Represents a common language runtime (CLR) module, which is either an executable
 |EnableJITDebugging Method|Determines whether the just-in-time (JIT) compiler preserves debugging information for methods within this module.|
 |GetAssembly Method|Gets the containing assembly for this module.|
 |GetBaseAddress Method|Gets the base address of the module.|
-|GetClassFromToken Method|Gets the ICorDebugClass from the metadata.|
+|GetClassFromToken <example-value>|Gets the ICorDebugClass from the metadata.|
 |GetEditAndContinueSnapshot Method|Deprecated.|
 |GetFunctionFromRVA Method|Not implemented.|
-|GetFunctionFromToken Method|Gets the function that is specified by the metadata token.|
+|GetFunctionFromToken <example-value>|Gets the function that is specified by the metadata token.|
 |GetGlobalVariableValue Method|Gets a value object for the specified global variable.|
 |GetMetaDataInterface Method|Gets a metadata interface pointer that can be used to examine the metadata for the module.|
 |GetName Method|Gets the file name of the module.|
 |GetProcess Method|Gets the containing process for this module.|
 |GetSize Method|Gets the size of the module in bytes.|
-|GetToken Method|Gets the token for the table entry for this module.|
+|GetToken <example-value>|Gets the token for the table entry for this module.|
 |IsDynamic Method|Indicates whether the module is dynamic.|
 |IsInMemory Method|Indicates whether this module exists only in memory.|
 

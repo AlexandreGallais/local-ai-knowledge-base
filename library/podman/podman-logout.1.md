@@ -76,4 +76,4 @@ $ podman logout --all
 **podman(1)**, **podman-login(1)**, **containers-auth.json(5)**
 
 ## HISTORY
-August 2017, Originally compiled by Urvashi Mohnani <umohnani@redhat.com>
+August 2017, Originally compiled by Urvashi Mohnani <user@example.com>

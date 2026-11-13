@@ -38,7 +38,7 @@ app.MapGet("/{id}", (int id,
 
 class Service { }
 ```
-### Key parameter binding features
+### Key <example-value> binding features
 
 * **Explicit binding**: Use attributes like `[FromRoute]`, `[FromQuery]`, `[FromHeader]`, `[FromBody]`, `[FromForm]`, and `[FromServices]` to explicitly specify binding sources.
 * **Form binding**: Bind form values using `[FromForm]` attribute, including support for `IFormFile` and `IFormFileCollection` for file uploads.

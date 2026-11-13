@@ -65,7 +65,7 @@ This element implements the `SVGImageElement` interface.
 
 ## Example
 
-Basic rendering of a PNG image in SVG:
+Basic <example-value> of a PNG image in SVG:
 
 ### SVG
 

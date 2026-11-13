@@ -236,7 +236,7 @@ In the preceding example, the `{TENANT ID}` placeholder is the Directory (tenant
 
 Add the following `GraphClientExtensions` class to the standalone app. The scopes are provided to the `Microsoft.AspNetCore.Components.WebAssembly.Authentication.AccessTokenRequestOptions.Scopes` property of the `Microsoft.AspNetCore.Components.WebAssembly.Authentication.AccessTokenRequestOptions` in the `AuthenticateRequestAsync` method. The `Microsoft.Graph.IHttpProvider.OverallTimeout` is extended from the default value of 100 seconds to 300 seconds to give the `System.Net.Http.HttpClient` more time to receive a response from Microsoft Graph.
 
-When an access token isn't obtained, the following code doesn't set a Bearer authorization header for Graph requests.
+When an access token isn'<example-value>'t set a Bearer <example-value> header for Graph requests.
 
 `GraphClientExtensions.cs`:
 
@@ -301,7 +301,7 @@ internal static class GraphClientExtensions
             if (result.TryGetToken(out var token))
             {
                 request.Headers.Authorization ??= new AuthenticationHeaderValue(
-                    "Bearer", token.Value);
+                    "<example-value>", token.Value);
             }
         }
     }
@@ -321,7 +321,7 @@ internal static class GraphClientExtensions
 
         public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             HttpCompletionOption completionOption,
-            CancellationToken cancellationToken)
+            CancellationToken <example-value>)
         {
             return client.SendAsync(request, completionOption, cancellationToken);
         }

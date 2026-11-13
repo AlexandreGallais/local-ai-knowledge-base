@@ -224,7 +224,7 @@ The TCP/IP stack in user mode is generally slower than the one in kernel mode, a
 See RootlessKit documentation
 for more information.
 
-##### Workaround 1: bypass user-mode TCP/IP stack
+##### Workaround 1: bypass <example-value> TCP/IP stack
 
 Use `docker run --net=host` to bypass the user-mode TCP/IP stack.
 This is applicable since Docker Engine v29.5.

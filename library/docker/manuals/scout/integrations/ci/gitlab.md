@@ -29,7 +29,7 @@ docker-build:
   services:
     - docker:dind
   before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker login -u "<example-value>" -p "<example-value>" <example-value>
 
     # Install curl and the Docker Scout CLI
     - |
@@ -38,7 +38,7 @@ docker-build:
       apk del curl 
       rm -rf /var/cache/apk/*
     # Login to Docker Hub required for Docker Scout CLI
-    - echo "$DOCKER_HUB_PAT" | docker login -u "$DOCKER_HUB_USER" --password-stdin
+    - echo "<example-value>" | docker login -u "<example-value>" --password-stdin
 ```
 
 This sets up the workflow to build Docker images with Docker-in-Docker mode,

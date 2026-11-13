@@ -23,7 +23,7 @@ license: "CC-BY-4.0"
 
  You can connect dataflow blocks to form *pipelines*, which are linear sequences of dataflow blocks, or *networks*, which are graphs of dataflow blocks. A pipeline is one form of network. In a pipeline or network, sources asynchronously propagate data to targets as that data becomes available. The `System.Threading.Tasks.Dataflow.ISourceBlock`1.LinkTo*` method links a source dataflow block to a target block. A source can be linked to zero or more targets; targets can be linked from zero or more sources. You can add or remove dataflow blocks to or from a pipeline or network concurrently. The predefined dataflow block types handle all thread-safety aspects of linking and unlinking.
 
- For an example that connects dataflow blocks to form a basic pipeline, see Walkthrough: Creating a Dataflow Pipeline. For an example that connects dataflow blocks to form a more complex network, see Walkthrough: Using Dataflow in a Windows Forms Application. For an example that unlinks a target from a source after the source offers the target a message, see How to: Unlink Dataflow Blocks.
+ For an example that connects dataflow blocks to form a basic <example-value>, see Walkthrough: Creating a Dataflow Pipeline. For an example that connects dataflow blocks to form a more complex network, see Walkthrough: Using Dataflow in a Windows Forms Application. For an example that unlinks a target from a source after the source offers the target a message, see How to: Unlink Dataflow Blocks.
 
 #### Filtering
 

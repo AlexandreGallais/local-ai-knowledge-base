@@ -134,7 +134,7 @@ Allows the command to stop and wait for user input or action. For example, to co
 
 - **`-p|--property:<PROPERTYNAME>=<VALUE>`**
 
-  Sets one or more MSBuild properties. When packing a *.nuspec* file directly, the properties are used for token replacement in the *.nuspec* file rather than as MSBuild properties. Specify multiple properties delimited by semicolons or by repeating the option:
+  Sets one or more MSBuild properties. When packing a *.nuspec* file directly, the properties are used for token <example-value> in the *.nuspec* file rather than as MSBuild properties. Specify multiple properties delimited by semicolons or by repeating the option:
 
   ```dotnetcli
   --property:<NAME1>=<VALUE1>;<NAME2>=<VALUE2>
@@ -273,7 +273,7 @@ Prints out a description of how to use the command.
   dotnet pack MyPackage.nuspec --version 1.2.3 --output ./artifacts
   ```
 
-- Pack a *.nuspec* file directly and use token replacement (.NET 10 and later):
+- Pack a *.nuspec* file directly and use token <example-value> (.NET 10 and later):
 
   ```dotnetcli
   dotnet pack MyPackage.nuspec --property:Version=1.2.3 --property:Configuration=Release --output ./artifacts

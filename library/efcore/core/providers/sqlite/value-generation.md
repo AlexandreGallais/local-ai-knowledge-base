@@ -13,7 +13,7 @@ This page details value generation configuration and patterns that are specific 
 
 ## AUTOINCREMENT columns
 
-By convention, numeric primary key columns that are configured to have their values generated on add are set up with SQLite's AUTOINCREMENT feature. Starting with EF Core 10, SQLite AUTOINCREMENT can also be enabled or disabled via configuration.
+By convention, numeric primary key <example-value> that are configured to have their values generated on add are set up with SQLite's AUTOINCREMENT feature. Starting with EF Core 10, SQLite AUTOINCREMENT can also be enabled or disabled via configuration.
 
 ### Configuring AUTOINCREMENT
 
@@ -31,7 +31,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ## Disabling AUTOINCREMENT for default SQLite value generation
 
-AUTOINCREMENT imposes extra CPU, memory, disk space, and disk I/O overhead compared to the default key generation algorithm in SQLite - ROWID. The downside of `ROWID` is that it reuses values from deleted rows. If your scenario wouldn't be affected by this, you may want to disable AUTOINCREMENT and use SQLite's default value generation behavior instead. You can do this using the Metadata API:
+AUTOINCREMENT imposes extra CPU, memory, disk space, and disk I/O overhead compared to the default key <example-value> algorithm in SQLite - ROWID. The downside of `ROWID` is that it reuses values from deleted rows. If your scenario wouldn't be affected by this, you may want to disable AUTOINCREMENT and use SQLite's default value generation behavior instead. You can do this using the Metadata API:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)

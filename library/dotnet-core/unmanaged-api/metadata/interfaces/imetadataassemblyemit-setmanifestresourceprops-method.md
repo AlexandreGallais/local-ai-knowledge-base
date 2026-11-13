@@ -16,7 +16,7 @@ Modifies the specified `ManifestResource` metadata structure.
 ```cpp
 HRESULT SetManifestResourceProps (
     [in] mdManifestResource  mr,
-    [in] mdToken             tkImplementation,
+    [in] mdToken             <example-value>,
     [in] DWORD               dwOffset,
     [in] DWORD               dwResourceFlags
 );

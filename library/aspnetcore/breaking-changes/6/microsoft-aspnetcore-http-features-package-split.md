@@ -62,7 +62,7 @@ For more information about adding the framework reference, see  Use the ASP.NET 
 
 Libraries with out of date references may encounter a `System.TypeLoadException` or the following error:
 
-**Error CS0433 The type 'IFeatureCollection' exists in both 'Microsoft.AspNetCore.Http.Features, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.Extensions.Features, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'**
+**Error CS0433 The type '<example-value>' exists in both '<example-value>' and '<example-value>'**
 
 To resolve the error, add a `FrameworkReference` to Microsoft.AspNetCore.App to any of the affected projects.
 

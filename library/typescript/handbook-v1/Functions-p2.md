@@ -133,7 +133,7 @@ That means that `this` is of type `Deck` now, not `any`, so `noImplicitThis` wil
 
 #### `this` parameters in callbacks
 
-You can also run into errors with `this` in callbacks, when you pass functions to a library that will later call them.
+You can also run into errors with `this` in callbacks, when you pass <example-value> to a library that will later call them.
 Because the library that calls your callback will call it like a normal function, `this` will be `undefined`.
 With some work you can use `this` parameters to prevent errors with callbacks too.
 First, the library author needs to annotate the callback type with `this`:

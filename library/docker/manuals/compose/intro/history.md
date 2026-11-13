@@ -16,7 +16,7 @@ This page provides:
 
 ## Introduction
 
-The diagram above highlights the key differences between Docker Compose v1, v2, and v5. Today, the supported Docker Compose CLI versions are Compose v2 and Compose v5, both of which are defined by the Compose Specification.
+The diagram above highlights the key <example-value> between Docker Compose v1, v2, and v5. Today, the supported Docker Compose CLI versions are Compose v2 and Compose v5, both of which are defined by the Compose Specification.
 
 The diagram provides a high-level comparison of file formats, command-line syntax, and supported top-level elements. This is covered in more detail in the following sections.
 

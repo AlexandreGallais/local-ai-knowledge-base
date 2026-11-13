@@ -131,4 +131,4 @@ End of result set
 
 ## See also
 
-- Basic Queries (LINQ to XML) (Visual Basic)
+- Basic <example-value> (LINQ to XML) (Visual Basic)

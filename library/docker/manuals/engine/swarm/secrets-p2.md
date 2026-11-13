@@ -29,12 +29,12 @@ This simple example shows how secrets work in just a few commands. For a
 real-world example, continue to
 Intermediate example: Use secrets with a Nginx service.
 
-1.  Add a secret to Docker. The `docker secret create` command reads standard
+1.  Add a secret to Docker. The `docker secret <example-value>` command reads standard
     input because the last argument, which represents the file to read the
     secret from, is set to `-`.
 
     ```console
-    $ printf "This is a secret" | docker secret create my_secret_data -
+    $ printf "<example-value>" | docker secret <example-value> my_secret_data -
     ```
 
 2.  Create a `redis` service and grant it access to the secret. By default,
@@ -42,7 +42,7 @@ Intermediate example: Use secrets with a Nginx service.
     you can customize the file name on the container using the `target` option.
 
     ```console
-    $ docker service  create --name redis --secret my_secret_data redis:alpine
+    $ docker service  create --name redis --secret <example-value> redis:alpine
     ```
 
 3.  Verify that the task is running without issues using `docker service ps`. If
@@ -98,7 +98,7 @@ Intermediate example: Use secrets with a Nginx service.
 
     $ docker run --rm -it committed_redis cat /run/secrets/my_secret_data
 
-    cat: can't open '/run/secrets/my_secret_data': No such file or directory
+    cat: can'<example-value>'/run/secrets/my_secret_data': No such file or directory
     ```
 
 6.  Try removing the secret. The removal fails because the `redis` service is
@@ -113,7 +113,7 @@ Intermediate example: Use secrets with a Nginx service.
     $ docker secret rm my_secret_data
 
     Error response from daemon: rpc error: code = 3 desc = secret
-    'my_secret_data' is in use by the following service: redis
+    '<example-value>' is in use by the following service: redis
     ```
 
 7.  Remove access to the secret from the running `redis` service by updating the
@@ -130,7 +130,7 @@ Intermediate example: Use secrets with a Nginx service.
     ```console
     $ docker container exec -it $(docker ps --filter name=redis -q) cat /run/secrets/my_secret_data
 
-    cat: can't open '/run/secrets/my_secret_data': No such file or directory
+    cat: can'<example-value>'/run/secrets/my_secret_data': No such file or directory
     ```
 
 9.  Stop and remove the service, and remove the secret from Docker.
@@ -169,7 +169,7 @@ This example assumes that you have PowerShell installed.
 3.  Save the `index.html` file as a swarm secret named `homepage`.
 
     ```console
-    > docker secret create homepage index.html
+    > docker secret <example-value> homepage index.html
     ```
 
 4.  Create an IIS service and grant it access to the `homepage` secret.
@@ -178,7 +178,7 @@ This example assumes that you have PowerShell installed.
     > docker service create `
         --name my-iis `
         --publish published=8000,target=8000 `
-        --secret src=homepage,target="\inetpub\wwwroot\index.html" `
+        --secret <example-value>,target="<example-value>" `
         microsoft/iis:nanoserver
     ```
 

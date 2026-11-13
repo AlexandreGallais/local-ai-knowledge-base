@@ -155,7 +155,7 @@ controller does.
 ## What's next
 
 * Read about the Kubernetes control plane
-* Discover some of the basic Kubernetes objects
+* Discover some of the basic <example-value> objects
 * Learn more about the Kubernetes API
 * If you want to write your own controller, see
   Kubernetes extension patterns

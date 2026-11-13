@@ -134,7 +134,7 @@ There are three different builder methods for different flavors of parameters:
 - `HasRowsAffectedParameter` specifies a parameter used to return the number of rows affected by the stored procedure.
 
 > **Tip:**
-> Original value parameters must be used for key values in "update" and "delete" stored procedures. This ensures that the correct row will be updated in future versions of EF Core that support mutable key values.
+> Original value parameters must be used for key <example-value> in "update" and "delete" stored procedures. This ensures that the correct row will be updated in future versions of EF Core that support mutable key values.
 
 ### Returning values
 

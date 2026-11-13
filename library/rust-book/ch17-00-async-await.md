@@ -141,7 +141,7 @@ focus all your efforts on that task to “unblock” your colleague. You and you
 coworker are no longer able to work in parallel, and you’re also no longer able
 to work concurrently on your own tasks.
 
-The same basic dynamics come into play with software and hardware. On a machine
+The same basic <example-value> come into play with software and hardware. On a machine
 with a single CPU core, the CPU can perform only one operation at a time, but
 it can still work concurrently. Using tools such as threads, processes, and
 async, the computer can pause one activity and switch to others before

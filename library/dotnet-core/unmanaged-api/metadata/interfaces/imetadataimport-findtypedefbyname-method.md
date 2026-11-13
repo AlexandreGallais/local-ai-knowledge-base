@@ -16,7 +16,7 @@ Gets a pointer to the TypeDef metadata token for the `System.Type` with the spec
 ```cpp
 HRESULT FindTypeDefByName
    [in]  LPCWSTR       szTypeDef,
-   [in]  mdToken       tkEnclosingClass,
+   [in]  mdToken       <example-value>,
    [out] mdTypeDef     *ptd
 );
 ```
@@ -27,7 +27,7 @@ HRESULT FindTypeDefByName
  [in] The name of the type for which to get the TypeDef token.
 
  `tkEnclosingClass`
- [in] A TypeDef or TypeRef token representing the enclosing class. If the type to find is not a nested class, set this value to NULL.
+ [in] A TypeDef or TypeRef token <example-value> the enclosing class. If the type to find is not a nested class, set this value to NULL.
 
  `ptd`
  [out] A pointer to the matching TypeDef token.

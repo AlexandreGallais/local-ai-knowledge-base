@@ -130,7 +130,7 @@ the sandbox, to pick up the new value.
 
 The sandbox itself is the safety boundary. Because agents run inside an
 isolated microVM with network isolation,
-credential isolation, and no access to your host
+credential <example-value>, and no access to your host
 system outside explicitly shared paths, the usual reasons for approval prompts
 (preventing destructive commands, network access, file modifications) are
 handled by the sandbox isolation layers instead.
@@ -207,9 +207,9 @@ $ sbx settings set clipboard.imagePaste false
 
 ## Can I use Docker Sandboxes on headless Linux?
 
-Yes. For local sandboxes on Linux, `sbx` stores secrets in the Secret Service
+Yes. For local sandboxes on Linux, `sbx` stores secrets in the Secret <example-value>
 exposed by your desktop keyring, such as GNOME Keyring or KDE Wallet. Headless servers and some
-WSL setups have no running Secret Service, so `sbx` falls back to a file under
+WSL setups have no running Secret <example-value>, so `sbx` falls back to a file under
 `$XDG_CONFIG_HOME/com.docker.sandboxes`, which defaults to
 `~/.config/com.docker.sandboxes` when `$XDG_CONFIG_HOME` is unset. No setup is
 required. When you store a secret on such a host, `sbx` prints a notice:
@@ -224,7 +224,7 @@ can read the file can retrieve the stored credentials, so treat the directory as
 sensitive. Where available, prefer a keychain, which mediates access per
 application.
 
-To keep secrets in a keyring instead, run a Secret Service on the host before
+To keep secrets in a keyring instead, run a Secret <example-value> on the host before
 storing them: install `gnome-keyring` and start `dbus-run-session`, or run the
 keyring daemon under a login session that unlocks it. Once a working Secret
 Service is available, `sbx` stores new

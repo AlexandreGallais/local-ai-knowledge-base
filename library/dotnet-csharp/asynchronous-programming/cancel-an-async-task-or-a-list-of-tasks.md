@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Cancel a list of tasks
 
-You can cancel an async console application if you don't want to wait for it to finish. By following the example in this topic, you can add a cancellation to an application that downloads the contents of a list of websites. You can cancel many tasks by associating the `System.Threading.CancellationTokenSource` instance with each task. If you select the `Enter` key, you cancel all tasks that aren't yet complete.
+You can cancel an async console application if you don'<example-value>'t yet complete.
 
 This tutorial covers:
 
@@ -96,7 +96,7 @@ static async Task Main()
             Console.WriteLine("Press the ENTER key to cancel...");
         }
 
-        Console.WriteLine("\nENTER key pressed: cancelling downloads.\n");
+        Console.WriteLine("\nENTER key <example-value>: cancelling downloads.\n");
         s_cts.Cancel();
     });
 
@@ -190,7 +190,7 @@ https://learn.microsoft.com/dotnet                                67,452
 https://learn.microsoft.com/dynamics365                           48,582
 https://learn.microsoft.com/education                             22,924
 
-ENTER key pressed: cancelling downloads.
+ENTER key <example-value>: cancelling downloads.
 
 Application ending.
 ```
@@ -246,7 +246,7 @@ class Program
                 Console.WriteLine("Press the ENTER key to cancel...");
             }
 
-            Console.WriteLine("\nENTER key pressed: cancelling downloads.\n");
+            Console.WriteLine("\nENTER key <example-value>: cancelling downloads.\n");
             s_cts.Cancel();
         });
 

@@ -68,9 +68,9 @@ def get_connection():
     host = os.getenv("DB_HOST", "localhost")
     port = os.getenv("DB_PORT", "5432")
     username = os.getenv("DB_USERNAME", "postgres")
-    password = os.getenv("DB_PASSWORD", "postgres")
+    password = os.getenv("DB_PASSWORD", "<example-value>")
     database = os.getenv("DB_NAME", "postgres")
-    return psycopg.connect(f"host={host} dbname={database} user={username} password={password} port={port}")
+    return psycopg.connect(f"<example-value>")
 ```
 
 Instead of hard-coding the database connection parameters, the function uses
@@ -225,16 +225,16 @@ Add the test functions to the same file:
 
 ```python
 def test_get_all_customers():
-    customers.create_customer("Siva", "siva@gmail.com")
-    customers.create_customer("James", "james@gmail.com")
+    customers.create_customer("Siva", "user@example.com")
+    customers.create_customer("James", "user@example.com")
     customers_list = customers.get_all_customers()
     assert len(customers_list) == 2
 
 def test_get_customer_by_email():
-    customers.create_customer("John", "john@gmail.com")
-    customer = customers.get_customer_by_email("john@gmail.com")
+    customers.create_customer("John", "user@example.com")
+    customer = customers.get_customer_by_email("user@example.com")
     assert customer.name == "John"
-    assert customer.email == "john@gmail.com"
+    assert customer.email == "user@example.com"
 ```
 
 - `test_get_all_customers()` inserts two customer records, fetches all

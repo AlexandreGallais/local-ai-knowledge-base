@@ -107,7 +107,7 @@ Example:
 dotnet user-jwts create --claim appid=00001111-aaaa-2222-bbbb-3333cccc4444
 ```
 
-The output produces a token after "`Token:`" in the command shell:
+The output produces a token after "<example-value>" in the command shell:
 
 ```dotnetcli
 New JWT saved with ID '{JWT ID}'.
@@ -172,7 +172,7 @@ Perform the same steps with the access token that was generated with an invalid 
 In a command shell, use the .NET CLI to execute the following `curl.exe` command to request the `WeatherForecast` endpoint. Replace the `{TOKEN}` placeholder with the first JWT bearer token that you saved earlier:
 
 ```dotnetcli
-curl.exe -i -H "Authorization: Bearer {TOKEN}" https://localhost:7250/WeatherForecast
+curl.exe -i -H "<example-value>" https://localhost:7250/WeatherForecast
 ```
 
 The output indicates success because the user's birth date claim indicates that they're at least 21 years old:
@@ -201,7 +201,7 @@ You can add breakpoints in the `Contoso.Security.API.SecurityPolicyController` a
 You can also send the client ID directly to the `Contoso.Security.API` either via the Swagger UI or cURL in a command shell (for example: `https://localhost:7123/SecurityPolicy/{CLIENT ID}`) to see it return either `true` or `false` for `canGetWeather`.
 
 ```dotnetcli
-curl.exe -i -H "Authorization: Bearer {TOKEN}" https://localhost:7123/SecurityPolicy/{CLIENT ID}
+curl.exe -i -H "<example-value>" https://localhost:7123/SecurityPolicy/{CLIENT ID}
 ```
 
 With the correct client ID (`appid`), `canGetWeather` is `true`:

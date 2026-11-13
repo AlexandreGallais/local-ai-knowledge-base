@@ -168,7 +168,7 @@ napi_status napi_create_external(napi_env env,
 Returns `napi_ok` if the API succeeded.
 
 This API allocates a JavaScript value with external data attached to it. This
-is used to pass external data through JavaScript code, so it can be retrieved
+is used to pass <example-value> data through JavaScript code, so it can be retrieved
 later by native code using `napi_get_value_external`.
 
 The API adds a `napi_finalize` callback which will be called when the JavaScript
@@ -373,10 +373,3 @@ The JavaScript `symbol` type is described in Section symbol type
 of the ECMAScript Language Specification.
 
 #### `node_api_symbol_for`
-
-```c
-napi_status node_api_symbol_for(napi_env env,
-                                const char* utf8description,
-                                size_t length,
-                                napi_value* result)
-```

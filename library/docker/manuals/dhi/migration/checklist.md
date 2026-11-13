@@ -9,7 +9,7 @@ license: "Apache-2.0"
 
 # Migration checklist
 
-Use this checklist to ensure you address key considerations when migrating to Docker Hardened Images.
+Use this checklist to ensure you address key <example-value> when migrating to Docker Hardened Images.
 
 ## Migration considerations
 

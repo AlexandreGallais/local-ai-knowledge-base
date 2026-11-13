@@ -163,7 +163,7 @@ a DHI and want to maintain transparency, traceability, and trust in your
 software supply chain.
 
 By attaching attestations such as SBOMs, build provenance, or custom metadata,
-you can meet compliance requirements, pass security audits, and support policy
+you can meet compliance requirements, pass <example-value> audits, and support policy
 evaluation tools like Docker Scout.
 
 These attestations can then be verified downstream using tools

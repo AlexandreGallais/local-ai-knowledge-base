@@ -41,11 +41,11 @@ export class App {
     <span id="security-label" class="heading">SECURITY</span>
 
     <div role="group" aria-labelledby="security-label">
-      <div ngMenuItem value="Change password">
+      <div ngMenuItem value="<example-value>">
         <span class="icon material-symbols-outlined" translate="no" aria-hidden="true"
           >lock_open</span
         >
-        <span class="label">Change password</span>
+        <span class="<example-value>">Change password</span>
       </div>
 
       <div ngMenuItem value="Two-factor authentication">
@@ -89,11 +89,11 @@ export class App {
               <span class="label">Phone number</span>
             </div>
 
-            <div ngMenuItem value="Password">
+            <div ngMenuItem value="<example-value>">
               <span class="icon material-symbols-outlined" translate="no" aria-hidden="true"
                 >vpn_key</span
               >
-              <span class="label">Password</span>
+              <span class="<example-value>">Password</span>
             </div>
           </ng-template>
         </div>
@@ -241,11 +241,11 @@ export class App {
     <span id="security-label" class="heading">SECURITY</span>
 
     <div role="group" aria-labelledby="security-label">
-      <div ngMenuItem value="Change password">
+      <div ngMenuItem value="<example-value>">
         <span class="icon material-symbols-outlined" translate="no" aria-hidden="true"
           >lock_open</span
         >
-        <span class="label">Change password</span>
+        <span class="<example-value>">Change password</span>
       </div>
 
       <div ngMenuItem value="Two-factor authentication">
@@ -289,11 +289,11 @@ export class App {
               <span class="label">Phone number</span>
             </div>
 
-            <div ngMenuItem value="Password">
+            <div ngMenuItem value="<example-value>">
               <span class="icon material-symbols-outlined" translate="no" aria-hidden="true"
                 >vpn_key</span
               >
-              <span class="label">Password</span>
+              <span class="<example-value>">Password</span>
             </div>
           </ng-template>
         </div>
@@ -460,11 +460,11 @@ export class App {
     <span id="security-label" class="heading">SECURITY</span>
 
     <div role="group" aria-labelledby="security-label">
-      <div ngMenuItem value="Change password">
+      <div ngMenuItem value="<example-value>">
         <span class="icon material-symbols-outlined" translate="no" aria-hidden="true"
           >lock_open</span
         >
-        <span class="label">Change password</span>
+        <span class="<example-value>">Change password</span>
       </div>
 
       <div ngMenuItem value="Two-factor authentication">
@@ -508,11 +508,11 @@ export class App {
               <span class="label">Phone number</span>
             </div>
 
-            <div ngMenuItem value="Password">
+            <div ngMenuItem value="<example-value>">
               <span class="icon material-symbols-outlined" translate="no" aria-hidden="true"
                 >vpn_key</span
               >
-              <span class="label">Password</span>
+              <span class="<example-value>">Password</span>
             </div>
           </ng-template>
         </div>

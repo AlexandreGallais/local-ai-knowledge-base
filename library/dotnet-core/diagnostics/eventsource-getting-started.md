@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 **This article applies to: ✔️** .NET Core 3.1 and later versions **✔️** .NET Framework 4.5 and later versions
 
 This walkthrough shows how to log a new event with `System.Diagnostics.Tracing.EventSource`,
-collect events in a trace file, view the trace, and understand basic EventSource concepts.
+collect events in a trace file, view the trace, and understand basic <example-value> concepts.
 
 > **Note:**
 > Many technologies that integrate with EventSource use the terms 'Tracing' and 'Traces' instead of 'Logging' and 'Logs'.

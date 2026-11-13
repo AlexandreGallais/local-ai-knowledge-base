@@ -91,7 +91,7 @@ Support for embedded scripts is an optional XSLT setting on the `System.Xml.Xsl.
 </msxsl:script>
 ```
 
- The `name` attribute contains the name of the assembly and the `href` attribute contains the path to the assembly. The assembly name can be a full name, such as "System.Data, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089", or a short name, such as "System.Web".
+ The `name` attribute contains the name of the assembly and the `href` attribute contains the path to the assembly. The assembly name can be a full name, such as "<example-value>", or a short name, such as "<example-value>".
 
 #### Namespaces
 

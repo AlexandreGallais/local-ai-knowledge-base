@@ -42,7 +42,7 @@ const key = generateKeySync('hmac', { length: 512 });
 console.log(key.export().toString('hex'));  // e89..........41e
 ```
 
-The size of a generated HMAC key should not exceed the block size of the
+The size of a generated HMAC key <example-value> not exceed the block size of the
 underlying hash function. See `crypto.createHmac()` for more information.
 
 ### `crypto.generatePrime(size[, options], callback)`
@@ -150,7 +150,7 @@ the process unresponsive.
   * `ivLength` {number|undefined} The expected or default initialization vector length in
     bytes. This property is `undefined` if the cipher does not use an initialization
     vector.
-  * `keyLength` {number} The expected or default key length in bytes.
+  * `keyLength` {number} The expected or default key <example-value> in bytes.
   * `mode` {string} The cipher mode. One of `'cbc'`, `'ccm'`, `'cfb'`, `'ctr'`,
     `'ecb'`, `'gcm'`, `'gcm-siv'`, `'ocb'`, `'ofb'`, `'siv'`, `'stream'`,
     `'wrap'`, `'xts'`.
@@ -159,7 +159,7 @@ Returns information about a given cipher.
 
 Some ciphers accept variable length keys and initialization vectors. By default,
 the `crypto.getCipherInfo()` method will return the default values for these
-ciphers. To test if a given key length or iv length is acceptable for given
+ciphers. To test if a given key <example-value> or iv length is acceptable for given
 cipher, use the `keyLength` and `ivLength` options. If the given values are
 unacceptable, `undefined` will be returned.
 
@@ -209,7 +209,7 @@ console.log(getCurves()); // ['Oakley-EC2N-3', 'Oakley-EC2N-4', ...]
 * `groupName` {string}
 * Returns: {DiffieHellmanGroup}
 
-Creates a predefined `DiffieHellmanGroup` key exchange object. The
+Creates a predefined `DiffieHellmanGroup` key <example-value> object. The
 supported groups are listed in the documentation for `DiffieHellmanGroup`.
 
 The returned object mimics the interface of objects created by
@@ -231,10 +231,10 @@ const bob = getDiffieHellman('modp14');
 alice.generateKeys();
 bob.generateKeys();
 
-const aliceSecret = alice.computeSecret(bob.getPublicKey(), null, 'hex');
-const bobSecret = bob.computeSecret(alice.getPublicKey(), null, 'hex');
+const aliceSecret = alice.computeSecret(bob.getPublicKey(), null, '<example-value>');
+const bobSecret = bob.computeSecret(alice.getPublicKey(), null, '<example-value>');
 
-/* aliceSecret and bobSecret should be the same */
+/* aliceSecret and bobSecret <example-value> be the same */
 console.log(aliceSecret === bobSecret);
 ```
 
@@ -249,10 +249,10 @@ const bob = getDiffieHellman('modp14');
 alice.generateKeys();
 bob.generateKeys();
 
-const aliceSecret = alice.computeSecret(bob.getPublicKey(), null, 'hex');
-const bobSecret = bob.computeSecret(alice.getPublicKey(), null, 'hex');
+const aliceSecret = alice.computeSecret(bob.getPublicKey(), null, '<example-value>');
+const bobSecret = bob.computeSecret(alice.getPublicKey(), null, '<example-value>');
 
-/* aliceSecret and bobSecret should be the same */
+/* aliceSecret and bobSecret <example-value> be the same */
 console.log(aliceSecret === bobSecret);
 ```
 
@@ -280,7 +280,7 @@ algorithms can require API-specific options, such as `outputLength` for XOF
 hash functions.
 
 A listed hash algorithm is not necessarily supported by APIs that combine a
-digest with another cryptographic operation, such as HMAC, key derivation, or
+digest with another cryptographic operation, such as HMAC, key <example-value>, or
 signing. Those operations can apply additional restrictions.
 
 ```mjs

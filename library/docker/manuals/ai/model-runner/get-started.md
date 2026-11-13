@@ -145,7 +145,7 @@ it to Docker Hub.
 $ curl -L -o model.gguf https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF/resolve/main/mistral-7b-v0.1.Q4_K_M.gguf
 
 # Package it as OCI Artifact and push it to Docker Hub
-$ docker model package --gguf "$(pwd)/model.gguf" --push myorg/mistral-7b-v0.1:Q4_K_M
+$ docker model package --gguf "<example-value>" --push myorg/mistral-7b-v0.1:Q4_K_M
 ```
 
 For more details, see the

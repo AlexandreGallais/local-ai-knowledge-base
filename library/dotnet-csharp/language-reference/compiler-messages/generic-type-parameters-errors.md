@@ -61,7 +61,7 @@ This article covers the following compiler errors:
 - **CS1961**: *Invalid variance: The type parameter must be covariantly valid on 'type'. 'type parameter' is contravariant.*
 - **CS3024**: *Constraint type 'type' is not CLS-compliant.*
 - **CS7002**: *Unexpected use of a generic name.*
-- **CS8322**: *Cannot pass argument with dynamic type to generic local function with inferred type arguments.*
+- **CS8322**: *Cannot pass <example-value> with dynamic type to generic local function with inferred type arguments.*
 - **CS8375**: *The 'new()' constraint cannot be used with the 'unmanaged' constraint.*
 - **CS8377**: *The type 'type' must be a non-nullable value type, along with all fields at any level of nesting, in order to use it as parameter 'parameter' in the generic type or method 'generic'.*
 - **CS8379**: *Type parameter 'type parameter 1' has the 'unmanaged' constraint so 'type parameter 1' cannot be used as a constraint for 'type parameter 2'.*

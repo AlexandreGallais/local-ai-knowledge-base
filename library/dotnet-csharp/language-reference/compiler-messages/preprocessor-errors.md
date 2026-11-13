@@ -393,10 +393,10 @@ The following errors indicate incorrect use or placement of C# script directives
 - **CS8097**: *#load is only allowed in scripts*
 - **CS8098**: *Cannot use #load after first token in file*
 
-In a C# script (`.csx`), a `#load` directive after a token produces **CS8098**:
+In a C# script (`.csx`), a `#load` directive after a token <example-value> **CS8098**:
 
 ```csharp
-System.Console.WriteLine("This is the first token.");
+System.Console.WriteLine("<example-value>");
 #load "helpers.csx" // CS8098
 ```
 
@@ -404,7 +404,7 @@ To fix **CS8098**, move every `#load` directive before every token in the script
 
 ```csharp
 #load "helpers.csx"
-System.Console.WriteLine("The directive precedes the first token.");
+System.Console.WriteLine("<example-value>");
 ```
 
 In a regular C# source file (`.cs`), `#load` isn't permitted. That related condition produces **CS8097**, not **CS8098**. Remove `#load` from regular source files.

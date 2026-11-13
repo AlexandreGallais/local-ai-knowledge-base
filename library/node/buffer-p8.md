@@ -35,7 +35,7 @@ const copy = JSON.parse(json, (key, value) => {
 });
 
 console.log(copy);
-// Prints: <Buffer 01 02 03 04 05>
+// Prints: <Buffer .. .. .. .. ..>
 ```
 
 ```cjs
@@ -54,7 +54,7 @@ const copy = JSON.parse(json, (key, value) => {
 });
 
 console.log(copy);
-// Prints: <Buffer 01 02 03 04 05>
+// Prints: <Buffer .. .. .. .. ..>
 ```
 
 ### `buf.toString([encoding[, start[, end]]])`
@@ -257,7 +257,7 @@ const buf = Buffer.allocUnsafe(8);
 buf.writeBigInt64BE(0x0102030405060708n, 0);
 
 console.log(buf);
-// Prints: <Buffer 01 02 03 04 05 06 07 08>
+// Prints: <Buffer .. .. .. .. .. .. .. ..>
 ```
 
 ```cjs
@@ -268,7 +268,7 @@ const buf = Buffer.allocUnsafe(8);
 buf.writeBigInt64BE(0x0102030405060708n, 0);
 
 console.log(buf);
-// Prints: <Buffer 01 02 03 04 05 06 07 08>
+// Prints: <Buffer .. .. .. .. .. .. .. ..>
 ```
 
 ### `buf.writeBigInt64LE(value[, offset])`
@@ -290,7 +290,7 @@ const buf = Buffer.allocUnsafe(8);
 buf.writeBigInt64LE(0x0102030405060708n, 0);
 
 console.log(buf);
-// Prints: <Buffer 08 07 06 05 04 03 02 01>
+// Prints: <Buffer .. .. .. .. .. .. .. ..>
 ```
 
 ```cjs
@@ -301,7 +301,7 @@ const buf = Buffer.allocUnsafe(8);
 buf.writeBigInt64LE(0x0102030405060708n, 0);
 
 console.log(buf);
-// Prints: <Buffer 08 07 06 05 04 03 02 01>
+// Prints: <Buffer .. .. .. .. .. .. .. ..>
 ```
 
 ### `buf.writeBigUInt64BE(value[, offset])`
@@ -323,7 +323,7 @@ const buf = Buffer.allocUnsafe(8);
 buf.writeBigUInt64BE(0xdecafafecacefaden, 0);
 
 console.log(buf);
-// Prints: <Buffer de ca fa fe ca ce fa de>
+// Prints: <Buffer .. .. .. .. .. .. .. ..>
 ```
 
 ```cjs
@@ -334,7 +334,7 @@ const buf = Buffer.allocUnsafe(8);
 buf.writeBigUInt64BE(0xdecafafecacefaden, 0);
 
 console.log(buf);
-// Prints: <Buffer de ca fa fe ca ce fa de>
+// Prints: <Buffer .. .. .. .. .. .. .. ..>
 ```
 
 ### `buf.writeBigUInt64LE(value[, offset])`
@@ -354,7 +354,7 @@ const buf = Buffer.allocUnsafe(8);
 buf.writeBigUInt64LE(0xdecafafecacefaden, 0);
 
 console.log(buf);
-// Prints: <Buffer de fa ce ca fe fa ca de>
+// Prints: <Buffer .. .. .. .. .. .. .. ..>
 ```
 
 ```cjs
@@ -365,7 +365,7 @@ const buf = Buffer.allocUnsafe(8);
 buf.writeBigUInt64LE(0xdecafafecacefaden, 0);
 
 console.log(buf);
-// Prints: <Buffer de fa ce ca fe fa ca de>
+// Prints: <Buffer .. .. .. .. .. .. .. ..>
 ```
 
 This function is also available under the `writeBigUint64LE` alias.
@@ -389,7 +389,7 @@ const buf = Buffer.allocUnsafe(8);
 buf.writeDoubleBE(123.456, 0);
 
 console.log(buf);
-// Prints: <Buffer 40 5e dd 2f 1a 9f be 77>
+// Prints: <Buffer .. .. .. .. .. .. .. ..>
 ```
 
 ```cjs
@@ -400,7 +400,7 @@ const buf = Buffer.allocUnsafe(8);
 buf.writeDoubleBE(123.456, 0);
 
 console.log(buf);
-// Prints: <Buffer 40 5e dd 2f 1a 9f be 77>
+// Prints: <Buffer .. .. .. .. .. .. .. ..>
 ```
 
 ### `buf.writeDoubleLE(value[, offset])`
@@ -422,7 +422,7 @@ const buf = Buffer.allocUnsafe(8);
 buf.writeDoubleLE(123.456, 0);
 
 console.log(buf);
-// Prints: <Buffer 77 be 9f 1a 2f dd 5e 40>
+// Prints: <Buffer .. .. .. .. .. .. .. ..>
 ```
 
 ```cjs
@@ -433,7 +433,7 @@ const buf = Buffer.allocUnsafe(8);
 buf.writeDoubleLE(123.456, 0);
 
 console.log(buf);
-// Prints: <Buffer 77 be 9f 1a 2f dd 5e 40>
+// Prints: <Buffer .. .. .. .. .. .. .. ..>
 ```
 
 ### `buf.writeFloatBE(value[, offset])`
@@ -454,7 +454,7 @@ const buf = Buffer.allocUnsafe(4);
 buf.writeFloatBE(0xcafebabe, 0);
 
 console.log(buf);
-// Prints: <Buffer 4f 4a fe bb>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ```cjs
@@ -465,7 +465,7 @@ const buf = Buffer.allocUnsafe(4);
 buf.writeFloatBE(0xcafebabe, 0);
 
 console.log(buf);
-// Prints: <Buffer 4f 4a fe bb>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ### `buf.writeFloatLE(value[, offset])`
@@ -486,7 +486,7 @@ const buf = Buffer.allocUnsafe(4);
 buf.writeFloatLE(0xcafebabe, 0);
 
 console.log(buf);
-// Prints: <Buffer bb fe 4a 4f>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ```cjs
@@ -497,7 +497,7 @@ const buf = Buffer.allocUnsafe(4);
 buf.writeFloatLE(0xcafebabe, 0);
 
 console.log(buf);
-// Prints: <Buffer bb fe 4a 4f>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ### `buf.writeInt8(value[, offset])`

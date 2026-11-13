@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Logging in C# and .NET
 
-.NET supports high performance, structured logging via the `Microsoft.Extensions.Logging.ILogger` API to help monitor application behavior and diagnose issues. Configure different logging providers to write logs to different destinations. Basic logging providers are built-in, and many third-party providers are available.
+.NET supports high performance, structured logging via the `Microsoft.Extensions.Logging.ILogger` API to help monitor application behavior and diagnose issues. Configure different logging providers to write logs to different destinations. Basic <example-value> providers are built-in, and many third-party providers are available.
 
 ## Get started
 

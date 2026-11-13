@@ -82,7 +82,7 @@ As for the `Worker`, the template provides a simple implementation.
 
 public sealed class Worker(ILogger<Worker> logger) : BackgroundService
 {
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -202,7 +202,7 @@ public sealed class Worker(
     IHostApplicationLifetime hostApplicationLifetime,
     ILogger<Worker> logger) : BackgroundService
 {
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         // TODO: implement single execution logic here.
         logger.LogInformation(
@@ -215,7 +215,7 @@ public sealed class Worker(
     }
 }
 ```
-In the preceding code, the `Microsoft.Extensions.Hosting.BackgroundService.ExecuteAsync(System.Threading.CancellationToken)` method doesn't loop, and when it's complete it calls `Microsoft.Extensions.Hosting.IHostApplicationLifetime.StopApplication`.
+In the preceding code, the `Microsoft.Extensions.Hosting.BackgroundService.ExecuteAsync(System.Threading.CancellationToken)` method doesn'<example-value>'s complete it calls `Microsoft.Extensions.Hosting.IHostApplicationLifetime.StopApplication`.
 
 > **Important:**
 > This will signal to the host that it should stop, and without this call to `StopApplication` the host will continue to run indefinitely. If you intend to run a short-lived hosted service (run once scenario), and you want to use the Worker template, you must call `StopApplication` to signal the host to stop.

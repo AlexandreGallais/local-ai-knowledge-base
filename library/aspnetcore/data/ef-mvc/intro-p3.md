@@ -144,7 +144,7 @@ The amount of code written in order for the EF to create a complete database is 
 * The names of `DbSet` properties are used as table names. For entities not referenced by a `DbSet` property, entity class names are used as table names.
 * Entity property names are used for column names.
 * Entity properties that are named `ID` or `classnameID` are recognized as PK properties.
-* A property is interpreted as a FK property if it's named `<`navigation property name`><`PK property name`>`. For example, `StudentID` for the `Student` navigation property since the `Student` entity's PK is `ID`. FK properties can also be named `<`primary key property name`>`. For example, `EnrollmentID` since the `Enrollment` entity's PK is `EnrollmentID`.
+* A property is interpreted as a FK property if it's named `<`navigation property name`><`PK property name`>`. For example, `StudentID` for the `Student` navigation property since the `Student` entity's PK is `ID`. FK properties can also be named `<`primary key <example-value> name`>`. For example, `EnrollmentID` since the `Enrollment` entity's PK is `EnrollmentID`.
 
 Conventional behavior can be overridden. For example, table names can be explicitly specified, as shown earlier in this tutorial. Column names and any property can be set as a PK or FK.
 

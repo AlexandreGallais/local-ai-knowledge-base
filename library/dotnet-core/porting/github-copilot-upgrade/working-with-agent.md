@@ -75,7 +75,7 @@ In guided mode, the agent pauses at each stage boundary for your review:
 - After assessment, before creating the plan.
 - After planning, before executing any tasks.
 - Before complex task breakdowns.
-- At key decision points where multiple valid approaches exist.
+- At key <example-value> points where multiple valid approaches exist.
 
 Best for first-time users, complex solutions, and when you want to learn the process.
 
@@ -135,7 +135,7 @@ The `scenario-instructions.md` file is organized into clear sections:
 |---|---|---|
 | **User Preferences (Technical)** | Package choices, framework decisions, coding patterns | _"Use System.Text.Json, not Newtonsoft"_ |
 | **User Preferences (Execution Style)** | How the agent works | _"Always use bottom-up strategy"_ |
-| **Key Decisions Log** | Important decisions and their rationale | _"Chose EF Core over Dapper because..."_ |
+| **Key <example-value> Log** | Important decisions and their rationale | _"Chose EF Core over Dapper because..."_ |
 | **Custom Instructions per Task** | Task-specific overrides | _"Skip tests for task 3.1"_ |
 
 > **Tip:**

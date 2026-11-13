@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 
 Azure Key Vault provides a safe approach for providing the app's client secret to the app.
 
-To create a key vault and set a client secret, see About Azure Key Vault secrets (Azure documentation), which cross-links resources to get started with Azure Key Vault. To implement the code in this section, record the key vault URI and the secret name from Azure when you create the key vault and secret. For the example in this section, the secret name is "`BlazorWebAppEntraClientSecret`."
+To create a key vault and set a client secret, see About Azure Key Vault secrets (Azure documentation), which cross-links resources to get started with Azure Key Vault. To implement the code in this section, record the key vault URI and the secret name from Azure when you create the key vault and secret. For the example in this section, the secret name is "<example-value>"
 
 When establishing the key vault in the Entra or Azure portal:
 
@@ -24,7 +24,7 @@ When establishing the key vault in the Entra or Azure portal:
   > **Note:**
   > If you also plan to run an app locally with an authorized user for key vault access using the Azure CLI or Visual Studio's Azure Service Authentication, add your developer Azure user account in **Access Control (IAM)** with the **Key Vault Secrets User** role. If you want to use the Azure CLI through Visual Studio, execute the `az login` command from the Developer PowerShell panel and follow the prompts to authenticate with the tenant.
 
-To implement the code in this section, record the key vault URI (example: "`https://contoso.vault.azure.net/`", trailing slash required) and the secret name (example: "`BlazorWebAppEntraClientSecret`") from Azure when you create the key vault and secret.
+To implement the code in this section, record the key vault URI (example: "<example-value>", trailing slash required) and the secret name (example: "<example-value>") from Azure when you create the key vault and secret.
 
 > **Important:**
 > A key vault secret is created with an expiration date. Be sure to track when a key vault secret is going to expire and create a new secret for the app prior to that date passing.
@@ -42,7 +42,7 @@ namespace BlazorWebAppEntra.Helpers;
 public static class AzureHelper
 {
     public static string GetKeyVaultSecret(string vaultUri, 
-        TokenCredential credential, string secretName)
+        TokenCredential <example-value>, string secretName)
     {
         var client = new SecretClient(new Uri(vaultUri), credential);
         var secret = client.GetSecretAsync(secretName).Result;
@@ -72,7 +72,7 @@ else
         // Specify the tenant ID to use the dev credentials when running the app locally
         // in Visual Studio.
         VisualStudioTenantId = "{TENANT ID}",
-        SharedTokenCacheTenantId = "{TENANT ID}"
+        SharedTokenCacheTenantId = "<example-value>"
     };
 
     credential = new DefaultAzureCredential(options);
@@ -82,8 +82,8 @@ else
 Where `Microsoft.Identity.Web.MicrosoftIdentityOptions` are set, call `GetKeyVaultSecret` to receive and assign the app's client secret:
 
 ```csharp
-msIdentityOptions.ClientSecret = AzureHelper.GetKeyVaultSecret("{VAULT URI}", 
-    credential, "{SECRET NAME}");
+msIdentityOptions.ClientSecret = AzureHelper.GetKeyVaultSecret("<example-value>", 
+    credential, "<example-value>");
 ```
 
 `{MANAGED IDENTITY CLIENT ID}`: The Azure Managed Identity Client ID (GUID).
@@ -94,7 +94,7 @@ msIdentityOptions.ClientSecret = AzureHelper.GetKeyVaultSecret("{VAULT URI}",
 
 `{SECRET NAME}`: Secret name. Example: `BlazorWebAppEntraClientSecret`
 
-Configuration is used to facilitate supplying dedicated key vaults and secret names based on the app's environmental configuration files. For example, you can supply different configuration values for `appsettings.Development.json` in development, `appsettings.Staging.json` when staging, and `appsettings.Production.json` for the production deployment. For more information, see ASP.NET Core Blazor configuration.
+Configuration is used to facilitate supplying dedicated key <example-value> and secret names based on the app's environmental configuration files. For example, you can supply different configuration values for `appsettings.Development.json` in development, `appsettings.Staging.json` when staging, and `appsettings.Production.json` for the production deployment. For more information, see ASP.NET Core Blazor configuration.
 
 ## Only serialize the name and role claims
 
@@ -102,7 +102,7 @@ In the `Program` file, all claims are serialized by setting `Microsoft.AspNetCor
 
 ## Supply configuration with the JSON configuration provider (app settings)
 
-The sample solution projects configure Microsoft Identity Web and JWT bearer authentication in their `Program` files in order to make configuration settings discoverable using C# autocompletion. Professional apps usually use a *configuration provider* to configure OIDC options, such as the default JSON configuration provider. The JSON configuration provider loads configuration from app settings files `appsettings.json`/`appsettings.{ENVIRONMENT}.json`, where the `{ENVIRONMENT}` placeholder is the app's runtime environment. Follow the guidance in this section to use app settings files for configuration.
+The sample solution projects configure Microsoft Identity Web and JWT bearer <example-value> in their `Program` files in order to make configuration settings discoverable using C# autocompletion. Professional apps usually use a *configuration provider* to configure OIDC options, such as the default JSON configuration provider. The JSON configuration provider loads configuration from app settings files `appsettings.json`/`appsettings.{ENVIRONMENT}.json`, where the `{ENVIRONMENT}` placeholder is the app's runtime environment. Follow the guidance in this section to use app settings files for configuration.
 
 In the app settings file (`appsettings.json`) of the `BlazorWebAppEntra` project, add the following JSON configuration:
 
@@ -203,7 +203,7 @@ In the `MinimalApiJwt` project, add the following app settings configuration to 
 },
 ```
 
-The preceding example uses the V1 STS token URL format. For guidance on V2 STS tokens, see the STS token version section.
+The preceding example uses the V1 STS token URL format. For guidance on V2 STS tokens, see the STS token <example-value> section.
 
 Update the placeholders in the preceding configuration to match the values that the app uses in the `Program` file:
 
@@ -216,7 +216,7 @@ Authority formats adopt the following patterns:
 * Microsoft Entra External ID: `https://{DIRECTORY NAME}.ciamlogin.com/{TENANT ID}/v2.0`
 * B2C tenant type: `https://login.microsoftonline.com/{TENANT ID}/v2.0`
 
-The preceding example for the ME-ID tenant type uses the V1 STS token URL format. For guidance on V2 STS tokens, see the STS token version section.
+The preceding example for the ME-ID tenant type uses the V1 STS token URL format. For guidance on V2 STS tokens, see the STS token <example-value> section.
 
 Audience formats adopt the following patterns (`{CLIENT ID}` is the Client Id of the web API; `{DIRECTORY NAME}` is the directory name, for example, `contoso`):
 
@@ -224,7 +224,7 @@ Audience formats adopt the following patterns (`{CLIENT ID}` is the Client Id of
 * Microsoft Entra External ID: `{CLIENT ID}`
 * B2C tenant type: `https://{DIRECTORY NAME}.onmicrosoft.com/{CLIENT ID}`
 
-The configuration is automatically picked up by the JWT bearer authentication builder.
+The configuration is automatically picked up by the JWT bearer <example-value> builder.
 
 Remove the following lines from the `Program` file:
 

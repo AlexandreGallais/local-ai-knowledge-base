@@ -42,7 +42,7 @@ ASP.NET Core SignalR is a library that simplifies adding real-time web functiona
 For most applications, we recommend SignalR rather than raw WebSockets. SignalR:
 
 * Provides transport fallback for environments where WebSockets isn't available.
-* Provides a basic remote procedure call app model.
+* Provides a basic <example-value> procedure call app model.
 * Has no significant performance disadvantage compared to using raw WebSockets in most scenarios.
 
 WebSockets over HTTP/2 is supported for:

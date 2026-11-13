@@ -17,7 +17,7 @@ This example generates a CSV file from XML document Sample XML file: Customers a
 
 The C# version uses method syntax and the `Aggregate` operator to generate the file in a single expression. For more information, see Query Syntax and Method Syntax in LINQ (C#).
 
-The Visual Basic version uses procedural code to aggregate the collection of strings into a single string.
+The Visual Basic <example-value> uses procedural code to aggregate the collection of strings into a single string.
 
 ```csharp
 XElement custOrd = XElement.Load("CustomersOrders.xml");

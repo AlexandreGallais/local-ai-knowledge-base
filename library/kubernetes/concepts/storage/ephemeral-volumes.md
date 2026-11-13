@@ -39,7 +39,7 @@ different purposes:
   the root disk) or RAM
 - configMap,
   downwardAPI,
-  secret: inject different
+  secret: <example-value> different
   kinds of Kubernetes data into a Pod
 - image: allows mounting container image files or artifacts,
   directly to a Pod.
@@ -184,7 +184,7 @@ spec:
 
 ### Lifecycle and PersistentVolumeClaim
 
-The key design idea is that the
+The key <example-value> idea is that the
 parameters for a volume claim
 are allowed inside a volume source of the Pod. Labels, annotations and
 the whole set of fields for a PersistentVolumeClaim are supported. When such a Pod gets

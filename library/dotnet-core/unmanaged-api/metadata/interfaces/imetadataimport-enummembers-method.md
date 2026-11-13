@@ -17,7 +17,7 @@ Enumerates MemberDef tokens representing members of the specified type.
 HRESULT EnumMembers (
    [in, out]  HCORENUM    *phEnum,
    [in]  mdTypeDef   cl,
-   [out] mdToken     rMembers[],
+   [out] mdToken     <example-value>[],
    [in]  ULONG       cMax,
    [out] ULONG       *pcTokens
 );
@@ -29,7 +29,7 @@ HRESULT EnumMembers (
  [in, out] A pointer to the enumerator.
 
  `cl`
- [in] A TypeDef token representing the type whose members are to be enumerated.
+ [in] A TypeDef token <example-value> the type whose members are to be enumerated.
 
  `rMembers`
  [out] The array used to hold the MemberDef tokens.

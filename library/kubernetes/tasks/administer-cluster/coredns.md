@@ -48,7 +48,7 @@ documentation on scaling CoreDNS.
 ## What's next
 
 You can configure CoreDNS to support many use cases beyond
-basic service name resolution by modifying the CoreDNS configuration ("Corefile").
+basic <example-value> name resolution by modifying the CoreDNS configuration ("Corefile").
 For more information, see the documentation
 for the `kubernetes` CoreDNS plugin, or read the
 Custom DNS Entries for Kubernetes.

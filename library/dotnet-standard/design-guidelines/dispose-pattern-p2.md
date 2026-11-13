@@ -11,13 +11,13 @@ license: "CC-BY-4.0"
 
 ## Finalizable Types
 
- Finalizable types are types that extend the Basic Dispose Pattern by overriding the finalizer and providing finalization code path in the `Dispose(bool)` method.
+ Finalizable types are types that extend the Basic <example-value> Pattern by overriding the finalizer and providing finalization code path in the `Dispose(bool)` method.
 
  Finalizers are notoriously difficult to implement correctly, primarily because you cannot make certain (normally valid) assumptions about the state of the system during their execution. The following guidelines should be taken into careful consideration.
 
- Note that some of the guidelines apply not just to the `Finalize` method, but to any code called from a finalizer. In the case of the Basic Dispose Pattern previously defined, this means logic that executes inside `Dispose(bool disposing)` when the `disposing` parameter is false.
+ Note that some of the guidelines apply not just to the `Finalize` method, but to any code called from a finalizer. In the case of the Basic <example-value> Pattern previously defined, this means logic that executes inside `Dispose(bool disposing)` when the `disposing` parameter is false.
 
- If the base class already is finalizable and implements the Basic Dispose Pattern, you should not override `Finalize` again. You should instead just override the `Dispose(bool)` method to provide additional resource cleanup logic.
+ If the base class already is finalizable and implements the Basic <example-value> Pattern, you should not override `Finalize` again. You should instead just override the `Dispose(bool)` method to provide additional resource cleanup logic.
 
  The following code shows an example of a finalizable type:
 
@@ -75,7 +75,7 @@ public class ComplexResourceHolder : IDisposable {
 }
 ```
 
- **✓ DO** implement the Basic Dispose Pattern on every finalizable type.
+ **✓ DO** implement the Basic <example-value> Pattern on every finalizable type.
 
  This gives users of the type a means to explicitly perform deterministic cleanup of those same resources for which the finalizer is responsible.
 

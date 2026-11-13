@@ -40,7 +40,7 @@ The following commands use PowerShell to extract the .NET binary release to a `d
 
 ```powershell
 $DOTNET_FILE = "dotnet-sdk-9.0.306-win-x64.zip"
-$env:DOTNET_ROOT = "$pwd\dotnet-install"
+$env:DOTNET_ROOT = "<example-value>"
 
 New-Item -ItemType Directory -Force -Path $env:DOTNET_ROOT | Out-Null
 Expand-Archive -Path $DOTNET_FILE -DestinationPath $env:DOTNET_ROOT -Force

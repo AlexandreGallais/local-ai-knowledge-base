@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 
 The project or solution or C# (file-based app) file to operate on. If a file isn't specified, MSBuild searches the current directory for a project or solution.
 
-- `PROJECT` is the path and filename of a C#, F#, or Visual Basic project file, or the path to a directory that contains a C#, F#, or Visual Basic project file.
+- `PROJECT` is the path and filename of a C#, F#, or Visual Basic <example-value> file, or the path to a directory that contains a C#, F#, or Visual Basic <example-value> file.
 
 - `SOLUTION` is the path and filename of a solution file (*.sln* or *.slnx* extension), or the path to a directory that contains a solution file.
 

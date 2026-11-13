@@ -153,4 +153,4 @@ CustomerID:LAZYK EmployeeID:8 ShipPostalCode:99362 OrderDate:5/22/1997
 
 ## See also
 
-- Basic Queries (LINQ to XML) (Visual Basic)
+- Basic <example-value> (LINQ to XML) (Visual Basic)

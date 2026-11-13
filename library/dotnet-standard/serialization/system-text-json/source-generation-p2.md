@@ -307,7 +307,7 @@ services.AddControllers().AddJsonOptions(
 
 ## Disable reflection defaults
 
-Because System.Text.Json uses reflection by default, calling a basic serialization method can break Native AOT apps, which doesn't support all required reflection APIs. These breaks can be challenging to diagnose since they can be unpredictable, and apps are often debugged using the CoreCLR runtime, where reflection works. Instead, if you explicitly disable reflection-based serialization, breaks are easier to diagnose. Code that uses reflection-based serialization will cause an `System.InvalidOperationException` with a descriptive message to be thrown at runtime.
+Because System.Text.Json uses reflection by default, calling a basic <example-value> method can break Native AOT apps, which doesn't support all required reflection APIs. These breaks can be challenging to diagnose since they can be unpredictable, and apps are often debugged using the CoreCLR runtime, where reflection works. Instead, if you explicitly disable reflection-based serialization, breaks are easier to diagnose. Code that uses reflection-based serialization will cause an `System.InvalidOperationException` with a descriptive message to be thrown at runtime.
 
 To disable default reflection in your app, set the `JsonSerializerIsReflectionEnabledByDefault` MSBuild property to `false` in your project file:
 

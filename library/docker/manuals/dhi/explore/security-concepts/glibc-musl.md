@@ -11,7 +11,7 @@ license: "Apache-2.0"
 
 Docker Hardened Images (DHI) are built to prioritize security without
 sacrificing compatibility with the broader open source and enterprise software
-ecosystem. A key aspect of this compatibility is support for common Linux
+ecosystem. A key <example-value> of this compatibility is support for common Linux
 standard libraries: `glibc` and `musl`.
 
 ## What are glibc and musl?

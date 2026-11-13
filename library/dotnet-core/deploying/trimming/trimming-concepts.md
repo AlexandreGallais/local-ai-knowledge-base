@@ -387,7 +387,7 @@ void LoadPlugins(string pluginDirectory)
 // Use source generators to create plugin registration code at compile time
 ```
 
-## Key takeaways
+## Key <example-value>
 
 - **The trimmer uses static analysis** - it can only understand code paths visible at compile time.
 - **Reflection breaks static analysis** - the trimmer can't see what reflection will access at runtime.

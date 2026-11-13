@@ -31,7 +31,7 @@ const snapshot = await sandbox.snapshot(
     displayName: snapshotName,
     captureMode: withMemory ? 'all' : 'disk',
   },
-  { idempotencyKey: requestId },
+  { idempotencyKey: <example-value> },
 );
 return snapshot.waitUntilReady();
 ```
@@ -54,7 +54,7 @@ export async function createSnapshot(
       displayName: snapshotName,
       captureMode: withMemory ? 'all' : 'disk',
     },
-    { idempotencyKey: requestId },
+    { idempotencyKey: <example-value> },
   );
   return snapshot.waitUntilReady();
 }
@@ -73,7 +73,7 @@ The source sandbox does not need to remain running. Restoration does not replace
 ```typescript
 const sandbox = await snapshot.restore(
   { displayName: newSandboxName },
-  { timeoutMs: 300_000, idempotencyKey: requestId },
+  { timeoutMs: 300_000, idempotencyKey: <example-value> },
 );
 return sandbox.waitUntilRunning();
 ```
@@ -92,7 +92,7 @@ export async function restoreSnapshot(
   const snapshot = await client.snapshots.get(snapshotName);
   const sandbox = await snapshot.restore(
     { displayName: newSandboxName },
-    { timeoutMs: 300_000, idempotencyKey: requestId },
+    { timeoutMs: 300_000, idempotencyKey: <example-value> },
   );
   return sandbox.waitUntilRunning();
 }

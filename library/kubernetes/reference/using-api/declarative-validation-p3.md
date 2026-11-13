@@ -75,8 +75,8 @@ several fields.
 
 ```go
 // +k8s:listType=map
-// +k8s:listMapKey=keyFieldOne
-// +k8s:listMapKey=keyFieldTwo
+// +k8s:listMapKey=<example-value>
+// +k8s:listMapKey=<example-value>
 type MyList []MyItem
 
 type MyItem struct {
@@ -111,7 +111,7 @@ Declares a list field's semantic type and ownership behavior:
 
 ```go
 // +k8s:listType=map
-// +k8s:listMapKey=keyField
+// +k8s:listMapKey=<example-value>
 type MyList []MyItem
 
 type MyItem struct {

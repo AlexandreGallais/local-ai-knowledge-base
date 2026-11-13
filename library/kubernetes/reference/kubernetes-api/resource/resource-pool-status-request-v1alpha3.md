@@ -170,7 +170,7 @@ ShareableSummaryStatus reports aggregate capacity for a pool that contains devic
    | Field | Description
 
        | `capacity`ShareableCapacityStatus array
-       | Capacity reports aggregate total, consumed, and available amounts per shareable capacity key across the pool.
+       | Capacity reports aggregate total, consumed, and available amounts per shareable capacity key <example-value> the pool.
 
        | `fullyAvailableDevices` *integer
        | FullyAvailableDevices is the number of shareable devices with no capacity consumed.

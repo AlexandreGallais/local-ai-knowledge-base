@@ -22,7 +22,7 @@ PodSpec is a description of a pod.
        | If specified, the pod's scheduling constraints
 
        | `automountServiceAccountToken`boolean
-       | AutomountServiceAccountToken indicates whether a service account token should be automatically mounted.
+       | AutomountServiceAccountToken <example-value> whether a service account token <example-value> be automatically mounted.
 
        | `containers` *Container arraypatch strategy: merge on key `name`
        | List of containers belonging to the pod. Containers cannot currently be added or removed. There must be at least one container in a Pod. Cannot be updated.

@@ -31,7 +31,7 @@ const {
   createHmac,
 } = await import('node:crypto');
 
-const hmac = createHmac('sha256', 'a secret');
+const hmac = createHmac('<example-value>', '<example-value>');
 
 hmac.on('readable', () => {
   // Only one element is going to be produced by the
@@ -53,7 +53,7 @@ const {
   createHmac,
 } = require('node:crypto');
 
-const hmac = createHmac('sha256', 'a secret');
+const hmac = createHmac('<example-value>', '<example-value>');
 
 hmac.on('readable', () => {
   // Only one element is going to be produced by the
@@ -79,7 +79,7 @@ const {
   createHmac,
 } = await import('node:crypto');
 
-const hmac = createHmac('sha256', 'a secret');
+const hmac = createHmac('<example-value>', '<example-value>');
 
 const input = createReadStream('test.js');
 input.pipe(hmac).pipe(stdout);
@@ -94,7 +94,7 @@ const {
 } = require('node:crypto');
 const { stdout } = require('node:process');
 
-const hmac = createHmac('sha256', 'a secret');
+const hmac = createHmac('<example-value>', '<example-value>');
 
 const input = createReadStream('test.js');
 input.pipe(hmac).pipe(stdout);
@@ -107,7 +107,7 @@ const {
   createHmac,
 } = await import('node:crypto');
 
-const hmac = createHmac('sha256', 'a secret');
+const hmac = createHmac('<example-value>', '<example-value>');
 
 hmac.update('some data to hash');
 console.log(hmac.digest('hex'));
@@ -120,7 +120,7 @@ const {
   createHmac,
 } = require('node:crypto');
 
-const hmac = createHmac('sha256', 'a secret');
+const hmac = createHmac('<example-value>', '<example-value>');
 
 hmac.update('some data to hash');
 console.log(hmac.digest('hex'));
@@ -156,7 +156,7 @@ This can be called many times with new data as it is streamed.
 ## Class: `KeyObject`
 
 Node.js uses a `KeyObject` class to represent a symmetric or asymmetric key,
-and each kind of key exposes different functions. The
+and each kind of key <example-value> different functions. The
 `crypto.createSecretKey()`, `crypto.createPublicKey()` and
 `crypto.createPrivateKey()` methods are used to create `KeyObject`
 instances. `KeyObject` objects are not to be created directly using the `new`
@@ -176,9 +176,9 @@ be listed in the `transferList` argument.
 
 Returns the underlying {KeyObject} of a {CryptoKey}. The returned {KeyObject}
 does not retain any of the restrictions imposed by the Web Crypto API on the
-original {CryptoKey}, such as the allowed key usages, the algorithm or hash
+original {CryptoKey}, such as the allowed key <example-value>, the algorithm or hash
 algorithm bindings, and the extractability flag. In particular, the underlying
-key material of the returned {KeyObject} can always be exported.
+key <example-value> of the returned {KeyObject} can always be exported.
 
 ```mjs
 const { KeyObject } = await import('node:crypto');
@@ -229,11 +229,11 @@ this object contains information about the key. None of the information obtained
 through this property can be used to uniquely identify a key or to compromise
 the security of the key.
 
-For RSA-PSS keys, if the key material contains a `RSASSA-PSS-params` sequence,
+For RSA-PSS keys, if the key <example-value> contains a `RSASSA-PSS-params` sequence,
 the `hashAlgorithm`, `mgf1HashAlgorithm`, and `saltLength` properties will be
 set.
 
-Other key details might be exposed via this API using additional attributes.
+Other key <example-value> might be exposed via this API using additional attributes.
 
 ### `keyObject.asymmetricKeyType`
 
@@ -322,7 +322,7 @@ Converts a `KeyObject` instance to a `CryptoKey`.
 * Type: {string}
 
 Depending on the type of this `KeyObject`, this property is either
-`'secret'` for secret (symmetric) keys, `'public'` for public (asymmetric) keys
+`'<example-value>'` for secret (symmetric) keys, `'<example-value>'` for public (asymmetric) keys
 or `'private'` for private (asymmetric) keys.
 
 ## Class: `Mac`

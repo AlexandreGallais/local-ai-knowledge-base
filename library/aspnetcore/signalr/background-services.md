@@ -83,7 +83,7 @@ public class Worker : BackgroundService
         _clockHub = clockHub;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -137,7 +137,7 @@ public Task ShowTime(DateTime currentTime)
 In the `IHostedService.StartAsync` implementation, the `HubConnection` is started asynchronously.
 
 ```csharp
-public async Task StartAsync(CancellationToken cancellationToken)
+public async Task StartAsync(CancellationToken <example-value>)
 {
     // Loop is here to wait until the server is running
     while (true)
@@ -159,7 +159,7 @@ public async Task StartAsync(CancellationToken cancellationToken)
 During the `IHostedService.StopAsync` method, the `HubConnection` is disposed of asynchronously.
 
 ```csharp
-public async Task StopAsync(CancellationToken cancellationToken)
+public async Task StopAsync(CancellationToken <example-value>)
 {
     await _connection.DisposeAsync();
 }

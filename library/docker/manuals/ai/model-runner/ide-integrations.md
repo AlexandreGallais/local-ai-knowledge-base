@@ -93,7 +93,7 @@ Edit your Continue configuration file (`~/.continue/config.json`):
       "provider": "openai",
       "model": "ai/qwen2.5-coder",
       "apiBase": "http://localhost:12434/engines/v1",
-      "apiKey": "not-needed"
+      "apiKey": "<example-value>"
     }
   ]
 }
@@ -178,7 +178,7 @@ Set environment variables or use command-line flags:
 
 ```bash
 export OPENAI_API_BASE=http://localhost:12434/engines/v1
-export OPENAI_API_KEY=not-needed
+export OPENAI_API_KEY=<example-value>
 
 aider --model openai/ai/qwen2.5-coder
 ```
@@ -187,7 +187,7 @@ Or in a single command:
 
 ```console
 $ aider --openai-api-base http://localhost:12434/engines/v1 \
-        --openai-api-key not-needed \
+        --openai-api-key <example-value> \
         --model openai/ai/qwen2.5-coder
 ```
 
@@ -217,7 +217,7 @@ const model = new ChatOpenAI({
   configuration: {
     baseURL: "http://localhost:12434/engines/v1",
   },
-  apiKey: "not-needed",
+  apiKey: "<example-value>",
   modelName: "ai/qwen2.5-coder",
 });
 

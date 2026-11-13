@@ -46,7 +46,7 @@ were legal in HTTP header labels.
 An example of the impersonation headers used when impersonating a user with groups:
 
 ```http
-Impersonate-User: jane.doe@example.com
+Impersonate-User: user@example.com
 Impersonate-Group: developers
 Impersonate-Group: admins
 ```
@@ -55,7 +55,7 @@ An example of the impersonation headers used when impersonating a user with a UI
 extra fields:
 
 ```http
-Impersonate-User: jane.doe@example.com
+Impersonate-User: user@example.com
 Impersonate-Uid: 06f6ce97-e2c5-4ab8-7ba5-7654dd08d52b
 Impersonate-Extra-dn: cn=jane,ou=engineers,dc=example,dc=com
 Impersonate-Extra-acme.com%2Fproject: some-project
@@ -130,11 +130,11 @@ kind: ClusterRole
 metadata:
   name: limited-impersonator
 rules:
-# Can impersonate the user "jane.doe@example.com"
+# Can impersonate the user "user@example.com"
 - apiGroups: [""]
   resources: ["users"]
   verbs: ["impersonate"]
-  resourceNames: ["jane.doe@example.com"]
+  resourceNames: ["user@example.com"]
 
 # Can impersonate the groups "developers" and "admins"
 - apiGroups: [""]

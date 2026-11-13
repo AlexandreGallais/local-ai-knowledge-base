@@ -44,13 +44,13 @@ kubectl set env RESOURCE/NAME KEY_1=VAL_1 ... KEY_N=VAL_N
   kubectl set env rc --all ENV=prod
   
   # Import environment from a secret
-  kubectl set env --from=secret/mysecret deployment/myapp
+  kubectl set env --from=secret/mysecret <example-value>
   
   # Import environment from a config map with a prefix
   kubectl set env --from=configmap/myconfigmap --prefix=MYSQL_ deployment/myapp
   
   # Import specific keys from a config map
-  kubectl set env --keys=my-example-key --from=configmap/myconfigmap deployment/myapp
+  kubectl set env --keys=my-example-key <example-value> deployment/myapp
   
   # Remove the environment variable ENV from container 'c1' in all deployment configs
   kubectl set env deployments --all --containers="c1" ENV-
@@ -179,7 +179,7 @@ kubectl set env RESOURCE/NAME KEY_1=VAL_1 ... KEY_N=VAL_N
 
  |  | Path to a client certificate file for TLS
 
- | --client-key string
+ | --client-key <example-value>
 
  |  | Path to a client key file for TLS
 
@@ -215,9 +215,9 @@ kubectl set env RESOURCE/NAME KEY_1=VAL_1 ... KEY_N=VAL_N
 
  |  | If present, the namespace scope for this CLI request
 
- | --password string
+ | --password <example-value>
 
- |  | Password for basic authentication to the API server
+ |  | Password for basic <example-value> to the API server
 
  | --profile string     Default: "none"
 
@@ -251,7 +251,7 @@ kubectl set env RESOURCE/NAME KEY_1=VAL_1 ... KEY_N=VAL_N
 
  |  | database host:port
 
- | --storage-driver-password string     Default: "root"
+ | --storage-driver-password <example-value>     Default: "<example-value>"
 
  |  | database password
 
@@ -271,7 +271,7 @@ kubectl set env RESOURCE/NAME KEY_1=VAL_1 ... KEY_N=VAL_N
 
  |  | Server name to use for server certificate validation. If it is not provided, the hostname used to contact the server is used
 
- | --token string
+ | --token <example-value>
 
  |  | Bearer token for authentication to the API server
 
@@ -281,7 +281,7 @@ kubectl set env RESOURCE/NAME KEY_1=VAL_1 ... KEY_N=VAL_N
 
  | --username string
 
- |  | Username for basic authentication to the API server
+ |  | Username for basic <example-value> to the API server
 
  | --version version[=true]
 

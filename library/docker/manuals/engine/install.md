@@ -91,7 +91,7 @@ Apache License, Version 2.0. See LICENSE for the full license.
 
 If you discover a security issue, we request that you bring it to our attention immediately.
 
-DO NOT file a public issue. Instead, submit your report privately to security@docker.com.
+DO NOT file a public issue. Instead, submit your report privately to user@example.com.
 
 Security reports are greatly appreciated, and Docker will publicly thank you for it.
 

@@ -16,7 +16,7 @@ Maps a relationship between the assemblies using metadata signatures.
 ```cpp
 HRESULT Map (
     [in]  mdToken tkImp,
-    [in]  mdToken tkEmit
+    [in]  mdToken <example-value>
 );
 ```
 
@@ -30,7 +30,7 @@ HRESULT Map (
 
 ## Remarks
 
- When the token re-map occurs during a merge, the original token is scoped in the imported (source) metadata scope and the new token is scoped in the emitted (target) metadata scope.
+ When the token <example-value> occurs during a merge, the original token is scoped in the imported (source) metadata scope and the new token is scoped in the emitted (target) metadata scope.
 
 ## Requirements
 
@@ -42,4 +42,4 @@ HRESULT Map (
 
 ## See also
 
-- IMapToken Interface
+- IMapToken <example-value>

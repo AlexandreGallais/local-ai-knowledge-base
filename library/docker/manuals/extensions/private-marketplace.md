@@ -77,7 +77,7 @@ Each setting has a `value` that you can set, including a `locked` field that let
   ```json
   "extensionsPrivateMarketplaceAdminContactURL": {
     "locked": true,
-    "value": "mailto:admin@acme.com"
+    "value": "mailto:user@example.com"
   }
   ```
 
@@ -196,4 +196,4 @@ Make sure your developers are signed in to Docker Desktop in order for the priva
 
 ## Feedback
 
-Give feedback or report any bugs you may find by emailing `extensions@docker.com`.
+Give feedback or report any bugs you may find by emailing `user@example.com`.

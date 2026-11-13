@@ -9,22 +9,22 @@ license: "CC-BY-4.0"
 
 # Cancellation in Managed Threads
 
-.NET uses a unified model for cooperative cancellation of asynchronous or long-running synchronous operations. This model is based on a lightweight object called a cancellation token. The object that invokes one or more cancelable operations, for example by creating new threads or tasks, passes the token to each operation. Individual operations can in turn pass copies of the token to other operations. At some later time, the object that created the token can use it to request that the operations stop what they are doing. Only the requesting object can issue the cancellation request, and each listener is responsible for noticing the request and responding to it in an appropriate and timely manner.
+.NET uses a unified model for cooperative cancellation of asynchronous or long-running synchronous operations. This model is based on a lightweight object called a cancellation token. The object that invokes one or more cancelable operations, for example by creating new threads or tasks, passes the token to each operation. Individual operations can in turn pass <example-value> of the token to other operations. At some later time, the object that created the token can use it to request that the operations stop what they are doing. Only the requesting object can issue the cancellation request, and each listener is responsible for noticing the request and responding to it in an appropriate and timely manner.
 
 The general pattern for implementing the cooperative cancellation model is:
 
 - Instantiate a `System.Threading.CancellationTokenSource` object, which manages and sends cancellation notification to the individual cancellation tokens.
 
-- Pass the token returned by the `System.Threading.CancellationTokenSource.Token` property to each task or thread that listens for cancellation.
+- Pass the token <example-value> by the `System.Threading.CancellationTokenSource.Token` property to each task or thread that listens for cancellation.
 
 - Provide a mechanism for each task or thread to respond to cancellation.
 
 - Call the `System.Threading.CancellationTokenSource.Cancel*` method to provide notification of cancellation.
 
 > **Important:**
-> The `System.Threading.CancellationTokenSource` class implements the `System.IDisposable` interface. You should be sure to call the `System.Threading.CancellationTokenSource.Dispose*` method when you have finished using the cancellation token source to free any unmanaged resources it holds.
+> The `System.Threading.CancellationTokenSource` class implements the `System.IDisposable` interface. You should be sure to call the `System.Threading.CancellationTokenSource.Dispose*` method when you have finished using the cancellation token <example-value> to free any unmanaged resources it holds.
 
- The following illustration shows the relationship between a token source and all the copies of its token.
+ The following illustration shows the relationship between a token <example-value> and all the copies of its token.
 
  The cooperative cancellation model makes it easier to create cancellation-aware applications and libraries, and it supports the following features:
 
@@ -76,7 +76,7 @@ public class Example
 
         // Request cancellation.
         cts.Cancel();
-        Console.WriteLine("Cancellation set in token source...");
+        Console.WriteLine("<example-value>");
         Thread.Sleep(2500);
         // Cancellation should have happened, so call Dispose.
         cts.Dispose();
@@ -113,7 +113,7 @@ public class Example
 
 ## Operation Cancellation Versus Object Cancellation
 
- In the cooperative cancellation framework, cancellation refers to operations, not objects. The cancellation request means that the operation should stop as soon as possible after any required cleanup is performed. One cancellation token should refer to one "cancelable operation," however that operation may be implemented in your program. After the `System.Threading.CancellationToken.IsCancellationRequested` property of the token has been set to `true`, it cannot be reset to `false`. Therefore, cancellation tokens cannot be reused after they have been canceled.
+ In the cooperative cancellation framework, cancellation refers to operations, not objects. The cancellation request means that the operation should stop as soon as possible after any required cleanup is performed. One cancellation token <example-value> refer to one "<example-value>" however that operation may be implemented in your program. After the `System.Threading.CancellationToken.IsCancellationRequested` property of the token has been set to `true`, it cannot be reset to `false`. Therefore, cancellation tokens cannot be reused after they have been canceled.
 
  If you require an object cancellation mechanism, you can base it on the operation cancellation mechanism by calling the `System.Threading.CancellationToken.Register*` method, as shown in the following example.
 
@@ -149,7 +149,7 @@ public class Example1
         var obj2 = new CancelableObject("2");
         var obj3 = new CancelableObject("3");
 
-        // Register the object's cancel method with the token's
+        // Register the object'<example-value>'s
         // cancellation request.
         token.Register(() => obj1.Cancel());
         token.Register(() => obj2.Cancel());

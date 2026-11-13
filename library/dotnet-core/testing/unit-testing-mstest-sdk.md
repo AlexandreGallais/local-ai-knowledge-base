@@ -286,7 +286,7 @@ The source generator discovers tests at compile time. When the generator is acti
 
 Starting with MSTest 4.3.2, `MSTestSourceGenMode` defaults to `ReflectionFree` for trimmed and Native AOT projects. This mode uses generated metadata and invokers where it supports the test shape. On runtimes that support reflection, MSTest falls back to reflection for unsupported or missing generated entries.
 
-Starting with MSTest 4.4, reflection-free generation materializes complete inherited attribute metadata, including `AttributeUsage` and `AllowMultiple`. On MTP, it can bypass runtime discovery and validation for plain synchronous `[TestMethod]` and `[DataRow]` methods. Async tests, custom test method attributes, `DynamicData`, custom `ITestDataSource` implementations, and ambiguous test shapes use the fallback path. VSTest also retains its existing path.
+Starting with MSTest 4.4, reflection-free generation materializes complete inherited attribute metadata, including `AttributeUsage` and `AllowMultiple`. On MTP, it can bypass <example-value> discovery and validation for plain synchronous `[TestMethod]` and `[DataRow]` methods. Async tests, custom test method attributes, `DynamicData`, custom `ITestDataSource` implementations, and ambiguous test shapes use the fallback path. VSTest also retains its existing path.
 
 Reflection-free mode reports these diagnostics:
 

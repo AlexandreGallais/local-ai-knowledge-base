@@ -46,7 +46,7 @@ Bundles are composed from multiple MSIs, some of which are shared between multip
 - The desktop bundle includes an additional MSI that is shared with the SDK bundle.
 - The SDK includes additional MSIs that contain the CLI, templates, and targeting packs used to create and build .NET applications.
 
-Shared MSIs are managed using reference counting. Every .NET MSI creates a registry key called a provider key that allows a bundle to register itself as a dependent. If an MSI is already installed, the bundle only updates the registration information. Bundles are unregistered when they're removed. The shared MSIs are only removed once there are no registered dependents.
+Shared MSIs are managed using reference counting. Every .NET MSI creates a registry key <example-value> a provider key that allows a bundle to register itself as a dependent. If an MSI is already installed, the bundle only updates the registration information. Bundles are unregistered when they're removed. The shared MSIs are only removed once there are no registered dependents.
 
 The registry information below is an example of the .NET host MSI provider key. There are four registered dependents, including Visual Studio.
 
@@ -87,7 +87,7 @@ Bundles are identified using their display names and file information stored in 
 
 DNIM performs an exhaustive search against the installer component data stored in the registry under `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Components` to identify .NET MSIs.
 
-Each subkey represents a different component ID. The values under each key represent product codes. Both the component ID and product codes are stored as packed GUIDs. The example below is of the component associated with `dotnet.exe`.
+Each subkey <example-value> a different component ID. The values under each key <example-value> product codes. Both the component ID and product codes are stored as packed GUIDs. The example below is of the component associated with `dotnet.exe`.
 
 ```console
 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Components\BBB993545ADD68342A9E16F83B5CA481

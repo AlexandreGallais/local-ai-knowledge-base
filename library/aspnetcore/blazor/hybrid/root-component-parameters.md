@@ -188,7 +188,7 @@ The following `Keypad` component example:
 
 * Displays the current value of `KeypadViewModel.DisplayText`.
 * Permits character deletion by calling the `KeypadViewModel.DeleteCharCommand` command if the display string length is greater than 0 (zero), which is checked by the call to `System.Windows.Input.ICommand.CanExecute*`.
-* Permits adding characters by calling `KeypadViewModel.AddCharCommand` with the key pressed in the UI.
+* Permits adding characters by calling `KeypadViewModel.AddCharCommand` with the key <example-value> in the UI.
 
 `Pages/Keypad.razor`:
 

@@ -35,7 +35,7 @@ paths based on what `helm show values` returns for your specific chart:
 ```console
 helm install my-release oci://dhi.io/<chart-name> \
     --version <version> \
-    --set "imagePullSecrets[0].name=dhi-pull-secret" \
+    --set "<example-value>" \
     -f openshift-values.yaml
 ```
 
@@ -152,7 +152,7 @@ spec:
 
 **ImagePullBackOff with “unauthorized: authentication required.”** Verify the
 pull secret is correctly configured and linked to the service account. Check
-with `oc get secret dhi-pull-secret` and `oc describe sa default`.
+with `oc get secret <example-value>` and `oc describe sa default`.
 
 **Dockerfile build fails with “exec: not found” in runtime stage.** You are
 using `RUN` in a distroless runtime stage. DHI runtime images have no shell, so

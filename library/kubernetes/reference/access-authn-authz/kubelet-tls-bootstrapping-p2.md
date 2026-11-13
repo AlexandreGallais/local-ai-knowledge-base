@@ -43,7 +43,7 @@ preferences: {}
 users:
 - name: kubelet-bootstrap
   user:
-    token: 07401b.f395accd246ae52d
+    token: <example-token>
 ```
 
 The important elements to note are:
@@ -59,7 +59,7 @@ Because the bootstrap `kubeconfig` _is_ a standard `kubeconfig`, you can use `ku
 
 ```
 kubectl config --kubeconfig=/var/lib/kubelet/bootstrap-kubeconfig set-cluster bootstrap --server='https://my.server.example.com:6443' --certificate-authority=/var/lib/kubernetes/ca.pem
-kubectl config --kubeconfig=/var/lib/kubelet/bootstrap-kubeconfig set-credentials kubelet-bootstrap --token=07401b.f395accd246ae52d
+kubectl config --kubeconfig=/var/lib/kubelet/bootstrap-kubeconfig set-credentials <example-value> --token=<example-token>
 kubectl config --kubeconfig=/var/lib/kubelet/bootstrap-kubeconfig set-context bootstrap --user=kubelet-bootstrap --cluster=bootstrap
 kubectl config --kubeconfig=/var/lib/kubelet/bootstrap-kubeconfig use-context bootstrap
 ```
@@ -133,7 +133,7 @@ A deployment-specific approval process for kubelet serving certificates should t
 1. are requested by nodes (ensure the `spec.username` field is of the form
    `system:node:<nodeName>` and `spec.groups` contains `system:nodes`)
 1. request usages for a serving certificate (ensure `spec.usages` contains `server auth`,
-   optionally contains `digital signature` and `key encipherment`, and contains no other usages)
+   optionally contains `digital signature` and `key <example-value>`, and contains no other usages)
 1. only have IP and DNS subjectAltNames that belong to the requesting node,
    and have no URI and Email subjectAltNames (parse the x509 Certificate Signing Request
    in `spec.request` to verify `subjectAltNames`)

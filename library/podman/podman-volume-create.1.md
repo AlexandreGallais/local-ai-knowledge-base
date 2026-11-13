@@ -215,7 +215,7 @@ $ ls /s3
 
 Create a s3-directory by putting an empty object at the desired `prefix/` key
 ```shell
-$ aws s3api put-object --bucket bucket --key prefix/
+$ aws s3api put-object --bucket bucket --key <example-value>
 ```
 
 If performance is the priority, please check out the more performant goofys.
@@ -226,5 +226,5 @@ If performance is the priority, please check out the more performant goofys.
 **podman(1)**, **containers.conf(5)**, **podman-volume(1)**, **mount(8)**, **xfs_quota(8)**, **xfs_quota(8)**, **projects(5)**, **projid(5)**
 
 ## HISTORY
-January 2020, updated with information on volume plugins by Matthew Heon <mheon@redhat.com>
-November 2018, Originally compiled by Urvashi Mohnani <umohnani@redhat.com>
+January 2020, updated with information on volume plugins by Matthew Heon <user@example.com>
+November 2018, Originally compiled by Urvashi Mohnani <user@example.com>

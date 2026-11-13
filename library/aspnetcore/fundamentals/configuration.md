@@ -34,7 +34,7 @@ For more information on migrating app configuration from earlier versions of ASP
 
 > **Warning:**
 > This article shows the use of connection strings. When a local database is used for development and testing, database user authentication via the connection string isn't required.
-> In production environments, connection strings sometimes include a password for authenticating database access or database operations. A resource owner password credential (ROPC) in a connection string is a security risk that should be avoided in production apps. Production apps should use the most secure authentication flow available.
+> In production environments, connection strings sometimes include a password for authenticating database access or database operations. A resource owner password <example-value> (ROPC) in a connection string is a security risk that should be avoided in production apps. Production apps should use the most secure authentication flow available.
 > For more information on authentication for apps deployed to test or production environments, see ASP.NET Core security topics.
 
 Examples in this article use *primary constructors*, available in C# 12 (.NET 8) or later. For more information, see Declare primary constructors for classes and structs (C# documentation tutorial) and Primary constructors (C# Guide).
@@ -129,7 +129,7 @@ For more information, see Change the content root, app name, and environment and
 
 Configuration data guidelines:
 
-* Never store passwords or other sensitive data in configuration provider code or in plain text configuration files. The Secret Manager tool can be used to store secrets in development.
+* Never store passwords or other sensitive data in configuration provider code or in plain text configuration files. The Secret <example-value> tool can be used to store secrets in development.
 * Don't use production secrets in development or test environments.
 * Specify secrets outside of the project so that they can't be accidentally committed to a source code repository.
 * Production apps should use the most secure authentication flow available. For more information, see Secure authentication flows.
@@ -139,12 +139,12 @@ The User Secrets file configuration source of the default configuration sources 
 For more information on storing passwords or other sensitive data:
 
 * ASP.NET Core runtime environments
-* Safe storage of app secrets in development: Includes advice on using environment variables to store sensitive data. The Secret Manager tool uses the File Configuration Provider to store user secrets in a JSON file on the local system.
+* Safe storage of app secrets in development: Includes advice on using environment variables to store sensitive data. The Secret <example-value> tool uses the File Configuration Provider to store user secrets in a JSON file on the local system.
 * Azure Key Vault safely stores app secrets for ASP.NET Core apps. For more information, see Azure Key Vault configuration provider.
 
 ## Access configuration with Dependency Injection (DI)
 
-Configuration can be injected into services using Dependency Injection (DI) by resolving the `Microsoft.Extensions.Configuration.IConfiguration` service. In the following example, the configuration value stored for the configuration key represented by the `{KEY}` placeholder is assigned to `value`. If the key isn't found, `null` is assigned to `value`:
+Configuration can be injected into services using Dependency Injection (DI) by resolving the `Microsoft.Extensions.Configuration.IConfiguration` service. In the following example, the configuration value stored for the configuration key <example-value> by the `{KEY}` placeholder is assigned to `value`. If the key isn't found, `null` is assigned to `value`:
 
 ```csharp
 public class CustomService(IConfiguration config)

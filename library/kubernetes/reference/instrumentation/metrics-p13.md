@@ -9,7 +9,11 @@ license: "CC-BY-4.0"
 
 # Kubernetes Metrics Reference (part 13 of 13)
 
-watch_cache_capacity
+Stability Level:ALPHA
+	Type: Counter
+	Labels:operation_nameplugin_nameComponents:kube-controller-manager (/metrics)Deprecated Versions:1.36.0
+
+	watch_cache_capacity
 	Total capacity of watch cache broken by resource type.
 
 	Stability Level:ALPHA

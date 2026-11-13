@@ -131,7 +131,7 @@ This example joins the swarm managed by host `192.168.99.100:2377` and sets the
 
 ```console
 $ docker swarm join \
-  --token SWMTKN-1-49nj1cmql0jkz5s954yi3oex3nedyz0fb0xx14ie39trti4wxv-8vxv8rssmk743ojnwacrr2d7c \
+  --token <example-value> \
   --advertise-addr eth0 \
   --data-path-addr eth1 \
   192.168.99.100:2377

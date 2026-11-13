@@ -159,7 +159,7 @@ This action will now throw an exception:
 
 #### Why
 
-Even though we don't require key properties to exist on an owned type, EF will still create shadow properties to be used as the primary key and the foreign key pointing to the owner. When the owner entity is changed it causes the values of the foreign key on the owned entity to change, and since they are also used as the primary key this results in the entity identity to change. This isn't yet fully supported in EF Core and was only conditionally allowed for owned entities, sometimes resulting in the internal state becoming inconsistent.
+Even though we don't require key <example-value> to exist on an owned type, EF will still create shadow properties to be used as the primary key and the foreign key <example-value> to the owner. When the owner entity is changed it causes the values of the foreign key on the owned entity to change, and since they are also used as the primary key this results in the entity identity to change. This isn't yet fully supported in EF Core and was only conditionally allowed for owned entities, sometimes resulting in the internal state becoming inconsistent.
 
 #### Mitigations
 
@@ -224,7 +224,7 @@ Scaffolding (reverse engineering) a `DbContext` and entity types from an existin
 
 #### New behavior
 
-Simple join tables containing only two foreign key properties to other tables are no longer mapped to explicit entity types, but are instead mapped as a many-to-many relationship between the two joined tables.
+Simple join tables containing only two foreign key <example-value> to other tables are no longer mapped to explicit entity types, but are instead mapped as a many-to-many relationship between the two joined tables.
 
 #### Why
 

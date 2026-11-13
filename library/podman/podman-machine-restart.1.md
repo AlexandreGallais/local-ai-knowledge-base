@@ -54,4 +54,4 @@ $ podman machine restart myvm
 **podman(1)**, **podman-machine(1)**, **podman-machine-start(1)**, **podman-machine-stop(1)**
 
 ## HISTORY
-May 2026, Originally compiled by Jait Jacob <jai8.jacob@gmail.com>
+May 2026, Originally compiled by Jait Jacob <user@example.com>

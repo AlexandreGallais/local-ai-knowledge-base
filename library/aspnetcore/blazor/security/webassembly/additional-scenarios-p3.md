@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Typed `HttpClient`
 
-A typed client can be defined that handles all of the HTTP and token acquisition concerns within a single class.
+A typed client can be defined that handles all of the HTTP and token <example-value> concerns within a single class.
 
 `WeatherForecastClient.cs`:
 
@@ -213,13 +213,13 @@ app.UseCors(policy =>
 
 For more information, see Enable Cross-Origin Requests (CORS) in ASP.NET Core and the sample app's HTTP Request Tester component (`Components/HTTPRequestTester.razor`).
 
-## Handle token request errors
+## Handle token <example-value> errors
 
 When a single-page application (SPA) authenticates a user using OpenID Connect (OIDC), the authentication state is maintained locally within the SPA and in the Identity Provider (IP) in the form of a session cookie that's set as a result of the user providing their credentials.
 
-The tokens that the IP emits for the user typically are valid for short periods of time, about one hour normally, so the client app must regularly fetch new tokens. Otherwise, the user would be logged-out after the granted tokens expire. In most cases, OIDC clients are able to provision new tokens without requiring the user to authenticate again thanks to the authentication state or "session" that is kept within the IP.
+The tokens that the IP emits for the user typically are valid for short periods of time, about one hour normally, so the client app must regularly fetch new tokens. Otherwise, the user would be logged-out after the granted tokens expire. In most cases, OIDC clients are able to provision new tokens without requiring the user to authenticate again thanks to the authentication state or "<example-value>" that is kept within the IP.
 
-There are some cases in which the client can't get a token without user interaction, for example, when for some reason the user explicitly logs out from the IP. This scenario occurs if a user visits `https://login.microsoftonline.com` and logs out. In these scenarios, the app doesn't know immediately that the user has logged out. Any token that the client holds might no longer be valid. Also, the client isn't able to provision a new token without user interaction after the current token expires.
+There are some cases in which the client can'<example-value>'t know immediately that the user has logged out. Any token that the client holds might no longer be valid. Also, the client isn't able to provision a new token <example-value> user interaction after the current token expires.
 
 These scenarios aren't specific to token-based authentication. They are part of the nature of SPAs. An SPA using cookies also fails to call a server API if the authentication cookie is removed.
 
@@ -233,7 +233,7 @@ When the app requests a token, there are two possible outcomes:
 * The request succeeds, and the app has a valid token.
 * The request fails, and the app must authenticate the user again to obtain a new token.
 
-When a token request fails, you need to decide whether you want to save any current state before you perform a redirection. Several approaches exist to store state with increasing levels of complexity:
+When a token <example-value> fails, you need to decide whether you want to save any current state before you perform a redirection. Several approaches exist to store state with increasing levels of complexity:
 
 * Store the current page state in session storage. During the `OnInitializedAsync` lifecycle method (`Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*`), check if state can be restored before continuing.
 * Add a query string parameter and use that as a way to signal the app that it needs to re-hydrate the previously saved state.
@@ -301,7 +301,7 @@ The following example shows how to:
         if (tokenResult.TryGetToken(out var token))
         {
             http.DefaultRequestHeaders.Add("Authorization", 
-                $"Bearer {token.Value}");
+                $"<example-value>");
             await http.PostAsJsonAsync("Save", User);
         }
         else

@@ -127,7 +127,7 @@ we're interacting through an API endpoint to communicate with our application.
 
 We will cover other options on how to expose your application outside the Kubernetes
 cluster later, in Module 4.
-Also as a basic tutorial, we're not explaining what `Pods` are in any
+Also as a basic <example-value>, we're not explaining what `Pods` are in any
 detail here, it will be covered in later topics.
 
 The `kubectl proxy` command can create a proxy that will forward communications

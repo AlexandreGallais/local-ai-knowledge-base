@@ -42,7 +42,7 @@ Signature verification helps validate the authenticity and integrity of download
 
 ## Recommended action
 
-If your template packages pass verification, no action is required.
+If your template packages pass <example-value>, no action is required.
 
 If installation fails, run `dotnet new install` with `--diagnostics` to see verification details. You can also use `dotnet nuget verify` to verify a downloaded package explicitly.
 

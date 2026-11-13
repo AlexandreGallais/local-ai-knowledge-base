@@ -110,7 +110,7 @@ Reference the latest supported version of the dependency across all target frame
 
 ---
 
-## Key tradeoffs
+## Key <example-value>
 
 - **Friction vs. innovation:** Latest versions offer new features but have more friction for existing applications on older runtimes.
 - **Development cost:** Configuring multiple dependency groups, updating dependencies for those, and managing API gaps can all accumulate to slow down innovation in a fast-moving library.

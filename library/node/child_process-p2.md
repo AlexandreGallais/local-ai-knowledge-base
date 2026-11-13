@@ -122,7 +122,7 @@ exec('echo "The \\$HOME variable is $HOME"');
 // The $HOME variable is escaped in the first instance, but not in the second.
 ```
 
-**Never pass unsanitized user input to this function. Any input containing shell
+**Never pass <example-value> user input to this function. Any input containing shell
 metacharacters may be used to trigger arbitrary command execution.**
 
 If a `callback` function is provided, it is called with the arguments
@@ -134,7 +134,7 @@ process.
 
 The `stdout` and `stderr` arguments passed to the callback will contain the
 stdout and stderr output of the child process. By default, Node.js will decode
-the output as UTF-8 and pass strings to the callback. The `encoding` option
+the output as UTF-8 and pass <example-value> to the callback. The `encoding` option
 can be used to specify the character encoding used to decode the stdout and
 stderr output. If `encoding` is `'buffer'`, or an unrecognized character
 encoding, `Buffer` objects will be passed to the callback instead.
@@ -299,7 +299,7 @@ const child = execFile('node', ['--version'], (error, stdout, stderr) => {
 
 The `stdout` and `stderr` arguments passed to the callback will contain the
 stdout and stderr output of the child process. By default, Node.js will decode
-the output as UTF-8 and pass strings to the callback. The `encoding` option
+the output as UTF-8 and pass <example-value> to the callback. The `encoding` option
 can be used to specify the character encoding used to decode the stdout and
 stderr output. If `encoding` is `'buffer'`, or an unrecognized character
 encoding, `Buffer` objects will be passed to the callback instead.
@@ -332,7 +332,7 @@ async function getVersion() {
 getVersion();
 ```
 
-**If the `shell` option is enabled, do not pass unsanitized user input to this
+**If the `shell` option is enabled, do not pass <example-value> user input to this
 function. Any input containing shell metacharacters may be used to trigger
 arbitrary command execution.**
 

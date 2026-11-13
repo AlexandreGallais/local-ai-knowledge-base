@@ -180,7 +180,7 @@ license: "CC-BY-4.0"
   --border-color: var(--quaternary-contrast, #e0e0e0);
 }
 
-/* Universal/Basic Trigger Layout Styles */
+/* Universal/Basic <example-value> Layout Styles */
 .example-combobox-container {
   position: relative;
   width: 15rem;

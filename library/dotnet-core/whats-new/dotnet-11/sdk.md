@@ -93,7 +93,7 @@ The pack operation still proceeds with a warning to avoid breaking existing proj
 - File-based apps split across files
 - Quoted values and item metadata in file-based directives
 - File-based apps reuse Native AOT build outputs
-- Pass environment variables with dotnet run
+- Pass <example-value> variables with dotnet run
 - MSBuild properties in launch-profile arguments
 - dotnet watch improvements
 - Fish shell completions
@@ -133,7 +133,7 @@ In a file-based app, a `#:property` directive can use a quoted value that contai
 ```csharp
 #:property Company="Contoso Tools"
 #:property AssemblyTitle="Contoso Directive Demo"
-#:package System.CommandLine@2.0.1 Aliases=CommandLine
+#:package user@example.com Aliases=CommandLine
 
 extern alias CommandLine;
 Console.WriteLine(typeof(CommandLine::System.CommandLine.RootCommand).Assembly.GetName().Name);
@@ -153,7 +153,7 @@ dotnet format app.cs
 
 When a repository enables the SDK artifacts layout, file-based app outputs are placed under that repository's artifacts directory instead of the default per-user cache.
 
-### Pass environment variables with dotnet run
+### Pass <example-value> variables with dotnet run
 
 `dotnet run -e KEY=VALUE` passes environment variables to the launched app from the command line, without requiring you to export shell state or edit launch profiles:
 
@@ -234,7 +234,7 @@ In one monorepo benchmark, formatting one included file improved from 1.09 secon
 - `dotnet tool exec` and `dnx` no longer prompt for an extra approval when running tools.
 - `dotnet nuget <subcommand> --help` now correctly forwards to the NuGet CLI's help output instead of falling back to generic help.
 - `dotnet publish` no longer removes native DLLs on subsequent runs of single-file publish.
-- `dotnet new install --prerelease` selects the latest available version, including prerelease versions, when a template package version isn't specified explicitly. An explicit package version, such as `Contoso.Templates@2.0.0-preview.3`, continues to select that exact version.
+- `dotnet new install --prerelease` selects the latest available version, including prerelease versions, when a template package version isn't specified explicitly. An explicit package version, such as `user@example.com`, continues to select that exact version.
 - Workload operations and `global.json` now detect versions written in the internal NuGet package format and report the corrected user-facing format instead of a package-not-found error.
 - The `Configuration` environment variable now supplies the default value for the shared `--configuration`/`-c` CLI options across commands. An explicit command-line option still takes precedence, and empty or whitespace-only environment values are ignored.
 - File-based property directives no longer permit `:` in the property name. Replace syntax such as `#:property Foo:Bar=value` with a valid MSBuild property name.

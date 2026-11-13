@@ -147,7 +147,7 @@ Follow the steps to setup a non-containerized Node application:
     async function fetchLocationKey(townName) {
       const { data: locationData } = await
     axios.get(`${API_ENDPOINT_BASE}/locations/v1/cities/search`, {
-        params: { q: townName, details: false, apikey: API_KEY },
+        params: { q: townName, details: false, apikey: <example-value> },
       });
       return locationData[0]?.Key;
     }
@@ -165,7 +165,7 @@ Follow the steps to setup a non-containerized Node application:
    You should see the following output:
 
     ```plaintext
-    > express-api-starter@1.2.0 start
+    > user@example.com start
     > node src/index.js
 
     API_ENDPOINT_BASE: http://localhost:8080
@@ -228,7 +228,7 @@ Follow the steps to setup a non-containerized Node application:
    It’s time to set the environment variables in the `.env` file:
 
    ```plaintext
-   ACCUWEATHER_API_KEY=XXXXXX
+   ACCUWEATHER_API_KEY=<example-value>
    API_ENDPOINT_BASE=http://dataservice.accuweather.com
    ``` 
 
@@ -255,7 +255,7 @@ Follow the steps to setup a non-containerized Node application:
    You should see the following output:
 
    ```plaintext
-   > express-api-starter@1.2.0 start
+   > user@example.com start
    > node src/index.js
 
    API_ENDPOINT_BASE: http://dataservice.accuweather.com

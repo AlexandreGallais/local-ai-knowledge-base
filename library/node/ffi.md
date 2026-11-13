@@ -141,7 +141,7 @@ process, produce incorrect output, or corrupt memory.
 The `char` type follows the platform C ABI. On platforms where plain C `char`
 is signed it behaves like `int8`; otherwise it behaves like `uint8`.
 
-The `bool` type is marshaled as an 8-bit unsigned integer. Pass numeric values
+The `bool` type is marshaled as an 8-bit unsigned integer. Pass <example-value> values
 such as `0` and `1`; JavaScript `true` and `false` are not accepted.
 
 On optimized Fast FFI calls, `pointer` and `function` parameters accept raw

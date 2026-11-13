@@ -67,10 +67,10 @@ In addition to the enhancements described above, there have been many smaller ch
 - Remove unneeded subquery and projection when using ordering without limit/offset in set operations
 - Allow pooling DbContext with singleton services
 - Optional RestartSequenceOperation.StartValue
-- Allow UseSequence and HiLo on non-key properties
+- Allow UseSequence and HiLo on non-key <example-value>
 - Provide more information when 'No DbContext was found' error is generated
 - Pass query tracking behavior to materialization interceptor
-- Use case-insensitive string key comparisons on SQL Server
+- Use case-insensitive string key <example-value> on SQL Server
 - Allow value converters to change the DbType
 - Resolve application services in EF services
 - Allow transfer of ownership of DbConnection from application to DbContext

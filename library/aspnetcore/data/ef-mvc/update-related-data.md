@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Tutorial: Update related data - ASP.NET MVC with EF Core
 
-In the previous tutorial you displayed related data; in this tutorial you'll update related data by updating foreign key fields and navigation properties.
+In the previous tutorial you displayed related data; in this tutorial you'll update related data by updating foreign key <example-value> and navigation properties.
 
 The following illustrations show some of the pages that you'll work with.
 
@@ -27,7 +27,7 @@ In this tutorial, you:
 
 ## Customize Courses pages
 
-When a new `Course` entity is created, it must have a relationship to an existing department. To facilitate this, the scaffolded code includes controller methods and Create and Edit views that include a drop-down list for selecting the department. The drop-down list sets the `Course.DepartmentID` foreign key property, and that's all the Entity Framework needs in order to load the `Department` navigation property with the appropriate `Department` entity. You'll use the scaffolded code, but change it slightly to add error handling and sort the drop-down list.
+When a new `Course` entity is created, it must have a relationship to an existing department. To facilitate this, the scaffolded code includes controller methods and Create and Edit views that include a drop-down list for selecting the department. The drop-down list sets the `Course.DepartmentID` foreign key <example-value>, and that's all the Entity Framework needs in order to load the `Department` navigation property with the appropriate `Department` entity. You'll use the scaffolded code, but change it slightly to add error handling and sort the drop-down list.
 
 In `CoursesController.cs`, delete the four Create and Edit methods and replace them with the following code:
 

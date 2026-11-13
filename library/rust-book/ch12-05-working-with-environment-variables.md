@@ -110,7 +110,7 @@ First, we lowercase the `query` string and store it in a new variable with the
 same name, shadowing the original `query`. Calling `to_lowercase` on the query
 is necessary so that no matter whether the user’s query is `"rust"`, `"RUST"`,
 `"Rust"`, or `"rUsT"`, we’ll treat the query as if it were `"rust"` and be
-insensitive to the case. While `to_lowercase` will handle basic Unicode, it
+insensitive to the case. While `to_lowercase` will handle basic <example-value>, it
 won’t be 100 percent accurate. If we were writing a real application, we’d want
 to do a bit more work here, but this section is about environment variables,
 not Unicode, so we’ll leave it at that here.

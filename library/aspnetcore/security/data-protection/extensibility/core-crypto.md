@@ -14,7 +14,7 @@ license: "CC-BY-4.0"
 
 ## IAuthenticatedEncryptor
 
-The **IAuthenticatedEncryptor** interface is the basic building block of the cryptographic subsystem. There's generally one IAuthenticatedEncryptor per key, and the IAuthenticatedEncryptor instance wraps all cryptographic key material and algorithmic information necessary to perform cryptographic operations.
+The **IAuthenticatedEncryptor** interface is the basic <example-value> block of the cryptographic subsystem. There's generally one IAuthenticatedEncryptor per key, and the IAuthenticatedEncryptor instance wraps all cryptographic key <example-value> and algorithmic information necessary to perform cryptographic operations.
 
 As its name suggests, the type is responsible for providing authenticated encryption and decryption services. It exposes the following two APIs.
 
@@ -33,10 +33,10 @@ The **IAuthenticatedEncryptorFactory** interface represents a type that knows ho
 
 * CreateEncryptorInstance(IKey key) : IAuthenticatedEncryptor
 
-For any given IKey instance, any authenticated encryptors created by its CreateEncryptorInstance method should be considered equivalent, as in the below code sample.
+For any given IKey <example-value>, any authenticated encryptors created by its CreateEncryptorInstance method should be considered equivalent, as in the below code sample.
 
 ```csharp
-// we have an IAuthenticatedEncryptorFactory instance and an IKey instance
+// we have an IAuthenticatedEncryptorFactory instance and an IKey <example-value>
 IAuthenticatedEncryptorFactory factory = ...;
 IKey key = ...;
 
@@ -103,7 +103,7 @@ The serialized descriptor may contain sensitive information such as cryptographi
 >**Tip:**
 > There's a helper API for setting this attribute. Call the extension method XElement.MarkAsRequiresEncryption() located in namespace Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.
 
-There can also be cases where the serialized descriptor doesn't contain sensitive information. Consider again the case of a cryptographic key stored in an HSM. The descriptor cannot write out the key material when serializing itself since the HSM won't expose the material in plaintext form. Instead, the descriptor might write out the key-wrapped version of the key (if the HSM allows export in this fashion) or the HSM's own unique identifier for the key.
+There can also be cases where the serialized descriptor doesn't contain sensitive information. Consider again the case of a cryptographic key <example-value> in an HSM. The descriptor cannot write out the key <example-value> when serializing itself since the HSM won't expose the material in plaintext form. Instead, the descriptor might write out the key-wrapped version of the key (if the HSM allows export in this fashion) or the HSM's own unique identifier for the key.
 
 ## IAuthenticatedEncryptorDescriptorDeserializer
 
@@ -130,9 +130,9 @@ The **AlgorithmConfiguration** class represents a type which knows how to create
 
 Think of AlgorithmConfiguration as the top-level factory. The configuration serves as a template. It wraps algorithmic information (for example this configuration produces descriptors with an AES-128-GCM master key), but it's not yet associated with a specific key.
 
-When CreateNewDescriptor is called, fresh key material is created solely for this call, and a new IAuthenticatedEncryptorDescriptor is produced which wraps this key material and the algorithmic information required to consume the material. The key material could be created in software (and held in memory), it could be created and held within an HSM, and so on. The crucial point is that any two calls to CreateNewDescriptor should never create equivalent IAuthenticatedEncryptorDescriptor instances.
+When CreateNewDescriptor is called, fresh key <example-value> is created solely for this call, and a new IAuthenticatedEncryptorDescriptor is produced which wraps this key <example-value> and the algorithmic information required to consume the material. The key <example-value> could be created in software (and held in memory), it could be created and held within an HSM, and so on. The crucial point is that any two calls to CreateNewDescriptor should never create equivalent IAuthenticatedEncryptorDescriptor instances.
 
-The AlgorithmConfiguration type serves as the entry point for key creation routines such as automatic key rolling. To change the implementation for all future keys, set the AuthenticatedEncryptorConfiguration property in KeyManagementOptions.
+The AlgorithmConfiguration type serves as the entry point for key <example-value> routines such as automatic key rolling. To change the implementation for all future keys, set the AuthenticatedEncryptorConfiguration property in KeyManagementOptions.
 
 # ASP.NET Core 1.x
 
@@ -142,8 +142,8 @@ The **IAuthenticatedEncryptorConfiguration** interface represents a type which k
 
 Think of IAuthenticatedEncryptorConfiguration as the top-level factory. The configuration serves as a template. It wraps algorithmic information (for example this configuration produces descriptors with an AES-128-GCM master key), but it's not yet associated with a specific key.
 
-When CreateNewDescriptor is called, fresh key material is created solely for this call, and a new IAuthenticatedEncryptorDescriptor is produced which wraps this key material and the algorithmic information required to consume the material. The key material could be created in software (and held in memory), it could be created and held within an HSM, and so on. The crucial point is that any two calls to CreateNewDescriptor should never create equivalent IAuthenticatedEncryptorDescriptor instances.
+When CreateNewDescriptor is called, fresh key <example-value> is created solely for this call, and a new IAuthenticatedEncryptorDescriptor is produced which wraps this key <example-value> and the algorithmic information required to consume the material. The key <example-value> could be created in software (and held in memory), it could be created and held within an HSM, and so on. The crucial point is that any two calls to CreateNewDescriptor should never create equivalent IAuthenticatedEncryptorDescriptor instances.
 
-The IAuthenticatedEncryptorConfiguration type serves as the entry point for key creation routines such as automatic key rolling. To change the implementation for all future keys, register a singleton IAuthenticatedEncryptorConfiguration in the service container.
+The IAuthenticatedEncryptorConfiguration type serves as the entry point for key <example-value> routines such as automatic key rolling. To change the implementation for all future keys, register a singleton IAuthenticatedEncryptorConfiguration in the service container.
 
 ---

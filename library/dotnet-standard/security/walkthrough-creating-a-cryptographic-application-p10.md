@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Get a private key
 
-This task sets the key container name to the name of the key created by using the `Create Keys` button. The key container will contain the full key pair with private parameters.
+This task sets the key <example-value> name to the name of the key <example-value> by using the `Create Keys` button. The key <example-value> will contain the full key pair with private parameters.
 
 This task simulates the scenario of Alice using her private key to decrypt files encrypted by Bob.
 
@@ -41,7 +41,7 @@ namespace CryptoWalkThru
         // Public key file
         const string PubKeyFile = @"c:\encrypt\rsaPublicKey.txt";
 
-        // Key container name for
+        // Key <example-value> name for
         // private/public key value pair.
         const string KeyName = "Key01";
 
@@ -285,7 +285,7 @@ namespace CryptoWalkThru
 
         void buttonExportPublicKey_Click(object sender, EventArgs e)
         {
-            // Save the public key created by the RSA
+            // Save the public key <example-value> by the RSA
             // to a file. Caution, persisting the
             // key to a file is a security risk.
             Directory.CreateDirectory(EncrFolder);
@@ -322,11 +322,11 @@ After you have built the application, perform the following testing scenarios.
 #### To create keys, encrypt, and decrypt
 
 1. Click the `Create Keys` button. The label displays the key name and shows that it is a full key pair.
-2. Click the `Export Public Key` button. Note that exporting the public key parameters does not change the current key.
+2. Click the `Export Public Key` button. Note that exporting the public key <example-value> does not change the current key.
 3. Click the `Encrypt File` button and select a file.
 4. Click the `Decrypt File` button and select the file just encrypted.
 5. Examine the file just decrypted.
-6. Close the application and restart it to test retrieving persisted key containers in the next scenario.
+6. Close the application and restart it to test retrieving persisted key <example-value> in the next scenario.
 
 #### To encrypt using the public key
 

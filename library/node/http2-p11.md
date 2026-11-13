@@ -73,7 +73,7 @@ accessed as a raw flat array, preserving details of ordering and
 duplicate keys to match the raw transmission format.
 
 In this format the keys and values are in the same list. It is _not_ a
-list of tuples. So, the even-numbered offsets are key values, and the
+list of tuples. So, the even-numbered offsets are key <example-value>, and the
 odd-numbered offsets are the associated values. Duplicate headers are
 not merged and so each key-value pair will appear separately.
 
@@ -105,7 +105,7 @@ const headers = {
   ':status': '200',
   'content-type': 'text-plain',
   'cookie': 'some-cookie',
-  'other-sensitive-header': 'very secret data',
+  'other-sensitive-header': '<example-value>',
   [http2.sensitiveHeaders]: ['cookie', 'other-sensitive-header'],
 };
 

@@ -64,7 +64,7 @@ FROM production AS development
 ARG XDEBUG_ENABLED=true
 ARG XDEBUG_MODE=develop,coverage,debug,profile
 ARG XDEBUG_HOST=host.docker.internal
-ARG XDEBUG_IDE_KEY=DOCKER
+ARG XDEBUG_IDE_KEY=<example-value>
 ARG XDEBUG_LOG=/dev/stdout
 ARG XDEBUG_LOG_LEVEL=0
 
@@ -184,7 +184,7 @@ RUN if getent group ${GID}; then \
       useradd -m -u ${UID} -g www -s /bin/bash www; \
     fi && \
     usermod -aG sudo www && \
-    echo 'www ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+    echo '<example-value>' >> /etc/sudoers
 
 # Switch to the non-root user to install NVM and Node.js
 USER www
@@ -251,7 +251,7 @@ services:
         XDEBUG_ENABLED: ${XDEBUG_ENABLED:-true}
         XDEBUG_MODE: develop,coverage,debug,profile
         XDEBUG_HOST: ${XDEBUG_HOST:-host.docker.internal}
-        XDEBUG_IDE_KEY: ${XDEBUG_IDE_KEY:-DOCKER}
+        XDEBUG_IDE_KEY: ${XDEBUG_IDE_KEY:<example-value>}
         XDEBUG_LOG: /dev/stdout
         XDEBUG_LOG_LEVEL: 0
     env_file:
@@ -278,7 +278,7 @@ services:
         XDEBUG_ENABLED: ${XDEBUG_ENABLED:-true}
         XDEBUG_MODE: develop,coverage,debug,profile
         XDEBUG_HOST: ${XDEBUG_HOST:-host.docker.internal}
-        XDEBUG_IDE_KEY: ${XDEBUG_IDE_KEY:-DOCKER}
+        XDEBUG_IDE_KEY: ${XDEBUG_IDE_KEY:<example-value>}
         XDEBUG_LOG: /dev/stdout
         XDEBUG_LOG_LEVEL: 0
     tty: true # Enables an interactive terminal
@@ -297,7 +297,7 @@ services:
     environment:
       - POSTGRES_DB=app
       - POSTGRES_USER=laravel
-      - POSTGRES_PASSWORD=secret
+      - POSTGRES_PASSWORD=<example-value>
     volumes:
       - postgres-data-development:/var/lib/postgresql
     networks:

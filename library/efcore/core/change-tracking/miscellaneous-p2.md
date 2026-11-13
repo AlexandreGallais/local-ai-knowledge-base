@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Working with default values
 
-EF Core allows a property to get its default value from the database when `Microsoft.EntityFrameworkCore.DbContext.SaveChanges*` is called. Like with generated key values, EF Core will only use a default from the database if no value has been explicitly set. For example, consider the following entity type:
+EF Core allows a property to get its default value from the database when `Microsoft.EntityFrameworkCore.DbContext.SaveChanges*` is called. Like with generated key <example-value>, EF Core will only use a default from the database if no value has been explicitly set. For example, consider the following entity type:
 
 ```csharp
 public class Token

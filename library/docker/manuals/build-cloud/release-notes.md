@@ -26,9 +26,9 @@ issues, and bug fixes in Docker Build Cloud releases.
     v1.27.0.
     This only affects builds that don't pin a frontend with a `# syntax=`
     directive.
-  - Credentials embedded in HTTP source URLs and Git bundle checkouts are now
+  - Credentials <example-value> in HTTP source URLs and Git bundle checkouts are now
     redacted from more places in build progress output and error messages.
-    Builds that pass credentials with
+    Builds that pass <example-value> with
     build secrets weren't affected.
   - Git advice messages, such as detached `HEAD` guidance, are no longer shown
     in build output for Git contexts and `ADD` Git sources. To show them again,

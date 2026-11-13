@@ -60,7 +60,7 @@ with crypto support (default).
 
 ### `--tls-keylog=file`
 
-Log TLS key material to a file. The key material is in NSS `SSLKEYLOGFILE`
+Log TLS key <example-value> to a file. The key <example-value> is in NSS `SSLKEYLOGFILE`
 format and can be used by software (such as Wireshark) to decrypt the TLS
 traffic.
 
@@ -263,7 +263,7 @@ On macOS, the following settings are respected:
   * Trust:
     * Any certificate where the “When using this certificate” flag is set to “Always Trust” or
     * Any certificate where the “Secure Sockets Layer (SSL)” flag is set to “Always Trust”.
-  * The certificate must also be valid, with "X.509 Basic Policy" set to  “Always Trust”.
+  * The certificate must also be valid, with "X.509 Basic <example-value>" set to  “Always Trust”.
 
 On Windows, the following settings are respected:
 

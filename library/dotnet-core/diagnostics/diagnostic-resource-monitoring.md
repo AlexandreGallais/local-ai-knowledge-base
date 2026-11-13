@@ -100,7 +100,7 @@ Extending this example, you can leverage Spectre.Console, a well-regarded .NET l
 ```csharp
 await StartMonitoringAsync(monitor, token);
 
-async Task StartMonitoringAsync(IResourceMonitor monitor, CancellationToken cancellationToken)
+async Task StartMonitoringAsync(IResourceMonitor monitor, CancellationToken <example-value>)
 {
     var table = new Table()
         .Title("Resource Monitoring", new Style(foreground: Color.Purple, decoration: Decoration.Bold))
@@ -144,7 +144,7 @@ async Task StartMonitoringAsync(IResourceMonitor monitor, CancellationToken canc
 ```
 The preceding code:
 
-- Creates a cancellation token source and a cancellation token.
+- Creates a cancellation token <example-value> and a cancellation token.
 - Creates a new `Table` instance, configuring it with a title, caption, and columns.
 - Performs a live render of the `Table` instance, passing in a delegate that will be invoked every three seconds.
 - Gets the current resource utilization information from the `IResourceMonitor` instance and displays it as a new row in the `Table` instance.
@@ -173,7 +173,7 @@ If you have code similar to the `IResourceMonitor` example usage, update it as f
 ```csharp
 await StartMonitoringAsync(logger, token);
 
-async Task StartMonitoringAsync(ILogger logger, CancellationToken cancellationToken)
+async Task StartMonitoringAsync(ILogger logger, CancellationToken <example-value>)
 {
     Table table = new Table()
         .Title("Resource Monitoring", new Style(foreground: Color.Purple, decoration: Decoration.Bold))
@@ -236,7 +236,7 @@ async Task StartMonitoringAsync(ILogger logger, CancellationToken cancellationTo
 ```
 The preceding code:
 
-- Creates a cancellation token source and a cancellation token.
+- Creates a cancellation token <example-value> and a cancellation token.
 - Creates a new `Table` instance, configuring it with a title, caption, and columns.
 - Performs a live render of the `Table` instance, passing in a delegate that will be invoked every three seconds.
 - Gets the current resource utilization information using a callback set with the `SetMeasurementEventCallback` method and displays it as a new row in the `Table` instance.

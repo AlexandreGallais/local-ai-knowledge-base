@@ -67,4 +67,4 @@ cc8f0bea67b1a1a11aec1ecd38102a1be4b145577f21fc843c7c83b77fc28907
 **podman(1)**, **podman-pod(1)**, **podman-restart(1)**
 
 ## HISTORY
-July 2018, Originally compiled by Peter Hunt <pehunt@redhat.com>
+July 2018, Originally compiled by Peter Hunt <user@example.com>

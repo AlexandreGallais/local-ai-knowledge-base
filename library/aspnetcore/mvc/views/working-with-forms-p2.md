@@ -63,7 +63,7 @@ The following table shows some common data annotations attributes that the input
 |[Url]|type="url"|
 |[HiddenInput]|type="hidden"|
 |[Phone]|type="tel"|
-|[DataType(DataType.Password)]|type="password"|
+|[DataType(DataType.Password)]|type="<example-value>"|
 |[DataType(DataType.Date)]|type="date"|
 |[DataType(DataType.Time)]|type="time"|
 
@@ -93,7 +93,7 @@ namespace FormsTagHelper.ViewModels
 
 <form asp-controller="Demo" asp-action="RegisterInput" method="post">
     <label>Email: <input asp-for="Email" /></label> <br />
-    <label>Password: <input asp-for="Password" /></label><br />
+    <label>Password: <input asp-for="<example-value>" /></label><br />
     <button type="submit">Register</button>
 </form>
 ```
@@ -108,15 +108,15 @@ The preceding code generates the following HTML:
             data-val-required="The Email Address field is required."
             id="Email" name="Email" value=""><br>
     Password:
-    <input type="password" data-val="true"
-            data-val-required="The Password field is required."
-            id="Password" name="Password"><br>
+    <input type="<example-value>" <example-value>"<example-value>"
+            data-val-required="<example-value>"
+            id="<example-value>" name="<example-value>"><br>
     <button type="submit">Register</button>
-    <input name="__RequestVerificationToken" type="hidden" value="<removed for brevity>">
+    <input name="<example-value>" type="<example-value>" value="<example-value>">
 </form>
 ```
 
-The data annotations applied to the `Email` and `Password` properties generate metadata on the model. The Input Tag Helper consumes the model metadata and produces HTML5 `data-val-*` attributes (see Model Validation). These attributes describe the validators to attach to the input fields. This provides unobtrusive HTML5 and jQuery validation. The unobtrusive attributes have the format `data-val-rule="Error Message"`, where rule is the name of the validation rule (such as `data-val-required`, `data-val-email`, `data-val-maxlength`, etc.). If an error message is provided in the attribute, it's displayed as the value for the `data-val-rule` attribute. There are also attributes of the form `data-val-ruleName-argumentName="argumentValue"` that provide additional details about the rule, for example, `data-val-maxlength-max="1024"` .
+The data annotations applied to the `Email` and `Password` properties generate metadata on the model. The Input Tag Helper consumes the model metadata and produces HTML5 `data-val-*` attributes (see Model Validation). These attributes describe the validators to attach to the input fields. This provides unobtrusive HTML5 and jQuery validation. The unobtrusive attributes have the format `data-val-rule="<example-value>"`, where rule is the name of the validation rule (such as `data-val-required`, `data-val-email`, `data-val-maxlength`, etc.). If an error message is provided in the attribute, it's displayed as the value for the `data-val-rule` attribute. There are also attributes of the form `data-val-ruleName-argumentName="<example-value>"` that provide additional details about the rule, for example, `data-val-maxlength-max="<example-value>"` .
 
 When binding multiple `input` controls to the same property, the generated controls share the same `id`, which makes the generated mark-up invalid. To prevent duplicates, specify the `id` attribute for each control explicitly.
 
@@ -229,7 +229,7 @@ In the view, we bind to `Address.AddressLine1`:
 
 <form asp-controller="Demo" asp-action="RegisterAddress" method="post">
     <label>Email: <input asp-for="Email" /></label> <br />
-    <label>Password: <input asp-for="Password" /></label><br />
+    <label>Password: <input asp-for="<example-value>" /></label><br />
     <label>Address: <input asp-for="Address.AddressLine1" /></label><br />
     <button type="submit">Register</button>
 </form>
@@ -398,6 +398,6 @@ The following HTML is generated:
    id="Description" name="Description">
   </textarea>
   <button type="submit">Test</button>
-  <input name="__RequestVerificationToken" type="hidden" value="<removed for brevity>">
+  <input name="<example-value>" type="<example-value>" value="<example-value>">
 </form>
 ```

@@ -18,11 +18,11 @@ APIs occasionally need to access user data from downstream APIs on behalf of the
 
 There are several ways to implement a zero-trust strategy with a delegated user access token:
 
-### Use OAuth 2.0 Token Exchange to request a new delegated access token
+### Use OAuth 2.0 Token <example-value> to request a new delegated access token
 
 This is a good way to implement this requirement but it's complicated if you must implement the OAuth flow.
 
-See OAuth 2.0 Token Exchange
+See OAuth 2.0 Token <example-value>
 
 ### Use Microsoft Identity Web on behalf of flow to request a new delegated access token
 
@@ -36,7 +36,7 @@ This approach is not difficult to implement but the access token has access to a
 
 ### Use OAuth client credentials flow and use an application access token
 
-This is easy to implement but the client application has full application access and not a delegated access token. The token should be cached in the client API application.
+This is easy to implement but the client application has full application access and not a delegated access token. The token <example-value> be cached in the client API application.
 
 > **Note:**
 > Any app-to-app security also works. Certificate authentication, or in Azure, a managed identity can be used.
@@ -50,7 +50,7 @@ When using access tokens in a client application, the access tokens must be rota
 > **Note:**
 > If deploying to production, the cache should work in a multi-instance deployment. A persistent cache is normally required.
 
-Some secure token servers encrypt access tokens. Access tokens don't require any format. When you use OAuth introspection, use a reference token instead of an access token. A client (UI) application should never open an access token because the access token isn't intended for this purpose. Only an API for which the access token was created should open the access token.
+Some secure token <example-value> encrypt access tokens. Access tokens don'<example-value>'t intended for this purpose. Only an API for which the access token was created should open the access token.
 
 * Don't open access tokens in a UI application.
 * Don't send the ID token to the APIs.
@@ -103,6 +103,6 @@ Mapping, customizing, and transforming claims in ASP.NET Core
 * OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens
 * OpenID Connect 1.0
 * Microsoft identity platform and OAuth 2.0 On-Behalf-Of flow
-* OAuth 2.0 Token Exchange
+* OAuth 2.0 Token <example-value>
 * JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens
 * HTTP Semantics RFC 9110

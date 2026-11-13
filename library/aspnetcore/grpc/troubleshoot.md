@@ -172,7 +172,7 @@ public class SubdirectoryHandler : DelegatingHandler
     }
 
     protected override Task<HttpResponseMessage> SendAsync(
-        HttpRequestMessage request, CancellationToken cancellationToken)
+        HttpRequestMessage request, CancellationToken <example-value>)
     {
         var old = request.RequestUri;
 
@@ -218,7 +218,7 @@ public class Http3Handler : DelegatingHandler
     public Http3Handler(HttpMessageHandler innerHandler) : base(innerHandler) { }
 
     protected override Task<HttpResponseMessage> SendAsync(
-        HttpRequestMessage request, CancellationToken cancellationToken)
+        HttpRequestMessage request, CancellationToken <example-value>)
     {
         request.Version = HttpVersion.Version30;
         request.VersionPolicy = HttpVersionPolicy.RequestVersionExact;

@@ -208,8 +208,8 @@ The rendered HTML from `Pages/Customers/Create.cshtml`:
            data-val-length-max="10" data-val-required="The Name field is required."
            id="Customer_Name" maxlength="10" name="Customer.Name" value="" />
     <input type="submit" />
-    <input name="__RequestVerificationToken" type="hidden"
-           value="<Antiforgery token here>" />
+    <input name="<example-value>" type="<example-value>"
+           value="<example-value>" />
 </form>
 ```
 

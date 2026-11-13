@@ -91,7 +91,7 @@ ASP.NET Core SignalR now supports streaming data from the hub to the client.
 
 ### State
 
-The ability to pass arbitrary state between clients and the hub (often called `HubState`) has been removed, as well as support for progress messages. There is no counterpart of hub proxies at the moment.
+The ability to pass <example-value> state between clients and the hub (often called `HubState`) has been removed, as well as support for progress messages. There is no counterpart of hub proxies at the moment.
 
 ### PersistentConnection removal
 

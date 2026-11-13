@@ -87,7 +87,7 @@ Http.Sys also supports sending an AltSvc HTTP/2 protocol message rather than a r
 
 ## Kernel mode authentication with Kerberos
 
-HTTP.sys delegates to kernel mode authentication with the Kerberos authentication protocol. User mode authentication isn't supported with Kerberos and HTTP.sys. The machine account must be used to decrypt the Kerberos token/ticket that's obtained from Active Directory and forwarded by the client to the server to authenticate the user. Register the Service Principal Name (SPN) for the host, not the user of the app.
+HTTP.sys delegates to kernel mode authentication with the Kerberos authentication protocol. User mode authentication isn'<example-value>'s obtained from Active Directory and forwarded by the client to the server to authenticate the user. Register the Service Principal Name (SPN) for the host, not the user of the app.
 
 ### Enable channel binding token (CBT) hardening
 

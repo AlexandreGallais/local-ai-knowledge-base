@@ -19,9 +19,9 @@ HRESULT DefineImportMember (
     [in]  const void               *pbHashValue,
     [in]  ULONG                    cbHashValue,
     [in]  IMetaDataImport          *pImport,
-    [in]  mdToken                  mbMember,
+    [in]  mdToken                  <example-value>,
     [in]  IMetaDataAssemblyEmit    *pAssemEmit,
-    [in]  mdToken                  tkParent,
+    [in]  mdToken                  <example-value>,
     [out] mdMemberRef              *pmr
 );
 ```
@@ -56,7 +56,7 @@ HRESULT DefineImportMember (
 
  The `DefineImportMember` method looks up the member, specified by `mbMember`, that is defined in another scope, specified by `pImport`, and retrieves its properties. It uses this information to call the IMetaDataEmit::DefineMemberRef method in the current scope to create the member reference.
 
- Generally, before you use the `DefineImportMember` method, you must create, in the current scope, a type reference or module reference for the target member's parent class, interface, or module. The metadata token for this reference is then passed in the `tkParent` argument. You do not need to create a reference to the target member's parent if it will be resolved later by the compiler or linker. To summarize:
+ Generally, before you use the `DefineImportMember` method, you must create, in the current scope, a type reference or module reference for the target member'<example-value>'s parent if it will be resolved later by the compiler or linker. To summarize:
 
 - If the target member is a field or method, use either the IMetaDataEmit::DefineTypeRefByName or the IMetaDataEmit::DefineImportType method to create a type reference, in the current scope, for the member's parent class or parent interface.
 

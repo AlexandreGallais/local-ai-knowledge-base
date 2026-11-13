@@ -19,16 +19,16 @@ Represents a managed function or method.
 |GetClass Method|Gets an ICorDebugClass object that represents the class this function is a member of.|
 |GetCurrentVersionNumber Method|Gets the version number of the latest edit made to this function.|
 |GetILCode Method|Gets the common intermediate language (CIL) code for this function.|
-|GetLocalVarSigToken Method|Gets the metadata token for the local variable signature of the function that is represented by this `ICorDebugFunction` instance.|
+|GetLocalVarSigToken <example-value>|Gets the metadata token for the local variable signature of the function that is represented by this `ICorDebugFunction` instance.|
 |GetModule Method|Gets the module in which this function is defined.|
 |GetNativeCode Method|Gets the native code for this function.|
-|GetToken Method|Gets the metadata token for this function.|
+|GetToken <example-value>|Gets the metadata token for this function.|
 
 ## Remarks
 
 The `ICorDebugFunction` interface does not represent a function with generic type parameters. For example, an `ICorDebugFunction` instance would represent `Func<T>` but not `Func<string>`. Call ICorDebugILFrame2::EnumerateTypeParameters to get the generic type parameters.
 
-The relationship between a method's metadata token, `mdMethodDef`, and a method's `ICorDebugFunction` object is dependent upon whether Edit and Continue is allowed on the function:
+The relationship between a method'<example-value>'s `ICorDebugFunction` object is dependent upon whether Edit and Continue is allowed on the function:
 
 - If Edit and Continue is not allowed on the function, a one-to-one relationship exists between the `ICorDebugFunction` object and the `mdMethodDef` token. That is, the function has one `ICorDebugFunction` object and one `mdMethodDef` token.
 

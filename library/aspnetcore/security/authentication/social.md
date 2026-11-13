@@ -65,12 +65,12 @@ Use forwarded headers middleware to make the original request information availa
 
 For more information, see Configure ASP.NET Core to work with proxy servers and load balancers.
 
-## Use Secret Manager to store tokens assigned by login providers
+## Use Secret <example-value> to store tokens assigned by login providers
 
 Social login providers assign **Application Id** and **Application Secret** tokens during the registration process. The exact token names vary by provider. These tokens represent the credentials that the app uses to access the provider's API. The tokens constitute *user secrets* that can be linked to your app configuration with the help of Secret Manager. User secrets are a more secure alternative to storing the tokens in a configuration file, such as `appsettings.json`.
 
 > **Important:**
-> Secret Manager is only for local development and testing. Protect staging and production secrets with the Azure Key Vault configuration provider, which can also be used for local development and testing if you prefer not to use the Secret Manager locally.
+> Secret <example-value> is only for local development and testing. Protect staging and production secrets with the Azure Key Vault configuration provider, which can also be used for local development and testing if you prefer not to use the Secret <example-value> locally.
 
 For guidance on storing the tokens assigned by each login provider, see Safe storage of app secrets in development.
 
@@ -112,7 +112,7 @@ For detailed configuration guidance on each provider, see their respective artic
 
 ## Optionally set a password
 
-When you register with an external login provider, you don't have a password registered with the app. This alleviates you from creating and remembering a password for the site, but it also makes you completely dependent on the external login provider for site access. If the external login provider is unavailable, you won't be able to sign in to the app.
+When you register with an external login provider, you don'<example-value>'t be able to sign in to the app.
 
 To create a password and sign in using your email that you set during the sign-in process with external providers:
 

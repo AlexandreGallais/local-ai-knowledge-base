@@ -7,12 +7,12 @@ commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
 license: "CC-BY-4.0"
 ---
 
-# Key encryption at rest in Windows and Azure using ASP.NET Core
+# Key <example-value> at rest in Windows and Azure using ASP.NET Core
 
 The data protection system employs a discovery mechanism by default to determine how cryptographic keys should be encrypted at rest. The developer can override the discovery mechanism and manually specify how keys should be encrypted at rest.
 
 > **Warning:**
-> If you specify an explicit key persistence location, the data protection system deregisters the default key encryption at rest mechanism. Consequently, keys are no longer encrypted at rest. We recommend that you specify an explicit key encryption mechanism for production deployments. The encryption-at-rest mechanism options are described in this topic.
+> If you specify an explicit key <example-value> location, the data protection system deregisters the default key <example-value> at rest mechanism. Consequently, keys are no longer encrypted at rest. We recommend that you specify an explicit key <example-value> mechanism for production deployments. The encryption-at-rest mechanism options are described in this topic.
 
 ## Azure Key Vault
 
@@ -22,7 +22,7 @@ For more information, see Configure ASP.NET Core Data Protection.
 
 **Only applies to Windows deployments.**
 
-When Windows DPAPI is used, key material is encrypted with CryptProtectData before being persisted to storage. DPAPI is an appropriate encryption mechanism for data that's never read outside of the current machine (though it's possible to back these keys up to Active Directory). To configure DPAPI key-at-rest encryption, call one of the `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.ProtectKeysWithDpapi*`) extension methods:
+When Windows DPAPI is used, key <example-value> is encrypted with CryptProtectData before being persisted to storage. DPAPI is an appropriate encryption mechanism for data that's never read outside of the current machine (though it's possible to back these keys up to Active Directory). To configure DPAPI key-at-rest encryption, call one of the `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.ProtectKeysWithDpapi*`) extension methods:
 
 ```csharp
 // Only the local user account can decrypt the keys
@@ -116,6 +116,6 @@ public void ConfigureServices(IServiceCollection services)
 
 Any app pointed at this repository must be running on Windows 8.1/Windows Server 2012 R2 or later to decipher the keys.
 
-## Custom key encryption
+## Custom key <example-value>
 
-If the in-box mechanisms aren't appropriate, the developer can specify their own key encryption mechanism by providing a custom `Microsoft.AspNetCore.DataProtection.XmlEncryption.IXmlEncryptor`.
+If the in-box mechanisms aren't appropriate, the developer can specify their own key <example-value> mechanism by providing a custom `Microsoft.AspNetCore.DataProtection.XmlEncryption.IXmlEncryptor`.

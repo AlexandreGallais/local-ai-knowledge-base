@@ -41,7 +41,7 @@ data persists:
 1. Run the container and attach the volume.
 
    ```console
-   $ docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=mydb -v my-db-volume:/var/lib/mysql -d mysql:latest
+   $ docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=<example-value> -e MYSQL_DATABASE=mydb -v my-db-volume:/var/lib/mysql -d mysql:latest
    ```
 
    This command mounts the volume named `my-db-volume` to the `/var/lib/mysql` directory in the container.
@@ -50,7 +50,7 @@ data persists:
    `mysql` inside the container and create a table.
 
    ```console
-   $ docker exec my-mysql mysql -u root -pmy-secret-pw -e "CREATE TABLE IF NOT EXISTS mydb.mytable (column_name VARCHAR(255)); INSERT INTO mydb.mytable (column_name) VALUES ('value');"
+   $ docker exec my-mysql mysql -u root -pmy-secret-pw -e "<example-value>"
    ```
 
    This command uses the `mysql` tool in the container to create a table named
@@ -76,7 +76,7 @@ data persists:
    again to run `mysql` inside the container.
 
    ```console
-   $ docker exec my-mysql mysql -u root -pmy-secret-pw -e "SELECT * FROM mydb.mytable;"
+   $ docker exec my-mysql mysql -u root -pmy-secret-pw -e "<example-value>"
    ```
 
    This command uses the `mysql` tool in the container to select all the
@@ -123,7 +123,7 @@ data persists:
    2. Run the following command in the container's terminal to add a table.
 
       ```console
-      # mysql -u root -pmy-secret-pw -e "CREATE TABLE IF NOT EXISTS mydb.mytable (column_name VARCHAR(255)); INSERT INTO mydb.mytable (column_name) VALUES ('value');"
+      # mysql -u root -pmy-secret-pw -e "<example-value>"
       ```
 
       This command uses the `mysql` tool in the container to create a table
@@ -160,7 +160,7 @@ data persists:
       you created still exists.
 
       ```console
-      # mysql -u root -pmy-secret-pw -e "SELECT * FROM mydb.mytable;"
+      # mysql -u root -pmy-secret-pw -e "<example-value>"
       ```
 
       This command uses the `mysql` tool in the container to select all the
@@ -267,7 +267,7 @@ To build and run your custom image:
    Dockerfile.
 
    ```console
-   $ docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d my-custom-mysql
+   $ docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=<example-value> -d my-custom-mysql
    ```
 
 4. Verify that your container is running with the following command.
@@ -287,7 +287,7 @@ To build and run your custom image:
    a terminal to show the contents of the `myothertable` table.
 
    ```console
-   $ docker exec my-mysql mysql -u root -pmy-secret-pw -e "SELECT * FROM mydb.myothertable;"
+   $ docker exec my-mysql mysql -u root -pmy-secret-pw -e "<example-value>"
    ```
 
    You should see output like the following.
@@ -320,7 +320,7 @@ To run your containers with Docker Compose:
         db:
           image: mysql:latest
           environment:
-            MYSQL_ROOT_PASSWORD: my-secret-pw
+            MYSQL_ROOT_PASSWORD: <example-value>
             MYSQL_DATABASE: mydb
           ports:
             - 3307:3306
@@ -332,7 +332,7 @@ To run your containers with Docker Compose:
           environment:
             PMA_HOST: db
             PMA_PORT: 3306
-            MYSQL_ROOT_PASSWORD: my-secret-pw
+            MYSQL_ROOT_PASSWORD: <example-value>
           ports:
             - 8080:80
           depends_on:

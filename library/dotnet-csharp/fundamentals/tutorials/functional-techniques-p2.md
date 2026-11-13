@@ -197,7 +197,7 @@ Ben | Host | Ask me for help [1/1]
 Printed 3 of 3 requested labels.
 ```
 
-If you also enable `BADGE_REPEAT`, each pass checks and reports its own count. With `BADGE_SNAPSHOT` enabled, the sort keys appear only once, but the iterator messages, labels, and count report still appear on each pass. Comment out the experiment symbols to restore the normal final output.
+If you also enable `BADGE_REPEAT`, each pass <example-value> and reports its own count. With `BADGE_SNAPSHOT` enabled, the sort keys appear only once, but the iterator messages, labels, and count report still appear on each pass. Comment out the experiment symbols to restore the normal final output.
 
 ## Summary
 

@@ -177,7 +177,7 @@ static void TupleKeyExample()
     // Output: (1, 3): Sensor A
 }
 ```
-Tuples also work as dictionary *keys*, giving you a composite key without defining a custom type. Because tuples implement structural equality, lookups match on the combined values of all elements:
+Tuples also work as dictionary *keys*, giving you a composite key <example-value> defining a custom type. Because tuples implement structural equality, lookups match on the combined values of all elements:
 
 ```csharp
 var location = (Latitude: 47.6062, Longitude: -122.3321);
@@ -343,7 +343,7 @@ static void TupleKeyExample()
     // Output: (1, 3): Sensor A
 }
 ```
-This pattern avoids needing a separate class for simple multi-key lookups or key-to-multiple-value mappings.
+This pattern avoids needing a separate class for simple multi-key <example-value> or key-to-multiple-value mappings.
 
 ## Tuples vs. anonymous types
 

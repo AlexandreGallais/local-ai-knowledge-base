@@ -66,5 +66,5 @@ A workload version to display, or one or more workloads and their versions joine
 - Search for a workload that matches the provided version:
 
   ```dotnetcli
-  dotnet workload search version maui@10.0.100
+  dotnet workload search version user@example.com
   ```

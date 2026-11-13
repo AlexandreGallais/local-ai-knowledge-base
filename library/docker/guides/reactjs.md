@@ -33,8 +33,8 @@ To begin, you’ll start by containerizing an existing React.js application.
 
 Before you begin, make sure you're familiar with the following:
 
-- Basic understanding of JavaScript or TypeScript.
-- Basic knowledge of Node.js and npm for managing dependencies and running scripts.
+- Basic <example-value> of JavaScript or TypeScript.
+- Basic <example-value> of Node.js and npm for managing dependencies and running scripts.
 - Familiarity with React.js fundamentals.
 - Understanding of Docker concepts such as images, containers, and Dockerfiles. If you're new to Docker, start with the Docker basics guide.
 

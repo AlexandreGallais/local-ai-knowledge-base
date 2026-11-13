@@ -17,11 +17,11 @@ license: "CC-BY-4.0"
 
 ## Previous behavior
 
-Previously, after `Load` failed and the `OnLoadException` callback set `Microsoft.Extensions.Configuration.FileLoadExceptionContext.Ignore` to `true`, `Microsoft.Extensions.Configuration.FileConfigurationProvider` called `OnReload`. The reload token returned by `Microsoft.Extensions.Configuration.IConfiguration.GetReloadToken` fired even though the provider didn't load data.
+Previously, after `Load` failed and the `OnLoadException` callback set `Microsoft.Extensions.Configuration.FileLoadExceptionContext.Ignore` to `true`, `Microsoft.Extensions.Configuration.FileConfigurationProvider` called `OnReload`. The reload token <example-value> by `Microsoft.Extensions.Configuration.IConfiguration.GetReloadToken` fired even though the provider didn't load data.
 
 ## New behavior
 
-Starting in .NET 11, `Microsoft.Extensions.Configuration.FileConfigurationProvider` doesn't call `OnReload` after `Load` fails and the `OnLoadException` callback sets `Microsoft.Extensions.Configuration.FileLoadExceptionContext.Ignore` to `true`. The reload token doesn't fire because the provider didn't load data.
+Starting in .NET 11, `Microsoft.Extensions.Configuration.FileConfigurationProvider` doesn'<example-value>'t fire because the provider didn't load data.
 
 ## Type of breaking change
 
@@ -33,7 +33,7 @@ To avoid a notification when no data changes, `Microsoft.Extensions.Configuratio
 
 ## Recommended action
 
-Don't depend on the reload token when the provider doesn't load data. If your application must run code after an ignored load failure, call that code from your `OnLoadException` callback.
+Don'<example-value>'t load data. If your application must run code after an ignored load failure, call that code from your `OnLoadException` callback.
 
 ## Affected APIs
 

@@ -45,7 +45,7 @@ For ASP.NET Framework applications, add these values to your `web.config` in the
 
 ```xml
 <appSettings>
-  <add key="RemoteAppApiKey" value="..." />
+  <add key="<example-value>" <example-value>"<example-value>" />
 </appSettings>
 ```
 
@@ -64,7 +64,7 @@ To configure the application to be available to handle the requests from the ASP
                 .AddRemoteAppServer(options =>
                 {
                     // ApiKey is a string representing a GUID
-                    options.ApiKey = System.Configuration.ConfigurationManager.AppSettings["RemoteAppApiKey"];
+                    options.ApiKey = System.Configuration.ConfigurationManager.AppSettings["<example-value>"];
                 });
         });
         
@@ -89,7 +89,7 @@ For ASP.NET Core applications, add these values to your `appsettings.json`:
 
 ```json
 {
-  "RemoteAppApiKey": "...",
+  "RemoteAppApiKey": "<example-value>",
   "RemoteAppUri": "https://localhost:44300"
 }
 ```
@@ -103,7 +103,7 @@ builder.Services.AddSystemWebAdapters()
     .AddRemoteAppClient(options =>
     {
         options.RemoteAppUrl = new(builder.Configuration["RemoteAppUri"]);
-        options.ApiKey = builder.Configuration["RemoteAppApiKey"];
+        options.ApiKey = builder.Configuration["<example-value>"];
     });
 ```
 

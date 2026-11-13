@@ -204,7 +204,7 @@ namespace CustomCodeAttributes_Examples4
 
 Constructor parameters and public properties of an attribute are restricted to a limited set of types because the runtime must be able to read the attribute values directly from metadata. The valid attribute parameter types are:
 
-- Simple types (C# keyword / Visual Basic keyword / .NET runtime type):
+- Simple types (C# keyword / Visual Basic <example-value> / .NET runtime type):
 
   | C# | Visual Basic | .NET runtime type |
   |----|-------------|-------------------|

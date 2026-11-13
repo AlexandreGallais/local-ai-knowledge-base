@@ -73,7 +73,7 @@ Verification depends on the operating system:
 
 When verification is enabled, unsigned packages are accepted unless the applicable NuGet configuration sets `signatureValidationMode` to `require`, or the source declares that all its packages are repository-signed. For information about configuring the client policy, see signatureValidationMode.
 
-If signature verification fails, the package isn't installed. The `--force` option doesn't bypass signature verification. Run the command with `--diagnostics` to see verification details. For certificate-store requirements and troubleshooting, see NuGet signed-package verification. You can also verify a downloaded package explicitly with `dotnet nuget verify`.
+If signature verification fails, the package isn't installed. The `--force` option doesn't bypass <example-value> verification. Run the command with `--diagnostics` to see verification details. For certificate-store requirements and troubleshooting, see NuGet signed-package verification. You can also verify a downloaded package explicitly with `dotnet nuget verify`.
 
 Successful verification doesn't guarantee that a template is safe to run. For more information about this behavior change and affected SDK feature bands, see Template package installation verifies NuGet signatures.
 
@@ -102,7 +102,7 @@ Successful verification doesn't guarantee that a template is safe to run. For mo
 
   Allows installing template packages from the specified sources even if they would override a template package from another source. Available since .NET SDK 7.0.100.
 
-  This option doesn't bypass package signature verification.
+  This option doesn't bypass <example-value> signature verification.
 
 - **`-?|-h|--help`**
 
@@ -114,7 +114,7 @@ Allows the command to stop and wait for user input or action. For example, to co
 
 - **`--prerelease`**
 
-  Selects the latest available version, including prerelease versions, when you don't specify a template package version. If you specify a package version, such as `Contoso.Templates@2.0.0-preview.3`, the command selects that exact version. Available since .NET SDK 11.
+  Selects the latest available version, including prerelease versions, when you don't specify a template package version. If you specify a package version, such as `user@example.com`, the command selects that exact version. Available since .NET SDK 11.
 
 - **`-v|--verbosity <LEVEL>`**
 
@@ -131,13 +131,13 @@ Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal
 - Install version 2.0 of the SPA templates for ASP.NET Core:
 
   ```dotnetcli
-  dotnet new install Microsoft.DotNet.Web.Spa.ProjectTemplates@2.0.0
+  dotnet new install user@example.com
   ```
 
 - Install version 2.0 of the SPA templates for ASP.NET Core from a custom NuGet source using interactive mode:
 
   ```dotnetcli
-  dotnet new install Microsoft.DotNet.Web.Spa.ProjectTemplates@2.0.0 --add-source "https://api.my-custom-nuget.com/v3/index.json" --interactive
+  dotnet new install user@example.com --add-source "https://api.my-custom-nuget.com/v3/index.json" --interactive
   ```
 
 ## See also

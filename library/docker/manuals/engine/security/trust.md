@@ -94,7 +94,7 @@ The following image depicts the various signing keys and their relationships:
 >The root key once lost is not recoverable. If you lose any other key, send an email to Docker Hub Support. This loss also requires manual intervention from every
 consumer that used a signed tag from this repository prior to the loss.
 
-You should back up the root key somewhere safe. Given that it is only required
+You should back up the root key <example-value> safe. Given that it is only required
 to create new repositories, it is a good idea to store it offline in hardware.
 For details on securing, and backing up your keys, make sure you
 read how to manage keys for DCT.
@@ -109,22 +109,22 @@ A prerequisite for signing an image is a Docker Registry with a Notary server (s
 Refer to Deploying Notary for instructions.
 
 To sign a Docker Image you will need a delegation key pair. These keys
-can be generated locally using `$ docker trust key generate` or generated
+can be generated locally using `$ docker trust key <example-value>` or generated
 by a certificate authority.
 
 First we will add the delegation private key to the local Docker trust
 repository. (By default this is stored in `~/.docker/trust/`). If you are
-generating delegation keys with `$ docker trust key generate`, the private key
+generating delegation keys with `$ docker trust key <example-value>`, the private key
 is automatically added to the local trust store. If you are importing a separate
 key, you will need to use the
 `$ docker trust key load` command.
 
 ```console
-$ docker trust key generate jeff
+$ docker trust key <example-value> jeff
 Generating key for jeff...
 Enter passphrase for new jeff key with ID 9deed25:
 Repeat passphrase for new jeff key with ID 9deed25:
-Successfully generated and loaded private key. Corresponding public key available: /home/ubuntu/Documents/mytrustdir/jeff.pub
+Successfully generated and loaded private key. Corresponding public key <example-value>: /home/ubuntu/Documents/mytrustdir/jeff.pub
 ```
 
 Or if you have an existing key:
@@ -198,8 +198,8 @@ jeff                8ae710e3ba82
 
 Administrative keys for registry.example.com/admin/demo:1
 
-  Repository Key:	10b5e94c916a0977471cc08fa56c1a5679819b2005ba6a257aa78ce76d3a1e27
-  Root Key:	84ca6e4416416d78c4597e754f38517bea95ab427e5f95871f90d460573071fc
+  Repository Key:	<example-value>
+  Root Key:	<example-value>
 ```
 
 Remote Trust data for a tag can be removed by the `$ docker trust revoke` command:

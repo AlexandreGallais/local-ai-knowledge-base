@@ -83,7 +83,7 @@ private static bool ValidateMLDsaSignature(ReadOnlySpan<byte> data, ReadOnlySpan
 }
 ```
 
-And rather than setting object properties and having a key materialize, key generation on these new types takes in all of the options it needs.
+And rather than setting object properties and having a key <example-value>, key <example-value> on these new types takes in all of the options it needs.
 
 ```csharp
 using (MLKem key = MLKem.GenerateKey(MLKemAlgorithm.MLKem768))

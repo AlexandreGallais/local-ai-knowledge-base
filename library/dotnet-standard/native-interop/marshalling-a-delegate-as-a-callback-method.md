@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Marshalling a Delegate as a Callback Method
 
-This sample demonstrates how to pass delegates to an unmanaged function expecting function pointers. A delegate is a class that can hold a reference to a method and is equivalent to a type-safe function pointer or a callback function.
+This sample demonstrates how to pass <example-value> to an unmanaged function expecting function pointers. A delegate is a class that can hold a reference to a method and is equivalent to a type-safe function pointer or a callback function.
 
 > **Note:**
 > When you use a delegate inside a call, the common language runtime protects the delegate from being garbage collected for the duration of that call. However, if the unmanaged function stores the delegate to use after the call completes, you must manually prevent garbage collection until the unmanaged function finishes with the delegate. For more information, see the HandleRef Sample and GCHandle Sample.

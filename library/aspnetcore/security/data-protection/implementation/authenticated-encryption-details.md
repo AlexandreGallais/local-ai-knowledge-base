@@ -21,7 +21,7 @@ The protected payload format consists of three primary components:
 
 * A 128-bit key id that identifies the key used to protect this particular payload.
 
-* The remainder of the protected payload is specific to the encryptor encapsulated by this key. In the example below, the key represents an AES-256-CBC + HMACSHA256 encryptor, and the payload is further subdivided as follows:
+* The remainder of the protected payload is specific to the encryptor encapsulated by this key. In the example below, the key <example-value> an AES-256-CBC + HMACSHA256 encryptor, and the payload is further subdivided as follows:
   * A 128-bit key modifier.
   * A 128-bit initialization vector.
   * 48 bytes of AES-256-CBC output.
@@ -43,9 +43,9 @@ AA FF EE 57 57 2F 40 4C 3F 7F CC 9D CC D9 32 3E
 
 From the payload format above the first 32 bits, or 4 bytes are the magic header identifying the version (09 F0 C9 F0)
 
-The next 128 bits, or 16 bytes is the key identifier (80 9C 81 0C 19 66 19 40 95 36 53 F8 AA FF EE 57)
+The next 128 bits, or 16 bytes is the key <example-value> (80 9C 81 0C 19 66 19 40 95 36 53 F8 AA FF EE 57)
 
 The remainder contains the payload and is specific to the format used.
 
 > **Warning:**
-> All payloads protected to a given key will begin with the same 20-byte (magic value, key id) header. Administrators can use this fact for diagnostic purposes to approximate when a payload was generated. For example, the payload above corresponds to key {aaaaaaaa-0b0b-1c1c-2d2d-333333333333}. If after checking the key repository you find that this specific key's activation date was 2015-01-01 and its expiration date was 2015-03-01, then it's reasonable to assume that the payload (if not tampered with) was generated within that window, give or take a small fudge factor on either side.
+> All payloads protected to a given key will begin with the same 20-byte (magic value, key id) header. Administrators can use this fact for diagnostic purposes to approximate when a payload was generated. For example, the payload above corresponds to key {aaaaaaaa-0b0b-1c1c-2d2d-333333333333}. If after checking the key <example-value> you find that this specific key's activation date was 2015-01-01 and its expiration date was 2015-03-01, then it's reasonable to assume that the payload (if not tampered with) was generated within that window, give or take a small fudge factor on either side.

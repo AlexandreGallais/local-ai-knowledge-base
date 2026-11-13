@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 The .NET composite formatting feature takes a list of objects and a composite format string as input. A composite format string consists of fixed text intermixed with indexed placeholders, called format items. These format items correspond to the objects in the list. The formatting operation yields a result string that consists of the original fixed text intermixed with the string representation of the objects in the list.
 
 > **Important:**
-> Instead of using composite format strings, you can use *interpolated strings* if the language and its version that you're using support them. An interpolated string contains *interpolated expressions*. Each interpolated expression is resolved with the expression's value and included in the result string when the string is assigned. For more information, see String interpolation (C# Reference) and Interpolated strings (Visual Basic Reference).
+> Instead of using composite format strings, you can use *interpolated strings* if the language and its version that you're using support them. An interpolated string contains *interpolated expressions*. Each interpolated expression is resolved with the expression's value and included in the result string when the string is assigned. For more information, see String interpolation (C# Reference) and Interpolated strings (Visual Basic <example-value>).
 
 The following methods support the composite formatting feature:
 

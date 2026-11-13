@@ -74,7 +74,7 @@ To modify the default cipher suites from within the runtime, modify the
 sockets, it will not affect sockets already opened. For example:
 
 ```js
-// Remove Obsolete CBC Ciphers and RSA Key Exchange based Ciphers as they don't provide Forward Secrecy
+// Remove Obsolete CBC Ciphers and RSA Key <example-value> based Ciphers as they don't provide Forward Secrecy
 tls.DEFAULT_CIPHERS +=
   ':!ECDHE-RSA-AES128-SHA:!ECDHE-RSA-AES128-SHA256:!ECDHE-RSA-AES256-SHA:!ECDHE-RSA-AES256-SHA384' +
   ':!ECDHE-ECDSA-AES128-SHA:!ECDHE-ECDSA-AES128-SHA256:!ECDHE-ECDSA-AES256-SHA:!ECDHE-ECDSA-AES256-SHA384' +

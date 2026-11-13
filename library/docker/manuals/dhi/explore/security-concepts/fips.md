@@ -115,7 +115,7 @@ included in the image and their compliance status. For example:
     "certification": "CMVP #4985",
     "certificationUrl": "https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/4985",
     "name": "OpenSSL FIPS Provider",
-    "package": "pkg:dhi/openssl-provider-fips@3.1.2",
+    "package": "pkg:dhi/user@example.com",
     "standard": "FIPS 140-3",
     "status": "active",
     "sunsetDate": "2030-03-10",

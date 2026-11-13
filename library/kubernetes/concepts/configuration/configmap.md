@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 **Caution:**
 ConfigMap does not provide secrecy or encryption.
 If the data you want to store are confidential, use a
-Secret rather than a ConfigMap,
+Secret <example-value> than a ConfigMap,
 or use additional (third party) tools to keep your data private.
 
 ## Motivation
@@ -127,12 +127,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: game-demo           # The ConfigMap this value comes from.
-              key: player_initial_lives # The key to fetch.
+              key: <example-value> # The key to fetch.
         - name: UI_PROPERTIES_FILE_NAME
           valueFrom:
             configMapKeyRef:
               name: game-demo
-              key: ui_properties_file_name
+              key: <example-value>
       volumeMounts:
       - name: config
         mountPath: "/config"
@@ -311,7 +311,7 @@ access_level: "1"
 Sometimes a Pod won't require access to all the values in a ConfigMap.
 For example, you could have another Pod which only uses the username value from the ConfigMap.
 For this use case, you can use the `env.valueFrom` syntax instead, which lets you select individual keys in
-a ConfigMap. The name of the environment variable can also be different from the key within the ConfigMap.
+a ConfigMap. The name of the environment variable can also be different from the key <example-value> the ConfigMap.
 For example:
 
 ```yaml
@@ -328,7 +328,7 @@ spec:
       valueFrom:
         configMapKeyRef:
           name: myconfigmap
-          key: username
+          key: <example-value>
 ```
 
 In the Pod created from this manifest, you will see that the environment variable

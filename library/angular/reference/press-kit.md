@@ -26,7 +26,7 @@ The logo graphics available for download on this page are provided under CC BY 4
 
 ## Press and Media
 
-For inquiries regarding press and media please contact us at press@angular.io. For developer inquiries contact devrel@angular.io.
+For inquiries regarding press and media please contact us at user@example.com. For developer inquiries contact user@example.com.
 
 ## Adapting the logo
 
@@ -36,7 +36,7 @@ Angular has long valued creative expression through customized shield icons. The
 
 We have provided a template to get you started.
 
-If you have any questions on adapting the new logo, or updating your own, please email devrel@angular.io for additional help – we can’t wait to see what you create!
+If you have any questions on adapting the new logo, or updating your own, please email user@example.com for additional help – we can’t wait to see what you create!
 
 ### Adapt the logo colors as your own
 Lean into the shape of Angular’s new logo by changing the logo colors to match your brand colors, flag, cause, etc.

@@ -13,7 +13,7 @@ By Tom Dykstra
 
 Apps can apply timeout limits selectively to requests. ASP.NET Core servers don't do this by default since request processing times vary widely by scenario. For example, WebSockets, static files, and calling expensive APIs would each require a different timeout limit. So ASP.NET Core provides middleware that configures timeouts per endpoint as well as a global timeout.
 
-When a timeout limit is hit, a `System.Threading.CancellationToken` in `Microsoft.AspNetCore.Http.HttpContext.RequestAborted` has `System.Threading.CancellationToken.IsCancellationRequested` set to `true`. `Microsoft.AspNetCore.Http.HttpContext.Abort` isn't automatically called on the request, so the application may still produce a success or failure response. The default behavior if the app doesn't handle the exception and produce a response is to return status code 504.
+When a timeout limit is hit, a `System.Threading.CancellationToken` in `Microsoft.AspNetCore.Http.HttpContext.RequestAborted` has `System.Threading.CancellationToken.IsCancellationRequested` set to `true`. `Microsoft.AspNetCore.Http.HttpContext.Abort` isn'<example-value>'t handle the exception and produce a response is to return status code 504.
 
 This article explains how to configure the timeout middleware. The timeout middleware can be used in all types of ASP.NET Core apps: Minimal API, Web API with controllers, MVC, and Razor Pages. The sample app is a Minimal API, but every timeout feature it illustrates is also supported in the other app types.
 

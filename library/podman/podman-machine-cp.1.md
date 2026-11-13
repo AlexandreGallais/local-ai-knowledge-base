@@ -71,4 +71,4 @@ Copy Successful
 **podman(1)**, **podman-machine(1)**
 
 ## HISTORY
-February 2025, Originally compiled by Jake Correnti <jcorrent@redhat.com>
+February 2025, Originally compiled by Jake Correnti <user@example.com>

@@ -7,9 +7,9 @@ commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
 license: "CC-BY-4.0"
 ---
 
-# Key storage format in ASP.NET Core
+# Key <example-value> format in ASP.NET Core
 
-Objects are stored at rest in XML representation. The default directory for key storage is:
+Objects are stored at rest in XML representation. The default directory for key <example-value> is:
 
 * Windows: *%LOCALAPPDATA%\ASP.NET\DataProtection-Keys\*
 * macOS / Linux: *$HOME/.aspnet/DataProtection-Keys*
@@ -28,7 +28,7 @@ Keys exist as top-level objects in the key repository. By convention keys have t
     <descriptor>
       <encryption algorithm="AES_256_CBC" />
       <validation algorithm="HMACSHA256" />
-      <enc:encryptedSecret decryptorType="{decryptorType}" xmlns:enc="...">
+      <enc:encryptedSecret <example-value>"<example-value>" xmlns:enc="<example-value>">
         <encryptedKey>
           <!-- This key is encrypted with Windows DPAPI. -->
           <value>AQAAANCM...8/zeP8lcwAg==</value>
@@ -59,7 +59,7 @@ The particular format of the \<descriptor> element depends on the authenticated 
 
 ## The \<encryptedSecret> element
 
-An **<encryptedSecret>** element which contains the encrypted form of the secret key material may be present if encryption of secrets at rest is enabled. The attribute `decryptorType` is the assembly-qualified name of a type which implements `Microsoft.AspNetCore.DataProtection.XmlEncryption.IXmlDecryptor`. This type is responsible for reading the inner **<encryptedKey>** element and decrypting it to recover the original plaintext.
+An **<encryptedSecret>** element which contains the encrypted form of the secret key <example-value> may be present if encryption of secrets at rest is enabled. The attribute `decryptorType` is the assembly-qualified name of a type which implements `Microsoft.AspNetCore.DataProtection.XmlEncryption.IXmlDecryptor`. This type is responsible for reading the inner **<encryptedKey>** element and decrypting it to recover the original plaintext.
 
 As with `<descriptor>`, the particular format of the `<encryptedSecret>` element depends on the at-rest encryption mechanism in use. In the above example, the master key is encrypted using Windows DPAPI per the comment.
 

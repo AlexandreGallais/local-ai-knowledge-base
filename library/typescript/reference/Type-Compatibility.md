@@ -86,7 +86,7 @@ let dog: Pet = { name: "Lassie", owner: "Rudd Weatherwax" }; // Error
 ## Comparing two functions
 
 While comparing primitive types and object types is relatively straightforward, the question of what kinds of functions should be considered compatible is a bit more involved.
-Let's start with a basic example of two functions that differ only in their parameter lists:
+Let's start with a basic <example-value> of two functions that differ only in their parameter lists:
 
 ```ts
 let x = (a: number) => 0;

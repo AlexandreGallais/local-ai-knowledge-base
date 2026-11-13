@@ -29,7 +29,7 @@ models:
     model: ai/model
 ```
 
-In this basic example:
+In this basic <example-value>:
 
  - The app service uses the `ai_model`.
  - The `ai_model` is defined as an OCI artifact (`ai/model`) that is pulled and served by the model runner.
@@ -62,7 +62,7 @@ In this advanced setup:
 ## Attributes
 
 - `model` (required): The OCI artifact identifier for the model. This is what Compose pulls and runs via the model runner.
-- `context_size`: Defines the maximum token context size for the model.
+- `context_size`: Defines the maximum token <example-value> size for the model.
 - `runtime_flags`: A list of raw command-line flags passed to the inference engine when the model is started.
 
 ## Additional resources

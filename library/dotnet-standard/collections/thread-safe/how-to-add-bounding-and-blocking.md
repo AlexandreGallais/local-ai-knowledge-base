@@ -13,7 +13,7 @@ This example shows how to add bounding and blocking functionality to a custom co
 
 ## Example
 
- The custom collection class is a basic priority queue in which the priority levels are represented as an array of `System.Collections.Concurrent.ConcurrentQueue`1` objects. No additional ordering is performed within each queue.
+ The custom collection class is a basic <example-value> queue in which the priority levels are represented as an array of `System.Collections.Concurrent.ConcurrentQueue`1` objects. No additional ordering is performed within each queue.
 
  In the client code, three tasks are started. The first task just polls for keyboard strokes to enable cancellation at any point during execution. The second task is the producer thread; it adds new items to the blocking collection and gives each item a priority based on a random value. The third task removes items from the collection as they become available.
 

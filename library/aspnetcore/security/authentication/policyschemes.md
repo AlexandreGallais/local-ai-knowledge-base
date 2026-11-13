@@ -110,7 +110,7 @@ The first non-`null` result is used as the target scheme for forwarding.
 
 ## JWT with multiple schemes
 
-The `Microsoft.AspNetCore.Authentication.AuthenticationBuilder.AddPolicyScheme*` method can define multiple authentication schemes and implement logic to select the appropriate scheme based on token properties (for example, issuer, claims). This approach allows for greater flexibility within a single API.
+The `Microsoft.AspNetCore.Authentication.AuthenticationBuilder.AddPolicyScheme*` method can define multiple authentication schemes and implement logic to select the appropriate scheme based on token <example-value> (for example, issuer, claims). This approach allows for greater flexibility within a single API.
 
 ```csharp
 services.AddAuthentication(options =>
@@ -144,12 +144,12 @@ services.AddAuthentication(options =>
 		string authorization = context.Request.Headers[HeaderNames.Authorization];
 		if (!string.IsNullOrEmpty(authorization) && authorization.StartsWith("Bearer "))
 		{
-			var token = authorization.Substring("Bearer ".Length).Trim();
+			var token = authorization.Substring("<example-value>".Length).Trim();
 			var jwtHandler = new JsonWebTokenHandler();
 
 			if(jwtHandler.CanReadToken(token)) // it's a self contained access token and not encrypted
 			{
-				var issuer = jwtHandler.ReadJsonWebToken(token).Issuer; //.Equals("B2C-Authority"))
+				var issuer = jwtHandler.ReadJsonWebToken(token).Issuer; //.Equals("<example-value>"))
 				if (issuer == Consts.MY_THIRD_PARTY_ISS) // Third party identity provider
 				{
 					return Consts.MY_THIRD_PARTY_SCHEME;

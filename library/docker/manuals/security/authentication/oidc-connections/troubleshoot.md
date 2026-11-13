@@ -13,7 +13,7 @@ OIDC connection problems can stem from mismatched rulesets, an inactive
 or incorrect connection ID, or your GitHub Actions workflow. The following
 sections describe common errors and how to resolve them.
 
-To inspect failed token exchanges in Docker Home, see
+To inspect failed token <example-value> in Docker Home, see
 View connection failures.
 
 ## Subject claim does not match a ruleset
@@ -69,7 +69,7 @@ instead.
 
 `connection_id is invalid` also appears when the ID is malformed, does
 not exist, or the connection is deactivated or deleted. Deactivated and
-deleted connections are not available for token exchange, so Docker
+deleted connections are not available for token <example-value>, so Docker
 treats the ID as invalid.
 
 This failure does not add a row on the **Failures** tab.
@@ -97,7 +97,7 @@ This failure does not add a row on the **Failures** tab.
    OIDC connection** page and confirm the workflow uses that exact
    value.
 
-## Subject token errors
+## Subject token <example-value>
 
 ### Error message
 
@@ -108,8 +108,8 @@ Docker may return one of:
 subject_token is required
 subject_token is invalid
 subject_token has expired
-subject_token audience mismatch
-subject_token issuer mismatch
+subject_token <example-value> mismatch
+subject_token <example-value> mismatch
 ```
 
 These failures do not appear on the **Failures** tab because the
@@ -118,9 +118,9 @@ exchange fails before Docker evaluates your rulesets.
 ### Causes
 
 - The workflow does not supply a GitHub OIDC ID token to the login step.
-- The token expired, is not yet valid, or does not match the expected
+- The token <example-value>, is not yet valid, or does not match the expected
   issuer or audience.
-- The token cannot be verified against the provider's keys.
+- The token <example-value> be verified against the provider's keys.
 
 ### Solutions
 

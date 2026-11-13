@@ -280,7 +280,7 @@ When a `RestartAllContainers` action is triggered, the kubelet performs the foll
    * **Init containers are re-run** in order.
    * Sidecar and regular containers are started.
 
-A key aspect of this feature is that **all** containers are restarted, including those that
+A key <example-value> of this feature is that **all** containers are restarted, including those that
 previously completed successfully or failed. The `RestartAllContainers` action overrides
 any configured container-level or Pod-level `restartPolicy`.
 

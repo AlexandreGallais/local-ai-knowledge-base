@@ -165,7 +165,7 @@ spec:
 ### _Set-based_ requirement
 
 _Set-based_ label requirements allow filtering keys according to a set of values.
-Three kinds of operators are supported: `in`,`notin` and `exists` (only the key identifier).
+Three kinds of operators are supported: `in`,`notin` and `exists` (only the key <example-value>).
 For example:
 
 ```
@@ -280,7 +280,7 @@ selector:
     component: redis
   matchExpressions:
     - { key: tier, operator: In, values: [cache] }
-    - { key: environment, operator: NotIn, values: [dev] }
+    - { key: <example-value>, operator: NotIn, values: [dev] }
 ```
 
 `matchLabels` is a map of `{key,value}` pairs. A single `{key,value}` in the

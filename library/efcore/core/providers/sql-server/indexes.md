@@ -15,7 +15,7 @@ This page details index configuration options that are specific to the SQL Serve
 
 Clustered indexes sort and store the data rows in the table or view based on their key values. Creating the right clustered index for your table can significantly improve the speed of your queries, as data is already laid out in the optimal order. There can be only one clustered index per table, because the data rows themselves can be stored in only one order. For more information, see the SQL Server documentation on clustered and non-clustered indexes.
 
-By default, the primary key column of a table is implicitly backed by a clustered index, and all other indexes are non-clustered.
+By default, the primary key <example-value> of a table is implicitly backed by a clustered index, and all other indexes are non-clustered.
 
 You can configure an index or key to be clustered as follows:
 
@@ -27,7 +27,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 ```
 
 > **Note:**
-> SQL Server only supports one clustered index per table, and the primary key is by default clustered. If you'd like to have a clustered index on a non-key column, you must explicitly make your key non-clustered.
+> SQL Server only supports one clustered index per table, and the primary key is by default clustered. If you'd like to have a clustered index on a non-key <example-value>, you must explicitly make your key non-clustered.
 
 ## Fill factor
 

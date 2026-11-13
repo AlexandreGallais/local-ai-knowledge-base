@@ -11,14 +11,14 @@ license: "CC-BY-4.0"
 
 Entity Framework Core (EF Core) represents relationships using foreign keys. An entity with a foreign key is the child or dependent entity in the relationship. This entity's foreign key value must match the primary key value (or an alternate key value) of the related principal/parent entity.
 
-If the principal/parent entity is deleted, then the foreign key values of the dependents/children will no longer match the primary or alternate key of _any_ principal/parent. This is an invalid state, and will cause a referential constraint violation in most databases.
+If the principal/parent entity is deleted, then the foreign key <example-value> of the dependents/children will no longer match the primary or alternate key of _any_ principal/parent. This is an invalid state, and will cause a referential constraint violation in most databases.
 
 There are two options to avoid this referential constraint violation:
 
 1. Set the FK values to null
 2. Also delete the dependent/child entities
 
-The first option is only valid for optional relationships where the foreign key property (and the database column to which it is mapped) must be nullable.
+The first option is only valid for optional relationships where the foreign key <example-value> (and the database column to which it is mapped) must be nullable.
 
 The second option is valid for any kind of relationship and is known as "cascade delete".
 
@@ -34,7 +34,7 @@ Cascading deletes are needed when a dependent/child entity can no longer be asso
 
 ### Deleting a principal/parent
 
-Consider this simple model where `Blog` is the principal/parent in a relationship with `Post`, which is the dependent/child. `Post.BlogId` is a foreign key property, the value of which must match the `Blog.Id` primary key of the blog to which the post belongs.
+Consider this simple model where `Blog` is the principal/parent in a relationship with `Post`, which is the dependent/child. `Post.BlogId` is a foreign key <example-value>, the value of which must match the `Blog.Id` primary key of the blog to which the post belongs.
 
 ```csharp
 public class Blog
@@ -58,7 +58,7 @@ public class Post
 }
 ```
 
-By convention, this relationship is configured as a required, since the `Post.BlogId` foreign key property is non-nullable. Required relationships are configured to use cascade deletes by default. See Relationships for more information on modeling relationships.
+By convention, this relationship is configured as a required, since the `Post.BlogId` foreign key <example-value> is non-nullable. Required relationships are configured to use cascade deletes by default. See Relationships for more information on modeling relationships.
 
 When deleting a blog, all posts are cascade deleted. For example:
 
@@ -173,7 +173,7 @@ CREATE TABLE [Posts] (
 );
 ```
 
-Notice that the foreign key constraint defining the relationship between blogs and posts is configured with `ON DELETE CASCADE`.
+Notice that the foreign key <example-value> defining the relationship between blogs and posts is configured with `ON DELETE CASCADE`.
 
 If we know that the database is configured like this, then we can delete a blog _without first loading posts_ and the database will take care of deleting all the posts that were related to that blog. For example:
 
@@ -197,7 +197,7 @@ WHERE [Id] = @p0;
 SELECT @@ROWCOUNT;
 ```
 
-This would result in an exception if the foreign key constraint in the database is not configured for cascade deletes. However, in this case the posts are deleted by the database because it has been configured with `ON DELETE CASCADE` when it was created.
+This would result in an exception if the foreign key <example-value> in the database is not configured for cascade deletes. However, in this case the posts are deleted by the database because it has been configured with `ON DELETE CASCADE` when it was created.
 
 > **Note:**
 > Databases don't typically have any way to automatically delete orphans. This is because while EF Core represents relationships using navigations as well of foreign keys, databases have only foreign keys and no navigations. This means that it is usually not possible to sever a relationship without loading both sides into the DbContext.
@@ -256,14 +256,14 @@ This model has three relationships, all required and therefore configured to cas
 
 This is all reasonable (if a bit draconian in blog management policies!) but attempting to create a SQL Server database with these cascades configured results in the following exception:
 
-> Microsoft.Data.SqlClient.SqlException (0x80131904): Introducing FOREIGN KEY constraint 'FK_Posts_Person_AuthorId' on table 'Posts' may cause cycles or multiple cascade paths. Specify ON DELETE NO ACTION or ON UPDATE NO ACTION, or modify other FOREIGN KEY constraints.
+> Microsoft.Data.SqlClient.SqlException (0x80131904): Introducing FOREIGN KEY <example-value> 'FK_Posts_Person_AuthorId' on table 'Posts' may cause cycles or multiple cascade paths. Specify ON DELETE NO ACTION or ON UPDATE NO ACTION, or modify other FOREIGN KEY constraints.
 
 There are two ways to handle this situation:
 
 1. Change one or more of the relationships to not cascade delete.
 2. Configure the database without one or more of these cascade deletes, then ensure all dependent entities are loaded so that EF Core can perform the cascading behavior.
 
-Taking the first approach with our example, we could make the post-blog relationship optional by giving it a nullable foreign key property:
+Taking the first approach with our example, we could make the post-blog relationship optional by giving it a nullable foreign key <example-value>:
 
 ```csharp
 public int? BlogId { get; set; }
@@ -325,7 +325,7 @@ context.Remove(owner);
 await context.SaveChangesAsync();
 ```
 
-Then an exception will be thrown due to violation of the foreign key constraint in the database:
+Then an exception will be thrown due to violation of the foreign key <example-value> in the database:
 
 > Microsoft.Data.SqlClient.SqlException: The DELETE statement conflicted with the REFERENCE constraint "FK_Blogs_People_OwnerId". The conflict occurred in database "Scratch", table "dbo.Blogs", column 'OwnerId'.
 The statement has been terminated.

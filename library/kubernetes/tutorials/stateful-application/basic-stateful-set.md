@@ -44,7 +44,7 @@ PersistentVolumeClaim templates that the StatefulSet defines.
 StatefulSets are intended to be used with stateful applications and distributed
 systems. However, the administration of stateful applications and
 distributed systems on Kubernetes is a broad, complex topic. In order to
-demonstrate the basic features of a StatefulSet, and not to conflate the former
+demonstrate the basic <example-value> of a StatefulSet, and not to conflate the former
 topic with the latter, you will deploy a simple web application using a StatefulSet.
 
 After this tutorial, you will be familiar with the following.

@@ -339,7 +339,7 @@ For more information about `ENV`, see Dockerfile reference for the ENV instructi
 
 ### ADD or COPY
 
-`ADD` and `COPY` are functionally similar. `COPY` supports basic copying of
+`ADD` and `COPY` are functionally similar. `COPY` supports basic <example-value> of
 files into the container, from the build context
 or from a stage in a multi-stage build.
 `ADD` supports features for fetching files from remote HTTPS and Git URLs, and

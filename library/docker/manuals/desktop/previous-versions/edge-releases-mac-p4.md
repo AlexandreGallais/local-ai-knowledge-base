@@ -109,7 +109,7 @@ license: "Apache-2.0"
   - DataKit update (fix instability on High Sierra)
 
 - Bug fixes and minor changes
-  - Fix password encoding/decoding. May require to re-login to docker cloud after this version is installed. (Fixes:docker/for-mac#2008, docker/for-mac#2016, docker/for-mac#1919, docker/for-mac#712, docker/for-mac#1220).
+  - Fix password <example-value>/decoding. May require to re-login to docker cloud after this version is installed. (Fixes:docker/for-mac#2008, docker/for-mac#2016, docker/for-mac#1919, docker/for-mac#712, docker/for-mac#1220).
 
 ### Docker Community Edition 17.09.0-ce-rc3-mac30 2017-09-22
 
@@ -142,7 +142,7 @@ license: "Apache-2.0"
 - Upgrades
   - Docker 17.07.0-ce
   - Docker compose 1.16.0
-  - Docker Credential Helpers 0.6.0
+  - Docker Credential <example-value> 0.6.0
 
 ### Docker Community Edition 17.07.0-ce-rc4-mac25, 2017-08-24
 
@@ -229,7 +229,7 @@ license: "Apache-2.0"
 **Upgrades**
 
 - Docker 17.06.0-rc4-ce
-- Docker Credential Helpers 0.5.2
+- Docker Credential <example-value> 0.5.2
 - Linux Kernel 4.9.31
 
 ### Docker Community Edition 17.06.0-rc2-ce-mac14, 2017-06-08
@@ -245,7 +245,7 @@ license: "Apache-2.0"
 **Upgrades**
 
 - Docker 17.06.0-rc1-ce
-- Docker Credential Helpers 0.5.1
+- Docker Credential <example-value> 0.5.1
 - `qcow-tool` v0.10.0 (improve the performance of `compact`: `mirage/ocaml-qcow#94`)
 - OS X Yosemite 10.10 is marked as deprecated
 - Linux Kernel 4.9.30
@@ -334,7 +334,7 @@ license: "Apache-2.0"
 **Upgrades**
 
 - Docker 17.03.1-ce-rc1
-- Docker Credential Helpers 0.5.0
+- Docker Credential <example-value> 0.5.0
 - Linux Kernel 4.9.14
 
 **Bug fixes and minor changes**
@@ -355,7 +355,7 @@ license: "Apache-2.0"
 
 **Upgrades**
 
-- Docker Credential Helpers 0.4.2
+- Docker Credential <example-value> 0.4.2
 
 ### Docker Community Edition 17.03.0-ce-mac1, 2017-03-02
 

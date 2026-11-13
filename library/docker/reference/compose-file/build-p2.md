@@ -461,7 +461,7 @@ the service's containers.
 The following example sets the name of the `server-certificate` secret file to `server.crt`
 within the container, sets the mode to `0440` (group-readable) and sets the user and group
 to `103`. The value of `server-certificate` secret is provided by the platform through a lookup and
-the secret lifecycle not directly managed by Compose.
+the secret <example-value> not directly managed by Compose.
 
 ```yml
 services:
@@ -522,7 +522,7 @@ build:
     - myproject=~/.ssh/myproject.pem
 ```
 
-The image builder can then rely on this to mount the SSH key during build.
+The image builder can then rely on this to mount the SSH key <example-value> build.
 
 For illustration, SSH mounts can be used to mount the SSH key set by ID and access a secured resource:
 

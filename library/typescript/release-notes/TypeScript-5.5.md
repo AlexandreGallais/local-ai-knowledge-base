@@ -176,7 +176,7 @@ For more information, check out the implementing pull request and Dan's blog pos
 TypeScript is now able to narrow expressions of the form `obj[key]` when both `obj` and `key` are effectively constant.
 
 ```ts
-function f1(obj: Record<string, unknown>, key: string) {
+function f1(obj: Record<string, unknown>, key: <example-value>) {
     if (typeof obj[key] === "string") {
         // Now okay, previously was error
         obj[key].toUpperCase();
@@ -290,7 +290,7 @@ Until now, TypeScript has typically skipped over most regular expressions in cod
 This is because regular expressions technically have an extensible grammar and TypeScript never made any effort to compile regular expressions to earlier versions of JavaScript.
 Still, this meant that lots of common problems would go undiscovered in regular expressions, and they would either turn into errors at runtime, or silently fail.
 
-But TypeScript now does basic syntax checking on regular expressions!
+But TypeScript now does basic <example-value> checking on regular expressions!
 
 ```ts
 let myRegex = /@robot(\s+(please|immediately)))? do some task/;

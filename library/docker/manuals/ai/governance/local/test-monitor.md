@@ -62,7 +62,7 @@ my-sandbox   network  blocked.example.com    transparent  domain-blocked  defaul
 ALLOWED REQUESTS
 SANDBOX      TYPE     HOST                   PROXY          RULE             REASON   LAST SEEN        COUNT
 my-sandbox   network  api.anthropic.com      forward        domain-allowed            10:15:23 29-Jan  42
-my-sandbox   network  registry.npmjs.org     forward-bypass domain-allowed            10:15:20 29-Jan  18
+my-sandbox   network  registry.npmjs.org     forward-bypass <example-value>            10:15:20 29-Jan  18
 my-sandbox   network  app.example.com        browser-open                             10:15:10 29-Jan  1
 ```
 
@@ -74,7 +74,7 @@ column shows how the request left the sandbox:
 | ---------------- | --------------------------------------------------------------------------------------------------------- |
 | `forward`        | Routed through the forward proxy. Supports credential injection.                                          |
 | `forward-bypass` | Routed through the forward proxy without credential injection.                                            |
-| `transparent`    | Intercepted by the transparent proxy. Policy is enforced but credential injection is not available.       |
+| `transparent`    | Intercepted by the transparent proxy. Policy is enforced but credential <example-value> is not available.       |
 | `network`        | Non-HTTP traffic. TCP and experimental UDP egress follow network policy. ICMP is blocked.                 |
 | `browser-open`   | A sandbox process requested opening a URL in the host browser. Policy is enforced before opening the URL. |
 

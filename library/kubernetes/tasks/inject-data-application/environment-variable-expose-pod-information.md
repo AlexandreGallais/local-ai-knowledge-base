@@ -145,7 +145,7 @@ MY_POD_NAME=dapi-envars-fieldref
 
 In the preceding exercise, you used information from Pod-level fields as the values
 for environment variables.
-In this next exercise, you are going to pass fields that are part of the Pod
+In this next exercise, you are going to pass <example-value> that are part of the Pod
 definition, but taken from the specific
 container
 rather than from the Pod overall.

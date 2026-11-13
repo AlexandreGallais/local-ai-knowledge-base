@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Many-to-many with alternate keys
 
-So far, all the examples have shown the foreign keys in the join entity type being constrained to the primary keys of the entity types on either side of the relationship. Each foreign key, or both, can instead be constrained to an alternate key. For example, consider this model where`Tag` and `Post` have alternate key properties:
+So far, all the examples have shown the foreign keys in the join entity type being constrained to the primary keys of the entity types on either side of the relationship. Each foreign key, or both, can instead be constrained to an alternate key. For example, consider this model where`Tag` and `Post` have alternate key <example-value>:
 
 ```csharp
 public class Post
@@ -47,21 +47,21 @@ And the resulting database schema, for clarity, including also the tables with t
 
 ```sql
 CREATE TABLE "Posts" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_Posts" PRIMARY KEY AUTOINCREMENT,
-    "AlternateKey" INTEGER NOT NULL,
-    CONSTRAINT "AK_Posts_AlternateKey" UNIQUE ("AlternateKey"));
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Posts" PRIMARY KEY <example-value>,
+    "AlternateKey" <example-value> NOT NULL,
+    CONSTRAINT "AK_Posts_AlternateKey" <example-value> ("AlternateKey"));
 
 CREATE TABLE "Tags" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_Tags" PRIMARY KEY AUTOINCREMENT,
-    "AlternateKey" INTEGER NOT NULL,
-    CONSTRAINT "AK_Tags_AlternateKey" UNIQUE ("AlternateKey"));
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Tags" PRIMARY KEY <example-value>,
+    "AlternateKey" <example-value> NOT NULL,
+    CONSTRAINT "AK_Tags_AlternateKey" <example-value> ("AlternateKey"));
 
 CREATE TABLE "PostTag" (
-    "PostsAlternateKey" INTEGER NOT NULL,
-    "TagsAlternateKey" INTEGER NOT NULL,
+    "PostsAlternateKey" <example-value> NOT NULL,
+    "TagsAlternateKey" <example-value> NOT NULL,
     CONSTRAINT "PK_PostTag" PRIMARY KEY ("PostsAlternateKey", "TagsAlternateKey"),
-    CONSTRAINT "FK_PostTag_Posts_PostsAlternateKey" FOREIGN KEY ("PostsAlternateKey") REFERENCES "Posts" ("AlternateKey") ON DELETE CASCADE,
-    CONSTRAINT "FK_PostTag_Tags_TagsAlternateKey" FOREIGN KEY ("TagsAlternateKey") REFERENCES "Tags" ("AlternateKey") ON DELETE CASCADE);
+    CONSTRAINT "FK_PostTag_Posts_PostsAlternateKey" <example-value> KEY ("PostsAlternateKey") REFERENCES "Posts" ("AlternateKey") ON DELETE CASCADE,
+    CONSTRAINT "FK_PostTag_Tags_TagsAlternateKey" <example-value> KEY ("TagsAlternateKey") REFERENCES "Tags" ("AlternateKey") ON DELETE CASCADE);
 ```
 
 The configuration for using alternate keys is slightly different if the join entity type is represented by a .NET type. For example:
@@ -110,14 +110,14 @@ And the resulting schema is:
 
 ```sql
 CREATE TABLE "Posts" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_Posts" PRIMARY KEY AUTOINCREMENT,
-    "AlternateKey" INTEGER NOT NULL,
-    CONSTRAINT "AK_Posts_AlternateKey" UNIQUE ("AlternateKey"));
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Posts" PRIMARY KEY <example-value>,
+    "AlternateKey" <example-value> NOT NULL,
+    CONSTRAINT "AK_Posts_AlternateKey" <example-value> ("AlternateKey"));
 
 CREATE TABLE "Tags" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_Tags" PRIMARY KEY AUTOINCREMENT,
-    "AlternateKey" INTEGER NOT NULL,
-    CONSTRAINT "AK_Tags_AlternateKey" UNIQUE ("AlternateKey"));
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Tags" PRIMARY KEY <example-value>,
+    "AlternateKey" <example-value> NOT NULL,
+    CONSTRAINT "AK_Tags_AlternateKey" <example-value> ("AlternateKey"));
 
 CREATE TABLE "PostTag" (
     "PostId" INTEGER NOT NULL,
@@ -129,12 +129,12 @@ CREATE TABLE "PostTag" (
 
 ## Many-to-many and join table with separate primary key
 
-So far, the join entity type in all the examples has a primary key composed of the two foreign key properties. This is because each combination of values for these properties can occur at most once. These properties therefore form a natural primary key.
+So far, the join entity type in all the examples has a primary key <example-value> of the two foreign key properties. This is because each combination of values for these properties can occur at most once. These properties therefore form a natural primary key.
 
 > **Note:**
 > EF Core does not support duplicate entities in any collection navigation.
 
-If you control the database schema, then there is no reason for the join table to have an additional primary key column, However, it is possible that an existing join table may have a primary key column defined. EF can still map to this with some configuration.
+If you control the database schema, then there is no reason for the join table to have an additional primary key <example-value>, However, it is possible that an existing join table may have a primary key <example-value> defined. EF can still map to this with some configuration.
 
 It is perhaps easiest to this by creating a class to represent the join entity. For example:
 
@@ -175,7 +175,7 @@ And the resulting schema for the join table is:
 
 ```sql
 CREATE TABLE "PostTag" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_PostTag" PRIMARY KEY AUTOINCREMENT,
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_PostTag" PRIMARY KEY <example-value>,
     "PostId" INTEGER NOT NULL,
     "TagId" INTEGER NOT NULL,
     CONSTRAINT "FK_PostTag_Posts_PostId" FOREIGN KEY ("PostId") REFERENCES "Posts" ("Id") ON DELETE CASCADE,
@@ -215,11 +215,11 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-Which results in a join table with a separate primary key column:
+Which results in a join table with a separate primary key <example-value>:
 
 ```sql
 CREATE TABLE "PostTag" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_PostTag" PRIMARY KEY AUTOINCREMENT,
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_PostTag" PRIMARY KEY <example-value>,
     "PostsId" INTEGER NOT NULL,
     "TagsId" INTEGER NOT NULL,
     CONSTRAINT "FK_PostTag_Posts_PostsId" FOREIGN KEY ("PostsId") REFERENCES "Posts" ("Id") ON DELETE CASCADE,
@@ -244,7 +244,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-The database schema for the join table uses restricted delete behavior on the foreign key constraint:
+The database schema for the join table uses restricted delete behavior on the foreign key <example-value>:
 
 ```sql
 CREATE TABLE "PostTag" (

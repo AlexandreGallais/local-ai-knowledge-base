@@ -184,7 +184,7 @@ To run the sample:
    </PropertyGroup>
    ```
 
-1. Observe that the service configuration key values rendered by the Index page match the values set by the package's `ServiceKeyInjection.Configure` method.
+1. Observe that the service configuration key <example-value> rendered by the Index page match the values set by the package's `ServiceKeyInjection.Configure` method.
 
 If you make changes to the *HostingStartupPackage* project and recompile it, clear the local NuGet package caches to ensure that the *HostingStartupApp* receives the updated package and not a stale package from the local cache. To clear the local NuGet caches, execute the following dotnet nuget locals command:
 
@@ -208,7 +208,7 @@ dotnet nuget locals all --clear
    </ItemGroup>
    ```
 
-1. Observe that the service configuration key values rendered by the Index page match the values set by the class library's `ServiceKeyInjection.Configure` method.
+1. Observe that the service configuration key <example-value> rendered by the Index page match the values set by the class library's `ServiceKeyInjection.Configure` method.
 
 **Activation from a runtime store-deployed assembly**
 

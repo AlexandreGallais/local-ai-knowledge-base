@@ -45,7 +45,7 @@ HRESULT EnumTypeDefs (
 
 ## Remarks
 
- The TypeDef token represents a type such as a class or an interface, as well as any type added via an extensibility mechanism.
+ The TypeDef token <example-value> a type such as a class or an interface, as well as any type added via an extensibility mechanism.
 
 ## Requirements
 

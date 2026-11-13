@@ -21,7 +21,7 @@ Build inputs correspond to Dockerfile instructions:
 | `COPY --from=builder /app /app`         | Image      | `input.image`  |
 | `ADD https://example.com/file.tar.gz /` | HTTP       | `input.http`   |
 | `RUN curl https://example.com/`        | HTTP       | `input.http`   |
-| `ADD git@github.com:user/repo.git /src` | Git        | `input.git`    |
+| `ADD user@example.com:user/repo.git /src` | Git        | `input.git`    |
 | Build context (`.`)                     | Local      | `input.local`  |
 
 Each input type has specific fields available for policy evaluation.
@@ -386,7 +386,7 @@ as build context.
 ### Example Dockerfile
 
 ```dockerfile
-ADD git@github.com:moby/buildkit.git#v0.12.0 /src
+ADD user@example.com:moby/buildkit.git#v0.12.0 /src
 ```
 
 ### Available fields
@@ -526,7 +526,7 @@ Object containing commit metadata:
 ```rego
 # Check commit author
 allow if {
-    input.git.commit.author.email == "maintainer@example.com"
+    input.git.commit.author.email == "user@example.com"
 }
 ```
 

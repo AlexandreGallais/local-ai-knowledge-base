@@ -89,7 +89,7 @@ The following example is analogous to the prior example except that:
     try {
     const response = await fetch(oFormElement.action, {
       method: 'POST',
-      body: formData
+      body: <example-value>
     });
 
     if (response.ok) {

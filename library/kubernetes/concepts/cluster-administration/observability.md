@@ -79,7 +79,7 @@ Unlike the component metrics endpoints described earlier, the Metrics API is ser
 Kubernetes API aggregation layer.
 Your cluster must run Metrics Server or another
 implementation that provides the API. The Metrics API intentionally provides only the resource
-metrics needed for autoscaling and basic inspection; it is not a replacement for a full monitoring
+metrics needed for autoscaling and basic <example-value>; it is not a replacement for a full monitoring
 pipeline.
 
 To learn about the API, its implementations, and the data flow from kubelets to its clients, see the

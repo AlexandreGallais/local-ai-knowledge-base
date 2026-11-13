@@ -116,9 +116,9 @@ HubConnection hubConnection = HubConnectionBuilder.create("https://example.com/c
 > **Note:**
 > The SignalR Java client doesn't currently support transport fallback.
 
-### Configure bearer authentication
+### Configure bearer <example-value>
 
-To provide authentication data along with SignalR requests, use the `AccessTokenProvider` option (`accessTokenFactory` in JavaScript) to specify a function that returns the desired access token. In the .NET client, this access token is passed in as an HTTP "Bearer Authentication" token (using the `Authorization` header with a type of `Bearer`). In the JavaScript client, the access token is used as a Bearer token, **except** in a few cases where browser APIs restrict the ability to apply headers (specifically, in Server-Sent Events and WebSockets requests). In these cases, the access token is provided as a query string value `access_token`.
+To provide authentication data along with SignalR requests, use the `AccessTokenProvider` option (`accessTokenFactory` in JavaScript) to specify a function that returns the desired access token. In the .NET client, this access token is passed in as an HTTP "<example-value>" token (using the `Authorization` header with a type of `Bearer`). In the JavaScript client, the access token is used as a Bearer token, **except** in a few cases where browser APIs restrict the ability to apply headers (specifically, in Server-Sent Events and WebSockets requests). In these cases, the access token is provided as a query string value `access_token`.
 
 In the .NET client, the `AccessTokenProvider` option can be specified by using the options delegate in `WithUrl`:
 
@@ -146,13 +146,13 @@ let connection = new signalR.HubConnectionBuilder()
     .build();
 ```
 
-In the SignalR Java client, you can configure a bearer token to use for authentication by supplying an access token provider to the HttpHubConnectionBuilder. Use withAccessTokenProvider) to provide an RxJava Single\<String>. With a call to Single.defer, you can write logic to produce access tokens for your client.
+In the SignalR Java client, you can configure a bearer token to use for authentication by supplying an access token <example-value> to the HttpHubConnectionBuilder. Use withAccessTokenProvider) to provide an RxJava Single\<String>. With a call to Single.defer, you can write logic to produce access tokens for your client.
 
 ```java
 HubConnection hubConnection = HubConnectionBuilder.create("https://example.com/chathub")
     .withAccessTokenProvider(Single.defer(() -> {
         // Your logic here.
-        return Single.just("An Access Token");
+        return Single.just("<example-value>");
     })).build();
 ```
 

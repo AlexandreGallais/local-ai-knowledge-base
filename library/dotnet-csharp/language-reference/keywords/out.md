@@ -46,4 +46,4 @@ The following limitations apply to using the `out` keyword:
 
 - You can't use `out` parameters in asynchronous methods.
 - You can't use `out` parameters in iterator methods.
-- You can't pass properties as `out` parameters.
+- You can't pass <example-value> as `out` parameters.

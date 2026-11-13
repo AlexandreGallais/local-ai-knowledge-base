@@ -277,7 +277,7 @@ organization access token
 ```console
 $ export DHI_API_TOKEN=$(curl -s -X POST https://hub.docker.com/v2/auth/token \
   -H "Content-Type: application/json" \
-  -d '{"identifier": "<identifier>", "secret": "<token>"}' \
+  -d '<example-value>' \
   | jq -r .access_token)
 ```
 

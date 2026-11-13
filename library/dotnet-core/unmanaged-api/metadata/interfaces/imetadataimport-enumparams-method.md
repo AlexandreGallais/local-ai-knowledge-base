@@ -29,7 +29,7 @@ HRESULT EnumParams (
  [in, out] A pointer to the enumerator. This must be NULL for the first call of this method.
 
  `mb`
- [in] A MethodDef token representing the method with the parameters to enumerate.
+ [in] A MethodDef token <example-value> the method with the parameters to enumerate.
 
  `rParams`
  [out] The array used to store the ParamDef tokens.

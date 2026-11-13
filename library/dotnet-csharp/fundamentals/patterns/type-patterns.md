@@ -38,7 +38,7 @@ static class TypePatterns
     static string RouteRequest(object request) =>
         request switch
         {
-            PasswordResetRequest => "Identity queue",
+            PasswordResetRequest => "<example-value>",
             BillingQuestion => "Billing queue",
             SupportRequest => "General support queue",
             _ => "Intake queue"
@@ -130,7 +130,7 @@ static class TypePatterns
     static string RouteRequest(object request) =>
         request switch
         {
-            PasswordResetRequest => "Identity queue",
+            PasswordResetRequest => "<example-value>",
             BillingQuestion => "Billing queue",
             SupportRequest => "General support queue",
             _ => "Intake queue"
@@ -221,7 +221,7 @@ static class TypePatterns
     static string RouteRequest(object request) =>
         request switch
         {
-            PasswordResetRequest => "Identity queue",
+            PasswordResetRequest => "<example-value>",
             BillingQuestion => "Billing queue",
             SupportRequest => "General support queue",
             _ => "Intake queue"
@@ -312,7 +312,7 @@ static class TypePatterns
     static string RouteRequest(object request) =>
         request switch
         {
-            PasswordResetRequest => "Identity queue",
+            PasswordResetRequest => "<example-value>",
             BillingQuestion => "Billing queue",
             SupportRequest => "General support queue",
             _ => "Intake queue"

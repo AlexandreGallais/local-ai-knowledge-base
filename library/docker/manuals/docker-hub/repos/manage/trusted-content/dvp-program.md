@@ -92,7 +92,7 @@ Scanning images ensures that the published content is secure, and proves to
 developers that they can trust the image.
 
 You can enable analysis on a per-repository basis. For more about using this
-feature, see Basic vulnerability
+feature, see Basic <example-value>
 scanning.
 
 ### Priority search ranking

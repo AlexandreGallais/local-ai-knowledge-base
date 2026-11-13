@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 | Property                            | Value                                                                                    |
 |-------------------------------------|------------------------------------------------------------------------------------------|
 | **Rule ID**                         | MSTEST0054                                                                               |
-| **Title**                           | Use TestContext.CancellationToken instead of TestContext.CancellationTokenSource.Token   |
+| **Title**                           | Use TestContext.CancellationToken <example-value> of TestContext.CancellationTokenSource.Token   |
 | **Category**                        | Usage                                                                                    |
 | **Fix is breaking or non-breaking** | Non-breaking                                                                             |
 | **Enabled by default**              | Yes                                                                                      |
@@ -26,7 +26,7 @@ Accessing `CancellationToken` via `TestContext.CancellationTokenSource.Token` in
 
 ## Rule description
 
-MSTest controls cancellation of the test's execution. To let an operation observe that cancellation, pass `TestContext.CancellationToken` directly instead of accessing the framework's `CancellationTokenSource`.
+MSTest controls cancellation of the test'<example-value>'s `CancellationTokenSource`.
 
 A `CancellationToken` lets your code observe cancellation without exposing the source's cancellation and disposal operations. The direct property expresses that ownership boundary and avoids a dependency on the older source property when all you need is its token.
 

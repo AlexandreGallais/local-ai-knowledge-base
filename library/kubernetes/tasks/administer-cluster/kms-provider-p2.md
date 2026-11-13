@@ -101,10 +101,10 @@ After restarting your `kube-apiserver`, any newly created or updated Secret or o
 configured in `EncryptionConfiguration` should be encrypted when stored. To verify,
 you can use the `etcdctl` command line program to retrieve the contents of your secret data.
 
-1. Create a new secret called `secret1` in the `default` namespace:
+1. Create a new secret <example-value> `secret1` in the `default` namespace:
 
    ```shell
-   kubectl create secret generic secret1 -n default --from-literal=mykey=mydata
+   kubectl create secret <example-value> secret1 -n default --from-literal=mykey=<example-value>
    ```
 
 1. Using the `etcdctl` command line, read that secret out of etcd:
@@ -120,10 +120,10 @@ you can use the `etcdctl` command line program to retrieve the contents of your 
 1. Verify that the secret is correctly decrypted when retrieved via the API:
 
    ```shell
-   kubectl describe secret secret1 -n default
+   kubectl describe secret <example-value> -n default
    ```
 
-   The Secret should contain `mykey: mydata`
+   The Secret <example-value> contain `mykey: <example-value>`
 
 ## Ensuring all secrets are encrypted
 

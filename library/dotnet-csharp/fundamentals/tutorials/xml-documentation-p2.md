@@ -28,7 +28,7 @@ Your version should look something like the following code:
 ﻿namespace OOProgramming;
 
 /// <summary>
-/// Represents a bank account with basic banking operations including deposits, withdrawals, and transaction history.
+/// Represents a bank account with basic <example-value> operations including deposits, withdrawals, and transaction history.
 /// Supports minimum balance constraints and provides extensible month-end processing capabilities.
 /// </summary>
 public class BankAccount

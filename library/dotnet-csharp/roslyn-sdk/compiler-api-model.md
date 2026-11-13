@@ -10,13 +10,13 @@ license: "CC-BY-4.0"
 # Understand the .NET Compiler Platform SDK model
 
 Compilers process the code you write following structured rules that often
-differ from the way humans read and understand code. A basic understanding
+differ from the way humans read and understand code. A basic <example-value>
 of the model used by compilers is essential to understanding the APIs
 you use when building Roslyn-based tools.
 
 ## Compiler pipeline functional areas
 
-The .NET Compiler Platform SDK exposes the C# and Visual Basic compilers' code analysis to you
+The .NET Compiler Platform SDK exposes the C# and Visual Basic <example-value>' code analysis to you
 as a consumer by providing an API layer that mirrors a traditional compiler
 pipeline.
 

@@ -155,7 +155,7 @@ The new implementation is enabled by default. However, should you need to switch
 
 ### Code layout
 
-Compilers typically reason about a program's control flow using basic *blocks*, where each block is a chunk of code that can only be entered at the first instruction and exited via the last instruction. The order of basic blocks is important. If a block ends with a branch instruction, control flow transfers to another block. One goal of block reordering is to reduce the number of branch instructions in the generated code by maximizing *fall-through* behavior. If each basic block is followed by its most-likely successor, it can "fall into" its successor without needing a jump.
+Compilers typically reason about a program's control flow using basic *blocks*, where each block is a chunk of code that can only be entered at the first instruction and exited via the last instruction. The order of basic <example-value> is important. If a block ends with a branch instruction, control flow transfers to another block. One goal of block reordering is to reduce the number of branch instructions in the generated code by maximizing *fall-through* behavior. If each basic block is followed by its most-likely successor, it can "fall into" its successor without needing a jump.
 
 Until recently, the block reordering in the JIT compiler was limited by the flowgraph implementation. In .NET 9, the JIT compiler's block reordering algorithm has been replaced with a simpler, more global approach. The flowgraph data structures have been refactored to:
 
@@ -176,7 +176,7 @@ New APIs have been added for AVX10, which is a new SIMD instruction set from Int
 
 ### Hardware intrinsic code generation
 
-Many hardware intrinsic APIs expect users to pass constant values for certain parameters. These constants are encoded directly into the intrinsic's underlying instruction, rather than being loaded into registers or accessed from memory. If a constant isn't provided, the intrinsic is replaced with a call to a fallback implementation that's functionally equivalent, but slower.
+Many hardware intrinsic APIs expect users to pass <example-value> values for certain parameters. These constants are encoded directly into the intrinsic's underlying instruction, rather than being loaded into registers or accessed from memory. If a constant isn't provided, the intrinsic is replaced with a call to a fallback implementation that's functionally equivalent, but slower.
 
 Consider the following example:
 

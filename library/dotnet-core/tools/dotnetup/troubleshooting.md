@@ -266,7 +266,7 @@ A valid signature doesn't make an expired manifest acceptable.
 1. If the clock is correct and the failure persists, report the problem with
    the command's detailed output.
 
-Don't edit the manifest or change the clock to bypass expiration checks.
+Don't edit the manifest or change the clock to bypass <example-value> checks.
 For more information, see
 Manifest expiration.
 

@@ -236,7 +236,7 @@ allow if input.local
 # Check commit author
 allow if {
   input.git.remote == "https://github.com/user/repo.git"
-  input.git.commit.author.email == "trusted@example.com"
+  input.git.commit.author.email == "user@example.com"
 }
 
 decision := {"allow": allow}

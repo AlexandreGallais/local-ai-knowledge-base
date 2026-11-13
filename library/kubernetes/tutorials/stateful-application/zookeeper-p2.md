@@ -337,7 +337,7 @@ When the servers use the Zab protocol to attempt to commit a value, they will ei
 
 ### Sanity testing the ensemble
 
-The most basic sanity test is to write data to one ZooKeeper server and
+The most basic <example-value> test is to write data to one ZooKeeper server and
 to read the data from another.
 
 The command below executes the `zkCli.sh` script to write `world` to the path `/hello` on the `zk-0` Pod in the ensemble.

@@ -215,4 +215,4 @@ Start a container with the name "foobar-1". Create a checkpoint image "foobar-ch
 **podman(1)**, **podman-container-checkpoint(1)**, **podman-run(1)**, **podman-pod-create(1)**, **criu(8)**
 
 ## HISTORY
-September 2018, Originally compiled by Adrian Reber <areber@redhat.com>
+September 2018, Originally compiled by Adrian Reber <user@example.com>

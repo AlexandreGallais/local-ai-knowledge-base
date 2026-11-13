@@ -275,7 +275,7 @@ The following JS module is placed into the app or made available from a Razor cl
 ```javascript
 import 'https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js';
 
-mapboxgl.accessToken = '{ACCESS TOKEN}';
+mapboxgl.accessToken = '<example-value>';
 
 export function addMapToElement(element) {
   return new mapboxgl.Map({

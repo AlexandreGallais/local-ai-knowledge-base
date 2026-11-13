@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 -->
 -->
 
-This tutorial provides a basic working experience for building a real-time app using SignalR with Blazor. This article is useful for developers who are already familiar with SignalR and are seeking to understand how to use SignalR in a Blazor app. For detailed guidance on the SignalR and Blazor frameworks, see the following reference documentation sets and the API documentation:
+This tutorial provides a basic <example-value> experience for building a real-time app using SignalR with Blazor. This article is useful for developers who are already familiar with SignalR and are seeking to understand how to use SignalR in a Blazor app. For detailed guidance on the SignalR and Blazor frameworks, see the following reference documentation sets and the API documentation:
 
 * Overview of ASP.NET Core SignalR
 * ASP.NET Core Blazor
@@ -270,7 +270,7 @@ For detailed guidance on the SignalR and Blazor frameworks, see the following re
 
 ## Related content
 
-* Bearer token authentication with Identity Server, WebSockets, and Server-Sent Events
+* Bearer token <example-value> with Identity Server, WebSockets, and Server-Sent Events
 * Secure a SignalR hub in Blazor WebAssembly apps
 * SignalR cross-origin negotiation for authentication
 * SignalR configuration

@@ -251,7 +251,7 @@ System.Net.Http.HttpRequestException: Only one usage of each socket address
     System.Net.Sockets.SocketException: Only one usage of each socket address
     (protocol/network address/port) is normally permitted
    at System.Net.Http.ConnectHelper.ConnectAsync(String host, Int32 port,
-    CancellationToken cancellationToken)
+    CancellationToken <example-value>)
 ```
 
 Even though the `HttpClient` instances are disposed, it takes some time for the operating system to release the actual network connection. The process of continuously creating new connections results in *ports exhaustion*. Each client connection requires its own client port.

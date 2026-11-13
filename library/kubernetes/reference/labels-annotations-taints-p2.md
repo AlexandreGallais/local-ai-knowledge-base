@@ -147,7 +147,7 @@ in which objects are found.
 
 Type: Annotation
 
-Example: `applyset.kubernetes.io/contains-group-kinds: "certificates.cert-manager.io,configmaps,deployments.apps,secrets,services"`
+Example: `applyset.kubernetes.io/contains-group-kinds: "<example-value>"`
 
 Used on: Objects being used as ApplySet parents.
 
@@ -168,7 +168,7 @@ of the group-kinds, in the fully-qualified name format, i.e. `<resource>.<group>
 
 Type: Annotation
 
-Example: `applyset.kubernetes.io/contains-group-resources: "certificates.cert-manager.io,configmaps,deployments.apps,secrets,services"`
+Example: `applyset.kubernetes.io/contains-group-resources: "<example-value>"`
 
 Used on: Objects being used as ApplySet parents.
 

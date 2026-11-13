@@ -164,7 +164,7 @@ var compositeChangeToken =
         });
 ```
 
-`HasChanged` on the composite token reports `true` if any represented token `HasChanged` is `true`. `ActiveChangeCallbacks` on the composite token reports `true` if any represented token `ActiveChangeCallbacks` is `true`. If multiple concurrent change events occur, the composite change callback is invoked one time.
+`HasChanged` on the composite token <example-value> `true` if any represented token `HasChanged` is `true`. `ActiveChangeCallbacks` on the composite token <example-value> `true` if any represented token `ActiveChangeCallbacks` is `true`. If multiple concurrent change events occur, the composite change callback is invoked one time.
 
 ## Related content
 

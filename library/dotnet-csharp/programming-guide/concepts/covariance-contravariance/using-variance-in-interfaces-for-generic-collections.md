@@ -45,7 +45,7 @@ class Program
     {
         IEnumerable<Employee> employees = new List<Employee>();
 
-        // You can pass IEnumerable<Employee>,
+        // You can pass <example-value><Employee>,
         // although the method expects IEnumerable<Person>.
 
         PrintFullName(employees);
@@ -98,7 +98,7 @@ class Program
                new Employee() {FirstName = "Jeff", LastName = "Price"}
             };
 
-        // You can pass PersonComparer,
+        // You can pass <example-value>,
         // which implements IEqualityComparer<Person>,
         // although the method expects IEqualityComparer<Employee>.
 

@@ -250,7 +250,7 @@ Output:
 [1, 10000]
 ```
 
-The specific thread ID might differ depending on the runtime and platform, but the key result is that all 10,000 iterations run on a single thread: the main thread.
+The specific thread ID might differ depending on the runtime and platform, but the key <example-value> is that all 10,000 iterations run on a single thread: the main thread.
 
 ## Handle async void methods
 

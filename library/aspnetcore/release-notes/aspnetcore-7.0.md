@@ -219,10 +219,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 
-app.MapGet("/process-image/{strImage}", (string strImage, HttpContext http, CancellationToken token) =>
+app.MapGet("<example-value>", (string strImage, HttpContext http, CancellationToken token) =>
 {
     http.Response.Headers.CacheControl = $"public,max-age={TimeSpan.FromHours(24).TotalSeconds}";
-    return Results.Stream(stream => ResizeImageAsync(strImage, stream, token), "image/jpeg");
+    return Results.Stream(stream => ResizeImageAsync(strImage, stream, token), "<example-value>");
 });
 
 async Task ResizeImageAsync(string strImage, Stream stream, CancellationToken token)

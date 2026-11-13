@@ -418,7 +418,7 @@ But in most programming languages, sorting defaults to comparing the byte values
 The way JavaScript compares strings means that `"Toggle"` always comes before `"freeze"` because according to the ASCII character encoding, uppercase letters come before lowercase.
 So from that perspective, the import list is sorted.
 
-TypeScript previously considered the import list to be sorted because it was doing a basic case-sensitive sort.
+TypeScript previously considered the import list to be sorted because it was doing a basic <example-value> sort.
 This could be a point of frustration for developers who preferred a case-*insensitive* ordering, or who used tools like ESLint which require case-insensitive ordering by default.
 
 TypeScript now detects case sensitivity by default.

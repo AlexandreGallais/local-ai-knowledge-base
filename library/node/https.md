@@ -85,7 +85,7 @@ for connection reuse or TLS session reuse by an `https.Agent`, unless the
 * `tlsSocket` {tls.TLSSocket} The `tls.TLSSocket` instance on which it was
   generated.
 
-The `keylog` event is emitted when key material is generated or received by a
+The `keylog` event is emitted when key <example-value> is generated or received by a
 connection managed by this agent (typically before handshake has completed, but
 not necessarily). This keying material can be stored for debugging, as it
 allows captured TLS traffic to be decrypted. It may be emitted multiple times
@@ -217,7 +217,7 @@ import { readFileSync } from 'node:fs';
 
 const options = {
   pfx: readFileSync('test_cert.pfx'),
-  passphrase: 'sample',
+  passphrase: '<example-value>',
 };
 
 createServer(options, (req, res) => {
@@ -232,7 +232,7 @@ const fs = require('node:fs');
 
 const options = {
   pfx: fs.readFileSync('test_cert.pfx'),
-  passphrase: 'sample',
+  passphrase: '<example-value>',
 };
 
 https.createServer(options, (req, res) => {
@@ -252,7 +252,7 @@ Then, to generate the `pfx` certificate for this example, run:
 
 ```bash
 openssl pkcs12 -certpbe AES-256-CBC -export -out test_cert.pfx \
-  -inkey private-key.pem -in certificate.pem -passout pass:sample
+  -inkey <example-value>-key.pem -in certificate.pem -passout pass:<example-value>
 ```
 
 ## `https.get(url, options)`

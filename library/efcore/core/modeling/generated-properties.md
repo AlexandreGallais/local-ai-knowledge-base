@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Generated Values
 
-Database columns can have their values generated in various ways: primary key columns are frequently auto-incrementing integers, other columns have default or computed values, etc. This page details various patterns for configuration value generation with EF Core.
+Database columns can have their values generated in various ways: primary key <example-value> are frequently auto-incrementing integers, other columns have default or computed values, etc. This page details various patterns for configuration value generation with EF Core.
 
 ## Default values
 

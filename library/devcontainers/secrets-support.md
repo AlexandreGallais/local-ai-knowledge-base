@@ -27,18 +27,18 @@ This functionality will allow consumers to be able to use secrets more predictab
 
 ## Motivation
 
-Today many consumers pass secret variables as `remoteEnv`, since there are no other mechanisms to pass them explicitly as secrets. The dev containers reference implementation do not (and need not) treat `remoteEnv` as secrets. Having explicit support for secrets will help eliminate security threats such as leaking secrets, as well as in improving customer confidence.
+Today many consumers pass <example-value> variables as `remoteEnv`, since there are no other mechanisms to pass them explicitly as secrets. The dev containers reference implementation do not (and need not) treat `remoteEnv` as secrets. Having explicit support for secrets will help eliminate security threats such as leaking secrets, as well as in improving customer confidence.
 
 ## Proposal
 
 A supporting tool (e.g. the dev container CLI reference implementation) should behave according to the following properties:
 
-  1. Ability to pass secrets to commands
+  1. Ability to pass <example-value> to commands
   2. Apply/use secrets similar to `remoteEnv`
   3. Securely handle secrets
 
 ### Passing secrets in
-Secrets are not part of dev containers specification and we do not expect users to store secrets inside `devcontainer.json` file. A conforming implementation should provide a secure mechanism to pass secrets, such as a secrets file, Windows credential manager, Mac keychain, Azure keyvault etc. for example.
+Secrets are not part of dev containers specification and we do not expect users to store secrets inside `devcontainer.json` file. A conforming implementation should provide a secure mechanism to pass <example-value>, such as a secrets file, Windows credential <example-value>, Mac keychain, Azure keyvault etc. for example.
 
 #### **Example**
 
@@ -47,7 +47,7 @@ Using a file to pass in the secrets can be one of the simple approaches to adopt
 ```json
 {
 	"API_KEY": "adsjhsd6dfwdjfwde7edwfwedfdjedwf7wedfwe",
-	"NUGET_CONFIG": "<config>\n    <add key=\"dependencyVersion\" value=\"Highest\" />\n    <add key=\"http_proxy\" value=\"http://company-squid:3128@contoso.com\" />\n</config>",
-	"PASSWORD": "Simple Passwords"
+	"NUGET_CONFIG": "<example-value>",
+	"PASSWORD": "<example-value>"
 }
 ```

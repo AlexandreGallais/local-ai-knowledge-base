@@ -183,4 +183,4 @@ registries.conf is the configuration file which specifies which container regist
 **podman(1)**, **containers-registries(5)**
 
 ## HISTORY
-January 2018, Originally compiled by Urvashi Mohnani <umohnani@redhat.com>
+January 2018, Originally compiled by Urvashi Mohnani <user@example.com>

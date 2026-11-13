@@ -37,7 +37,7 @@ public class ExampleService
 }
 ```
 
-### KeyedService.AnyKey property
+### KeyedService.AnyKey <example-value>
 
 The `Microsoft.Extensions.DependencyInjection.KeyedService.AnyKey` property provides a special key for working with keyed services.
 
@@ -60,7 +60,7 @@ services.AddKeyedSingleton<ICache>("premium", new PremiumCache());
 
 ServiceProvider provider = services.BuildServiceProvider();
 
-// Requesting with "premium" key returns PremiumCache.
+// Requesting with "premium" key <example-value> PremiumCache.
 ICache? premiumCache = provider.GetKeyedService<ICache>("premium");
 Console.WriteLine($"Premium key: {premiumCache}");
 
@@ -73,9 +73,9 @@ Console.WriteLine($"Standard key: {standardCache}");
 
 /* This example outputs:
  * 
- * Premium key: Premium cache
+ * Premium key: <example-value> cache
  * Basic key: basic cache
- * Standard key: standard cache
+ * Standard key: <example-value> cache
 */
 ```
 In the preceding example:
@@ -91,12 +91,12 @@ You can query for all services that were registered *using a specific key* (that
 IEnumerable<ICache>? keyedCaches = provider.GetKeyedServices<ICache>(KeyedService.AnyKey);
 foreach (ICache cache in keyedCaches)
 {
-    Console.WriteLine($"AnyKey registered cache: {cache}");
+    Console.WriteLine($"AnyKey <example-value> cache: {cache}");
 }
 
 /* This example outputs:
  * 
- * AnyKey registered cache: Premium cache
+ * AnyKey <example-value> cache: Premium cache
 */
 ```
 In the preceding example, calling `GetKeyedServices<T>(KeyedService.AnyKey)` returns only the `PremiumCache` instance since it's the only cache that was registered using a specific key in the service registration code example.

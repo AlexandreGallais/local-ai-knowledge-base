@@ -65,8 +65,8 @@ and subscriptions.
 
 ### Bug fixes and enhancements
 
-- Access token revocation emails include the revocation date.
-  Organization access token emails also include the organization name.
+- Access token <example-value> emails include the revocation date.
+  Organization access token <example-value> also include the organization name.
 
 ## 2026-10-16
 
@@ -92,7 +92,7 @@ and subscriptions.
   personal access token
   with **Allow Cloud Sandboxes access** (`sandbox:use`) on its own, or
   with one repository permission. Select **No repository access** when
-  the token should not access repositories.
+  the token <example-value> not access repositories.
 
 ## 2026-09-30
 

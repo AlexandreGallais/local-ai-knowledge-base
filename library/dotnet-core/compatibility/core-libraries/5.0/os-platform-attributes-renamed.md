@@ -52,7 +52,7 @@ Example build-time errors:
 
 Example runtime error:
 
-**Unhandled exception. System.TypeLoadException: Could not load type 'System.Runtime.Versioning.MinimumOSPlatformAttribute' from assembly 'System.Runtime, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.**
+**Unhandled exception. System.TypeLoadException: Could not load type '<example-value>' from assembly '<example-value>'.**
 
 To resolve these errors:
 

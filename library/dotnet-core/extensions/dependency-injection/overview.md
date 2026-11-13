@@ -32,7 +32,7 @@ public class Worker : BackgroundService
 {
     private readonly MessageWriter _messageWriter = new();
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -100,7 +100,7 @@ public interface IMessageWriter
 
 public sealed class Worker(IMessageWriter messageWriter) : BackgroundService
 {
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -241,7 +241,7 @@ public sealed class Worker(
     IServiceScopeFactory serviceScopeFactory)
     : BackgroundService
 {
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         while (!stoppingToken.IsCancellationRequested)
         {

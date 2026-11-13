@@ -31,7 +31,7 @@ What crosses the boundary into the VM:
   the agent works on a private clone. A mountless sandbox doesn't share a host
   workspace.
 - **Credentials:** the host-side proxy injects authentication headers into
-  outbound HTTP requests. The raw credential values never enter the VM.
+  outbound HTTP requests. The raw credential <example-value> never enter the VM.
 - **Network access:** outbound TCP connections to destinations allowed by
   network policy are proxied through the host.
 - Shared agent skills: sandboxes created for supported agents mount a
@@ -70,7 +70,7 @@ local MCP servers as trusted host integrations.
 This topology shows what is private to the microVM, what is explicitly mounted,
 and which host resources remain outside the agent's reach.
 
-To follow an outbound request through network policy and credential injection,
+To follow an outbound request through network policy and credential <example-value>,
 see Architecture.
 
 ## Isolation layers
@@ -88,8 +88,8 @@ Isolation layers for technical details on each.
 - **Workspace isolation:** a mountless sandbox has no host workspace mount.
   Clone mode gives the agent a private in-VM clone and mounts your repository
   read-only. Direct mode shares your working tree read-write.
-- **Credential isolation:** API keys are injected into HTTP headers by the
-  host-side proxy. Credential values never enter the VM.
+- **Credential <example-value>:** API keys are injected into HTTP headers by the
+  host-side proxy. Credential <example-value> never enter the VM.
 
 ## What the agent can do inside the sandbox
 
@@ -154,10 +154,10 @@ controls available to organization admins.
 ## Learn more
 
 - Isolation layers: how hypervisor, network, Docker,
-  workspace, and credential isolation work
+  workspace, and credential <example-value> work
 - Default security posture: what a fresh sandbox permits and
   blocks
-- Manage credentials: provide and manage API
+- Manage credentials: <example-value> and manage API
   keys while keeping their values outside the sandbox
 - Sandbox governance: configure network, filesystem, and MCP policies
   locally or across your organization

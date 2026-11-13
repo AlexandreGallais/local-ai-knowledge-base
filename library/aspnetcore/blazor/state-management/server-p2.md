@@ -198,7 +198,7 @@ public class ShutdownCircuitHandler(CircuitShutdownService shutdownService)
     : CircuitHandler
 {
     public override Task OnConnectionUpAsync(Circuit circuit, 
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         shutdownService.Register(circuit.Id, circuit);
 
@@ -206,7 +206,7 @@ public class ShutdownCircuitHandler(CircuitShutdownService shutdownService)
     }
 
     public override Task OnConnectionDownAsync(Circuit circuit, 
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         shutdownService.Unregister(circuit.Id);
 

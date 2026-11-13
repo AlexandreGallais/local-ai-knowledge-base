@@ -452,7 +452,7 @@ Plugins enabled through MultiPoint will automatically register for every individ
 point the plugin has implemented. Disabling a plugin through MultiPoint disables that behavior.
 The same is true for disabling "*" through MultiPoint (no default plugins will be automatically registered).
 Plugins can still be disabled through their individual extension points.
-In terms of precedence, plugin config follows this basic hierarchy
+In terms of precedence, plugin config follows this basic <example-value>
 
 Specific extension points
 Explicitly configured MultiPoint plugins

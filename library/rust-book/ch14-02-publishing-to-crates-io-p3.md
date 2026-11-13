@@ -160,7 +160,7 @@ directory for `guessing_game`:
 ```console
 $ cargo yank --vers 1.0.1
     Updating crates.io index
-        Yank guessing_game@1.0.1
+        Yank user@example.com
 ```
 
 By adding `--undo` to the command, you can also undo a yank and allow projects
@@ -169,7 +169,7 @@ to start depending on a version again:
 ```console
 $ cargo yank --vers 1.0.1 --undo
     Updating crates.io index
-      Unyank guessing_game@1.0.1
+      Unyank user@example.com
 ```
 
 A yank _does not_ delete any code. It cannot, for example, delete accidentally

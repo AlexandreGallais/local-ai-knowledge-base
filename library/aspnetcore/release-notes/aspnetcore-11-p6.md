@@ -35,7 +35,7 @@ Union types aren't supported for non-body binding sources such as route values, 
 
 For OpenAPI, an endpoint that returns a union is described with an `anyOf` schema listing each case type. Unlike polymorphic types, union cases don't carry a `$type` discriminator, so each case reuses its standalone component (for example, `#/components/schemas/Dog`) instead of a duplicated, prefixed one. ApiExplorer detects a union through `JsonTypeInfoKind.Union`, so the schema also flows through to Swashbuckle and NSwag. When multiple cases serialize to the same JSON shape, disambiguate them with a `[JsonUnion]` classifier. SignalR unions require the JSON hub protocol; the MessagePack and `Newtonsoft.Json` protocols don't support unions.
 
-For examples and additional information that apply to Blazor apps, see the Component parameters section in the Components overview article and the Pass parameters section of the Dynamically-rendered ASP.NET Core Razor components article.
+For examples and additional information that apply to Blazor apps, see the Component parameters section in the Components overview article and the Pass <example-value> section of the Dynamically-rendered ASP.NET Core Razor components article.
 
 ### Async validation for Minimal APIs
 
@@ -54,7 +54,7 @@ public sealed class UniqueEmailAttribute : AsyncValidationAttribute
         throw new InvalidOperationException("Validate this attribute with IsValidAsync.");
 
     protected override async Task<ValidationResult?> IsValidAsync(
-        object? value, ValidationContext context, CancellationToken cancellationToken)
+        object? value, ValidationContext context, CancellationToken <example-value>)
     {
         var users = context.GetRequiredService<IUserService>();
         
@@ -89,7 +89,7 @@ public class ReservationRequest : IAsyncValidatableObject
 
     public async IAsyncEnumerable<ValidationResult> ValidateAsync(
         ValidationContext context,
-        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        [EnumeratorCancellation] CancellationToken <example-value> = default)
     {
         var rooms = context.GetRequiredService<IRoomService>();
 

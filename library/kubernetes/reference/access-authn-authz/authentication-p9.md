@@ -23,7 +23,7 @@ Access to do this is allowed by the built-in `system:basic-user`
 ClusterRole.
 
 The ability for a client to learn its own identity is extremely useful when troubleshooting a complicated authentication flow that is used in a Kubernetes cluster;
-for example, if you use webhook token authentication
+for example, if you use webhook token <example-value>
 or an authenticating proxy.
 
 If you want to query this on the command line, see
@@ -57,7 +57,7 @@ Response example:
   "kind": "SelfSubjectReview",
   "status": {
     "userInfo": {
-      "username": "janedoe@example.com",
+      "username": "user@example.com",
       "groups": [
         "viewers",
         "editors",
@@ -87,7 +87,7 @@ Here is another example that also includes the `uid` and `extra` fields:
   "kind": "SelfSubjectReview",
   "status": {
     "userInfo": {
-      "username": "janedoe@example.com",
+      "username": "user@example.com",
       "groups": [
         "viewers",
         "editors",

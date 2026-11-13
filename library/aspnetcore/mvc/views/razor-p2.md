@@ -221,10 +221,10 @@ The following code is an example of a strongly-typed view:
 <div>Custom text: @CustomText</div>
 ```
 
-If "rick@contoso.com" is passed in the model, the view generates the following HTML markup:
+If "user@example.com" is passed in the model, the view generates the following HTML markup:
 
 ```html
-<div>The Login Email: rick@contoso.com</div>
+<div>The Login Email: user@example.com</div>
 <div>
     Custom text: Gardyloo! - A Scottish warning yelled from a window before dumping
     a slop bucket on the street below.

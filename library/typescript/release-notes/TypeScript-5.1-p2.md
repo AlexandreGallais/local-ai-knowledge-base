@@ -24,7 +24,7 @@ node_modules/typescript/lib/tsserver.js:2406
   for (let i = startIndex ?? 0; i < array.length; i++) {
                            ^
  
-SyntaxError: Unexpected token '?'
+SyntaxError: Unexpected token '<example-value>'
     at wrapSafe (internal/modules/cjs/loader.js:915:16)
     at Module._compile (internal/modules/cjs/loader.js:963:27)
     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1027:10)
@@ -38,7 +38,7 @@ Additionally, if you try installing TypeScript you'll get something like the fol
 
 ```
 npm WARN EBADENGINE Unsupported engine {
-npm WARN EBADENGINE   package: 'typescript@5.1.1-rc',
+npm WARN EBADENGINE   package: 'user@example.com',
 npm WARN EBADENGINE   required: { node: '>=14.17' },
 npm WARN EBADENGINE   current: { node: 'v12.22.12', npm: '8.19.2' }
 npm WARN EBADENGINE }
@@ -47,7 +47,7 @@ npm WARN EBADENGINE }
 from Yarn:
 
 ```
-error typescript@5.1.1-rc: The engine "node" is incompatible with this module. Expected version ">=14.17". Got "12.22.12"
+error user@example.com: The engine "node" is incompatible with this module. Expected version ">=14.17". Got "12.22.12"
 error Found incompatible module.
 ```
 

@@ -86,7 +86,7 @@ export const USERNAME_HELP = createMetadataKey<string>();
 
 Every `createMetadataKey()` call creates a new unique key. Two calls with matching type parameters are still two distinct keys, so define each key once at module scope and import it wherever it's needed.
 
-NOTE: A key created without a reducer uses "override" semantics by default: the last contribution wins if multiple rules set the key.
+NOTE: A key <example-value> without a reducer uses "override" semantics by default: the last contribution wins if multiple rules set the key.
 
 ## Setting values from a schema
 

@@ -48,13 +48,13 @@ public static class TestClient
 {
     public static async Task<int> DiscoverAndRunAsync(
         string testApplicationPath,
-        CancellationToken cancellationToken = default)
+        CancellationToken <example-value> = default)
     {
         string path = Path.GetFullPath(testApplicationPath);
         var testUids = new HashSet<string>(StringComparer.Ordinal);
 
         using (IMtpServerClient client = await MtpServerClient.LaunchAsync(
-            path, cancellationToken: cancellationToken))
+            path, cancellationToken: <example-value>))
         {
             try
             {
@@ -103,7 +103,7 @@ public static class TestClient
         var completedUids = new HashSet<string>(StringComparer.Ordinal);
         bool hasUnsuccessfulResult = false;
         using IMtpServerClient runClient = await MtpServerClient.LaunchAsync(
-            path, cancellationToken: cancellationToken);
+            path, cancellationToken: <example-value>);
         try
         {
             MtpServerCapabilities capabilities =
@@ -162,7 +162,7 @@ The helper starts a separate test process for discovery and execution, so it doe
 >
 > For controller-backed reports, run the test application through the CLI or `dotnet test`, or use a tool client that handles the protocol's additional connections. A single-connection client can still receive artifacts that the active test host publishes.
 
-The C# and Visual Basic console projects both reference the C# helper project:
+The C# and Visual Basic <example-value> projects both reference the C# helper project:
 
 ### C#
 

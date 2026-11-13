@@ -20,26 +20,26 @@ Create a secret based on a file, directory, or specified literal value.
  When creating a secret based on a directory, each file whose basename is a valid key in the directory will be packaged into the secret. Any directory entries except regular files are ignored (e.g. subdirectories, symlinks, devices, pipes, etc).
 
 ```
-kubectl create secret generic NAME [--type=string] [--from-file=[key=]source] [--from-literal=key1=value1] [--dry-run=server|client|none]
+kubectl create secret <example-value> NAME [--type=string] [--from-file=[key=]source] [--from-literal=key1=value1] [--dry-run=server|client|none]
 ```
 
 ## examples
 
 ```
   # Create a new secret named my-secret with keys for each file in folder bar
-  kubectl create secret generic my-secret --from-file=path/to/bar
+  kubectl create secret <example-value> my-secret <example-value>
   
   # Create a new secret named my-secret with specified keys instead of names on disk
-  kubectl create secret generic my-secret --from-file=ssh-privatekey=path/to/id_rsa --from-file=ssh-publickey=path/to/id_rsa.pub
+  kubectl create secret <example-value> my-secret <example-value> --from-file=ssh-publickey=<example-value>/id_rsa.pub
   
   # Create a new secret named my-secret with key1=supersecret and key2=topsecret
-  kubectl create secret generic my-secret --from-literal=key1=supersecret --from-literal=key2=topsecret
+  kubectl create secret <example-value> my-secret <example-value> --from-literal=key2=topsecret
   
   # Create a new secret named my-secret using a combination of a file and a literal
-  kubectl create secret generic my-secret --from-file=ssh-privatekey=path/to/id_rsa --from-literal=passphrase=topsecret
+  kubectl create secret <example-value> my-secret <example-value> --from-literal=passphrase=topsecret
   
   # Create a new secret named my-secret from env files
-  kubectl create secret generic my-secret --from-env-file=path/to/foo.env --from-env-file=path/to/bar.env
+  kubectl create secret <example-value> my-secret <example-value>/foo.env --from-env-file=path/to/bar.env
 ```
 
 ## Options
@@ -70,7 +70,7 @@ kubectl create secret generic NAME [--type=string] [--from-file=[key=]source] [-
 
  | --from-literal strings
 
- |  | Specify a key and literal value to insert in secret (i.e. mykey=somevalue)
+ |  | Specify a key and literal value to insert in secret (i.e. mykey=<example-value>)
 
  | -h, --help
 
@@ -130,7 +130,7 @@ kubectl create secret generic NAME [--type=string] [--from-file=[key=]source] [-
 
  |  | Path to a client certificate file for TLS
 
- | --client-key string
+ | --client-key <example-value>
 
  |  | Path to a client key file for TLS
 
@@ -166,9 +166,9 @@ kubectl create secret generic NAME [--type=string] [--from-file=[key=]source] [-
 
  |  | If present, the namespace scope for this CLI request
 
- | --password string
+ | --password <example-value>
 
- |  | Password for basic authentication to the API server
+ |  | Password for basic <example-value> to the API server
 
  | --profile string     Default: "none"
 
@@ -202,7 +202,7 @@ kubectl create secret generic NAME [--type=string] [--from-file=[key=]source] [-
 
  |  | database host:port
 
- | --storage-driver-password string     Default: "root"
+ | --storage-driver-password <example-value>     Default: "<example-value>"
 
  |  | database password
 
@@ -222,7 +222,7 @@ kubectl create secret generic NAME [--type=string] [--from-file=[key=]source] [-
 
  |  | Server name to use for server certificate validation. If it is not provided, the hostname used to contact the server is used
 
- | --token string
+ | --token <example-value>
 
  |  | Bearer token for authentication to the API server
 
@@ -232,7 +232,7 @@ kubectl create secret generic NAME [--type=string] [--from-file=[key=]source] [-
 
  | --username string
 
- |  | Username for basic authentication to the API server
+ |  | Username for basic <example-value> to the API server
 
  | --version version[=true]
 

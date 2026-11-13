@@ -100,6 +100,6 @@ The `DataProtectionKeys` class/entity adopts the structure shown in the followin
 | `FriendlyName` | `string` | `nvarchar(MAX)`, null |
 | `Xml`          | `string` | `nvarchar(MAX)`, null |
 
-## Custom key repository
+## Custom key <example-value>
 
-If the in-box mechanisms aren't appropriate, the developer can specify their own key persistence mechanism by providing a custom `Microsoft.AspNetCore.DataProtection.Repositories.IXmlRepository`.
+If the in-box mechanisms aren't appropriate, the developer can specify their own key <example-value> mechanism by providing a custom `Microsoft.AspNetCore.DataProtection.Repositories.IXmlRepository`.

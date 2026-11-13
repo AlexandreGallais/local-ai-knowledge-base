@@ -160,7 +160,7 @@ Anywhere you refer to a method, property, parameter, type, or namespace by name 
 - Rename refactorings update the result automatically. Hardcoded strings drift out of sync.
 - The result is a compile-time constant, so there's no runtime cost.
 
-This recommendation applies to logging messages, exception arguments, attribute arguments, property-change notifications, and serialization key constants tied to a member name.
+This recommendation applies to logging messages, exception arguments, attribute arguments, property-change notifications, and serialization key <example-value> tied to a member name.
 
 ## See also
 

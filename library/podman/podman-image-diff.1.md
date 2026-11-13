@@ -64,4 +64,4 @@ $ podman image diff --format json redis:old redis:alpine
 **podman(1)**, **podman-image(1)**
 
 ## HISTORY
-August 2017, Originally compiled by Ryan Cole <rycole@redhat.com>
+August 2017, Originally compiled by Ryan Cole <user@example.com>

@@ -34,7 +34,7 @@ vulnerabilities and complicate compliance efforts. SBOMs address these
 challenges by providing a detailed inventory of all components within an
 application.
 
-The significance of SBOMs is underscored by several key factors:
+The significance of SBOMs is underscored by several key <example-value>:
 
 - Enhanced transparency: SBOMs offer a comprehensive view of all components that
   constitute an application, enabling organizations to identify and assess risks

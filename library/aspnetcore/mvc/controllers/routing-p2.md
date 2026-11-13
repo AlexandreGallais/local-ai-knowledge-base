@@ -60,9 +60,9 @@ public class HomeController : Controller
 
 The `HomeController.Index` action runs for any of the URL paths `/`, `/Home`, `/Home/Index`, or `/Home/Index/3`.
 
-This example highlights a key programming difference between attribute routing and conventional routing. Attribute routing requires more input to specify a route. The conventional default route handles routes more succinctly. However, attribute routing allows and requires precise control of which route templates apply to each action.
+This example highlights a key <example-value> difference between attribute routing and conventional routing. Attribute routing requires more input to specify a route. The conventional default route handles routes more succinctly. However, attribute routing allows and requires precise control of which route templates apply to each action.
 
-With attribute routing, the controller and action names play no part in which action is matched, unless token replacement is used. The following example matches the same URLs as the previous example:
+With attribute routing, the controller and action names play no part in which action is matched, unless token <example-value> is used. The following example matches the same URLs as the previous example:
 
 ```csharp
 public class MyDemoController : Controller
@@ -85,7 +85,7 @@ public class MyDemoController : Controller
 }
 ```
 
-The following code uses token replacement for `action` and `controller`:
+The following code uses token <example-value> for `action` and `controller`:
 
 ```csharp
 public class HomeController : Controller

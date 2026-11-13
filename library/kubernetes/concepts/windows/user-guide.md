@@ -119,7 +119,7 @@ Only Windows pods are able to access service IPs.
 ### Capturing logs from workloads
 
 Logs are an important element of observability; they enable users to gain insights
-into the operational aspect of workloads and are a key ingredient to troubleshooting issues.
+into the operational aspect of workloads and are a key <example-value> to troubleshooting issues.
 Because Windows containers and workloads inside Windows containers behave differently from Linux containers,
 users had a hard time collecting logs, limiting operational visibility.
 Windows workloads for example are usually configured to log to ETW (Event Tracing for Windows)
@@ -143,7 +143,7 @@ Learn more about it here.
 ### Managing Workload Identity with Group Managed Service Accounts
 
 Windows container workloads can be configured to use Group Managed Service Accounts (GMSA).
-Group Managed Service Accounts are a specific type of Active Directory account that provide automatic password management,
+Group Managed Service Accounts are a specific type of Active Directory account that provide automatic password <example-value>,
 simplified service principal name (SPN) management, and the ability to delegate the management to other administrators across multiple servers.
 Containers configured with a GMSA can access external Active Directory Domain resources while carrying the identity configured with the GMSA.
 Learn more about configuring and using GMSA for Windows containers here.

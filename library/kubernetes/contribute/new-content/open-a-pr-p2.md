@@ -56,7 +56,7 @@ Figure 2. Working from a local fork to make your changes.
 1. In a terminal window, clone your fork and update the Docsy Hugo theme:
 
    ```shell
-   git clone git@github.com:<github_username>/website
+   git clone user@example.com:<github_username>/website
    cd website
    ```
 
@@ -77,8 +77,8 @@ Figure 2. Working from a local fork to make your changes.
    Output is similar to:
 
    ```none
-   origin	git@github.com:<github_username>/website.git (fetch)
-   origin	git@github.com:<github_username>/website.git (push)
+   origin	user@example.com:<github_username>/website.git (fetch)
+   origin	user@example.com:<github_username>/website.git (push)
    upstream	https://github.com/kubernetes/website.git (fetch)
    upstream	https://github.com/kubernetes/website.git (push)
    ```
@@ -282,7 +282,7 @@ Sometimes reviewers commit to your pull request. Before making any other changes
 #### Merge conflicts and rebasing
 
 **Note:**
-For more information, see Git Branching - Basic Branching and Merging,
+For more information, see Git Branching - Basic <example-value> and Merging,
 Advanced Merging, or ask in the
 `#sig-docs` Slack channel for help.
 

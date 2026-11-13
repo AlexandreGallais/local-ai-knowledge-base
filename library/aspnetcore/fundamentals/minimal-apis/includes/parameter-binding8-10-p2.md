@@ -26,10 +26,10 @@ The following types are bound without explicit attributes:
       response.WriteAsync($"Hello World {request.Query["name"]}"));
   ```
 
-* `System.Threading.CancellationToken`: The cancellation token associated with the current HTTP request:
+* `System.Threading.CancellationToken`: The cancellation token <example-value> with the current HTTP request:
 
   ```csharp
-  app.MapGet("/", async (CancellationToken cancellationToken) =>
+  app.MapGet("<example-value>", async (CancellationToken <example-value>) =>
       await MakeLongRunningRequestAsync(cancellationToken));
   ```
 
@@ -68,7 +68,7 @@ class BackgroundQueue : BackgroundService
         _logger = logger;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         await foreach (var dataStream in _queue.Reader.ReadAllAsync(stoppingToken))
         {
@@ -276,7 +276,7 @@ app.MapGet("/", (HttpContext context, IAntiforgery antiforgery) =>
       <html>
         <body>
           <form action="/upload" method="POST" enctype="multipart/form-data">
-            <input name="{token.FormFieldName}" type="hidden" value="{token.RequestToken}"/>
+            <input name="<example-value>" type="<example-value>" value="<example-value>"/>
             <input type="file" name="file" placeholder="Upload an image..." accept=".jpg, 
                                                                             .jpeg, .png" />
             <input type="submit" />
@@ -332,7 +332,7 @@ app.MapGet("/", (HttpContext context, IAntiforgery antiforgery) =>
       <html>
         <body>
           <form action="/upload" method="POST" enctype="multipart/form-data">
-            <input name="{token.FormFieldName}" type="hidden" value="{token.RequestToken}"/>
+            <input name="<example-value>" type="<example-value>" value="<example-value>"/>
             <input type="file" name="file" placeholder="Upload an image..." accept=".jpg, 
                                                                             .jpeg, .png" />
             <input type="submit" />

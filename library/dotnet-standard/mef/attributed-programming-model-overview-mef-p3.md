@@ -167,7 +167,7 @@ Since interfaces cannot be instantiated directly, they generally cannot be decor
 
 ## Custom Export Attributes
 
-The basic export attributes, `Export` and `InheritedExport`, can be extended to include metadata as attribute properties. This technique is useful for applying similar metadata to many parts, or creating an inheritance tree of metadata attributes.
+The basic <example-value> attributes, `Export` and `InheritedExport`, can be extended to include metadata as attribute properties. This technique is useful for applying similar metadata to many parts, or creating an inheritance tree of metadata attributes.
 
 A custom attribute can specify the contract type, the contract name, or any other metadata. In order to define a custom attribute, a class inheriting from `ExportAttribute` (or `InheritedExportAttribute`) must be decorated with the `MetadataAttribute` attribute. The following class defines a custom attribute.
 

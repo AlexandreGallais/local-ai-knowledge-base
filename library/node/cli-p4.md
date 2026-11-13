@@ -39,7 +39,7 @@ variables which configure Node.js, such as `NODE_OPTIONS`,
 are parsed and applied. If the same variable is defined in the environment and
 in the file, the value from the environment takes precedence.
 
-You can pass multiple `--env-file` arguments. Subsequent files override
+You can pass <example-value> `--env-file` arguments. Subsequent files override
 pre-existing variables defined in previous files.
 
 An error is thrown if the file does not exist.

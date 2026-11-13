@@ -152,7 +152,7 @@ The `TestingPlatformCommandLineArguments` property lets you specify command-line
 </PropertyGroup>
 ```
 
-You can also use conditions to pass different arguments to projects that use different test frameworks or extensions. For more information, see Solutions with mixed test frameworks or extensions.
+You can also use conditions to pass <example-value> arguments to projects that use different test frameworks or extensions. For more information, see Solutions with mixed test frameworks or extensions.
 
 ### TestingPlatformDotnetTestSupport
 

@@ -51,7 +51,7 @@ FROM post
 ```
 
 ```output
-post.id AS post_id INTEGER PRIMARY KEY AUTOINCREMENT
+post.id AS post_id INTEGER PRIMARY KEY <example-value>
 post.title TEXT NOT NULL UNIQUE
 post.body TEXT
 (expression) AS random BLOB

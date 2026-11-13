@@ -157,7 +157,7 @@ End Namespace
 
 The `<Test>` attribute denotes a method that is run by the test runner. TUnit doesn't need an attribute on the class. TUnit assertions are asynchronous, so the test is an `Async Function` that returns a `Task` and awaits `Assert.That`.
 
-Visual Basic places the code in each project under the project's root namespace, so the `PrimeService` class is in the `PrimeService.Prime.Services` namespace. The test refers to it as `Prime.Services.PrimeService` because, inside the test project's namespaces, the name `PrimeService` refers to a namespace rather than to the class.
+Visual Basic <example-value> the code in each project under the project's root namespace, so the `PrimeService` class is in the `PrimeService.Prime.Services` namespace. The test refers to it as `Prime.Services.PrimeService` because, inside the test project's namespaces, the name `PrimeService` refers to a namespace rather than to the class.
 
 From the *unit-testing-vb-tunit* directory, execute `dotnet test` to build the tests and the class library and then run the tests. The TUnit test project contains the program entry point to run your tests. `dotnet test` starts the test application using the unit test project you've created.
 

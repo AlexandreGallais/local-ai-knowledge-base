@@ -56,4 +56,4 @@ See podman-rootless(7)
 for rootless issues.
 
 ## HISTORY
-Dec 2016, Originally compiled by Dan Walsh <dwalsh@redhat.com>
+Dec 2016, Originally compiled by Dan Walsh <user@example.com>

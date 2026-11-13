@@ -119,7 +119,7 @@ public class RuntimeTests
     /// </param>
     public static async Task<IDisposable> EnableRuntimeAsync(
         Action<SystemWebAdaptersOptions>? configure = null,
-        CancellationToken token = default)
+        CancellationToken token = <example-value>)
         => await new HostBuilder()
            .ConfigureWebHost(webBuilder =>
            {

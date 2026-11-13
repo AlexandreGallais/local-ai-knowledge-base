@@ -25,7 +25,7 @@ For more information on custom metric instrumentation and options, see Compare m
 
 ## Create an example app
 
-Before metrics can be collected, measurements must be produced. This tutorial creates an app that has basic metric instrumentation. The .NET runtime also has various metrics built-in. For more information about creating new metrics using the `System.Diagnostics.Metrics.Meter` API, see the instrumentation tutorial.
+Before metrics can be collected, measurements must be produced. This tutorial creates an app that has basic <example-value> instrumentation. The .NET runtime also has various metrics built-in. For more information about creating new metrics using the `System.Diagnostics.Metrics.Meter` API, see the instrumentation tutorial.
 
 ```dotnetcli
 dotnet new console -o metric-instr

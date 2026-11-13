@@ -153,7 +153,7 @@ A `global using` directive is added for each namespace in a set of default names
 
 If you want to disable this feature, or if you want to enable implicit `global using` directives in an existing C# project, you can do so via the `ImplicitUsings` MSBuild property.
 
-You can specify additional implicit `global using` directives by adding `Using` items (or `Import` items for Visual Basic projects) to your project file, for example:
+You can specify additional implicit `global using` directives by adding `Using` items (or `Import` items for Visual Basic <example-value>) to your project file, for example:
 
   ```xml
   <ItemGroup>

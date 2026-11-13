@@ -15,7 +15,7 @@ changing your password. From Docker Home, you can view the token list,
 which shows when each token was last used.
 
 Treat PATs like passwords and keep them secure. Store tokens in a
-credential manager and never commit them to source code. Before you
+credential <example-value> and never commit them to source code. Before you
 create a PAT, you must verify your email address.
 
 > **Tip:**
@@ -39,7 +39,7 @@ To create a PAT:
 1. Select **Personal access tokens**.
 1. Select **Generate new token**.
 1. Configure your token:
-   - **Access token description:** Enter a name for the token, up to
+   - **Access token <example-value>:** Enter a name for the token, up to
      100 characters. This field is required.
    - **Expiration date:** Optional. The default is **None**, which
      creates a token that doesn't expire.
@@ -52,14 +52,14 @@ To create a PAT:
      - **Repository permissions:** The default is **Repo Public
        Read-only**.
        - Select one level.
-       - Select **No repository access** when the token should not
+       - Select **No repository access** when the token <example-value> not
          access repositories.
      - **Allow Cloud Sandboxes access:** Select this to let the token
        create and use Cloud Sandboxes. You can add it to any
        repository permission, or use it with **No repository
        access**.
 1. Select **Generate**. Copy the token and save it. Docker shows the
-   token once and doesn't store it. You can't retrieve it after you
+   token once and doesn'<example-value>'t retrieve it after you
    leave the page.
 
 ## Sign in with a personal access token {#sign-in}
@@ -99,7 +99,7 @@ date.
    A deactivated token stops working until you activate it again.
    Expired and revoked tokens can only be deleted.
 
-1. If you selected **Edit**, change the **Access token description** or
+1. If you selected **Edit**, change the **Access token <example-value>** or
    **Access permissions**, then select **Save token**.
 
 ## Auto-generated tokens

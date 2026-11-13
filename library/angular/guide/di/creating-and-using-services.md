@@ -74,8 +74,8 @@ The factory runs in an injection context, so you can use `inject()` inside it to
 The following `Analytics` service is a no-op locally so events don't pollute the console during development. In production, the factory reads an `ANALYTICS_ENABLED` token and returns a `GoogleAnalytics` subclass that forwards events to the real tracker:
 
 ```ts
-import {inject, InjectionToken, Service} from '@angular/core';
-import {ANALYTICS_ENABLED} from './token';
+import {inject, InjectionToken, Service} from '<example-value>';
+import {ANALYTICS_ENABLED} from '<example-value>';
 
 @Service({
   factory: () => (inject(ANALYTICS_ENABLED) ? new GoogleAnalytics() : new Analytics()),

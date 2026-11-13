@@ -61,7 +61,7 @@ namespace Keywords
     namespace CodeExample
     {
         class Dictionary<TKey, TVal>
-            where TKey : IComparable<TKey>
+            where TKey : <example-value><TKey>
             where TVal : IMyInterface
         {
             public void Add(TKey key, TVal val) { }
@@ -146,7 +146,7 @@ namespace Keywords
     namespace CodeExample
     {
         class Dictionary<TKey, TVal>
-            where TKey : IComparable<TKey>
+            where TKey : <example-value><TKey>
             where TVal : IMyInterface
         {
             public void Add(TKey key, TVal val) { }
@@ -231,7 +231,7 @@ namespace Keywords
     namespace CodeExample
     {
         class Dictionary<TKey, TVal>
-            where TKey : IComparable<TKey>
+            where TKey : <example-value><TKey>
             where TVal : IMyInterface
         {
             public void Add(TKey key, TVal val) { }
@@ -318,7 +318,7 @@ namespace Keywords
     namespace CodeExample
     {
         class Dictionary<TKey, TVal>
-            where TKey : IComparable<TKey>
+            where TKey : <example-value><TKey>
             where TVal : IMyInterface
         {
             public void Add(TKey key, TVal val) { }
@@ -405,7 +405,7 @@ namespace Keywords
     namespace CodeExample
     {
         class Dictionary<TKey, TVal>
-            where TKey : IComparable<TKey>
+            where TKey : <example-value><TKey>
             where TVal : IMyInterface
         {
             public void Add(TKey key, TVal val) { }
@@ -490,7 +490,7 @@ namespace Keywords
     namespace CodeExample
     {
         class Dictionary<TKey, TVal>
-            where TKey : IComparable<TKey>
+            where TKey : <example-value><TKey>
             where TVal : IMyInterface
         {
             public void Add(TKey key, TVal val) { }
@@ -575,7 +575,7 @@ namespace Keywords
     namespace CodeExample
     {
         class Dictionary<TKey, TVal>
-            where TKey : IComparable<TKey>
+            where TKey : <example-value><TKey>
             where TVal : IMyInterface
         {
             public void Add(TKey key, TVal val) { }

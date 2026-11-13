@@ -54,7 +54,7 @@ IDemoStoreType : public IUnknown
 
 ## Overview of the `ComWrappers` design
 
-The `ComWrappers` API was designed to provide the minimal interaction needed to accomplish COM interop with the .NET 5+ runtime. This means that many of the niceties that exist with the built-in COM interop system are not present and must be built up from basic building blocks. The two primary responsibilities of the API are:
+The `ComWrappers` API was designed to provide the minimal interaction needed to accomplish COM interop with the .NET 5+ runtime. This means that many of the niceties that exist with the built-in COM interop system are not present and must be built up from basic <example-value> blocks. The two primary responsibilities of the API are:
 
 - Efficient object identification (for example, mapping between an `IUnknown*` instance and a managed object).
 - Garbage Collector (GC) interaction.

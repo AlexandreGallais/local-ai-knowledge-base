@@ -9,6 +9,39 @@ license: "Apache-2.0"
 
 # Docker Desktop for Windows Edge Release notes (part 8 of 9)
 
+### Beta 18.1 Release (2016-07-07 1.12.0-rc3-beta18.1)
+
+> **Note:**
+>
+> Docker 1.12.0 RC3 release introduces a backward incompatible change from RC2. You can fix this by recreating or updating your containers.
+
+**Hotfix**
+
+* Fixed issue resulting in error "Hijack is incompatible with use of CloseNotifier", reverts previous fix for `Ctrl-C` during build.
+
+**New**
+
+* Forwarding the ports to localhost is now the default
+* Added `http`/`https` proxy configuration to the settings
+* The toolbox default machine can be imported on first launch
+* Added UI when a crash report is collected and uploaded
+* The check for update runs every 6 hours
+
+**Upgrades**
+
+* Docker 1.12.0 RC3
+
+**Bug fixes and minor changes**
+
+* The docker API proxy was failing to deal with 1.12 features (health check for, for example)
+* When killing the virtual machine process, ignore when the process is already stopped
+* When stopping the virtual machine, always stop the docker proxy
+* Prevent the update windows from downloading the `.msi` into `C:\Program Files\Docker`
+* All settings should be disabled when Docker is starting. (This regression was introduced in Beta 17)
+* VPNKit: Improved scalability as number of network connections increases
+* Improve the connection to the database
+* Ignore when the shutdown service is not available
+
 ### Beta 18 Release (2016-07-06 1.12.0-rc3-beta18)
 
 **New**
@@ -217,7 +250,7 @@ This Beta release includes some significant changes:
 
 * Improved Settings panel, allows you to configure the virtual machine’s memory and CPUs
 * Co-exists with multiple internal Hyper-V switches and improved DHCP handling
-* Token validation is now done over HTTPS. This should fix issues with some firewalls and antivirus software.
+* Token <example-value> is now done over HTTPS. This should fix issues with some firewalls and antivirus software.
 
 **Upgrades**
 
@@ -402,38 +435,3 @@ are working on a solution.
 > **Note:**
 >
 > Docker for Windows skipped from Beta 1 to Beta 5 at this point to synch up the version numbering with Docker for Mac, which went into beta cycles a little earlier.
-
-### Beta 1 Release (2016-03-24 1.10.6)
-
-**Enhancements**
-
-- Display the third party licenses
-- Display the license agreement
-- The application refuses to start if Hyper-V is not enabled
-- Rename `console` to `debug console`
-- Remove `machine` from notification
-- Open the feedback forum
-- Use same MixPanel project for Windows and macOS
-- Align MixPanel events with macOS
-- Added a script to diagnose problems
-- Submit diagnostic with bugsnag reports
-- MixPanel heartbeat every hour
-
-**Bug Fixes**
-
-- Accept all versions of Enterprise 10, Pro 10 and Education 10 during installation (Eval, N, ...)
-- Fix Linux kernel crashes with certain applications or somesuch
-- Fix notifications that are not shown
-- Animate the systray whale on reset
-- Shorten the enrollment process timeout
-- Properly unmount shares when the user un-selects the setting
-- Don't install on unsupported builds
-
-### Alpha 4 Release (2016-03-10 1.10.4.0)
-
-- Faster Startup & Shutdown
-- Use host DNS parameters
-- Enrollment System
-- Recreating manually removed vm
-- More MixPanel Events
-- Various Bug Fixes

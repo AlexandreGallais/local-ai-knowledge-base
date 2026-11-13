@@ -164,7 +164,7 @@ what `cargo` is and what each of these commands does in detail later.)
 ```console
 $ cargo new get-dependencies
 $ cd get-dependencies
-$ cargo add rand@0.10.1 trpl@0.2.0
+$ cargo add user@example.com user@example.com
 ```
 
 This will cache the downloads for these packages so you will not need to

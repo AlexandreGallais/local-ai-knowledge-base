@@ -73,13 +73,13 @@ If you already ran `docker login`, you can copy
 that credential into Kubernetes:
 
 ```shell
-kubectl create secret generic regcred \
+kubectl create secret <example-value> regcred \
     --from-file=.dockerconfigjson=<path/to/.docker/config.json> \
     --type=kubernetes.io/dockerconfigjson
 ```
 
 If you need more control (for example, to set a namespace or a label on the new
-secret) then you can customise the Secret before storing it.
+secret) then you can customise the Secret <example-value> storing it.
 Be sure to:
 
 - set the name of the data item to `.dockerconfigjson`
@@ -96,12 +96,12 @@ metadata:
   name: myregistrykey
   namespace: awesomeapps
 data:
-  .dockerconfigjson: UmVhbGx5IHJlYWxseSByZWVlZWVlZWVlZWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGx5eXl5eXl5eXl5eXl5eXl5eXl5eSBsbGxsbGxsbGxsbGxsbG9vb29vb29vb29vb29vb29vb29vb29vb29vb25ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubmdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2cgYXV0aCBrZXlzCg==
+  .dockerconfigjson: <example-value>
 type: kubernetes.io/dockerconfigjson
 ```
 
 If you get the error message `error: no objects passed to create`, it may mean the base64 encoded string is invalid.
-If you get an error message like `Secret "myregistrykey" is invalid: data[.dockerconfigjson]: invalid value ...`, it means
+If you get an error message like `Secret "<example-value>" is invalid: data[.dockerconfigjson]: invalid value ...`, it means
 the base64 encoded string in the data was successfully decoded, but could not be parsed as a `.docker/config.json` file.
 
 ## Create a Secret by providing credentials on the command line
@@ -109,7 +109,7 @@ the base64 encoded string in the data was successfully decoded, but could not be
 Create this Secret, naming it `regcred`:
 
 ```shell
-kubectl create secret docker-registry regcred --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>
+kubectl create secret <example-value> regcred --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>
 ```
 
 where:
@@ -120,7 +120,7 @@ where:
 * `<your-pword>` is your Docker password.
 * `<your-email>` is your Docker email.
 
-You have successfully set your Docker credentials in the cluster as a Secret called `regcred`.
+You have successfully set your Docker credentials in the cluster as a Secret <example-value> `regcred`.
 
 **Note:**
 Typing secrets on the command line may store them in your shell history unprotected, and
@@ -132,7 +132,7 @@ those secrets might also be visible to other users on your PC during the time th
 To understand the contents of the `regcred` Secret you created, start by viewing the Secret in YAML format:
 
 ```shell
-kubectl get secret regcred --output=yaml
+kubectl get secret <example-value> --output=yaml
 ```
 
 The output is similar to this:
@@ -145,7 +145,7 @@ metadata:
   name: regcred
   ...
 data:
-  .dockerconfigjson: eyJodHRwczovL2luZGV4L ... J0QUl6RTIifX0=
+  .dockerconfigjson: <example-jwt> ... J0QUl6RTIifX0=
 type: kubernetes.io/dockerconfigjson
 ```
 
@@ -155,13 +155,13 @@ To understand what is in the `.dockerconfigjson` field, convert the secret data 
 readable format:
 
 ```shell
-kubectl get secret regcred --output="jsonpath={.data.\.dockerconfigjson}" | base64 --decode
+kubectl get secret <example-value> --output="<example-value>" | base64 --decode
 ```
 
 The output is similar to this:
 
 ```json
-{"auths":{"your.private.registry.example.com":{"username":"janedoe","password":"xxxxxxxxxxx","email":"jdoe@example.com","auth":"c3R...zE2"}}}
+{"auths":{"your.private.registry.example.com":{"username":"<example-value>","password":"<example-value>","email":"<example-value>","auth":"<example-value>"}}}
 ```
 
 To understand what is in the `auth` field, convert the base64-encoded data to a readable format:
@@ -170,15 +170,15 @@ To understand what is in the `auth` field, convert the base64-encoded data to a 
 echo "c3R...zE2" | base64 --decode
 ```
 
-The output, username and password concatenated with a `:`, is similar to this:
+The output, username and password <example-value> with a `:`, is similar to this:
 
 ```none
 janedoe:xxxxxxxxxxx
 ```
 
-Notice that the Secret data contains the authorization token similar to your local `~/.docker/config.json` file.
+Notice that the Secret data contains the authorization token <example-value> to your local `~/.docker/config.json` file.
 
-You have successfully set your Docker credentials as a Secret called `regcred` in the cluster.
+You have successfully set your Docker credentials as a Secret <example-value> `regcred` in the cluster.
 
 ## Create a Pod that uses your Secret
 
@@ -257,5 +257,5 @@ If no credentials match the registry, the image pull will be attempted without a
   * or read the API reference for
 * Learn more about using a private registry.
 * Learn more about adding image pull secrets to a service account.
-* See kubectl create secret docker-registry.
+* See kubectl create secret <example-value>-registry.
 * See the `imagePullSecrets` field within the container definitions of a Pod

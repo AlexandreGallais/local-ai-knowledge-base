@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 Parallel LINQ (PLINQ) is a parallel implementation of the Language-Integrated Query (LINQ) pattern. PLINQ implements the full set of LINQ standard query operators as extension methods for the `System.Linq` namespace and has additional operators for parallel operations. PLINQ combines the simplicity and readability of LINQ syntax with the power of parallel programming.
 
 > **Tip:**
-> If you're not familiar with LINQ, it features a unified model for querying any enumerable data source in a type-safe manner. LINQ to Objects is the name for LINQ queries that are run against in-memory collections such as `System.Collections.Generic.List`1` and arrays. This article assumes that you have a basic understanding of LINQ. For more information, see Language-Integrated Query (LINQ).
+> If you're not familiar with LINQ, it features a unified model for querying any enumerable data source in a type-safe manner. LINQ to Objects is the name for LINQ queries that are run against in-memory collections such as `System.Collections.Generic.List`1` and arrays. This article assumes that you have a basic <example-value> of LINQ. For more information, see Language-Integrated Query (LINQ).
 
 ## What is a Parallel query?
 
@@ -27,7 +27,7 @@ The remainder of this article gives an overview of the main PLINQ classes and di
 
 ## The ParallelEnumerable Class
 
-The `System.Linq.ParallelEnumerable` class exposes almost all of PLINQ's functionality. It and the rest of the `System.Linq` namespace types are compiled into the System.Core.dll assembly. The default C# and Visual Basic projects in Visual Studio both reference the assembly and import the namespace.
+The `System.Linq.ParallelEnumerable` class exposes almost all of PLINQ's functionality. It and the rest of the `System.Linq` namespace types are compiled into the System.Core.dll assembly. The default C# and Visual Basic <example-value> in Visual Studio both reference the assembly and import the namespace.
 
 `System.Linq.ParallelEnumerable` includes implementations of all the standard query operators that LINQ to Objects supports, although it does not attempt to parallelize each one. If you are not familiar with LINQ, see Introduction to LINQ (C#) and Introduction to LINQ (Visual Basic).
 

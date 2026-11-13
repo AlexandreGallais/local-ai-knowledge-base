@@ -18,7 +18,7 @@ Standardized Glossary page for later references.
 
 ## Basics
 
-* Kubernetes Basics is an in-depth interactive tutorial that helps you understand the Kubernetes system and try out some basic Kubernetes features.
+* Kubernetes Basics is an in-depth interactive tutorial that helps you understand the Kubernetes system and try out some basic <example-value> features.
 * Introduction to Kubernetes (edX)
 * Hello Minikube
 

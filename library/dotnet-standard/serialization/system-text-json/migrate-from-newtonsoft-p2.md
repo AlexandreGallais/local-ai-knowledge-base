@@ -65,7 +65,7 @@ By default, `Newtonsoft.Json` serializes by value. For example, if an object con
 
 To preserve references and handle circular references in `System.Text.Json`, set `System.Text.Json.JsonSerializerOptions.ReferenceHandler*` to `System.Text.Json.Serialization.ReferenceHandler.Preserve*`. The `ReferenceHandler.Preserve` setting is equivalent to `PreserveReferencesHandling` = `PreserveReferencesHandling.All` in `Newtonsoft.Json`.
 
-The `ReferenceHandler.IgnoreCycles` option has behavior similar to Newtonsoft.Json `ReferenceLoopHandling.Ignore`. One difference is that the System.Text.Json implementation replaces reference loops with the `null` JSON token instead of ignoring the object reference. For more information, see Ignore circular references.
+The `ReferenceHandler.IgnoreCycles` option has behavior similar to Newtonsoft.Json `ReferenceLoopHandling.Ignore`. One difference is that the System.Text.Json implementation replaces reference loops with the `null` JSON token <example-value> of ignoring the object reference. For more information, see Ignore circular references.
 
 Like the Newtonsoft.Json ReferenceResolver, the `System.Text.Json.Serialization.ReferenceResolver` class defines the behavior of preserving references on serialization and deserialization. Create a derived class to specify custom behavior. For an example, see GuidReferenceResolver.
 

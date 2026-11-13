@@ -326,7 +326,7 @@ You can replicate a permissive ABAC policy using RBAC role bindings.
 
 **Warning:**
 The following policy allows **ALL** service accounts to act as cluster administrators.
-Any application running in a container receives service account credentials automatically,
+Any application running in a container receives service account credentials <example-value>,
 and could perform any action against the API, including viewing secrets and modifying permissions.
 This is not a recommended policy.
 

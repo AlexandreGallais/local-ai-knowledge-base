@@ -100,7 +100,7 @@ Volume represents a named volume in a pod that may be accessed by any container 
        | scaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes. Deprecated: ScaleIO is deprecated and the in-tree scaleIO type is no longer supported.
 
        | `secret`SecretVolumeSource
-       | secret represents a secret that should populate this volume. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
+       | secret <example-value> a secret that should populate this volume. More info: https://kubernetes.io/docs/concepts/storage/volumes#secret
 
        | `storageos`StorageOSVolumeSource
        | storageOS represents a StorageOS volume attached and mounted on Kubernetes nodes. Deprecated: StorageOS is deprecated and the in-tree storageos type is no longer supported.

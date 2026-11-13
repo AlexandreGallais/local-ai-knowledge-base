@@ -10,6 +10,7 @@ import {
   lineRange,
   mapCode,
   mapProse,
+  neutralizeExamples,
   region,
   withoutRegionMarks,
 } from './library-markdown.ts';
@@ -519,7 +520,7 @@ export function cleanDocument(text: string, context: CleanContext): Cleaned {
     .replace(/^﻿/, '');
   const front = FRONT_MATTER.exec(normalized);
   const raw = front === null ? normalized : normalized.slice(front[0].length);
-  const body = finishMarkdown(flavorPass(context, raw));
+  const body = neutralizeExamples(finishMarkdown(flavorPass(context, raw)));
   const heading = /^# (.+)$/m
     .exec(body)?.[1]
     ?.replaceAll(/`/g, '')

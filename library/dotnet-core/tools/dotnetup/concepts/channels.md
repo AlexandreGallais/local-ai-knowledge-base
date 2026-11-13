@@ -48,9 +48,9 @@ major/minor channel, such as `10.0`, or an exact runtime version, such as
 Use `component@version-or-channel` to select a runtime component:
 
 ```dotnetcli
-dotnetup runtime install runtime@10.0
-dotnetup runtime install aspnetcore@10.0
-dotnetup runtime install windowsdesktop@10.0
+dotnetup runtime install user@example.com
+dotnetup runtime install user@example.com
+dotnetup runtime install user@example.com
 ```
 
 When you omit the component name, `dotnetup` selects the core .NET runtime:

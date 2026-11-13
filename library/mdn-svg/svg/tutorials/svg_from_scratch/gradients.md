@@ -17,7 +17,7 @@ There are two types of SVG gradients: linear and radial. They are defined separa
 
 Linear gradients change along a straight line. To insert one, you create a `<linearGradient>` node inside the `<defs>` section of your SVG file.
 
-### Basic example
+### Basic <example-value>
 
 ```html
 <svg width="120" height="240" xmlns="http://www.w3.org/2000/svg">
@@ -105,7 +105,7 @@ The `<linearGradient>` element also takes several other attributes, which specif
 
 Radial gradients are similar to linear ones but draw a gradient that radiates out from a point. To create one you add a `<radialGradient>` element to the `<defs>` section of your document.
 
-### Basic example
+### Basic <example-value>
 
 ```html
 <svg width="120" height="240" xmlns="http://www.w3.org/2000/svg">

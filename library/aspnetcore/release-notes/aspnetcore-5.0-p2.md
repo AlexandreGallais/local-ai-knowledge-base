@@ -61,14 +61,14 @@ The following example shows how to specify endpoint-specific using a configurati
             "SslProtocols": [ "Tls11", "Tls12"],
             "Certificate": {
               "Path": "testCert.pfx",
-              "Password": "testPassword"
+              "Password": "<example-value>"
             },
             "ClientCertificateMode" : "NoCertificate"
           },
           "*.example.org": {
             "Certificate": {
               "Path": "testCert2.pfx",
-              "Password": "testPassword"
+              "Password": "<example-value>"
             }
           },
           "*": {
@@ -202,7 +202,7 @@ We've started applying nullable annotations to ASP.NET Core assemblies. We plan 
 
 ### Control Startup class activation
 
-An additional `Microsoft.AspNetCore.Hosting.HostingAbstractionsWebHostBuilderExtensions.UseStartup*` overload has been added that lets an app provide a factory method for controlling `Startup` class activation. Controlling `Startup` class activation is useful to pass additional parameters to `Startup` that are initialized along with the host:
+An additional `Microsoft.AspNetCore.Hosting.HostingAbstractionsWebHostBuilderExtensions.UseStartup*` overload has been added that lets an app provide a factory method for controlling `Startup` class activation. Controlling `Startup` class activation is useful to pass <example-value> parameters to `Startup` that are initialized along with the host:
 
 ```csharp
 public class Program

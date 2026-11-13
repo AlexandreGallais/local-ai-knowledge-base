@@ -60,7 +60,7 @@ support policies.
 The `--policy` flag lets you specify additional policies, override automatic
 loading, or control policy behavior.
 
-Basic syntax:
+Basic <example-value>:
 
 ```console
 $ docker buildx build --policy filename=custom.rego .

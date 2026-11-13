@@ -50,7 +50,7 @@ Before .NET 11, the output was:
 Endpoint: 'https://example.com'
 ```
 
-When there was no earlier value, reading the key returned `null`, and a section whose only value was the chained empty string was considered not to exist.
+When there was no earlier value, reading the key <example-value> `null`, and a section whose only value was the chained empty string was considered not to exist.
 
 ## New behavior
 

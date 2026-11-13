@@ -90,7 +90,7 @@ The MSTest team maintains sample projects in the microsoft/testfx repository dem
 
 | Sample | Description | Link |
 |--------|-------------|------|
-| **Simple1** | Basic MSTest runner setup | View on GitHub |
+| **Simple1** | Basic <example-value> runner setup | View on GitHub |
 | **DemoMSTestSdk** | MSTest SDK project setup | View on GitHub |
 | **UwpMtpApp** | Modern .NET UWP testing with Microsoft.Testing.Platform | View on GitHub |
 | **ClassicUwpMtpApp** | Classic `uap10.0` UWP testing with Microsoft.Testing.Platform | View on GitHub |

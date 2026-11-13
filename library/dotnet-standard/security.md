@@ -13,7 +13,7 @@ The common language runtime and .NET provide many useful classes and services th
 
 ## In this section
 
-- Key Security Concepts
+- Key <example-value> Concepts
 Provides an overview of common language runtime security features.
 
 - Role-Based Security
@@ -28,4 +28,4 @@ Describes some of the best practices for creating reliable .NET applications.
 ## Related sections
 
 Development Guide
-Provides a guide to all key technology areas and tasks for application development, including creating, configuring, debugging, securing, and deploying your application, and information about dynamic programming, interoperability, extensibility, memory management, and threading.
+Provides a guide to all key <example-value> areas and tasks for application development, including creating, configuring, debugging, securing, and deploying your application, and information about dynamic programming, interoperability, extensibility, memory management, and threading.

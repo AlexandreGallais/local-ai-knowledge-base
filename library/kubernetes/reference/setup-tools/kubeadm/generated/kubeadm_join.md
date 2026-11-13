@@ -22,9 +22,9 @@ There are 2 main schemes for discovery. The first is to use a shared
 token along with the IP address of the API server. The second is to
 provide a file - a subset of the standard kubeconfig file. The
 discovery/kubeconfig file supports token, client-go authentication
-plugins ("exec"), "tokenFile", and "authProvider". This file can be a
+plugins ("<example-value>"), "<example-value>", and "<example-value>". This file can be a
 local file or downloaded via an HTTPS URL. The forms are
-kubeadm join --discovery-token abcdef.1234567890abcdef 1.2.3.4:6443,
+kubeadm join --discovery-token <example-token> 1.2.3.4:6443,
 kubeadm join --discovery-file path/to/file.conf, or kubeadm join
 --discovery-file https://url/file.conf. Only one form can be used. If
 the discovery information is loaded from a URL, HTTPS must be used.
@@ -51,7 +51,7 @@ used to temporarily authenticate with the Kubernetes Control Plane to submit a
 certificate signing request (CSR) for a locally created key pair. By
 default, kubeadm will set up the Kubernetes Control Plane to automatically
 approve these signing requests. This token is passed in with the
---tls-bootstrap-token abcdef.1234567890abcdef flag.
+--tls-bootstrap-token <example-token> flag.
 
 Often times the same token is used for both parts. In this case, the
 --token flag can be used instead of specifying each token individually.
@@ -86,7 +86,7 @@ kubeadm join [api-server-endpoint] [flags]
 
  |  | If the node should host a new control plane instance, the port for the API Server to bind to.
 
- | --certificate-key string
+ | --certificate-key <example-value>
 
  |  | Use this key to decrypt the certificate secrets uploaded by init. The certificate key is a hex encoded string that is an AES key of size 32 bytes.
 
@@ -106,13 +106,13 @@ kubeadm join [api-server-endpoint] [flags]
 
  |  | For file-based discovery, a file or URL from which to load cluster information.
 
- | --discovery-token string
+ | --discovery-token <example-value>
 
  |  | For token-based discovery, the token used to validate cluster information fetched from the API server.
 
  | --discovery-token-ca-cert-hash strings
 
- |  | For token-based discovery, validate that the root CA public key matches this hash (format: "<type>:<value>").
+ |  | For token-based discovery, validate that the root CA public key <example-value> this hash (format: "<example-value>").
 
  | --discovery-token-unsafe-skip-ca-verification
 
@@ -142,11 +142,11 @@ kubeadm join [api-server-endpoint] [flags]
 
  |  | List of phases to be skipped
 
- | --tls-bootstrap-token string
+ | --tls-bootstrap-token <example-value>
 
  |  | Specify the token used to temporarily authenticate with the Kubernetes Control Plane while joining the node.
 
- | --token string
+ | --token <example-value>
 
  |  | Use this token for both discovery-token and tls-bootstrap-token when those values are not provided.
 

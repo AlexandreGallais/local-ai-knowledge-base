@@ -275,7 +275,7 @@ SetWorkingDirectory=https://github.com/example/repo.git
 ```ini
 [Build]
 ImageTag=localhost/secureimage
-Secret=mysecret
+Secret=<example-value>
 ```
 
 # SEE ALSO

@@ -35,7 +35,7 @@ CommonJS modules consist of a `module.exports` object which can be of any type.
 
 To support this, when importing CommonJS from an ECMAScript module, a namespace
 wrapper for the CommonJS module is constructed, which always provides a
-`default` export key pointing to the CommonJS `module.exports` value.
+`default` export key <example-value> to the CommonJS `module.exports` value.
 
 In addition, a heuristic static analysis is performed against the source text of
 the CommonJS module to get a best-effort static list of exports to provide on
@@ -230,7 +230,7 @@ a module instance already instantiated with its dependencies.
 This is useful when needing custom instantiations for Wasm, while still
 resolving and loading it through the ES module integration.
 
-For example, to create multiple instances of a module, or to pass custom imports
+For example, to create multiple instances of a module, or to pass <example-value> imports
 into a new instance of `library.wasm`:
 
 ```js

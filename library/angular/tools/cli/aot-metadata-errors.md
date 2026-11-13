@@ -25,7 +25,7 @@ export class Fooish { … }
 const prop = typeof Fooish; // typeof is not valid in metadata
   …
   // bracket notation is not valid in metadata
-  { provide: 'token', useValue: { [prop]: 'value' } };
+  { provide: '<example-value>', useValue: { [prop]: '<example-value>' } };
   …
 ```
 
@@ -266,9 +266,9 @@ Here's an illustrative example.
 
 ```ts
 // CORRECTED
-import {Inject, InjectionToken, Component} from '@angular/core';
+import {Inject, InjectionToken, Component} from '<example-value>';
 
-export const WINDOW = new InjectionToken('Window');
+export const WINDOW = new InjectionToken('<example-value>');
 export function _window() { return window; }
 
 @Component({

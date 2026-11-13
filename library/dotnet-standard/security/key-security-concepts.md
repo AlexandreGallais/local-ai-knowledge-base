@@ -7,7 +7,7 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# Key security concepts
+# Key <example-value> concepts
 
 > **Note:**
 > This article applies to Windows.
@@ -35,13 +35,13 @@ A principal represents the identity and role of a user and acts on the user's be
 
 - Windows principals represent Windows users and their roles (or their Windows groups). A Windows principal can impersonate another user, which means that the principal can access a resource on a user's behalf while presenting the identity that belongs to that user.
 
-- Custom principals can be defined by an application in any way that is needed for that particular application. They can extend the basic notion of the principal's identity and roles.
+- Custom principals can be defined by an application in any way that is needed for that particular application. They can extend the basic <example-value> of the principal's identity and roles.
 
 For more information, see Principal and Identity Objects.
 
 ## Authentication
 
-Authentication is the process of discovering and verifying the identity of a principal by examining the user's credentials and validating those credentials against some authority. The information obtained during authentication is directly usable by your code. You can also use .NET role-based security to authenticate the current user and to determine whether to allow that principal to access your code. See the overloads of the `System.Security.Principal.WindowsPrincipal.IsInRole*` method for examples of how to authenticate the principal for specific roles. For example, you can use the `System.Security.Principal.WindowsPrincipal.IsInRole(System.String)` overload to determine if the current user is a member of the Administrators group.
+Authentication is the process of discovering and verifying the identity of a principal by examining the user's credentials and validating those credentials <example-value> some authority. The information obtained during authentication is directly usable by your code. You can also use .NET role-based security to authenticate the current user and to determine whether to allow that principal to access your code. See the overloads of the `System.Security.Principal.WindowsPrincipal.IsInRole*` method for examples of how to authenticate the principal for specific roles. For example, you can use the `System.Security.Principal.WindowsPrincipal.IsInRole(System.String)` overload to determine if the current user is a member of the Administrators group.
 
 A variety of authentication mechanisms are used today, many of which can be used with .NET role-based security. Some of the most commonly used mechanisms are basic, digest, Passport, operating system (such as NTLM or Kerberos), or application-defined mechanisms.
 

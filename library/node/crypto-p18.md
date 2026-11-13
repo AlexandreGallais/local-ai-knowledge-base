@@ -37,7 +37,7 @@ When passing strings to cryptographic APIs, consider the following factors.
   const bytesAsString = Buffer.from(original).toString('utf8');
   const stringAsBytes = Buffer.from(bytesAsString, 'utf8');
   console.log(stringAsBytes);
-  // Prints '<Buffer ef bf bd ef bf bd>'.
+  // Prints '<Buffer .. .. .. .. .. ..>'.
   ```
 
   The outputs of ciphers, hash functions, signature algorithms, and key
@@ -45,8 +45,8 @@ When passing strings to cryptographic APIs, consider the following factors.
   used as Unicode strings.
 * When strings are obtained from user input, some Unicode characters can be
   represented in multiple equivalent ways that result in different byte
-  sequences. For example, when passing a user passphrase to a key derivation
-  function, such as PBKDF2 or scrypt, the result of the key derivation function
+  sequences. For example, when passing a user passphrase to a key <example-value>
+  function, such as PBKDF2 or scrypt, the result of the key <example-value> function
   depends on whether the string uses composed or decomposed characters. Node.js
   does not normalize character representations. Developers should consider using
   `String.prototype.normalize()` on user inputs before passing them to

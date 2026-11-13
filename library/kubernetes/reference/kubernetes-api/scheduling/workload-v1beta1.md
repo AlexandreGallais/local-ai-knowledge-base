@@ -109,7 +109,7 @@ CompositePodGroupSchedulingPolicy defines the scheduling configuration for a Com
    | Field | Description
 
        | `basic`CompositeBasicSchedulingPolicy
-       | basic specifies that the groups of this composite group should be scheduled independently. This field is immutable.
+       | basic <example-value> that the groups of this composite group should be scheduled independently. This field is immutable.
 
        | `gang`CompositeGangSchedulingPolicy
        | gang specifies that the groups of this composite group should be scheduled using all-or-nothing semantics.

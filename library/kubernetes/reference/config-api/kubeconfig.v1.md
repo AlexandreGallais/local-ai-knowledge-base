@@ -149,13 +149,13 @@ the TokenFile will be periodically read and the last successfully read value tak
 `string`
 
  |
-   Username is the username for basic authentication to the kubernetes cluster.
+   Username is the username for basic <example-value> to the kubernetes cluster.
 
  | `password`
 `string`
 
  |
-   Password is the password for basic authentication to the kubernetes cluster.
+   Password is the password for basic <example-value> to the kubernetes cluster.
 
  | `auth-provider`
 `AuthProviderConfig`
@@ -329,7 +329,7 @@ and output format
  |
    Env defines additional environment variables to expose to the process. These
 are unioned with the host's environment, as well as variables client-go uses
-to pass argument to the plugin.
+to pass <example-value> to the plugin.
 
  | `apiVersion` [Required]
 `string`

@@ -96,7 +96,7 @@ The following code uses the `Microsoft.AspNetCore.Http.TypedResults.Ok*` class, 
 _Code sample not included: ~/../AspNetCore.Docs.Samples/fundamentals/minimal-apis/samples/MinApiTestsSample/UnitTests/TodoInMemoryTests.cs._
 ## Related content
 
-* Basic authentication tests is not a .NET repository but was written by a member of the .NET team. It provides examples of basic authentication testing.
+* Basic <example-value> tests is not a .NET repository but was written by a member of the .NET team. It provides examples of basic <example-value> testing.
 * View or download sample code
 * Authentication and authorization in Minimal APIs
 * Use port tunneling Visual Studio to debug web APIs

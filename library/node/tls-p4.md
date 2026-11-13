@@ -59,7 +59,7 @@ Construct a new `tls.TLSSocket` object from an existing TCP socket.
 
 * `line` {Buffer} Line of ASCII text, in NSS `SSLKEYLOGFILE` format.
 
-The `keylog` event is emitted on a `tls.TLSSocket` when key material
+The `keylog` event is emitted on a `tls.TLSSocket` when key <example-value>
 is generated or received by the socket. This keying material can be stored
 for debugging, as it allows captured TLS traffic to be decrypted. It may
 be emitted multiple times, before or after the handshake completes.
@@ -222,7 +222,7 @@ const keyingMaterial = tlsSocket.exportKeyingMaterial(
 
 /*
  Example return value of keyingMaterial:
- <Buffer 76 26 af 99 c5 56 8e 42 09 91 ef 9f 93 cb ad 6c 7b 65 f8 53 f1 d8 d9
+ <Buffer .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. d9
     12 5a 33 b8 b5 25 df 7b 37 9f e0 e2 4f b8 67 83 a3 2f cd 5d 41 42 4c 91
     74 ef 2c ... 78 more bytes>
 */
@@ -272,13 +272,13 @@ for more information.
 
 * Returns: {Object}
 
-Returns an object describing ephemeral key agreement in perfect forward
+Returns an object describing ephemeral key <example-value> in perfect forward
 secrecy on a client connection. It returns an empty object when the key
 agreement is not ephemeral. As this is only supported on a client socket;
 `null` is returned if called on a server socket. The supported types are `'DH'`,
 `'ECDH'`, and `'TLSGroup'`. For `'DH'` and `'ECDH'`, the object describes peer
 temporary key parameters. For `'TLSGroup'`, the object identifies the negotiated
-TLS Supported Group used for key agreement when a peer temporary key object is
+TLS Supported Group used for key <example-value> when a peer temporary key <example-value> is
 not available.
 
 The `name` property is available only when type is `'ECDH'` or `'TLSGroup'`. The

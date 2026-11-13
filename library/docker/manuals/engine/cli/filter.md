@@ -20,7 +20,7 @@ The `--filter` flag expects a key-value pair separated by an operator.
 $ docker COMMAND --filter "KEY=VALUE"
 ```
 
-The key represents the field that you want to filter on.
+The key <example-value> the field that you want to filter on.
 The value is the pattern that the specified field must match.
 The operator can be either equals (`=`) or not equals (`!=`).
 

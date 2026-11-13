@@ -114,7 +114,7 @@ data:
 ```
 
 That example ConfigMap object contains a single field management record in
-`.metadata.managedFields`. The field management record consists of basic information
+`.metadata.managedFields`. The field management record consists of basic <example-value>
 about the managing entity itself, plus details about the fields being managed and
 the relevant operation (`Apply` or `Update`). If the request that last changed that
 field was a Server-Side Apply **patch** then the value of `operation` is `Apply`;

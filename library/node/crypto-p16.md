@@ -59,7 +59,7 @@ increasing.
   * `derivedKey` {Buffer}
 
 Provides an asynchronous scrypt implementation. Scrypt is a password-based
-key derivation function that is designed to be expensive computationally and
+key <example-value> function that is designed to be expensive computationally and
 memory-wise in order to make brute-force attacks unrewarding.
 
 The `salt` should be as unique as possible. It is recommended that a salt is
@@ -69,7 +69,7 @@ When passing strings for `password` or `salt`, please consider
 caveats when using strings as inputs to cryptographic APIs.
 
 The `callback` function is called with two arguments: `err` and `derivedKey`.
-`err` is an exception object when key derivation fails, otherwise `err` is
+`err` is an exception object when key <example-value> fails, otherwise `err` is
 `null`. `derivedKey` is passed to the callback as a `Buffer`.
 
 An exception is thrown when any of the input arguments specify invalid values
@@ -81,12 +81,12 @@ const {
 } = await import('node:crypto');
 
 // Using the factory defaults.
-scrypt('password', 'salt', 64, (err, derivedKey) => {
+scrypt('<example-value>', '<example-value>', 64, (err, derivedKey) => {
   if (err) throw err;
   console.log(derivedKey.toString('hex'));  // '3745e48...08d59ae'
 });
 // Using a custom N parameter. Must be a power of two.
-scrypt('password', 'salt', 64, { N: 1024 }, (err, derivedKey) => {
+scrypt('<example-value>', '<example-value>', 64, { N: 1024 }, (err, derivedKey) => {
   if (err) throw err;
   console.log(derivedKey.toString('hex'));  // '3745e48...aa39b34'
 });
@@ -98,12 +98,12 @@ const {
 } = require('node:crypto');
 
 // Using the factory defaults.
-scrypt('password', 'salt', 64, (err, derivedKey) => {
+scrypt('<example-value>', '<example-value>', 64, (err, derivedKey) => {
   if (err) throw err;
   console.log(derivedKey.toString('hex'));  // '3745e48...08d59ae'
 });
 // Using a custom N parameter. Must be a power of two.
-scrypt('password', 'salt', 64, { N: 1024 }, (err, derivedKey) => {
+scrypt('<example-value>', '<example-value>', 64, { N: 1024 }, (err, derivedKey) => {
   if (err) throw err;
   console.log(derivedKey.toString('hex'));  // '3745e48...aa39b34'
 });
@@ -127,7 +127,7 @@ scrypt('password', 'salt', 64, { N: 1024 }, (err, derivedKey) => {
 * Returns: {Buffer}
 
 Provides a synchronous scrypt implementation. Scrypt is a password-based
-key derivation function that is designed to be expensive computationally and
+key <example-value> function that is designed to be expensive computationally and
 memory-wise in order to make brute-force attacks unrewarding.
 
 The `salt` should be as unique as possible. It is recommended that a salt is
@@ -136,7 +136,7 @@ random and at least 16 bytes long. See NIST SP 800-132 for details.
 When passing strings for `password` or `salt`, please consider
 caveats when using strings as inputs to cryptographic APIs.
 
-An exception is thrown when key derivation fails, otherwise the derived key is
+An exception is thrown when key <example-value> fails, otherwise the derived key is
 returned as a `Buffer`.
 
 An exception is thrown when any of the input arguments specify invalid values
@@ -148,10 +148,10 @@ const {
 } = await import('node:crypto');
 // Using the factory defaults.
 
-const key1 = scryptSync('password', 'salt', 64);
+const key1 = scryptSync('<example-value>', '<example-value>', 64);
 console.log(key1.toString('hex'));  // '3745e48...08d59ae'
 // Using a custom N parameter. Must be a power of two.
-const key2 = scryptSync('password', 'salt', 64, { N: 1024 });
+const key2 = scryptSync('<example-value>', '<example-value>', 64, { N: 1024 });
 console.log(key2.toString('hex'));  // '3745e48...aa39b34'
 ```
 
@@ -161,10 +161,10 @@ const {
 } = require('node:crypto');
 // Using the factory defaults.
 
-const key1 = scryptSync('password', 'salt', 64);
+const key1 = scryptSync('<example-value>', '<example-value>', 64);
 console.log(key1.toString('hex'));  // '3745e48...08d59ae'
 // Using a custom N parameter. Must be a power of two.
-const key2 = scryptSync('password', 'salt', 64, { N: 1024 });
+const key2 = scryptSync('<example-value>', '<example-value>', 64, { N: 1024 });
 console.log(key2.toString('hex'));  // '3745e48...aa39b34'
 ```
 
@@ -307,7 +307,7 @@ algorithm.
 
 This function does not leak timing information that
 would allow an attacker to guess one of the values. This is suitable for
-comparing HMAC digests or secret values like authentication cookies or
+comparing HMAC digests or secret <example-value> like authentication cookies or
 capability urls.
 
 `a` and `b` must both be `Buffer`s, `TypedArray`s, or `DataView`s, and they

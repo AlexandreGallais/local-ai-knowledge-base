@@ -71,7 +71,7 @@ connecting.
 
 ### Troubleshoot conflicts between the `daemon.json` and startup scripts
 
-If you use a `daemon.json` file and also pass options to the `dockerd` command
+If you use a `daemon.json` file and also pass <example-value> to the `dockerd` command
 manually or using start-up scripts, and these options conflict, Docker fails to
 start with an error such as:
 

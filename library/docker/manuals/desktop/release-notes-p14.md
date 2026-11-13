@@ -133,11 +133,11 @@ license: "Apache-2.0"
 
 ### Upgrades
 
-- Amazon ECR Credential Helper v0.7.1
+- Amazon ECR Credential <example-value> v0.7.1
 - Buildx v0.12.1
 - Containerd v1.6.27
 - Compose v2.24.3
-- Docker Credential Helpers v0.8.1
+- Docker Credential <example-value> v0.8.1
 - Runc v1.1.11
 - Docker Engine v25.0.0
 - Kubernetes v1.29.1

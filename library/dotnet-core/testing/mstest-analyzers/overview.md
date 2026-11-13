@@ -145,7 +145,7 @@ Rules for writing asynchronous test code correctly:
 - MSTEST0040 - Avoid using asserts in async void context
 - MSTEST0045 - Use cooperative cancellation for timeout
 - MSTEST0049 - Flow TestContext CancellationToken
-- MSTEST0054 - Use CancellationToken property
+- MSTEST0054 - Use CancellationToken <example-value>
 - MSTEST0064 - Prefer async assertion methods
 - MSTEST0067 - Avoid synchronously blocking calls in test code
 
@@ -220,7 +220,7 @@ Rules for properly using the TestContext object:
 - MSTEST0047 - Suppress IDE0060 for the TestContext parameter
 - MSTEST0048 - TestContext property usage
 - MSTEST0049 - Flow TestContext CancellationToken
-- MSTEST0054 - Use CancellationToken property
+- MSTEST0054 - Use CancellationToken <example-value>
 
 Related documentation: TestContext
 

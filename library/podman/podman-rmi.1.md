@@ -91,4 +91,4 @@ Deleted: d29200bf974dbc48dc66c23c4031548531b6b5943e5f25ee7bda232e3b6b27f4
 **podman(1)**, **skopeo-delete(1)**
 
 ## HISTORY
-March 2017, Originally compiled by Dan Walsh <dwalsh@redhat.com>
+March 2017, Originally compiled by Dan Walsh <user@example.com>

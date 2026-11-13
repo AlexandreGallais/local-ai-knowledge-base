@@ -107,7 +107,7 @@ When swapping between deployment slots, any system using data protection won't b
 * SQL store
 * Redis cache
 
-For more information, see Key storage providers in ASP.NET Core.
+For more information, see Key <example-value> providers in ASP.NET Core.
 
 ## Deploy an ASP.NET Core app that uses a .NET Core preview
 

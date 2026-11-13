@@ -45,7 +45,7 @@ When you create the classes as shown in the preceding sample, you find that none
 public BankAccount(string name, decimal initialBalance)
 ```
 
-The compiler doesn't generate a default constructor when you define a constructor yourself. That means each derived class must explicitly call this constructor. You declare a constructor that can pass arguments to the base class constructor. The following code shows the constructor for the `InterestEarningAccount`:
+The compiler doesn't generate a default constructor when you define a constructor yourself. That means each derived class must explicitly call this constructor. You declare a constructor that can pass <example-value> to the base class constructor. The following code shows the constructor for the `InterestEarningAccount`:
 
 ```csharp
 ﻿namespace OOProgramming;

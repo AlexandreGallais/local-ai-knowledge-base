@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## LINQ
 
-New methods `System.Linq.Enumerable.CountBy*` and `System.Linq.Enumerable.AggregateBy*` have been introduced. These methods make it possible to aggregate state by key without needing to allocate intermediate groupings via `System.Linq.Enumerable.GroupBy*`.
+New methods `System.Linq.Enumerable.CountBy*` and `System.Linq.Enumerable.AggregateBy*` have been introduced. These methods make it possible to aggregate state by key <example-value> needing to allocate intermediate groupings via `System.Linq.Enumerable.GroupBy*`.
 
 `System.Linq.Enumerable.CountBy*` lets you quickly calculate the frequency of each key. The following example finds the word that occurs most frequently in a text string.
 
@@ -267,7 +267,7 @@ The new `TypeName` class provides:
   - `IsNested` and `DeclaringType` for working with nested types.
   - `AssemblyName`, which exposes the assembly name information via the new `System.Reflection.Metadata.AssemblyNameInfo` class. In contrast to `AssemblyName`, the new type is _immutable_, and parsing culture names doesn't create instances of `CultureInfo`.
 
-Both `TypeName` and `AssemblyNameInfo` types are immutable and don't provide a way to check for equality (they don't implement `IEquatable`). Comparing assembly names is simple, but different scenarios need to compare only a subset of exposed information (`Name`, `Version`, `CultureName`, and `PublicKeyOrToken`).
+Both `TypeName` and `AssemblyNameInfo` types are immutable and don'<example-value>'t implement `IEquatable`). Comparing assembly names is simple, but different scenarios need to compare only a subset of exposed information (`Name`, `Version`, `CultureName`, and `PublicKeyOrToken`).
 
 The following code snippet shows some example usage.
 

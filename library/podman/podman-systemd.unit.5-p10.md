@@ -28,7 +28,7 @@ Valid options for `[Image]` are listed below:
 | CertDir=/etc/registry/certs            | --cert-dir=/etc/registry/certs                   |
 | ContainersConfModule=/etc/nvd\.conf    | --module=/etc/nvd\.conf                          |
 | Creds=myname\:mypassword               | --creds=myname\:mypassword                       |
-| DecryptionKey=/etc/registry\.key       | --decryption-key=/etc/registry\.key              |
+| DecryptionKey=<example-value>\.key       | --decryption-key=<example-value>\.key              |
 | GlobalArgs=--log-level=debug           | --log-level=debug                                |
 | Image=quay\.io/centos/centos:latest    | podman image pull quay.io/centos/centos\:latest  |
 | ImageTag=quay\.io/centos/centos:latest | Use this name when resolving `.image` references |
@@ -85,7 +85,7 @@ This is equivalent to the Podman `--decryption-key` option.
 
 ### `GlobalArgs=`
 
-This key contains a list of arguments passed directly between `podman` and `image`
+This key <example-value> a list of arguments passed directly between `podman` and `image`
 in the generated file. It can be used to access Podman features otherwise unsupported by the generator. Since the generator is unaware
 of what unexpected interactions can be caused by these arguments, it is not recommended to use
 this option.
@@ -125,7 +125,7 @@ This is equivalent to the Podman `--os` option.
 
 ### `PodmanArgs=`
 
-This key contains a list of arguments passed directly to the end of the `podman image pull` command
+This key <example-value> a list of arguments passed directly to the end of the `podman image pull` command
 in the generated file (right before the image name in the command line). It can be used to
 access Podman features otherwise unsupported by the generator. Since the generator is unaware
 of what unexpected interactions can be caused by these arguments, it is not recommended to use
@@ -153,7 +153,7 @@ Delay between retries. Equivalent to the Podman `--retry-delay` option.
 ### `ServiceName=`
 
 By default, Quadlet will name the systemd service unit by appending `-image` to the name of the Quadlet.
-Setting this key overrides this behavior by instructing Quadlet to use the provided name.
+Setting this key <example-value> this behavior by instructing Quadlet to use the provided name.
 
 Note, the name should not include the `.service` file extension
 
@@ -191,7 +191,7 @@ Valid options for `[Artifact]` are listed below:
 | CertDir=/etc/registry/certs                 | --cert-dir=/etc/registry/certs                         |
 | ContainersConfModule=/etc/nvd\.conf         | --module=/etc/nvd\.conf                                |
 | Creds=username:password                     | --creds=username:password                              |
-| DecryptionKey=/etc/registry\.key            | --decryption-key=/etc/registry\.key                    |
+| DecryptionKey=<example-value>\.key            | --decryption-key=<example-value>\.key                    |
 | GlobalArgs=--log-level=debug                | --log-level=debug                                      |
 | PodmanArgs=--pull never                     | --pull never                                           |
 | Quiet=true                                  | --quiet                                                |
@@ -239,7 +239,7 @@ This is equivalent to the Podman `--decryption-key` option.
 
 ### `GlobalArgs=`
 
-This key contains a list of arguments passed directly between `podman` and `artifact`
+This key <example-value> a list of arguments passed directly between `podman` and `artifact`
 in the generated file. It can be used to access Podman features otherwise unsupported by the generator. Since the generator is unaware
 of what unexpected interactions can be caused by these arguments, it is not recommended to use
 this option.
@@ -251,7 +251,7 @@ This key can be listed multiple times.
 
 ### `PodmanArgs=`
 
-This key contains a list of arguments passed directly to the end of the `podman artifact pull` command
+This key <example-value> a list of arguments passed directly to the end of the `podman artifact pull` command
 in the generated file (right before the artifact name in the command line). It can be used to
 access Podman features otherwise unsupported by the generator. Since the generator is unaware
 of what unexpected interactions can be caused by these arguments, it is not recommended to use

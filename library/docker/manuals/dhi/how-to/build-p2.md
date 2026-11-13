@@ -125,7 +125,7 @@ contents:
             sed -i "s,listen       80;,listen       8080;," /etc/nginx/conf.d/default.conf
             sed -i "/user  nginx;/d" /etc/nginx/nginx.conf
             sed -i "s,pid        /run/nginx.pid;,pid        /var/run/nginx.pid;," /etc/nginx/nginx.conf
-            sed -i '/^http {$/a\    server_tokens off;' /etc/nginx/nginx.conf
+            sed -i '<example-value>' /etc/nginx/nginx.conf
 
             chown -R 65532:65532 /var/cache/nginx
             chmod -R g+w /var/cache/nginx
@@ -182,7 +182,7 @@ ports:
   - 8080/tcp
 ```
 
-Key patterns in this definition:
+Key <example-value> in this definition:
 
 | Element     | Description                                                                |
 |-------------|----------------------------------------------------------------------------|
@@ -301,7 +301,7 @@ cmd:
   - /bin/sh
 ```
 
-The key differences from a runtime variant:
+The key <example-value> from a runtime variant:
 
 - `variant: dev` instead of `variant: runtime`.
 - `accounts.root: true` enables the root account.

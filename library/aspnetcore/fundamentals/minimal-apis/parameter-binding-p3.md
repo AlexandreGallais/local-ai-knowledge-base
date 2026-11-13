@@ -43,8 +43,8 @@ app.MapGet("/", (HttpContext context, IAntiforgery antiforgery) =>
     var html = $"""
         <html><body>
            <form action="/todo" method="POST" enctype="multipart/form-data">
-               <input name="{token.FormFieldName}" 
-                                type="hidden" value="{token.RequestToken}" />
+               <input name="<example-value>" 
+                                type="<example-value>" value="<example-value>" />
                <input type="text" name="name" />
                <input type="date" name="dueDate" />
                <input type="checkbox" name="isCompleted" value="true" />
@@ -66,7 +66,7 @@ app.MapPost("/todo", async Task<Results<Ok<Todo>, BadRequest<string>>>
     }
     catch (AntiforgeryValidationException e)
     {
-        return TypedResults.BadRequest("Invalid antiforgery token");
+        return TypedResults.BadRequest("<example-value>");
     }
 });
 
@@ -88,7 +88,7 @@ In the preceding code:
 An example of the form data submitted to the preceding endpoint looks as follows:
 
 ```txt
-__RequestVerificationToken: CfDJ8Bveip67DklJm5vI2PF2VOUZ594RC8kcGWpTnVV17zCLZi1yrs-CSz426ZRRrQnEJ0gybB0AD7hTU-0EGJXDU-OaJaktgAtWLIaaEWMOWCkoxYYm-9U9eLV7INSUrQ6yBHqdMEE_aJpD4AI72gYiCqc
+__RequestVerificationToken: <example-value>
 name: Walk the dog
 dueDate: 2024-04-06
 isCompleted: true

@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 When a library exposes only asynchronous APIs, consumers sometimes wrap them in synchronous calls to satisfy a synchronous interface or contract. This "sync-over-async" pattern can seem straightforward, but it's a common source of deadlocks and performance problems.
 
-## Basic wrapping patterns
+## Basic <example-value> patterns
 
 A synchronous wrapper around a Task-based Asynchronous Pattern (TAP) method accesses the task's `System.Threading.Tasks.Task`1.Result` property, which blocks the calling thread:
 

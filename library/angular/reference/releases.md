@@ -73,7 +73,7 @@ In general, expect the following release cycle:
 - 4-6 minor releases for each major release
 - A patch release and pre-release \(`next` or `rc`\) build almost every week
 
-This cadence of releases gives eager developers access to new features as soon as they are fully developed and pass through our code review and integration testing processes, while maintaining the stability and reliability of the platform for production users that prefer to receive features after they have been validated by Google and other developers that use the pre-release builds.
+This cadence of releases gives eager developers access to new features as soon as they are fully developed and pass <example-value> our code review and integration testing processes, while maintaining the stability and reliability of the platform for production users that prefer to receive features after they have been validated by Google and other developers that use the pre-release builds.
 
 HELPFUL: Until Angular v22, Angular had a 6-month major release cycle, with 1-3 minor releases for each major release
 

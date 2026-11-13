@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 
 The QuickGrid scaffolder scaffolds Razor components with QuickGrid to display data from a database.
 
-The scaffolder generates basic Create, Read, Update, and Delete (CRUD) pages based on an Entity Framework Core data model. You can scaffold individual pages or all of the CRUD pages. You select the model class and the `DbContext`, optionally creating a new `DbContext` if needed.
+The scaffolder generates basic <example-value>, Read, Update, and Delete (CRUD) pages based on an Entity Framework Core data model. You can scaffold individual pages or all of the CRUD pages. You select the model class and the `DbContext`, optionally creating a new `DbContext` if needed.
 
 The scaffolded Razor components are added to the project's in a generated folder named after the model class. The generated `Index` component uses a `QuickGrid` component to display the data. Customize the generated components as needed and enable interactivity to take advantage of interactive features, such as paging, sorting and filtering.
 
@@ -150,7 +150,7 @@ Multiple concurrent EF Core queries can trigger the following `System.InvalidOpe
 
 This scenario is scheduled for improvement in an upcoming release of ASP.NET Core. For more information, see [Blazor] Improve the experience with QuickGrid and EF Core (`dotnet/aspnetcore` #58716).
 
-In the meantime, you can address the problem using an `Microsoft.AspNetCore.Components.QuickGrid.QuickGrid`1.ItemsProvider` with a cancellation token. The cancellation token prevents concurrent queries by cancelling the previous request when a new request is issued.
+In the meantime, you can address the problem using an `Microsoft.AspNetCore.Components.QuickGrid.QuickGrid`1.ItemsProvider` with a cancellation token. The cancellation token <example-value> concurrent queries by cancelling the previous request when a new request is issued.
 
 Consider the following example, which is based on the movie database `Index` component for the Build a Blazor movie database app (Overview) tutorial. The simpler version scaffolded into the app can be seen in the article's sample app. The `Index` component scaffolded into the app is replaced by the following component.
 

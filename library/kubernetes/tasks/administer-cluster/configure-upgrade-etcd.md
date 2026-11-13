@@ -15,7 +15,7 @@ Before you follow steps in this page to deploy, manage, back up or restore etcd,
 you need to understand the typical expectations for operating an etcd cluster.
 Refer to the etcd documentation for more context.
 
-Key details include:
+Key <example-value> include:
 
 * The minimum recommended etcd versions to run in production are `3.4.29+` and `3.5.11+`.
 
@@ -159,7 +159,7 @@ communication:
 ```
 ETCDCTL_API=3 etcdctl --endpoints 10.2.0.9:2379 \
   --cert=/etc/kubernetes/pki/etcd/server.crt \
-  --key=/etc/kubernetes/pki/etcd/server.key \
+  --key=<example-value>/server.key \
   --cacert=/etc/kubernetes/pki/etcd/ca.crt \
   member list
 ```

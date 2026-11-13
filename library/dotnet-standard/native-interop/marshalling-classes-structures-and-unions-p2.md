@@ -143,7 +143,7 @@ public class App
 
 ## Unions sample
 
-This sample demonstrates how to pass structures containing only value types, and structures containing a value type and a string as parameters to an unmanaged function expecting a union. A union represents a memory location that can be shared by two or more variables.
+This sample demonstrates how to pass <example-value> containing only value types, and structures containing a value type and a string as parameters to an unmanaged function expecting a union. A union represents a memory location that can be shared by two or more variables.
 
 The Unions sample uses the following unmanaged function, shown with its original function declaration:
 

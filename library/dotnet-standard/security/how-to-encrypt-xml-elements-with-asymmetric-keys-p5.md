@@ -409,4 +409,4 @@ class Program
 }
 ```
 
-9. Create an `System.Security.Cryptography.Xml.EncryptedKey` object to contain the encrypted session key.  Encrypt the session key, add it to the `System.Security.Cryptography.Xml.EncryptedKey` object, and enter a session key name and key identifier URL.
+9. Create an `System.Security.Cryptography.Xml.EncryptedKey` object to contain the encrypted session key.  Encrypt the session key, add it to the `System.Security.Cryptography.Xml.EncryptedKey` object, and enter a session key name and key <example-value> URL.

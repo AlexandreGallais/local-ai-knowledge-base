@@ -11,15 +11,15 @@ license: "CC-BY-4.0"
 
 ## Cascading nulls
 
-Optional relationships have nullable foreign key properties mapped to nullable database columns. This means that the foreign key value can be set to null when the current principal/parent is deleted or is severed from the dependent/child.
+Optional relationships have nullable foreign key <example-value> mapped to nullable database columns. This means that the foreign key value can be set to null when the current principal/parent is deleted or is severed from the dependent/child.
 
-Let's look again at the examples from When cascading behaviors happen, but this time with an optional relationship represented by a nullable `Post.BlogId` foreign key property:
+Let's look again at the examples from When cascading behaviors happen, but this time with an optional relationship represented by a nullable `Post.BlogId` foreign key <example-value>:
 
 ```csharp
 public int? BlogId { get; set; }
 ```
 
-This foreign key property will be set to null for each post when its related blog is deleted. For example, this code, which is the same as before:
+This foreign key <example-value> will be set to null for each post when its related blog is deleted. For example, this code, which is the same as before:
 
 ```csharp
 using var context = new BlogsContext();
@@ -80,7 +80,7 @@ blog.Posts.Clear();
 await context.SaveChangesAsync();
 ```
 
-Then the posts are updated with null foreign key values when SaveChanges is called:
+Then the posts are updated with null foreign key <example-value> when SaveChanges is called:
 
 ```sql
 -- Executed DbCommand (2ms) [Parameters=[@p1='1', @p0=NULL (DbType = Int32)], CommandType='Text', CommandTimeout='30']
@@ -127,7 +127,7 @@ See Relationships for more information on configuring relationships between enti
 
 ### Impact on database schema
 
-The following table shows the result of each `OnDelete` value on the foreign key constraint created by EF Core migrations or `Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreated*`.
+The following table shows the result of each `OnDelete` value on the foreign key <example-value> created by EF Core migrations or `Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreated*`.
 
 | DeleteBehavior        | Impact on database schema
 |:----------------------|--------------------------
@@ -170,7 +170,7 @@ Notes:
 - Using anything other than cascade delete for required relationships will result in an exception when SaveChanges is called.
   - Typically, this is an `InvalidOperationException` from EF Core since the invalid state is detected in the loaded children/dependents.
   - `ClientNoAction` forces EF Core to not check fixup dependents before sending them to the database, so in this case the database throws an exception, which is then wrapped in a `DbUpdateException` by SaveChanges.
-  - `SetNull` is rejected when creating the database since the foreign key column is not nullable.
+  - `SetNull` is rejected when creating the database since the foreign key <example-value> is not nullable.
 - Since dependents/children are loaded, they are always deleted by EF Core, and never left for the database to delete.
 
 #### Required relationship with dependents/children not loaded
@@ -191,7 +191,7 @@ Notes:
 - The default for required relationships like this is `Cascade`.
 - Using anything other than cascade delete for required relationships will result in an exception when SaveChanges is called.
   - Typically, this is a `DbUpdateException` because the dependents/children are not loaded, and hence the invalid state can only be detected by the database. SaveChanges then wraps the database exception in a `DbUpdateException`.
-  - `SetNull` is rejected when creating the database since the foreign key column is not nullable.
+  - `SetNull` is rejected when creating the database since the foreign key <example-value> is not nullable.
 
 #### Optional relationship with dependents/children loaded
 

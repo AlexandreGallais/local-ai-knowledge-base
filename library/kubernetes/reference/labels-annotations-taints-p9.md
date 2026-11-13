@@ -147,7 +147,7 @@ Example: `node-role.kubernetes.io/gpu: gpu`
 Used on: Node
 
 This optional label is applied to a node when you want to mark a node role.
-The node role (text following `/` in the label key) can be set, as long as the overall key follows the
+The node role (text following `/` in the label key) can be set, as long as the overall key <example-value> the
 syntax rules for
 object labels.
 

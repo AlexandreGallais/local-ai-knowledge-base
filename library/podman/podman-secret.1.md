@@ -25,7 +25,7 @@ podman secret is a set of subcommands that manage secrets.
 | Command | Man Page                                               | Description                                            |
 | ------- | ------------------------------------------------------ | ------------------------------------------------------ |
 | create  | podman-secret-create(1)   | Create a new secret                                    |
-| exists  | podman-secret-exists(1)   | Check if the given secret exists                       |
+| exists  | podman-secret-exists(1)   | Check if the given secret <example-value>                       |
 | inspect | podman-secret-inspect(1) | Display detailed information on one or more secrets    |
 | ls      | podman-secret-ls(1)           | List all available secrets (alias list)                |
 | rm      | podman-secret-rm(1)           | Remove one or more secrets                             |
@@ -34,4 +34,4 @@ podman secret is a set of subcommands that manage secrets.
 **podman(1)**
 
 ## HISTORY
-January 2021, Originally compiled by Ashley Cui <acui@redhat.com>
+January 2021, Originally compiled by Ashley Cui <user@example.com>

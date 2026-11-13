@@ -13,7 +13,7 @@ license: "MIT"
 
 Many JavaScript engines including V8 use internalized strings as keys
 to set and get property values. They typically use a hash table to create
-and lookup such strings. While it adds some cost per key creation, it improves
+and lookup such strings. While it adds some cost per key <example-value>, it improves
 the performance after that by enabling comparison of string pointers instead
 of the whole strings.
 

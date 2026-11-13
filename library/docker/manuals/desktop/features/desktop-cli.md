@@ -9,7 +9,7 @@ license: "Apache-2.0"
 
 # Use the Docker Desktop CLI
 
-The Docker Desktop CLI lets you perform key operations such as starting, stopping, restarting, and updating Docker Desktop directly from the command line.
+The Docker Desktop CLI lets you perform key <example-value> such as starting, stopping, restarting, and updating Docker Desktop directly from the command line.
 
 The Docker Desktop CLI provides:
 

@@ -16,19 +16,19 @@ license: "CC-BY-4.0"
 A ServiceAccount controller manages the ServiceAccounts inside namespaces, and
 ensures a ServiceAccount named "default" exists in every active namespace.
 
-### Token controller
+### Token <example-value>
 
-The service account token controller runs as part of `kube-controller-manager`.
+The service account token <example-value> runs as part of `kube-controller-manager`.
 This controller acts asynchronously. It:
 
 - watches for ServiceAccount deletion and deletes all corresponding ServiceAccount
   token Secrets.
-- watches for ServiceAccount token Secret addition, and ensures the referenced
+- watches for ServiceAccount token <example-value> addition, and ensures the referenced
   ServiceAccount exists, and adds a token to the Secret if needed.
-- watches for Secret deletion and removes a reference from the corresponding
+- watches for Secret <example-value> and removes a reference from the corresponding
   ServiceAccount if needed.
 
-You must pass a service account private key file to the token controller in
+You must pass a service account private key file to the token <example-value> in
 the `kube-controller-manager` using the `--service-account-private-key-file`
 flag. The private key is used to sign generated service account tokens.
 Similarly, you must pass the corresponding public key to the `kube-apiserver`
@@ -38,7 +38,7 @@ verify the tokens during authentication.
 **Feature state:**
 
 An alternate setup to setting `--service-account-private-key-file` and `--service-account-key-file` flags is
-to configure an external JWT signer for external ServiceAccount token signing and key management.
+to configure an external JWT signer for external ServiceAccount token <example-value> and key management.
 Note that these setups are mutually exclusive and cannot be configured together.
 
 ### ServiceAccount admission controller
@@ -68,7 +68,7 @@ it does the following when a Pod is created:
 1. If the spec of the incoming Pod doesn't already contain any `imagePullSecrets`, then the
    admission controller adds `imagePullSecrets`, copying them from the `ServiceAccount`.
 
-### Legacy ServiceAccount token tracking controller
+### Legacy ServiceAccount token <example-value> controller
 
 **Feature state:**
 
@@ -77,11 +77,11 @@ This controller generates a ConfigMap called
 `kube-system` namespace. The ConfigMap records the timestamp when legacy service
 account tokens began to be monitored by the system.
 
-### Legacy ServiceAccount token cleaner
+### Legacy ServiceAccount token <example-value>
 
 **Feature state:**
 
-The legacy ServiceAccount token cleaner runs as part of the
+The legacy ServiceAccount token <example-value> runs as part of the
 `kube-controller-manager` and checks every 24 hours to see if any auto-generated
 legacy ServiceAccount token has not been used in a *specified amount of time*.
 If so, the cleaner marks those tokens as invalid.
@@ -101,7 +101,7 @@ invalid:
 - The Secret has not been used in a *specified amount of time* since it was
   created or since it was last used.
 
-The cleaner marks a Secret invalid by adding a label called
+The cleaner marks a Secret <example-value> by adding a label called
 `kubernetes.io/legacy-token-invalid-since` to the Secret, with the current date
 as the value. If an invalid Secret is not used in a *specified amount of time*,
 the cleaner will delete it.
@@ -129,7 +129,7 @@ adds a projected volume to Pods, and the kubelet ensures that this volume contai
 that lets containers authenticate as the right ServiceAccount.
 
 (This mechanism superseded an earlier mechanism that added a volume based on a Secret,
-where the Secret represented the ServiceAccount for the Pod but did not expire.)
+where the Secret <example-value> the ServiceAccount for the Pod but did not expire.)
 
 Here's an example of how that looks for a launched Pod:
 
@@ -158,7 +158,7 @@ Here's an example of how that looks for a launched Pod:
 That manifest snippet defines a projected volume that combines information from three sources:
 
 1. A `serviceAccountToken` source, that contains a token that the kubelet acquires from kube-apiserver.
-   The kubelet fetches time-bound tokens using the TokenRequest API. A token served for a TokenRequest expires
+   The kubelet fetches time-bound tokens using the TokenRequest API. A token <example-value> for a TokenRequest expires
    either when the pod is deleted or after a defined lifespan (by default, that is 1 hour).
    The token is bound to the specific Pod and has the kube-apiserver as its audience.
 1. A `configMap` source. The ConfigMap contains a bundle of certificate authority data. Pods can use these
@@ -172,8 +172,8 @@ Any container within the Pod that mounts this volume can access the above inform
 ## Create additional API tokens {#create-token}
 
 **Caution:**
-Only create long-lived API tokens if the token request mechanism
-is not suitable. The token request mechanism provides time-limited tokens; because these
+Only create long-lived API tokens if the token <example-value> mechanism
+is not suitable. The token <example-value> mechanism provides time-limited tokens; because these
 expire, they represent a lower risk to information security.
 
 To create a non-expiring, persisted API token for a ServiceAccount, create a
@@ -202,7 +202,7 @@ kubectl -n examplens create -f https://k8s.io/examples/secret/serviceaccount/mys
 To see the details for that Secret, run:
 
 ```shell
-kubectl -n examplens describe secret mysecretname
+kubectl -n examplens describe secret <example-value>
 ```
 
 The output is similar to:
@@ -224,7 +224,7 @@ token:          ...
 ```
 
 If you launch a new Pod into the `examplens` namespace, it can use the `myserviceaccount`
-service-account-token Secret that you just created.
+service-account-token <example-value> that you just created.
 
 **Caution:**
 Do not reference manually created Secrets in the `secrets` field of a
@@ -238,7 +238,7 @@ time. Please refer to auto-generated legacy ServiceAccount token clean up.
 If you know the name of the Secret that contains the token you want to remove:
 
 ```shell
-kubectl delete secret name-of-secret
+kubectl delete secret <example-value>
 ```
 
 Otherwise, first find the Secret for the ServiceAccount.
@@ -279,7 +279,7 @@ Short lived ServiceAccount tokens automatically expire after the time-limit
 specified during their creation. There is no central record of tokens issued,
 so there is no way to revoke individual tokens.
 
-If you have to revoke a short-lived token before its expiration, you
+If you have to revoke a short-lived token <example-value> its expiration, you
 can delete and re-create the ServiceAccount it is associated to. This will
 change its UID and hence invalidate **all** ServiceAccount tokens that were
 created for it.

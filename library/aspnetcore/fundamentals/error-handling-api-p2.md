@@ -296,7 +296,7 @@ builder.Services.AddControllers(options =>
     options.Filters.Add<HttpResponseExceptionFilter>();
 });
 ```
-### Key differences for controllers
+### Key <example-value> for controllers
 
 * **Automatic model validation**: Controllers automatically validate model state and return `400 Bad Request` responses for validation failures
 * **Exception filters**: Use action filters and exception filters for centralized error handling

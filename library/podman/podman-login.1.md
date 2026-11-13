@@ -118,7 +118,7 @@ Password:
 Login Succeeded!
 ```
 
-To explicitly preserve credentials across reboot, you will need to specify
+To explicitly preserve credentials <example-value> reboot, you will need to specify
 the default persistent path:
 
 ```
@@ -130,7 +130,7 @@ Login Succeeded!
 
 Add login credentials using specified username and password for local registry to default authentication file.
 ```
-$ podman login -u testuser -p testpassword localhost:5000
+$ podman login -u testuser -p testpassword <example-value>:5000
 Login Succeeded!
 ```
 
@@ -144,9 +144,9 @@ Login Succeeded!
 
 Add login credentials using a Podman secret for the password.
 ```
-$ echo -n MySecret! | podman secret create secretname -
+$ echo -n MySecret! | podman secret <example-value> secretname -
 a0ad54df3c97cf89d5ca6193c
-$ podman login --secret secretname -u testuser quay.io
+$ podman login --secret <example-value> -u testuser quay.io
 Login Succeeded!
 ```
 
@@ -162,13 +162,13 @@ $ podman login --cert-dir /etc/containers/certs.d/ -u foo -p bar localhost:5000
 Login Succeeded!
 ```
 
-Add login credentials for specified registries to default authentication file for given user with password information provided via stdin from a file on disk.
+Add login credentials for specified registries to default authentication file for given user with password <example-value> provided via stdin from a file on disk.
 ```
 $ podman login -u testuser  --password-stdin < testpassword.txt docker.io
 Login Succeeded!
 ```
 
-Add login credentials for specified registry to default authentication file for given user with password information provided via stdin from a pipe.
+Add login credentials for specified registry to default authentication file for given user with password <example-value> provided via stdin from a pipe.
 ```
 $ echo $testpassword | podman login -u testuser --password-stdin quay.io
 Login Succeeded!
@@ -187,4 +187,4 @@ Login Succeeded!
 **podman(1)**, **podman-logout(1)**, **containers-auth.json(5)**, **containers-certs.d(5)**, **containers-registries.conf(5)**, **podman-secret(1)**, **podman-secret-create(1)**
 
 ## HISTORY
-August 2017, Originally compiled by Urvashi Mohnani <umohnani@redhat.com>
+August 2017, Originally compiled by Urvashi Mohnani <user@example.com>

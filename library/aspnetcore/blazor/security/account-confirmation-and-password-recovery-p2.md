@@ -9,14 +9,14 @@ license: "CC-BY-4.0"
 
 # Account confirmation and password recovery in ASP.NET Core Blazor (part 2 of 2)
 
-## Change the email token lifespan
+## Change the email token <example-value>
 
-The default token lifespan of the Identity user tokens is one day.
+The default token <example-value> of the Identity user tokens is one day.
 
 > **Note:**
 > Documentation links to .NET reference source usually load the repository's default branch, which represents the current development for the next release of .NET. To select a tag for a specific release, use the **Switch branches or tags** dropdown list.
 
-To change the email token lifespan, add a custom `Microsoft.AspNetCore.Identity.DataProtectorTokenProvider`1` and `Microsoft.AspNetCore.Identity.DataProtectionTokenProviderOptions`.
+To change the email token <example-value>, add a custom `Microsoft.AspNetCore.Identity.DataProtectorTokenProvider`1` and `Microsoft.AspNetCore.Identity.DataProtectionTokenProviderOptions`.
 
 `CustomTokenProvider.cs`:
 
@@ -44,7 +44,7 @@ public class EmailConfirmationTokenProviderOptions
 {
     public EmailConfirmationTokenProviderOptions()
     {
-        Name = "EmailDataProtectorTokenProvider";
+        Name = "<example-value>";
         TokenLifespan = TimeSpan.FromHours(4);
     }
 }
@@ -66,19 +66,19 @@ public class PasswordResetTokenProviderOptions :
 {
     public PasswordResetTokenProviderOptions()
     {
-        Name = "PasswordResetDataProtectorTokenProvider";
+        Name = "<example-value>";
         TokenLifespan = TimeSpan.FromHours(3);
     }
 }
 ```
 
-Configure the services to use the custom token provider in the `Program` file:
+Configure the services to use the custom token <example-value> in the `Program` file:
 
 ```csharp
 builder.Services.AddIdentityCore<ApplicationUser>(options =>
     {
         options.SignIn.RequireConfirmedAccount = true;
-        options.Tokens.ProviderMap.Add("CustomEmailConfirmation",
+        options.Tokens.ProviderMap.Add("<example-value>",
             new TokenProviderDescriptor(
                 typeof(CustomEmailConfirmationTokenProvider<ApplicationUser>)));
         options.Tokens.EmailConfirmationTokenProvider = 

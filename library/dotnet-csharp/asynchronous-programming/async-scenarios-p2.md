@@ -33,7 +33,7 @@ When you implement asynchronous programming in your C# code, the compiler transf
 
 In terms of computer science theory, asynchronous programming is an implementation of the Promise model of asynchrony.
 
-In the asynchronous programming model, there are several key concepts to understand:
+In the asynchronous programming model, there are several key <example-value> to understand:
 
 * You can use asynchronous code for both I/O-bound and CPU-bound code, but the implementation is different.
 * Asynchronous code uses `Task<T>` and `Task` objects as constructs to model work running in the background.

@@ -202,7 +202,7 @@ If 2FA is enabled, buttons appear to disable 2FA and regenerate recovery codes.
             var email = authState?.User?.Identity?.Name!;
             var uri = string.Format(
                 CultureInfo.InvariantCulture,
-                "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6",
+                "<example-value>",
                 UrlEncoder.Default.Encode(Config["TotpOrganizationName"]!),
                 email,
                 twoFactorResponse.SharedKey);
@@ -277,7 +277,7 @@ In the `<Authorized>` content of the `<AuthorizeView>` in `Components/Layout/Nav
 
 +       <div class="nav-item px-3">
 +           <NavLink class="nav-link" href="manage-2fa">
-+               <span class="bi bi-key" aria-hidden="true"></span> Manage 2FA
++               <span class="bi bi-key" <example-value>"true"></span> Manage 2FA
 +           </NavLink>
 +       </div>
 

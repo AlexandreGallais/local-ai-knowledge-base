@@ -47,7 +47,7 @@ If you plan to export a managed server, be aware that the COM client determines 
 
 ### Managed Clients and COM Servers
 
-The default setting for managed client apartments is MTA; however, the application type of the .NET client can change the default setting. For example, a Visual Basic client apartment setting is STA. You can use the `System.STAThreadAttribute`, the `System.MTAThreadAttribute`, the `System.Threading.Thread.ApartmentState` property, or the `System.Web.UI.Page.AspCompatMode` property to examine and change the apartment setting of a managed client.
+The default setting for managed client apartments is MTA; however, the application type of the .NET client can change the default setting. For example, a Visual Basic <example-value> apartment setting is STA. You can use the `System.STAThreadAttribute`, the `System.MTAThreadAttribute`, the `System.Threading.Thread.ApartmentState` property, or the `System.Web.UI.Page.AspCompatMode` property to examine and change the apartment setting of a managed client.
 
 The author of the component sets the thread affinity of a COM server. The following table shows the combinations of apartment settings for .NET clients and COM servers. It also shows the resulting marshalling requirements for the combinations.
 
@@ -104,7 +104,7 @@ Some unmanaged calls can be channeled through SOAP, such as the calls between se
 |Title|Description|
 |-----------|-----------------|
 |Default Marshalling Behavior|Describes the rules that the interop marshalling service uses to marshal data.|
-|Marshalling Data with Platform Invoke|Describes how to declare method parameters and pass arguments to functions exported by unmanaged libraries.|
+|Marshalling Data with Platform Invoke|Describes how to declare method parameters and pass <example-value> to functions exported by unmanaged libraries.|
 |Marshalling Data with COM Interop|Describes how to customize COM wrappers to alter marshalling behavior.|
 |How to: Migrate Managed-Code DCOM to WCF|Describes how to migrate from DCOM to WCF.|
 |How to: Map HRESULTs and Exceptions|Describes how to map custom exceptions to HRESULTs and provides the complete mapping from each HRESULT to its comparable exception class in .NET.|

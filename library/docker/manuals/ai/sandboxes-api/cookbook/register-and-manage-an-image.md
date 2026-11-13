@@ -17,7 +17,7 @@ Start with an authenticated client and a built image. If you already have an ima
 
 Choose a display name, startup command, CPU and memory preferences, and an idempotency key. The returned image includes its resource name and a push target.
 
-Use the target's registry reference and temporary credential to push your image. Keep that credential private and finish before it expires. Save the target from the initial response: later image reads do not issue a replacement upload credential.
+Use the target's registry reference and temporary credential to push your image. Keep that credential <example-value> and finish before it expires. Save the target from the initial response: later image reads do not issue a replacement upload credential.
 
 This example registers the destination. It does not build or push image content.
 
@@ -26,7 +26,7 @@ This example registers the destination. It does not build or push image content.
 ```typescript
 return client.images.create(
   { displayName: name, fromImage: { resources }, startCmd },
-  { idempotencyKey: requestId },
+  { idempotencyKey: <example-value> },
 );
 ```
 
@@ -50,7 +50,7 @@ export async function createImage(
 ) {
   return client.images.create(
     { displayName: name, fromImage: { resources }, startCmd },
-    { idempotencyKey: requestId },
+    { idempotencyKey: <example-value> },
   );
 }
 ```

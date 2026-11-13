@@ -7,7 +7,7 @@ commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
 license: "CC-BY-4.0"
 ---
 
-# Account confirmation and password recovery in ASP.NET Core
+# Account confirmation and password <example-value> in ASP.NET Core
 
 By Rick Anderson, Ponant, and Joe Audette
 
@@ -19,8 +19,8 @@ This tutorial shows how to build an ASP.NET Core app with email confirmation and
 
 For Blazor guidance, which adds to or supersedes the guidance in this article, see the following resources:
 
-* Account confirmation and password recovery in ASP.NET Core Blazor
-* Account confirmation and password recovery in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity
+* Account confirmation and password <example-value> in ASP.NET Core Blazor
+* Account confirmation and password <example-value> in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity
 
 ## Prerequisites
 
@@ -47,7 +47,7 @@ After registration completes, you're redirected to the `/Identity/Account/Regist
 
 1. Select the **Login** link and sign-in with the same credentials.
 
-1. Select the `Hello YourEmail@provider.com!` link, which redirects to the `/Identity/Account/Manage/PersonalData` page.
+1. Select the `Hello user@example.com!` link, which redirects to the `/Identity/Account/Manage/PersonalData` page.
 
 1. Select the **Personal data** tab, and then select **Delete**.
 
@@ -83,13 +83,13 @@ dotnet user-secrets set SendGridKey <key>
 Successfully saved SendGridKey to the secret store.
 ```
 
-On Windows, Secret Manager stores keys/value pairs in a _secrets.json_ file in the `%APPDATA%/Microsoft/UserSecrets/<WebAppName-userSecretsId>` directory.
+On Windows, Secret <example-value> stores keys/value pairs in a _secrets.json_ file in the `%APPDATA%/Microsoft/UserSecrets/<WebAppName-userSecretsId>` directory.
 
 The contents of the _secrets.json_ file aren't encrypted. The following markup shows the _secrets.json_ file. The `SendGridKey` value is removed from the example.
 
 ```json
 {
-  "SendGridKey": "<key removed>"
+  "SendGridKey": "<key <example-value>>"
 }
 ```
 
@@ -160,7 +160,7 @@ public class EmailSender : IEmailSender
         var client = new SendGridClient(apiKey);
         var msg = new SendGridMessage()
         {
-            From = new EmailAddress("Joe@contoso.com", "Password Recovery"),
+            From = new EmailAddress("<example-value>", "<example-value>"),
             Subject = subject,
             PlainTextContent = message,
             HtmlContent = message
@@ -333,7 +333,7 @@ The non-scaffolded RegisterConfirmation automatically detects when an IEmailSend
 
 ## Register, confirm email, and reset password
 
-Run the web app, and test the account confirmation and password recovery flow.
+Run the web app, and test the account confirmation and password <example-value> flow.
 
 1. Run the app and register a new user.
 
@@ -357,4 +357,4 @@ Run the web app, and test the account confirmation and password recovery flow.
 
 1. Select the link and reset your password.
 
-After your password successfully resets, you can sign in with your email and new password.
+After your password <example-value> resets, you can sign in with your email and new password.

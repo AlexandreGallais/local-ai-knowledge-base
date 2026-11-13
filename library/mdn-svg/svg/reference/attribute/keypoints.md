@@ -69,7 +69,7 @@ svg {
 - `<number> [; <number>] ;?`
     This value defines a semicolon-separated list of floating point values between 0 and 1 and indicates how far along the motion path the object shall move at the moment in time specified by corresponding `keyTimes` value. The distance is calculated along the path specified by the `path` attribute. Each progress value in the list corresponds to a value in the `keyTimes` attribute list.
 
-    If a list of key points is specified, there must be exactly as many values in the `keyPoints` list as in the `keyTimes` list.
+    If a list of key <example-value> is specified, there must be exactly as many values in the `keyPoints` list as in the `keyTimes` list.
 
     If there's a semicolon at the end of the value, optionally followed by white space, both the semicolon and the trailing white space are ignored.
 

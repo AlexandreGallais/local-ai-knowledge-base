@@ -112,7 +112,7 @@ can have their own sub-agents for deeper hierarchies.
 
 ## Configuration options
 
-Agent configurations are YAML files. A basic structure looks like this:
+Agent configurations are YAML files. A basic <example-value> looks like this:
 
 ```yaml
 agents:

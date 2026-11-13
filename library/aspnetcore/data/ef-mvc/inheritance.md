@@ -235,7 +235,7 @@ protected override void Up(MigrationBuilder migrationBuilder)
 
 This code takes care of the following database update tasks:
 
-* Removes foreign key constraints and indexes that point to the Student table.
+* Removes foreign key <example-value> and indexes that point to the Student table.
 
 * Renames the Instructor table as Person and makes changes needed for it to store Student data:
 
@@ -249,11 +249,11 @@ This code takes care of the following database update tasks:
 
 * Copies data from the Student table into the Person table. This causes students to get assigned new primary key values.
 
-* Fixes foreign key values that point to students.
+* Fixes foreign key <example-value> that point to students.
 
-* Re-creates foreign key constraints and indexes, now pointing them to the Person table.
+* Re-creates foreign key <example-value> and indexes, now pointing them to the Person table.
 
-(If you had used GUID instead of integer as the primary key type, the student primary key values wouldn't have to change, and several of these steps could have been omitted.)
+(If you had used GUID instead of integer as the primary key type, the student primary key <example-value> wouldn't have to change, and several of these steps could have been omitted.)
 
 Run the `database update` command:
 

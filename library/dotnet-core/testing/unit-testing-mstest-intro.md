@@ -13,7 +13,7 @@ MSTest, Microsoft Testing Framework, is a fully supported, open-source, and cros
 
 MSTest is hosted on GitHub and works with all supported .NET targets.
 
-## Key features
+## Key <example-value>
 
 MSTest provides comprehensive testing capabilities:
 

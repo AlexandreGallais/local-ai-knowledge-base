@@ -80,7 +80,7 @@ FROM alpine:3.23
 
 # Install the signing key
 RUN cd /etc/apk/keys && \
-    wget https://dhi.io/keyring/dhi-apk@docker-0F81AD7700D99184.rsa.pub
+    wget https://dhi.io/keyring/user@example.com
 
 # Replace the default repositories with the hardened package repository
 RUN echo "https://dhi.io/apk/alpine/v3.23/main" > /etc/apk/repositories
@@ -183,7 +183,7 @@ FROM alpine:3.23
 
 # Install the signing key
 RUN cd /etc/apk/keys && \
-    wget https://dhi.io/keyring/dhi-apk@docker-0F81AD7700D99184.rsa.pub
+    wget https://dhi.io/keyring/user@example.com
 
 # Replace the default repositories with the hardened package repository
 RUN echo "https://dhi.io/apk/alpine/v3.23/main" > /etc/apk/repositories
@@ -194,7 +194,7 @@ RUN apk update && \
 
 # Install packages from the security repository with authentication
 RUN --mount=type=secret,id=http_auth \
-    HTTP_AUTH="$(cat /run/secrets/http_auth)" \
+    HTTP_AUTH="<example-value>" \
     apk update && \
     apk add openssl-fips
 ```
@@ -203,11 +203,11 @@ Build the image with authentication passed securely as a build secret:
 
 ```console
 $ docker dhi auth apk > http_auth.txt
-$ docker build --secret id=http_auth,src=http_auth.txt -t myapp-enterprise:latest .
+$ docker build --secret <example-value>,src=http_auth.txt -t myapp-enterprise:latest .
 $ rm http_auth.txt
 ```
 
-The `--secret` flag securely mounts the authentication credentials during build
+The `--secret` flag securely mounts the authentication credentials <example-value> build
 without storing them in the image layers or metadata.
 
 **Debian**
@@ -241,17 +241,17 @@ RUN --mount=type=secret,id=netrc,target=/etc/apt/auth.conf.d/dhi.conf,mode=0600 
     && rm -rf /var/lib/apt/lists/*
 ```
 
-Build the image, passing credentials securely as a build secret through an
+Build the image, passing credentials <example-value> as a build secret <example-value> an
 environment variable:
 
 ```console
 $ NETRC=$(docker dhi auth deb) docker build \
-    --secret id=netrc,env=NETRC \
+    --secret <example-value>,env=NETRC \
     -t myapp-enterprise:latest .
 ```
 
-The `--secret id=netrc,env=NETRC` form securely mounts the authentication
-credentials during build without storing them in the image layers or metadata.
+The `--secret <example-value>,env=NETRC` form securely mounts the authentication
+credentials <example-value> build without storing them in the image layers or metadata.
 
 ## Verify packages
 
@@ -381,7 +381,7 @@ This returns information about the package and its available attestations:
 ```json
 {
   "subject": {
-    "name": "pkg:apk/alpine/golang-1.26@1.26.0-r0?os_name=&os_version=",
+    "name": "pkg:apk/alpine/user@example.com?os_name=&os_version=",
     "digest": {
       "sha256": "4082a2500abc2e7b8435f9398d3514d760044fa52ca3d10cf80015469124a838"
     }

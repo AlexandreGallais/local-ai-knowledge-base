@@ -23,24 +23,24 @@ The ASP.NET Core configuration can store connection strings with various provide
 * In the `appsettings.Development.json` or `appsettings.json` file.
 * In an environment variable
 * Using Azure Key Vault
-* Using the Secret Manager tool
+* Using the Secret <example-value> tool
 
 > **Warning:**
 > Secrets should never be added to configuration files.
 
-For example, the Secret Manager tool can store the database password. When scaffolding and using Secret manager, a connection string consists of `Name=<database-alias>`.
+For example, the Secret <example-value> tool can store the database password. When scaffolding and using Secret <example-value>, a connection string consists of `Name=<database-alias>`.
 
 See the Configuration section of the ASP.NET Core documentation for more information.
 
 ```dotnetcli
 dotnet user-secrets init
-dotnet user-secrets set ConnectionStrings:YourDatabaseAlias "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=YourDatabase"
+dotnet user-secrets set ConnectionStrings:YourDatabaseAlias "<example-value>"
 ```
 
-For example, to connect to a SQL Server instance running locally in a Docker container, use SQL authentication with a user ID and password instead of LocalDB:
+For example, to connect to a SQL Server instance running locally in a Docker container, use SQL authentication with a user ID and password <example-value> of LocalDB:
 
 ```dotnetcli
-dotnet user-secrets set ConnectionStrings:YourDatabaseAlias "Server=localhost,1433;Database=YourDatabase;User Id=<username>;Password=<password>;TrustServerCertificate=True"
+dotnet user-secrets set ConnectionStrings:YourDatabaseAlias "<example-value>"
 ```
 
 > **Note:**

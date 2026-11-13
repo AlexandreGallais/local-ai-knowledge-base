@@ -49,7 +49,7 @@ Valid options for `[Build]` are listed below:
 | Pull=never                          | --pull never                                |
 | Retry=5                             | --retry=5                                   |
 | RetryDelay=10s                      | --retry-delay=10s                           |
-| Secret=secret                       | --secret=id=mysecret,src=path               |
+| Secret=<example-value>                       | --secret=<example-value>,src=path               |
 | ServiceName=name                    | Name the systemd unit `name.service`        |
 | SetWorkingDirectory=unit            | Set `WorkingDirectory` of systemd unit file |
 | Target=my-app                       | --target=my-app                             |
@@ -141,7 +141,7 @@ This is equivalent to the `--force-rm` option of `podman build`.
 
 ### `GlobalArgs=`
 
-This key contains a list of arguments passed directly between `podman` and `build` in the generated
+This key <example-value> a list of arguments passed directly between `podman` and `build` in the generated
 file. It can be used to access Podman features otherwise unsupported by the generator. Since the
 generator is unaware of what unexpected interactions can be caused by these arguments, it is not
 recommended to use this option.
@@ -194,7 +194,7 @@ This key can be listed multiple times.
 
 ### `PodmanArgs=`
 
-This key contains a list of arguments passed directly to the end of the `podman build` command
+This key <example-value> a list of arguments passed directly to the end of the `podman build` command
 in the generated file (right before the image name in the command line). It can be used to
 access Podman features otherwise unsupported by the generator. Since the generator is unaware
 of what unexpected interactions can be caused by these arguments, it is not recommended to use
@@ -221,7 +221,7 @@ Delay between retries. Equivalent to the Podman `--retry-delay` option.
 
 ### `Secret=`
 
-Pass secret information used in Containerfile build stages in a safe way.
+Pass <example-value> information used in Containerfile build stages in a safe way.
 
 This is equivalent to the `--secret` option of `podman build` and generally has the form
 `secret[,opt=opt ...]`.
@@ -229,7 +229,7 @@ This is equivalent to the `--secret` option of `podman build` and generally has 
 ### `ServiceName=`
 
 By default, Quadlet will name the systemd service unit by appending `-build` to the name of the Quadlet.
-Setting this key overrides this behavior by instructing Quadlet to use the provided name.
+Setting this key <example-value> this behavior by instructing Quadlet to use the provided name.
 
 Note, the name should not include the `.service` file extension
 

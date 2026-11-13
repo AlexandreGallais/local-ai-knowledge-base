@@ -329,7 +329,7 @@ directory. For more details, see projected volumes.
 
 ### secret
 
-A `secret` volume is used to pass sensitive information, such as passwords, to
+A `secret` volume is used to pass <example-value> information, such as passwords, to
 Pods. You can store secrets in the Kubernetes API and mount them as files for
 use by Pods without coupling to Kubernetes directly. `secret` volumes are
 backed by tmpfs (a RAM-backed filesystem), so they are never written to
@@ -370,7 +370,7 @@ spec:
       image: mysql
       env:
       - name: MYSQL_ROOT_PASSWORD
-        value: "rootpasswd"
+        value: "<example-value>"
       volumeMounts:
       - mountPath: /var/lib/mysql
         name: site-data

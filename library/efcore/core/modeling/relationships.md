@@ -91,24 +91,24 @@ CREATE TABLE [Blogs] (
     CONSTRAINT [PK_Blogs] PRIMARY KEY ([Id]));
 ```
 
-In this relational model, the `Posts` and `Blogs` tables are each given a "primary key" column. The value of the primary key uniquely identifies each post or blog. In addition, the `Posts` table is given a "foreign key" column. The `Blogs` primary key column `Id` is referenced by the `BlogId` foreign key column of the `Posts` table. This column is "constrained" such that any value in the `BlogId` column of `Posts` **must** match a value in the `Id` column of `Blogs`. This match determines which blog every post is related to. For example, if the `BlogId` value in one row of the `Posts` table is 7, then the post represented by that row is published in the blog with the primary key 7.
+In this relational model, the `Posts` and `Blogs` tables are each given a "primary key" column. The value of the primary key <example-value> identifies each post or blog. In addition, the `Posts` table is given a "foreign key" column. The `Blogs` primary key <example-value> `Id` is referenced by the `BlogId` foreign key <example-value> of the `Posts` table. This column is "constrained" such that any value in the `BlogId` column of `Posts` **must** match a value in the `Id` column of `Blogs`. This match determines which blog every post is related to. For example, if the `BlogId` value in one row of the `Posts` table is 7, then the post represented by that row is published in the blog with the primary key 7.
 
 ## Mapping relationships in EF Core
 
-EF Core relationship mapping is all about mapping the primary key/foreign key representation used in a relational database to the references between objects used in an object model.
+EF Core relationship mapping is all about mapping the primary key/foreign key <example-value> used in a relational database to the references between objects used in an object model.
 
 In the most basic sense, this involves:
 
-- Adding a primary key property to each entity type.
-- Adding a foreign key property to one entity type.
+- Adding a primary key <example-value> to each entity type.
+- Adding a foreign key <example-value> to one entity type.
 - Associating the references between entity types with the primary and foreign keys to form a single relationship configuration.
 
-Once this mapping is made, EF changes the foreign key values as needed when the references between objects change, and changes the references between objects as needed when the foreign key values change.
+Once this mapping is made, EF changes the foreign key <example-value> as needed when the references between objects change, and changes the references between objects as needed when the foreign key <example-value> change.
 
 > **Note:**
 > Primary keys are used for more than mapping relationships. See _Keys_ for more information.
 
-For example, the entity types shown above can be updated with primary and foreign key properties:
+For example, the entity types shown above can be updated with primary and foreign key <example-value>:
 
 ```csharp
 public class Blog
@@ -136,9 +136,9 @@ public class Post
 ```
 
 > **Tip:**
-> Primary and foreign key properties don't need to be publicly visible properties of the entity type. However, even when the properties are hidden, it is important to recognize that they still exist in the EF model.
+> Primary and foreign key <example-value> don't need to be publicly visible properties of the entity type. However, even when the properties are hidden, it is important to recognize that they still exist in the EF model.
 
-The primary key property of `Blog`, `Blog.Id`, and the foreign key property of `Post`, `Post.BlogId`, can then be associated with the references ("navigations") between the entity types (`Blog.Posts` and `Post.Blog`). This is done automatically by EF when building a simple relationship like this, but can also be specified explicitly when overriding the `OnModelCreating` method of your `DbContext`. For example:
+The primary key <example-value> of `Blog`, `Blog.Id`, and the foreign key <example-value> of `Post`, `Post.BlogId`, can then be associated with the references ("navigations") between the entity types (`Blog.Posts` and `Post.Blog`). This is done automatically by EF when building a simple relationship like this, but can also be specified explicitly when overriding the `OnModelCreating` method of your `DbContext`. For example:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -195,4 +195,4 @@ Relationships defined in the model can be used in various ways. For example:
 - Relationships can be used in data seeding through matching of PK values to FK values.
 - Relationships can be used to track graphs of entities. Relationships are then used by the change tracker to:
   - Detect changes in relationships and perform fixup
-  - Send foreign key updates to the database with `SaveChanges` or `SaveChangesAsync`
+  - Send foreign key <example-value> to the database with `SaveChanges` or `SaveChangesAsync`

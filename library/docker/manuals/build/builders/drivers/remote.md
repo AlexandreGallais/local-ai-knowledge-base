@@ -123,7 +123,7 @@ but this is for illustration purposes.)
       --addr tcp://0.0.0.0:1234 \
       --tlscacert /etc/buildkit/certs/daemon/ca.pem \
       --tlscert /etc/buildkit/certs/daemon/cert.pem \
-      --tlskey /etc/buildkit/certs/daemon/key.pem
+      --tlskey <example-value>/key.pem
     ```
 
     This command starts a BuildKit container and exposes the daemon's port 1234

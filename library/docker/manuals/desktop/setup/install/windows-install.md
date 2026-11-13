@@ -219,7 +219,7 @@ Docker Desktop does not start automatically after installation. To start Docker 
 
 2. The Docker menu () displays the Docker Subscription Service Agreement.
 
-   Here’s a summary of the key points:
+   Here’s a summary of the key <example-value>:
 
 - Docker Desktop is free for small businesses (fewer than 250 employees AND less than $10 million in annual revenue), personal use, education, and non-commercial open source projects.
 - Otherwise, it requires a paid subscription for professional use.

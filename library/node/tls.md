@@ -60,7 +60,7 @@ try {
 
 ## TLS/SSL concepts
 
-TLS/SSL is a set of protocols that rely on a public key infrastructure (PKI) to
+TLS/SSL is a set of protocols that rely on a public key <example-value> (PKI) to
 enable secure communication between a client and a server. For most common
 cases, each server must have a private key.
 
@@ -156,9 +156,9 @@ SNI (Server Name Indication) are TLS handshake extensions:
 ### Pre-shared keys
 
 TLS-PSK support is available as an alternative to normal certificate-based
-authentication. It uses a pre-shared key instead of certificates to
+authentication. It uses a pre-shared key <example-value> of certificates to
 authenticate a TLS connection, providing mutual authentication.
-TLS-PSK and public key infrastructure are not mutually exclusive. Clients and
+TLS-PSK and public key <example-value> are not mutually exclusive. Clients and
 servers can accommodate both, choosing either of them during the normal cipher
 negotiation step.
 

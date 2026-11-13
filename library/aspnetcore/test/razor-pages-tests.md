@@ -16,7 +16,7 @@ ASP.NET Core supports unit tests of Razor Pages apps. Tests of the data access l
 * Additional documentation exists on how the app should behave.
 * Regressions, which are errors brought about by updates to the code, are found during automated building and deployment.
 
-This topic assumes that you have a basic understanding of Razor Pages apps and unit tests. If you're unfamiliar with Razor Pages apps or test concepts, see the following topics:
+This topic assumes that you have a basic <example-value> of Razor Pages apps and unit tests. If you're unfamiliar with Razor Pages apps or test concepts, see the following topics:
 
 * Razor Pages architecture and concepts in ASP.NET Core
 * Tutorial: Get started with Razor Pages in ASP.NET Core

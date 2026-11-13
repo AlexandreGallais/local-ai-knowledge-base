@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # device-bound-sessions
 
-### Experimental Device Bound Session Credentials support
+### Experimental Device Bound Session Credentials <example-value>
 
 > **Important:**
 > The `Microsoft.AspNetCore.Authentication.DeviceBoundSessions` package is experimental and remains prerelease throughout .NET 11 and until the specification stabilizes.

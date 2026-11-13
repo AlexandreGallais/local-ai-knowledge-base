@@ -217,7 +217,7 @@ modelBuilder.Entity<Blog>()
 
 ### Value objects as keys
 
-Sometimes primitive key properties may be wrapped in value objects to add an additional level of type-safety in assigning values. For example, we could implement a key type for blogs, and a key type for posts:
+Sometimes primitive key <example-value> may be wrapped in value objects to add an additional level of type-safety in assigning values. For example, we could implement a key type for blogs, and a key type for posts:
 
 ```csharp
 public readonly struct BlogKey
@@ -256,12 +256,12 @@ public class Post
 }
 ```
 
-Notice that `Blog.Id` cannot accidentally be assigned a `PostKey`, and `Post.Id` cannot accidentally be assigned a `BlogKey`. Similarly, the `Post.BlogId` foreign key property must be assigned a `BlogKey`.
+Notice that `Blog.Id` cannot accidentally be assigned a `PostKey`, and `Post.Id` cannot accidentally be assigned a `BlogKey`. Similarly, the `Post.BlogId` foreign key <example-value> must be assigned a `BlogKey`.
 
 > **Note:**
-> Showing this pattern does not mean we recommend it. Carefully consider whether this level of abstraction is helping or hampering your development experience. Also, consider using navigations and generated keys instead of dealing with key values directly.
+> Showing this pattern does not mean we recommend it. Carefully consider whether this level of abstraction is helping or hampering your development experience. Also, consider using navigations and generated keys instead of dealing with key <example-value> directly.
 
-These key properties can then be mapped using value converters:
+These key <example-value> can then be mapped using value converters:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -282,7 +282,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 ```
 
 > **Note:**
-> Key properties with conversions can only use generated key values starting with EF Core 7.0.
+> Key <example-value> with conversions can only use generated key <example-value> starting with EF Core 7.0.
 
 ### Use ulong for timestamp/rowversion
 
@@ -395,7 +395,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ### Handle fixed-length database strings
 
-The previous example did not need a value converter. However, a converter can be useful for fixed-length database string types like `char(20)` or `nchar(20)`. Fixed-length strings are padded to their full length whenever a value is inserted into the database. This means that a key value of "`dotnet`" will be read back from the database as "`dotnet..............`", where `.` represents a space character. This will then not compare correctly with key values that are not padded.
+The previous example did not need a value converter. However, a converter can be useful for fixed-length database string types like `char(20)` or `nchar(20)`. Fixed-length strings are padded to their full length whenever a value is inserted into the database. This means that a key value of "`dotnet`" will be read back from the database as "`dotnet..............`", where `.` represents a space character. This will then not compare correctly with key <example-value> that are not padded.
 
 A value converter can be used to trim the padding when reading key values. This can be combined with the value comparer in the previous example to compare fixed length case-insensitive ASCII keys correctly. For example:
 

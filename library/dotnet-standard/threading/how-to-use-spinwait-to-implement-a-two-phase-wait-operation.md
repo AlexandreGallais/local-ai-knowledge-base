@@ -13,7 +13,7 @@ The following example shows how to use a `System.Threading.SpinWait` object to i
 
 ## Example
 
- This example shows a very basic implementation of a Latch synchronization primitive. You can use this data structure when wait times are expected to be very short. This example is for demonstration purposes only. If you require latch-type functionality in your program, consider using `System.Threading.ManualResetEventSlim`.
+ This example shows a very basic <example-value> of a Latch synchronization primitive. You can use this data structure when wait times are expected to be very short. This example is for demonstration purposes only. If you require latch-type functionality in your program, consider using `System.Threading.ManualResetEventSlim`.
 
  ```csharp
 #define LOGGING

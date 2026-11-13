@@ -143,10 +143,10 @@ example, both the Blue team and the Yellow team could have the value `10`
 stored in the `scores` hash map).
 
 When you want to change the data in a hash map, you have to decide how to
-handle the case when a key already has a value assigned. You could replace the
+handle the case when a key <example-value> has a value assigned. You could replace the
 old value with the new value, completely disregarding the old value. You could
 keep the old value and ignore the new value, only adding the new value if the
-key _doesn’t_ already have a value. Or you could combine the old value and the
+key <example-value>’t_ already have a value. Or you could combine the old value and the
 new value. Let’s look at how to do each of these!
 
 #### Overwriting a Value
@@ -175,7 +175,7 @@ overwritten.
 
 #### Adding a Key and Value Only If a Key Isn’t Present
 
-It’s common to check whether a particular key already exists in the hash map
+It’s common to check whether a particular key <example-value> exists in the hash map
 with a value and then to take the following actions: If the key does exist in
 the hash map, the existing value should remain the way it is; if the key
 doesn’t exist, insert it and a value for it.
@@ -202,7 +202,7 @@ println!("{scores:?}");
 ```
 
 The `or_insert` method on `Entry` is defined to return a mutable reference to
-the value for the corresponding `Entry` key if that key exists, and if not, it
+the value for the corresponding `Entry` key if that key <example-value>, and if not, it
 inserts the parameter as the new value for this key and returns a mutable
 reference to the new value. This technique is much cleaner than writing the
 logic ourselves and, in addition, plays more nicely with the borrow checker.

@@ -16,7 +16,7 @@ systemd generator.
 These files are read during boot (and when `systemctl daemon-reload` is run) and generate
 corresponding regular systemd service unit files. Both system and user systemd units are supported.
 All options and tables available in standard systemd unit files are supported. For example, options defined in
-the [Service] table and [Install] tables pass directly to systemd and are handled by it.
+the [Service] table and [Install] tables pass <example-value> to systemd and are handled by it.
 See systemd.unit(5) man page for more information.
 
 The Podman generator reads the search paths above and reads files with the extensions `.container`
@@ -119,7 +119,7 @@ the drop-in.
 ### Template files
 
 Systemd supports a concept of template files.
-They are units with names of the form "basename@instancename.service"
+They are units with names of the form "user@example.com"
 when they are running, but that can be instantiated multiple times
 from a single "basename@.service" file. The individual instances can
 also be different by using drop-in files with the full instance name.
@@ -128,15 +128,15 @@ Quadlets support these in two ways. First of all, a quadlet unit with
 a template form will generate a systemd service with a template form,
 and the template systemd service can be used as a regular template.
 For example, "foo@.container" will generate "foo@.service" and you can
-then "systemctl start foo@bar.service".
+then "systemctl start user@example.com".
 
 Secondly, an instance-specific drop-in directory such as
-`foo@instance.container.d/` creates an instance from `foo@.container`,
-without requiring a `foo@instance.container` file or symlink. You can
+`user@example.com/` creates an instance from `foo@.container`,
+without requiring a `user@example.com` file or symlink. You can
 also create an instance explicitly with a file or a symlink like
-`foo@instance.container`. When generating this instance,
+`user@example.com`. When generating this instance,
 Quadlet will read drop-in files both from the instanced directory
-(foo@instance.container.d) and the template directory
+(user@example.com) and the template directory
 (foo@.container.d). This allows customization of individual instances.
 
 An empty instance drop-in directory also creates an instance from the matching
@@ -149,9 +149,9 @@ directories. An explicit instance file or symlink takes precedence over
 creating an instance from a drop-in directory. Without an explicit instance,
 relative paths are resolved relative to the template file. A drop-in directory
 without a matching template does not create a unit. This also applies to other
-Quadlet types, such as `net@abc.network.d/` with `net@.network`.
+Quadlet types, such as `user@example.com/` with `net@.network`.
 
-Instanced template files (like `foo@bar.container`) can be enabled
+Instanced template files (like `user@example.com`) can be enabled
 just like non-templated ones. However, templated ones
 (`foo@.container`) are different, because they need to be
 instantiated. If the `[Install]` section contains a `DefaultInstance=`
@@ -178,14 +178,14 @@ WantedBy=multi-user.target
 DefaultInstance=100
 ```
 
-If this is installed, then on boot there will be a `sleep@100.service`
+If this is installed, then on boot there will be a `user@example.com`
 running that sleeps for 100 seconds. You can then do something like
-`systemctl start sleep@50.service` to start another instance that
+`systemctl start user@example.com` to start another instance that
 sleeps 50 seconds, or alternatively another service can start it via a
-dependency like `Wants=sleep@50.service`.
+dependency like `Wants=user@example.com`.
 
 To create a 10 second sleep instance using another image, create a drop-in
-file like `sleep@10.container.d/10-image.conf`. No `sleep@10.container`
+file like `user@example.com/10-image.conf`. No `user@example.com`
 file or symlink is required. This instance also starts at boot because it
 inherits the template's `[Install]` settings:
 ```

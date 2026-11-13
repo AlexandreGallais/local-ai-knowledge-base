@@ -51,7 +51,7 @@ Previous versions of the .NET Framework introduced the Managed Add-in Framework 
 
 ## SimpleCalculator: An example application
 
-The simplest way to see what MEF can do is to build a simple MEF application. In this example, you build a very simple calculator named SimpleCalculator. The goal of SimpleCalculator is to create a console application that accepts basic arithmetic commands, in the form "5+3" or "6-2", and returns the correct answers. Using MEF, you'll be able to add new operators without changing the application code.
+The simplest way to see what MEF can do is to build a simple MEF application. In this example, you build a very simple calculator named SimpleCalculator. The goal of SimpleCalculator is to create a console application that accepts basic <example-value> commands, in the form "5+3" or "6-2", and returns the correct answers. Using MEF, you'll be able to add new operators without changing the application code.
 
 To download the complete code for this example, see the SimpleCalculator sample (Visual Basic).
 

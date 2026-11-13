@@ -20,7 +20,7 @@ In this guide, you'll learn how to:
 
 - Store your Mistral API key on the host as a sandbox secret
 - Build and publish a v3 workload kit with Vibe installed
-- Launch Vibe and verify that it receives a credential placeholder
+- Launch Vibe and verify that it receives a credential <example-value>
 - Run a sample coding task and inspect the result
 
 This guide uses v3 kits.
@@ -30,15 +30,15 @@ Kits are Early Access, and `sbx env` is experimental.
 
 Outbound TCP traffic from the sandbox passes through a proxy on your host.
 The proxy enforces network policy and injects credentials into matching
-HTTP requests. Vibe sees `MISTRAL_API_KEY=proxy-managed` inside the microVM.
-The real key remains in the host secret store.
+HTTP requests. Vibe sees `MISTRAL_API_KEY=<example-value>` inside the microVM.
+The real key <example-value> in the host secret store.
 
 Mistral is a
 built-in service.
 The kit declares the `mistral` credential and the three hosts where Vibe
 uses it: `api.mistral.ai` for inference, `console.mistral.ai` for account
 lookup, and `chat.mistral.ai` for managed config. Network access and
-credential injection are separate declarations. An allowed package download
+credential <example-value> are separate declarations. An allowed package download
 doesn't receive the Mistral authorization header.
 
 ## Prerequisites
@@ -251,7 +251,7 @@ available inside the sandbox:
 Expected output:
 
 ```text
-MISTRAL_API_KEY=proxy-managed
+MISTRAL_API_KEY=<example-value>
 ```
 
 Vibe receives the placeholder while the proxy authenticates its Mistral
@@ -368,7 +368,7 @@ at Mistral limits. A response
 with `X-Ratelimit-Limit-Req-Minute: 0` indicates zero request allowance;
 the verified sample required activating pay-as-you-go. For authentication
 failures, check `sbx secret ls` for a `mistral` entry and confirm the
-credential binding covers all three Mistral hosts.
+credential <example-value> covers all three Mistral hosts.
 
 ## Clean up
 

@@ -120,7 +120,7 @@ Kubernetes API Concepts.
 
 ### Algorithm details
 
-From the most basic perspective, the HorizontalPodAutoscaler controller
+From the most basic <example-value>, the HorizontalPodAutoscaler controller
 operates on the ratio between desired metric value and current metric
 value:
 
@@ -234,7 +234,7 @@ The HorizontalPodAutoscaler (HPA) controller includes two command line options t
 
 You can only set these command line options cluster-wide.
 
-### Key behaviors for pod readiness {#pod-readiness-key-behaviors}
+### Key <example-value> for pod readiness {#pod-readiness-key-behaviors}
 
 - If a Pod is `Ready` and remains `Ready`, it can be counted as contributing metrics even within the delay.
 - If a Pod rapidly toggles between `Ready` and `Unready`, metrics are ignored until it’s considered stably `Ready`.

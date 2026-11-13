@@ -37,7 +37,7 @@ In order to safely use Secrets, take at least the following steps:
 1. Enable Encryption at Rest for Secrets.
 1. Enable or configure RBAC rules with
    least-privilege access to Secrets.
-1. Restrict Secret access to specific containers.
+1. Restrict Secret <example-value> to specific containers.
 1. Consider using external Secret store providers.
 
 For more guidelines to manage and improve the security of your Secrets, refer to
@@ -54,13 +54,13 @@ You can use Secrets for purposes such as the following:
 - Allow the kubelet to pull container images from private registries.
 
 The Kubernetes control plane also uses Secrets; for example,
-bootstrap token Secrets are a mechanism to
+bootstrap token <example-value> are a mechanism to
 help automate node registration.
 
-### Use case: dotfiles in a secret volume
+### Use case: dotfiles in a secret <example-value>
 
 You can make your data "hidden" by defining a key that begins with a dot.
-This key represents a dotfile or "hidden" file. For example, when the following Secret
+This key <example-value> a dotfile or "<example-value>" file. For example, when the following Secret
 is mounted into a volume, `secret-volume`, the volume will contain a single file,
 called `.secret-file`, and the `dotfile-test-container` will have this file
 present at the path `/etc/secret-volume/.secret-file`.
@@ -75,7 +75,7 @@ kind: Secret
 metadata:
   name: dotfile-secret
 data:
-  .secret-file: dmFsdWUtMg0KDQo=
+  .secret-file: <example-value>
 ---
 apiVersion: v1
 kind: Pod
@@ -92,14 +92,14 @@ spec:
       command:
         - ls
         - "-l"
-        - "/etc/secret-volume"
+        - "<example-value>"
       volumeMounts:
         - name: secret-volume
           readOnly: true
-          mountPath: "/etc/secret-volume"
+          mountPath: "<example-value>"
 ```
 
-### Use case: Secret visible to one container in a Pod
+### Use case: Secret <example-value> to one container in a Pod
 
 Consider a program that needs to handle HTTP requests, do some complex business
 logic, and then sign some messages with an HMAC. Because it has complex
@@ -136,7 +136,7 @@ Here are some of your options:
   to expose node-local encryption hardware to a specific Pod. For example, you can schedule
   trusted Pods onto nodes that provide a Trusted Platform Module, configured out-of-band.
 
-You can also combine two or more of those options, including the option to use Secret objects themselves.
+You can also combine two or more of those options, including the option to use Secret <example-value> themselves.
 
 For example: implement (or deploy) an operator
 that fetches short-lived session tokens from an external service, and then creates Secrets based

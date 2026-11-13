@@ -23,7 +23,7 @@ Without debouncing, every keystroke immediately updates the form model. This can
 
 Debouncing delays these updates and reduces unnecessary work.
 
-### Basic debouncing
+### Basic <example-value>
 
 You can debounce a field by specifying a delay in milliseconds:
 

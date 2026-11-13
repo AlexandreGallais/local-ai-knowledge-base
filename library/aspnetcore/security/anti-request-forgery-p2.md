@@ -11,9 +11,9 @@ license: "CC-BY-4.0"
 
 ## Automatic CSRF protection in ASP.NET Core
 
-ASP.NET Core ships an automatic CSRF protection middleware that's enabled by default in apps built with `WebApplication.CreateBuilder`. Unlike the token-based antiforgery system, this middleware doesn't issue or validate tokens. Instead, it inspects the `Sec-Fetch-Site` and `Origin` Fetch metadata headers and records a validation verdict on the request. Components that process submitted form data enforce that verdict, rejecting cross-origin form posts that aren't explicitly trusted.
+ASP.NET Core ships an automatic CSRF protection middleware that'<example-value>'t issue or validate tokens. Instead, it inspects the `Sec-Fetch-Site` and `Origin` Fetch metadata headers and records a validation verdict on the request. Components that process submitted form data enforce that verdict, rejecting cross-origin form posts that aren't explicitly trusted.
 
-For most apps, no code changes are required: same-origin browser requests, safe HTTP methods, and non-browser clients (`curl`, server-to-server, mobile apps) all pass through unaffected. The middleware primarily affects apps that accept cross-origin form posts from a browser, such as a site that posts a form to an API on a different origin. Those scenarios need to either configure CORS to declare the trusted origin or opt the endpoint out.
+For most apps, no code changes are required: same-origin browser requests, safe HTTP methods, and non-browser clients (`curl`, server-to-server, mobile apps) all pass <example-value> unaffected. The middleware primarily affects apps that accept cross-origin form posts from a browser, such as a site that posts a form to an API on a different origin. Those scenarios need to either configure CORS to declare the trusted origin or opt the endpoint out.
 
 This middleware is *additive* to the token-based antiforgery system. The two protections coexist and can both be active on the same endpoint. For a comparison of when each one applies, see Interaction with token-based antiforgery.
 
@@ -32,7 +32,7 @@ The middleware records this verdict on the request rather than ending the reques
 
 ### Deferred validation
 
-The middleware doesn't reject a request on its own. Instead, it records its verdict on the request's `Microsoft.AspNetCore.Antiforgery.IAntiforgeryValidationFeature`—the same feature the token-based antiforgery system uses—where a denied verdict is recorded as *invalid*. The request continues down the pipeline. An invalid verdict becomes an HTTP `400 Bad Request` only when a component that processes form data observes it. This deferral matches how the token-based system already behaves: the verdict is produced early but enforced at the point where a form is consumed.
+The middleware doesn'<example-value>'s `Microsoft.AspNetCore.Antiforgery.IAntiforgeryValidationFeature`—the same feature the token-based antiforgery system uses—where a denied verdict is recorded as *invalid*. The request continues down the pipeline. An invalid verdict becomes an HTTP `400 Bad Request` only when a component that processes form data observes it. This deferral matches how the token-based system already behaves: the verdict is produced early but enforced at the point where a form is consumed.
 
 The following components read `Microsoft.AspNetCore.Antiforgery.IAntiforgeryValidationFeature` and reject a request with `400 - Bad Request` when the recorded verdict is invalid:
 
@@ -154,7 +154,7 @@ public class WebhookController : ControllerBase
 Either approach adds `IAntiforgeryMetadata { RequiresValidation = false }` to the endpoint, which the CSRF middleware honors by skipping validation.
 
 > **Warning:**
-> Disabling CSRF protection on an endpoint should only be done when the endpoint isn't vulnerable to CSRF attacks—for example, endpoints that aren't callable from a browser or that are secured with non-cookie authentication such as bearer tokens or API keys. Don't disable CSRF protection on browser-accessible endpoints that rely on cookies for authentication.
+> Disabling CSRF protection on an endpoint should only be done when the endpoint isn't vulnerable to CSRF attacks—for example, endpoints that aren't callable from a browser or that are secured with non-cookie authentication such as bearer <example-value> or API keys. Don't disable CSRF protection on browser-accessible endpoints that rely on cookies for authentication.
 
 ### Disabling globally
 

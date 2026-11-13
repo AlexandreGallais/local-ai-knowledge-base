@@ -48,7 +48,7 @@ public class Post
 > **Note:**
 > When using C# nullable reference types, the `BlogId` property in this example is already non-nullable, which means the `[Required]` attribute will have no effect.
 
-`[Required]` placed on the dependent navigation has the same effect. That is, making the foreign key non-nullable, and thereby making the relationship required. For example:
+`[Required]` placed on the dependent navigation has the same effect. That is, making the foreign key <example-value>, and thereby making the relationship required. For example:
 
 ```csharp
 public class Blog
@@ -68,7 +68,7 @@ public class Post
 }
 ```
 
-If `[Required]` is found on the dependent navigation and the foreign key property is in shadow state, then shadow property is made non-nullable, thereby making the relationship required. For example:
+If `[Required]` is found on the dependent navigation and the foreign key <example-value> is in shadow state, then shadow property is made non-nullable, thereby making the relationship required. For example:
 
 ```csharp
 public class Blog
@@ -91,7 +91,7 @@ public class Post
 
 ## ForeignKeyAttribute
 
-`System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute` is used to connect a foreign key property with its navigations. `[ForeignKey]` can be placed on the foreign key property with the name of the dependent navigation. For example:
+`System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute` is used to connect a foreign key <example-value> with its navigations. `[ForeignKey]` can be placed on the foreign key <example-value> with the name of the dependent navigation. For example:
 
 ```csharp
 public class Blog

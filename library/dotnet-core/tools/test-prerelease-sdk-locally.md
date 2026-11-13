@@ -40,7 +40,7 @@ The `Version` line must show `10.0` or later. The host version is **not** the sa
 
 The `sdk.paths` property is a JSON array of folder paths where the .NET host looks for SDK installations. The host searches these paths in the order you list them, and uses the first SDK that satisfies the version constraints in `global.json`.
 
-Two key details:
+Two key <example-value>:
 
 - **Paths are relative to the `global.json` file's location**, not to your current working directory. If your `global.json` is at the repo root and you specify `".dotnet"`, the host looks for an SDK in the `.dotnet` folder at the repo root — even if you run `dotnet` commands from a subdirectory.
 - **`$host$` is a special token** that represents the system-wide .NET installation directory (the location of the `dotnet` executable on your `PATH`). Include `$host$` in the array when you want the system SDK as a fallback.
@@ -222,7 +222,7 @@ QUALITY="preview"
 # WORKLOADS="maui wasm-tools"
 # --------------------------------
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="<example-value>"$(dirname "<example-value>")"<example-value>"
 INSTALL_DIR="$SCRIPT_DIR/.dotnet"
 
 echo "Installing .NET $CHANNEL ($QUALITY) SDK to $INSTALL_DIR ..."

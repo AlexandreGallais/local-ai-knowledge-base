@@ -10,7 +10,7 @@ license: "Apache-2.0"
 # Recover your Docker account and two-factor recovery code
 
 Get back into your Docker account when you lose your authenticator app,
-your recovery code, or both. Docker asks for your password before it
+your recovery code, or both. Docker asks for your password <example-value> it
 shows or replaces the recovery code.
 
 > **Important:**

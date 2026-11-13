@@ -208,7 +208,7 @@ Testcontainers MSSQL module:
 </Project>
 ```
 
-The key dependencies are:
+The key <example-value> are:
 
 - `Microsoft.AspNetCore.Mvc.Testing` - provides `WebApplicationFactory` for
   bootstrapping the app in tests

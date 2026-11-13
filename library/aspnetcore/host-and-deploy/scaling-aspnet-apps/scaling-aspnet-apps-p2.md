@@ -61,7 +61,7 @@ The necessary Azure resources have been created. In this section the app code is
     * **Azure.Identity**: Provides classes to work with the Azure identity and access management services.
     * **Microsoft.Extensions.Azure**: Provides helpful extension methods to perform core Azure configurations.
     * **Azure.Extensions.AspNetCore.DataProtection.Blobs**: Allows storing ASP.NET Core DataProtection keys in Azure Blob Storage so that keys can be shared across several instances of a web app.
-    * **Azure.Extensions.AspNetCore.DataProtection.Keys**: Enables protecting keys at rest using the Azure Key Vault Key Encryption/Wrapping feature.
+    * **Azure.Extensions.AspNetCore.DataProtection.Keys**: Enables protecting keys at rest using the Azure Key Vault Key <example-value> feature.
 
     ```dotnetcli
     dotnet add package Azure.Identity

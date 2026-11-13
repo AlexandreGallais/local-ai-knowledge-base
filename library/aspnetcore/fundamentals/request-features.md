@@ -79,9 +79,9 @@ The following feature interfaces are from `Microsoft.AspNetCore.Http.Features`:
 
 `Microsoft.AspNetCore.Http.Features.ITlsConnectionFeature`: Defines an API for retrieving client certificates.
 
-`ITlsConnectionFeature` also defines `TryGetChannelBindingBytes(ChannelBindingKind, out ReadOnlyMemory<byte>)`, which lets app code retrieve an RFC 5929 TLS channel binding token for the current connection, such as the endpoint token requested with `ChannelBindingKind.Endpoint`. Channel binding lets an authentication layer bind credentials to the underlying TLS channel, which helps mitigate credential-relay attacks as part of Extended Protection for Authentication (EPA). Kestrel retrieves the token from `SslStream.TransportContext.GetChannelBinding`, and HTTP.sys exposes it by default. For more information, see HttpSys enables TLS channel binding token exposure by default and Negotiate authentication uses TLS channel binding. The method returns `false` when a token isn't available for the requested `ChannelBindingKind`.
+`ITlsConnectionFeature` also defines `TryGetChannelBindingBytes(ChannelBindingKind, out ReadOnlyMemory<byte>)`, which lets app code retrieve an RFC 5929 TLS channel binding token for the current connection, such as the endpoint token <example-value> with `ChannelBindingKind.Endpoint`. Channel binding lets an authentication layer bind credentials to the underlying TLS channel, which helps mitigate credential-relay attacks as part of Extended Protection for Authentication (EPA). Kestrel retrieves the token from `SslStream.TransportContext.GetChannelBinding`, and HTTP.sys exposes it by default. For more information, see HttpSys enables TLS channel binding token <example-value> by default and Negotiate authentication uses TLS channel binding. The method returns `false` when a token isn't available for the requested `ChannelBindingKind`.
 
-`Microsoft.AspNetCore.Http.Features.ITlsTokenBindingFeature`: Defines methods for working with TLS token binding parameters.
+`Microsoft.AspNetCore.Http.Features.ITlsTokenBindingFeature`: Defines methods for working with TLS token <example-value> parameters.
 
 `Microsoft.AspNetCore.Http.Features.ITrackingConsentFeature`: Used to query, grant, and withdraw user consent regarding the storage of user information related to site activity and functionality.
 

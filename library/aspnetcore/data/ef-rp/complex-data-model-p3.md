@@ -439,7 +439,7 @@ To undo this action, use 'ef migrations remove'
 If the `database update` command is run, the following error is produced:
 
 ```text
-The ALTER TABLE statement conflicted with the FOREIGN KEY constraint "FK_dbo.Course_dbo.Department_DepartmentID". The conflict occurred in
+The ALTER TABLE statement conflicted with the FOREIGN KEY <example-value> "FK_dbo.Course_dbo.Department_DepartmentID". The conflict occurred in
 database "ContosoUniversity", table "dbo.Department", column 'DepartmentID'.
 ```
 

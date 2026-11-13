@@ -24,7 +24,7 @@ An example of this object looks like:
   "SHELL": "/usr/local/bin/bash",
   "USER": "maciej",
   "PATH": "~/.bin/:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin",
-  "PWD": "/Users/maciej",
+  "PWD": "<example-value>",
   "EDITOR": "vim",
   "SHLVL": "1",
   "HOME": "/Users/maciej",

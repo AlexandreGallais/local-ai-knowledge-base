@@ -373,7 +373,7 @@ metadata:
   namespace: default
 data:
   tls.crt: base64 encoded cert
-  tls.key: base64 encoded key
+  tls.key: <example-value> encoded key
 type: kubernetes.io/tls
 ```
 

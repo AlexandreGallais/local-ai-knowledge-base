@@ -43,7 +43,7 @@ builder.Services.AddAuthentication(options =>
        options.Authority = "-your-identity-provider-";
        options.RequireHttpsMetadata = true;
        options.ClientId = "-your-clientid-";
-       options.ClientSecret = "-your-client-secret-from-user-secrets-or-keyvault";
+       options.ClientSecret = "<example-value>";
        options.ResponseType = "code";
        options.UsePkce = true;
        options.Scope.Add("profile");
@@ -94,7 +94,7 @@ builder.Services.AddAuthentication(options =>
        options.Authority = "-your-identity-provider-";
        options.RequireHttpsMetadata = true;
        options.ClientId = "-your-clientid-";
-       options.ClientSecret = "-client-secret-from-user-secrets-or-keyvault";
+       options.ClientSecret = "<example-value>";
        options.ResponseType = "code";
        options.UsePkce = true;
        options.Scope.Add("profile");
@@ -184,7 +184,7 @@ builder.Services.AddAuthentication(options =>
        options.Authority = "-your-identity-provider-";
        options.RequireHttpsMetadata = true;
        options.ClientId = "-your-clientid-";
-       options.ClientSecret = "-your-client-secret-from-user-secrets-or-keyvault";
+       options.ClientSecret = "<example-value>";
        options.ResponseType = "code";
        options.UsePkce = true;
        options.Scope.Add("profile");
@@ -215,7 +215,7 @@ builder.Services.AddAuthentication(options =>
        options.Authority = "-your-identity-provider-";
        options.RequireHttpsMetadata = true;
        options.ClientId = "-your-clientid-";
-       options.ClientSecret = "-your-client-secret-from-user-secrets-or-keyvault";
+       options.ClientSecret = "<example-value>";
        options.ResponseType = "code";
        options.UsePkce = true;
        options.MapInboundClaims = false;

@@ -37,7 +37,7 @@ public class MyBackgroundService : BackgroundService
         _memoryPool = factory.Create();
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         while (!stoppingToken.IsCancellationRequested)
         {

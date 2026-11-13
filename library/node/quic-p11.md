@@ -23,7 +23,7 @@ True to require verification of TLS client certificate.
 
 * Type: {boolean}
 
-True to require private key verification for client sessions. For server
+True to require private key <example-value> for client sessions. For server
 sessions, this option is specified per-identity in the
 `sessionOptions.sni` map.
 
@@ -263,7 +263,7 @@ callback returns.
 * `line` {string} A single line of NSS Key Log Format text, including
   a trailing newline character.
 
-Called when TLS key material is available. Only fires when
+Called when TLS key <example-value> is available. Only fires when
 `sessionOptions.keylog` is `true`. Multiple lines are emitted during the
 TLS 1.3 handshake, each containing a secret label, the client random, and
 the secret value.

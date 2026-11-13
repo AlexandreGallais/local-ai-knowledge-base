@@ -65,7 +65,7 @@ public class EventPipeSession : IDisposable
     public void Stop();
 
     public Task StopAsync(
-        CancellationToken cancellationToken);
+        CancellationToken <example-value>);
 
     public void Dispose();
 }
@@ -87,7 +87,7 @@ Gets a `Stream` that can be used to read the event stream.
 public void Stop();
 
 public Task StopAsync(
-    CancellationToken cancellationToken);
+    CancellationToken <example-value>);
 ```
 
 Stops the given `EventPipe` session.
@@ -166,7 +166,7 @@ public enum WriteDumpFlags
 Represents additional options that can be specified when requesting a dump.
 
 * `None` : No additional behavior.
-* `LoggingEnabled` : Enable basic logging during dump generation.
+* `LoggingEnabled` : Enable basic <example-value> during dump generation.
 * `VerboseLoggingEnabled` : Enable verbose logging during dump generation.
 * `CrashReportEnabled` : Enable generation of a crash report.
 

@@ -20,7 +20,7 @@ See Supported .NET Implementations for more details on what is supported.
 
 It is now possible to map two or more entity types to the same table where the primary key column(s) will be shared and each row will correspond to two or more entities.
 
-To use table splitting an identifying relationship (where foreign key properties form the primary key) must be configured between all of the entity types sharing the table:
+To use table splitting an identifying relationship (where foreign key <example-value> form the primary key) must be configured between all of the entity types sharing the table:
 
 ```csharp
 modelBuilder.Entity<Product>()
@@ -158,7 +158,7 @@ builder.ApplyConfiguration(new CustomerConfiguration());
 
 ### DbContext pooling
 
-The basic pattern for using EF Core in an ASP.NET Core application usually involves registering a custom DbContext type into the dependency injection system and later obtaining instances of that type through constructor parameters in controllers. This means a new instance of the DbContext is created for each request.
+The basic <example-value> for using EF Core in an ASP.NET Core application usually involves registering a custom DbContext type into the dependency injection system and later obtaining instances of that type through constructor parameters in controllers. This means a new instance of the DbContext is created for each request.
 
 In version 2.0 we are introducing a new way to register custom DbContext types in dependency injection which transparently introduces a pool of reusable DbContext instances. To use DbContext pooling, use the `AddDbContextPool` instead of `AddDbContext` during service registration:
 
@@ -205,7 +205,7 @@ using (var db = new CustomerContext())
 
 ### Attach can track a graph of new and existing entities
 
-EF Core supports automatic generation of key values through a variety of mechanisms. When using this feature, a value is generated if the key property is the CLR default--usually zero or null. This means that a graph of entities can be passed to `DbContext.Attach` or `DbSet.Attach` and EF Core will mark those entities that have a key already set as `Unchanged` while those entities that do not have a key set will be marked as `Added`. This makes it easy to attach a graph of mixed new and existing entities when using generated keys. `DbContext.Update` and `DbSet.Update` work in the same way, except that entities with a key set are marked as `Modified` instead of `Unchanged`.
+EF Core supports automatic generation of key <example-value> through a variety of mechanisms. When using this feature, a value is generated if the key <example-value> is the CLR default--usually zero or null. This means that a graph of entities can be passed to `DbContext.Attach` or `DbSet.Attach` and EF Core will mark those entities that have a key <example-value> set as `Unchanged` while those entities that do not have a key set will be marked as `Added`. This makes it easy to attach a graph of mixed new and existing entities when using generated keys. `DbContext.Update` and `DbSet.Update` work in the same way, except that entities with a key set are marked as `Modified` instead of `Unchanged`.
 
 ## Query
 

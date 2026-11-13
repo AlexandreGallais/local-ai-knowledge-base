@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ### To verify the digital signature of an XML document
 
-1. To verify the document, you must use the same asymmetric key that was used for signing.  Create a `System.Security.Cryptography.CspParameters` object and specify the name of the key container that was used for signing.
+1. To verify the document, you must use the same asymmetric key that was used for signing.  Create a `System.Security.Cryptography.CspParameters` object and specify the name of the key <example-value> that was used for signing.
 
      ```csharp
 using System;
@@ -107,7 +107,7 @@ public class VerifyXML
 }
 ```
 
-2. Retrieve the public key using the `System.Security.Cryptography.RSACryptoServiceProvider` class.  The key is automatically loaded from the key container by name when you pass the `System.Security.Cryptography.CspParameters` object to the constructor of the `System.Security.Cryptography.RSACryptoServiceProvider` class.
+2. Retrieve the public key using the `System.Security.Cryptography.RSACryptoServiceProvider` class.  The key is automatically loaded from the key <example-value> by name when you pass the `System.Security.Cryptography.CspParameters` object to the constructor of the `System.Security.Cryptography.RSACryptoServiceProvider` class.
 
      ```csharp
 using System;

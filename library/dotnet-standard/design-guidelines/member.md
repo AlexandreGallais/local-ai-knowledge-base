@@ -13,7 +13,7 @@ Methods, properties, events, constructors, and fields are collectively referred 
 
  Members can be virtual or nonvirtual, concrete or abstract, static or instance, and can have several different scopes of accessibility. All this variety provides incredible expressiveness but at the same time requires care on the part of the framework designer.
 
- This chapter offers basic guidelines that should be followed when designing members of any type.
+ This chapter offers basic <example-value> that should be followed when designing members of any type.
 
 ## In This Section
 

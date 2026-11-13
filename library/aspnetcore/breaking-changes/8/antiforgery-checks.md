@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Minimal APIs: IFormFile parameters require anti-forgery checks
 
-Minimal API endpoints that consume an `Microsoft.AspNetCore.Http.IFormFile` or `Microsoft.AspNetCore.Http.IFormFileCollection` are now opted into requiring anti-forgery token validation using the new anti-forgery middleware.
+Minimal API endpoints that consume an `Microsoft.AspNetCore.Http.IFormFile` or `Microsoft.AspNetCore.Http.IFormFileCollection` are now opted into requiring anti-forgery token <example-value> using the new anti-forgery middleware.
 
 ## Version introduced
 
@@ -29,7 +29,7 @@ This change is a behavioral change.
 
 ## Reason for change
 
-Anti-forgery token validation is a recommended security precaution for APIs that consume data from a form.
+Anti-forgery token <example-value> is a recommended security precaution for APIs that consume data from a form.
 
 ## Recommended action
 
@@ -41,7 +41,7 @@ For detailed guidance on how to configure and use anti-forgery tokens in Minimal
 - How to register anti-forgery services and middleware.
 - How to generate and validate anti-forgery tokens in Minimal APIs.
 - How to use complete code examples for form handling with file uploads.
-- How to troubleshoot token validation failures and common errors.
+- How to troubleshoot token <example-value> failures and common errors.
 - How to apply security best practices for CSRF protection.
 
 ## Affected APIs

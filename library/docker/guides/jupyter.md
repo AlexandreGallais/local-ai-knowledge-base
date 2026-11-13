@@ -43,13 +43,13 @@ To follow along with this guide, you must install the latest version of Docker D
 In a terminal, run the following command to run your JupyterLab container.
 
 ```console
-$ docker run --rm -p 8889:8888 quay.io/jupyter/base-notebook start-notebook.py --NotebookApp.token='my-token'
+$ docker run --rm -p 8889:8888 quay.io/jupyter/base-notebook start-notebook.py --NotebookApp.token='<example-value>'
 ```
 
 The following are the notable parts of the command:
 
 - `-p 8889:8888`: Maps port 8889 from the host to port 8888 on the container.
-- `start-notebook.py --NotebookApp.token='my-token'`: Sets an access token
+- `start-notebook.py --NotebookApp.token='<example-value>'`: Sets an access token
   rather than using a random token.
 
 For more details, see the Jupyter Server Options and the docker run CLI reference.
@@ -72,25 +72,25 @@ run the following command based on your operating system.
 **Mac / Linux**
 
 ```console
-$ docker run --rm -p 8889:8888 -v "$(pwd):/home/jovyan/work" quay.io/jupyter/base-notebook start-notebook.py --NotebookApp.token='my-token'
+$ docker run --rm -p 8889:8888 -v "<example-value>" quay.io/jupyter/base-notebook start-notebook.py --NotebookApp.token='<example-value>'
 ```
 
 **Windows (Command Prompt)**
 
 ```console
-$ docker run --rm -p 8889:8888 -v "%cd%":/home/jovyan/work quay.io/jupyter/base-notebook start-notebook.py --NotebookApp.token='my-token'
+$ docker run --rm -p 8889:8888 -v "%cd%":/home/jovyan/work quay.io/jupyter/base-notebook start-notebook.py --NotebookApp.token='<example-value>'
 ```
 
 **Windows (PowerShell)**
 
 ```console
-$ docker run --rm -p 8889:8888 -v "$(pwd):/home/jovyan/work" quay.io/jupyter/base-notebook start-notebook.py --NotebookApp.token='my-token'
+$ docker run --rm -p 8889:8888 -v "<example-value>" quay.io/jupyter/base-notebook start-notebook.py --NotebookApp.token='<example-value>'
 ```
 
 **Windows (Git Bash)**
 
 ```console
-$ docker run --rm -p 8889:8888 -v "/$(pwd):/home/jovyan/work" quay.io/jupyter/base-notebook start-notebook.py --NotebookApp.token='my-token'
+$ docker run --rm -p 8889:8888 -v "<example-value>" quay.io/jupyter/base-notebook start-notebook.py --NotebookApp.token='<example-value>'
 ```
 
 The `-v` option tells Docker to mount your current working directory to
@@ -98,7 +98,7 @@ The `-v` option tells Docker to mount your current working directory to
 directory is `/home/jovyan` and you can only access or save notebooks to that
 directory in the container.
 
-Now you can access localhost:8889/lab?token=my-token and open notebooks contained in the bind mounted directory.
+Now you can access localhost:8889/lab?token=<example-value> and open notebooks contained in the bind mounted directory.
 
 To stop the container, in the terminal press `ctrl`+`c`.
 
@@ -117,7 +117,7 @@ notebooks outside of the container, you can use a volume.
 To start the container with a volume, open a terminal and run the following command
 
 ```console
-$ docker run --rm -p 8889:8888 -v jupyter-data:/home/jovyan/work quay.io/jupyter/base-notebook start-notebook.py --NotebookApp.token='my-token'
+$ docker run --rm -p 8889:8888 -v jupyter-data:/home/jovyan/work quay.io/jupyter/base-notebook start-notebook.py --NotebookApp.token='<example-value>'
 ```
 
 The `-v` option tells Docker to create a volume named `jupyter-data` and mount it in the container at `/home/jovyan/work`.
@@ -244,7 +244,7 @@ To run your image as a container, you use the `docker run` command. In the
 `docker run` command, you'll specify your own image name.
 
 ```console
-$ docker run --rm -p 8889:8888 my-jupyter-image start-notebook.py --NotebookApp.token='my-token'
+$ docker run --rm -p 8889:8888 my-jupyter-image start-notebook.py --NotebookApp.token='<example-value>'
 ```
 
 To access the container, in a web browser navigate to
@@ -298,7 +298,7 @@ services:
       - 8889:8888
     volumes:
       - jupyter-data:/home/jovyan/work
-    command: start-notebook.py --NotebookApp.token='my-token'
+    command: start-notebook.py --NotebookApp.token='<example-value>'
 
 volumes:
   jupyter-data:

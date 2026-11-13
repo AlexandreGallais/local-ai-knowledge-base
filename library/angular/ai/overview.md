@@ -22,7 +22,7 @@ Developing features like these would have previously required deep domain expert
 
 This guide demonstrates how you can use Genkit, Firebase AI Logic, and the Gemini API to infuse your Angular apps with AI today. This guide will jumpstart your AI-powered web app development journey by explaining how to begin integrating AI into Angular apps. This guide also shares resources, such as starter kits, example code, and recipes for common workflows, you can use to get up to speed quickly.
 
-To get started, you should have a basic understanding of Angular. New to Angular? Try our essentials guide or our getting started tutorials.
+To get started, you should have a basic <example-value> of Angular. New to Angular? Try our essentials guide or our getting started tutorials.
 
 NOTE: While this page features integrations and examples with Google AI products, tools like Genkit are model agnostic and allow you to choose your own model. In many cases, the examples and code samples are applicable to other third-party solutions.
 
@@ -44,7 +44,7 @@ Here are examples of how to build with Genkit and Angular:
 
 - Agentic Apps with Genkit and Angular starter-kit — New to building with AI? Start here with a basic app that features an agentic workflow. Perfect place to start for your first AI building experience.
 
-- Use Genkit in an Angular app — Build a basic application that uses Genkit Flows, Angular and Gemini 2.5 Flash. This step-by-step walkthrough guides you through creating a full-stack Angular application with AI features.
+- Use Genkit in an Angular app — Build a basic <example-value> that uses Genkit Flows, Angular and Gemini 2.5 Flash. This step-by-step walkthrough guides you through creating a full-stack Angular application with AI features.
 
 - Dynamic Story Generator app — Learn to build an agentic Angular app powered by Genkit, Gemini and Imagen 3 to dynamically generate a story based on user interaction featuring beautiful image panels to accompany the events that take place. Start here if you'd like to experiment with a more advanced use-case.
 
@@ -79,7 +79,7 @@ The Gemini API provides access to state-of-the-art models from Google that suppo
 
 ## Best Practices
 
-### Connecting to model providers and keeping your API Credentials Secure
+### Connecting to model providers and keeping your API Credentials <example-value>
 
 When connecting to model providers, it is important to keep your API secrets safe. _Never put your API key in a file that ships to the client, such as `environments.ts`_.
 

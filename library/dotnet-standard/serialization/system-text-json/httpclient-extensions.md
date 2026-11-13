@@ -55,7 +55,7 @@ namespace HttpClientExtensionMethods
 //Id: 1
 //Name: Tyler King
 //Username: Tyler
-//Email: Tyler@contoso.com
+//Email: user@example.com
 //Success - Created
 ```
 ```vb
@@ -101,6 +101,6 @@ End Namespace
 'Id: 1
 'Name: Tyler King
 'Username: Tyler
-'Email: Tyler@contoso.com
+'Email: user@example.com
 'Success - Created
 ```

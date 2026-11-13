@@ -124,7 +124,7 @@ Kubernetes API resources.
 
 In Kubernetes, a Namespace provides a
 mechanism for isolating groups of API resources within a single cluster. This isolation has two
-key dimensions:
+key <example-value>:
 
 1. Object names within a namespace can overlap with names in other namespaces, similar to files in
    folders. This allows tenants to name their resources without having to consider what other

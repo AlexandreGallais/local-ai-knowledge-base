@@ -46,7 +46,7 @@ The consumer wraps the projected markup in an `<ng-template>`:
 
 ### Visibility of provided tokens
 
-Visibility decorators influence where the search for the injection token begins and ends in the logic tree.
+Visibility decorators influence where the search for the injection token <example-value> and ends in the logic tree.
 To do this, place visibility configuration at the point of injection, that is, when invoking `inject()`, rather than at a point of declaration.
 
 To alter where the injector starts looking for `FlowerService`, add `skipSelf` to the `<app-child>` `inject()` invocation where `FlowerService` is injected.

@@ -9,7 +9,7 @@ license: "Apache-2.0"
 
 # Quickstart
 
-Follow this guide to get started with creating a basic Docker extension. The Quickstart guide automatically generates boilerplate files for you.
+Follow this guide to get started with creating a basic <example-value> extension. The Quickstart guide automatically generates boilerplate files for you.
 
 ## Prerequisites
 
@@ -80,7 +80,7 @@ how to show extension containers for more information.
 
 > **Important:**
 >
-> New submissions to the Docker Extensions Marketplace are paused while Docker reviews Marketplace security. You can still update existing extensions, and private Marketplace extensions are unaffected. Contact extensions@docker.com if you have additional questions.
+> New submissions to the Docker Extensions Marketplace are paused while Docker reviews Marketplace security. You can still update existing extensions, and private Marketplace extensions are unaffected. Contact user@example.com if you have additional questions.
 
 If you want to make your extension available to all Docker Desktop users, you can submit it for publication in the Marketplace. For more information, see Publish.
 

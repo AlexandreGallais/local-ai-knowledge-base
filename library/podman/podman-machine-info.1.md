@@ -115,4 +115,4 @@ amd64
 **podman(1)**, **podman-machine(1)**
 
 ## HISTORY
-June 2022, Originally compiled by Ashley Cui <acui@redhat.com>
+June 2022, Originally compiled by Ashley Cui <user@example.com>

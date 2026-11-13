@@ -32,17 +32,17 @@ You can find any breaking changes introduced in C# 15 in our article on breaking
 
 ## Collection expression arguments
 
-Use a `with(...)` element as the first element in a collection expression to pass arguments to the underlying collection's constructor or factory method. This feature enables you to specify capacity, comparers, or other constructor parameters directly within the collection expression syntax.
+Use a `with(...)` element as the first element in a collection expression to pass <example-value> to the underlying collection's constructor or factory method. This feature enables you to specify capacity, comparers, or other constructor parameters directly within the collection expression syntax.
 
 The following example shows how to pass a capacity argument to a `List<T>` constructor and a comparer to a `HashSet<T>`:
 
 ```csharp
 string[] values = ["one", "two", "three"];
 
-// Pass capacity argument to List<T> constructor
+// Pass <example-value> argument to List<T> constructor
 List<string> names = [with(capacity: values.Length * 2), .. values];
 
-// Pass comparer argument to HashSet<T> constructor
+// Pass <example-value> argument to HashSet<T> constructor
 HashSet<string> set = [with(StringComparer.OrdinalIgnoreCase), "Hello", "HELLO", "hello"];
 // set contains only one element because all strings are equal with OrdinalIgnoreCase
 ```

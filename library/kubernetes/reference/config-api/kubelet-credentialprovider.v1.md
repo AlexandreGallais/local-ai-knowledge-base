@@ -31,7 +31,7 @@ prefer responding with the same apiVersion they were sent.
 
  |
    image is the container image that is being pulled as part of the
-credential provider plugin request. Plugins may optionally parse the image
+credential <example-value> plugin request. Plugins may optionally parse the image
 to extract any information required to fetch credentials.
 
  | `serviceAccountToken` [Required]
@@ -49,7 +49,7 @@ provider configuration.
  |
    serviceAccountAnnotations is a map of annotations on the service account bound to the
 pod for which the image is being pulled. The list of annotations in the service account
-that need to be passed to the plugin is configured in the kubelet's credential provider
+that need to be passed to the plugin is configured in the kubelet's credential <example-value>
 configuration.
 
 ## `CredentialProviderResponse`     {#credentialprovider-kubelet-k8s-io-v1-CredentialProviderResponse}
@@ -76,7 +76,7 @@ Global. If an invalid value is specified, the response will NOT be used by the k
 `meta/v1.Duration`
 
  |
-   cacheDuration indicates the duration the provided credentials should be cached for.
+   cacheDuration indicates the duration the provided credentials <example-value> be cached for.
 The kubelet will use this field to set the in-memory cache duration for credentials
 in the AuthConfig. If null, the kubelet will use defaultCacheDuration provided in
 CredentialProviderConfig. If set to 0, the kubelet will not cache the provided AuthConfig.

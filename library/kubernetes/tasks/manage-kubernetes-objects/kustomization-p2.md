@@ -234,7 +234,7 @@ Here is an example of generating a Secret with a data item from a file:
 # Create a password.txt file
 cat <<EOF >./password.txt
 username=admin
-password=secret
+password=<example-value>
 EOF
 
 cat <<EOF >./kustomization.yaml
@@ -250,7 +250,7 @@ The generated Secret is as follows:
 ```yaml
 apiVersion: v1
 data:
-  password.txt: dXNlcm5hbWU9YWRtaW4KcGFzc3dvcmQ9c2VjcmV0Cg==
+  password.txt: <example-value>
 kind: Secret
 metadata:
   name: example-secret-1-t2kt65hgtb
@@ -266,7 +266,7 @@ secretGenerator:
 - name: example-secret-2
   literals:
   - username=admin
-  - password=secret
+  - password=<example-value>
 EOF
 ```
 
@@ -275,7 +275,7 @@ The generated Secret is as follows:
 ```yaml
 apiVersion: v1
 data:
-  password: c2VjcmV0
+  password: <example-value>
   username: YWRtaW4=
 kind: Secret
 metadata:
@@ -289,7 +289,7 @@ Like ConfigMaps, generated Secrets can be used in Deployments by referring to th
 # Create a password.txt file
 cat <<EOF >./password.txt
 username=admin
-password=secret
+password=<example-value>
 EOF
 
 cat <<EOF >deployment.yaml

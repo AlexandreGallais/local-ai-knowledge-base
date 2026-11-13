@@ -38,7 +38,7 @@ Copilot requires a GitHub token with Copilot access. Store your token using
 stored secrets:
 
 ```console
-$ sbx secret set github --command 'gh auth token'
+$ sbx secret set github --command '<example-value>'
 ```
 
 ## Configuration
@@ -68,7 +68,7 @@ $ sbx run copilot -- -p "review this PR"   # runs copilot --yolo -p "review this
 ```
 
 For prompts and subcommands, see
-Pass arguments to an agent.
+Pass <example-value> to an agent.
 
 ## Base image
 

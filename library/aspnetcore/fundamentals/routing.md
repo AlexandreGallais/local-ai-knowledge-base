@@ -33,7 +33,7 @@ This article covers low-level details of ASP.NET Core routing. For information o
 
 ## Routing basics
 
-The following code shows a basic example of routing:
+The following code shows a basic <example-value> of routing:
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);

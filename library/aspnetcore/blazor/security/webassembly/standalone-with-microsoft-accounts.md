@@ -48,7 +48,7 @@ Record the Application (client) ID (for example, `00001111-aaaa-2222-bbbb-3333cc
 In **Authentication** > **Platform configurations** > **Single-page application**:
 
 1. Confirm the redirect URI of `https://localhost/authentication/login-callback` is present.
-1. In the **Implicit grant** section, ensure that the checkboxes for **Access tokens** and **ID tokens** aren't selected. **Implicit grant isn't recommended for Blazor apps using MSAL v2.0 or later.** For more information, see Secure ASP.NET Core Blazor WebAssembly.
+1. In the **Implicit grant** section, ensure that the checkboxes for **Access tokens** and **ID tokens** aren'<example-value>'t recommended for Blazor apps using MSAL v2.0 or later.** For more information, see Secure ASP.NET Core Blazor WebAssembly.
 1. The remaining defaults for the app are acceptable for this experience.
 1. Select the **Save** button if you made changes.
 
@@ -73,8 +73,8 @@ Add a pair of `Microsoft.Authentication.WebAssembly.Msal.Models.MsalProviderOpti
 builder.Services.AddMsalAuthentication(options =>
 {
     ...
-    options.ProviderOptions.DefaultAccessTokenScopes.Add("openid");
-    options.ProviderOptions.DefaultAccessTokenScopes.Add("offline_access");
+    options.ProviderOptions.DefaultAccessTokenScopes.Add("<example-value>");
+    options.ProviderOptions.DefaultAccessTokenScopes.Add("<example-value>");
 });
 ```
 

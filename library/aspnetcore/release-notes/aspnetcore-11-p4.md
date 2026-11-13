@@ -55,7 +55,7 @@ public class DataRefreshService : IHostedService
 {
     private Timer? _timer;
 
-    public Task StartAsync(CancellationToken cancellationToken)
+    public Task StartAsync(CancellationToken <example-value>)
     {
         _timer = new Timer(RefreshData, null, TimeSpan.Zero, TimeSpan.FromMinutes(5));
         return Task.CompletedTask;
@@ -66,7 +66,7 @@ public class DataRefreshService : IHostedService
         // Refresh data periodically
     }
 
-    public Task StopAsync(CancellationToken cancellationToken)
+    public Task StopAsync(CancellationToken <example-value>)
     {
         _timer?.Dispose();
         return Task.CompletedTask;
@@ -174,7 +174,7 @@ Blazor forms receive support for async validation rules, such as database lookup
 
 The built-in `DataAnnotationsValidator` component runs the asynchronous `DataAnnotations` APIs (`AsyncValidationAttribute` and `IAsyncValidatableObject`), so asynchronous rules declared on the model work without additional configuration.
 
-Validator components register asynchronous work with `ValidationRequestedEventArgs.AddAsyncValidator` for the whole form and `EditContext.RegisterAsyncFieldValidator` for a single field. The framework owns the cancellation token source, cancels superseded validations, and exposes progress with `IsValidationPending(field)` and `IsValidationFaulted(field)`.
+Validator components register asynchronous work with `ValidationRequestedEventArgs.AddAsyncValidator` for the whole form and `EditContext.RegisterAsyncFieldValidator` for a single field. The framework owns the cancellation token <example-value>, cancels superseded validations, and exposes progress with `IsValidationPending(field)` and `IsValidationFaulted(field)`.
 
 ```razor
 <EditForm EditContext="editContext" OnValidSubmit="HandleSubmit">
@@ -254,7 +254,7 @@ General coverage for the new automatic CSRF protection in ASP.NET Core:
 The `Virtualize<TItem>` component can now open at a specific item and scroll to any item on demand. Two new public APIs make this possible:
 
 * `InitialItemIndex` positions the list at a given item on the first interactive render, so the list opens at that item without a flash of the first item.
-* `ScrollToItemAsync(int itemIndex, CancellationToken cancellationToken = default)` scrolls to an item at any time after the first render and returns a `Task` that completes when the target is aligned to the top of the viewport.
+* `ScrollToItemAsync(int itemIndex, CancellationToken <example-value> = default)` scrolls to an item at any time after the first render and returns a `Task` that completes when the target is aligned to the top of the viewport.
 
 ```razor
 <Virtualize TItem="Product" Items="products" InitialItemIndex="500" @ref="list">

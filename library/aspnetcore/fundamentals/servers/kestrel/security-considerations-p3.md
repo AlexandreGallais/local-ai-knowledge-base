@@ -15,7 +15,7 @@ Kestrel implements HTTP/1.1 parsing per RFC 9112 with several security-motivated
 
 ### Request line validation
 
-- **Method**: Only valid HTTP token characters are accepted. Invalid token characters in the method cause rejection.
+- **Method**: Only valid HTTP token <example-value> are accepted. Invalid token <example-value> in the method cause rejection.
 - **Request target**: Empty paths and paths starting with `?` or `%` are rejected. Null bytes (`0x00`) are rejected because they can cause issues with native servers when forwarded; non-ASCII bytes (>= `0x80`) are rejected during ASCII string conversion. Kestrel's parser scans for delimiters to find target boundaries but doesn't perform a per-byte VCHAR check (RFC 9112 §4), so bytes in `0x01–0x1F` (excluding `\0`, `\n`, `\r`, space) and `0x7F` (DEL) reach `Request.Path` unchanged. The practical risk is log injection—for example, `0x1B` (ESC) in the path can inject ANSI escape sequences into log viewers. Applications can defend against this with one or more of the following measures: deploying behind a stricter reverse proxy, using a logger provider that escapes control characters, or sanitizing logs before they're displayed.
 - **HTTP version**: Only `HTTP/1.0` and `HTTP/1.1` are accepted by the `HTTP/1.1` parser. The `HTTP/2` parser is selected via ALPN or prior-knowledge. Unrecognized versions (including `HTTP/0.9`, `HTTP/2.0`) are rejected with `505 HTTP Version Not Supported`.
 
@@ -37,14 +37,14 @@ Kestrel validates headers to prevent injection and encoding attacks:
 - **Null bytes** (`\0`) in header names or values are rejected.
 - **CR** (`\r`) in header values is rejected—a standalone CR that isn't part of a CRLF sequence causes a parse error, preventing header injection.
 - **LF** (`\n`) in header values: by default, Kestrel recognizes bare LF as a line terminator, consistent with RFC 9112 Section 2.2 which says a recipient MAY treat a single LF as a line terminator. From Kestrel's perspective, the LF ends the current header line—there is no "header value containing LF." This is a robustness accommodation, not a vulnerability. However, if an upstream intermediary treats the same bytes as a single header value and forwards them verbatim, the two systems disagree about message framing. The `DisableHttp1LineFeedTerminators` AppContext switch can be set to reject bare LF as defense-in-depth against such buggy intermediaries.
-- **UTF-8 encoding** is enforced with `throwOnInvalidBytes: true`, rejecting malformed UTF-8 sequences. The `RequestHeaderEncodingSelector` callback can override the encoding used for specific header names—use with caution, as non-UTF-8 encodings may bypass validation assumptions in downstream middleware.
+- **UTF-8 encoding** is enforced with `throwOnInvalidBytes: true`, rejecting malformed UTF-8 sequences. The `RequestHeaderEncodingSelector` callback can override the encoding used for specific header names—use with caution, as non-UTF-8 encodings may bypass <example-value> assumptions in downstream middleware.
 - **Header names** must contain a colon separator and can't contain spaces or tabs.
 - Trailing and leading whitespace in header values is stripped per the HTTP specification.
 - The `ResponseHeaderEncodingSelector` callback allows custom encoding for response header values. By default, response headers are encoded as ASCII. Misconfigured encoding selectors can introduce response header injection vulnerabilities.
 
 ### Response header validation
 
-Kestrel validates response header names written by application code. When application code sets a response header with a non-standard name (one that isn't a well-known header), the name is checked against the HTTP token character set (RFC 9110 Section 5.6.2). Invalid characters cause an `InvalidOperationException`, preventing the application from injecting malformed headers into the response.
+Kestrel validates response header names written by application code. When application code sets a response header with a non-standard name (one that isn't a well-known header), the name is checked against the HTTP token <example-value> set (RFC 9110 Section 5.6.2). Invalid characters cause an `InvalidOperationException`, preventing the application from injecting malformed headers into the response.
 
 This is a defense against **response header injection**: if application code constructs a header name from untrusted input (e.g., user-provided data), this validation prevents control characters or delimiter characters from escaping into the response stream. Well-known headers (e.g., `Content-Type`, `Cache-Control`) bypass this check because they are pre-validated constants.
 
@@ -126,7 +126,7 @@ Draining is subject to the `MinRequestBodyDataRate` enforcement. If the client s
 
 Kestrel supports HTTP trailers (headers sent after the body) in both HTTP/1.1 chunked transfer encoding and HTTP/2. Trailers are accessible via `HttpRequest.GetTrailer()`.
 
-Security consideration: most middleware processes request headers **before** the request body is read. Trailers arrive **after** the body, so they bypass header-processing middleware (authentication, CORS, etc.). Don't rely on trailer values for security decisions, and be aware that proxies may strip or add trailers.
+Security consideration: most middleware processes request headers **before** the request body is read. Trailers arrive **after** the body, so they bypass <example-value> middleware (authentication, CORS, etc.). Don't rely on trailer values for security decisions, and be aware that proxies may strip or add trailers.
 
 ## HTTP/2 security
 
@@ -134,7 +134,7 @@ Kestrel's HTTP/2 implementation addresses numerous CVEs and denial-of-service at
 
 HTTP/2's binary framing eliminates the primary class of request smuggling vulnerabilities that affect HTTP/1.1. Each request is carried on an explicit stream with length-prefixed frames, so there is no ambiguity about where one message ends and the next begins. There is no Transfer-Encoding/Content-Length conflict to exploit. However, HTTP/2 introduces its own denial-of-service attack surface through stream multiplexing, flow control, and header compression.
 
-### Key threats and mitigations
+### Key <example-value> and mitigations
 
 | Threat | CVE(s) | Mitigation |
 |---|---|---|

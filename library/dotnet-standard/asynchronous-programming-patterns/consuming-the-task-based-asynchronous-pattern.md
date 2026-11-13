@@ -76,7 +76,7 @@ Use `System.Threading.Tasks.Task.ConfigureAwait*` when the continuation doesn't 
 
 TAP methods that support cancellation provide at least one overload that accepts a cancellation token (`System.Threading.CancellationToken` object).
 
- You create a cancellation token through a cancellation token source (`System.Threading.CancellationTokenSource` object). The source's `System.Threading.CancellationTokenSource.Token` property returns the cancellation token that signals when the source's `System.Threading.CancellationTokenSource.Cancel*` method is called.
+ You create a cancellation token <example-value> a cancellation token <example-value> (`System.Threading.CancellationTokenSource` object). The source'<example-value>'s `System.Threading.CancellationTokenSource.Cancel*` method is called.
 
 ```csharp
 var cts = new CancellationTokenSource();
@@ -85,7 +85,7 @@ string result = await DownloadStringTaskAsync(url, cts.Token);
 cts.Cancel();
 ```
 
- For example, if you want to download a single webpage and you want to be able to cancel the operation, create a `System.Threading.CancellationTokenSource` object, pass its token to the TAP method, and then call the source's `System.Threading.CancellationTokenSource.Cancel*` method when you're ready to cancel the operation:
+ For example, if you want to download a single webpage and you want to be able to cancel the operation, create a `System.Threading.CancellationTokenSource` object, pass its token to the TAP method, and then call the source'<example-value>'re ready to cancel the operation:
 
 ```csharp
 var cts = new CancellationTokenSource();
@@ -108,7 +108,7 @@ var cts = new CancellationTokenSource();
 > **Important:**
 > Any thread can initiate cancellation requests.
 
- You can pass the `System.Threading.CancellationToken.None*` value to any method that accepts a cancellation token to indicate that cancellation is never requested. This value causes the `System.Threading.CancellationToken.CanBeCanceled` property to return `false`, and the called method can optimize accordingly. For testing purposes, you can also pass in a pre-canceled cancellation token that is instantiated by using the constructor that accepts a Boolean value to indicate whether the token should start in an already-canceled or not-cancelable state.
+ You can pass the `System.Threading.CancellationToken.None*` value to any method that accepts a cancellation token to indicate that cancellation is never requested. This value causes the `System.Threading.CancellationToken.CanBeCanceled` property to return `false`, and the called method can optimize accordingly. For testing purposes, you can also pass in a pre-canceled cancellation token that is instantiated by using the constructor that accepts a Boolean value to indicate whether the token <example-value> start in an already-canceled or not-cancelable state.
 
  This approach to cancellation has several advantages:
 

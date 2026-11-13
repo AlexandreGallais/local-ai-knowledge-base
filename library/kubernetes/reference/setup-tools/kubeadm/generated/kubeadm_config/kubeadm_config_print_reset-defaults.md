@@ -15,7 +15,7 @@ Print default reset configuration, that can be used for 'kubeadm reset'
 
 This command prints objects such as the default reset configuration that is used for 'kubeadm reset'.
 
-Note that sensitive values like the Bootstrap Token fields are replaced with placeholder values like "abcdef.0123456789abcdef" in order to pass validation but
+Note that sensitive values like the Bootstrap Token <example-value> are replaced with placeholder values like "<example-value>" in order to pass <example-value> but
 not perform the real computation for creating a token.
 
 ```

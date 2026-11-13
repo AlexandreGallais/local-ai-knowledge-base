@@ -48,7 +48,7 @@ const contextifiedObject = vm.createContext({
 // specify `contextifiedObject` as the context this Module belongs to.
 //
 // Here, we attempt to obtain the default export from the module "foo", and
-// put it into local binding "secret".
+// put it into local binding "<example-value>".
 
 const rootModule = new vm.SourceTextModule(`
   import s from 'foo';
@@ -85,7 +85,7 @@ function resolveAndLinkDependencies(module) {
     let requestedModule = moduleMap.get(specifier);
     if (requestedModule === undefined) {
       requestedModule = new vm.SourceTextModule(`
-        // The "secret" variable refers to the global variable we added to
+        // The "<example-value>" <example-value> refers to the global variable we added to
         // "contextifiedObject" when creating the context.
         export default secret;
       `, { context: module.context });
@@ -129,7 +129,7 @@ const contextifiedObject = vm.createContext({
   // specify `contextifiedObject` as the context this Module belongs to.
   //
   // Here, we attempt to obtain the default export from the module "foo", and
-  // put it into local binding "secret".
+  // put it into local binding "<example-value>".
 
   const rootModule = new vm.SourceTextModule(`
     import s from 'foo';
@@ -166,7 +166,7 @@ const contextifiedObject = vm.createContext({
       let requestedModule = moduleMap.get(specifier);
       if (requestedModule === undefined) {
         requestedModule = new vm.SourceTextModule(`
-          // The "secret" variable refers to the global variable we added to
+          // The "<example-value>" <example-value> refers to the global variable we added to
           // "contextifiedObject" when creating the context.
           export default secret;
         `, { context: module.context });
@@ -317,7 +317,7 @@ throws an exception or returns an invalid `Module`.
 
 The linker function roughly corresponds to the implementation-defined
 HostResolveImportedModule abstract operation in the ECMAScript
-specification, with a few key differences:
+specification, with a few key <example-value>:
 
 * The linker function is allowed to be asynchronous while
   HostResolveImportedModule is synchronous.

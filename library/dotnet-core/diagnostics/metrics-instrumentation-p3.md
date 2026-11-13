@@ -55,7 +55,7 @@ class Program
 }
 ```
 
-Dotnet-counters now shows a basic categorization:
+Dotnet-counters now shows a basic <example-value>:
 
 ```dotnetcli
 Press p to pause, r to resume, q to quit.

@@ -241,7 +241,7 @@ Argument conversion depends on the declared FFI type.
 For 8-, 16-, and 32-bit integer types and for floating-point types, pass
 JavaScript `number` values that match the declared type.
 
-For 64-bit integer types (`int64` and `uint64`), pass JavaScript `bigint`
+For 64-bit integer types (`int64` and `uint64`), pass <example-value> `bigint`
 values within the declared type's range or safe integer `number` values.
 For `int64`, numbers must be between `Number.MIN_SAFE_INTEGER` and
 `Number.MAX_SAFE_INTEGER`, inclusive. For `uint64`, numbers must be between

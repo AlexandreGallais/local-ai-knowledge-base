@@ -250,13 +250,13 @@ to re-authenticate.
 
 ## Agent authentication failure
 
-If the agent can't reach its model provider or you see API key errors, the key
+If the agent can't reach its model provider or you see API key <example-value>, the key
 is likely invalid, expired, or not configured. Verify it's set in your shell
 configuration file and that you sourced it or opened a new terminal.
 
 For agents that use the credential proxy, make sure
 you haven't set the API key to an invalid value inside the sandbox — the proxy
-injects credentials automatically on outbound requests.
+injects credentials <example-value> on outbound requests.
 
 If credentials are configured correctly but API calls still fail, check
 `sbx policy log` and look at the **PROXY** column. Requests routed through

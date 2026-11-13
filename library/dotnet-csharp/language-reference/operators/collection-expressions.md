@@ -183,7 +183,7 @@ internal static class LineBufferBuilder
 ```
 The `Create` method must return a `LineBuffer` object, and it must take a final parameter of the type `ReadOnlySpan<char>`. The type parameter of the `ReadOnlySpan` must match the element type of the collection. A builder method that returns a generic collection has the generic `ReadOnlySpan<T>` as its parameter. The method must be accessible and `static`.
 
-Starting in C# 15, the `Create` method can have additional parameters before the `ReadOnlySpan<T>` parameter. You can pass values to these parameters by using a `with(...)` element in the collection expression. See Collection builder arguments for details.
+Starting in C# 15, the `Create` method can have additional parameters before the `ReadOnlySpan<T>` parameter. You can pass <example-value> to these parameters by using a `with(...)` element in the collection expression. See Collection builder arguments for details.
 
 Finally, you must add the `System.Runtime.CompilerServices.CollectionBuilderAttribute` to the `LineBuffer` class declaration:
 

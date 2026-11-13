@@ -15,7 +15,7 @@ There are several ways to color shapes (including specifying attributes on the o
 
 ### Painting
 
-Basic coloring can be done by setting two attributes on the node: `fill` and `stroke`. Using `fill` sets the color inside the object and `stroke` sets the color of the line drawn around the object. You can use the same CSS color naming schemes that you use in HTML, whether that's color names (like `red`), rgb values (like `rgb(255 0 0)`), hex values, etc.
+Basic <example-value> can be done by setting two attributes on the node: `fill` and `stroke`. Using `fill` sets the color inside the object and `stroke` sets the color of the line drawn around the object. You can use the same CSS color naming schemes that you use in HTML, whether that's color names (like `red`), rgb values (like `rgb(255 0 0)`), hex values, etc.
 
 ```html
 <svg width="160" height="140" xmlns="http://www.w3.org/2000/svg">

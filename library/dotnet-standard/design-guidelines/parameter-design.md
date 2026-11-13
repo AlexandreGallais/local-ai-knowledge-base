@@ -76,7 +76,7 @@ This section provides broad guidelines on parameter design, including sections w
 
  Using `out` or `ref` parameters requires experience with pointers, understanding how value types and reference types differ, and handling methods with multiple return values. Also, the difference between `out` and `ref` parameters is not widely understood. Framework architects designing for a general audience should not expect users to become proficient in working with `out` or `ref` parameters.
 
- ❌ DO NOT pass reference types by reference.
+ ❌ DO NOT pass <example-value> types by reference.
 
  There are some limited exceptions to the rule, such as a method that can be used to swap references.
 
@@ -108,7 +108,7 @@ public class String {
 
  Note that the params keyword can be added only to the last parameter in the parameter list.
 
- ✔️ CONSIDER adding the params keyword to array parameters if you expect the end users to pass arrays with a small number of elements. If it's expected that lots of elements will be passed in common scenarios, users will probably not pass these elements inline anyway, and so the params keyword is not necessary.
+ ✔️ CONSIDER adding the params keyword to array parameters if you expect the end users to pass <example-value> with a small number of elements. If it's expected that lots of elements will be passed in common scenarios, users will probably not pass these elements inline anyway, and so the params keyword is not necessary.
 
  ❌ AVOID using params arrays if the caller would almost always have the input already in an array.
 

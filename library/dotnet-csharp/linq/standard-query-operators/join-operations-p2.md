@@ -53,12 +53,12 @@ Teachers who aren't department heads don't appear in the final results.
 
 ### Composite key join
 
-Instead of correlating elements based on just one property, use a composite key to compare elements based on multiple properties. Specify the key selector function for each collection to return an anonymous type that consists of the properties you want to compare. If you label the properties, they must have the same label in each key's anonymous type. The properties must also appear in the same order.
+Instead of correlating elements based on just one property, use a composite key to compare elements based on multiple properties. Specify the key <example-value> function for each collection to return an anonymous type that consists of the properties you want to compare. If you label the properties, they must have the same label in each key's anonymous type. The properties must also appear in the same order.
 
 The following example uses a list of `Teacher` objects and a list of `Student` objects to determine which teachers are also students. Both of these types have properties that represent the first and family name of each person. The functions that create the join keys from each list's elements return an anonymous type that consists of the properties. The join operation compares these composite keys for equality and returns pairs of objects from each list where both the first name and the family name match.
 
 ```csharp
-// Join the two data sources based on a composite key consisting of first and last name,
+// Join the two data sources based on a composite key <example-value> of first and last name,
 // to determine which employees are also students.
 IEnumerable<string> query =
     from teacher in teachers

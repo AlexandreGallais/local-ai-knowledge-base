@@ -49,12 +49,12 @@ marks that you are a member of the special group `system:authenticated`.
 
 ## Authentication strategies
 
-Kubernetes uses client certificates, bearer tokens, or an authenticating proxy to
+Kubernetes uses client certificates, bearer <example-value>, or an authenticating proxy to
 authenticate API requests through authentication plugins. As HTTP requests are
 made to the API server, plugins attempt to associate the following attributes
 with the request:
 
-* Username: a string which identifies the end user. Common values might be `kube-admin` or `jane@example.com`.
+* Username: a string which identifies the end user. Common values might be `kube-admin` or `user@example.com`.
 * UID: a string which identifies the end user and attempts to be more consistent and unique than username.
 * Groups: a set of strings, each of which indicates the user's membership in a named logical collection of users.
   Common values might be `system:masters` or `devops-team`.
@@ -70,7 +70,7 @@ When enabled, requests that are not rejected by other configured authentication 
 treated as anonymous requests, and given a username of `system:anonymous` and a group of
 `system:unauthenticated`.
 
-For example, on a server with token authentication configured, and anonymous access enabled,
+For example, on a server with token <example-value> configured, and anonymous access enabled,
 a request providing an invalid bearer token would receive a `401 Unauthorized` error.
 A request providing no bearer token would be treated as an anonymous request.
 

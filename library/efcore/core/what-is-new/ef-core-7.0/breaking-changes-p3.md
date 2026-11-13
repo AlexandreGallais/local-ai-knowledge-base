@@ -11,13 +11,13 @@ license: "CC-BY-4.0"
 
 ## Low-impact changes
 
-### Key properties may need to be configured with a provider value comparer
+### Key <example-value> may need to be configured with a provider value comparer
 
 Tracking Issue #27738
 
 #### Old behavior
 
-In EF Core 6.0, key values taken directly from the properties of entity types were used for comparison of key values when saving changes. This would make use of any custom value comparer configured on these properties.
+In EF Core 6.0, key <example-value> taken directly from the properties of entity types were used for comparison of key <example-value> when saving changes. This would make use of any custom value comparer configured on these properties.
 
 #### New behavior
 
@@ -182,7 +182,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     if (!optionsBuilder.IsConfigured)
     {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        optionsBuilder.UseNpgsql("MySecretConnectionString");
+        optionsBuilder.UseNpgsql("<example-value>");
     }
 }
 ```

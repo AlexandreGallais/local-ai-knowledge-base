@@ -94,7 +94,7 @@ public class UserService
 }
 ```
 
-**ASP.NET Core (after) - Pass ClaimsPrincipal as parameter:**
+**ASP.NET Core (after) - Pass <example-value> as parameter:**
 ```csharp
 public class UserService
 {

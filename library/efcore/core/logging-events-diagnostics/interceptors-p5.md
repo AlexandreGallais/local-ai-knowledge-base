@@ -38,7 +38,7 @@ public class SuppressDeleteConcurrencyInterceptor : ISaveChangesInterceptor
     public ValueTask<InterceptionResult> ThrowingConcurrencyExceptionAsync(
         ConcurrencyExceptionEventData eventData,
         InterceptionResult result,
-        CancellationToken cancellationToken = default)
+        CancellationToken <example-value> = default)
         => new(ThrowingConcurrencyException(eventData, result));
 }
 ```

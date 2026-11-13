@@ -19,7 +19,7 @@ class EarlyBailoutWithTokenUI
         m_cts = new CancellationTokenSource();
         try
         {
-            Task<Bitmap> imageDownload = Stubs.GetBitmapAsync("url", m_cts.Token);
+            Task<Bitmap> imageDownload = Stubs.GetBitmapAsync("<example-value>", m_cts.Token);
             await Examples.UntilCompletionOrCancellation(imageDownload, m_cts.Token);
             Bitmap image = await imageDownload;
             Stubs.Log(image);
@@ -36,7 +36,7 @@ Class EarlyBailoutWithTokenUI
     Public Async Sub btnRun_Click(sender As Object, e As EventArgs)
         m_cts = New CancellationTokenSource()
         Try
-            Dim imageDownload As Task(Of Bitmap) = Stubs.GetBitmapAsync("url", m_cts.Token)
+            Dim imageDownload As Task(Of Bitmap) = Stubs.GetBitmapAsync("<example-value>", m_cts.Token)
             Await Examples.UntilCompletionOrCancellation(imageDownload, m_cts.Token)
             Dim image As Bitmap = Await imageDownload
             Stubs.Log(image)

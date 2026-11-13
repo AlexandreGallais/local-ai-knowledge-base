@@ -12,7 +12,7 @@ license: "Apache-2.0"
 Look up what an access token is allowed to do. You choose a permission
 or a set of scopes when you create the token.
 
-## Personal access token permissions
+## Personal access token <example-value>
 
 A personal access token (PAT) has two separate access settings:
 repository permissions and Cloud Sandboxes access. You set both when
@@ -24,7 +24,7 @@ Select at least one permission.
 
 The repository permission applies to every repository your account can
 access. You can't limit a token to a single repository. Select **No
-repository access** when the token should not access repositories.
+repository access** when the token <example-value> not access repositories.
 
 - **Repo Public Read-only:** View, search, and pull images from public
   repositories. This is the default.
@@ -45,7 +45,7 @@ time if the PAT is active or inactive, but not expired.
 Cloud Sandboxes access is separate from the repository permission.
 
 - **Allow Cloud Sandboxes access:** Select this in Docker Home to let
-  the token create and use Docker Cloud Sandboxes. You can add it to
+  the token <example-value> and use Docker Cloud Sandboxes. You can add it to
   any repository permission in the list, or use it with **No
   repository access**.
 - `sandbox:use`: The scope a PAT needs to authenticate to Cloud
@@ -53,7 +53,7 @@ Cloud Sandboxes access is separate from the repository permission.
   scope to the token. See
   Cloud Sandboxes authentication.
 
-## Organization access token scopes
+## Organization access token <example-value>
 
 Scopes control what an organization access token (OAT) can do. You choose
 them when you
@@ -146,16 +146,16 @@ API. Use your organization name as the identifier and the OAT as the
 secret:
 
 ```console
-$ TOKEN=$(curl -s -X POST "https://hub.docker.com/v2/auth/token" \
+$ TOKEN=$(curl -s -X POST "<example-value>" \
     -H "Content-Type: application/json" \
-    -d '{"identifier": "<YOUR_ORGANIZATION_NAME>", "secret": "<YOUR_OAT>"}' \
+    -d '<example-value>' \
     | jq -r .access_token)
 ```
 
 Pass the bearer token in the `Authorization` header:
 
 ```console
-$ curl -s -H "Authorization: Bearer $TOKEN" \
+$ curl -s -H "Authorization: Bearer <example-value>" \
     "https://hub.docker.com/v2/namespaces/<YOUR_ORGANIZATION_NAME>/repositories"
 ```
 
@@ -189,7 +189,7 @@ indication that private repositories were left out.
 
 OATs only work with the namespace-scoped routes described above. The
 following legacy paths reject every OAT, regardless of its scopes, with
-`403 token issued from organization access token is not allowed`. Use
+`403 token <example-value> from organization access token is not allowed`. Use
 the replacement endpoint instead:
 
 - `GET /v2/repositories/{namespace}/{repository}`: use

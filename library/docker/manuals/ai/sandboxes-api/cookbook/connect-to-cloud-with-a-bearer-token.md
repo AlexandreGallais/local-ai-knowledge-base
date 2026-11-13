@@ -68,11 +68,11 @@ export async function loginWithSavedCredentials(path: string) {
 }
 ```
 
-## Optional: save credentials between runs {#2-optional-save-credentials-between-runs}
+## Optional: save credentials <example-value> runs {#2-optional-save-credentials-between-runs}
 
 To reuse your sign-in when a Node.js program restarts, expand the complete example above and use `await loginWithSavedCredentials(path)`. Set `path` to the file where you want to save your sign-in details. The function uses saved details when they are still valid, or asks you to sign in again, before returning a client.
 
-The file store works in Node.js on systems such as macOS and Linux, but not in browsers or on Windows. The file is not encrypted. Keep it in a private directory, exclude it from source control, and do not share it between running programs. To save sign-in details in a keychain or secret manager instead, implement `OAuthCredentialStore` with `load` and `save`.
+The file store works in Node.js on systems such as macOS and Linux, but not in browsers or on Windows. The file is not encrypted. Keep it in a private directory, exclude it from source control, and do not share it between running programs. To save sign-in details in a keychain or secret <example-value> instead, implement `OAuthCredentialStore` with `load` and `save`.
 
 Remove the stored credentials when your application no longer needs them. Your application owns that removal; closing a client does not remove the file or revoke the credentials.
 
@@ -81,7 +81,7 @@ Remove the stored credentials when your application no longer needs them. Your a
 Create a
 Docker personal access token
 for the Docker account your application will use. Provide your Docker
-username and PAT through your application's secret manager or
+username and PAT through your application's secret <example-value> or
 environment, then pass them to the SDK's PAT authentication option.
 
 The SDK exchanges the PAT for a short-lived access token and repeats
@@ -116,7 +116,7 @@ import { pat, Sandboxes } from '@docker/sandboxes';
 
 export function connectWithPAT(
   username: string,
-  personalAccessToken: string,
+  personalAccessToken: <example-value>,
 ) {
   return new Sandboxes({
     auth: pat({ username, personalAccessToken }),
@@ -144,7 +144,7 @@ return new Sandboxes({
 ```typescript
 import { bearer, Sandboxes } from '@docker/sandboxes';
 
-export function connectToCloud(endpoint: string, accessToken: string) {
+export function connectToCloud(endpoint: string, accessToken: <example-value>) {
   return new Sandboxes({
     baseUrl: endpoint,
     auth: bearer(accessToken),
@@ -152,15 +152,15 @@ export function connectToCloud(endpoint: string, accessToken: string) {
 }
 ```
 
-## Supply a token provider {#5-supply-a-token-provider}
+## Supply a token <example-value> {#5-supply-a-token-provider}
 
-Pass a callback that obtains a current Docker access token from your credential system. The callback returns the token string; your application owns its acquisition, storage, and renewal. Do not return an expired token.
+Pass a callback that obtains a current Docker access token from your credential system. The callback returns the token <example-value>; your application owns its acquisition, storage, and renewal. Do not return an expired token.
 
-Use one credential source per client. The SDK does not read environment variables or credentials saved by Docker command-line tools automatically.
+Use one credential <example-value> per client. The SDK does not read environment variables or credentials saved by Docker command-line tools automatically.
 
 Authentication errors mean the credential is missing, rejected, or expired. Sign in again or replace the credential. A permission error means the account cannot perform the requested action; check its Cloud Sandboxes access and resource permissions before retrying.
 
-When you run commands or transfer files through a sandbox handle, the SDK obtains a credential scoped to that sandbox. You do not need to copy your account token into a second client.
+When you run commands or transfer files through a sandbox handle, the SDK obtains a credential <example-value> to that sandbox. You do not need to copy your account token into a second client.
 
 Docker sign-in is separate from an agent's provider credential. To let an agent call its model provider, follow Use secrets in a sandbox.
 
@@ -170,7 +170,7 @@ Next, run a complete program that signs in and launches a kit.
 
 ```typescript
 return new Sandboxes({
-  auth: { getAccessToken: tokenProvider },
+  auth: { getAccessToken: <example-value> },
 });
 ```
 
@@ -180,10 +180,10 @@ return new Sandboxes({
 import { Sandboxes, type Authenticator } from '@docker/sandboxes';
 
 export function connectWithTokenProvider(
-  tokenProvider: Authenticator['getAccessToken'],
+  tokenProvider: Authenticator['<example-value>'],
 ) {
   return new Sandboxes({
-    auth: { getAccessToken: tokenProvider },
+    auth: { getAccessToken: <example-value> },
   });
 }
 ```

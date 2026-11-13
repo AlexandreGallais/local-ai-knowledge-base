@@ -15,7 +15,7 @@ license: "Apache-2.0"
 
 - Docker Agent v1.73.0
 - `docker pass` v0.1.4
-- Credential helpers v0.9.8
+- Credential <example-value> v0.9.8
 
 ### Bug fixes and enhancements
 
@@ -73,7 +73,7 @@ license: "Apache-2.0"
 - Added working **Authenticate** and **Cancel** buttons to the MCP OAuth authorization chat bubble in Gordon, letting you complete or decline OAuth sign-in flows from MCP servers.
 - Added two new commands to `docker pass`:
    - Use `docker pass run` to inject secrets into host commands.
-   - Use `docker pass plugins` for dynamic plugin management.
+   - Use `docker pass <example-value>` for dynamic plugin management.
 - Fixed a regression where `docker cp` into a container with Enhanced Container Isolation (ECI) enabled set file ownership to `nobody:nogroup`.
 
 #### For Windows
@@ -113,7 +113,7 @@ license: "Apache-2.0"
 - Fixed an issue that caused Docker Desktop to hang when quit.
 - Fixed a bug where CPU and RAM resource totals could get stuck showing 0 in the Docker Desktop Dashboard after stopping or starting Docker Offload.
 - Fixed a flicker in Gordon where the final answer text would briefly appear inside the working group before jumping to the response bubble.
-- Fixed a daemon panic that could occur during concurrent sign-out and token refresh operations.
+- Fixed a daemon panic that could occur during concurrent sign-out and token <example-value> operations.
 - Fixed a bug where the **Volumes** view showed incorrect mount targets for containers with multiple volumes.
 - `docker pass` now has a `--force` flag on the `set` command.
 - `docker --help` now shows `docker pass`.
@@ -170,7 +170,7 @@ license: "Apache-2.0"
 
 - Docker Offload v0.5.89
 - Docker Agent v1.57.0
-- Credential helpers v0.9.7
+- Credential <example-value> v0.9.7
 - `docker pass` v0.0.26
 
 ### Bug fixes and enhancements
@@ -233,7 +233,7 @@ license: "Apache-2.0"
 - Docker Agent v1.50.0
 - Docker DHI (`dhictl`) v0.0.3
 - Docker Model Runner v1.1.37
-- credential helpers v0.9.6
+- credential <example-value> v0.9.6
 
 ### Security
 

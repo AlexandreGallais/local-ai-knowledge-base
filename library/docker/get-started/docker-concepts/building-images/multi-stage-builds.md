@@ -47,7 +47,7 @@ In this hands-on guide, you'll unlock the power of multi-stage builds to create 
 
 2. Open this pre-initialized project to generate a ZIP file. Here’s how that looks:
 
-    Spring Initializr is a quickstart generator for Spring projects. It provides an extensible API to generate JVM-based projects with implementations for several common concepts — like basic language generation for Java, Kotlin, Groovy, and Maven.
+    Spring Initializr is a quickstart generator for Spring projects. It provides an extensible API to generate JVM-based projects with implementations for several common concepts — like basic <example-value> generation for Java, Kotlin, Groovy, and Maven.
 
     Select **Generate** to create and download the zip file for this project.
 

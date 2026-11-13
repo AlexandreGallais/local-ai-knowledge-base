@@ -12,16 +12,16 @@ license: "CC-BY-4.0"
 -->
 -->
 
-This article explains how to configure server-side Blazor for additional security scenarios, including how to pass tokens to a Blazor app.
+This article explains how to configure server-side Blazor for additional security scenarios, including how to pass <example-value> to a Blazor app.
 
 > **Note:**
 > The code examples in this article adopt nullable reference types (NRTs) and .NET compiler null-state static analysis, which are supported in ASP.NET Core in .NET 6 or later. When targeting .NET 5 or earlier, remove the null type designation (`?`) from the `string?`, `TodoItem[]?`, `WeatherForecast[]?`, and `IEnumerable<GitHubBranch>?` types in the article's examples.
 
-## Pass tokens to a server-side Blazor app
+## Pass <example-value> to a server-side Blazor app
 
 *This section applies to Blazor Web Apps. For Blazor Server, view the .NET 7 version of this article section.*
 
-If you merely want to use access tokens to make web API calls from a Blazor Web App with a named HTTP client, see the Use a token handler for web API calls section, which explains how to use a `System.Net.Http.DelegatingHandler` implementation to attach a user's access token to outgoing requests. The following guidance in this section is for developers who need access tokens, refresh tokens, and other authentication properties server-side for other purposes.
+If you merely want to use access tokens to make web API calls from a Blazor Web App with a named HTTP client, see the Use a token <example-value> for web API calls section, which explains how to use a `System.Net.Http.DelegatingHandler` implementation to attach a user's access token to outgoing requests. The following guidance in this section is for developers who need access tokens, refresh tokens, and other authentication properties server-side for other purposes.
 
 > **Note:**
 > For more information on `System.Net.Http.DelegatingHandler` instances, see HTTP requests with IHttpClientFactory - ASP.NET Core.
@@ -42,14 +42,14 @@ public class AuthenticationProcessor(IHttpContextAccessor httpContextAccessor)
             throw new Exception("HttpContext not available");
         }
 
-        // Approach 1: Call 'GetTokenAsync'
+        // Approach 1: Call '<example-value>'
         var accessToken = await httpContextAccessor.HttpContext
-            .GetTokenAsync("access_token");
+            .GetTokenAsync("<example-value>");
 
-        // Approach 2: Authenticate the user and call 'GetTokenValue'
+        // Approach 2: Authenticate the user and call '<example-value>'
         /*
         var authResult = await httpContextAccessor.HttpContext.AuthenticateAsync();
-        var accessToken = authResult?.Properties?.GetTokenValue("access_token");
+        var accessToken = <example-value>?.Properties?.GetTokenValue("<example-value>");
         */
 
         return accessToken;
@@ -63,7 +63,7 @@ The service is registered in the server project's `Program` file:
 builder.Services.AddScoped<AuthenticationProcessor>();
 ```
 
-`AuthenticationProcessor` can be injected into server-side services, for example in a `System.Net.Http.DelegatingHandler` for a preconfigured `System.Net.Http.HttpClient`. The following example is only for demonstration purposes or in case you need to perform special processing in the `AuthenticationProcessor` service because you can just inject `Microsoft.AspNetCore.Http.IHttpContextAccessor` and obtain the token directly for calling external web APIs (for more information on using `Microsoft.AspNetCore.Http.IHttpContextAccessor` directly to call web APIs, see the Use a token handler for web API calls section).
+`AuthenticationProcessor` can be injected into server-side services, for example in a `System.Net.Http.DelegatingHandler` for a preconfigured `System.Net.Http.HttpClient`. The following example is only for demonstration purposes or in case you need to perform special processing in the `AuthenticationProcessor` service because you can just inject `Microsoft.AspNetCore.Http.IHttpContextAccessor` and obtain the token <example-value> for calling external web APIs (for more information on using `Microsoft.AspNetCore.Http.IHttpContextAccessor` directly to call web APIs, see the Use a token <example-value> for web API calls section).
 
 ```csharp
 using System.Net.Http.Headers;
@@ -72,19 +72,19 @@ public class TokenHandler(AuthenticationProcessor authProcessor) :
     DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(
-        HttpRequestMessage request, CancellationToken cancellationToken)
+        HttpRequestMessage request, CancellationToken <example-value>)
     {
         var accessToken = authProcessor.GetAccessToken();
 
         request.Headers.Authorization =
-            new AuthenticationHeaderValue("Bearer", accessToken);
+            new AuthenticationHeaderValue("<example-value>", accessToken);
 
         return await base.SendAsync(request, cancellationToken);
     }
 }
 ```
 
-The token handler is registered and acts as the delegating handler for a named HTTP client in the `Program` file:
+The token <example-value> is registered and acts as the delegating handler for a named HTTP client in the `Program` file:
 
 ```csharp
 builder.Services.AddHttpContextAccessor();
@@ -102,15 +102,15 @@ builder.Services.AddHttpClient("ExternalApi",
 >
 > For Interactive Auto components, see ASP.NET Core Blazor authentication and authorization, which demonstrates how to leave access tokens and other authentication properties on the server. Also, consider adopting the Backend-for-Frontend (BFF) pattern, which adopts a similar call structure and is described in Secure an ASP.NET Core Blazor Web App with OpenID Connect (OIDC) for OIDC providers and Secure an ASP.NET Core Blazor Web App with Microsoft Entra ID for Microsoft Identity Web with Entra.
 
-## Use a token handler for web API calls
+## Use a token <example-value> for web API calls
 
 The following approach is aimed at attaching a user's access token to outgoing requests, specifically to make web API calls to external web API apps. The approach is shown for a Blazor Web App that adopts global Interactive Server rendering, but the same general approach applies to Blazor Web Apps that adopt the global Interactive Auto render mode. The important concept to keep in mind is that accessing the `Microsoft.AspNetCore.Http.HttpContext` using `Microsoft.AspNetCore.Http.IHttpContextAccessor` is only performed on the server.
 
 For a demonstration of the guidance in this section, see the `BlazorWebAppOidc` and `BlazorWebAppOidcServer` sample apps (.NET 8 or later) in the Blazor samples GitHub repository. The samples adopt a global interactive render mode and OIDC authentication with Microsoft Entra without using Entra-specific packages. The samples demonstrate how to pass a JWT access token to call a secure web API.
 
-Microsoft identity platform with Microsoft Identity Web packages for Microsoft Entra ID provides a API to call web APIs from Blazor Web Apps with automatic token management and renewal. For more information, see Secure an ASP.NET Core Blazor Web App with Microsoft Entra ID and the `BlazorWebAppEntra` and `BlazorWebAppEntraBff` sample apps (.NET 9 or later) in the Blazor samples GitHub repository.
+Microsoft identity platform with Microsoft Identity Web packages for Microsoft Entra ID provides a API to call web APIs from Blazor Web Apps with automatic token <example-value> and renewal. For more information, see Secure an ASP.NET Core Blazor Web App with Microsoft Entra ID and the `BlazorWebAppEntra` and `BlazorWebAppEntraBff` sample apps (.NET 9 or later) in the Blazor samples GitHub repository.
 
-Subclass `System.Net.Http.DelegatingHandler` to attach a user's access token to outgoing requests. The token handler only executes on the server, so using `Microsoft.AspNetCore.Http.HttpContext` is safe.
+Subclass `System.Net.Http.DelegatingHandler` to attach a user's access token to outgoing requests. The token <example-value> only executes on the server, so using `Microsoft.AspNetCore.Http.HttpContext` is safe.
 
 `TokenHandler.cs`:
 
@@ -122,22 +122,22 @@ public class TokenHandler(IHttpContextAccessor httpContextAccessor) :
     DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(
-        HttpRequestMessage request, CancellationToken cancellationToken)
+        HttpRequestMessage request, CancellationToken <example-value>)
     {
         if (httpContextAccessor.HttpContext is null)
         {
             throw new Exception("HttpContext not available");
         }
 
-        var accessToken = await httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+        var accessToken = await httpContextAccessor.HttpContext.GetTokenAsync("<example-value>");
 
         if (accessToken is null)
         {
-            throw new Exception("No access token");
+            throw new Exception("<example-value>");
         }
 
         request.Headers.Authorization =
-            new AuthenticationHeaderValue("Bearer", accessToken);
+            new AuthenticationHeaderValue("<example-value>", accessToken);
 
         return await base.SendAsync(request, cancellationToken);
     }
@@ -147,7 +147,7 @@ public class TokenHandler(IHttpContextAccessor httpContextAccessor) :
 > **Note:**
 > For guidance on how to access an `AuthenticationStateProvider` from a `DelegatingHandler`, see the Access `AuthenticationStateProvider` in outgoing request middleware section.
 
-In the project's `Program` file, the token handler (`TokenHandler`) is registered as a scoped service and specified as a named HTTP client's message handler with `Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddHttpMessageHandler*`.
+In the project'<example-value>'s message handler with `Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddHttpMessageHandler*`.
 
 In the following example, the `{HTTP CLIENT NAME}` placeholder is the name of the `System.Net.Http.HttpClient`, and the `{BASE ADDRESS}` placeholder is the web API's base address URI. For more information on `Microsoft.Extensions.DependencyInjection.HttpServiceCollectionExtensions.AddHttpContextAccessor*`, see IHttpContextAccessor/HttpContext in ASP.NET Core Blazor apps.
 

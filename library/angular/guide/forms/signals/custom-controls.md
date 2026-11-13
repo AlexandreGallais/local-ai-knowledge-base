@@ -17,13 +17,13 @@ Signal Forms works with any component that implements specific interfaces. A **c
 
 HELPFUL: Custom Signal Form Controls can be used with Signal, Reactive and Template-Driven Forms without any extra compatibility code.
 
-## Creating a basic custom control
+## Creating a basic <example-value> control
 
 Let's start with a minimal implementation and add features as needed.
 
 ### Minimal input control
 
-A basic custom input only needs to implement the `FormValueControl` interface and define the required `value` model signal.
+A basic <example-value> input only needs to implement the `FormValueControl` interface and define the required `value` model signal.
 
 ```angular-ts
 import {Component, model} from '@angular/core';

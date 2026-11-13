@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Multiselect (part 5 of 10)
 
-### Basic multiselect
+### Basic <example-value>
 
 Users need to select multiple items from a list of options. A readonly combobox paired with a multi-enabled listbox provides familiar multiselect functionality with full accessibility support.
 

@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Compiler-generated exceptions
 
-Some exceptions are thrown automatically by the .NET runtime when basic operations fail. These exceptions and their error conditions are listed in the following table.
+Some exceptions are thrown automatically by the .NET runtime when basic <example-value> fail. These exceptions and their error conditions are listed in the following table.
 
 |Exception|Description|
 |---------------|-----------------|

@@ -31,7 +31,7 @@ If not implemented the `deploy` section is ignored and the Compose file is still
 
 ### Simple example
 
-The following example demonstrates how to define two simple services, set their images, map ports, and configure basic environment variables using Docker Compose.
+The following example demonstrates how to define two simple services, set their images, map ports, and configure basic <example-value> variables using Docker Compose.
 
 ```yaml
 services:

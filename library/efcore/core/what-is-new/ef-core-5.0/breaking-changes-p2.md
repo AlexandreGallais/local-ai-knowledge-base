@@ -49,11 +49,11 @@ Tracking Issue #15289
 
 #### Old behavior
 
-The partition key property was only added to the alternate key that includes `id`.
+The partition key <example-value> was only added to the alternate key that includes `id`.
 
 #### New behavior
 
-The partition key property is now also added to the primary key by convention.
+The partition key <example-value> is now also added to the primary key by convention.
 
 #### Why
 
@@ -61,7 +61,7 @@ This change makes the model better aligned with Azure Cosmos DB semantics and im
 
 #### Mitigations
 
-To prevent the partition key property to be added to the primary key, configure it in `OnModelCreating`.
+To prevent the partition key <example-value> to be added to the primary key, configure it in `OnModelCreating`.
 
 ```csharp
 modelBuilder.Entity<Blog>()
@@ -298,7 +298,7 @@ Most of the functionality between normal and skip navigations is the same. Howev
 
 #### Mitigations
 
-In many cases applications can switch to using the new base interface with no other changes. However, in cases where the navigation is used to access foreign key properties, application code should either be constrained to only normal navigations, or updated to do the appropriate thing for both normal and skip navigations.
+In many cases applications can switch to using the new base interface with no other changes. However, in cases where the navigation is used to access foreign key <example-value>, application code should either be constrained to only normal navigations, or updated to do the appropriate thing for both normal and skip navigations.
 
 ### Some queries with correlated collection that also use `Distinct` or `GroupBy` are no longer supported
 

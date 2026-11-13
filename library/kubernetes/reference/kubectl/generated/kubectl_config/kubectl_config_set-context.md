@@ -78,7 +78,7 @@ kubectl config set-context [NAME | --current] [--cluster=cluster_nickname] [--us
 
  |  | Path to a client certificate file for TLS
 
- | --client-key string
+ | --client-key <example-value>
 
  |  | Path to a client key file for TLS
 
@@ -106,9 +106,9 @@ kubectl config set-context [NAME | --current] [--cluster=cluster_nickname] [--us
 
  |  | Require server version to match client version
 
- | --password string
+ | --password <example-value>
 
- |  | Password for basic authentication to the API server
+ |  | Password for basic <example-value> to the API server
 
  | --profile string     Default: "none"
 
@@ -142,7 +142,7 @@ kubectl config set-context [NAME | --current] [--cluster=cluster_nickname] [--us
 
  |  | database host:port
 
- | --storage-driver-password string     Default: "root"
+ | --storage-driver-password <example-value>     Default: "<example-value>"
 
  |  | database password
 
@@ -162,13 +162,13 @@ kubectl config set-context [NAME | --current] [--cluster=cluster_nickname] [--us
 
  |  | Server name to use for server certificate validation. If it is not provided, the hostname used to contact the server is used
 
- | --token string
+ | --token <example-value>
 
  |  | Bearer token for authentication to the API server
 
  | --username string
 
- |  | Username for basic authentication to the API server
+ |  | Username for basic <example-value> to the API server
 
  | --version version[=true]
 

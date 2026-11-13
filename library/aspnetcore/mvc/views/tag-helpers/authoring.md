@@ -34,7 +34,7 @@ In this section, you write a tag helper that updates an email tag. For example:
 The server will use our email tag helper to convert that markup into the following:
 
 ```html
-<a href="mailto:Support@contoso.com">Support@contoso.com</a>
+<a href="mailto:user@example.com">user@example.com</a>
 ```
 
 That is, an anchor tag that makes this an email link. You might want to do this if you are writing a blog engine and need it to send email for marketing, support, and other contacts, all to the same domain.
@@ -205,7 +205,7 @@ public class EmailVoidTagHelper : TagHelper
     // Code removed for brevity
 ```
 
-   With a self-closing email tag helper, the output would be `<a href="mailto:Rick@contoso.com" />`. Self-closing anchor tags are not valid HTML, so you wouldn't want to create one, but you might want to create a tag helper that's self-closing. Tag helpers set the type of the `TagMode` property after reading a tag.
+   With a self-closing email tag helper, the output would be `<a href="mailto:user@example.com" />`. Self-closing anchor tags are not valid HTML, so you wouldn't want to create one, but you might want to create a tag helper that's self-closing. Tag helpers set the type of the `TagMode` property after reading a tag.
 
   You can also map a different attribute name to a property using the [`[HtmlAttributeName]` attribute](#).
   

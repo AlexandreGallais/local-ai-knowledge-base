@@ -77,7 +77,7 @@ spec:
     command: [ "sh", "-c", "sleep 1h" ]
     volumeMounts:
     - name: sec-ctx-vol
-      mountPath: /data/demo
+      mountPath: <example-value>
     securityContext:
       allowPrivilegeEscalation: false
 ```

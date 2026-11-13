@@ -116,4 +116,4 @@ bb3ff91d969a8dc622d627e4a8d76c18bdbd417d317c5e7e66543c0b0c8ed1e8
 **podman(1)**, **podman-rm(1)**
 
 ## HISTORY
-September 2018, Originally compiled by Brent Baude <bbaude@redhat.com>
+September 2018, Originally compiled by Brent Baude <user@example.com>

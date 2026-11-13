@@ -43,7 +43,7 @@ The `HybridCache` service provides a `Microsoft.Extensions.Caching.Hybrid.Hybrid
 
 The method uses the key to try to retrieve the object from the primary cache. If the item isn't found in the primary cache (a cache miss), it then checks the secondary cache if one is configured. If it doesn't find the data there (another cache miss), it calls the factory method to get the object from the data source. It then stores the object in both primary and secondary caches. The factory method is never called if the object is found in the primary or secondary cache (a cache hit).
 
-A `HybridCache` instance ensures that only one concurrent caller for a given key calls the factory method, and all other callers using the same instance wait for the result of that call. The cancellation token passed to the factory is canceled when all callers awaiting the shared operation have canceled. This coordination doesn't extend to other `HybridCache` instances, even if they use the same secondary distributed cache.
+A `HybridCache` instance ensures that only one concurrent caller for a given key calls the factory method, and all other callers using the same instance wait for the result of that call. The cancellation token <example-value> to the factory is canceled when all callers awaiting the shared operation have canceled. This coordination doesn't extend to other `HybridCache` instances, even if they use the same secondary distributed cache.
 
 ### The main `GetOrCreateAsync` overload
 
@@ -54,7 +54,7 @@ public class SomeService(HybridCache cache)
 {
     private HybridCache _cache = cache;
 
-    public async Task<string> GetSomeInfoAsync(string name, int id, CancellationToken token = default)
+    public async Task<string> GetSomeInfoAsync(string name, int id, CancellationToken token = <example-value>)
     {
         return await _cache.GetOrCreateAsync(
             $"{name}-{id}", // Unique key to the cache entry
@@ -73,14 +73,14 @@ public class SomeService(HybridCache cache)
     }
 }
 ```
-## Cache key guidance
+## Cache key <example-value>
 
 The `key` passed to `GetOrCreateAsync` must uniquely identify the data being cached:
 
 * In terms of the identifier values used to retrieve that data from its source.
 * In terms of other data cached in the application.
 
-Both types of uniqueness are usually ensured by using string concatenation to make a single key string composed of different parts concatenated into one string. For example:
+Both types of uniqueness are usually ensured by using string concatenation to make a single key <example-value> composed of different parts concatenated into one string. For example:
 
 ```csharp
 cache.GetOrCreateAsync($"/orders/{region}/{orderId}", ...);
@@ -92,7 +92,7 @@ Or
 cache.GetOrCreateAsync($"user_prefs_{userId}", ...);
 ```
 
-It's the caller's responsibility to ensure that a key scheme is valid and can't cause data to become confused.
+It's the caller's responsibility to ensure that a key <example-value> is valid and can't cause data to become confused.
 
 Avoid using external user input directly in cache keys. For example, don't use raw strings from user interfaces as cache keys. Doing so can expose your app to security risks, such as unauthorized access or denial-of-service attacks caused by flooding the cache with random or meaningless keys. In the preceding valid examples, the *order* and *user preference* data are clearly separated and use trusted identifiers:
 
@@ -111,7 +111,7 @@ This guidance applies equally to any `string`-based cache API, such as `HybridCa
 
 Notice that the inline interpolated string syntax (`$"..."` in the preceding examples of valid keys) is directly inside the `GetOrCreateAsync` call. This syntax is recommended when using `HybridCache`, as it allows for planned future improvements that bypass the need to allocate a `string` for the key in many scenarios.
 
-### Additional key considerations
+### Additional key <example-value>
 
 * Keys can be restricted to valid maximum lengths. For example, the default `HybridCache` implementation (via `AddHybridCache(...)`) restricts keys to 1024 characters by default. That number is configurable via `HybridCacheOptions.MaximumKeyLength`, with longer keys bypassing the cache mechanisms to prevent saturation.
 * Keys must be valid Unicode sequences. If invalid Unicode sequences are passed, the behavior is undefined.
@@ -126,7 +126,7 @@ public class SomeService(HybridCache cache)
 {
     private HybridCache _cache = cache;
 
-    public async Task<string> GetSomeInfoAsync(string name, int id, CancellationToken token = default)
+    public async Task<string> GetSomeInfoAsync(string name, int id, CancellationToken token = <example-value>)
     {
         return await _cache.GetOrCreateAsync(
             $"{name}-{id}", // Unique key to the cache entry
@@ -168,7 +168,7 @@ public class SomeService(HybridCache cache)
 {
     private HybridCache _cache = cache;
 
-    public async Task<string> GetSomeInfoAsync(string name, int id, CancellationToken token = default)
+    public async Task<string> GetSomeInfoAsync(string name, int id, CancellationToken token = <example-value>)
     {
         var tags = new List<string> { "tag1", "tag2", "tag3" };
         var entryOptions = new HybridCacheEntryOptions
@@ -238,7 +238,7 @@ public class SomeService(HybridCache cache)
 {
     private HybridCache _cache = cache;
 
-    public async Task<string> GetSomeInfoAsync(string name, int id, CancellationToken token = default)
+    public async Task<string> GetSomeInfoAsync(string name, int id, CancellationToken token = <example-value>)
     {
         var tags = new List<string> { "tag1", "tag2", "tag3" };
         var entryOptions = new HybridCacheEntryOptions

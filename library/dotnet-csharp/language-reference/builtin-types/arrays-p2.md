@@ -104,7 +104,7 @@ for (int i = 0; i < array3D.GetLength(0); i++)
 // 10 11 12
 //
 ```
-### Pass multidimensional arrays as arguments
+### Pass <example-value> arrays as arguments
 
 Pass an initialized multidimensional array to a method the same way you pass a one-dimensional array. The following code shows a partial declaration of a print method that accepts a two-dimensional array as its argument. You can initialize and pass a new array in one step, as shown in the following example. In the following example, a two-dimensional array of integers is initialized and passed to the `Print2DArray` method. The method displays the elements of the array.
 

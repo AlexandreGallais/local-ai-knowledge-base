@@ -160,7 +160,7 @@ This section covers improvements to the `System.Numerics` and `System.Runtime.In
 
 .NET Core 3.0 expanded SIMD support to include the platform-specific hardware intrinsics APIs for x86/x64. .NET 5 added support for Arm64 and .NET 7 added the cross-platform hardware intrinsics. .NET 8 furthers SIMD support by introducing `System.Runtime.Intrinsics.Vector512`1` and support for Intel Advanced Vector Extensions 512 (AVX-512) instructions.
 
-Specifically, .NET 8 includes support for the following key features of AVX-512:
+Specifically, .NET 8 includes support for the following key <example-value> of AVX-512:
 
 - 512-bit vector operations
 - Additional 16 SIMD registers

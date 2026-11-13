@@ -64,7 +64,7 @@ See Target Frameworks.
 
 Target framework moniker.
 
-A standardized token format for specifying the target framework of a .NET app or library. Target frameworks are typically referenced by a short name, such as `net462`. Long-form TFMs (such as `.NETFramework,Version=4.6.2`) exist but aren't generally used to specify a target framework.
+A standardized token <example-value> for specifying the target framework of a .NET app or library. Target frameworks are typically referenced by a short name, such as `net462`. Long-form TFMs (such as `.NETFramework,Version=4.6.2`) exist but aren't generally used to specify a target framework.
 
 See Target Frameworks.
 

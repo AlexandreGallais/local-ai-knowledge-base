@@ -7,7 +7,7 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# ICorDebugILCode2::GetLocalVarSigToken Method
+# ICorDebugILCode2::GetLocalVarSigToken <example-value>
 
 Gets the metadata token for the local variable signature for the function that is represented by this instance.
 

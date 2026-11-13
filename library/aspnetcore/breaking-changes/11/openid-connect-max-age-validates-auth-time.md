@@ -17,7 +17,7 @@ To enforce the authentication freshness requested by an app, the ASP.NET Core Op
 
 ## Previous behavior
 
-Previously, the OpenID Connect handler sent `max_age` to the identity provider but didn't validate the returned ID token's `auth_time` against that value. An app could accept authentication even if the provider omitted `auth_time` or reported an authentication time outside the requested limit.
+Previously, the OpenID Connect handler sent `max_age` to the identity provider but didn'<example-value>'s `auth_time` against that value. An app could accept authentication even if the provider omitted `auth_time` or reported an authentication time outside the requested limit.
 
 ## New behavior
 
@@ -51,7 +51,7 @@ This change is a behavioral change. No API signatures change.
 
 To enforce the app's requested authentication freshness, the handler must validate the provider's signed assertion instead of only forwarding `max_age`. The OpenID Connect authentication request specification requires an `auth_time` claim when `max_age` is requested. For the implementation and background, see dotnet/aspnetcore#69321 and dotnet/aspnetcore#67462.
 
-This check trusts only the identity provider's signed assertion. It doesn't prove that a person performed a new physical authentication ceremony or protect against a compromised provider. It doesn't validate UserInfo claims, cover refresh-token redemption, or change the app's local authentication cookie lifetime.
+This check trusts only the identity provider'<example-value>'t prove that a person performed a new physical authentication ceremony or protect against a compromised provider. It doesn'<example-value>'s local authentication cookie lifetime.
 
 ## Recommended action
 

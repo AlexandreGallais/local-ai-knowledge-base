@@ -21,7 +21,7 @@ The table indicates native IIS modules that are functional with ASP.NET Core app
 | Module | Functional with ASP.NET Core apps | ASP.NET Core Option |
 | --- | :---: | --- |
 | **Anonymous Authentication**`AnonymousAuthenticationModule`                                  | Yes | |
-| **Basic Authentication**`BasicAuthenticationModule`                                          | Yes | |
+| **Basic <example-value>**`BasicAuthenticationModule`                                          | Yes | |
 | **Client Certification Mapping Authentication**`CertificateMappingAuthenticationModule`      | Yes | |
 | **CGI**`CgiModule`                                                                           | No  | |
 | **Configuration Validation**`ConfigurationValidationModule`                                  | Yes | |
@@ -48,7 +48,7 @@ The table indicates native IIS modules that are functional with ASP.NET Core app
 | **Server-Side Includes**`ServerSideIncludeModule`                                            | No  | |
 | **Static Compression**`StaticCompressionModule`                                              | No  | Response compression middleware |
 | **Static Content**`StaticFileModule`                                                         | No  | Static file middleware |
-| **Token Caching**`TokenCacheModule`                                                          | Yes | |
+| **Token <example-value>**`TokenCacheModule`                                                          | Yes | |
 | **URI Caching**`UriCacheModule`                                                              | Yes | |
 | **URL Authorization**`UrlAuthorizationModule`                                                | Yes | ASP.NET Core Identity |
 | **WebDav**`WebDAV`                                                                           | No  | |

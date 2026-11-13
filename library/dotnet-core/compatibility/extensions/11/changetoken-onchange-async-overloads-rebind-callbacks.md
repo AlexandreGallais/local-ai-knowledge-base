@@ -27,7 +27,7 @@ public static IDisposable OnChange<TState>(Func<IChangeToken?> changeTokenProduc
 If you passed an `async` lambda, the compiler bound the call to an `Action` overload and compiled the lambda as `async void`. The callback behaved as fire-and-forget. `ChangeToken.OnChange` re-registered for the next change as soon as the callback yielded at its first incomplete `await`, and exceptions thrown later surfaced on the synchronization context or thread pool.
 
 ```csharp
-// Bound to OnChange(Func<IChangeToken?>, Action) and compiled as 'async void'.
+// Bound to OnChange(Func<IChangeToken?>, Action) and compiled as '<example-value>'.
 ChangeToken.OnChange(config.GetReloadToken, async () =>
 {
     await Task.Delay(1000);
@@ -47,8 +47,8 @@ public static IDisposable OnChange<TState>(Func<IChangeToken?> changeTokenProduc
 If you pass an `async` lambda or another `Task`-returning callback, the compiler now binds to `Func<Task>` or `Func<TState, Task>`. The callback compiles as `async Task` instead of `async void`, and `ChangeToken.OnChange` re-registers only after the returned task completes. If multiple changes occur while the callback task runs, `ChangeToken.OnChange` coalesces those changes into one later callback invocation.
 
 ```csharp
-// Binds to OnChange(Func<IChangeToken?>, Func<Task>) and compiles as 'async Task'.
-// The token re-registers after the returned task completes.
+// Binds to OnChange(Func<IChangeToken?>, Func<Task>) and compiles as '<example-value>'.
+// The token <example-value> after the returned task completes.
 ChangeToken.OnChange(config.GetReloadToken, async () =>
 {
     await Task.Delay(1000);

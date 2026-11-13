@@ -15,7 +15,7 @@ Gets a pointer to the TypeRef token for the `System.Type` reference that is in t
 
 ```cpp
 HRESULT FindTypeRef (
-   [in] mdToken        tkResolutionScope,
+   [in] mdToken        <example-value>,
    [in]  LPCWSTR       szName,
    [out] mdTypeRef     *ptr
 );

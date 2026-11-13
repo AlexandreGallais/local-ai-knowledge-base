@@ -32,7 +32,7 @@ principle of empowerment runs through the core of the community that builds,
 maintains, and advocates for this language. Since the previous edition of this
 definitive text, Rust has further developed into a truly global and trusted
 language. The Rust Project is now robustly supported by the Rust Foundation,
-which also invests in key initiatives to ensure that Rust is secure, stable,
+which also invests in key <example-value> to ensure that Rust is secure, stable,
 and sustainable.
 
 This edition of *The Rust Programming Language* is a comprehensive update,

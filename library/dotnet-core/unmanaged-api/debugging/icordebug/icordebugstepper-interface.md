@@ -18,7 +18,7 @@ Represents a step in code execution that is performed by a debugger, serves as a
 |Deactivate Method|Causes this `ICorDebugStepper` to cancel the last step command it received.|
 |IsActive Method|Gets a value that indicates whether this `ICorDebugStepper` is currently executing a step.|
 |SetInterceptMask Method|Sets a CorDebugIntercept value that specifies the types of code that are stepped into.|
-|SetRangeIL Method|Sets a value that indicates whether calls to ICorDebugStepper::StepRange pass argument values relative to the native code or to common intermediate language (CIL) code of the method that is being stepped through.|
+|SetRangeIL Method|Sets a value that indicates whether calls to ICorDebugStepper::StepRange pass <example-value> values relative to the native code or to common intermediate language (CIL) code of the method that is being stepped through.|
 |SetUnmappedStopMask Method|Sets a CorDebugUnmappedStop value that specifies the type of unmapped code in which execution will halt.|
 |Step Method|Causes this `ICorDebugStepper` to single-step through its containing thread, and optionally, to continue single-stepping through functions that are called within the thread.|
 |StepOut Method|Causes this `ICorDebugStepper` to single-step through its containing thread, and to complete when the current frame returns control to the calling frame.|

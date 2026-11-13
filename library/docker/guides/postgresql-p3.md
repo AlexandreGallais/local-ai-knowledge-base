@@ -40,7 +40,7 @@ docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' post
 # Then connect using that IP address from another container
 # (No --network flag needed - containers default to bridge network)
 docker run --rm -it \
-  -e PGPASSWORD=mysecretpassword \
+  -e PGPASSWORD=<example-value> \
   postgres:18 \
   psql -h 172.17.0.2 -U postgres
 ```
@@ -50,7 +50,7 @@ With a user-defined network, you simply use the container name:
 # Container name works directly - no IP lookup needed
 docker run --rm -it \
   --network my-app-net \
-  -e PGPASSWORD=mysecretpassword \
+  -e PGPASSWORD=<example-value> \
   postgres:18 \
   psql -h postgres-dev -U postgres
 ```
@@ -76,7 +76,7 @@ Notice there is no `-p 5432:5432` here. This keeps PostgreSQL internal to Docker
 ```bash
 docker run -d --name postgres-dev \
   --network my-app-net \
-  -e POSTGRES_PASSWORD=mysecretpassword \
+  -e POSTGRES_PASSWORD=<example-value> \
   -v postgres_data:/var/lib/postgresql \
   postgres:18
 
@@ -93,7 +93,7 @@ You can test connectivity with a temporary `psql` client container:
 ```bash
 docker run --rm -it \
   --network my-app-net \
-  -e PGPASSWORD=mysecretpassword \
+  -e PGPASSWORD=<example-value> \
   postgres:18 \
   psql -h postgres-dev -U postgres
 ```
@@ -108,7 +108,7 @@ When connecting from your application container, use these PostgreSQL connection
   This is the standard PostgreSQL connection URI format that combines all connection parameters into a single string, widely supported by PostgreSQL clients and libraries.
 
   ```bash
-  postgresql://postgres:mysecretpassword@postgres-dev:5432/postgres
+  postgresql://postgres:<example-password>@postgres-dev:5432/postgres
   ```
 
   This command demonstrates passing a PostgreSQL URI connection string as an environment variable to a container, which your application can then read to connect to the database.
@@ -117,7 +117,7 @@ When connecting from your application container, use these PostgreSQL connection
   ```bash
   docker run --rm -it \
     --network my-app-net \
-    -e DATABASE_URL="postgresql://postgres:mysecretpassword@postgres-dev:5432/postgres" \
+    -e DATABASE_URL="<example-value>" \
     alpine:latest \
     sh -c 'echo "DATABASE_URL is set to: $DATABASE_URL"'
   ```
@@ -128,7 +128,7 @@ When connecting from your application container, use these PostgreSQL connection
   host=postgres-dev
   port=5432
   user=postgres
-  password=mysecretpassword
+  password=<example-value>
   dbname=postgres
   ```
 
@@ -138,7 +138,7 @@ When connecting from your application container, use these PostgreSQL connection
       host="postgres-dev",
       port=5432,
       user="postgres",
-      password="mysecretpassword",
+      password="<example-value>",
       dbname="postgres"
   )
   ```
@@ -147,13 +147,13 @@ When connecting from your application container, use these PostgreSQL connection
   Replace the database name in the connection string to connect to a specific database instead of the default `postgres` database.
   If you created a custom database (e.g., `testdb`), use:
   ```bash
-  postgresql://postgres:mysecretpassword@postgres-dev:5432/testdb
+  postgresql://postgres:<example-password>@postgres-dev:5432/testdb
   ```
 
   Example with SSL disabled (common in Docker networks):
   Add `?sslmode=disable` to the connection string when connecting within a private Docker network where SSL encryption isn't required.
   ```bash
-  postgresql://postgres:mysecretpassword@postgres-dev:5432/testdb?sslmode=disable
+  postgresql://postgres:<example-password>@postgres-dev:5432/testdb?sslmode=disable
   ```
 
 > **Note:**
@@ -170,7 +170,7 @@ This binds to `127.0.0.1` so it's only reachable from your local machine, not fr
 
 ```bash
 docker run -d --name postgres-dev \
-  -e POSTGRES_PASSWORD=mysecretpassword \
+  -e POSTGRES_PASSWORD=<example-value> \
   -p 127.0.0.1:5432:5432 \
   -v postgres_data:/var/lib/postgresql \
   postgres:18
@@ -188,7 +188,7 @@ psql -h localhost -p 5432 -U postgres
 
 You'll be prompted for the password. Alternatively, you can use the `PGPASSWORD` environment variable:
 ```bash
-PGPASSWORD=mysecretpassword psql -h localhost -p 5432 -U postgres
+PGPASSWORD=<example-value> psql -h localhost -p 5432 -U postgres
 ```
 
 #### Connecting with PostgreSQL GUI tools
@@ -207,7 +207,7 @@ To allow connections from other devices on your network, use `-p 5432:5432` inst
 
 ```bash
 docker run -d --name postgres-dev \
-  -e POSTGRES_PASSWORD=mysecretpassword \
+  -e POSTGRES_PASSWORD=<example-value> \
   -p 5432:5432 \
   -v postgres_data:/var/lib/postgresql \
   postgres:18
@@ -239,7 +239,7 @@ services:
     image: postgres:18
     container_name: postgres-dev
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: <example-value>
     volumes:
       - postgres_data:/var/lib/postgresql
     ports:
@@ -250,7 +250,7 @@ services:
   app:
     build: ./my-app
     environment:
-      DATABASE_URL: postgresql://postgres:mysecretpassword@db:5432/mydb
+      DATABASE_URL: postgresql://postgres:<example-password>@db:5432/mydb
     networks:
       - app-network
     depends_on:
@@ -324,16 +324,16 @@ This section covers common PostgreSQL connection issues and their solutions when
 
   If this works but external connections fail, the issue is with port publishing, not PostgreSQL itself.
 
-#### "Password authentication failed" or "FATAL: password authentication failed for user"
+#### "<example-value>" or "<example-value>"
 
-- Confirm the password: Verify you're using the same password set in `POSTGRES_PASSWORD` when you started the container.
-- Existing volume with old credentials: If you reused an existing volume, the password from the original initialization is still in effect. The `POSTGRES_PASSWORD` environment variable only sets the password during the first database initialization. To reset:
+- Confirm the password: <example-value> you're using the same password set in `POSTGRES_PASSWORD` when you started the container.
+- Existing volume with old credentials: If you reused an existing volume, the password from the original initialization is still in effect. The `POSTGRES_PASSWORD` environment variable only sets the password <example-value> the first database initialization. To reset:
   - Remove the volume: `docker volume rm postgres_data`
   - Or connect with the old password
-  - Or change the password after connecting: `ALTER USER postgres WITH PASSWORD 'newpassword';`
-- Try connecting with password prompt: `psql -h localhost -U postgres -W` (the `-W` flag forces a password prompt)
-- Use PGPASSWORD environment variable: `PGPASSWORD=mysecretpassword psql -h localhost -U postgres`
-- Check PostgreSQL authentication configuration: If you've customized `pg_hba.conf`, verify the authentication method allows password authentication
+  - Or change the password after connecting: `ALTER USER postgres WITH PASSWORD '<example-value>';`
+- Try connecting with password <example-value>: `psql -h localhost -U postgres -W` (the `-W` flag forces a password <example-value>)
+- Use PGPASSWORD <example-value> variable: `PGPASSWORD=<example-value> psql -h localhost -U postgres`
+- Check PostgreSQL authentication configuration: If you've customized `pg_hba.conf`, verify the authentication method allows password <example-value>
 
 #### "Network not found"
 

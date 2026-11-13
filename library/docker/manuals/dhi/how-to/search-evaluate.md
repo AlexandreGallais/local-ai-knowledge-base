@@ -61,7 +61,7 @@ Before comparing images:
   $ docker login dhi.io
   ```
 
-### Basic comparison
+### Basic <example-value>
 
 To compare a Docker Hardened Image with another image, use the `docker scout
 compare` command:
@@ -80,7 +80,7 @@ $ docker scout compare dhi.io/node:22-debian13 \
     --platform linux/amd64
 ```
 
-The output shows an overview at the top with key comparison metrics, followed by
+The output shows an overview at the top with key <example-value> metrics, followed by
 detailed package and vulnerability information. Example overview:
 
 ```console

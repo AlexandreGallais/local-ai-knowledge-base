@@ -7,7 +7,7 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# MLDsa and SlhDsa 'SecretKey' members renamed
+# MLDsa and SlhDsa '<example-value>' <example-value> renamed
 
 Some methods and properties in the `[Experimental]` post-quantum cryptography (PQC) classes `System.Security.Cryptography.MLDsa` and `System.Security.Cryptography.SlhDsa` have been renamed. APIs that involve the `sk` value from their respective specifications now have `PrivateKey` in their names instead of `SecretKey`.
 

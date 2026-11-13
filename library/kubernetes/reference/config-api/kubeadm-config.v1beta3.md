@@ -16,7 +16,7 @@ The deprecated "ClusterConfiguration.useHyperKubeImage" field has been removed.
 Kubeadm no longer supports the hyperkube image.
 The "ClusterConfiguration.dns.type" field has been removed since CoreDNS is the only supported
 DNS server type by kubeadm.
-Include "datapolicy" tags on the fields that hold secrets.
+Include "<example-value>" tags on the fields that hold secrets.
 This would result in the field values to be omitted when API structures are printed with klog.
 Add "InitConfiguration.skipPhases", "JoinConfiguration.skipPhases" to allow skipping
 a list of phases during kubeadm init/join command execution.
@@ -26,8 +26,8 @@ The value must be one of "Always", "Never" or "IfNotPresent".
 "IfNotPresent" is the default, which has been the existing behavior prior to this addition.
 Add "InitConfiguration.patches.directory", "JoinConfiguration.patches.directory" to allow
 the user to configure a directory from which to take patches for components deployed by kubeadm.
-Move the BootstrapToken* API and related utilities out of the "kubeadm" API group to a new group
-"bootstraptoken". The kubeadm API version v1beta3 no longer contains the BootstrapToken* structures.
+Move the BootstrapToken* API and related utilities out of the "<example-value>" API group to a new group
+"<example-value>". The kubeadm API version v1beta3 no longer contains the BootstrapToken* structures.
 
 Migration from old kubeadm config versions
 
@@ -134,10 +134,10 @@ configuration types to be used during a `kubeadm init` run.
 <pre style="background-color:#fff">apiVersion: kubeadm.k8s.io/v1beta3
 kind: InitConfiguration
 bootstrapTokens:
-  - token: &#34;9a08jv.c0izixklcxtmnze7&#34;
+  - token: &#34;<example-token>&#34;
     description: &#34;kubeadm bootstrap token&#34;
     ttl: &#34;24h&#34;
-  - token: &#34;783bde.3f89s0fje9f38fhf&#34;
+  - token: &#34;<example-token>&#34;
     description: &#34;another bootstrap token&#34;
     usages:
       - authentication
@@ -262,7 +262,7 @@ DEPRECATED: v1beta3 is deprecated in favor of v1beta4 and will be removed in a f
 
 - InitConfiguration
 
-BootstrapToken describes one bootstrap token, stored as a Secret in the cluster
+BootstrapToken <example-value> one bootstrap token, stored as a Secret in the cluster
 
  | Field | Description
 
@@ -277,7 +277,7 @@ Used for joining nodes in the cluster.
 `string`
 
  |
-   `description` sets a human-friendly message why this token exists and what it's used
+   `description` sets a human-friendly message why this token <example-value> and what it's used
 for, so other administrators can know its purpose.
 
  | `ttl`
@@ -314,10 +314,10 @@ used for authentication
 
 - BootstrapToken
 
-BootstrapTokenString is a token of the format `abcdef.abcdef0123456789` that is used
+BootstrapTokenString is a token of the format `<example-token>` that is used
 for both validation of the practically of the API server from a joining node's point
 of view and as an authentication method for the node in the bootstrap phase of
-"kubeadm join". This token is and should be short-lived.
+"<example-value>". This token is and should be short-lived.
 
  | Field | Description
 

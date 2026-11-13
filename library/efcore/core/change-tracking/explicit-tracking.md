@@ -35,11 +35,11 @@ The web application must now re-attach these entities so that they are again tra
 > **Tip:**
 > Attaching entities to the _same DbContext instance_ that they were queried from should not normally be needed. Do not routinely perform a no-tracking query and then attach the returned entities to the same context. This will be slower than using a tracking query, and may also result in issues such as missing shadow property values, making it harder to get right.
 
-### Generated versus explicit key values
+### Generated versus explicit key <example-value>
 
-By default, integer and GUID key properties are configured to use automatically generated key values. This has a **major advantage for change tracking: an unset key value indicates that the entity is "new"**. By "new", we mean that it has not yet been inserted into the database.
+By default, integer and GUID key <example-value> are configured to use automatically generated key values. This has a **major advantage for change tracking: an unset key value indicates that the entity is "new"**. By "new", we mean that it has not yet been inserted into the database.
 
-Two models are used in the following sections. The first is configured to **not** use generated key values:
+Two models are used in the following sections. The first is configured to **not** use generated key <example-value>:
 
 ```csharp
 public class Blog
@@ -65,7 +65,7 @@ public class Post
 }
 ```
 
-Non-generated (i.e. explicitly set) key values are shown first in each example because everything is very explicit and easy to follow. This is then followed by an example where generated key values are used:
+Non-generated (i.e. explicitly set) key <example-value> are shown first in each example because everything is very explicit and easy to follow. This is then followed by an example where generated key <example-value> are used:
 
 ```csharp
 public class Blog
@@ -87,11 +87,11 @@ public class Post
 }
 ```
 
-Notice that the key properties in this model need no additional configuration here since using generated key values is the default for simple integer keys.
+Notice that the key <example-value> in this model need no additional configuration here since using generated key <example-value> is the default for simple integer keys.
 
 ## Inserting new entities
 
-### Explicit key values
+### Explicit key <example-value>
 
 An entity must be tracked in the `Added` state to be inserted by `Microsoft.EntityFrameworkCore.DbContext.SaveChanges*`. Entities are typically put in the Added state by calling one of `Microsoft.EntityFrameworkCore.DbContext.Add*`, `Microsoft.EntityFrameworkCore.DbContext.AddRange*`, `Microsoft.EntityFrameworkCore.DbContext.AddAsync*`, `Microsoft.EntityFrameworkCore.DbContext.AddRangeAsync*`, or the equivalent methods on `Microsoft.EntityFrameworkCore.DbSet`1`.
 
@@ -161,7 +161,7 @@ Post {Id: 2} Added
   Blog: {Id: 1}
 ```
 
-Notice that explicit values have been set for the `Id` key properties in the examples above. This is because the model here has been configured to use explicitly set key values, rather than automatically generated key values. When not using generated keys, the key properties must be explicitly set _before_ calling `Add`. These key values are then inserted when SaveChanges is called. For example, when using SQLite:
+Notice that explicit values have been set for the `Id` key <example-value> in the examples above. This is because the model here has been configured to use explicitly set key <example-value>, rather than automatically generated key values. When not using generated keys, the key <example-value> must be explicitly set _before_ calling `Add`. These key <example-value> are then inserted when SaveChanges is called. For example, when using SQLite:
 
 ```sql
 -- Executed DbCommand (0ms) [Parameters=[@p0='1' (DbType = String), @p1='.NET Blog' (Size = 9)], CommandType='Text', CommandTimeout='30']
@@ -198,9 +198,9 @@ Post {Id: 2} Unchanged
   Blog: {Id: 1}
 ```
 
-### Generated key values
+### Generated key <example-value>
 
-As mentioned above, integer and GUID key properties are configured to use automatically generated key values by default. This means that the application _must not set any key value explicitly_. For example, to insert a new blog and posts all with generated key values:
+As mentioned above, integer and GUID key <example-value> are configured to use automatically generated key <example-value> by default. This means that the application _must not set any key value explicitly_. For example, to insert a new blog and posts all with generated key <example-value>:
 
 ```csharp
 context.Add(
@@ -223,7 +223,7 @@ context.Add(
     });
 ```
 
-As with explicit key values, the context is now tracking all these entities as `Added`:
+As with explicit key <example-value>, the context is now tracking all these entities as `Added`:
 
 ```output
 Blog {Id: -2147482644} Added
@@ -244,7 +244,7 @@ Post {Id: -2147482636} Added
   Blog: {Id: -2147482644}
 ```
 
-Notice in this case that temporary key values have been generated for each entity. These values are used by EF Core until SaveChanges is called, at which point real key values are read back from the database. For example, when using SQLite:
+Notice in this case that temporary key <example-value> have been generated for each entity. These values are used by EF Core until SaveChanges is called, at which point real key <example-value> are read back from the database. For example, when using SQLite:
 
 ```sql
 -- Executed DbCommand (0ms) [Parameters=[@p0='.NET Blog' (Size = 9)], CommandType='Text', CommandTimeout='30']
@@ -269,7 +269,7 @@ FROM "Posts"
 WHERE changes() = 1 AND "rowid" = last_insert_rowid();
 ```
 
-After SaveChanges completes, all of the entities have been updated with their real key values and are tracked in the `Unchanged` state since they now match the state in the database:
+After SaveChanges completes, all of the entities have been updated with their real key <example-value> and are tracked in the `Unchanged` state since they now match the state in the database:
 
 ```output
 Blog {Id: 1} Unchanged

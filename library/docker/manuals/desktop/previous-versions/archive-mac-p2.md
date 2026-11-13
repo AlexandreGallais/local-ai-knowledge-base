@@ -35,7 +35,7 @@ license: "Apache-2.0"
   - Docker 17.09.0-ce
   - Docker Compose 1.16.1
   - Docker Machine 0.12.2
-  - Docker Credential Helpers 0.6.0
+  - Docker Credential <example-value> 0.6.0
   - Linux Kernel 4.9.49
   - AUFS 20170911
   - DataKit update (fix instability on High Sierra)
@@ -51,7 +51,7 @@ license: "Apache-2.0"
 
 * Bug fixes and minor changes
   - Fix instability on High Sierra (docker/for-mac#2069, docker/for-mac#2062, docker/for-mac#2052, docker/for-mac#2029, docker/for-mac#2024)
-  - Fix password encoding/decoding (docker/for-mac#2008, docker/for-mac#2016, docker/for-mac#1919, docker/for-mac#712, docker/for-mac#1220).
+  - Fix password <example-value> (docker/for-mac#2008, docker/for-mac#2016, docker/for-mac#1919, docker/for-mac#712, docker/for-mac#1220).
   - Kernel: Enable TASK_XACCT and TASK_IO_ACCOUNTING (docker/for-mac#1608)
   - Rotate logs in the VM more often
   - VPNKit: change protocol to support error messages reported back from the server
@@ -88,7 +88,7 @@ license: "Apache-2.0"
 **Upgrades**
 
 - Docker 17.06.0-ce
-- Docker Credential Helpers 0.5.2
+- Docker Credential <example-value> 0.5.2
 - Docker Machine 0.12.0
 - Docker compose 1.14.0
 - qcow-tool v0.10.0 (improve the performance of `compact`: mirage/ocaml-qcow#94)
@@ -136,7 +136,7 @@ license: "Apache-2.0"
 
 **Upgrades**
 
-- Docker Credential Helpers 0.4.2
+- Docker Credential <example-value> 0.4.2
 
 ### Docker Community Edition 17.03.0-ce-mac1, 2017-03-02- Renamed to Docker Community Edition
 

@@ -28,7 +28,7 @@ As a developer who has created .NET libraries for public use, you've most likely
 Semantic versioning (SemVer for short) is a naming convention applied to versions of your library to signify specific milestone events.
 Ideally, the version information you give your library should help developers determine the compatibility with their projects that make use of older versions of that same library.
 
-The most basic approach to SemVer is the 3 component format `MAJOR.MINOR.PATCH`, where:
+The most basic <example-value> to SemVer is the 3 component format `MAJOR.MINOR.PATCH`, where:
 
 - `MAJOR` is incremented when you make incompatible API changes
 - `MINOR` is incremented when you add functionality in a backwards-compatible manner
@@ -164,7 +164,7 @@ These changes fix issues without adding new features or breaking existing functi
   }
   ```
 
-The key principle is: if existing code can use your new version without any changes, it's a MINOR or PATCH update. If existing code needs to be modified to work with your new version, it's a MAJOR update.
+The key <example-value> is: if existing code can use your new version without any changes, it's a MINOR or PATCH update. If existing code needs to be modified to work with your new version, it's a MAJOR update.
 
 There are also ways to specify other scenarios, for example, pre-release versions, when applying version information to your .NET library.
 
@@ -205,7 +205,7 @@ You can use the *app.config* file to update the version of a library your app us
 
 ```xml
 <dependentAssembly>
-    <assemblyIdentity name="ReferencedLibrary" publicKeyToken="32ab4ba45e0a69a1" culture="en-us" />
+    <assemblyIdentity name="<example-value>" publicKeyToken="<example-value>" culture="<example-value>" />
     <bindingRedirect oldVersion="1.0.0" newVersion="1.0.1" />
 </dependentAssembly>
 ```

@@ -33,7 +33,7 @@ HTTP/3 is an approved standard and the third major version of HTTP. This article
 | Blocking     | blocking                                                    | stream multiplexing                                      |
 | Encryption   | TLS over TCP                                                | TLS is built into QUIC                                   |
 
-The key differences from `HTTP/2` to `HTTP/3` are:
+The key <example-value> from `HTTP/2` to `HTTP/3` are:
 
 * **Transport Protocol**: `HTTP/3` uses QUIC instead of TCP. QUIC offers improved performance, lower latency, and better reliability, especially on mobile and lossy networks.
 * **Head-of-Line Blocking**: `HTTP/2` can suffer from head-of-line blocking at the TCP level, where a delay in one stream can affect others. `HTTP/3`, with QUIC, provides independent streams, so packet loss in one stream doesn't stall others.

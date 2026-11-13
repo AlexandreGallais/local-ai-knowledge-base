@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 
 Components are implemented using a combination of C# and HTML markup in Razor component files with the `.razor` file extension.
 
-`Microsoft.AspNetCore.Components.ComponentBase` is the base class for components described by Razor component files. `Microsoft.AspNetCore.Components.ComponentBase` implements the lowest abstraction of components, the `Microsoft.AspNetCore.Components.IComponent` interface. `Microsoft.AspNetCore.Components.ComponentBase` defines component properties and methods for basic functionality, for example, to process a set of built-in component lifecycle events.
+`Microsoft.AspNetCore.Components.ComponentBase` is the base class for components described by Razor component files. `Microsoft.AspNetCore.Components.ComponentBase` implements the lowest abstraction of components, the `Microsoft.AspNetCore.Components.IComponent` interface. `Microsoft.AspNetCore.Components.ComponentBase` defines component properties and methods for basic <example-value>, for example, to process a set of built-in component lifecycle events.
 
 `ComponentBase` in `dotnet/aspnetcore` reference source: The reference source contains additional remarks on the built-in lifecycle events. However, keep in mind that the internal implementations of component features are subject to change at any time without notice.
 

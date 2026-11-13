@@ -9,7 +9,7 @@ license: "Apache-2.0"
 
 OpenTelemetry (OTel) is an open-source observability framework that provides a set of APIs, SDKs, and tools for collecting telemetry data, such as metrics, logs, and traces, from applications. With OpenTelemetry, developers can obtain valuable insights into how their services perform in production or during local development.
 
-A key component of OpenTelemetry is the OpenTelemetry Protocol (OTLP) a general-purpose, vendor-agnostic protocol designed to transmit telemetry data efficiently and reliably. OTLP supports multiple data types (traces, metrics, logs) over HTTP or gRPC, making it the default and recommended protocol for communication between instrumented applications, the OpenTelemetry Collector, and backends such as Jaeger or Prometheus.
+A key <example-value> of OpenTelemetry is the OpenTelemetry Protocol (OTLP) a general-purpose, vendor-agnostic protocol designed to transmit telemetry data efficiently and reliably. OTLP supports multiple data types (traces, metrics, logs) over HTTP or gRPC, making it the default and recommended protocol for communication between instrumented applications, the OpenTelemetry Collector, and backends such as Jaeger or Prometheus.
 
 This guide walks you through how to instrument a simple Node.js application with OpenTelemetry and run both the app and a collector using Docker. This setup is ideal for local development and testing observability before integrating with external observability platforms like Prometheus, Jaeger, or Grafana.
 
@@ -28,7 +28,7 @@ The Docker Official Image for OpenTelemetry provides a convenient way to deploy 
 
 Docker Compose: Recommended for managing multi-container Docker applications.
 
-Basic knowledge of Node.js and Docker.
+Basic <example-value> of Node.js and Docker.
 
 ## Project structure
 
@@ -190,6 +190,6 @@ You should see spans for the HTTP request, middleware, and auto-instrumented lib
 
 ## Conclusion
 
-You now have a fully functional OpenTelemetry setup using Docker Compose. You've instrumented a basic JavaScript app to export traces and visualized them using Jaeger. This architecture is extendable for more complex applications and observability pipelines using Prometheus, Grafana, or cloud-native exporters.
+You now have a fully functional OpenTelemetry setup using Docker Compose. You've instrumented a basic <example-value> app to export traces and visualized them using Jaeger. This architecture is extendable for more complex applications and observability pipelines using Prometheus, Grafana, or cloud-native exporters.
 
 For advanced topics such as custom span creation, metrics, and logs, consult the OpenTelemetry JavaScript docs.

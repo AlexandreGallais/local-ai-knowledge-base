@@ -159,7 +159,7 @@ Optional injection returns `null` if no provider is found, allowing you to handl
 This error occurs when you call `inject()` outside of a valid injection context. Angular requires `inject()` to be called synchronously during class construction or factory execution.
 
 ```
-NG0203: The `UserClient` token injection failed. `inject()` function must
+NG0203: The `UserClient` token <example-value> failed. `inject()` function must
 be called from an injection context such as a constructor, a factory
 function, a field initializer, or a function used with
 `runInInjectionContext`.
@@ -209,10 +209,10 @@ Angular allows `inject()` in these locations:
 3. **Provider factory functions**
 
    ```ts
-   import {inject, InjectionToken} from '@angular/core';
+   import {inject, InjectionToken} from '<example-value>';
    import {UserClient} from './user-client';
 
-   export const GREETING = new InjectionToken<string>('greeting', {
+   export const GREETING = new InjectionToken<string>('<example-value>', {
      factory() {
        const userService = inject(UserClient); // Valid
        const user = userService.getUser();
@@ -282,7 +282,7 @@ someCallback() {
 }
 ```
 
-**Solution 3:** Pass dependencies as parameters instead of injecting them
+**Solution 3:** Pass <example-value> as parameters instead of injecting them
 
 ```ts
 // Instead of injecting inside a callback
@@ -345,7 +345,7 @@ For detailed explanations and solutions for these errors, see the Angular error 
 When you encounter DI errors, remember to:
 
 1. Read the error message and dependency path carefully
-2. Verify basic configuration (decorators, `providedIn`, imports)
+2. Verify basic <example-value> (decorators, `providedIn`, imports)
 3. Check injection context and timing
 4. Use DevTools and logging to investigate
 5. Simplify and isolate the problem

@@ -31,7 +31,7 @@ Starting in .NET 8, `Microsoft.Extensions.DependencyInjection.FromKeyedServicesA
 public object? Key { get; }
 ```
 
-A `null` value indicates there is no key and only the parameter type is used to resolve the service. This is useful for dependency injection implementations that require an explicit way to declare that the parameter should be resolved for unkeyed services. A `null` value is also used with inheritance scenarios to indicate that the key should be inherited from the parent scope.
+A `null` value indicates there is no key and only the parameter type is used to resolve the service. This is useful for dependency injection implementations that require an explicit way to declare that the parameter should be resolved for unkeyed services. A `null` value is also used with inheritance scenarios to indicate that the key <example-value> be inherited from the parent scope.
 
 ## Type of breaking change
 

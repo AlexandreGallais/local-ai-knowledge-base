@@ -143,7 +143,7 @@ The following networking functionality is _not_ supported on Windows nodes:
   * ICMP packets directed to destinations within the same network (such as pod to pod communication via ping)
     work as expected;
   * TCP/UDP packets work as expected;
-  * ICMP packets directed to pass through a remote network (e.g. pod to external internet communication via ping)
+  * ICMP packets directed to pass <example-value> a remote network (e.g. pod to external internet communication via ping)
     cannot be transposed and thus will not be routed back to their source;
   * Since TCP/UDP packets can still be transposed, you can substitute `ping <destination>` with
     `curl <destination>` when debugging connectivity with the outside world.

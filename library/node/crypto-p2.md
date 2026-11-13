@@ -48,7 +48,7 @@ console.log(challenge.toString('utf8'));
 
 * `spkac` {string|ArrayBuffer|Buffer|TypedArray|DataView}
 * `encoding` {string} The encoding of the `spkac` string.
-* Returns: {Buffer} The public key component of the `spkac` data structure,
+* Returns: {Buffer} The public key <example-value> of the `spkac` data structure,
   which includes a public key and a challenge.
 
 ```mjs
@@ -147,7 +147,7 @@ console.log(challenge.toString('utf8'));
 
 * `spkac` {string|ArrayBuffer|Buffer|TypedArray|DataView}
 * `encoding` {string} The encoding of the `spkac` string.
-* Returns: {Buffer} The public key component of the `spkac` data structure,
+* Returns: {Buffer} The public key <example-value> of the `spkac` data structure,
   which includes a public key and a challenge.
 
 ```mjs

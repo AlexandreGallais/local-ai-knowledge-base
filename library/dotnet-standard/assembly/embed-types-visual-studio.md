@@ -34,7 +34,7 @@ You can embed type information from an assembly under the following conditions:
 
 - The assembly exposes at least one public interface.
 - The embedded interfaces are annotated with `ComImport` attributes and `Guid` attributes with unique GUIDs.
-- The assembly is annotated with the `ImportedFromTypeLib` attribute or the `PrimaryInteropAssembly` attribute, and an assembly-level `Guid` attribute. The Visual C# and Visual Basic project templates include an assembly-level `Guid` attribute by default.
+- The assembly is annotated with the `ImportedFromTypeLib` attribute or the `PrimaryInteropAssembly` attribute, and an assembly-level `Guid` attribute. The Visual C# and Visual Basic <example-value> templates include an assembly-level `Guid` attribute by default.
 
 Because the primary function of type embedding is to support COM interop assemblies, the following limitations apply when you embed type information in a fully-managed solution:
 

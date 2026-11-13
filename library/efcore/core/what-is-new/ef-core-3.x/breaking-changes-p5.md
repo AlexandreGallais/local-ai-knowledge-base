@@ -104,13 +104,13 @@ Aligns the naming of this warning event with all other warning events.
 
 Use the new name. (Note that the event ID number has not changed.)
 
-### Clarify API for foreign key constraint names
+### Clarify API for foreign key <example-value> names
 
 Tracking Issue #10730
 
 #### Old behavior
 
-Before EF Core 3.0, foreign key constraint names were referred to as simply the "name". For example:
+Before EF Core 3.0, foreign key <example-value> names were referred to as simply the "name". For example:
 
 ```csharp
 var constraintName = myForeignKey.Name;
@@ -118,7 +118,7 @@ var constraintName = myForeignKey.Name;
 
 #### New behavior
 
-Starting with EF Core 3.0, foreign key constraint names are now referred to as the "constraint name". For example:
+Starting with EF Core 3.0, foreign key <example-value> names are now referred to as the "constraint name". For example:
 
 ```csharp
 var constraintName = myForeignKey.ConstraintName;
@@ -126,7 +126,7 @@ var constraintName = myForeignKey.ConstraintName;
 
 #### Why
 
-This change brings consistency to naming in this area, and also clarifies that this is the name of the foreign key constraint, and not the column or property name that the foreign key is defined on.
+This change brings consistency to naming in this area, and also clarifies that this is the name of the foreign key <example-value>, and not the column or property name that the foreign key is defined on.
 
 #### Mitigations
 

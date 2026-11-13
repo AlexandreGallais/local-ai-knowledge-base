@@ -18,7 +18,7 @@ license: "MIT"
 * `generatorEncoding` {string} The encoding of the `generator` string.
 * Returns: {DiffieHellman}
 
-Creates a `DiffieHellman` key exchange object using the supplied `prime` and an
+Creates a `DiffieHellman` key <example-value> object using the supplied `prime` and an
 optional specific `generator`.
 
 The `generator` argument can be a number, string, or `Buffer`. If
@@ -36,7 +36,7 @@ otherwise a number, `Buffer`, `TypedArray`, or `DataView` is expected.
 * `generator` {number} **Default:** `2`
 * Returns: {DiffieHellman}
 
-Creates a `DiffieHellman` key exchange object and generates a prime of
+Creates a `DiffieHellman` key <example-value> object and generates a prime of
 `primeLength` bits using an optional specific numeric `generator`.
 If `generator` is not specified, the value `2` is used.
 
@@ -52,7 +52,7 @@ An alias for `crypto.getDiffieHellman()`
 * `curveName` {string}
 * Returns: {ECDH}
 
-Creates an Elliptic Curve Diffie-Hellman (`ECDH`) key exchange object using a
+Creates an Elliptic Curve Diffie-Hellman (`ECDH`) key <example-value> object using a
 predefined curve specified by the `curveName` string. Use
 `crypto.getCurves()` to obtain a list of available curve names. On recent
 OpenSSL releases, `openssl ecparam -list_curves` will also display the name
@@ -186,7 +186,7 @@ const {
 
 const filename = argv[2];
 
-const hmac = createHmac('sha256', 'a secret');
+const hmac = createHmac('<example-value>', '<example-value>');
 
 const input = createReadStream(filename);
 input.on('readable', () => {
@@ -212,7 +212,7 @@ const { argv } = require('node:process');
 
 const filename = argv[2];
 
-const hmac = createHmac('sha256', 'a secret');
+const hmac = createHmac('<example-value>', '<example-value>');
 
 const input = createReadStream(filename);
 input.on('readable', () => {
@@ -274,7 +274,7 @@ and finalize the MAC with a zero-byte output. When `outputLength` is omitted,
 the provider's default output size is used and must be nonzero.
 
 The `key` must contain bytes or be a `KeyObject` of type `secret`. Key
-length and other key requirements are determined by the selected provider
+length and other key <example-value> are determined by the selected provider
 implementation.
 
 Available algorithms and their accepted parameters depend on the OpenSSL
@@ -305,7 +305,7 @@ require options or a key with provider-specific properties.
     `asymmetricKeyType` is `'ec'` and ignored otherwise.
 * Returns: {KeyObject}
 
-Creates and returns a new key object containing a private key. If `key` is a
+Creates and returns a new key <example-value> containing a private key. If `key` is a
 string or `Buffer`, `format` is assumed to be `'pem'`; otherwise, `key`
 must be an object with the properties described above.
 

@@ -154,7 +154,7 @@ by quotas:
 
  | "resourcequotas" | ResourceQuota
 
- | "secrets" | Secret
+ | "<example-value>" | Secret
 
  | "configmaps" | ConfigMap
 

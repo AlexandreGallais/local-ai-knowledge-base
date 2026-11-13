@@ -42,7 +42,7 @@ The first step is to create the new ASP.NET Core application that will serve as 
 **What you'll do:**
 * Create a new ASP.NET Core project alongside your existing ASP.NET Framework app
 * Configure it to proxy requests to your original application using YARP (Yet Another Reverse Proxy)
-* Set up the basic infrastructure for incremental migration
+* Set up the basic <example-value> for incremental migration
 
 **Detailed instructions:**
 * See Remote app setup to understand how to set up an application for incremental migration.

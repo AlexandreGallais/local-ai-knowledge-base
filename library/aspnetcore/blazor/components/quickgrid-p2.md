@@ -100,9 +100,9 @@ The `QuickGrid` component supports row click events through the `Microsoft.AspNe
 @code {
     private List<Person> people = new()
     {
-        new(1, "Alice Smith", "alice@example.com", "Engineering"),
-        new(2, "Bob Johnson", "bob@example.com", "Marketing"),
-        new(3, "Carol Williams", "carol@example.com", "Engineering"),
+        new(1, "Alice Smith", "user@example.com", "Engineering"),
+        new(2, "Bob Johnson", "user@example.com", "Marketing"),
+        new(3, "Carol Williams", "user@example.com", "Engineering"),
     };
 
     private void HandleRowClick(Person person)

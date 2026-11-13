@@ -30,7 +30,7 @@ const buf = Buffer.allocUnsafe(4);
 buf.writeInt32BE(0x01020304, 0);
 
 console.log(buf);
-// Prints: <Buffer 01 02 03 04>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ```cjs
@@ -41,7 +41,7 @@ const buf = Buffer.allocUnsafe(4);
 buf.writeInt32BE(0x01020304, 0);
 
 console.log(buf);
-// Prints: <Buffer 01 02 03 04>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ### `buf.writeInt32LE(value[, offset])`
@@ -65,7 +65,7 @@ const buf = Buffer.allocUnsafe(4);
 buf.writeInt32LE(0x05060708, 0);
 
 console.log(buf);
-// Prints: <Buffer 08 07 06 05>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ```cjs
@@ -76,7 +76,7 @@ const buf = Buffer.allocUnsafe(4);
 buf.writeInt32LE(0x05060708, 0);
 
 console.log(buf);
-// Prints: <Buffer 08 07 06 05>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ### `buf.writeIntBE(value, offset, byteLength)`
@@ -100,7 +100,7 @@ const buf = Buffer.allocUnsafe(6);
 buf.writeIntBE(0x1234567890ab, 0, 6);
 
 console.log(buf);
-// Prints: <Buffer 12 34 56 78 90 ab>
+// Prints: <Buffer .. .. .. .. .. ..>
 ```
 
 ```cjs
@@ -111,7 +111,7 @@ const buf = Buffer.allocUnsafe(6);
 buf.writeIntBE(0x1234567890ab, 0, 6);
 
 console.log(buf);
-// Prints: <Buffer 12 34 56 78 90 ab>
+// Prints: <Buffer .. .. .. .. .. ..>
 ```
 
 ### `buf.writeIntLE(value, offset, byteLength)`
@@ -135,7 +135,7 @@ const buf = Buffer.allocUnsafe(6);
 buf.writeIntLE(0x1234567890ab, 0, 6);
 
 console.log(buf);
-// Prints: <Buffer ab 90 78 56 34 12>
+// Prints: <Buffer .. .. .. .. .. ..>
 ```
 
 ```cjs
@@ -146,7 +146,7 @@ const buf = Buffer.allocUnsafe(6);
 buf.writeIntLE(0x1234567890ab, 0, 6);
 
 console.log(buf);
-// Prints: <Buffer ab 90 78 56 34 12>
+// Prints: <Buffer .. .. .. .. .. ..>
 ```
 
 ### `buf.writeUInt8(value[, offset])`
@@ -173,7 +173,7 @@ buf.writeUInt8(0x23, 2);
 buf.writeUInt8(0x42, 3);
 
 console.log(buf);
-// Prints: <Buffer 03 04 23 42>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ```cjs
@@ -187,7 +187,7 @@ buf.writeUInt8(0x23, 2);
 buf.writeUInt8(0x42, 3);
 
 console.log(buf);
-// Prints: <Buffer 03 04 23 42>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ### `buf.writeUInt16BE(value[, offset])`
@@ -212,7 +212,7 @@ buf.writeUInt16BE(0xdead, 0);
 buf.writeUInt16BE(0xbeef, 2);
 
 console.log(buf);
-// Prints: <Buffer de ad be ef>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ```cjs
@@ -224,7 +224,7 @@ buf.writeUInt16BE(0xdead, 0);
 buf.writeUInt16BE(0xbeef, 2);
 
 console.log(buf);
-// Prints: <Buffer de ad be ef>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ### `buf.writeUInt16LE(value[, offset])`
@@ -249,7 +249,7 @@ buf.writeUInt16LE(0xdead, 0);
 buf.writeUInt16LE(0xbeef, 2);
 
 console.log(buf);
-// Prints: <Buffer ad de ef be>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ```cjs
@@ -261,7 +261,7 @@ buf.writeUInt16LE(0xdead, 0);
 buf.writeUInt16LE(0xbeef, 2);
 
 console.log(buf);
-// Prints: <Buffer ad de ef be>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ### `buf.writeUInt32BE(value[, offset])`
@@ -285,7 +285,7 @@ const buf = Buffer.allocUnsafe(4);
 buf.writeUInt32BE(0xfeedface, 0);
 
 console.log(buf);
-// Prints: <Buffer fe ed fa ce>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ```cjs
@@ -296,7 +296,7 @@ const buf = Buffer.allocUnsafe(4);
 buf.writeUInt32BE(0xfeedface, 0);
 
 console.log(buf);
-// Prints: <Buffer fe ed fa ce>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ### `buf.writeUInt32LE(value[, offset])`
@@ -320,7 +320,7 @@ const buf = Buffer.allocUnsafe(4);
 buf.writeUInt32LE(0xfeedface, 0);
 
 console.log(buf);
-// Prints: <Buffer ce fa ed fe>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ```cjs
@@ -331,7 +331,7 @@ const buf = Buffer.allocUnsafe(4);
 buf.writeUInt32LE(0xfeedface, 0);
 
 console.log(buf);
-// Prints: <Buffer ce fa ed fe>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ### `buf.writeUIntBE(value, offset, byteLength)`
@@ -357,7 +357,7 @@ const buf = Buffer.allocUnsafe(6);
 buf.writeUIntBE(0x1234567890ab, 0, 6);
 
 console.log(buf);
-// Prints: <Buffer 12 34 56 78 90 ab>
+// Prints: <Buffer .. .. .. .. .. ..>
 ```
 
 ```cjs
@@ -368,7 +368,7 @@ const buf = Buffer.allocUnsafe(6);
 buf.writeUIntBE(0x1234567890ab, 0, 6);
 
 console.log(buf);
-// Prints: <Buffer 12 34 56 78 90 ab>
+// Prints: <Buffer .. .. .. .. .. ..>
 ```
 
 ### `buf.writeUIntLE(value, offset, byteLength)`
@@ -394,7 +394,7 @@ const buf = Buffer.allocUnsafe(6);
 buf.writeUIntLE(0x1234567890ab, 0, 6);
 
 console.log(buf);
-// Prints: <Buffer ab 90 78 56 34 12>
+// Prints: <Buffer .. .. .. .. .. ..>
 ```
 
 ```cjs
@@ -405,7 +405,7 @@ const buf = Buffer.allocUnsafe(6);
 buf.writeUIntLE(0x1234567890ab, 0, 6);
 
 console.log(buf);
-// Prints: <Buffer ab 90 78 56 34 12>
+// Prints: <Buffer .. .. .. .. .. ..>
 ```
 
 ### `new Buffer(array)`

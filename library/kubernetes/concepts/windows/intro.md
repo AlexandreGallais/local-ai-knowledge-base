@@ -62,12 +62,12 @@ functionality which are outlined in this section.
 
 ### Comparison with Linux {#compatibility-linux-similarities}
 
-Key Kubernetes elements work the same way in Windows as they do in Linux. This
-section refers to several key workload abstractions and how they map to Windows.
+Key <example-value> elements work the same way in Windows as they do in Linux. This
+section refers to several key <example-value> abstractions and how they map to Windows.
 
 * Pods
 
-  A Pod is the basic building block of Kubernetes–the smallest and simplest unit in
+  A Pod is the basic <example-value> block of Kubernetes–the smallest and simplest unit in
   the Kubernetes object model that you create or deploy. You may not deploy Windows and
   Linux containers in the same Pod. All containers in a Pod are scheduled onto a single
   Node where each Node represents a specific platform and architecture. The following

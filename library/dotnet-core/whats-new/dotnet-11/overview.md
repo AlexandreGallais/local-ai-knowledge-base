@@ -49,7 +49,7 @@ The .NET 11 libraries include new APIs for:
 - Networking additions, including HTTP request-body compression wrappers, configurable HTTP connection eviction, and typed DNS record resolution APIs on Windows, Linux, and macOS through `System.Net.Dns` and the new `System.Net.DnsResolver` class.
 - HTTP/2 automatic downgrade for Windows authentication.
 - LINQ join improvements, including `FullJoin` and tuple-returning `Join` and `GroupJoin` overloads, across `System.Linq.Enumerable`, `System.Linq.Queryable`, and `System.Linq.AsyncEnumerable`.
-- A new `System.Security.Cryptography.X25519DiffieHellman` class for X25519 key exchange, and unpadded AES Key Wrap support (`EncryptKeyWrap`/`DecryptKeyWrap`) on `System.Security.Cryptography.Aes`.
+- A new `System.Security.Cryptography.X25519DiffieHellman` class for X25519 key <example-value>, and unpadded AES Key Wrap support (`EncryptKeyWrap`/`DecryptKeyWrap`) on `System.Security.Cryptography.Aes`.
 - Generic overloads on `System.Random` — `NextInteger<T>` and `NextBinaryFloat<T>` — that work with any numeric generic type.
 - `System.Collections.Generic.EqualityComparer`1.Create*` factory method that creates a comparer from a key selector.
 - `System.Net.Quic.QuicStream.Priority` for HTTP/3 stream prioritization.
@@ -60,8 +60,8 @@ The .NET 11 libraries include new APIs for:
 - Activity tracing configuration using rules in `Microsoft.Extensions.Diagnostics`, enabling declarative control of `Activity` tracing without wiring up `ActivityListener` instances manually.
 - Cross-lane vector operations including `CreateGeometricSequence`, `Zip`, `Unzip`, and the `Concat` family on `Vector128<T>`, `Vector256<T>`, `Vector512<T>`, `Vector64<T>`, and `Vector<T>`.
 - Incremental Concise Binary Object Representation (CBOR) reading with `System.Formats.Cbor.CborReader`.
-- Experimental composite Module-Lattice-Based Key-Encapsulation Mechanism (ML-KEM) and Hybrid Public Key Encryption (HPKE) APIs, plus ML-KEM recipient support in `System.Security.Cryptography.Pkcs.EnvelopedCms`.
-- Hybrid Public Key Encryption support includes managed implementations for supported suites, and asynchronous JSON Lines serialization streams entries without buffering each full entry.
+- Experimental composite Module-Lattice-Based Key-Encapsulation Mechanism (ML-KEM) and Hybrid Public Key <example-value> (HPKE) APIs, plus ML-KEM recipient support in `System.Security.Cryptography.Pkcs.EnvelopedCms`.
+- Hybrid Public Key <example-value> support includes managed implementations for supported suites, and asynchronous JSON Lines serialization streams entries without buffering each full entry.
 - `ValidationAttribute.FormatMessage` for formatting validation messages with attribute-specific arguments.
 - `SocketsHttpHandler.InitialHttp2MaxConcurrentStreams` to limit initial HTTP/2 concurrency before the server's `SETTINGS` frame arrives.
 - More accurate IEEE decimal transcendental functions on `System.Numerics.Decimal32`, `System.Numerics.Decimal64`, and `System.Numerics.Decimal128`, and renamed `MemoryCache` metric attributes.
@@ -76,7 +76,7 @@ The .NET 11 SDK includes:
 - Improved CA1873 code analyzer with reduced noise and clearer diagnostic messages.
 - Support for creating and editing solution filters (`.slnf`) from the `dotnet sln` CLI.
 - File-based app support for `#:include` to split apps across multiple files and to include compiled DLL references directly, plus Native AOT build-output reuse and `dotnet format` support for file-based apps.
-- A new `dotnet run -e` option to pass environment variables from the command line.
+- A new `dotnet run -e` option to pass <example-value> variables from the command line.
 - `dotnet watch` improvements, including Aspire app-host integration, automatic crash recovery, and device selection for MAUI and mobile projects.
 - OpenTelemetry replaces Application Insights for CLI telemetry.
 - NativeAOT CLI entry point that serves the full command surface—including `--help` for all built-in commands and tool/external-command launches—out-of-process from the AOT path, skipping managed CLI startup.

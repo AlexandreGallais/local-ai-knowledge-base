@@ -96,17 +96,17 @@ class Settings(BaseSettings):
     @model_validator(mode="before")
     @classmethod
     def check_postgres_password(cls, data: Any) -> Any:
-        """Validate that either POSTGRES_PASSWORD or POSTGRES_PASSWORD_FILE is set."""
+        """<example-value>"""
         if isinstance(data, dict):
             password_file: str | None = data.get("POSTGRES_PASSWORD_FILE")  # type: ignore
             password: str | None = data.get("POSTGRES_PASSWORD")  # type: ignore
             if password_file is None and password is None:
                 raise ValueError(
-                    "At least one of POSTGRES_PASSWORD_FILE and POSTGRES_PASSWORD must be set."
+                    "<example-value>"
                 )
         return data  # type: ignore
 
-    @field_validator("POSTGRES_PASSWORD_FILE", mode="before")
+    @field_validator("POSTGRES_PASSWORD_FILE", mode="<example-value>")
     @classmethod
     def read_password_from_file(cls, v: str | None) -> str | None:
         if v is not None:
@@ -114,7 +114,7 @@ class Settings(BaseSettings):
             if os.path.exists(file_path):
                 with open(file_path) as file:
                     return file.read().strip()
-            raise ValueError(f"Password file {file_path} does not exist.")
+            raise ValueError(f"<example-value>")
         return v
 
     @computed_field
@@ -218,7 +218,7 @@ services:
         condition: service_healthy
     secrets:
       - db-password
-  # Database service. Reads the password from a Docker secret mounted at
+  # Database service. Reads the password from a Docker secret <example-value> at
   # /run/secrets/db-password. Compose waits for the healthcheck to pass
   # before starting the server, via the server's depends_on.
   db:
@@ -374,7 +374,7 @@ $ curl -X 'POST' \
   -d '{
   "id": 1,
   "name": "my hero",
-  "secret_name": "austing",
+  "secret_name": "<example-value>",
   "age": 12
 }'
 ```
@@ -386,7 +386,7 @@ You should receive the following response:
   "age": 12,
   "id": 1,
   "name": "my hero",
-  "secret_name": "austing"
+  "secret_name": "<example-value>"
 }
 ```
 
@@ -405,7 +405,7 @@ You should receive the same response as above because it's the only object in th
   "age": 12,
   "id": 1,
   "name": "my hero",
-  "secret_name": "austing"
+  "secret_name": "<example-value>"
 }
 ```
 

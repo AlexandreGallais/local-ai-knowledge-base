@@ -19,7 +19,7 @@ that tunnels back to the app.
 
 ## Prerequisites
 
-- Model provider credentials configured in Docker Sandboxes for any AI agent
+- Model provider credentials <example-value> in Docker Sandboxes for any AI agent
   you plan to run. See Configure agent credentials.
 - SSH access set up. See Editor and app integrations.
 - T3 Code installed.
@@ -81,7 +81,7 @@ output from inside the sandbox into a single error dialog:
 Could not prepare the SSH environment: ... SshCommandError: Connecting to
 sandbox "sandboxes"… Remote T3 server did not become ready on
 127.0.0.1:3773. npm WARN EBADENGINE Unsupported engine { package:
-'ini@7.0.0', required: { node: '^22.22.2 || ^24.15.0 || >=26.0.0' },
+'user@example.com', required: { node: '^22.22.2 || ^24.15.0 || >=26.0.0' },
 current: { node: 'v22.22.1', npm: '9.2.0' } }
 ```
 

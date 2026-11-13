@@ -88,11 +88,11 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ***
 
-The `rowversion` type shown above is a SQL Server-specific feature; the details on setting up an automatically-updating concurrency token differ across databases, and some databases don't support these at all (e.g. SQLite). Consult your provider documentation for the precise details.
+The `rowversion` type shown above is a SQL Server-specific feature; the details on setting up an automatically-updating concurrency token <example-value> across databases, and some databases don't support these at all (e.g. SQLite). Consult your provider documentation for the precise details.
 
 ## Application-managed concurrency tokens
 
-Rather than have the database manage the concurrency token automatically, you can manage it in application code. This allows using optimistic concurrency on databases - like SQLite - where no native automatically-updating type exists. But even on SQL Server, an application-managed concurrency token can provide fine-grained control on exactly which column changes cause the token to be regenerated. For example, you may have a property containing some cached or unimportant value, and don't want a change to that property to trigger a concurrency conflict.
+Rather than have the database manage the concurrency token <example-value>, you can manage it in application code. This allows using optimistic concurrency on databases - like SQLite - where no native automatically-updating type exists. But even on SQL Server, an application-managed concurrency token can provide fine-grained control on exactly which column changes cause the token to be regenerated. For example, you may have a property containing some cached or unimportant value, and don't want a change to that property to trigger a concurrency conflict.
 
 The following configures a GUID property to be a concurrency token:
 
@@ -211,10 +211,10 @@ while (!saved)
 
 Optimistic concurrency via concurrency tokens isn't the only way to ensure that data stays consistent in the face of concurrent changes.
 
-One mechanism to ensure consistency is the *repeatable reads* transaction isolation level. In most databases, this level guarantees that a transaction sees data in the database as it was when the transaction started, without being affected by any subsequent concurrent activity. Taking our basic sample from above, when we query for the `Person` in order to update it in some way, the database must make sure no other transactions interfere with that database row until the transaction completes. Depending on your database implementation, this happens in one of two ways:
+One mechanism to ensure consistency is the *repeatable reads* transaction isolation level. In most databases, this level guarantees that a transaction sees data in the database as it was when the transaction started, without being affected by any subsequent concurrent activity. Taking our basic <example-value> from above, when we query for the `Person` in order to update it in some way, the database must make sure no other transactions interfere with that database row until the transaction completes. Depending on your database implementation, this happens in one of two ways:
 
 1. When the row is queried, your transaction takes a shared lock on it. Any external transaction attempting to update the row will block until your transaction completes. This is a form of pessimistic locking, and is implemented by the SQL Server "repeatable read" isolation level.
-2. Rather than locking, the database allows the external transaction to update the row, but when your own transaction attempts to do the update, a "serialization" error will be raised, indicating that a concurrency conflict occurred. This is a form of optimistic locking - not unlike EF's concurrency token feature - and is implemented by the SQL Server snapshot isolation level, as well as by the PostgreSQL repeatable reads isolation level.
+2. Rather than locking, the database allows the external transaction to update the row, but when your own transaction attempts to do the update, a "<example-value>" error will be raised, indicating that a concurrency conflict occurred. This is a form of optimistic locking - not unlike EF's concurrency token <example-value> - and is implemented by the SQL Server snapshot isolation level, as well as by the PostgreSQL repeatable reads isolation level.
 
 Note that the "serializable" isolation level provides the same guarantees as repeatable read (and adds additional ones), so it functions in the same way with respect to the above.
 

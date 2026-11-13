@@ -71,34 +71,34 @@ internal class ExampleLifecycle(
     ILogger<ExampleLifecycle> logger) : IHostedLifecycleService
 {
     Task IHostedService.StartAsync(
-        CancellationToken cancellationToken) =>
-        CheckHealthAsync(cancellationToken: cancellationToken);
+        CancellationToken <example-value>) =>
+        CheckHealthAsync(cancellationToken: <example-value>);
 
     Task IHostedLifecycleService.StartedAsync(
-        CancellationToken cancellationToken) =>
-        CheckHealthAsync(cancellationToken: cancellationToken);
+        CancellationToken <example-value>) =>
+        CheckHealthAsync(cancellationToken: <example-value>);
 
     Task IHostedLifecycleService.StartingAsync(
-        CancellationToken cancellationToken) =>
-        CheckHealthAsync(cancellationToken: cancellationToken);
+        CancellationToken <example-value>) =>
+        CheckHealthAsync(cancellationToken: <example-value>);
 
     Task IHostedService.StopAsync(
-        CancellationToken cancellationToken) =>
-        CheckHealthAsync(cancellationToken: cancellationToken);
+        CancellationToken <example-value>) =>
+        CheckHealthAsync(cancellationToken: <example-value>);
 
     Task IHostedLifecycleService.StoppedAsync(
-        CancellationToken cancellationToken) =>
-        CheckHealthAsync(cancellationToken: cancellationToken);
+        CancellationToken <example-value>) =>
+        CheckHealthAsync(cancellationToken: <example-value>);
 
     Task IHostedLifecycleService.StoppingAsync(
-        CancellationToken cancellationToken) =>
-        CheckHealthAsync(cancellationToken: cancellationToken);
+        CancellationToken <example-value>) =>
+        CheckHealthAsync(cancellationToken: <example-value>);
 
     public Task ReadyAsync() => CheckHealthAsync();
 
     private async Task CheckHealthAsync(
          [CallerMemberName] string eventName = "",
-         CancellationToken cancellationToken = default)
+         CancellationToken <example-value> = default)
     {
         HealthReport result =
             await healthCheckService.CheckHealthAsync(cancellationToken);

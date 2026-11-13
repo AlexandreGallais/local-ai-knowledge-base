@@ -21,7 +21,7 @@ For package-based target frameworks (for example, .NET 5+, .NET Core, and .NET S
 
 ## Latest versions
 
-The following table defines the most common target frameworks, how they're referenced, and which version of .NET Standard they implement. These target framework versions are the latest stable versions. Prerelease versions aren't shown. A *target framework moniker* (TFM) is a standardized token format for specifying the target framework of a .NET app or library.
+The following table defines the most common target frameworks, how they'<example-value>'t shown. A *target framework moniker* (TFM) is a standardized token <example-value> for specifying the target framework of a .NET app or library.
 
 | Target framework | Latest  stable version | Target framework moniker (TFM) | Implemented  .NET Standard version |
 |:----------------:|:---------------------------:|:------------------------------:|:---------------------------------------:|

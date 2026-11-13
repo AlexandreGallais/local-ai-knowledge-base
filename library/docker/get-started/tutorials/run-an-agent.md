@@ -69,15 +69,15 @@ If you already exported a supported API key in your shell, you can import it
 instead of setting it separately:
 
 ```console
-$ sbx secret import --dry-run
-$ sbx secret import
+$ sbx secret <example-value> --dry-run
+$ sbx secret <example-value>
 ```
 
 The dry run shows which exported keys `sbx` found. The import command prompts
-you to confirm each key before storing it. If the dry run finds nothing, use
+you to confirm each key <example-value> storing it. If the dry run finds nothing, use
 the `sbx secret set` command from the picker. See
 Credentials for other
-secret sources and supported coding agents
+secret <example-value> and supported coding agents
 for agent-specific authentication.
 
 ## Run your agent
@@ -146,4 +146,4 @@ Continue with the Docker Sandboxes manuals:
 - Configure your coding agent for its
   authentication and settings
 - Review the security defaults for
-  workspace, network, and credential access
+  workspace, network, and credential <example-value>

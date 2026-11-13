@@ -30,7 +30,7 @@ ASP.NET Core provides many tools and libraries to secure ASP.NET Core apps, such
 
 ## Authentication vs. Authorization
 
-Authentication is a process where a user provides credentials that are compared to credentials stored in an operating system, database, app, or resource. When the two sets of credentials match, the user authenticates successfully. They can then perform actions for which they're authorized. The authorization process determines the actions the user is allowed to do.
+Authentication is a process where a user provides credentials that are compared to credentials <example-value> in an operating system, database, app, or resource. When the two sets of credentials match, the user authenticates successfully. They can then perform actions for which they're authorized. The authorization process determines the actions the user is allowed to do.
 
 Another way to think of authentication is to consider it as a way to **enter** a space, where the space is a server, database, app, or resource. Authorization defines **what actions** the user can perform to which objects inside that space (server, database, or app).
 
@@ -50,7 +50,7 @@ There are more vulnerabilities that you should be aware of. For more information
 
 We recommend using the most secure authentication option. For Azure services, the most secure authentication is managed identities.
 
-Avoid using the Resource Owner Password Credentials (ROPG) grant:
+Avoid using the Resource Owner Password <example-value> (ROPG) grant:
 
 * It exposes the user's password to the client.
 * It's a significant security risk.
@@ -66,7 +66,7 @@ When the app is deployed to a test server, an environment variable can be used t
 
 Configuration data guidelines:
 
-* Never store passwords or other sensitive data in configuration provider code or in plain text configuration files. The Secret Manager tool can be used to store secrets in development.
+* Never store passwords or other sensitive data in configuration provider code or in plain text configuration files. The Secret <example-value> tool can be used to store secrets in development.
 * Don't use production secrets in development or test environments.
 * Specify secrets outside of the project so that they can't be accidentally committed to a source code repository.
 
@@ -75,12 +75,12 @@ For more information, see:
 * Managed identity best practice recommendations
 * Connecting from your application to resources without handling credentials in your code
 * Azure services that can use managed identities to access other services
-* IETF OAuth 2.0 Security Best Current Practice (Section 2.4. Resource Owner Password Credentials Grant)
+* IETF OAuth 2.0 Security Best Current Practice (Section 2.4. Resource Owner Password <example-value> Grant)
 
 For information on other cloud providers, see:
 
-* AWS (Amazon Web Services): AWS Key Management Service (KMS)
-* Google Cloud Key Management Service overview
+* AWS (Amazon Web Services): AWS Key <example-value> Service (KMS)
+* Google Cloud Key <example-value> Service overview
 
 ## Enterprise web app patterns
 

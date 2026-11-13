@@ -67,7 +67,7 @@ Then install `typescript`, `gulp` and `gulp-typescript` in your project's dev de
 Gulp-typescript is a gulp plugin for TypeScript.
 
 ```shell
-npm install --save-dev typescript gulp@4.0.0 gulp-typescript
+npm install --save-dev typescript user@example.com gulp-typescript
 ```
 
 ### Write a simple example

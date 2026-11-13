@@ -468,7 +468,7 @@ REPOSITORY                TAG               IMAGE ID       CREATED         SIZE
 nextjs-sample             latest            8c5fc80f098e   14 seconds ago   130MB
 ```
 
-This output provides key details about your images:
+This output provides key <example-value> about your images:
 
 - Repository – The name assigned to the image.
 - Tag – A version label that helps identify different builds (e.g., latest).

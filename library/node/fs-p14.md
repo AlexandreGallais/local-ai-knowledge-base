@@ -34,7 +34,7 @@ the method will return `undefined`.
 import { accessSync, constants } from 'node:fs';
 
 try {
-  accessSync('etc/passwd', constants.R_OK | constants.W_OK);
+  accessSync('<example-value>', constants.R_OK | constants.W_OK);
   console.log('can read/write');
 } catch (err) {
   console.error('no access!');
@@ -219,7 +219,7 @@ Node.js callbacks. `fs.existsSync()` does not use a callback.
 ```mjs
 import { existsSync } from 'node:fs';
 
-if (existsSync('/etc/passwd'))
+if (existsSync('<example-value>'))
   console.log('The path exists.');
 ```
 

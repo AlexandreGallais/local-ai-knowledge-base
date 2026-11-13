@@ -74,7 +74,7 @@ services:
       - "3000:8080"
     environment:
       - OPENAI_API_BASE_URL=http://host.docker.internal:12434/engines/v1
-      - OPENAI_API_KEY=not-needed
+      - OPENAI_API_KEY=<example-value>
       - WEBUI_AUTH=false
     extra_hosts:
       - "host.docker.internal:host-gateway"

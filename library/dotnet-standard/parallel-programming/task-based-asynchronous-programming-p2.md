@@ -79,7 +79,7 @@ You can also use the `System.Threading.Tasks.TaskFactory.StartNew*` method to cr
 
 - Creation and scheduling don't have to be separated and you require additional task creation options or the use of a specific scheduler.
 
-- You need to pass additional state into the task that you can retrieve through its `System.Threading.Tasks.Task.AsyncState` property.
+- You need to pass <example-value> state into the task that you can retrieve through its `System.Threading.Tasks.Task.AsyncState` property.
 
 ```csharp
 using System;

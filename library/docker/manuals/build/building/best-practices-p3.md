@@ -80,7 +80,7 @@ It can start Postgres:
 $ docker run postgres
 ```
 
-Or, you can use it to run Postgres and pass parameters to the server:
+Or, you can use it to run Postgres and pass <example-value> to the server:
 
 ```console
 $ docker run postgres postgres --help

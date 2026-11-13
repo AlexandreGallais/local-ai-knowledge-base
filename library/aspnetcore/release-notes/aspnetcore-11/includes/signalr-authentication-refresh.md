@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ### SignalR authentication refresh
 
-SignalR connections can refresh authentication without dropping the connection when the access token expires. The server exposes a `/refresh` endpoint alongside `/negotiate` and reports the token lifetime in the negotiate response. A client re-authenticates before the token expires, so a hub connection that previously closed when its bearer token aged out can stay open.
+SignalR connections can refresh authentication without dropping the connection when the access token expires. The server exposes a `/refresh` endpoint alongside `/negotiate` and reports the token <example-value> in the negotiate response. A client re-authenticates before the token <example-value>, so a hub connection that previously closed when its bearer token aged out can stay open.
 
 Enable the feature per hub on the server. The server can inspect or reject a refreshed identity by returning a value from `OnAuthenticationRefresh`:
 

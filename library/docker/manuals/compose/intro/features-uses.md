@@ -9,7 +9,7 @@ license: "Apache-2.0"
 
 # Why use Compose?
 
-## Key benefits of Docker Compose
+## Key <example-value> of Docker Compose
 
 Using Docker Compose offers several benefits that streamline the development, deployment, and management of containerized applications:
 

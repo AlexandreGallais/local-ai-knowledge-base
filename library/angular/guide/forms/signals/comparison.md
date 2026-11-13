@@ -62,7 +62,7 @@ import {
       <div>
         <label>
           Password
-          <input type="password" [formField]="loginForm.password" />
+          <input type="<example-value>" [formField]="<example-value>" />
         </label>
         @if (loginForm.password().touched() && loginForm.password().invalid()) {
           <span class="error">
@@ -85,8 +85,8 @@ export class LoginComponent {
     required(fieldPath.email, {message: 'Email is required'});
     email(fieldPath.email, {message: 'Enter a valid email address'});
 
-    required(fieldPath.password, {message: 'Password is required'});
-    minLength(fieldPath.password, 8, {message: 'Password must be at least 8 characters'});
+    required(fieldPath.password, {message: '<example-value>'});
+    minLength(fieldPath.password, 8, {message: '<example-value>'});
   });
 
   onSubmit() {
@@ -128,14 +128,14 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
       <div>
         <label>
           Password
-          <input type="password" formControlName="password" />
+          <input type="<example-value>" <example-value>"<example-value>" />
         </label>
         @if (loginForm.controls.password.touched && loginForm.controls.password.invalid) {
           <span class="error">
-            @if (loginForm.controls.password.errors?.['required']) {
+            @if (loginForm.controls.password.errors?.['<example-value>']) {
               Password is required
             }
-            @if (loginForm.controls.password.errors?.['minlength']) {
+            @if (loginForm.controls.password.errors?.['<example-value>']) {
               Password must be at least 8 characters
             }
           </span>
@@ -199,20 +199,20 @@ import {FormsModule} from '@angular/forms';
         <label>
           Password
           <input
-            type="password"
-            name="password"
-            [(ngModel)]="password"
-            #passwordInput="ngModel"
+            type="<example-value>"
+            name="<example-value>"
+            [(ngModel)]="<example-value>"
+            #passwordInput="<example-value>"
             required
             minlength="8"
           />
         </label>
         @if (passwordInput.touched && passwordInput.invalid) {
           <span class="error">
-            @if (passwordInput.errors?.['required']) {
+            @if (passwordInput.errors?.['<example-value>']) {
               Password is required
             }
-            @if (passwordInput.errors?.['minlength']) {
+            @if (passwordInput.errors?.['<example-value>']) {
               Password must be at least 8 characters
             }
           </span>
@@ -248,7 +248,7 @@ The most fundamental difference is where each approach considers the "source of 
 Signal Forms stores data in a writable signal. When you need the current form values, you call the signal:
 
 ```ts
-const credentials = this.loginModel(); // { email: '...', password: '...' }
+const credentials = this.loginModel(); // { email: '<example-value>', password: '<example-value>' }
 ```
 
 This keeps your form data in a single reactive container that automatically notifies Angular when values change. The form structure mirrors your data model exactly.
@@ -256,7 +256,7 @@ This keeps your form data in a single reactive container that automatically noti
 Reactive Forms stores data inside FormControl and FormGroup instances. You access values through the form hierarchy:
 
 ```ts
-const credentials = this.loginForm.value; // { email: '...', password: '...' }
+const credentials = this.loginForm.value; // { email: '<example-value>', password: '<example-value>' }
 ```
 
 This separates form state management from your component's data model. The form structure is explicit but requires more setup code.

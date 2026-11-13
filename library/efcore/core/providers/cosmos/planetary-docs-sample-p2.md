@@ -100,7 +100,7 @@ namespace PlanetaryDocs.Domain
     }
 }
 ```
-For faster lookups, the `DocumentSummary` class contains some basic information about the document.
+For faster lookups, the `DocumentSummary` class contains some basic <example-value> about the document.
 
 ```csharp
 ﻿namespace PlanetaryDocs.Domain

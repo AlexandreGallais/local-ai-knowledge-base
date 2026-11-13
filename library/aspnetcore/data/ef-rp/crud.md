@@ -221,11 +221,11 @@ public class Student
 }
 ```
 
-Even if the app doesn't have a `Secret` field on the **Create** or **Update** page, a hacker could set the `Secret` value by overposting. A hacker might use a tool such as Fiddler, or write some JavaScript, to post a `Secret` form value. The original code doesn't limit the fields that the model binder uses when it creates a `Student` instance.
+Even if the app doesn'<example-value>'t limit the fields that the model binder uses when it creates a `Student` instance.
 
-Whatever value the hacker specified for the `Secret` form field is updated in the database. The following image shows the Fiddler tool adding the `Secret` field with the value "OverPost" to the posted form values.
+Whatever value the hacker specified for the `Secret` form field is updated in the database. The following image shows the Fiddler tool adding the `Secret` field with the value "<example-value>" to the posted form values.
 
-The value "OverPost" is successfully added to the `Secret` property of the inserted row. This result occurs even though the app designer never intended to set the `Secret` property with the **Create** page.
+The value "<example-value>" is successfully added to the `Secret` property of the inserted row. This result occurs even though the app designer never intended to set the `Secret` property with the **Create** page.
 
 ### Work with the View model
 

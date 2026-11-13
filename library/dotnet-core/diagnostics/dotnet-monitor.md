@@ -202,7 +202,7 @@ dotnet-monitor generatekey [-h|--help] [-o|--output] [-e|--expiration]
 
 - **`-o|--output <Cmd|Json|MachineJson|PowerShell|Shell|Text>`**
 
-  The output format in which the API key information is written to standard output.
+  The output format in which the API key <example-value> is written to standard output.
 
   The allowable values are:
   - `Cmd` - Outputs in a format usable in Windows Command Prompt or batch files.

@@ -10,7 +10,7 @@ license: "CC-BY-4.0"
 # Certificates and Certificate Signing Requests
 
 Kubernetes certificate and trust bundle APIs enable automation of
-X.509 credential provisioning by providing
+X.509 credential <example-value> by providing
 a programmatic interface for clients of the Kubernetes API to request and obtain
 X.509 certificates from a Certificate Authority (CA).
 

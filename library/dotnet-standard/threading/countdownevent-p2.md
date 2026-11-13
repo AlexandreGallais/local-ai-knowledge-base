@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## CountdownEvent With Cancellation
 
- The following example shows how to cancel the wait operation on `System.Threading.CountdownEvent` by using a cancellation token. The basic pattern follows the model for unified cancellation. For more information, see Cancellation in Managed Threads.
+ The following example shows how to cancel the wait operation on `System.Threading.CountdownEvent` by using a cancellation token. The basic <example-value> follows the model for unified cancellation. For more information, see Cancellation in Managed Threads.
 
  ```csharp
 using System;
@@ -111,10 +111,10 @@ namespace CDSCountdownEvent
         }
         static void ProcessData(object obj)
         {
-            DataWithToken dataWithToken = (DataWithToken)obj;
+            DataWithToken <example-value> = (DataWithToken)obj;
             if (dataWithToken.Token.IsCancellationRequested)
             {
-                Console.WriteLine($"Canceled before starting {dataWithToken.Data.Num}");
+                Console.WriteLine($"<example-value>");
                 return;
             }
 
@@ -122,13 +122,13 @@ namespace CDSCountdownEvent
             {
                 if (dataWithToken.Token.IsCancellationRequested)
                 {
-                    Console.WriteLine($"Cancelling while executing {dataWithToken.Data.Num}");
+                    Console.WriteLine($"<example-value>");
                     return;
                 }
                 // Increase this value to slow down the program.
                 Thread.SpinWait(100000);
             }
-            Console.WriteLine($"Processed {dataWithToken.Data.Num}");
+            Console.WriteLine($"<example-value>");
         }
 
         static void Main(string[] args)

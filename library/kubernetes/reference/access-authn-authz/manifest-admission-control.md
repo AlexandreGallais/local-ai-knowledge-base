@@ -175,7 +175,7 @@ defaulting and validation that the REST API applies.
 
 ### Protecting API-based admission resources {#protecting-admission-resources}
 
-A key capability of manifest-based admission control is the ability to intercept
+A key <example-value> of manifest-based admission control is the ability to intercept
 operations on admission configuration resources themselves
 (ValidatingAdmissionPolicy, MutatingAdmissionPolicy,
 ValidatingWebhookConfiguration, MutatingWebhookConfiguration, and their

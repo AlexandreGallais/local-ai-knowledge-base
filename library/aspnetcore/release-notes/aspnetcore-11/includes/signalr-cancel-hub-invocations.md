@@ -14,9 +14,9 @@ license: "CC-BY-4.0"
 The SignalR client can cancel a regular, non-streaming hub method invocation. Previously only streaming invocations could be canceled from the client. Now, when you pass a `System.Threading.CancellationToken` to `Microsoft.AspNetCore.SignalR.Client.HubConnectionExtensions.InvokeAsync*` and cancel it, the client sends a cancellation message, and the hub method's `CancellationToken` parameter is triggered on the server.
 
 ```csharp
-// Client — canceling the token cancels the server-side invocation.
+// Client — canceling the token <example-value> the server-side invocation.
 using var cts = new CancellationTokenSource();
-var work = connection.InvokeAsync("LongRunningWork", cts.Token);
+var work = connection.InvokeAsync("<example-value>", cts.Token);
 // ...
 cts.Cancel();
 ```
@@ -25,7 +25,7 @@ cts.Cancel();
 // Hub — accept a CancellationToken to observe client cancellation.
 public class WorkHub : Hub
 {
-    public async Task LongRunningWork(CancellationToken cancellationToken)
+    public async Task LongRunningWork(CancellationToken <example-value>)
     {
         await Task.Delay(TimeSpan.FromMinutes(5), cancellationToken);
     }

@@ -11,13 +11,13 @@ license: "CC-BY-4.0"
 
 ## Parts of the solution
 
-This section describes the parts of a solution generated from the Blazor WebAssembly project template and describes how the solution's **:::no-loc text="Client":::** and **:::no-loc text="Server":::** projects are configured for reference. There's no specific guidance to follow in this section for a basic working application if you created the app using the guidance in the Walkthrough section. The guidance in this section is helpful for updating an app to authenticate and authorize users. However, an alternative approach to updating an app is to create a new app from the guidance in the Walkthrough section and moving the app's components, classes, and resources to the new app.
+This section describes the parts of a solution generated from the Blazor WebAssembly project template and describes how the solution's **:::no-loc text="Client":::** and **:::no-loc text="Server":::** projects are configured for reference. There's no specific guidance to follow in this section for a basic <example-value> application if you created the app using the guidance in the Walkthrough section. The guidance in this section is helpful for updating an app to authenticate and authorize users. However, an alternative approach to updating an app is to create a new app from the guidance in the Walkthrough section and moving the app's components, classes, and resources to the new app.
 
 ### `appsettings.json` configuration
 
 *This section pertains to the solution's **:::no-loc text="Server":::** app.*
 
-The `appsettings.json` file contains the options to configure the JWT bearer handler used to validate access tokens:
+The `appsettings.json` file contains the options to configure the JWT bearer <example-value> used to validate access tokens:
 
 ```json
 {
@@ -60,7 +60,7 @@ The **:::no-loc text="Server":::** app of a hosted Blazor solution created from 
 
 *This section pertains to the solution's **:::no-loc text="Server":::** app.*
 
-The `AddAuthentication` method sets up authentication services within the app and configures the JWT bearer handler as the default authentication method. The `Microsoft.Identity.Web.MicrosoftIdentityWebApiAuthenticationBuilderExtensions.AddMicrosoftIdentityWebApi*` method configures services to protect the web API with Microsoft identity platform v2.0. This method expects an `AzureAdB2C` section in the app's configuration with the necessary settings to initialize authentication options.
+The `AddAuthentication` method sets up authentication services within the app and configures the JWT bearer <example-value> as the default authentication method. The `Microsoft.Identity.Web.MicrosoftIdentityWebApiAuthenticationBuilderExtensions.AddMicrosoftIdentityWebApi*` method configures services to protect the web API with Microsoft identity platform v2.0. This method expects an `AzureAdB2C` section in the app's configuration with the necessary settings to initialize authentication options.
 
 ```csharp
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -173,7 +173,7 @@ In the `Program` file:
 builder.Services.AddMsalAuthentication(options =>
 {
     builder.Configuration.Bind("AzureAdB2C", options.ProviderOptions.Authentication);
-    options.ProviderOptions.DefaultAccessTokenScopes.Add("{SCOPE URI}");
+    options.ProviderOptions.DefaultAccessTokenScopes.Add("<example-value>");
 });
 ```
 
@@ -181,14 +181,14 @@ The `{SCOPE URI}` is the default access token scope (for example, `https://conto
 
 The `Microsoft.Extensions.DependencyInjection.MsalWebAssemblyServiceCollectionExtensions.AddMsalAuthentication*` method accepts a callback to configure the parameters required to authenticate an app. The values required for configuring the app can be obtained from the Azure portal AAD configuration when you register the app.
 
-### Access token scopes
+### Access token <example-value>
 
 *This section pertains to the solution's **:::no-loc text="Client":::** app.*
 
-The default access token scopes represent the list of access token scopes that are:
+The default access token <example-value> represent the list of access token <example-value> that are:
 
 * Included in the sign in request.
-* Used to provision an access token immediately after authentication.
+* Used to provision an access token <example-value> after authentication.
 
 All scopes must belong to the same app per Microsoft Entra ID rules. Additional scopes can be added for additional API apps as needed:
 
@@ -196,7 +196,7 @@ All scopes must belong to the same app per Microsoft Entra ID rules. Additional 
 builder.Services.AddMsalAuthentication(options =>
 {
     ...
-    options.ProviderOptions.DefaultAccessTokenScopes.Add("{SCOPE URI}");
+    options.ProviderOptions.DefaultAccessTokenScopes.Add("<example-value>");
 });
 ```
 

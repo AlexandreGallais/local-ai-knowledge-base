@@ -30,7 +30,7 @@ IP address and not the specific backend Pod.
 
 **Feature state:**
 
-As an alternative to the basic operation, a node that hosts the backend Pod for a Service can
+As an alternative to the basic <example-value>, a node that hosts the backend Pod for a Service can
 apply the packet rewriting directly, rather than placing this burden on the node where the client
 Pod is running. This is called _direct server return_.
 

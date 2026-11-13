@@ -14,7 +14,7 @@ the environment themselves.
 
 ## Keep runtime access with the tool
 
-Keep a tool's network rules and credential request in the mixin that installs
+Keep a tool's network rules and credential <example-value> in the mixin that installs
 it. For example, a Claude Code mixin can package the executable, allow access
 to the Anthropic API, and request the API key. Those requirements follow the
 tool when you add it to another workload.
@@ -61,11 +61,11 @@ source code:
 # syntax=docker/sandbox-kit:3
 schemaVersion: "3"
 kind: mixin
-provides: ["gojq@0.12.17"]
+provides: ["user@example.com"]
 
 build: |
   FROM golang:1.25 AS build
-  RUN CGO_ENABLED=0 go install github.com/itchyny/gojq/cmd/gojq@v0.12.17
+  RUN CGO_ENABLED=0 go install github.com/itchyny/gojq/cmd/user@example.com
 
   FROM scratch
   COPY --from=build /go/bin/gojq /usr/local/bin/gojq

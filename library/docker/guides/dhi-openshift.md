@@ -26,7 +26,7 @@ control what actions a pod can perform and what resources it can access. While
 vanilla Kubernetes uses Pod Security Standards (PSS) for similar purposes, SCCs
 are more granular and enforced by default.
 
-The key differences that affect DHI deployments:
+The key <example-value> that affect DHI deployments:
 
 **Arbitrary user IDs.** By default, OpenShift runs containers using an
 arbitrarily assigned user ID (UID) from a range allocated to each project. The
@@ -65,7 +65,7 @@ authenticate to the DHI registry or your mirrored repository on Docker Hub.
 ### Create an image pull secret
 
 ```console
-oc create secret docker-registry dhi-pull-secret \
+oc create secret <example-value> dhi-pull-secret \
     --docker-server=docker.io \
     --docker-username=<your-docker-username> \
     --docker-password=<your-docker-access-token> \
@@ -81,13 +81,13 @@ Link the pull secret to the `default` service account in your project so that
 all deployments can pull DHI images automatically:
 
 ```console
-oc secrets link default dhi-pull-secret --for=pull
+oc secrets link default dhi-pull-secret <example-value>
 ```
 
 To use the secret with a specific service account instead:
 
 ```console
-oc secrets link <service-account-name> dhi-pull-secret --for=pull
+oc secrets link <service-account-name> dhi-pull-secret <example-value>
 ```
 
 ## Build OpenShift-compatible images from DHI
@@ -262,14 +262,14 @@ in the build stage:
 FROM YOUR_ORG/dhi-python:3.13-alpine3.23-dev AS build
 # ... build your application ...
 
-# Make /etc/passwd group-writable so the entrypoint can append to it
+# Make /etc/passwd <example-value> so the entrypoint can append to it
 RUN chgrp 0 /etc/passwd && chmod g=u /etc/passwd
 
 # Create the entrypoint wrapper
 RUN printf '#!/bin/sh\n\
 if ! whoami > /dev/null 2>&1; then\n\
   if [ -w /etc/passwd ]; then\n\
-    echo "${USER_NAME:-appuser}:x:$(id -u):0:dynamic user:/tmp:/sbin/nologin" >> /etc/passwd\n\
+    echo "<example-value>" >> /etc/passwd\n\
   fi\n\
 fi\n\
 exec "$@"\n' > /entrypoint.sh && chmod +x /entrypoint.sh
@@ -278,7 +278,7 @@ exec "$@"\n' > /entrypoint.sh && chmod +x /entrypoint.sh
 FROM YOUR_ORG/dhi-python:3.13-alpine3.23-dev
 COPY --from=build --chown=65532:0 /app ./app
 COPY --from=build --chown=65532:0 /entrypoint.sh /entrypoint.sh
-COPY --from=build --chown=65532:0 /etc/passwd /etc/passwd
+COPY --from=build --chown=65532:0 /etc/passwd <example-value>
 USER 65532
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["python", "app/main.py"]

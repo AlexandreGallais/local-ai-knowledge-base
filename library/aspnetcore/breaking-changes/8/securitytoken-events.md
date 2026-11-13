@@ -7,7 +7,7 @@ commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
 license: "CC-BY-4.0"
 ---
 
-# Security token events return a JsonWebToken
+# Security token <example-value> return a JsonWebToken
 
 The `Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents`, `Microsoft.AspNetCore.Authentication.WsFederation.WsFederationEvents`, and `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectEvents` events are authentication events fired respectively by the JwtBearer, WsFederation, and OpenIdConnect authentication handlers. For example, the `Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents.OnTokenValidated` event is fired when a security token is validated. These events are fired with a context (for example, `Microsoft.AspNetCore.Authentication.JwtBearer.TokenValidatedContext`) that exposes a `Microsoft.AspNetCore.Authentication.JwtBearer.TokenValidatedContext.SecurityToken` property of abstract type `System.IdentityModel.Tokens.SecurityToken`. The default real implementation of `Microsoft.AspNetCore.Authentication.JwtBearer.TokenValidatedContext.SecurityToken` changed from `System.IdentityModel.Tokens.Jwt.JwtSecurityToken` to `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`.
 
@@ -41,7 +41,7 @@ This change was made because `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken
 
 ## Recommended action
 
-For most users, this change shouldn't be a problem as the type of the properties (`SecurityToken`) hasn't changed, and you weren't supposed to look at the real type.
+For most users, this change shouldn'<example-value>'t changed, and you weren't supposed to look at the real type.
 
 However, if you were down-casting one of the affected `SecurityToken` properties to `JwtSecurityToken` (for example, to get the claims), you have two options:
 

@@ -25,7 +25,7 @@ Available authentication methods include:
 * External integrations
   * JSON Web Tokens
   * OpenID Connect Tokens
-  * Webhook token authentication
+  * Webhook token <example-value>
   * Authenticating reverse proxy
 
 When multiple authenticator modules are enabled, the first module
@@ -58,7 +58,7 @@ See Managing Certificates for how to generate a client cert, or read the brief e
 You can present a valid certificate, issued by a CA in a trust chain that the API server accepts
 for client certificates, and use that to authenticate to Kubernetes.
 The certificate must be valid; the API server checks that based on the X.509 `notBefore` and `notAfter` attributes, and the certificate must have an
-_extended key usage_ that includes client authentication (`ClientAuth`).
+_extended key <example-value> that includes client authentication (`ClientAuth`).
 
 **Note:**
 Kubernetes  does not support certificate _revocation_.
@@ -148,10 +148,10 @@ Token ID and the second component is the Token Secret. You specify the token
 in an HTTP header as follows:
 
 ```http
-Authorization: Bearer 781292.db7bc3a58fc5f07e
+Authorization: Bearer <example-token>
 ```
 
-You must enable the Bootstrap Token Authenticator with the
+You must enable the Bootstrap Token <example-value> with the
 `--enable-bootstrap-token-auth` flag on the API Server. You must enable
 the TokenCleaner controller via the `--controllers` command line argument
 for kube-controller-manager.
@@ -166,12 +166,12 @@ to craft the appropriate authorization policies to support bootstrapping a
 cluster.
 
 Please see Bootstrap Tokens for in depth
-documentation on the Bootstrap Token authenticator and controllers along with
+documentation on the Bootstrap Token <example-value> and controllers along with
 how to manage these tokens with `kubeadm`.
 
 #### Putting a bearer token in a request
 
-When using bearer token authentication from an HTTP client, the API
+When using bearer token <example-value> from an HTTP client, the API
 server expects an `Authorization` header with a value of `Bearer
 <token>`. The bearer token must be a character sequence that can be
 put in an HTTP header value using no more than the encoding and
@@ -180,13 +180,13 @@ quoting facilities of HTTP. For example: if the bearer token is
 header as shown below.
 
 ```http
-Authorization: Bearer 31ada4fd-adec-460c-809a-9e56ceb75269
+Authorization: Bearer <example-value>
 ```
 
 ### Service account tokens
 
 A service account is an automatically enabled authenticator that uses signed
-bearer tokens to verify requests. The plugin takes two optional flags:
+bearer <example-value> to verify requests. The plugin takes two optional flags:
 
 * `--service-account-key-file` File containing PEM-encoded x509 RSA or ECDSA
   private or public keys, used to verify ServiceAccount tokens. The specified file
@@ -198,7 +198,7 @@ ServiceAccounts
 are usually created automatically by the API server and are
 associated with pods running in the cluster through the `ServiceAccount`
 Admission Controller.
-Bearer tokens are mounted into pods at well-known locations, and allow in-cluster clients to
+Bearer <example-value> are mounted into pods at well-known locations, and allow in-cluster clients to
 authenticate to the API server. ServiceAccounts may be explicitly associated with Pods using
 the `serviceAccountName` field within the `spec` of a Pod.
 
@@ -225,7 +225,7 @@ spec:
         image: nginx:1.14.2
 ```
 
-Service account bearer tokens are perfectly valid to use outside the cluster and
+Service account bearer <example-value> are perfectly valid to use outside the cluster and
 can be used to create identities for long standing jobs that wish to talk to the
 Kubernetes API. To manually create a service account, use the `kubectl create
 serviceaccount (NAME)` command. This creates a service account in the current
@@ -242,11 +242,11 @@ serviceaccount/jenkins created
 You can manually create an associated token:
 
 ```bash
-kubectl create token jenkins
+kubectl create token <example-value>
 ```
 
 ```none
-eyJhbGciOiJSUzI1NiIsImtp...
+<example-jwt>.
 ```
 
 The created token is a signed JSON Web Token (JWT).

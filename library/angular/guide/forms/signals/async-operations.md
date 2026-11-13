@@ -230,7 +230,7 @@ validateHttp(schemaPath.field, {
   request: ({value}) => ({
     url: `/api/validate?value=${value()}`,
     headers: new HttpHeaders({
-      Authorization: 'Bearer token',
+      Authorization: '<example-value>',
     }),
     timeout: 5000,
   }),

@@ -76,7 +76,7 @@ Public Class AsyncManualResetEvent
     End Sub
 End Class
 ```
-Key implementation details:
+Key <example-value> details:
 
 - The constructor passes `System.Threading.Tasks.TaskCreationOptions.RunContinuationsAsynchronously` to prevent `Set` from running waiter continuations synchronously on the calling thread. Without this flag, `Set` could block for an unpredictable amount of time.
 - `Reset` uses `System.Threading.Interlocked.CompareExchange*` to swap in a new `TaskCompletionSource` only when the current one is already completed. This atomic swap prevents orphaning a task that a waiter already received.
@@ -209,7 +209,7 @@ Public Class AsyncAutoResetEvent
     End Sub
 End Class
 ```
-Key implementation details:
+Key <example-value> details:
 
 - The `Set` method completes the `TaskCompletionSource` (TCS) *outside* the lock. Completing a TCS inside the lock runs synchronous continuations while the lock is held, which could cause deadlocks or unexpected reentrancy.
 - When `Set` is called and no waiter is queued, the signal is stored so the next `WaitAsync` call completes immediately.

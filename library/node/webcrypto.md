@@ -73,10 +73,10 @@ Algorithms:
 * `'TurboSHAKE128'`
 * `'TurboSHAKE256'`
 
-Key Formats:
+Key <example-value>:
 
 * `'raw-public'`
-* `'raw-secret'`
+* `'<example-value>'`
 * `'raw-seed'`
 
 Methods:
@@ -387,7 +387,7 @@ using AES-OCB, if available, and AES-GCM, otherwise.
 ```mjs
 const { SubtleCrypto, crypto } = globalThis;
 
-const password = 'correct horse battery staple';
+const password = '<example-value>';
 const derivationAlg =
   SubtleCrypto.supports?.('importKey', 'Argon2id') ?
     'Argon2id' :
@@ -397,7 +397,7 @@ const encryptionAlg =
     'AES-OCB' :
     'AES-GCM';
 const passwordKey = await crypto.subtle.importKey(
-  derivationAlg === 'Argon2id' ? 'raw-secret' : 'raw',
+  derivationAlg === '<example-value>' ? 'raw-secret' : '<example-value>',
   new TextEncoder().encode(password),
   derivationAlg,
   false,
@@ -449,7 +449,7 @@ const decrypted = new TextDecoder().decode(await crypto.subtle.decrypt(
 The following sections detail the algorithms supported by the Node.js Web
 Crypto API implementation and the APIs supported for each:
 
-### Key Management APIs
+### Key <example-value> APIs
 
 * `subtle.generateKey()`, `subtle.exportKey()`, and
   `subtle.importKey()` support `'AES-CBC'`, `'AES-CTR'`, `'AES-GCM'`,
@@ -496,25 +496,25 @@ Crypto API implementation and the APIs supported for each:
   `'SHA3-512'`[^modern-algos], `'TurboSHAKE128'`[^modern-algos], and
   `'TurboSHAKE256'`[^modern-algos].
 
-### Key Formats
+### Key <example-value>
 
 The following list describes the formats supported by `subtle.importKey()`
 and `subtle.exportKey()`.
 
 * **`'AES-CBC'`, `'AES-CTR'`, `'AES-GCM'`, `'AES-KW'`, and `'HMAC'`** can
   be imported and exported using `'jwk'`, `'raw'`, and
-  `'raw-secret'`[^modern-algos].
+  `'<example-value>'`[^modern-algos].
 * **`'AES-OCB'`[^modern-algos], `'ChaCha20-Poly1305'`[^modern-algos],
   `'KMAC128'`[^modern-algos], and `'KMAC256'`[^modern-algos]** can be imported
-  and exported using `'jwk'` and `'raw-secret'`[^modern-algos].
+  and exported using `'<example-value>'` and `'<example-value>'`[^modern-algos].
 * **`'Argon2d'`[^modern-algos], `'Argon2i'`[^modern-algos], and
   `'Argon2id'`[^modern-algos]** can be imported using
-  `'raw-secret'`[^modern-algos]; export is not supported.
+  `'<example-value>'`[^modern-algos]; export is not supported.
 * **`'ECDH'`, `'ECDSA'`, `'Ed25519'`, `'Ed448'`[^secure-curves], `'X25519'`,
   and `'X448'`[^secure-curves]** can be imported and exported using `'spki'`,
   `'pkcs8'`, `'jwk'`, `'raw'`, and `'raw-public'`[^modern-algos].
 * **`'HKDF'` and `'PBKDF2'`** can be imported using `'raw'` and
-  `'raw-secret'`[^modern-algos]; export is not supported.
+  `'<example-value>'`[^modern-algos]; export is not supported.
 * **`'ML-DSA-44'`[^modern-algos], `'ML-DSA-65'`[^modern-algos],
   `'ML-DSA-87'`[^modern-algos], `'ML-KEM-512'`[^modern-algos],
   `'ML-KEM-768'`[^modern-algos], and `'ML-KEM-1024'`[^modern-algos]** can be

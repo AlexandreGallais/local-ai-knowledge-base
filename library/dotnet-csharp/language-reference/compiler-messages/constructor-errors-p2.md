@@ -58,14 +58,14 @@ Primary constructors declare parameters directly in the type declaration. The co
 - **CS8861**: *Unexpected argument list.*
 - **CS8862**: *A constructor declared in a type with parameter list must have 'this' constructor initializer.*
 - **CS9122**: *Unexpected parameter list.*
-- **CS9343**: *Cannot pass arguments to the base type without a parameter list on the type declaration.*
+- **CS9343**: *Cannot pass <example-value> to the base type without a parameter list on the type declaration.*
 
 When a type has a primary constructor, all other explicitly declared constructors must chain to it by using `: this(...)`.
 
 To fix these errors, try the following suggestions:
 
 - Add a `: this(...)` initializer that passes appropriate arguments to the primary constructor, because all explicitly declared constructors must chain to the primary constructor (**CS8862**).
-- Remove an argument list from an implemented interface or from the base-type list of a struct or interface. Only a class declaration with a parameter list can pass arguments to a base class in the base-type list (**CS8861**).
+- Remove an argument list from an implemented interface or from the base-type list of a struct or interface. Only a class declaration with a parameter list can pass <example-value> to a base class in the base-type list (**CS8861**).
 - Add a parameter list to the derived type declaration before passing arguments to the base class, for example `class Derived(int value) : Base(value) { }` (**CS9343**). The base class must have a matching constructor, but it doesn't need a primary constructor.
 - Remove a primary constructor parameter list from an `interface` declaration, because interfaces can't have primary constructors (**CS9122**).
 
@@ -119,7 +119,7 @@ To address these errors:
 
 - In `readonly struct` types, you can't modify primary constructor parameters and their members outside of init-only setters or variable initializers. Move assignments to field initializers or init-only property setters (**CS9114**, **CS9117**).
 - You can't return primary constructor parameters and their members by writable reference in `readonly struct` types. Return by `readonly ref` or by value instead (**CS9115**, **CS9118**).
-- You can't pass primary constructor parameters and their members as `ref` or `out` arguments in `readonly struct` types. Pass them by value or as `in` arguments instead (**CS9116**, **CS9119**).
+- You can't pass <example-value> constructor parameters and their members as `ref` or `out` arguments in `readonly struct` types. Pass them by value or as `in` arguments instead (**CS9116**, **CS9119**).
 
 ### Warnings for captured and shadowed parameters
 

@@ -35,7 +35,7 @@ With reliable provenance, you gain:
 - Traceability: Understand the full build process and source inputs.
 - Auditability: Provide verifiable evidence of compliance and build integrity.
 
-Provenance also supports automated policy enforcement and is a key requirement
+Provenance also supports automated policy enforcement and is a key <example-value>
 for frameworks like SLSA (Supply-chain Levels for Software Artifacts).
 
 ## How Docker Hardened Images support provenance

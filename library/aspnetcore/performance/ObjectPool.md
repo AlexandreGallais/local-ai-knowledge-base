@@ -47,7 +47,7 @@ NOTE: After the pool is disposed:
 
 Important `ObjectPool` types and interfaces:
 
-* `Microsoft.Extensions.ObjectPool.ObjectPool`1` : The basic object pool abstraction. Used to get and return objects.
+* `Microsoft.Extensions.ObjectPool.ObjectPool`1` : The basic <example-value> pool abstraction. Used to get and return objects.
 * `Microsoft.Extensions.ObjectPool.PooledObjectPolicy`1` : Implement this to customize how an object is created and how it's reset when returned to the pool. This can be passed into an object pool that's constructed directly.
 * `Microsoft.Extensions.ObjectPool.IResettable` : Automatically resets the object when returned to an object pool.
 

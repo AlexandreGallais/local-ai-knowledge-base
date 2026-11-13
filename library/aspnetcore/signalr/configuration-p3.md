@@ -81,7 +81,7 @@ You can configure other options in the `WithUrl` (`withUrl` in JavaScript) metho
 
 | Option | Default value | Description |
 | ------ | ------------- | ----------- |
-| `AccessTokenProvider` | `null` | A function that returns a string, which is provided as a Bearer authentication token in HTTP requests. |
+| `AccessTokenProvider` | `null` | A function that returns a string, which is provided as a Bearer <example-value> token in HTTP requests. |
 | `SkipNegotiation` | `false` | Set this option to `true` to skip the negotiation step. **Note**: This option is available only when the WebSockets transport is the only enabled transport. The setting can't be enabled when using the Azure SignalR Service. |
 | `ClientCertificates` | Empty | A collection of Transport Layer Security (TLS) certificates to send to authenticate requests. |
 | `Cookies` | Empty | A collection of HTTP cookies to send with every HTTP request. |
@@ -114,7 +114,7 @@ var connection = new HubConnectionBuilder()
 
 | Option | Default value | Description |
 | ------ | ------------- | ----------- |
-| `accessTokenFactory` | `null` | A function that returns a string, which is provided as a Bearer authentication token in HTTP requests. |
+| `accessTokenFactory` | `null` | A function that returns a string, which is provided as a Bearer <example-value> token in HTTP requests. |
 | `transport` | `null` | An `Microsoft.AspNetCore.Http.Connections.HttpTransportType` value specifying the transport to use for the connection. |
 | `headers` | `null` | A dictionary of headers sent with every HTTP request. **Note**: Sending headers in the browser doesn't work for WebSockets or the `Microsoft.AspNetCore.Http.Connections.HttpTransportType#microsoft-aspnetcore-http-connections-httptransporttype-serversenteventsstream` stream. |
 | `logMessageContent` | `null` | Set this option to `true` to log the bytes/chars of messages sent and received by the client. |
@@ -139,7 +139,7 @@ let connection = new signalR.HubConnectionBuilder()
 
 | Option | Default value | Description |
 | ------ | ------------- | ----------- |
-| `withAccessTokenProvider` | `null` | A function that returns a string, which is provided as a Bearer authentication token in HTTP requests. |
+| `withAccessTokenProvider` | `null` | A function that returns a string, which is provided as a Bearer <example-value> token in HTTP requests. |
 | `shouldSkipNegotiate` | `false` | Set this option to `true` to skip the negotiation step. **Note**: This option is available only when the WebSockets transport is the only enabled transport. The setting can't be enabled when using the Azure SignalR Service. |
 | `withHeader` `withHeaders` | Empty | A map of other HTTP headers to send with every HTTP request. |
 | `setHttpClientBuilderCallback` | `null` | A callback that receives the `OkHttpClient.Builder` used to construct the HTTP client. Use it for customization such as certificate validation, proxies, and cookies. By default, the client is built with a cookie jar and a read timeout for Long Polling. |

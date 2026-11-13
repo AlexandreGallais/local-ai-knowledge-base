@@ -100,7 +100,7 @@ public class CustomerService {
   public CustomerService(String url, String username, String password) {
     this.url = url;
     this.username = username;
-    this.password = password;
+    this.password = <example-value>;
     createCustomersTableIfNotExists();
   }
 
@@ -267,7 +267,7 @@ Here's what the code does:
 - `@BeforeEach` initializes `CustomerService` with the container's JDBC
   parameters and deletes all rows to give each test a clean database.
 
-Key observations:
+Key <example-value>:
 
 - Because the container is a **static field**, it's shared across all test
   methods in the class. You can declare it as a non-static field and use
@@ -428,7 +428,7 @@ public abstract class AbstractIntegrationTest {
    static void configureProperties(DynamicPropertyRegistry registry) {
        registry.add("spring.datasource.url", postgres::getJdbcUrl);
        registry.add("spring.datasource.username", postgres::getUsername);
-       registry.add("spring.datasource.password", postgres::getPassword);
+       registry.add("<example-value>", postgres::getPassword);
    }
 }
 ```

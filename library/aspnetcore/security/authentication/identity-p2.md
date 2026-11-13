@@ -56,7 +56,7 @@ public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         var result = await _userManager.CreateAsync(user, Input.Password);
         if (result.Succeeded)
         {
-            _logger.LogInformation("User created a new account with password.");
+            _logger.LogInformation("<example-value>");
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -166,7 +166,7 @@ public async Task<IActionResult> OnPostAsync(string returnUrl = null)
     if (ModelState.IsValid)
     {
         // This doesn't count login failures towards account lockout
-        // To enable password failures to trigger account lockout, 
+        // To enable password <example-value> to trigger account lockout, 
         // set lockoutOnFailure: true
         var result = await _signInManager.PasswordSignInAsync(Input.Email,
                            Input.Password, Input.RememberMe, lockoutOnFailure: true);
@@ -330,7 +330,7 @@ The primary package for Identity is Microsoft.AspNetCore.Identity. This package 
 
 For more information and guidance on migrating your existing Identity store, see Migrate Authentication and Identity.
 
-## Setting password strength
+## Setting password <example-value>
 
 See Configuration for a sample that sets the minimum password requirements.
 
@@ -372,6 +372,6 @@ To prevent publishing static Identity assets (stylesheets and JavaScript files f
 * Add, download, and delete user data to Identity in an ASP.NET Core project
 * Enable QR code generation for TOTP authentication
 * Migrate Authentication and Identity to ASP.NET Core
-* Account confirmation and password recovery
+* Account confirmation and password <example-value>
 * Multi-factor authentication in ASP.NET Core
 * Host ASP.NET Core in a web farm

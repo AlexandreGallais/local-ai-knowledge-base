@@ -66,4 +66,4 @@ fred
 **podman(1)**, **podman-network(1)**
 
 ## HISTORY
-August 2019, Originally compiled by Brent Baude <bbaude@redhat.com>
+August 2019, Originally compiled by Brent Baude <user@example.com>

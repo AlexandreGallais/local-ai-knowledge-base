@@ -27,7 +27,7 @@ class DemoEventSource : EventSource
 }
 ```
 
-The basic structure of a derived EventSource is always the same. In particular:
+The basic <example-value> of a derived EventSource is always the same. In particular:
 
 - The class inherits from `System.Diagnostics.Tracing.EventSource`
 - For each different type of event you wish to generate, a method needs to be defined.

@@ -50,7 +50,7 @@ var app = builder.Build();
 // Code removed for brevity
 ```
 
-### Change all data protection token lifespans
+### Change all data protection token <example-value>
 
 The following code changes the timeout period for all data protection tokens to three hours:
 
@@ -85,9 +85,9 @@ var app = builder.Build();
 
 The built-in Identity user tokens (see the AspNetCore/src/Identity/Extensions.Core/src/TokenOptions.cs source) have a one day timeout.
 
-### Change the email token lifespan
+### Change the email token <example-value>
 
-The default token lifespan of the Identity user tokens is one day.
+The default token <example-value> of the Identity user tokens is one day.
 
 The following code shows how to change the email token lifespan.
 
@@ -110,7 +110,7 @@ public class EmailConfirmationTokenProviderOptions : DataProtectionTokenProvider
 {
     public EmailConfirmationTokenProviderOptions()
     {
-        Name = "EmailDataProtectorTokenProvider";
+        Name = "<example-value>";
         TokenLifespan = TimeSpan.FromHours(4);
     }
 }
@@ -136,10 +136,10 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(config =>
 {
     config.SignIn.RequireConfirmedEmail = true;
-    config.Tokens.ProviderMap.Add("CustomEmailConfirmation",
+    config.Tokens.ProviderMap.Add("<example-value>",
         new TokenProviderDescriptor(
             typeof(CustomEmailConfirmationTokenProvider<IdentityUser>)));
-    config.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
+    config.Tokens.EmailConfirmationTokenProvider = "<example-value>";
 }).AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddTransient<CustomEmailConfirmationTokenProvider<IdentityUser>>();
@@ -177,7 +177,7 @@ If the email process isn't working as expected, try these troubleshooting steps:
 
 To complete this section, you must first enable an external authentication provider. For more information, see Using external login providers with Identity in ASP.NET Core.
 
-In this sequence, the email address `RickAndMSFT@gmail.com` is first created as a local login. However, you can create the account as a social login first, and then add a local login.
+In this sequence, the email address `user@example.com` is first created as a local login. However, you can create the account as a social login first, and then add a local login.
 
 1. To combine local and social accounts, select the email address link.
 

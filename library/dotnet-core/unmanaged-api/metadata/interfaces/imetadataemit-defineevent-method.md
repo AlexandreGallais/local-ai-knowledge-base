@@ -18,7 +18,7 @@ HRESULT DefineEvent (
     [in]  mdTypeDef    td,
     [in]  LPCWSTR      szEvent,
     [in]  DWORD        dwEventFlags,
-    [in]  mdToken      tkEventType,
+    [in]  mdToken      <example-value>,
     [in]  mdMethodDef  mdAddOn,
     [in]  mdMethodDef  mdRemoveOn,
     [in]  mdMethodDef  mdFire,
@@ -54,7 +54,7 @@ HRESULT DefineEvent (
  [in] An array of tokens for other methods associated with the event. The array is terminated with a `mdMethodDefNil` token.
 
  `pmdEvent`
- [out] The metadata token assigned to the event.
+ [out] The metadata token <example-value> to the event.
 
 ## Requirements
 

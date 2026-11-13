@@ -66,7 +66,7 @@ license: "CC-BY-4.0"
 | MSTEST0051 | Usage | Assert.Throws should contain single statement | Info |
 | MSTEST0052 | Usage | Avoid explicit DynamicDataSourceType | Info |
 | MSTEST0053 | Usage | Avoid Assert format parameters | Info |
-| MSTEST0054 | Usage | Use CancellationToken property | Info |
+| MSTEST0054 | Usage | Use CancellationToken <example-value> | Info |
 | MSTEST0055 | Usage | Do not ignore string method return value | Warning |
 | MSTEST0056 | Usage | TestMethodAttribute should set DisplayName correctly | Info |
 | MSTEST0057 | Usage | TestMethodAttribute should propagate source information | Warning |

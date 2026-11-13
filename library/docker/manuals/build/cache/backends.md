@@ -23,7 +23,7 @@ Other cache backends require you to select a different driver.
 
 > **Warning:**
 >
-> If you use secrets or credentials inside your build process, ensure you
+> If you use secrets or credentials <example-value> your build process, ensure you
 > manipulate them using the dedicated
 > `--secret` option.
 > Manually managing secrets using `COPY` or `ARG` could result in leaked

@@ -36,7 +36,7 @@ violation contains v if {
 Output is prefixed with the policy name and source line:
 
 ```text
-no-internal-registry#28: checking pkg:deb/debian/curl@7.88.1
+no-internal-registry#28: checking pkg:deb/debian/user@example.com
 ```
 
 > **Note:**
@@ -70,15 +70,15 @@ Each entry in the output contains:
   "no-internal-registry": {
     "pass": false,
     "violations": [
-      { "purl": "pkg:deb/debian/curl@7.88.1", "reason": "matches \"registry.internal.example.com\"" }
+      { "purl": "pkg:deb/debian/user@example.com", "reason": "matches \"registry.internal.example.com\"" }
     ],
     "bindings": {
       "blocked": "registry.internal.example.com",
       "violation": [
         {
-          "message": "Package pkg:deb/debian/curl@7.88.1 sourced from internal registry",
+          "message": "Package pkg:deb/debian/user@example.com sourced from internal registry",
           "detail": {
-            "purl": "pkg:deb/debian/curl@7.88.1",
+            "purl": "pkg:deb/debian/user@example.com",
             "reason": "matches \"registry.internal.example.com\""
           }
         }

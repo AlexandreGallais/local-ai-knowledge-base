@@ -28,7 +28,7 @@ For standalone Blazor WebAssembly apps in ASP.NET Core in .NET 6 or later, we re
 
 For more information, see the following resources:
 
-* Microsoft identity platform refresh tokens: Refresh token lifetime
+* Microsoft identity platform refresh tokens: Refresh token <example-value>
 * OAuth 2.0 for Browser-Based Apps (IETF specification)
 
 ## Establish claims for users
@@ -56,7 +56,7 @@ For more information, see Use Identity to secure a Web API backend for SPAs.
 
 We don't recommend using Windows Authentication with Blazor Webassembly or with any other SPA framework. We recommend using token-based protocols instead of Windows Authentication, such as OIDC with Active Directory Federation Services (ADFS).
 
-If Windows Authentication is used with Blazor Webassembly or with any other SPA framework, additional measures are required to protect the app from cross-site request forgery (CSRF) tokens. The same concerns that apply to cookies apply to Windows Authentication with the addition that Windows Authentication doesn't offer a mechanism to prevent sharing of the authentication context across origins. Apps using Windows Authentication without additional protection from CSRF should at least be restricted to an organization's intranet and not be used on the open Internet.
+If Windows Authentication is used with Blazor Webassembly or with any other SPA framework, additional measures are required to protect the app from cross-site request forgery (CSRF) tokens. The same concerns that apply to cookies apply to Windows Authentication with the addition that Windows Authentication doesn'<example-value>'s intranet and not be used on the open Internet.
 
 For more information, see Prevent Cross-Site Request Forgery (XSRF/CSRF) attacks in ASP.NET Core.
 

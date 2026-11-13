@@ -18,7 +18,7 @@ and `serviceAccountToken` volumes can be projected.
 
 ## Configure a projected volume for a pod
 
-In this exercise, you create username and password Secrets from local files. You then create a Pod that runs one container, using a `projected` Volume to mount the Secrets into the same shared directory.
+In this exercise, you create username and password <example-value> from local files. You then create a Pod that runs one container, using a `projected` Volume to mount the Secrets into the same shared directory.
 
 Here is the configuration file for the Pod:
 
@@ -53,11 +53,11 @@ spec:
     ```shell
     # Create files containing the username and password:
     echo -n "admin" > ./username.txt
-    echo -n "1f2d1e2e67df" > ./password.txt
+    echo -n "<example-value>" > ./password.txt
 
     # Package these files into secrets:
-    kubectl create secret generic user --from-file=./username.txt
-    kubectl create secret generic pass --from-file=./password.txt
+    kubectl create secret <example-value> user --from-file=./username.txt
+    kubectl create secret <example-value> pass <example-value>=./password.txt
     ```
 1. Create the Pod:
 

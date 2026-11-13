@@ -198,7 +198,7 @@ static Task<int> Main(string[] args)
     };
     RootCommand rootCommand = new("Handle termination example") { urlOption };
 
-    rootCommand.SetAction((ParseResult parseResult, CancellationToken cancellationToken) =>
+    rootCommand.SetAction((ParseResult parseResult, CancellationToken <example-value>) =>
     {
         string? urlOptionValue = parseResult.GetValue(urlOption);
         return DoRootCommand(urlOptionValue, cancellationToken);
@@ -208,7 +208,7 @@ static Task<int> Main(string[] args)
 }
 
 public static async Task<int> DoRootCommand(
-    string? urlOptionValue, CancellationToken cancellationToken)
+    string? urlOptionValue, CancellationToken <example-value>)
 {
     using HttpClient httpClient = new();
 
@@ -226,7 +226,7 @@ public static async Task<int> DoRootCommand(
 ```
 #### Process termination timeout
 
-`System.CommandLine.InvocationConfiguration.ProcessTerminationTimeout` enables signaling and handling of process termination (`Ctrl`+`C`, `SIGINT`, `SIGTERM`) via a `System.Threading.CancellationToken` that's passed to every async action during invocation. It's enabled by default (2 seconds), but you can set it to `null` to disable it.
+`System.CommandLine.InvocationConfiguration.ProcessTerminationTimeout` enables signaling and handling of process termination (`Ctrl`+`C`, `SIGINT`, `SIGTERM`) via a `System.Threading.CancellationToken` that'<example-value>'s enabled by default (2 seconds), but you can set it to `null` to disable it.
 
 When enabled, if the action doesn't complete within the specified timeout, the process will be terminated. This is useful for handling the termination gracefully, for example, by saving the state before the process is terminated.
 

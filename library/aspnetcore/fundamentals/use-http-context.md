@@ -27,7 +27,7 @@ Commonly used members on `HttpRequest` include:
 |`Microsoft.AspNetCore.Http.HttpRequest.Headers`|A collection of request headers.|`user-agent=Edge``x-custom-header=MyValue`|
 |`Microsoft.AspNetCore.Http.HttpRequest.RouteValues`|A collection of route values. The collection is set when the request is matched to a route.|`language=en``article=getstarted`|
 |`Microsoft.AspNetCore.Http.HttpRequest.Query`|A collection of query values parsed from `Microsoft.AspNetCore.Http.HttpRequest.QueryString`.|`filter=hello``page=1`|
-|HttpRequest.ReadFormAsync())|A method that reads the request body as a form and returns a form values collection. For information about why `ReadFormAsync` should be used to access form data, see Prefer ReadFormAsync over Request.Form.|`email=user@contoso.com`|
+|HttpRequest.ReadFormAsync())|A method that reads the request body as a form and returns a form values collection. For information about why `ReadFormAsync` should be used to access form data, see Prefer ReadFormAsync over Request.Form.|`email=user@example.com`|
 |`Microsoft.AspNetCore.Http.HttpRequest.Body`|A `System.IO.Stream` for reading the request body.|UTF-8 JSON payload|
 
 ### Get request headers
@@ -215,7 +215,7 @@ app.Run();
 
 ## `RequestAborted`
 
-The `Microsoft.AspNetCore.Http.HttpContext.RequestAborted` cancellation token can be used to notify that the HTTP request has been aborted by the client or server. The cancellation token should be passed to long-running tasks so they can be canceled if the request is aborted. For example, aborting a database query or HTTP request to get data to return in the response.
+The `Microsoft.AspNetCore.Http.HttpContext.RequestAborted` cancellation token can be used to notify that the HTTP request has been aborted by the client or server. The cancellation token <example-value> be passed to long-running tasks so they can be canceled if the request is aborted. For example, aborting a database query or HTTP request to get data to return in the response.
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);

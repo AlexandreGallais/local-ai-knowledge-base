@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Summary
 
-With the advent of C# source generators, writing highly performant logging APIs is easier. Using the source generator approach has several key benefits:
+With the advent of C# source generators, writing highly performant logging APIs is easier. Using the source generator approach has several key <example-value>:
 
 - Allows the logging structure to be preserved and enables the exact format syntax required by Message Templates.
 - Allows supplying alternative names for the template placeholders and using format specifiers.

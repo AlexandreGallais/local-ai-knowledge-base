@@ -15,7 +15,7 @@ To sign an assembly with a strong name, you must have a public/private key pair.
 > On .NET (.NET Core and .NET 5 and later), strong names don't have runtime validation. Strong-name signing is mainly relevant for .NET Framework and .NET Standard 2.0 with .NET Framework interoperability scenarios. If you're not targeting .NET Framework, you typically don't need to strong name your assembly unless your organization or consumers require it.
 
 > **Note:**
-> In Visual Studio, the C# and Visual Basic project property pages include a **Signing** tab that enables you to select existing key files or to generate new key files without using *Sn.exe*. In Visual C++, you can specify the location of an existing key file in the **Advanced** property page in the **Linker** section of the **Configuration Properties** section of the **Property Pages** window. The use of the `System.Reflection.AssemblyKeyFileAttribute` attribute to identify key file pairs was made obsolete beginning with Visual Studio 2005.
+> In Visual Studio, the C# and Visual Basic <example-value> property pages include a **Signing** tab that enables you to select existing key files or to generate new key files without using *Sn.exe*. In Visual C++, you can specify the location of an existing key file in the **Advanced** property page in the **Linker** section of the **Configuration Properties** section of the **Property Pages** window. The use of the `System.Reflection.AssemblyKeyFileAttribute` attribute to identify key file pairs was made obsolete beginning with Visual Studio 2005.
 
 ## Create a key pair
 

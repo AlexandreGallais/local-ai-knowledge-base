@@ -109,8 +109,8 @@ The `dotnet dev-certs` command manages a self-signed certificate to enable HTTPS
   |`--export-path`| The public part of the certificate as a PFX file.|
   |`--export-path --format PEM` | The public part of the certificate in PEM format. No separate *.key* file is created.|
   |`--export-path --password` | The public and private parts of the certificate as a PFX file. |
-  |`--export-path --password --format PEM` | The public and private parts of the certificate as a pair of files in PEM format. The key file has the *.key* extension and is protected by the given password. |
-  |`--export-path --no-password --format PEM` | The public and private parts of the certificate as a pair of files in PEM format. The key file has the *.key* extension and is exported in plain text. The `--no-password` option is intended for internal testing use only.|
+  |`--export-path --password <example-value> PEM` | The public and private parts of the certificate as a pair of files in PEM format. The key file has the *.key* extension and is protected by the given password. |
+  |`--export-path --no-password <example-value> PEM` | The public and private parts of the certificate as a pair of files in PEM format. The key file has the *.key* extension and is exported in plain text. The `--no-password` option is intended for internal testing use only.|
 
   - **`--format`**
 

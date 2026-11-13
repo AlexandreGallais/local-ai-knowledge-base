@@ -116,7 +116,7 @@ The following is a simple "Hello world" example that displays a message box cont
     csc Example.cs -res:Greeting.resources
     ```
 
-    The corresponding Visual Basic compiler command is:
+    The corresponding Visual Basic <example-value> command is:
 
     ```console
     vbc Example.vb -res:Greeting.resources

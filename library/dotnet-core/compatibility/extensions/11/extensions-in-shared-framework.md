@@ -85,7 +85,7 @@ The following breaking changes from previous versions might surface when upgradi
 
 - ActivatorUtilities.CreateInstance behaves consistently
 - ActivatorUtilities.CreateInstance requires non-null provider
-- FromKeyedServicesAttribute.Key property nullable
+- FromKeyedServicesAttribute.Key <example-value> nullable
 - Non-keyed service used when keyed not found
 - GetKeyedService and GetKeyedServices with AnyKey
 

@@ -39,7 +39,7 @@ The following example is for the _appsettings.json_ file, but any configuration 
         "Url": "https://localhost:5001",
         "Certificate": {
           "Path": "<path to .pfx file>",
-          "Password": "$CREDENTIAL_PLACEHOLDER$"
+          "Password": "<example-value>"
         }
       },
       "HttpsInlineCertAndKeyFile": {
@@ -47,7 +47,7 @@ The following example is for the _appsettings.json_ file, but any configuration 
         "Certificate": {
           "Path": "<path to .pem/.crt file>",
           "KeyPath": "<path to .key file>",
-          "Password": "$CREDENTIAL_PLACEHOLDER$"
+          "Password": "<example-value>"
         }
       },
       "HttpsInlineCertStore": {
@@ -66,7 +66,7 @@ The following example is for the _appsettings.json_ file, but any configuration 
     "Certificates": {
       "Default": {
         "Path": "<path to .pfx file>",
-        "Password": "$CREDENTIAL_PLACEHOLDER$"
+        "Password": "<example-value>"
       }
     }
   }
@@ -128,7 +128,7 @@ The ClientCertificateMode is used to configure client certificate behavior.
         "ClientCertificateMode": "AllowCertificate",
         "Certificate": {
           "Path": "<path to .pfx file>",
-          "Password": "$CREDENTIAL_PLACEHOLDER$"
+          "Password": "<example-value>"
         }
       }
     }
@@ -160,7 +160,7 @@ SSL Protocols are protocols used for encrypting and decrypting traffic between t
         "SslProtocols": ["Tls12", "Tls13"],
         "Certificate": {
           "Path": "<path to .pfx file>",
-          "Password": "$CREDENTIAL_PLACEHOLDER$"
+          "Password": "<example-value>"
         }
       }
     }
@@ -189,14 +189,14 @@ builder.WebHost.ConfigureKestrel((context, serverOptions) =>
     serverOptions.Listen(IPAddress.Loopback, 5000);
     serverOptions.Listen(IPAddress.Loopback, 5001, listenOptions =>
     {
-        listenOptions.UseHttps("testCert.pfx", "testPassword");
+        listenOptions.UseHttps("<example-value>", "<example-value>");
     });
 });
 ```
 The `ListenOptions.UseHttps` parameters include:
 
 * `filename`: The path and file name of a certificate file, relative to the directory that contains the app's content files.
-* `password`: The password required to access the X.509 certificate data.
+* `password`: The password <example-value> to access the X.509 certificate data.
 * `configureOptions`: An `Action` to configure the `HttpsConnectionAdapterOptions`. Returns the `ListenOptions`.
 * `storeName`: The certificate store from which to load the certificate.
 * `subject`: The subject name for the certificate.

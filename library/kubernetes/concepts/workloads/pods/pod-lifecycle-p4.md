@@ -199,7 +199,7 @@ containers. The Pod conditions
 indicate the status of the resize operation. For more details about resize status, see
 Container Resize Status.
 
-Key considerations for in-place resize:
+Key <example-value> for in-place resize:
 - Only CPU and memory resources can be resized in-place.
 - The Pod's Quality of Service (QoS) class
   is determined at creation and cannot be changed by resizing.

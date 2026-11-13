@@ -19,13 +19,13 @@ license: "CC-BY-4.0"
 |NETSDK1006|Assets file path '{0}' is not rooted. Only full paths are supported.|
 |NETSDK1007|Cannot find project info for '{0}'. This can indicate a missing project reference.|
 |NETSDK1008|Missing '{0}' metadata on '{1}' item '{2}'.|
-|NETSDK1009|Unrecognized preprocessor token '{0}' in '{1}'.|
+|NETSDK1009|Unrecognized preprocessor token '<example-value>' in '<example-value>'.|
 |NETSDK1010|The '{0}' task must be given a value for parameter '{1}' in order to consume preprocessed content.|
 |NETSDK1011|Assets are consumed from project '{0}', but no corresponding MSBuild project path was  found in '{1}'.|
 |NETSDK1012|Unexpected file type for '{0}'. Type is both '{1}' and '{2}'.|
 |NETSDK1013|The TargetFramework value '{0}' was not recognized. It may be misspelled. If not, then the TargetFrameworkIdentifier and/or TargetFrameworkVersion properties must be specified explicitly.|
 |NETSDK1014|Content item for '{0}' sets '{1}', but does not provide  '{2}' or '{3}'.|
-|NETSDK1015|The preprocessor token '{0}' has been given more than one value. Choosing '{1}' as the value.|
+|NETSDK1015|The preprocessor token '<example-value>' has been given more than one value. Choosing '<example-value>' as the value.|
 |NETSDK1016|Unable to find resolved path for '{0}'.|
 |NETSDK1017|Asset preprocessor must be configured before assets are processed.|
 |NETSDK1018|Invalid NuGet version string: '{0}'.|

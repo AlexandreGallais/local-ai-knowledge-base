@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 -->
 -->
 
-The following tutorials provide a basic working experience for building a Blazor Hybrid app:
+The following tutorials provide a basic <example-value> experience for building a Blazor Hybrid app:
 
 * Build your first app
 

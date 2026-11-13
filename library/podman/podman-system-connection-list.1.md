@@ -37,7 +37,7 @@ Valid placeholders for the Go template listed below:
 | .ReadWrite      | Indicates if this connection can be modified using the system connection commands |
 | .TLSCA          | Path to a PEM file containing the certificate authority bundle to verify the server's certificate against. |
 | .TLSCert        | Path to a PEM file containing the certificate authority bundle to verify the server's certificate against. |
-| .TLSKey         | Path to a PEM file containing the private key matching `.TLSCA` |
+| .TLSKey         | Path to a PEM file containing the private key <example-value> `.TLSCA` |
 | .URI            | URI to podman service. Valid schemes are ssh://[user@]*host*[:port]*Unix domain socket*[?secure=True], unix://*Unix domain socket*, and tcp://localhost[:*port*] |
 
 #### **--quiet**, **-q**
@@ -50,7 +50,7 @@ List system connections:
 ```
 $ podman system connection list
 Name URI                                                      Identity	    Default  ReadWrite
-deva ssh://root@example.com:/run/podman/podman.sock           ~/.ssh/id_rsa true     true
+deva ssh://user@example.com:/run/podman/podman.sock           ~/.ssh/id_rsa true     true
 devb ssh://user@example.com:/run/user/1000/podman/podman.sock ~/.ssh/id_rsa false    true
 ```
 Show connections in JSON format:
@@ -59,7 +59,7 @@ $ podman system connection list --format json
 [
     {
         "Name": "podman-machine-default",
-        "URI": "ssh://core@127.0.0.1:53298/run/user/501/podman/podman.sock",
+        "URI": "ssh://user@example.com:53298/run/user/501/podman/podman.sock",
         "Identity": "/Users/ragm/.local/share/containers/podman/machine/machine",
         "IsMachine": true,
         "Default": true,
@@ -67,7 +67,7 @@ $ podman system connection list --format json
     },
     {
         "Name": "podman-machine-default-root",
-        "URI": "ssh://root@127.0.0.1:53298/run/podman/podman.sock",
+        "URI": "ssh://user@example.com:53298/run/podman/podman.sock",
         "Identity": "/Users/ragm/.local/share/containers/podman/machine/machine",
         "IsMachine": true,
         "Default": false,
@@ -78,20 +78,20 @@ $ podman system connection list --format json
 Show connection names and URIs:
 ```
 $ podman system connection list --format "{{.Name}}\t{{.URI}}"
-podman-machine-default	ssh://core@127.0.0.1:53298/run/user/501/podman/podman.sock
-podman-machine-default-root	ssh://root@127.0.0.1:53298/run/podman/podman.sock
+podman-machine-default	ssh://user@example.com:53298/run/user/501/podman/podman.sock
+podman-machine-default-root	ssh://user@example.com:53298/run/podman/podman.sock
 ```
 Show all connection details in a comprehensive format:
 ```
 $ podman system connection list --format "Name: {{.Name}}\nURI: {{.URI}}\nIdentity: {{.Identity}}\nDefault: {{.Default}}\nReadWrite: {{.ReadWrite}}\n---"
 Name: podman-machine-default
-URI: ssh://core@127.0.0.1:53298/run/user/501/podman/podman.sock
+URI: ssh://user@example.com:53298/run/user/501/podman/podman.sock
 Identity: /Users/ragm/.local/share/containers/podman/machine/machine
 Default: true
 ReadWrite: true
 ---
 Name: podman-machine-default-root
-URI: ssh://root@127.0.0.1:53298/run/podman/podman.sock
+URI: ssh://user@example.com:53298/run/podman/podman.sock
 Identity: /Users/ragm/.local/share/containers/podman/machine/machine
 Default: false
 ReadWrite: true

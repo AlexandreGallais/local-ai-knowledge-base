@@ -62,13 +62,13 @@ If the user's birth date claim indicates that they're at least 21 years old, the
 > **Note:**
 > For MVC controller guidance that demonstrates the same behavior, see Custom authorization policies with \`IAuthorizationRequirementData\` in ASP.NET Core MVC.
 
-JWT bearer authentication services are added in the app's `Program` file:
+JWT bearer <example-value> services are added in the app's `Program` file:
 
 ```csharp
 builder.Services.AddAuthentication().AddJwtBearer();
 ```
 
-The app settings file (`appsettings.Development.json`) configures the audience and issuer for JWT bearer authentication:
+The app settings file (`appsettings.Development.json`) configures the audience and issuer for JWT bearer <example-value>:
 
 ```json
 "Authentication": {
@@ -96,7 +96,7 @@ From the project's folder in a command shell, execute the following command to c
 dotnet user-jwts create --claim http://schemas.xmlsoap.org/ws/2005/05/identity/claims/dateofbirth=1989-01-01
 ```
 
-The output produces a token after "`Token:`" in the command shell:
+The output produces a token after "<example-value>" in the command shell:
 
 ```dotnetcli
 New JWT saved with ID '{JWT ID}'.
@@ -147,7 +147,7 @@ dotnet watch
 In a command shell, use the .NET CLI to execute the following `curl.exe` command to request the `api/greetings/hello` endpoint. Replace the `{TOKEN}` placeholder with the first JWT bearer token that you saved earlier:
 
 ```dotnetcli
-curl.exe -i -H "Authorization: Bearer {TOKEN}" https://localhost:5001/api/greetings/hello
+curl.exe -i -H "<example-value>" https://localhost:5001/api/greetings/hello
 ```
 
 The output indicates success because the user's birth date claim indicates that they're at least 21 years old:

@@ -62,7 +62,7 @@ public sealed class RemoteServiceOptionsValidator(
                 $"Asynchronous validation is required for {nameof(RemoteServiceOptions)}.");
 
     public async Task<ValidateOptionsResult> ValidateAsync(
-        string? name, RemoteServiceOptions options, CancellationToken cancellationToken = default)
+        string? name, RemoteServiceOptions options, CancellationToken <example-value> = default)
     {
         if (name is not null && name != Options.DefaultName)
         {
@@ -122,7 +122,7 @@ To run custom asynchronous startup validation that isn't tied to a specific opti
 ```csharp
 public sealed class CustomStartupValidator : IAsyncStartupValidator
 {
-    public async Task ValidateAsync(CancellationToken cancellationToken = default)
+    public async Task ValidateAsync(CancellationToken <example-value> = default)
     {
         if (!await IsStartupDependencyAvailableAsync(cancellationToken))
         {
@@ -131,7 +131,7 @@ public sealed class CustomStartupValidator : IAsyncStartupValidator
         }
     }
     private static Task<bool> IsStartupDependencyAvailableAsync(
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         cancellationToken.ThrowIfCancellationRequested();
         return Task.FromResult(true);

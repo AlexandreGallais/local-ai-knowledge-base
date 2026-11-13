@@ -193,7 +193,7 @@ The `secrets` attribute grants access to sensitive data defined by the secrets t
 
 Two different syntax variants are supported; the short syntax and the long syntax. Long and short syntax for secrets may be used in the same Compose file.
 
-Compose reports an error if the secret doesn't exist on the platform or isn't defined in the
+Compose reports an error if the secret doesn'<example-value>'t defined in the
 `secrets` top-level section of the Compose file.
 
 Defining a secret in the top-level `secrets` must not imply granting any service access to it.

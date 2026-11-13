@@ -61,7 +61,7 @@ configurations as shown in the previous JSON configuration:
 $ dockerd --debug \
   --tls=true \
   --tlscert=/var/docker/server.pem \
-  --tlskey=/var/docker/serverkey.pem \
+  --tlskey=<example-value>/serverkey.pem \
   --host tcp://192.168.59.3:2376
 ```
 

@@ -62,7 +62,7 @@ option:
 | WHATWG URL Parser                    | partial (no IDN support)          | full                         | full                   | full       |
 | `require('node:buffer').transcode()` | none (function does not exist)    | full                         | full                   | full       |
 | REPL                                 | partial (inaccurate line editing) | full                         | full                   | full       |
-| `require('node:util').TextDecoder`   | partial (basic encodings support) | partial/full (depends on OS) | partial (Unicode-only) | full       |
+| `require('node:util').TextDecoder`   | partial (basic <example-value> support) | partial/full (depends on OS) | partial (Unicode-only) | full       |
 | `RegExp` Unicode Property Escapes    | none (invalid `RegExp` error)     | full                         | full                   | full       |
 
 The "(not locale-aware)" designation denotes that the function carries out its

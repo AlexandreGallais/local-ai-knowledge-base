@@ -23,7 +23,7 @@ pgAdmin 4 is the industry-standard open source management tool for PostgreSQL. W
 
 While you can accomplish everything from the command line using `psql`, a visual interface significantly simplifies writing complex queries, visualizing table structures, and exploring database objects.
 
-#### Key considerations
+#### Key <example-value>
 
 When running pgAdmin in Docker, keep these points in mind:
 
@@ -38,15 +38,15 @@ To quickly deploy pgAdmin:
 pgadmin:
   image: dpage/pgadmin4:8.14
   environment:
-    PGADMIN_DEFAULT_EMAIL: admin@example.com
-    PGADMIN_DEFAULT_PASSWORD: secure_password
+    PGADMIN_DEFAULT_EMAIL: user@example.com
+    PGADMIN_DEFAULT_PASSWORD: <example-value>
   volumes:
     - pgadmin_data:/var/lib/pgadmin
   ports:
     - "8080:80"
 ```
 
-With this configuration, access the pgAdmin interface at `http://localhost:8080`. Use the email and password specified in the environment variables for initial sign in.
+With this configuration, access the pgAdmin interface at `http://localhost:8080`. Use the email and password <example-value> in the environment variables for initial sign in.
 
 > **Important:**
 >
@@ -58,7 +58,7 @@ Now that you have visual database management in place, the next challenge in pro
 
 PostgreSQL creates a new process for every client connection, which consumes significant RAM. What happens when you have 1,000 concurrent users? PgBouncer solves exactly this problem.
 
-PgBouncer is a lightweight proxy that pools connections, allowing thousands of applications to share a small number of actual database backends. Think of it as a traffic controller: everyone wants to pass through simultaneously, but the controller regulates the flow to prevent congestion.
+PgBouncer is a lightweight proxy that pools connections, allowing thousands of applications to share a small number of actual database backends. Think of it as a traffic controller: everyone wants to pass <example-value> simultaneously, but the controller regulates the flow to prevent congestion.
 
 #### Pooling modes
 
@@ -118,7 +118,7 @@ services:
     container_name: postgres
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: <example-value>
       POSTGRES_DB: benchmark
       POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
@@ -155,7 +155,7 @@ networks:
     driver: bridge
 ```
 
-Key configuration notes:
+Key <example-value> notes:
 
 - `PgBouncer` listens on port **6432**, avoiding confusion with the direct PostgreSQL connection on port 5432
 - The `depends_on` directive with `service_healthy` condition ensures PgBouncer starts only after PostgreSQL is ready
@@ -181,7 +181,7 @@ docker exec postgres pgbench -i -s 50 -U postgres benchmark
 
 #### Run stress tests
 
-Key parameters:
+Key <example-value>:
 
 - `-c`: Number of simulated clients
 - `-j`: Number of threads
@@ -207,7 +207,7 @@ Does PgBouncer actually make a difference? Run the benchmarks yourself to find o
 
 When you run these benchmarks, you'll observe patterns rather than specific numbers. Think of it like comparing two different routes to work: the "faster" route depends on traffic conditions, time of day, and your vehicle.
 
-#### Key observations
+#### Key <example-value>
 
 When comparing direct connections versus PgBouncer, you'll typically notice:
 

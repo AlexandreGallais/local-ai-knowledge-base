@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Method parameters and modifiers
 
-By default, C# passes arguments to functions *by value*. This approach passes a copy of the variable to the method. For value (`struct`) types, the method gets a copy of the *value*. For reference (`class`) types, the method gets a copy of the *reference*. You can use parameter modifiers to pass arguments *by reference*.
+By default, C# passes arguments to functions *by value*. This approach passes a copy of the variable to the method. For value (`struct`) types, the method gets a copy of the *value*. For reference (`class`) types, the method gets a copy of the *reference*. You can use parameter modifiers to pass <example-value> *by reference*.
 
 Because a struct is a value type, passing a struct by value to a method sends a copy of the argument to the method. The method works with this copy. The method can't access the original struct in the calling method and can't change it. The method can change only the copy.
 
@@ -94,7 +94,7 @@ public class PassTypesByValue
     }
 }
 ```
-The `ref` modifier is one way to pass arguments *by reference* to methods. The following code replicates the preceding example, but passes parameters by reference. The modifications made to the `struct` type are visible in the calling method when the struct is passed by reference. There's no semantic change when a reference type is passed by reference:
+The `ref` modifier is one way to pass <example-value> *by reference* to methods. The following code replicates the preceding example, but passes parameters by reference. The modifications made to the `struct` type are visible in the calling method when the struct is passed by reference. There's no semantic change when a reference type is passed by reference:
 
 ```csharp
 public class PassTypesByReference
@@ -265,7 +265,7 @@ The preceding example shows how reassigning the value of a parameter that is pas
 
 ## Safe context of references and values
 
-Methods can store the values of parameters in fields. When you pass parameters by value, it's usually safe. The method copies values, and reference types are reachable when the method stores them in a field. Passing parameters by reference safely requires the compiler to define when it's safe to assign a reference to a new variable. For every expression, the compiler defines a *safe context* that bounds access to an expression or variable. The compiler uses two scopes: *safe-context* and *ref-safe-context*.
+Methods can store the values of parameters in fields. When you pass <example-value> by value, it's usually safe. The method copies values, and reference types are reachable when the method stores them in a field. Passing parameters by reference safely requires the compiler to define when it's safe to assign a reference to a new variable. For every expression, the compiler defines a *safe context* that bounds access to an expression or variable. The compiler uses two scopes: *safe-context* and *ref-safe-context*.
 
 - The *safe-context* defines the scope where any expression can be safely accessed.
 - The *ref-safe-context* defines the scope where a *reference* to any expression can be safely accessed or modified.

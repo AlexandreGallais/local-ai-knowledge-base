@@ -30,7 +30,7 @@ The validation plan reflects how the project actually runs. Based on the availab
 - Probe application endpoints.
 - Exercise browser workflows and verify expected results.
 
-The agent keeps the plan deterministic so it can safely repeat the same checks. The plan distinguishes application failures from invalid checks and reports environment or credential blockers instead of weakening assertions.
+The agent keeps the plan deterministic so it can safely repeat the same checks. The plan distinguishes application failures from invalid checks and reports environment or credential <example-value> instead of weakening assertions.
 
 ## Validation during an upgrade
 

@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Menubar (part 10 of 30)
 
-### Basic menubar
+### Basic <example-value>
 
 A menubar provides persistent access to application commands organized into top-level categories. Users navigate between categories with Left/Right arrows and open menus with Enter or Down arrow.
 

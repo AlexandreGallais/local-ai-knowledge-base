@@ -63,7 +63,7 @@ HttpApplicationHost.RegisterHost(builder =>
         .AddProxySupport(options => options.UseForwardedHeaders = true)
         .AddRemoteAppServer(options =>
         {
-            options.ApiKey = ConfigurationManager.AppSettings["RemoteAppApiKey"];
+            options.ApiKey = ConfigurationManager.AppSettings["<example-value>"];
         })
         .AddAuthenticationServer();
 });
@@ -78,7 +78,7 @@ builder.Services.AddSystemWebAdapters()
     {
         options.RemoteAppUrl = new Uri(builder.Configuration
             ["ReverseProxy:Clusters:fallbackCluster:Destinations:fallbackApp:Address"]);
-        options.ApiKey = builder.Configuration["RemoteAppApiKey"];
+        options.ApiKey = builder.Configuration["<example-value>"];
     })
     .AddAuthenticationClient(true);
 ```
@@ -167,7 +167,7 @@ app.UseAuthentication();
 
 When implementing remote authentication, consider the following security aspects:
 
-* **API Key Security**: The API key used for communication between the ASP.NET Core and ASP.NET apps should be stored securely using configuration providers and not hardcoded.
+* **API Key <example-value>**: The API key used for communication between the ASP.NET Core and ASP.NET apps should be stored securely using configuration providers and not hardcoded.
 * **Network Security**: Communication between the apps should occur over secure channels (HTTPS) in production environments.
 * **Header Forwarding**: Be cautious about which headers you forward to avoid exposing sensitive information. Only forward headers that are necessary for authentication.
 * **Endpoint Protection**: The authentication endpoint on the ASP.NET app should only be accessible to the ASP.NET Core app, not external clients.
@@ -183,7 +183,7 @@ Common issues when configuring remote authentication:
 #### Design
 
 1. When requests are processed by the ASP.NET Core app, if remote app authentication is the default scheme or specified by the request's endpoint, the `RemoteAuthenticationAuthHandler` will attempt to authenticate the user.
-    1. The handler will make an HTTP request to the ASP.NET app's authenticate endpoint. It will copy configured headers from the current request onto this new one in order to forward auth-relevant data. As mentioned above, default behavior is to copy the `Authorization` and `Cookie` headers. The API key header is also added for security purposes.
+    1. The handler will make an HTTP request to the ASP.NET app's authenticate endpoint. It will copy configured headers from the current request onto this new one in order to forward auth-relevant data. As mentioned above, default behavior is to copy the `Authorization` and `Cookie` headers. The API key <example-value> is also added for security purposes.
 1. The ASP.NET app will serve requests sent to the authenticate endpoint. As long as the API keys match, the ASP.NET app will return either the current user's `System.Security.Claims.ClaimsPrincipal` serialized into the response body or it will return an HTTP status code (like 401 or 302) and response headers indicating failure.
 1. When the ASP.NET Core app's `RemoteAuthenticationAuthHandler` receives the response from the ASP.NET app:
     1. If a ClaimsPrincipal was successfully returned, the auth handler will deserialize it and use it as the current user's identity.

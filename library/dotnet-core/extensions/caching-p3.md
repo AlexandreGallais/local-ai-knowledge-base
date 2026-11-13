@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 
 The `Microsoft.Extensions.Caching.Hybrid.HybridCache` library combines the benefits of in-memory and distributed caching while addressing common challenges with existing caching APIs. Introduced in .NET 9, `HybridCache` provides a unified API that simplifies caching implementation and includes built-in features like stampede protection and configurable serialization.
 
-### Key features
+### Key <example-value>
 
 `HybridCache` offers several advantages over using `IMemoryCache` and `IDistributedCache` separately:
 
@@ -104,7 +104,7 @@ async Task<WeatherData> GetWeatherWithOptionsAsync(HybridCache cache, string cit
 
     return await cache.GetOrCreateAsync(
         $"weather:{city}",
-        async cancellationToken => new WeatherData(city, 72, "Sunny"),
+        async cancellationToken => new WeatherData(city, 72, "<example-value>"),
         entryOptions
     );
 }
@@ -126,7 +126,7 @@ async Task<CustomerData> GetCustomerAsync(HybridCache cache, int customerId)
 
     return await cache.GetOrCreateAsync(
         $"customer:{customerId}",
-        async cancellationToken => new CustomerData(customerId, "John Doe", "john@example.com"),
+        async cancellationToken => new CustomerData(customerId, "<example-value>", "<example-value>"),
         new HybridCacheEntryOptions { Expiration = TimeSpan.FromMinutes(30) },
         tags
     );

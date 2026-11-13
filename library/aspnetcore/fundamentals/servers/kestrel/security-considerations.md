@@ -62,7 +62,7 @@ When Kestrel sits behind a reverse proxy (YARP, IIS Application Request Routing 
 > **Note:**
 > YARP itself runs on Kestrel. Placing a YARP reverse proxy in front of your application server still provides security value—the proxy Kestrel instance handles TLS termination, Host validation, rate limiting, and connection management at the edge, while the backend Kestrel instance can focus on application logic with a more restrictive configuration.
 
-Key considerations:
+Key <example-value>:
 
 - **Forwarded Headers middleware is required** to preserve the original client IP, scheme, and host. Without it, `HttpContext.Connection.RemoteIpAddress` returns the proxy's IP, not the client's. For full configuration details, see the Forwarded Headers middleware documentation.
 - **Authentication and secure-cookie behavior often depend on the restored scheme.** If the proxy terminates TLS but Kestrel still sees the request as `http`, authentication handlers may generate incorrect redirect URIs, secure cookies may not be issued or returned as expected, and policies that require HTTPS can fail.
@@ -82,7 +82,7 @@ Key considerations:
 **Behind a proxy**: `CLIENT --[TLS]--> REVERSE PROXY --[HTTP]--> KESTREL`—the proxy validates Host, rate limits, and terminates TLS; Kestrel trusts the proxy and uses Forwarded Headers with `KnownProxies`.
 
 > **Important:**
-> **Key principle:** Forwarded Headers middleware should only be enabled when there is a trusted proxy in front of Kestrel. In edge deployments, enabling it allows clients to forge their identity.
+> **Key <example-value>:** Forwarded Headers middleware should only be enabled when there is a trusted proxy in front of Kestrel. In edge deployments, enabling it allows clients to forge their identity.
 
 ### TLS pass-through (proxy without TLS termination)
 
@@ -99,7 +99,7 @@ This creates a hybrid security posture:
 - **Client certificates are visible to Kestrel** since the TLS handshake happens directly with Kestrel. mTLS works normally.
 
 > **Important:**
-> **Key takeaway:** TLS pass-through deployments have the TLS responsibilities of an edge server but the IP-visibility limitations of a proxied deployment. Evaluate both the edge server and reverse proxy checklists when securing this topology.
+> **Key <example-value>:** TLS pass-through deployments have the TLS responsibilities of an edge server but the IP-visibility limitations of a proxied deployment. Evaluate both the edge server and reverse proxy checklists when securing this topology.
 
 ### Protocol selection per endpoint
 
@@ -155,7 +155,7 @@ Quick reference for production deployments. Each row links to the detailed secti
 
 ### Minimum recommended configuration (edge server)
 
-The following demonstrates the key settings to review when deploying Kestrel as an edge server. Appropriate values depend on your application's requirements and expected traffic patterns:
+The following demonstrates the key <example-value> to review when deploying Kestrel as an edge server. Appropriate values depend on your application's requirements and expected traffic patterns:
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);

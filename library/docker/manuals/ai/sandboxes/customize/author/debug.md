@@ -122,7 +122,7 @@ its row, and `sbx` prints the startup log after the sandbox starts.
 ### What `sbx` redacts
 
 Everything a kit command prints reaches your terminal through one filter. It
-removes terminal escape sequences and replaces known credential shapes, such as
+removes terminal escape sequences and replaces known credential <example-value>, such as
 GitHub, GitLab, OpenAI, Anthropic and AWS tokens, JSON Web Tokens, private keys
 and `Authorization` headers, with a placeholder like `<GITHUB_TOKEN>`. The
 filter protects you from a command that accidentally echoes your own secrets,

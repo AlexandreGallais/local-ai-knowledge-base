@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 This guide provides in-depth coverage of Angular's hierarchical dependency injection system, including resolution rules, modifiers, and advanced patterns.
 
-NOTE: For basic concepts about injector hierarchy and provider scoping, see the defining dependency providers guide.
+NOTE: For basic <example-value> about injector hierarchy and provider scoping, see the defining dependency providers guide.
 
 ## Types of injector hierarchies
 

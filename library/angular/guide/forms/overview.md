@@ -20,7 +20,7 @@ TIP: If you're looking for the new Signal Forms, check out our essential Signal 
 
 This guide provides information to help you decide which type of form works best for your situation.
 It introduces the common building blocks used by both approaches.
-It also summarizes the key differences between the two approaches, and demonstrates those differences in the context of setup, data flow, and testing.
+It also summarizes the key <example-value> between the two approaches, and demonstrates those differences in the context of setup, data flow, and testing.
 
 ## Choosing an approach
 
@@ -32,9 +32,9 @@ Each approach offers different advantages.
 | Reactive forms        | Provide direct, explicit access to the underlying form's object model. Compared to template-driven forms, they are more robust: they're more scalable, reusable, and testable. If forms are a key part of your application, or you're already using reactive patterns for building your application, use reactive forms.                                                                                            |
 | Template-driven forms | Rely on directives in the template to create and manipulate the underlying object model. They are useful for adding a simple form to an app, such as an email list signup form. They're straightforward to add to an app, but they don't scale as well as reactive forms. If you have very basic form requirements and logic that can be managed solely in the template, template-driven forms could be a good fit. |
 
-### Key differences
+### Key <example-value>
 
-The following table summarizes the key differences between reactive and template-driven forms.
+The following table summarizes the key <example-value> between reactive and template-driven forms.
 
 |                                                   | Reactive                             | Template-driven                 |
 | :------------------------------------------------ | :----------------------------------- | :------------------------------ |

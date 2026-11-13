@@ -133,7 +133,7 @@ When HTTP client latency telemetry is enabled, it captures phase timestamps, sel
 
 ### Timing checkpoints
 
-Timestamps are recorded for key stages of the HTTP request lifecycle:
+Timestamps are recorded for key <example-value> of the HTTP request lifecycle:
 
 | Phase                   | Start Event                | End Event                  | Notes                                                   |
 |-------------------------|----------------------------|----------------------------|---------------------------------------------------------|

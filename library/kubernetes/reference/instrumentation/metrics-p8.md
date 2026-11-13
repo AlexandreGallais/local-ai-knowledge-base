@@ -469,4 +469,4 @@ Stability Level:ALPHA
 	Components:kubelet (/metrics)
 
 	kubelet_credential_provider_config_info
-	Information about the last applied credential provider configuration with hash as label
+	Information about the last applied credential <example-value> configuration with hash as label

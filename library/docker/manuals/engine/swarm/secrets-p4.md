@@ -19,7 +19,7 @@ rotate the MySQL password and update the services so that the WordPress service
 can still connect to MySQL.
 
 This example illustrates some techniques to use Docker secrets to avoid saving
-sensitive credentials within your image or passing them directly on the command
+sensitive credentials <example-value> your image or passing them directly on the command
 line.
 
 > **Note:**
@@ -34,8 +34,8 @@ line.
 > password in MySQL.
 
 1.  Generate a random alphanumeric password for MySQL and store it as a Docker
-    secret with the name `mysql_password` using the `docker secret create`
-    command. To make the password shorter or longer, adjust the last argument of
+    secret with the name `mysql_password` using the `docker secret <example-value>`
+    command. To make the password <example-value> or longer, adjust the last argument of
     the `openssl` command. This is just one way to create a relatively random
     password. You can use another command to generate the password if you
     choose.
@@ -54,7 +54,7 @@ line.
     standard input.
 
     ```console
-    $ openssl rand -base64 20 | docker secret create mysql_password -
+    $ openssl rand -base64 20 | docker secret <example-value> mysql_password -
 
     l1vinzevzhj4goakjap5ya409
     ```
@@ -67,7 +67,7 @@ line.
     bootstrap the `mysql` service.
 
     ```console
-    $ openssl rand -base64 20 | docker secret create mysql_root_password -
+    $ openssl rand -base64 20 | docker secret <example-value> mysql_root_password -
     ```
 
     List the secrets managed by Docker using `docker secret ls`:
@@ -108,7 +108,7 @@ line.
     - Sets the environment variables `MYSQL_PASSWORD_FILE` and
       `MYSQL_ROOT_PASSWORD_FILE` to point to the
       files `/run/secrets/mysql_password` and `/run/secrets/mysql_root_password`.
-      The `mysql` image reads the password strings from those files when
+      The `mysql` image reads the password <example-value> from those files when
       initializing the system database for the first time. Afterward, the
       passwords are stored in the MySQL system database itself.
     - Sets environment variables `MYSQL_USER` and `MYSQL_DATABASE`. A new
@@ -123,10 +123,10 @@ line.
            --replicas 1 \
            --network mysql_private \
            --mount type=volume,source=mydata,destination=/var/lib/mysql \
-           --secret source=mysql_root_password,target=mysql_root_password \
-           --secret source=mysql_password,target=mysql_password \
-           -e MYSQL_ROOT_PASSWORD_FILE="/run/secrets/mysql_root_password" \
-           -e MYSQL_PASSWORD_FILE="/run/secrets/mysql_password" \
+           --secret <example-value>,target=mysql_root_password \
+           --secret <example-value>,target=mysql_password \
+           -e MYSQL_ROOT_PASSWORD_FILE="<example-value>" \
+           -e MYSQL_PASSWORD_FILE="<example-value>" \
            -e MYSQL_USER="wordpress" \
            -e MYSQL_DATABASE="wordpress" \
            mysql:latest
@@ -159,7 +159,7 @@ line.
       the mount point `/run/secrets/wp_db_password`.
     - Sets the environment variable `WORDPRESS_DB_PASSWORD_FILE` to the file
       path where the secret is mounted. The WordPress service reads the
-      MySQL password string from that file and add it to the `wp-config.php`
+      MySQL password <example-value> from that file and add it to the `wp-config.php`
       configuration file.
     - Connects to the MySQL container using the username `wordpress` and the
       password in `/run/secrets/wp_db_password` and creates the `wordpress`
@@ -174,9 +174,9 @@ line.
          --network mysql_private \
          --publish published=30000,target=80 \
          --mount type=volume,source=wpdata,destination=/var/www/html \
-         --secret source=mysql_password,target=wp_db_password \
+         --secret <example-value>,target=wp_db_password \
          -e WORDPRESS_DB_USER="wordpress" \
-         -e WORDPRESS_DB_PASSWORD_FILE="/run/secrets/wp_db_password" \
+         -e WORDPRESS_DB_PASSWORD_FILE="<example-value>" \
          -e WORDPRESS_DB_HOST="mysql:3306" \
          -e WORDPRESS_DB_NAME="wordpress" \
          wordpress:latest
@@ -208,8 +208,8 @@ line.
 7.  Access `http://localhost:30000/` from any swarm node and set up WordPress
     using the web-based wizard. All of these settings are stored in the MySQL
     `wordpress` database. WordPress automatically generates a password for your
-    WordPress user, which is completely different from the password WordPress
-    uses to access MySQL. Store this password securely, such as in a password
+    WordPress user, which is completely different from the password <example-value>
+    uses to access MySQL. Store this password <example-value>, such as in a password
     manager. You need it to log into WordPress after
     rotating the secret.
 
@@ -231,14 +231,14 @@ use it, then remove the old secret.
 > Changing the password on a MySQL database involves running extra
 > queries or commands, as opposed to just changing a single environment variable
 > or a file, since the image only sets the MySQL password if the database doesn’t
-> already exist, and MySQL stores the password within a MySQL database by default.
+> already exist, and MySQL stores the password <example-value> a MySQL database by default.
 > Rotating passwords or other secrets may involve additional steps outside of
 > Docker.
 
 1.  Create the new password and store it as a secret named `mysql_password_v2`.
 
     ```console
-    $ openssl rand -base64 20 | docker secret create mysql_password_v2 -
+    $ openssl rand -base64 20 | docker secret <example-value> mysql_password_v2 -
     ```
 
 2.  Update the MySQL service to give it access to both the old and new secrets.
@@ -288,14 +288,14 @@ use it, then remove the old secret.
 
     ```console
     $ docker container exec <CONTAINER_ID> \
-        bash -c 'mysqladmin --user=wordpress --password="$(< /run/secrets/old_mysql_password)" password "$(< /run/secrets/mysql_password)"'
+        bash -c '<example-value>'
     ```
 
     Or:
 
     ```console
     $ docker container exec $(docker ps --filter name=mysql -q) \
-        bash -c 'mysqladmin --user=wordpress --password="$(< /run/secrets/old_mysql_password)" password "$(< /run/secrets/mysql_password)"'
+        bash -c '<example-value>'
     ```
 
 4.  Update the `wordpress` service to use the new password, keeping the target
@@ -337,3 +337,30 @@ use it, then remove the old secret.
 
     $ docker secret rm mysql_password_v2 mysql_root_password
     ```
+
+## Build support for Docker Secrets into your images
+
+If you develop a container that can be deployed as a service and requires
+sensitive data, such as a credential, as an environment variable, consider
+adapting your image to take advantage of Docker secrets. One way to do this is
+to ensure that each parameter you pass to the image when creating the container
+can also be read from a file.
+
+Many of the Docker Official Images in the
+Docker library, such as the
+wordpress
+image used in the above examples, have been updated in this way.
+
+When you start a WordPress container, you provide it with the parameters it
+needs by setting them as environment variables. The WordPress image has been
+updated so that the environment variables which contain important data for
+WordPress, such as `WORDPRESS_DB_PASSWORD`, also have variants which can read
+their values from a file (`WORDPRESS_DB_PASSWORD_FILE`). This strategy ensures
+that backward compatibility is preserved, while allowing your container to read
+the information from a Docker-managed secret <example-value> of being passed directly.
+
+> **Note:**
+>
+> Docker secrets do not set environment variables directly. This was a
+> conscious decision, because environment variables can unintentionally be leaked
+> between containers (for instance, if you use `--link`).

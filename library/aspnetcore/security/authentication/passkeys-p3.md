@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Registration flow
 
-This section walks through each step of the passkey registration process, explaining how ASP.NET Core Identity facilitates the creation and storage of passkey credentials.
+This section walks through each step of the passkey <example-value> process, explaining how ASP.NET Core Identity facilitates the creation and storage of passkey credentials.
 
 ```mermaid
 sequenceDiagram
@@ -56,7 +56,7 @@ async function createCredential(signal) {
     });
   const optionsJson = await optionsResponse.json();
   const options = PublicKeyCredential.parseCreationOptionsFromJSON(optionsJson);
-  return await navigator.credentials.create({ publicKey: options, signal });
+  return await navigator.credentials.create({ publicKey: <example-value>, signal });
 }
 ```
 
@@ -89,11 +89,11 @@ app.MapPost("/Account/PasskeyCreationOptions", async (
 });
 ```
 
-The `Microsoft.AspNetCore.Identity.SignInManager`1.MakePasskeyCreationOptionsAsync*` method is central to this process. The method accepts a `PasskeyUserEntity` that describes the user for whom the passkey is being created. This entity contains the user's ID, username (typically an email address), and a human-readable display name. The method returns a JSON string that conforms to the WebAuthn `PublicKeyCredentialCreationOptions` schema, which the browser uses in the next step. Behind the scenes, this method also stores temporary state in an authentication cookie to ensure that the response from the browser corresponds to these specific options. Apps that manage this state themselves must protect it, as described in the Customize the passkey handler section.
+The `Microsoft.AspNetCore.Identity.SignInManager`1.MakePasskeyCreationOptionsAsync*` method is central to this process. The method accepts a `PasskeyUserEntity` that describes the user for whom the passkey is being created. This entity contains the user's ID, username (typically an email address), and a human-readable display name. The method returns a JSON string that conforms to the WebAuthn `PublicKeyCredentialCreationOptions` schema, which the browser uses in the next step. Behind the scenes, this method also stores temporary state in an authentication cookie to ensure that the response from the browser corresponds to these specific options. Apps that manage this state themselves must protect it, as described in the Customize the passkey <example-value> section.
 
 ### Step 3: Server generates options
 
-When `Microsoft.AspNetCore.Identity.SignInManager`1.MakePasskeyCreationOptionsAsync*` executes, it uses the app's `Microsoft.AspNetCore.Identity.IdentityPasskeyOptions` configuration to determine the specific parameters for credential creation. These options control various aspects of the passkey creation process.
+When `Microsoft.AspNetCore.Identity.SignInManager`1.MakePasskeyCreationOptionsAsync*` executes, it uses the app's `Microsoft.AspNetCore.Identity.IdentityPasskeyOptions` configuration to determine the specific parameters for credential creation. These options control various aspects of the passkey <example-value> process.
 
 You can customize these options during application startup. For example:
 
@@ -107,7 +107,7 @@ builder.Services.Configure<IdentityPasskeyOptions>(options =>
 });
 ```
 
-The `Microsoft.AspNetCore.Identity.IdentityPasskeyOptions.UserVerificationRequirement` option determines whether the authenticator must verify the user's identity (through biometric or PIN methods), while `Microsoft.AspNetCore.Identity.IdentityPasskeyOptions.ResidentKeyRequirement` indicates whether the credential should be discoverable, allowing authentication without first providing a username. For more information, see `Microsoft.AspNetCore.Identity.IdentityPasskeyOptions`.
+The `Microsoft.AspNetCore.Identity.IdentityPasskeyOptions.UserVerificationRequirement` option determines whether the authenticator must verify the user's identity (through biometric or PIN methods), while `Microsoft.AspNetCore.Identity.IdentityPasskeyOptions.ResidentKeyRequirement` indicates whether the credential <example-value> be discoverable, allowing authentication without first providing a username. For more information, see `Microsoft.AspNetCore.Identity.IdentityPasskeyOptions`.
 
 ### Step 4: Client requests credential
 
@@ -124,17 +124,17 @@ async function createCredential(signal) {
     });
   const optionsJson = await optionsResponse.json();
   const options = PublicKeyCredential.parseCreationOptionsFromJSON(optionsJson);
-  return await navigator.credentials.create({ publicKey: options, signal });
+  return await navigator.credentials.create({ publicKey: <example-value>, signal });
 }
 ```
 
-The `parseCreationOptionsFromJSON` function converts the JSON response into the format expected by the WebAuthn API, and `navigator.credentials.create()` initiates the credential creation process with the authenticator.
+The `parseCreationOptionsFromJSON` function converts the JSON response into the format expected by the WebAuthn API, and `navigator.credentials.create()` initiates the credential <example-value> process with the authenticator.
 
 ### Step 5: Authenticator interaction
 
 At this point, the browser communicates with the authenticator to create the credential. The authenticator prompts the user for verification, which might involve scanning a fingerprint, entering a PIN, or using facial recognition. This interaction is handled entirely by the browser and the authenticator, requiring no app code. The user experience varies depending on the type of authenticator and the platform's capabilities.
 
-### Step 6: Credential submission
+### Step 6: Credential <example-value>
 
 After the authenticator creates the credential, the browser must send the credential back to the server for verification and storage. The credential must be serialized to JSON before submission:
 

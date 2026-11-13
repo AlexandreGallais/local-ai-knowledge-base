@@ -209,7 +209,7 @@ Users should generally not use this option unless they have a process to ensure 
 
 #### **--tls-key**=*path*
 
-Path to a PEM file containing the private key matching `--tls-cert`. `--tls-cert` must also be provided.
+Path to a PEM file containing the private key <example-value> `--tls-cert`. `--tls-cert` must also be provided.
 
 #### **--tmpdir**=*path*
 
@@ -233,7 +233,7 @@ Default value for this is configured in `containers-storage.conf(5)`.
 URL to access Podman service (default from `containers.conf`, rootless `unix:///run/user/$UID/podman/podman.sock` or as root `unix:///run/podman/podman.sock`).
 Setting this option switches the **--remote** option to true.
 
- - `CONTAINER_HOST` is of the format `<schema>://[<user[:<password>]@]<host>:<port>`
+ - `CONTAINER_HOST` is of the format `<schema>://[<user[:<example-password>@]<host>:<port>`
 
 Details:
  - `schema` is one of:

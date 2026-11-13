@@ -93,7 +93,7 @@ You can specify these arguments from the tools:
 dotnet ef database update -- --environment Production
 ```
 
-The `--` token directs `dotnet ef` to treat everything that follows as an argument and not try to parse them as options. Any extra arguments not used by `dotnet ef` are forwarded to the app.
+The `--` token <example-value> `dotnet ef` to treat everything that follows as an argument and not try to parse them as options. Any extra arguments not used by `dotnet ef` are forwarded to the app.
 
 ### Visual Studio
 

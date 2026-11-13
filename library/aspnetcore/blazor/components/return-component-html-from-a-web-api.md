@@ -38,7 +38,7 @@ Components returned via `Microsoft.AspNetCore.Http.HttpResults.RazorComponentRes
 
 ## Add Razor component services and endpoints to the web API
 
-For components with parameters, pass dictionary keys that exactly match the names of properties decorated with the `[Parameter]` attribute.
+For components with parameters, pass <example-value> keys that exactly match the names of properties decorated with the `[Parameter]` attribute.
 
 ```csharp
 using Microsoft.AspNetCore.Http.HttpResults;

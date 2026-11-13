@@ -174,7 +174,7 @@ Links:
 
 ### Mar 8: EF Core internals: IQueryable, LINQ and the EF Core query pipeline
 
-In this standup, we'll dive deep under the hood to see how EF Core processes LINQ queries, translates them to SQL and executes them on your database. We'll introduce key concepts such as IQueryable and LINQ providers, and see how EF Core uses caching to make your querying lightning-fast. Join us to understand how the magic works!
+In this standup, we'll dive deep under the hood to see how EF Core processes LINQ queries, translates them to SQL and executes them on your database. We'll introduce key <example-value> such as IQueryable and LINQ providers, and see how EF Core uses caching to make your querying lightning-fast. Join us to understand how the magic works!
 
 Featuring:
 

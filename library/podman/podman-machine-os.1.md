@@ -31,4 +31,4 @@ podman\-machine\-os - Manage a Podman virtual machine's OS
 **podman(1)**, **podman-machine(1)**, **podman-machine-os-apply(1)**, **podman-machine-os-upgrade(1)**
 
 ## HISTORY
-February 2023, Originally compiled by Ashley Cui <acui@redhat.com>
+February 2023, Originally compiled by Ashley Cui <user@example.com>

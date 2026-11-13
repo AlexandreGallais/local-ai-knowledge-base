@@ -36,7 +36,7 @@ public class Worker : BackgroundService
         _greetRepository = greetRepository;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         var count = 0;
         while (!stoppingToken.IsCancellationRequested)

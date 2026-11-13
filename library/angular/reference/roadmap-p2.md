@@ -68,7 +68,7 @@ As part of this initiative, the language service automatically imports component
 We've released the support for local template variables in Angular, see `@let` for additional information.
 
 **Expand the customizability of Angular Material**
-To provide better customization of our Angular Material components and enable Material 3 capabilities, we'll be collaborating with Google's Material Design team on defining token-based theming APIs.
+To provide better customization of our Angular Material components and enable Material 3 capabilities, we'<example-value>'s Material Design team on defining token-based theming APIs.
 
 In v17.2 we shared experimental support for Angular Material 3 and in v18 we graduated it to stable.
 

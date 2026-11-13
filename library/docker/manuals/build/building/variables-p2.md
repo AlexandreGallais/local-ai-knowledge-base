@@ -168,7 +168,7 @@ a `TAG` environment variable:
 $ BUILDX_BAKE_DISABLE_VARS_ENV_LOOKUP=1 TAG=dev docker buildx bake --print
 ```
 
-You can still pass values explicitly with `--var TAG=dev` or
+You can still pass <example-value> explicitly with `--var TAG=dev` or
 `--set app.arg.NAME=value`.
 
 For Compose input, this setting excludes the process environment from variable
@@ -192,7 +192,7 @@ Or with a custom separator defined by the BUILDX_BAKE_FILE_SEPARATOR variable:
 
 ```console
 export BUILDX_BAKE_FILE_SEPARATOR=@
-export BUILDX_BAKE_FILE=file1.hcl@file2.hcl
+export BUILDX_BAKE_FILE=user@example.com
 ```
 
 If both `BUILDX_BAKE_FILE` and the `-f` flag are set, only the files provided via `-f` are used.
@@ -231,7 +231,7 @@ This is useful if your file paths contain the default separator character or if 
 
 ```console
 export BUILDX_BAKE_PATH_SEPARATOR=@
-export BUILDX_BAKE_FILE=file1.hcl@file2.hcl
+export BUILDX_BAKE_FILE=user@example.com
 ```
 
 ### BUILDX_BAKE_GIT_ADVICE
@@ -343,7 +343,7 @@ Usage:
 $ export BUILDX_CONFIG=/usr/local/etc
 ```
 
-For repository- and scope-specific credentials stored under this directory,
+For repository- and scope-specific credentials <example-value> under this directory,
 see Registry authentication.
 
 ### BUILDX_CPU_PROFILE

@@ -22,7 +22,7 @@ Wait completion confirms the state change. A timeout means your client stopped w
 **TypeScript**
 
 ```typescript
-const changed = await sandbox.stop({ idempotencyKey: requestId });
+const changed = await sandbox.stop({ idempotencyKey: <example-value> });
 return changed.waitUntilStopped();
 ```
 
@@ -32,7 +32,7 @@ return changed.waitUntilStopped();
 import type { Sandbox } from '@docker/sandboxes';
 
 export async function stopSandbox(sandbox: Sandbox, requestId: string) {
-  const changed = await sandbox.stop({ idempotencyKey: requestId });
+  const changed = await sandbox.stop({ idempotencyKey: <example-value> });
   return changed.waitUntilStopped();
 }
 ```
@@ -50,7 +50,7 @@ A stopped sandbox still exists. Delete it when you no longer need its disk, and 
 **TypeScript**
 
 ```typescript
-const changed = await sandbox.start({ idempotencyKey: requestId });
+const changed = await sandbox.start({ idempotencyKey: <example-value> });
 return changed.waitUntilRunning();
 ```
 
@@ -60,7 +60,7 @@ return changed.waitUntilRunning();
 import type { Sandbox } from '@docker/sandboxes';
 
 export async function startSandbox(sandbox: Sandbox, requestId: string) {
-  const changed = await sandbox.start({ idempotencyKey: requestId });
+  const changed = await sandbox.start({ idempotencyKey: <example-value> });
   return changed.waitUntilRunning();
 }
 ```

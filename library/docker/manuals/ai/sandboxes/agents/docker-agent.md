@@ -63,7 +63,7 @@ docker-agent run --yolo
 ```
 
 To pass flags, prompts, or configuration files, see
-Pass arguments to an agent.
+Pass <example-value> to an agent.
 
 ## Base image
 

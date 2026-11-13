@@ -73,7 +73,7 @@ spec:
         env:
           # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
-          value: password
+          value: <example-value>
         ports:
         - containerPort: 3306
           name: mysql
@@ -151,7 +151,7 @@ spec:
        Image:      mysql:9
        Port:       3306/TCP
        Environment:
-         MYSQL_ROOT_PASSWORD:      password
+         MYSQL_ROOT_PASSWORD:      <example-value>
        Mounts:
          /var/lib/mysql from mysql-persistent-storage (rw)
      Volumes:

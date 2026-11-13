@@ -17,7 +17,7 @@ and creating a replacement, often managed by a workload controller.
 In-place Pod Resize allows changing the CPU/memory allocation of container(s) within a running Pod
 while potentially avoiding application disruption. The process for resizing Pod resources is covered in Resize CPU and Memory Resources assigned to Pods.
 
-**Key Concepts:**
+**Key <example-value>:**
 
 * **Desired Resources:** A container's `spec.containers[*].resources` represent
   the *desired* resources for the container, and are mutable for CPU and memory.

@@ -34,7 +34,7 @@ You must authenticate to dhi.io before you can pull Docker Hardened Images. Run 
 
 ```console
 docker run --rm --name postgres-dev \
-  -e POSTGRES_PASSWORD=mysecretpassword \
+  -e POSTGRES_PASSWORD=<example-value> \
   -p 5432:5432 \
   -d dhi.io/postgres:18
 ```
@@ -43,7 +43,7 @@ docker run --rm --name postgres-dev \
 
 ```console
 $ docker run --rm --name postgres-dev \
-  -e POSTGRES_PASSWORD=mysecretpassword \
+  -e POSTGRES_PASSWORD=<example-value> \
   -p 5432:5432 \
   -d postgres:18
 ```
@@ -97,7 +97,7 @@ $ docker stop postgres-dev
 postgres-dev
 
 $ docker run --rm --name postgres-dev \
-  -e POSTGRES_PASSWORD=mysecretpassword \
+  -e POSTGRES_PASSWORD=<example-value> \
   -p 5432:5432 \
   -d dhi.io/postgres:18
 
@@ -118,7 +118,7 @@ $ docker stop postgres-dev
 postgres-dev
 
 $ docker run --rm --name postgres-dev \
-  -e POSTGRES_PASSWORD=mysecretpassword \
+  -e POSTGRES_PASSWORD=<example-value> \
   -p 5432:5432 \
   -d postgres:18
 
@@ -140,7 +140,7 @@ You must authenticate to dhi.io before you can pull Docker Hardened Images. Run 
 
 ```console
 $ docker run --rm --name postgres-dev \
-  -e POSTGRES_PASSWORD=mysecretpassword \
+  -e POSTGRES_PASSWORD=<example-value> \
   -p 5432:5432 \
   -v postgres_data:/var/lib/postgresql \
   -d dhi.io/postgres:18
@@ -150,7 +150,7 @@ $ docker run --rm --name postgres-dev \
 
 ```console
 $ docker run --rm --name postgres-dev \
-  -e POSTGRES_PASSWORD=mysecretpassword \
+  -e POSTGRES_PASSWORD=<example-value> \
   -p 5432:5432 \
   -v postgres_data:/var/lib/postgresql \
   -d postgres:18
@@ -176,7 +176,7 @@ $ docker stop postgres-dev
 postgres-dev
 
 $ docker run --rm --name postgres-dev \
-  -e POSTGRES_PASSWORD=mysecretpassword \
+  -e POSTGRES_PASSWORD=<example-value> \
   -p 5432:5432 \
   -v postgres_data:/var/lib/postgresql \
   -d dhi.io/postgres:18
@@ -195,7 +195,7 @@ $ docker stop postgres-dev
 postgres-dev
 
 $ docker run --rm --name postgres-dev \
-  -e POSTGRES_PASSWORD=mysecretpassword \
+  -e POSTGRES_PASSWORD=<example-value> \
   -p 5432:5432 \
   -v postgres_data:/var/lib/postgresql \
   -d postgres:18
@@ -255,7 +255,7 @@ Run Postgres using a bind mount.
 
 ```console
 docker run --rm --name postgres-dev \
-  -e POSTGRES_PASSWORD=mysecretpassword \
+  -e POSTGRES_PASSWORD=<example-value> \
   -p 5432:5432 \
   -v ~/postgres-data:/var/lib/postgresql \
   -d dhi.io/postgres:18
@@ -271,7 +271,7 @@ Run Postgres using a bind mount.
 
 ```console
 $ docker run --rm --name postgres-dev \
-  -e POSTGRES_PASSWORD=mysecretpassword \
+  -e POSTGRES_PASSWORD=<example-value> \
   -p 5432:5432 \
   -v ~/postgres-data:/var/lib/postgresql \
   -d postgres:18
@@ -303,7 +303,7 @@ services:
     image: postgres:18
     container_name: postgres-dev
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: <example-value>
     ports:
       - "5432:5432"
     volumes:

@@ -211,9 +211,9 @@ public class Student
 }
 ```
 
-Even if you don't have a `Secret` field on the web page, a hacker might use a tool such as Fiddler, or write some JavaScript, to post a `Secret` form value. Without the `Bind` attribute limiting the fields that the model binder uses when it creates a `Student` instance, the model binder can pick up that `Secret` form value and use it to create the `Student` entity instance. Then, whatever value the hacker specified for the `Secret` form field is updated in your database. The following image shows the Fiddler tool adding the `Secret` field (with the value "OverPost") to the posted form values.
+Even if you don't have a `Secret` field on the web page, a hacker might use a tool such as Fiddler, or write some JavaScript, to post a `Secret` form value. Without the `Bind` attribute limiting the fields that the model binder uses when it creates a `Student` instance, the model binder can pick up that `Secret` form value and use it to create the `Student` entity instance. Then, whatever value the hacker specified for the `Secret` form field is updated in your database. The following image shows the Fiddler tool adding the `Secret` field (with the value "<example-value>") to the posted form values.
 
-The value "OverPost" is then successfully added to the `Secret` property of the inserted row, although you never intended that the web page set the property.
+The value "<example-value>" is then successfully added to the `Secret` property of the inserted row, although you never intended that the web page set the property.
 
 You can prevent overposting in edit scenarios by reading the entity from the database first and then calling the `TryUpdateModel` method. Pass in an explicit allowed properties list, which is how the method is used in these tutorials.
 

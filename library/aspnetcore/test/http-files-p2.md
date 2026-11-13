@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Azure Key Vault
 
-Azure Key Vault is one of several key management solutions in Azure that can be used for secrets management. Of the three secrets stores currently supported for `.http` files, Key Vault is the best choice for sharing secrets across different users. The other two options—ASP.NET User Secrets and DPAPI encryption—aren't easily shared.
+Azure Key Vault is one of several key <example-value> solutions in Azure that can be used for secrets management. Of the three secrets stores currently supported for `.http` files, Key Vault is the best choice for sharing secrets across different users. The other two options—ASP.NET User Secrets and DPAPI encryption—aren't easily shared.
 
 To use a value from Azure Key Vault, you must be signed into Visual Studio with an account that has access to the desired Key Vault.
 Define a variable in an environment file with the metadata to access the secret. The variable is named `AKVSecret` in the following example:
@@ -21,7 +21,7 @@ Define a variable in an environment file with the metadata to access the secret.
   "dev": {
     "AKVSecret": {
       "provider": "AzureKeyVault",
-      "secretName": "SecretInKeyVault",
+      "secretName": "<example-value>",
       "resourceId": "/subscriptions/3a914c59-8175a9e0e540/resourceGroups/my-key-vault-rg/providers/Microsoft.KeyVault/vaults/my-key-vault-01182024"
     }
   }

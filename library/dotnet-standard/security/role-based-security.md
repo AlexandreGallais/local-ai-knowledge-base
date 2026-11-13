@@ -17,11 +17,11 @@ Roles are often used in financial or business applications to enforce policy. Fo
 
  .NET provides role-based security support that is flexible and extensible enough to meet the needs of a wide spectrum of applications. You can choose to interoperate with existing authentication infrastructures, such as COM+ 1.0 Services, or to create a custom authentication system. Role-based security is particularly well-suited for use in ASP.NET Web applications, which are processed primarily on the server. However, .NET role-based security can be used on either the client or the server.
 
- Before reading this section, make sure that you understand the material presented in Key Security Concepts.
+ Before reading this section, make sure that you understand the material presented in Key <example-value> Concepts.
 
 ## See also
 
 - Principal and Identity Objects
-- Key Security Concepts
+- Key <example-value> Concepts
 - `System.Security.Permissions.PrincipalPermission`
 - ASP.NET Core Security

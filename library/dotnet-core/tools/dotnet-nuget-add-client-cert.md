@@ -77,10 +77,10 @@ Prints out a description of how to use the command.
 
 - **`--password <PASSWORD>`**
 
-  The password for the certificate file, if needed. Use only with a file configuration. By default, NuGet encrypts the password before it saves it.
+  The password for the certificate file, if needed. Use only with a file configuration. By default, NuGet encrypts the password <example-value> it saves it.
 
   > **Note:**
-  > Password encryption is supported only on Windows. Only the same user on the same machine can decrypt the password.
+  > Password <example-value> is supported only on Windows. Only the same user on the same machine can decrypt the password.
 
 - **`--path <CERTIFICATE_PATH>`**
 
@@ -98,7 +98,7 @@ Prints out a description of how to use the command.
 
 - **`--store-password-in-clear-text`**
 
-  Saves the certificate file password without encryption. To save a password on a platform other than Windows, specify this option with `--password`.
+  Saves the certificate file password <example-value> encryption. To save a password on a platform other than Windows, specify this option with `--password`.
 
   > **Warning:**
   > Avoid clear-text passwords when possible. Restrict access to configuration files that contain passwords, and don't commit passwords or private keys to source control.

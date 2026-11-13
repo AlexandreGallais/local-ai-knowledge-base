@@ -27,8 +27,8 @@ Start by containerizing a Node.js application.
 
 ## Prerequisites
 
-- Basic understanding of JavaScript and TypeScript.
-- Basic knowledge of Node.js and npm.
+- Basic <example-value> of JavaScript and TypeScript.
+- Basic <example-value> of Node.js and npm.
 - Familiarity with Docker concepts such as images, containers, and Dockerfiles. If you're new to Docker, start with the Docker basics guide.
 
 ## Containerize a Node.js application
@@ -36,7 +36,7 @@ Start by containerizing a Node.js application.
 ### Prerequisites
 
 - You have installed the latest version of Docker Desktop.
-- You're familiar with basic Docker concepts. If you're new to Docker, start
+- You're familiar with basic <example-value> concepts. If you're new to Docker, start
   with Build and share a containerized application.
 
 ### Overview

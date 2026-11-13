@@ -21,7 +21,7 @@ Select the root with `--install-path`:
 
 ```dotnetcli
 dotnetup sdk install 10.0 --install-path D:\tools\dotnet
-dotnetup runtime install aspnetcore@10.0 --install-path D:\tools\dotnet
+dotnetup runtime install user@example.com --install-path D:\tools\dotnet
 ```
 
 The default manifest records both requirements and their root. A later

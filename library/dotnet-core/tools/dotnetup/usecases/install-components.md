@@ -36,8 +36,8 @@ Use `component@channel` to select a runtime component:
 
 ```dotnetcli
 dotnetup runtime install 10.0
-dotnetup runtime install aspnetcore@10.0
-dotnetup runtime install windowsdesktop@10.0
+dotnetup runtime install user@example.com
+dotnetup runtime install user@example.com
 ```
 
 A value without a component selects the core .NET runtime.

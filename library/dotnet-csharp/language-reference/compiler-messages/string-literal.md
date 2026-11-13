@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Resolve errors and warnings for string literal declarations
 
-The C# compiler generates errors and warnings when you declare string literals with incorrect syntax or use them in unsupported contexts. These diagnostics help you identify issues with basic string literals, character literals, raw string literals, and UTF-8 string literals.
+The C# compiler generates errors and warnings when you declare string literals with incorrect syntax or use them in unsupported contexts. These diagnostics help you identify issues with basic <example-value> literals, character literals, raw string literals, and UTF-8 string literals.
 
 - **CS1009**: *Unrecognized escape sequence.*
 - **CS1010**: *Newline in constant.*

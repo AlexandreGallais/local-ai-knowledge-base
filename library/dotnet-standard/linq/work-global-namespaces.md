@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Work with global namespaces in Visual Basic (LINQ to XML)
 
-One of the key features of XML literals in Visual Basic is the capability to declare XML namespaces by using the `Imports` statement. Using this feature, you can declare an XML namespace that uses a prefix, or you can declare a default XML namespace.
+One of the key <example-value> of XML literals in Visual Basic is the capability to declare XML namespaces by using the `Imports` statement. Using this feature, you can declare an XML namespace that uses a prefix, or you can declare a default XML namespace.
 
 This capability is useful in two situations:
 

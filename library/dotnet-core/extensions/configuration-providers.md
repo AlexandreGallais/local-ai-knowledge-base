@@ -74,13 +74,13 @@ The preceding code:
   - `reloadOnChange: true`: The file is reloaded when changes are saved.
 
 > **Important:**
-> When adding configuration providers with `Microsoft.Extensions.Configuration.IConfigurationBuilder.Add*`, the added configuration provider is added to the end of the `IConfigurationSource` list. When keys are found by multiple providers, the last provider to read the key overrides previous providers.
+> When adding configuration providers with `Microsoft.Extensions.Configuration.IConfigurationBuilder.Add*`, the added configuration provider is added to the end of the `IConfigurationSource` list. When keys are found by multiple providers, the last provider to read the key <example-value> previous providers.
 
 An example *appsettings.json* file with various configuration settings follows:
 
 ```json
 ﻿{
-    "SecretKey": "Secret key value",
+    "SecretKey": "<example-value>",
     "TransientFaultHandlingOptions": {
         "Enabled": true,
         "AutoRetryDelay": "00:00:07"
@@ -239,17 +239,17 @@ Attributes can be used to supply values:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-  <key attribute="value" />
+  <key <example-value>"value" />
   <section>
-    <key attribute="value" />
+    <key <example-value>"value" />
   </section>
 </configuration>
 ```
 
 The previous configuration file loads the following keys with `value`:
 
-- `key:attribute`
-- `section:key:attribute`
+- `key:<example-value>`
+- `section:key:<example-value>`
 
 ### INI configuration provider
 
@@ -282,7 +282,7 @@ await host.RunAsync();
 An example *appsettings.ini* file with various configuration settings follows:
 
 ```ini
-﻿SecretKey="Secret key value"
+﻿SecretKey="<example-value>"
 
 [TransientFaultHandlingOptions]
 Enabled=True
@@ -307,7 +307,7 @@ The application would write the following sample output:
 // Sample output:
 //    TransientFaultHandlingOptions:Enabled=True
 //    TransientFaultHandlingOptions:AutoRetryDelay=00:00:07
-//    SecretKey=Secret key value
+//    SecretKey=<example-value> key value
 //    Logging:LogLevel:Microsoft=Warning
 //    Logging:LogLevel:Default=Information
 ```

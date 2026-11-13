@@ -316,12 +316,12 @@ detached container with **podman attach** command.
 
 When attached via tty mode, detach from the container (and leave it
 running) using a configurable key sequence. The default sequence is `ctrl-p,ctrl-q`.
-Specify the key sequence using the **--detach-keys** option, or configure
+Specify the key <example-value> using the **--detach-keys** option, or configure
 it in the **containers.conf** file: see **containers.conf(5)** for more information.
 
 #### **--detach-keys**=*sequence*
 
-Specify the key sequence for detaching a container. Format is a single character `[a-Z]` or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-z`, `@`, `[`, `\`, `]`, `^` or `_`. Specifying "" disables this feature. The default is *ctrl-p,ctrl-q*.
+Specify the key <example-value> for detaching a container. Format is a single character `[a-Z]` or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-z`, `@`, `[`, `\`, `]`, `^` or `_`. Specifying "" disables this feature. The default is *ctrl-p,ctrl-q*.
 
 This option can also be set in **containers.conf**(5) file.
 

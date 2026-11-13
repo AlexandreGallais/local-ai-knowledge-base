@@ -47,7 +47,7 @@ A few helper methods on the `DbContext` class make it easier to search for and a
 public async ValueTask<T> FindMetaAsync<T>(string key)
     where T : class, IDocSummaries
 {
-    var partitionKey = ComputePartitionKey<T>();
+    var partitionKey = <example-value><T>();
     try
     {
         return await FindAsync<T>(key, partitionKey);

@@ -80,7 +80,7 @@ class BadExample
         try
         {
             object obj = ad.CreateInstanceAndUnwrap(
-                "MyAssembly, version=1.2.3.4, culture=neutral, publicKeyToken=null",
+                "<example-value>",
                 "MyType");
         }
         catch (Exception ex)
@@ -121,7 +121,7 @@ Class BadExample
 
         Try
             Dim obj As object = ad.CreateInstanceAndUnwrap(
-                "MyAssembly, version=1.2.3.4, culture=neutral, publicKeyToken=null",
+                "<example-value>",
                 "MyType")
         Catch ex As Exception
             Console.WriteLine(ex.Message)
@@ -170,7 +170,7 @@ void main()
     try
     {
         Object^ obj = ad->CreateInstanceAndUnwrap(
-            "MyAssembly, version=1.2.3.4, culture=neutral, publicKeyToken=null",
+            "<example-value>",
             "MyType");
     }
     catch (Exception^ ex)
@@ -212,7 +212,7 @@ class CorrectExample
         try
         {
             object obj = ad.CreateInstanceAndUnwrap(
-                "MyAssembly, version=1.2.3.4, culture=neutral, publicKeyToken=null",
+                "<example-value>",
                 "MyType");
         }
         catch (Exception ex)
@@ -244,7 +244,7 @@ Class CorrectExample
 
         Try
             Dim obj As Object = ad.CreateInstanceAndUnwrap(
-                "MyAssembly, version=1.2.3.4, culture=neutral, publicKeyToken=null",
+                "<example-value>",
                 "MyType")
         Catch ex As Exception
             Console.WriteLine(ex.Message)
@@ -286,7 +286,7 @@ void main()
     try
     {
         Object^ obj = ad->CreateInstanceAndUnwrap(
-            "MyAssembly, version=1.2.3.4, culture=neutral, publicKeyToken=null",
+            "<example-value>",
             "MyType");
     }
     catch (Exception^ ex)

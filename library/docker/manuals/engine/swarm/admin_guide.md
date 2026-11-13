@@ -9,9 +9,9 @@ license: "Apache-2.0"
 
 # Administer and maintain a swarm of Docker Engines
 
-When you run a swarm of Docker Engines, manager nodes are the key components
+When you run a swarm of Docker Engines, manager nodes are the key <example-value>
 for managing the swarm and storing the swarm state. It is important to
-understand some key features of manager nodes to properly deploy and
+understand some key <example-value> of manager nodes to properly deploy and
 maintain the swarm.
 
 Refer to How nodes work

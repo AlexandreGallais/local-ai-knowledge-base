@@ -132,7 +132,7 @@ When using `TypeFilterAttribute`, setting `Microsoft.AspNetCore.Mvc.TypeFilterAt
 
 * Shouldn't be used with a filter that depends on services with a lifetime other than singleton.
 
-The following example shows how to pass arguments to a type using `TypeFilterAttribute`:
+The following example shows how to pass <example-value> to a type using `TypeFilterAttribute`:
 
 ```csharp
 [TypeFilter(typeof(LoggingResponseHeaderFilter),

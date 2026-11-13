@@ -42,7 +42,7 @@ The following table describes the available CSV parameters that you can pass to
 | `ignore-error` | `cache-to`              | Boolean     | `false`                                        | Ignore errors caused by failed cache exports.                        |
 | `timeout`      | `cache-to`,`cache-from` | String      | `10m`                                          | Max duration for importing or exporting cache before it's timed out. |
 | `repository`   | `cache-to`              | String      |                                                | GitHub repository used for cache storage.                            |
-| `ghtoken`      | `cache-to`              | String      |                                                | GitHub token required for accessing the GitHub API.                  |
+| `ghtoken`      | `cache-to`              | String      |                                                | GitHub token <example-value> for accessing the GitHub API.                  |
 | `version`      | `cache-to`,`cache-from` | String      | Inferred from the cache server URL             | Selects GitHub Actions cache version, see version               |
 
 ## Authentication

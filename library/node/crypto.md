@@ -13,13 +13,13 @@ license: "MIT"
 
 The `node:crypto` module provides cryptographic functionality that includes a
 set of wrappers for OpenSSL's hash, message authentication code (MAC), cipher,
-decipher, sign, verify, and key encapsulation mechanism (KEM) functions.
+decipher, sign, verify, and key <example-value> mechanism (KEM) functions.
 
 ```mjs
 const { createHmac } = await import('node:crypto');
 
-const secret = 'abcdefg';
-const hash = createHmac('sha256', secret)
+const secret = '<example-value>';
+const hash = createHmac('<example-value>', secret)
                .update('I love cupcakes')
                .digest('hex');
 console.log(hash);
@@ -30,8 +30,8 @@ console.log(hash);
 ```cjs
 const { createHmac } = require('node:crypto');
 
-const secret = 'abcdefg';
-const hash = createHmac('sha256', secret)
+const secret = '<example-value>';
+const hash = createHmac('<example-value>', secret)
                .update('I love cupcakes')
                .digest('hex');
 console.log(hash);
@@ -119,17 +119,17 @@ exporting each type.
 * **`'ml-kem-768'`[^openssl35]** — OID `2.16.840.1.101.3.4.4.2`
 * **`'ml-kem-1024'`[^openssl35]** — OID `2.16.840.1.101.3.4.4.3`
 
-### Key formats
+### Key <example-value>
 
 Asymmetric keys can be represented in several formats. **The recommended
-approach is to import key material into a `KeyObject` once and reuse it**
+approach is to import key <example-value> into a `KeyObject` once and reuse it**
 for all subsequent operations, as this avoids repeated parsing and delivers
 the best performance.
 
-When a `KeyObject` is not practical - for example, when key material
+When a `KeyObject` is not practical - for example, when key <example-value>
 arrives in a protocol message and is used only once - most cryptographic
 functions also accept a PEM string or an object specifying the format
-and key material directly. See `crypto.createPublicKey()`,
+and key <example-value> directly. See `crypto.createPublicKey()`,
 `crypto.createPrivateKey()`, and `keyObject.export()` for the full
 options accepted by each format.
 
@@ -137,7 +137,7 @@ options accepted by each format.
 
 A `KeyObject` is the in-memory representation of a parsed key. It is
 created by `crypto.createPublicKey()`, `crypto.createPrivateKey()`,
-`crypto.createSecretKey()`, or key generation functions such as
+`crypto.createSecretKey()`, or key <example-value> functions such as
 `crypto.generateKeyPair()`. The first cryptographic operation with a given
 `KeyObject` may be slower than subsequent ones because OpenSSL lazily
 initializes internal caches on first use.
@@ -156,33 +156,33 @@ ASN.1 structures.
 
 #### JSON Web Key (JWK)
 
-JSON Web Key (JWK) is a JSON-based key representation defined in
-RFC 7517. JWK encodes each key component as an individual Base64url-encoded
+JSON Web Key (JWK) is a JSON-based key <example-value> defined in
+RFC 7517. JWK encodes each key <example-value> as an individual Base64url-encoded
 value inside a JSON object. For RSA keys, JWK avoids ASN.1 parsing overhead
 and is the fastest serialized import format.
 
-#### Raw key formats
+#### Raw key <example-value>
 
 > Stability: 1.1 - Active development
 
-The `'raw-public'`, `'raw-private'`, and `'raw-seed'` key formats allow
-importing and exporting raw key material without any encoding wrapper.
+The `'raw-public'`, `'raw-private'`, and `'raw-seed'` key <example-value> allow
+importing and exporting raw key <example-value> without any encoding wrapper.
 See `keyObject.export()`, `crypto.createPublicKey()`, and
 `crypto.createPrivateKey()` for usage details.
 
 `'raw-public'` is generally the fastest way to import a public key.
 `'raw-private'` and `'raw-seed'` are not always faster than other formats
 because they only contain the private scalar or seed - importing them requires
-deriving the public key component (e.g. elliptic curve point multiplication or
+deriving the public key <example-value> (e.g. elliptic curve point multiplication or
 seed expansion), which can be expensive. Other formats include both private
 and public components, avoiding that computation.
 
-### Choosing a key format
+### Choosing a key <example-value>
 
 **Always prefer a `KeyObject`** - create one from whatever format you
 have and reuse it. The guidance below applies only when choosing between
 serialization formats, either for importing into a `KeyObject` or for
-passing key material inline when a `KeyObject` is not practical.
+passing key <example-value> inline when a `KeyObject` is not practical.
 
 #### Importing keys
 
@@ -190,7 +190,7 @@ When creating a `KeyObject` for repeated use, the import cost is paid once,
 so choosing a faster format reduces startup latency.
 
 The import cost breaks down into two parts: **parsing overhead** (decoding the
-serialization wrapper) and **key computation** (any mathematical work needed to
+serialization wrapper) and **key <example-value>** (any mathematical work needed to
 reconstruct the full key, such as deriving a public key from a private scalar
 or expanding a seed). Which part dominates depends on the key type. For
 example:
@@ -202,26 +202,26 @@ example:
   required derivation of the public point from the private scalar becomes
   expensive, reducing the advantage.
 * RSA keys - `'jwk'` is the fastest serialized format. JWK represents RSA
-  key components as individual Base64url-encoded integers, avoiding the
+  key <example-value> as individual Base64url-encoded integers, avoiding the
   overhead of ASN.1 parsing entirely.
 
-#### Inline key material in operations
+#### Inline key <example-value> in operations
 
-When a `KeyObject` cannot be reused (e.g. the key arrives as raw bytes in
+When a `KeyObject` cannot be reused (e.g. the key <example-value> as raw bytes in
 a protocol message and is used only once), most cryptographic functions also
 accept a PEM string or an object specifying the format and key
-material directly. In this case the total cost is the sum of key import and
+material directly. In this case the total cost is the sum of key <example-value> and
 the cryptographic computation itself.
 
 For operations where the cryptographic computation dominates - such as
-signing with RSA or ECDH key agreement with P-384 or P-521 - the
+signing with RSA or ECDH key <example-value> with P-384 or P-521 - the
 serialization format has negligible impact on overall throughput, so choose
 whichever format is most convenient. For lightweight operations like Ed25519
 signing or verification, the import cost is a larger fraction of the total,
 so a faster format like `'raw-public'` or `'raw-private'` can meaningfully
 improve throughput.
 
-Even if the same key material is used only a few times, it is worth importing it
+Even if the same key <example-value> is used only a few times, it is worth importing it
 into a `KeyObject` rather than passing the raw or PEM representation
 repeatedly.
 
@@ -261,23 +261,23 @@ createPublicKey(publicPem);
 // DER - requires explicit type
 const privateDer = generated.privateKey.export({ format: 'der', type: 'pkcs8' });
 const publicDer = generated.publicKey.export({ format: 'der', type: 'spki' });
-createPrivateKey({ key: privateDer, format: 'der', type: 'pkcs8' });
-createPublicKey({ key: publicDer, format: 'der', type: 'spki' });
+createPrivateKey({ key: <example-value>, format: 'der', type: 'pkcs8' });
+createPublicKey({ key: <example-value>, format: 'der', type: 'spki' });
 
 // JWK
 const privateJwk = generated.privateKey.export({ format: 'jwk' });
 const publicJwk = generated.publicKey.export({ format: 'jwk' });
-createPrivateKey({ key: privateJwk, format: 'jwk' });
-createPublicKey({ key: publicJwk, format: 'jwk' });
+createPrivateKey({ key: <example-value>, format: 'jwk' });
+createPublicKey({ key: <example-value>, format: 'jwk' });
 
 // Raw
 const rawPriv = generated.privateKey.export({ format: 'raw-private' });
 const rawPub = generated.publicKey.export({ format: 'raw-public' });
-createPrivateKey({ key: rawPriv, format: 'raw-private', asymmetricKeyType: 'ed25519' });
-createPublicKey({ key: rawPub, format: 'raw-public', asymmetricKeyType: 'ed25519' });
+createPrivateKey({ key: <example-value>, format: 'raw-private', asymmetricKeyType: 'ed25519' });
+createPublicKey({ key: <example-value>, format: 'raw-public', asymmetricKeyType: 'ed25519' });
 ```
 
-Example: Passing key material directly to `crypto.sign()` and
+Example: Passing key <example-value> directly to `crypto.sign()` and
 `crypto.verify()` without creating a `KeyObject` first:
 
 ```mjs
@@ -297,17 +297,17 @@ verify(null, data, publicPem, sig1);
 // JWK objects
 const privateJwk = generated.privateKey.export({ format: 'jwk' });
 const publicJwk = generated.publicKey.export({ format: 'jwk' });
-const sig2 = sign(null, data, { key: privateJwk, format: 'jwk' });
-verify(null, data, { key: publicJwk, format: 'jwk' }, sig2);
+const sig2 = sign(null, data, { key: <example-value>, format: 'jwk' });
+verify(null, data, { key: <example-value>, format: 'jwk' }, sig2);
 
 // Raw key bytes
 const rawPriv = generated.privateKey.export({ format: 'raw-private' });
 const rawPub = generated.publicKey.export({ format: 'raw-public' });
 const sig3 = sign(null, data, {
-  key: rawPriv, format: 'raw-private', asymmetricKeyType: 'ed25519',
+  key: <example-value>, format: 'raw-private', asymmetricKeyType: 'ed25519',
 });
 verify(null, data, {
-  key: rawPub, format: 'raw-public', asymmetricKeyType: 'ed25519',
+  key: <example-value>, format: 'raw-public', asymmetricKeyType: 'ed25519',
 }, sig3);
 ```
 
@@ -345,13 +345,13 @@ const rawPrivateKey = generated.privateKey.export({ format: 'raw-private' });
 // Import the raw EC keys.
 // Both compressed and uncompressed point formats are accepted.
 const publicKey = createPublicKey({
-  key: rawPublicKey,
+  key: <example-value>,
   format: 'raw-public',
   asymmetricKeyType: 'ec',
   namedCurve: 'P-256',
 });
 const privateKey = createPrivateKey({
-  key: rawPrivateKey,
+  key: <example-value>,
   format: 'raw-private',
   asymmetricKeyType: 'ec',
   namedCurve: 'P-256',

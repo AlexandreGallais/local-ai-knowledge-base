@@ -292,7 +292,7 @@ The `FindEntry` method returns either the `Microsoft.EntityFrameworkCore.ChangeT
 Console.WriteLine($"Blog '{blogEntry.Entity.Name}' with key {blogEntry.Entity.Id} is tracked in the '{blogEntry.State}' state.");
 ```
 
-Looking up an entity by anything other than a primary key requires that the property name be specified. For example, to look up by an alternate key:
+Looking up an entity by anything other than a primary key <example-value> that the property name be specified. For example, to look up by an alternate key:
 
 ```csharp
 var siteEntry = context.Websites.Local.FindEntry(nameof(Website.Uri), new Uri("https://www.bricelam.net/"))!;

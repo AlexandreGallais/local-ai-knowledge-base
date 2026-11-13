@@ -29,7 +29,7 @@ sandbox doesn't use your Anthropic key. OpenCode supports all the listed model
 providers. Hermes needs at least one Anthropic or OpenAI key. The built-in
 provider list doesn't include OpenRouter.
 
-For custom kits, the launcher shows the supported credentials listed in the
+For custom kits, the launcher shows the supported credentials <example-value> in the
 kit's definition.
 
 ## GitHub credential
@@ -44,7 +44,7 @@ repository access. You don't need to provide a separate token.
 
 ## Configure a secret
 
-To configure a credential before launching a sandbox:
+To configure a credential <example-value> launching a sandbox:
 
 1. Open **Secrets** and find the service.
 2. Select the edit icon for that service.

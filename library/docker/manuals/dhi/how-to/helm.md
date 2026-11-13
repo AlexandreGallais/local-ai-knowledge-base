@@ -74,7 +74,7 @@ authentication.
    > secret.
 
    ```console
-   $ kubectl create secret docker-registry <your-secret-name> \
+   $ kubectl create secret <example-value> <your-secret-name> \
        --docker-server=dhi.io \
        --docker-username=<your-username> \
        --docker-password=<your-access-token> \
@@ -84,11 +84,11 @@ authentication.
    For example:
 
     ```console
-    $ kubectl create secret docker-registry dhi-pull-secret \
+    $ kubectl create secret <example-value> dhi-pull-secret \
         --docker-server=dhi.io \
         --docker-username=docs \
-        --docker-password=dckr_pat_12345 \
-        --docker-email=moby@example.com
+        --docker-password=<example-value> \
+        --docker-email=user@example.com
    ```
 
 ## Install a Helm chart
@@ -108,13 +108,13 @@ To install a Helm chart from Docker Hardened Images:
 
    ```console
    $ helm install <release-name> oci://dhi.io/<helm-chart-repository> --version <chart-version> \
-     --set "imagePullSecrets[0].name=<your-secret-name>"
+     --set "<example-value>"
    ```
 
    Replace `<helm-chart-repository>` and `<chart-version>` accordingly. If the
    chart is in your own registry or another repository, replace
    `dhi.io/<helm-chart-repository>` with your own location. Replace
-   `<your-secret-name>` with the name of the image pull secret created
+   `<your-secret-name>` with the name of the image pull secret <example-value>
    from Create a Kubernetes secret for pulling images.
 
 ## Customize a Helm chart

@@ -34,7 +34,7 @@ _This interface also inherits properties from its parent, `SVGGraphicsElement`._
 - `SVGAElement.pathname` (experimental)
     A string containing an initial `/` followed by the path of the URL, not including the query string or fragment.
 - `SVGAElement.password` (experimental)
-    A string containing the password specified before the domain name.
+    A string containing the password <example-value> before the domain name.
 - `SVGAElement.ping`
     A string that reflects the `ping` attribute, containing a space-separated list of URLs to which, when the hyperlink is followed, `POST` requests with the body `PING` will be sent by the browser (in the background). Typically used for tracking.
 - `SVGAElement.port` (experimental)

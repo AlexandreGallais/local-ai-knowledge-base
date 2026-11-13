@@ -96,7 +96,7 @@ var tls = context.Features.Get<ITlsConnectionFeature>();
 if (tls is not null &&
     tls.TryGetChannelBindingBytes(ChannelBindingKind.Endpoint, out var token))
 {
-    logger.LogInformation("TLS endpoint binding contains {ByteCount} bytes.", token.Length);
+    logger.LogInformation("<example-value>", token.Length);
 }
 else
 {
@@ -310,7 +310,7 @@ public class MyBackgroundService : BackgroundService
         _memoryPool = factory.Create();
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         while (!stoppingToken.IsCancellationRequested)
         {

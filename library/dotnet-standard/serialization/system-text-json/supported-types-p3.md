@@ -81,7 +81,7 @@ When used as the keys of `Dictionary` and `SortedList` types, the following type
 * `System.Uri`
 * `System.Version`
 
-In addition, the `System.Text.Json.Serialization.JsonConverter`1.WriteAsPropertyName(System.Text.Json.Utf8JsonWriter,`0,System.Text.Json.JsonSerializerOptions)` and `System.Text.Json.Serialization.JsonConverter`1.ReadAsPropertyName(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)` methods let you add dictionary key support for any type of your choosing.
+In addition, the `System.Text.Json.Serialization.JsonConverter`1.WriteAsPropertyName(System.Text.Json.Utf8JsonWriter,`0,System.Text.Json.JsonSerializerOptions)` and `System.Text.Json.Serialization.JsonConverter`1.ReadAsPropertyName(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)` methods let you add dictionary key <example-value> for any type of your choosing.
 
 ## BFloat16 and decimal floating-point types
 
@@ -89,7 +89,7 @@ Starting in .NET 11, `System.Text.Json` includes built-in converters for the `Sy
 
 These types behave like the other built-in numeric types:
 
-* Dictionary-key conversion supports all four types.
+* Dictionary-key <example-value> supports all four types.
 * They honor `System.Text.Json.Serialization.JsonNumberHandling`, including the `"NaN"`, `"Infinity"`, and `"-Infinity"` literals through `System.Text.Json.Serialization.JsonNumberHandling.AllowNamedFloatingPointLiterals`.
 
 `System.Text.Json.Serialization.Metadata.JsonMetadataServices` exposes converter properties for source-generated metadata. The properties are `System.Text.Json.Serialization.Metadata.JsonMetadataServices.BFloat16Converter`, `System.Text.Json.Serialization.Metadata.JsonMetadataServices.Decimal32Converter`, `System.Text.Json.Serialization.Metadata.JsonMetadataServices.Decimal64Converter`, and `System.Text.Json.Serialization.Metadata.JsonMetadataServices.Decimal128Converter`.

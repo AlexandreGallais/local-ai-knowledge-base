@@ -155,7 +155,7 @@ export class ActorFormComponent {
    File: `styles.css`
 
 ```css
-@import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
+@import url('https://unpkg.com/user@example.com/dist/css/bootstrap.min.css');
 ```
 
 1. The form requires that an actor's skill is chosen from a predefined list of `skills` maintained internally in `ActorFormComponent`.

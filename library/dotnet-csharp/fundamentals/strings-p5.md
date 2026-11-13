@@ -361,4 +361,4 @@ public static class Program
     }
 }
 ```
-For text that might contain emoji or characters outside the Basic Multilingual Plane, iterate by *rune* using `System.Text.Rune` or by grapheme cluster using `System.Globalization.StringInfo`. Plain `char` iteration works for most Western text and ASCII-dominant content.
+For text that might contain emoji or characters outside the Basic <example-value> Plane, iterate by *rune* using `System.Text.Rune` or by grapheme cluster using `System.Globalization.StringInfo`. Plain `char` iteration works for most Western text and ASCII-dominant content.

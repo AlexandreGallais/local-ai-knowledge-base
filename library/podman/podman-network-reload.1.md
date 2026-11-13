@@ -63,4 +63,4 @@ fe7e8eca56f844ec33af10f0aa3b31b44a172776e3277b9550a623ed5d96e72b
 **podman(1)**, **podman-network(1)**
 
 ## HISTORY
-December 2020, Originally compiled by Paul Holzinger <paul.holzinger@web.de>
+December 2020, Originally compiled by Paul Holzinger <user@example.com>

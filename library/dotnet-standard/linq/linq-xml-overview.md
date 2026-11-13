@@ -30,7 +30,7 @@ LINQ to XML is like the Document Object Model (DOM) in that it brings the XML do
 - It provides a new object model that's lighter weight and easier to work with.
 - It takes advantage of language features in C# and Visual Basic.
 
-The most important advantage of LINQ to XML is its integration with Language-Integrated Query (LINQ). This integration enables you to write queries on the in-memory XML document to retrieve collections of elements and attributes. The query capability of LINQ to XML is comparable in functionality (although not in syntax) to XPath and XQuery. The integration of LINQ in C# and Visual Basic provides stronger typing, compile-time checking, and improved debugger support.
+The most important advantage of LINQ to XML is its integration with Language-Integrated Query (LINQ). This integration enables you to write queries on the in-memory XML document to retrieve collections of elements and attributes. The query capability of LINQ to XML is comparable in functionality (although not in syntax) to XPath and XQuery. The integration of LINQ in C# and Visual Basic <example-value> stronger typing, compile-time checking, and improved debugger support.
 
 Another advantage of LINQ to XML is the ability to use query results as parameters to `System.Xml.Linq.XElement` and `System.Xml.Linq.XAttribute` object constructors enables a powerful approach to creating XML trees. This approach, called *functional construction*, enables developers to easily transform XML trees from one shape to another.
 
@@ -160,7 +160,7 @@ Dim contacts As XElement = _
 ```
 
 > **Note:**
-> The Visual Basic version of the example uses XML literals. You can also use `System.Xml.Linq.XElement` in Visual Basic, as in the C# version.
+> The Visual Basic <example-value> of the example uses XML literals. You can also use `System.Xml.Linq.XElement` in Visual Basic, as in the C# version.
 
 For more information, see XML trees.
 

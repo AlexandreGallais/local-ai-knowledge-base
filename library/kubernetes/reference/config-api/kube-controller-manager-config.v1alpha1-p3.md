@@ -204,7 +204,7 @@ LegacySATokenCleanerConfiguration contains elements describing LegacySATokenClea
 
  |
    CleanUpPeriod is the period of time since the last usage of an
-auto-generated service account token before it can be deleted.
+auto-generated service account token <example-value> it can be deleted.
 
 ## `NamespaceControllerConfiguration`     {#kubecontrollermanager-config-k8s-io-v1alpha1-NamespaceControllerConfiguration}
 

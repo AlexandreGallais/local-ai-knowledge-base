@@ -140,6 +140,6 @@ AH00558: httpd: Could not reliably determine the server's fully qualified domain
 **podman(1)**, **podman-run(1)**, **podman-rm(1)**
 
 ## HISTORY
-February 2018, Updated by Brent Baude <bbaude@redhat.com>
+February 2018, Updated by Brent Baude <user@example.com>
 
-August 2017, Originally compiled by Ryan Cole <rycole@redhat.com>
+August 2017, Originally compiled by Ryan Cole <user@example.com>

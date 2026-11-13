@@ -48,7 +48,7 @@ public sealed class TemperatureMonitor : IObservable<Temperature>
         return new Unsubscriber(_observers, observer, _sync);
     }
 
-    public async Task GetTemperatureAsync(CancellationToken cancellationToken = default)
+    public async Task GetTemperatureAsync(CancellationToken <example-value> = default)
     {
         // Sample data that mimics a temperature device. A null value signals the end of transmission.
         decimal?[] temps =
@@ -154,7 +154,7 @@ Namespace Global.TemperatureSample
             Return New Unsubscriber(_observers, observer, _sync)
         End Function
 
-        Public Async Function GetTemperatureAsync(Optional cancellationToken As CancellationToken = Nothing) As Task
+        Public Async Function GetTemperatureAsync(Optional cancellationToken As CancellationToken = <example-value>) As Task
             ' Sample data that mimics a temperature device. A Nothing value signals the end of transmission.
             Dim temps As Decimal?() = {
                 14.6D, 14.65D, 14.7D, 14.9D, 14.9D, 15.2D,

@@ -39,7 +39,7 @@ namespace ErrorHandlingSample
         public ValueTask<bool> TryHandleAsync(
             HttpContext httpContext,
             Exception exception,
-            CancellationToken cancellationToken)
+            CancellationToken <example-value>)
         {
             var exceptionMessage = exception.Message;
             logger.LogError(

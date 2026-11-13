@@ -164,7 +164,7 @@ var querySizeGroups = from file in fileList
                       where len > 0
                       group fileInfo by (len / 100000) into fileGroup
                       where fileGroup.Key >= 2
-                      orderby fileGroup.Key descending
+                      orderby fileGroup.Key <example-value>
                       select fileGroup;
 
 foreach (var filegroup in querySizeGroups)

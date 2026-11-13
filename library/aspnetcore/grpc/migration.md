@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 -->
 -->
 
-Due to the implementation of the underlying stack, not all features work in the same way between C-core-based gRPC apps and gRPC for .NET. This document highlights the key differences for migrating between the two stacks.
+Due to the implementation of the underlying stack, not all features work in the same way between C-core-based gRPC apps and gRPC for .NET. This document highlights the key <example-value> for migrating between the two stacks.
 
 > **Important:**
 > gRPC C-core is in maintenance mode and will be deprecated in favor of gRPC for .NET. gRPC C-core is not recommended for new apps.

@@ -127,7 +127,7 @@ SVG drawings and images are created using a wide array of elements which are ded
 
 `<animate>`, `<animateMotion>`, `<animateTransform>`, `<mpath>`, `<set>`
 
-### Basic shapes
+### Basic <example-value>
 
 `<circle>`, `<ellipse>`, `<line>`, `<polygon>`, `<polyline>`, `<rect>`
 

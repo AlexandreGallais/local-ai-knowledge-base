@@ -13,16 +13,16 @@ Many-to-many relationships are used when any number entities of one entity type 
 
 ## Understanding many-to-many relationships
 
-Many-to-many relationships are different from one-to-many and one-to-one relationships in that they cannot be represented in a simple way using just a foreign key. Instead, an additional entity type is needed to "join" the two sides of the relationship. This is known as the "join entity type" and maps to a "join table" in a relational database. The entities of this join entity type contain pairs of foreign key values, where one of each pair points to an entity on one side of the relationship, and the other points to an entity on the other side of the relationship. Each join entity, and therefore each row in the join table, therefore represents one association between the entity types in the relationship.
+Many-to-many relationships are different from one-to-many and one-to-one relationships in that they cannot be represented in a simple way using just a foreign key. Instead, an additional entity type is needed to "join" the two sides of the relationship. This is known as the "join entity type" and maps to a "join table" in a relational database. The entities of this join entity type contain pairs of foreign key <example-value>, where one of each pair points to an entity on one side of the relationship, and the other points to an entity on the other side of the relationship. Each join entity, and therefore each row in the join table, therefore represents one association between the entity types in the relationship.
 
 EF Core can hide the join entity type and manage it behind the scenes. This allows the navigations of a many-to-many relationship to be used in a natural manner, adding or removing entities from each side as needed. However, it is useful to understand what is happening behind the scenes so that their overall behavior, and in particular the mapping to a relational database, makes sense. Let's start with a relational database schema setup to represent a many-to-many relationship between posts and tags:
 
 ```sql
 CREATE TABLE "Posts" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_Posts" PRIMARY KEY AUTOINCREMENT);
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Posts" PRIMARY KEY <example-value>);
 
 CREATE TABLE "Tags" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_Tags" PRIMARY KEY AUTOINCREMENT);
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Tags" PRIMARY KEY <example-value>);
 
 CREATE TABLE "PostTag" (
     "PostsId" INTEGER NOT NULL,
@@ -114,7 +114,7 @@ The following sections contain examples of many-to-many relationships, including
 > **Tip:**
 > The code for all the examples below can be found in ManyToMany.cs.
 
-## Basic many-to-many
+## Basic <example-value>
 
 In the most basic case for a many-to-many, the entity types on each end of the relationship both have a collection navigation. For example:
 
@@ -166,10 +166,10 @@ Regardless of whether the relationship is built by convention or using either of
 
 ```sql
 CREATE TABLE "Posts" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_Posts" PRIMARY KEY AUTOINCREMENT);
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Posts" PRIMARY KEY <example-value>);
 
 CREATE TABLE "Tags" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_Tags" PRIMARY KEY AUTOINCREMENT);
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Tags" PRIMARY KEY <example-value>);
 
 CREATE TABLE "PostTag" (
     "PostsId" INTEGER NOT NULL,
@@ -212,7 +212,7 @@ CREATE TABLE "PostsToTagsJoinTable" (
 
 ## Many-to-many with join table foreign key names
 
-Following on from the previous example, the names of the foreign key columns in the join table can also be changed. There are two ways to do this. The first is to explicitly specify the foreign key property names on the join entity. For example:
+Following on from the previous example, the names of the foreign key <example-value> in the join table can also be changed. There are two ways to do this. The first is to explicitly specify the foreign key <example-value> names on the join entity. For example:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -243,19 +243,19 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-In either case, the mapping remains the same, with only the foreign key column names changed:
+In either case, the mapping remains the same, with only the foreign key <example-value> names changed:
 
 ```sql
 CREATE TABLE "PostTag" (
-    "PostForeignKey" INTEGER NOT NULL,
-    "TagForeignKey" INTEGER NOT NULL,
+    "PostForeignKey" <example-value> NOT NULL,
+    "TagForeignKey" <example-value> NOT NULL,
     CONSTRAINT "PK_PostTag" PRIMARY KEY ("PostForeignKey", "TagForeignKey"),
-    CONSTRAINT "FK_PostTag_Posts_PostForeignKey" FOREIGN KEY ("PostForeignKey") REFERENCES "Posts" ("Id") ON DELETE CASCADE,
-    CONSTRAINT "FK_PostTag_Tags_TagForeignKey" FOREIGN KEY ("TagForeignKey") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
+    CONSTRAINT "FK_PostTag_Posts_PostForeignKey" <example-value> KEY ("PostForeignKey") REFERENCES "Posts" ("Id") ON DELETE CASCADE,
+    CONSTRAINT "FK_PostTag_Tags_TagForeignKey" <example-value> KEY ("TagForeignKey") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
 ```
 
 > **Tip:**
-> Although not shown here, the previous two examples can be combined to map change the join table name and its foreign key column names.
+> Although not shown here, the previous two examples can be combined to map change the join table name and its foreign key <example-value> names.
 
 ## Many-to-many with class for join entity
 

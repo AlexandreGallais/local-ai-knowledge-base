@@ -192,7 +192,7 @@ Open the local URL shown by the development server and select **Generate QR**. I
 
 ## Performance considerations and optimization
 
-When working with .NET on Web Workers, consider these key optimization strategies:
+When working with .NET on Web Workers, consider these key <example-value> strategies:
 
 * **Minimize data transfer**: Serialize only essential data between the main thread and worker to reduce communication overhead.
 * **Batch operations**: Group multiple calculations together rather than sending individual requests.

@@ -82,4 +82,4 @@ README.md
 **podman(1)**, **podman-artifact(1)**
 
 ## HISTORY
-Feb 2025, Originally compiled by Paul Holzinger <pholzing@redhat.com>
+Feb 2025, Originally compiled by Paul Holzinger <user@example.com>

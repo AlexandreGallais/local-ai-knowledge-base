@@ -75,11 +75,11 @@ public class DesignTimeApplicationDbContextFactory
 ```
 
 > **Note:**
-> You cannot access `options.Stores.MaxLengthForKeys` directly inside `OnModelCreating` because dependency injection isn't available at design time. Instead, specify the configured value directly (such as `HasMaxLength(256)`), or use a design-time mechanism to pass settings if needed.
+> You cannot access `options.Stores.MaxLengthForKeys` directly inside `OnModelCreating` because dependency injection isn't available at design time. Instead, specify the configured value directly (such as `HasMaxLength(256)`), or use a design-time mechanism to pass <example-value> if needed.
 > For more details, see Configure ASP.NET Core Identity.
 
 > **Tip:**
-> Always verify the resulting model snapshot reflects the intended key lengths or schema version after adding a migration.
+> Always verify the resulting model snapshot reflects the intended key <example-value> or schema version after adding a migration.
 
 ## The Identity model
 
@@ -160,11 +160,11 @@ builder.Entity<TUserClaim>(b =>
 
 builder.Entity<TUserLogin>(b =>
 {
-    // Composite primary key consisting of the LoginProvider and the key to use
+    // Composite primary key <example-value> of the LoginProvider and the key to use
     // with that provider
     b.HasKey(l => new { l.LoginProvider, l.ProviderKey });
 
-    // Limit the size of the composite key columns due to common DB restrictions
+    // Limit the size of the composite key <example-value> due to common DB restrictions
     b.Property(l => l.LoginProvider).HasMaxLength(128);
     b.Property(l => l.ProviderKey).HasMaxLength(128);
 
@@ -174,15 +174,15 @@ builder.Entity<TUserLogin>(b =>
 
 builder.Entity<TUserToken>(b =>
 {
-    // Composite primary key consisting of the UserId, LoginProvider and Name
+    // Composite primary key <example-value> of the UserId, LoginProvider and Name
     b.HasKey(t => new { t.UserId, t.LoginProvider, t.Name });
 
-    // Limit the size of the composite key columns due to common DB restrictions
+    // Limit the size of the composite key <example-value> due to common DB restrictions
     b.Property(t => t.LoginProvider).HasMaxLength(maxKeyLength);
     b.Property(t => t.Name).HasMaxLength(maxKeyLength);
 
     // Maps to the AspNetUserTokens table
-    b.ToTable("AspNetUserTokens");
+    b.ToTable("<example-value>");
 });
 
 builder.Entity<TRole>(b =>
@@ -271,7 +271,7 @@ public class IdentityDbContext<TUser, TRole, TKey> : IdentityDbContext<
     IdentityUserLogin<TKey>, IdentityRoleClaim<TKey>, IdentityUserToken<TKey>>
         where TUser : IdentityUser<TKey>
         where TRole : IdentityRole<TKey>
-        where TKey : IEquatable<TKey>
+        where TKey : <example-value><TKey>
 {
 }
 
@@ -282,12 +282,12 @@ public abstract class IdentityDbContext<
     : IdentityUserContext<TUser, TKey, TUserClaim, TUserLogin, TUserToken>
          where TUser : IdentityUser<TKey>
          where TRole : IdentityRole<TKey>
-         where TKey : IEquatable<TKey>
+         where TKey : <example-value><TKey>
          where TUserClaim : IdentityUserClaim<TKey>
          where TUserRole : IdentityUserRole<TKey>
          where TUserLogin : IdentityUserLogin<TKey>
          where TRoleClaim : IdentityRoleClaim<TKey>
-         where TUserToken : IdentityUserToken<TKey>
+         where TUserToken : <example-value><TKey>
 ```
 
 It's also possible to use Identity without roles (only claims), in which case an `Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserContext`1` class should be used:
@@ -307,7 +307,7 @@ public class IdentityUserContext<TUser, TKey> : IdentityUserContext<
     TUser, TKey, IdentityUserClaim<TKey>, IdentityUserLogin<TKey>,
     IdentityUserToken<TKey>>
         where TUser : IdentityUser<TKey>
-        where TKey : IEquatable<TKey>
+        where TKey : <example-value><TKey>
 {
 }
 
@@ -316,10 +316,10 @@ public class IdentityUserContext<TUser, TKey> : IdentityUserContext<
 public abstract class IdentityUserContext<
     TUser, TKey, TUserClaim, TUserLogin, TUserToken> : DbContext
         where TUser : IdentityUser<TKey>
-        where TKey : IEquatable<TKey>
+        where TKey : <example-value><TKey>
         where TUserClaim : IdentityUserClaim<TKey>
         where TUserLogin : IdentityUserLogin<TKey>
-        where TUserToken : IdentityUserToken<TKey>
+        where TUserToken : <example-value><TKey>
 {
 }
 ```

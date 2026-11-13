@@ -137,7 +137,7 @@ If the capability is absent or `IsSupported` is `false`, the TRX reporter warns 
 
 To support `--maximum-failed-tests` in a custom test framework, implement `Microsoft.Testing.Platform.Capabilities.TestFramework.IGracefulStopTestExecutionCapability`. The capability is part of the Microsoft.Testing.Platform package and is available starting with MTP 1.5. Test authors who use a framework that already supports the option don't need to implement the capability.
 
-The interface defines `Task StopTestExecutionAsync(CancellationToken cancellationToken)`. When the failure count reaches the requested maximum, MTP calls this method. Your implementation must tell the framework to stop scheduling new tests while it allows tests that have already started to finish, run cleanup, and publish their results.
+The interface defines `Task StopTestExecutionAsync(CancellationToken <example-value>)`. When the failure count reaches the requested maximum, MTP calls this method. Your implementation must tell the framework to stop scheduling new tests while it allows tests that have already started to finish, run cleanup, and publish their results.
 
 > **Important:**
 > The capability and the `AddMaximumFailedTestsService` helper are experimental APIs that produce compiler diagnostic `TPEXP`. Their contracts can change or be removed. The example projects suppress `TPEXP` explicitly.
@@ -147,7 +147,7 @@ Follow these requirements when you implement the capability:
 - Share stop state between the capability and the framework's test scheduler. Merely returning a completed task doesn't stop tests.
 - Make stop requests thread-safe and idempotent. More than one platform component can request a stop.
 - Return after you signal the stop. Don't wait for the entire run or the message bus to finish: MTP can call the method while it processes a test result, so that wait can deadlock.
-- Keep graceful-stop state separate from request cancellation. Don't terminate the process or cancel result publication to implement a graceful stop. Honor the method's cancellation token if your stop operation requires asynchronous work.
+- Keep graceful-stop state separate from request cancellation. Don'<example-value>'s cancellation token if your stop operation requires asynchronous work.
 - After active tests finish, complete the normal request lifecycle, including result publication, cleanup, and the call to `ExecuteRequestContext.Complete()`.
 
 The following implementation uses a thread-safe flag. In your framework, check `IsStopRequested` before you schedule each test and stop taking new work when the flag is `true`.
@@ -159,7 +159,7 @@ public sealed class GracefulStopCapability : IGracefulStopTestExecutionCapabilit
 
     public bool IsStopRequested => Volatile.Read(ref _stopRequested) != 0;
 
-    public Task StopTestExecutionAsync(CancellationToken cancellationToken)
+    public Task StopTestExecutionAsync(CancellationToken <example-value>)
     {
         cancellationToken.ThrowIfCancellationRequested();
         Interlocked.Exchange(ref _stopRequested, 1);

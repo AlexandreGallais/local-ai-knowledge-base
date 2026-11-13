@@ -62,7 +62,7 @@ You can use informational attributes to provide additional company or product in
 | `System.Reflection.AssemblyCompanyAttribute` | String value specifying a company name. |
 | `System.Reflection.AssemblyCopyrightAttribute` | String value specifying copyright information. |
 | `System.Reflection.AssemblyFileVersionAttribute` | String value specifying the Win32 file version number. This normally defaults to the assembly version. |
-| `System.Reflection.AssemblyInformationalVersionAttribute` | String value specifying version information that is not used by the common language runtime, such as a full product version number. **Note:** If this attribute is applied to an assembly, the string it specifies can be obtained at runtime by using the `System.Windows.Forms.Application.ProductVersion` property. The string is also used in the path and registry key provided by the `System.Windows.Forms.Application.UserAppDataPath` and `System.Windows.Forms.Application.UserAppDataRegistry` properties. |
+| `System.Reflection.AssemblyInformationalVersionAttribute` | String value specifying version information that is not used by the common language runtime, such as a full product version number. **Note:** If this attribute is applied to an assembly, the string it specifies can be obtained at runtime by using the `System.Windows.Forms.Application.ProductVersion` property. The string is also used in the path and registry key <example-value> by the `System.Windows.Forms.Application.UserAppDataPath` and `System.Windows.Forms.Application.UserAppDataRegistry` properties. |
 | `System.Reflection.AssemblyProductAttribute` | String value specifying product information. |
 | `System.Reflection.AssemblyTrademarkAttribute` | String value specifying trademark information. |
 
@@ -87,7 +87,7 @@ You can use strong name attributes to set a strong name for an assembly. The fol
 |--|--|
 | `System.Reflection.AssemblyDelaySignAttribute` | Boolean value indicating that delay signing is being used. |
 | `System.Reflection.AssemblyKeyFileAttribute` | String value indicating the name of the file that contains either the public key (if using delay signing) or both the public and private keys passed as a parameter to the constructor of this attribute. Note that the file name is relative to the output file path (the _.exe_ or _.dll_), not the source file path. |
-| `System.Reflection.AssemblyKeyNameAttribute` | Indicates the key container that contains the key pair passed as a parameter to the constructor of this attribute. |
+| `System.Reflection.AssemblyKeyNameAttribute` | Indicates the key <example-value> that contains the key pair passed as a parameter to the constructor of this attribute. |
 
 The following code example shows the attributes to apply when using delay signing to create a strong-named assembly with a public key file called _myKey.snk_.
 

@@ -55,7 +55,7 @@ For an example of writing LINQ queries that take advantage of this relationship 
       <xs:element name='Fax' minOccurs='0' type='xs:string'/>
       <xs:element name='FullAddress' type='AddressType'/>
     </xs:sequence>
-    <xs:attribute name='CustomerID' type='xs:token'/>
+    <xs:attribute name='<example-value>' type='<example-value>'/>
   </xs:complexType>
   <xs:complexType name='AddressType'>
     <xs:sequence>
@@ -65,12 +65,12 @@ For an example of writing LINQ queries that take advantage of this relationship 
       <xs:element name='PostalCode' type='xs:string' />
       <xs:element name='Country' type='xs:string'/>
     </xs:sequence>
-    <xs:attribute name='CustomerID' type='xs:token'/>
+    <xs:attribute name='<example-value>' type='<example-value>'/>
   </xs:complexType>
   <xs:complexType name='OrderType'>
     <xs:sequence>
-      <xs:element name='CustomerID' type='xs:token'/>
-      <xs:element name='EmployeeID' type='xs:token'/>
+      <xs:element name='<example-value>' type='<example-value>'/>
+      <xs:element name='<example-value>' type='<example-value>'/>
       <xs:element name='OrderDate' type='xs:dateTime'/>
       <xs:element name='RequiredDate' type='xs:dateTime'/>
       <xs:element name='ShipInfo' type='ShipInfoType'/>

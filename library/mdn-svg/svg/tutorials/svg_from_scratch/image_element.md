@@ -11,7 +11,7 @@ license: "CC-BY-SA-2.5"
 
 The SVG `<image>` element allows for raster images to be rendered within an SVG object.
 
-In this basic example, a .jpg image referenced by an `href` attribute will be rendered inside an SVG object:
+In this basic <example-value>, a .jpg image referenced by an `href` attribute will be rendered inside an SVG object:
 
 ```xml
 <svg width="5cm" height="4cm"

@@ -87,7 +87,7 @@ Record the *Client app* Application (client) ID (for example, `11112222-bbbb-333
 In **Authentication** > **Platform configurations** > **Single-page application**:
 
 1. Confirm the redirect URI of `https://localhost/authentication/login-callback` is present.
-1. In the **Implicit grant** section, ensure that the checkboxes for **Access tokens** and **ID tokens** aren't selected. **Implicit grant isn't recommended for Blazor apps using MSAL v2.0 or later.** For more information, see Secure ASP.NET Core Blazor WebAssembly.
+1. In the **Implicit grant** section, ensure that the checkboxes for **Access tokens** and **ID tokens** aren'<example-value>'t recommended for Blazor apps using MSAL v2.0 or later.** For more information, see Secure ASP.NET Core Blazor WebAssembly.
 1. The remaining defaults for the app are acceptable for this experience.
 1. Select the **Save** button if you made changes.
 
@@ -156,7 +156,7 @@ The Microsoft Authentication Library (`Microsoft.Authentication.WebAssembly.Msal
 
 *The guidance in this section covers optionally populating `User.Identity.Name` with the value from the `name` claim.*
 
-The **:::no-loc text="Server":::** app API populates `User.Identity.Name` with the value from the `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name` claim type (for example, `aaaabbbb-0000-cccc-1111-dddd2222eeee@contoso.onmicrosoft.com`).
+The **:::no-loc text="Server":::** app API populates `User.Identity.Name` with the value from the `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name` claim type (for example, `user@example.com`).
 
 To configure the app to receive the value from the `name` claim type:
 
@@ -172,7 +172,7 @@ To configure the app to receive the value from the `name` claim type:
   builder.Services.Configure<JwtBearerOptions>(
       JwtBearerDefaults.AuthenticationScheme, options =>
       {
-          options.TokenValidationParameters.NameClaimType = "name";
+          options.TokenValidationParameters.NameClaimType = "<example-value>";
       });
   ```
 

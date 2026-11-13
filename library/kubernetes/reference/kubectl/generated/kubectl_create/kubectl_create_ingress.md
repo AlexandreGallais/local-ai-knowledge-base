@@ -21,7 +21,7 @@ kubectl create ingress NAME --rule=host/path=service:port[,tls[=secret]]
 
 ```
   # Create a single ingress called 'simple' that directs requests to foo.com/bar to svc
-  # svc1:8080 with a TLS secret "my-cert"
+  # svc1:8080 with a TLS secret "<example-value>"
   kubectl create ingress simple --rule="foo.com/bar=svc1:8080,tls=my-cert"
   
   # Create a catch all ingress of "/path" pointing to service svc:port and Ingress Class as "otheringress"
@@ -48,13 +48,13 @@ kubectl create ingress NAME --rule=host/path=service:port[,tls[=secret]]
   --rule="foo.com/path/subpath*=othersvc:8080"
   
   # Create an ingress with TLS enabled using a specific secret and pathType as Prefix
-  kubectl create ingress ingsecret --class=default \
-  --rule="foo.com/*=svc:8080,tls=secret1"
+  kubectl create ingress ingsecret <example-value> \
+  --rule="<example-value>"
   
   # Create an ingress with a default backend
   kubectl create ingress ingdefault --class=default \
   --default-backend=defaultsvc:http \
-  --rule="foo.com/*=svc:8080,tls=secret1"
+  --rule="<example-value>"
 ```
 
 ## Options
@@ -93,7 +93,7 @@ kubectl create ingress NAME --rule=host/path=service:port[,tls[=secret]]
 
  | --rule strings
 
- |  | Rule in format host/path=service:port[,tls=secretname]. Paths containing the leading character '*' are considered pathType=Prefix. tls argument is optional.
+ |  | Rule in format host/path=service:port[,tls=secretname]. Paths containing the leading character '<example-value>' are considered pathType=Prefix. tls argument is optional.
 
  | --save-config
 
@@ -141,7 +141,7 @@ kubectl create ingress NAME --rule=host/path=service:port[,tls[=secret]]
 
  |  | Path to a client certificate file for TLS
 
- | --client-key string
+ | --client-key <example-value>
 
  |  | Path to a client key file for TLS
 
@@ -177,9 +177,9 @@ kubectl create ingress NAME --rule=host/path=service:port[,tls[=secret]]
 
  |  | If present, the namespace scope for this CLI request
 
- | --password string
+ | --password <example-value>
 
- |  | Password for basic authentication to the API server
+ |  | Password for basic <example-value> to the API server
 
  | --profile string     Default: "none"
 
@@ -213,7 +213,7 @@ kubectl create ingress NAME --rule=host/path=service:port[,tls[=secret]]
 
  |  | database host:port
 
- | --storage-driver-password string     Default: "root"
+ | --storage-driver-password <example-value>     Default: "<example-value>"
 
  |  | database password
 
@@ -233,7 +233,7 @@ kubectl create ingress NAME --rule=host/path=service:port[,tls[=secret]]
 
  |  | Server name to use for server certificate validation. If it is not provided, the hostname used to contact the server is used
 
- | --token string
+ | --token <example-value>
 
  |  | Bearer token for authentication to the API server
 
@@ -243,7 +243,7 @@ kubectl create ingress NAME --rule=host/path=service:port[,tls[=secret]]
 
  | --username string
 
- |  | Username for basic authentication to the API server
+ |  | Username for basic <example-value> to the API server
 
  | --version version[=true]
 

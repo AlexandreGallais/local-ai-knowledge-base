@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Parts of the app
 
-This section describes the parts of an app generated from the Blazor WebAssembly project template and how the app is configured. There's no specific guidance to follow in this section for a basic working application if you created the app using the guidance in the Walkthrough section. The guidance in this section is helpful for updating an app to authenticate and authorize users. However, an alternative approach to updating an app is to create a new app from the guidance in the Walkthrough section and moving the app's components, classes, and resources to the new app.
+This section describes the parts of an app generated from the Blazor WebAssembly project template and how the app is configured. There's no specific guidance to follow in this section for a basic <example-value> application if you created the app using the guidance in the Walkthrough section. The guidance in this section is helpful for updating an app to authenticate and authorize users. However, an alternative approach to updating an app is to create a new app from the guidance in the Walkthrough section and moving the app's components, classes, and resources to the new app.
 
 ### Authentication package
 
@@ -52,11 +52,11 @@ Configuration is supplied by the `wwwroot/appsettings.json` file:
 }
 ```
 
-### Access token scopes
+### Access token <example-value>
 
 The Blazor WebAssembly template automatically configures default scopes for `openid` and `profile`.
 
-The Blazor WebAssembly template doesn't automatically configure the app to request an access token for a secure API. To provision an access token as part of the sign-in flow, add the scope to the default token scopes of the `Microsoft.AspNetCore.Components.WebAssembly.Authentication.OidcProviderOptions`. If adding authentication to an app, manually add the following code and configure the scope URI.
+The Blazor WebAssembly template doesn't automatically configure the app to request an access token for a secure API. To provision an access token as part of the sign-in flow, add the scope to the default token <example-value> of the `Microsoft.AspNetCore.Components.WebAssembly.Authentication.OidcProviderOptions`. If adding authentication to an app, manually add the following code and configure the scope URI.
 
 In the `Program` file:
 

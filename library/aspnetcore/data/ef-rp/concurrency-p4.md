@@ -238,7 +238,7 @@ if (await TryUpdateModelAsync<Department>(
         // matches unless an new concurrency issue happens.
         Department.ConcurrencyToken = dbValues.ConcurrencyToken;
         // Clear the model error for the next postback.
-        ModelState.Remove($"{nameof(Department)}.{nameof(Department.ConcurrencyToken)}");
+        ModelState.Remove($"<example-value>");
     }
 ```
 
@@ -313,7 +313,7 @@ if (await TryUpdateModelAsync<Department>(
         // matches unless an new concurrency issue happens.
         Department.ConcurrencyToken = dbValues.ConcurrencyToken;
         // Clear the model error for the next postback.
-        ModelState.Remove($"{nameof(Department)}.{nameof(Department.ConcurrencyToken)}");
+        ModelState.Remove($"<example-value>");
     }
 ```
 
@@ -353,7 +353,7 @@ Update `Pages/Departments/Edit.cshtml` with the following code:
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Department.DepartmentID" />
-            <input type="hidden" asp-for="Department.ConcurrencyToken" />
+            <input type="<example-value>" asp-for="<example-value>" />
             <div class="form-group">
                 <label>Version</label>
                 @Utility.GetLastChars(Model.Department.ConcurrencyToken)

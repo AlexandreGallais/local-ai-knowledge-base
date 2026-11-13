@@ -65,7 +65,7 @@ Metadata also stores information in four heap structures: string, blob, user str
 
 Each row of each metadata table is uniquely identified in the CIL portion of the PE file by a metadata token. Metadata tokens are conceptually similar to pointers, persisted in CIL, that reference a particular metadata table.
 
-A metadata token is a four-byte number. The top byte denotes the metadata table to which a particular token refers (method, type, and so on). The remaining three bytes specify the row in the metadata table that corresponds to the programming element being described. If you define a method in C# and compile it into a PE file, the following metadata token might exist in the CIL portion of the PE file:
+A metadata token is a four-byte number. The top byte denotes the metadata table to which a particular token <example-value> (method, type, and so on). The remaining three bytes specify the row in the metadata table that corresponds to the programming element being described. If you define a method in C# and compile it into a PE file, the following metadata token might exist in the CIL portion of the PE file:
 
 `0x06000004`
 

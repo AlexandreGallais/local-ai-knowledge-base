@@ -13,17 +13,17 @@ license: "CC-BY-4.0"
 
 Create a TLS secret from the given public/private key pair.
 
- The public/private key pair must exist beforehand. The public key certificate must be .PEM encoded and match the given private key.
+ The public/private key pair must exist beforehand. The public key <example-value> must be .PEM encoded and match the given private key.
 
 ```
-kubectl create secret tls NAME --cert=path/to/cert/file --key=path/to/key/file [--dry-run=server|client|none]
+kubectl create secret tls NAME --cert=path/to/cert/file --key=<example-value> [--dry-run=server|client|none]
 ```
 
 ## examples
 
 ```
   # Create a new TLS secret named tls-secret with the given key pair
-  kubectl create secret tls tls-secret --cert=path/to/tls.crt --key=path/to/tls.key
+  kubectl create secret tls tls-secret <example-value>/tls.crt --key=<example-value>/tls.key
 ```
 
 ## Options
@@ -52,9 +52,9 @@ kubectl create secret tls NAME --cert=path/to/cert/file --key=path/to/key/file [
 
  |  | help for tls
 
- | --key string
+ | --key <example-value>
 
- |  | Path to private key associated with given certificate.
+ |  | Path to private key <example-value> with given certificate.
 
  | -o, --output string
 
@@ -106,7 +106,7 @@ kubectl create secret tls NAME --cert=path/to/cert/file --key=path/to/key/file [
 
  |  | Path to a client certificate file for TLS
 
- | --client-key string
+ | --client-key <example-value>
 
  |  | Path to a client key file for TLS
 
@@ -142,9 +142,9 @@ kubectl create secret tls NAME --cert=path/to/cert/file --key=path/to/key/file [
 
  |  | If present, the namespace scope for this CLI request
 
- | --password string
+ | --password <example-value>
 
- |  | Password for basic authentication to the API server
+ |  | Password for basic <example-value> to the API server
 
  | --profile string     Default: "none"
 
@@ -178,7 +178,7 @@ kubectl create secret tls NAME --cert=path/to/cert/file --key=path/to/key/file [
 
  |  | database host:port
 
- | --storage-driver-password string     Default: "root"
+ | --storage-driver-password <example-value>     Default: "<example-value>"
 
  |  | database password
 
@@ -198,7 +198,7 @@ kubectl create secret tls NAME --cert=path/to/cert/file --key=path/to/key/file [
 
  |  | Server name to use for server certificate validation. If it is not provided, the hostname used to contact the server is used
 
- | --token string
+ | --token <example-value>
 
  |  | Bearer token for authentication to the API server
 
@@ -208,7 +208,7 @@ kubectl create secret tls NAME --cert=path/to/cert/file --key=path/to/key/file [
 
  | --username string
 
- |  | Username for basic authentication to the API server
+ |  | Username for basic <example-value> to the API server
 
  | --version version[=true]
 

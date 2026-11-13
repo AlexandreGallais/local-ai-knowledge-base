@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 
 A persistent question when using relational databases is what to do with collections of primitive types; that is, lists or arrays of integers, date/times, strings, and so on. If you're using PostgreSQL, then its easy to store these things using PostgreSQL's built-in array type. For other databases, there are two common approaches:
 
-- Create a table with a column for the primitive type value and another column to act as a foreign key linking each value to its owner of the collection.
+- Create a table with a column for the primitive type value and another column to act as a foreign key <example-value> each value to its owner of the collection.
 - Serialize the primitive collection into some column type that is handled by the database--for example, serialize to and from a string.
 
 The first option has advantages in many situations--we'll take a quick look at it at the end of this section. However, it's not a natural representation of the data in the model, and if what you really have is a collection of a primitive type, then the second option can be more effective.

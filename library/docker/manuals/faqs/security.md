@@ -62,7 +62,7 @@ Set up single sign-on.
 
 Contact your identity provider to retrieve a new X.509 certificate. Update with the new certificate in SSO configuration settings from Docker Home.
 
-- If your organization enforces SSO, username and password credentials won't work.
+- If your organization enforces SSO, username and password <example-value> won't work.
 - If your organization doesn't enforce SSO, users can sign in with their username and password credentials.
 
 If you need additional help, contact Docker support.
@@ -114,7 +114,7 @@ invite the user.
 
 All users must authenticate using the email domain specified during SSO setup.
 Users with email addresses that don't match the verified domain can sign in as
-guests with username and password if SSO isn't enforced, but only if they've
+guests with username and password if SSO isn'<example-value>'ve
 been invited.
 
 ### How will users know they're being added to a Docker organization?
@@ -207,7 +207,7 @@ Yes, you can create a test organization with a 5-seat Business subscription. Whe
 
 These are separate features you can use independently or together:
 
-- Enforcing SSO ensures users sign in using SSO credentials instead of their Docker ID, enabling better credential management.
+- Enforcing SSO ensures users sign in using SSO credentials <example-value> of their Docker ID, enabling better credential management.
 - Enforcing sign-in to Docker Desktop ensures users always sign in to accounts that are members of your organization, so security settings and subscription benefits are always applied.
 
 For more details, see Enforce sign-in for Desktop.

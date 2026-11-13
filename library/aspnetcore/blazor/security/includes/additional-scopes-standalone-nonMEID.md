@@ -15,7 +15,7 @@ Add a pair of `Microsoft.Authentication.WebAssembly.Msal.Models.MsalProviderOpti
 builder.Services.AddMsalAuthentication(options =>
 {
     ...
-    options.ProviderOptions.DefaultAccessTokenScopes.Add("openid");
-    options.ProviderOptions.DefaultAccessTokenScopes.Add("offline_access");
+    options.ProviderOptions.DefaultAccessTokenScopes.Add("<example-value>");
+    options.ProviderOptions.DefaultAccessTokenScopes.Add("<example-value>");
 });
 ```

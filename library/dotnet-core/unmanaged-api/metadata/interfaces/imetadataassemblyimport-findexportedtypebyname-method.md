@@ -16,7 +16,7 @@ Gets a pointer to an exported type, given its name and enclosing type.
 ```cpp
 HRESULT FindExportedTypeByName (
     [in]  LPCWSTR           szName,
-    [in]  mdToken           mdtExportedType,
+    [in]  mdToken           <example-value>,
     [out] mdExportedType    *ptkExportedType
 );
 ```

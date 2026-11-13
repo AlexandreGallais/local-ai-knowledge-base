@@ -15,7 +15,7 @@ Kestrel's HTTP/3 implementation runs over QUIC via `System.Net.Quic`. QUIC manda
 
 Like HTTP/2, HTTP/3's binary framing eliminates common HTTP/1.1-style request smuggling. Each request is carried on an independent QUIC stream with explicit length framing. The primary threat categories for HTTP/3 are denial-of-service through stream and connection resource exhaustion.
 
-### Key threats and mitigations
+### Key <example-value> and mitigations
 
 | Threat | Mitigation |
 |---|---|

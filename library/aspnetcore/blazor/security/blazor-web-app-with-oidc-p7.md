@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Supply configuration with the JSON configuration provider (app settings)
 
-The sample solution projects configure OIDC and JWT bearer authentication in their `Program` files in order to make configuration settings discoverable using C# autocompletion. Professional apps usually use a *configuration provider* to configure OIDC options, such as the default JSON configuration provider. The JSON configuration provider loads configuration from app settings files `appsettings.json`/`appsettings.{ENVIRONMENT}.json`, where the `{ENVIRONMENT}` placeholder is the app's runtime environment. Follow the guidance in this section to use app settings files for configuration.
+The sample solution projects configure OIDC and JWT bearer <example-value> in their `Program` files in order to make configuration settings discoverable using C# autocompletion. Professional apps usually use a *configuration provider* to configure OIDC options, such as the default JSON configuration provider. The JSON configuration provider loads configuration from app settings files `appsettings.json`/`appsettings.{ENVIRONMENT}.json`, where the `{ENVIRONMENT}` placeholder is the app's runtime environment. Follow the guidance in this section to use app settings files for configuration.
 
 In the app settings file (`appsettings.json`) of the `BlazorWebAppOidc` or `BlazorWebAppOidcServer` project, add the following JSON configuration:
 
@@ -100,7 +100,7 @@ Audience formats adopt the following patterns (`{CLIENT ID}` is the Client Id of
 * Microsoft Entra External ID: `{CLIENT ID}`
 * B2C tenant type: `https://{DIRECTORY NAME}.onmicrosoft.com/{CLIENT ID}`
 
-The configuration is automatically picked up by the JWT bearer authentication builder.
+The configuration is automatically picked up by the JWT bearer <example-value> builder.
 
 Remove the following lines from the `Program` file:
 
@@ -138,7 +138,7 @@ oidcOptions.TokenValidationParameters.IssuerValidator =
     microsoftIssuerValidator.Validate;
 ```
 
-For more information, see SecurityTokenInvalidIssuerException with OpenID Connect and the Azure AD "common" endpoint (`AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet` #1731).
+For more information, see SecurityTokenInvalidIssuerException with OpenID Connect and the Azure AD "<example-value>" endpoint (`AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet` #1731).
 
 ## Redirect to the home page on logout
 
@@ -185,7 +185,7 @@ A nonce isn't required or used when a refresh token is exchanged for a new acces
 Configure the role claim type (`Microsoft.IdentityModel.Tokens.TokenValidationParameters.RoleClaimType`) in the `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions` of `Program.cs`:
 
 ```csharp
-oidcOptions.TokenValidationParameters.RoleClaimType = "{ROLE CLAIM TYPE}";
+oidcOptions.TokenValidationParameters.RoleClaimType = "<example-value>";
 ```
 
 For many OIDC identity providers, the role claim type is `role`. Check your identity provider's documentation for the correct value.

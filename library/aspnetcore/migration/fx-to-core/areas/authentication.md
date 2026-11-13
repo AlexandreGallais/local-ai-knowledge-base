@@ -32,11 +32,11 @@ Different authentication types present varying levels of migration complexity:
 * **ASP.NET Core**: Uses `CookieAuthentication` middleware with different configuration
 * **Migration challenge**: Cookie format, encryption keys, and configuration differences
 
-### JWT bearer tokens
+### JWT bearer <example-value>
 
 * **ASP.NET Framework**: Often handled through custom modules or OWIN middleware
 * **ASP.NET Core**: Native support through `Microsoft.AspNetCore.Authentication.JwtBearer`
-* **Migration challenge**: Token validation parameter differences and middleware registration
+* **Migration challenge**: Token <example-value> parameter differences and middleware registration
 
 ### Windows authentication
 
@@ -80,7 +80,7 @@ You have three main options for migrating authentication from ASP.NET Framework 
 
 2. **What type of authentication does your ASP.NET Framework app use?**
    * OWIN cookie authentication → Continue to question 3
-   * Forms authentication, JWT bearer tokens, Windows auth, or Custom authentication → Remote authentication
+   * Forms authentication, JWT bearer <example-value>, Windows auth, or Custom authentication → Remote authentication
 
 3. **Do both your ASP.NET Framework and ASP.NET Core apps need to access the same authentication state?**
    * Yes, shared authentication needed → Continue to question 4
@@ -120,7 +120,7 @@ When migrating to native ASP.NET Core authentication:
 
 **Choose based on your Framework authentication type:**
 * **Forms authentication** → Migrate to Cookie authentication
-* **JWT bearer tokens** → Migrate to JWT bearer authentication
+* **JWT bearer <example-value>** → Migrate to JWT bearer <example-value>
 * **Windows authentication** → Use Windows authentication
 * **OWIN OAuth providers** → Use corresponding ASP.NET Core OAuth providers
 * **Custom authentication** → Implement custom authentication handlers

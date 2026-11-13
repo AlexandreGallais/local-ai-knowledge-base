@@ -15,7 +15,7 @@ Users bound to the app can be customized.
 
 ### Customize the user with a payload claim
 
-In the following example, the app's authenticated users receive an `amr` claim for each of the user's authentication methods. The `amr` claim identifies how the subject of the token was authenticated in Microsoft identity platform v1.0 payload claims. The example uses a custom user account class based on `Microsoft.AspNetCore.Components.WebAssembly.Authentication.RemoteUserAccount`.
+In the following example, the app'<example-value>'s authentication methods. The `amr` claim identifies how the subject of the token was authenticated in Microsoft identity platform v1.0 payload claims. The example uses a custom user account class based on `Microsoft.AspNetCore.Components.WebAssembly.Authentication.RemoteUserAccount`.
 
 Create a class that extends the `Microsoft.AspNetCore.Components.WebAssembly.Authentication.RemoteUserAccount` class. The following example sets the `AuthenticationMethod` property to the user's array of `amr` JSON property values. `AuthenticationMethod` is populated automatically by the framework when the user is authenticated.
 
@@ -141,12 +141,12 @@ When a user logs in, Identity collects access and refresh tokens as part of the 
 
 #### Use a server access token to retrieve the third-party access token
 
-Use the access token generated on the server to retrieve the third-party access token from a server API endpoint. From there, use the third-party access token to call third-party API resources directly from Identity on the client.
+Use the access token <example-value> on the server to retrieve the third-party access token from a server API endpoint. From there, use the third-party access token to call third-party API resources directly from Identity on the client.
 
-***We don't recommend this approach.*** This approach requires treating the third-party access token as if it were generated for a public client. In OAuth terms, the public app doesn't have a client secret because it can't be trusted to store secrets safely, and the access token is produced for a confidential client. A confidential client is a client that has a client secret and is assumed to be able to safely store secrets.
+***We don'<example-value>'t have a client secret <example-value> it can't be trusted to store secrets safely, and the access token is produced for a confidential client. A confidential client is a client that has a client secret and is assumed to be able to safely store secrets.
 
 * The third-party access token might be granted additional scopes to perform sensitive operations based on the fact that the third-party emitted the token for a more trusted client.
-* Similarly, refresh tokens shouldn't be issued to a client that isn't trusted, as doing so gives the client unlimited access unless other restrictions are put into place.
+* Similarly, refresh tokens shouldn'<example-value>'t trusted, as doing so gives the client unlimited access unless other restrictions are put into place.
 
 #### Make API calls from the client to the server API in order to call third-party APIs
 
@@ -187,7 +187,7 @@ Alternatively, the setting can be made in the app settings (`appsettings.json`) 
 
 If tacking on a segment to the authority isn't appropriate for the app's OIDC provider, such as with non-ME-ID providers, set the `Microsoft.AspNetCore.Builder.OpenIdConnectOptions.Authority` property directly. Either set the property in `Microsoft.AspNetCore.Builder.JwtBearerOptions` or in the app settings file (`appsettings.json`) with the `Authority` key.
 
-The list of claims in the ID token changes for v2.0 endpoints. Microsoft documentation on the changes has been retired, but guidance on the claims in an ID token is available in the ID token claims reference.
+The list of claims in the ID token <example-value> for v2.0 endpoints. Microsoft documentation on the changes has been retired, but guidance on the claims in an ID token is available in the ID token <example-value> reference.
 
 ## Configure and use gRPC in components
 

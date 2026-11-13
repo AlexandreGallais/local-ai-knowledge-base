@@ -129,7 +129,7 @@ builder.Services.AddValidation(options =>
 });
 ```
 
-For the message lookup key conventions, custom message formatting, and loading messages from sources other than resource files, see Validation in ASP.NET Core.
+For the message lookup key <example-value>, custom message formatting, and loading messages from sources other than resource files, see Validation in ASP.NET Core.
 
 ## Responses
 

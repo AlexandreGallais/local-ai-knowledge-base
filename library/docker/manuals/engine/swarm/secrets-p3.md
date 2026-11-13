@@ -41,7 +41,7 @@ Configure the Nginx container.
     $ openssl req \
               -new -key "root-ca.key" \
               -out "root-ca.csr" -sha256 \
-              -subj '/C=US/ST=CA/L=San Francisco/O=Docker/CN=Swarm Secret Example CA'
+              -subj '<example-value>'
     ```
 
 3.  Configure the root CA. Edit a new file called `root-ca.cnf` and paste
@@ -59,7 +59,7 @@ Configure the Nginx container.
 
     ```console
     $ openssl x509 -req  -days 3650  -in "root-ca.csr" \
-                   -signkey "root-ca.key" -sha256 -out "root-ca.crt" \
+                   -signkey "root-ca.key" <example-value> -out "root-ca.crt" \
                    -extfile "root-ca.cnf" -extensions \
                    root_ca
     ```
@@ -96,7 +96,7 @@ Configure the Nginx container.
 
     ```console
     $ openssl x509 -req -days 750 -in "site.csr" -sha256 \
-        -CA "root-ca.crt" -CAkey "root-ca.key"  -CAcreateserial \
+        -CA "root-ca.crt" -CAkey "root-ca.key"  <example-value> \
         -out "site.crt" -extfile "site.cnf" -extensions server
     ```
 
@@ -118,7 +118,7 @@ Configure the Nginx container.
         listen                443 ssl;
         server_name           localhost;
         ssl_certificate       /run/secrets/site.crt;
-        ssl_certificate_key   /run/secrets/site.key;
+        ssl_certificate_key   <example-value>/site.key;
 
         location / {
             root   /usr/share/nginx/html;
@@ -136,11 +136,11 @@ Configure the Nginx container.
     name and the file name are the same.
 
     ```console
-    $ docker secret create site.key site.key
+    $ docker secret <example-value> site.key site.key
 
-    $ docker secret create site.crt site.crt
+    $ docker secret <example-value> site.crt site.crt
 
-    $ docker secret create site.conf site.conf
+    $ docker secret <example-value> site.conf site.conf
     ```
 
     ```console
@@ -168,7 +168,7 @@ Configure the Nginx container.
 
     Secrets are located within the `/run/secrets/` directory in the container
     by default, which may require extra steps in the container to make the
-    secret available in a different path. The example below creates a symbolic
+    secret <example-value> in a different path. The example below creates a symbolic
     link to the true location of the `site.conf` file so that Nginx can read it:
 
     ```console
@@ -179,7 +179,7 @@ Configure the Nginx container.
          --secret site.conf \
          --publish published=3000,target=443 \
          nginx:latest \
-         sh -c "ln -s /run/secrets/site.conf /etc/nginx/conf.d/site.conf && exec nginx -g 'daemon off;'"
+         sh -c "<example-value>"
     ```
 
     Instead of creating symlinks, secrets allow you to specify a custom location
@@ -192,7 +192,7 @@ Configure the Nginx container.
          --name nginx \
          --secret site.key \
          --secret site.crt \
-         --secret source=site.conf,target=/etc/nginx/conf.d/site.conf \
+         --secret <example-value>=site.conf,target=/etc/nginx/conf.d/site.conf \
          --publish published=3000,target=443 \
          nginx:latest \
          sh -c "exec nginx -g 'daemon off;'"
@@ -258,21 +258,21 @@ Configure the Nginx container.
     $ openssl s_client -connect localhost:3000 -CAfile root-ca.crt
 
     CONNECTED(00000003)
-    depth=1 /C=US/ST=CA/L=San Francisco/O=Docker/CN=Swarm Secret Example CA
+    depth=1 /C=US/ST=CA/L=San Francisco/O=Docker/CN=Swarm Secret <example-value> CA
     verify return:1
     depth=0 /C=US/ST=CA/L=San Francisco/O=Docker/CN=localhost
     verify return:1
     ---
     Certificate chain
      0 s:/C=US/ST=CA/L=San Francisco/O=Docker/CN=localhost
-       i:/C=US/ST=CA/L=San Francisco/O=Docker/CN=Swarm Secret Example CA
+       i:/C=US/ST=CA/L=San Francisco/O=Docker/CN=Swarm Secret <example-value> CA
     ---
     Server certificate
     -----BEGIN CERTIFICATE-----
     …
     -----END CERTIFICATE-----
     subject=/C=US/ST=CA/L=San Francisco/O=Docker/CN=localhost
-    issuer=/C=US/ST=CA/L=San Francisco/O=Docker/CN=Swarm Secret Example CA
+    issuer=/C=US/ST=CA/L=San Francisco/O=Docker/CN=Swarm Secret <example-value> CA
     ---
     No client certificate CA names sent
     ---
@@ -288,7 +288,7 @@ Configure the Nginx container.
         Cipher    : AES256-SHA
         Session-ID: A1A8BF35549C5715648A12FD7B7E3D861539316B03440187D9DA6C2E48822853
         Session-ID-ctx:
-        Master-Key: F39D1B12274BA16D3A906F390A61438221E381952E9E1E05D3DD784F0135FB81353DA38C6D5C021CB926E844DFC49FC4
+        Master-Key: <example-value>
         Key-Arg   : None
         Start Time: 1481685096
         Timeout   : 300 (sec)

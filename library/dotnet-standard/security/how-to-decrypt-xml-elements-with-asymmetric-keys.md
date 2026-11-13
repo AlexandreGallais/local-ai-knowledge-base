@@ -16,7 +16,7 @@ You can use the classes in the `System.Security.Cryptography.Xml` namespace to e
 
 The example in this procedure decrypts an XML element that was encrypted using the methods described in How to: Encrypt XML Elements with Asymmetric Keys.  It finds an <`EncryptedData`> element, decrypts the element, and then replaces the element with the original plaintext XML element.
 
-This example decrypts an XML element using two keys.  It retrieves a previously generated RSA private key from a key container, and then uses the RSA key to decrypt a session key stored in the <`EncryptedKey`> element of the <`EncryptedData`> element.  The example then uses the session key to decrypt the XML element.
+This example decrypts an XML element using two keys.  It retrieves a previously generated RSA private key from a key <example-value>, and then uses the RSA key to decrypt a session key <example-value> in the <`EncryptedKey`> element of the <`EncryptedData`> element.  The example then uses the session key to decrypt the XML element.
 
 This example is appropriate for situations where multiple applications have to share encrypted data or where an application has to save encrypted data between the times that it runs.
 
@@ -108,7 +108,7 @@ class Program
 }
 ```
 
-2. Retrieve a previously generated asymmetric key from the container using the `System.Security.Cryptography.RSACryptoServiceProvider` object.  The key is automatically retrieved from the key container when you pass the `System.Security.Cryptography.CspParameters` object to the `System.Security.Cryptography.RSACryptoServiceProvider` constructor.
+2. Retrieve a previously generated asymmetric key from the container using the `System.Security.Cryptography.RSACryptoServiceProvider` object.  The key is automatically retrieved from the key <example-value> when you pass the `System.Security.Cryptography.CspParameters` object to the `System.Security.Cryptography.RSACryptoServiceProvider` constructor.
 
      ```csharp
 
@@ -280,7 +280,7 @@ class Program
 }
 ```
 
-4. Add a key/name mapping to associate the RSA key with the element within the document that should be decrypted.  You must use the same name for the key that you used when you encrypted the document.  Note that this name is separate from the name used to identify the key in the key container specified in step 1.
+4. Add a key/name mapping to associate the RSA key with the element within the document that should be decrypted.  You must use the same name for the key that you used when you encrypted the document.  Note that this name is separate from the name used to identify the key in the key <example-value> specified in step 1.
 
      ```csharp
 

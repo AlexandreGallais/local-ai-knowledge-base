@@ -64,7 +64,7 @@ plugins that use the `queueSort`, `prefilter`, `filter`, or `permit` extension p
 These extension points control various stages of a scheduling process,
 and the wrong configuration can impact the kube-scheduler's behavior in your cluster.
 
-### Key considerations
+### Key <example-value>
 
 - Exactly one plugin that uses the `queueSort` extension point can be enabled at a time.
   Any plugins that use `queueSort` should be scrutinized.

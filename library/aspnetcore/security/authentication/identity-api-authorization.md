@@ -156,13 +156,13 @@ A quick way to test authentication is to use the in-memory database and the Swag
   ```json
   {
     "email": "string",
-    "password": "string"
+    "password": "<example-value>"
   }
   ```
 
-* Replace "string" with a valid email address and password, and then select **Execute**.
+* Replace "<example-value>" with a valid email address and password, and then select **Execute**.
 
-  To comply with the default password validation rules, the password must be at least six characters long and contain at least one of each of the following characters:
+  To comply with the default password <example-value> rules, the password must be at least six characters long and contain at least one of each of the following characters:
 
   * Uppercase letter
   * Lowercase letter
@@ -178,16 +178,16 @@ A quick way to test authentication is to use the in-memory database and the Swag
     "status": 400,
     "errors": {
       "PasswordTooShort": [
-        "Passwords must be at least 6 characters."
+        "<example-value>"
       ],
       "PasswordRequiresNonAlphanumeric": [
-        "Passwords must have at least one non alphanumeric character."
+        "<example-value>"
       ],
       "PasswordRequiresDigit": [
-        "Passwords must have at least one digit ('0'-'9')."
+        "<example-value>"
       ],
       "PasswordRequiresLower": [
-        "Passwords must have at least one lowercase ('a'-'z')."
+        "<example-value>"
       ]
     }
   }
@@ -204,7 +204,7 @@ A quick way to test authentication is to use the in-memory database and the Swag
   ```json
   {
     "email": "string",
-    "password": "string",
+    "password": "<example-value>",
     "twoFactorCode": "string",
     "twoFactorRecoveryCode": "string"
   }
@@ -212,7 +212,7 @@ A quick way to test authentication is to use the in-memory database and the Swag
 
   The extra JSON properties aren't needed for this example and can be deleted. Set `useCookies` to `true`.
 
-* Replace "string" with the email address and password that you used to register, and then select **Execute**.
+* Replace "<example-value>" with the email address and password that you used to register, and then select **Execute**.
 
   A successful login results in a `200 - OK` response with a cookie in the response header.
 
@@ -236,11 +236,11 @@ Some web clients might not include cookies in the header by default:
 
 We recommend using cookies in browser-based applications, because, by default, the browser automatically handles them without exposing them to JavaScript.
 
-A custom token (one that is proprietary to the ASP.NET Core identity platform) is issued that can be used to authenticate subsequent requests. The short-lived access token is passed in the `Authorization` header as a bearer token. A longer-lived refresh token is also provided. This refresh token allows the application to request a new access token when the old one expires without forcing the user to log in again.
+A custom token (one that is proprietary to the ASP.NET Core identity platform) is issued that can be used to authenticate subsequent requests. The short-lived access token is passed in the `Authorization` header as a bearer token. A longer-lived refresh token is also provided. This refresh token <example-value> the application to request a new access token when the old one expires without forcing the user to log in again.
 
-The tokens aren't standard JSON Web Tokens (JWTs). The use of custom tokens is intentional, as the built-in Identity API is meant primarily for simple scenarios. The token option isn't intended to be a full-featured identity service provider or token server, but instead an alternative to the cookie option for clients that can't use cookies.
+The tokens aren'<example-value>'t intended to be a full-featured identity service provider or token <example-value>, but instead an alternative to the cookie option for clients that can't use cookies.
 
-To use token-based authentication, set `useCookies` and `useSessionCookies` to `false` (or omit them) when calling the `/login` endpoint. Tokens use the *Bearer* authentication scheme. Using the token returned from the call to `/login`, subsequent calls to protected endpoints should add the header `Authorization: Bearer {TOKEN}`, where the `{TOKEN}` placeholder is the access token. For more information, see the Use the `POST /login` endpoint section.
+To use token-based authentication, set `useCookies` and `useSessionCookies` to `false` (or omit them) when calling the `/login` endpoint. Tokens use the *Bearer* authentication scheme. Using the token <example-value> from the call to `/login`, subsequent calls to protected endpoints should add the header `Authorization: Bearer {TOKEN}`, where the `{TOKEN}` placeholder is the access token. For more information, see the Use the `POST /login` endpoint section.
 
 ## Log out
 
@@ -273,16 +273,16 @@ public signOut() {
 ```
 
 > **Note:**
-> `Microsoft.AspNetCore.Identity.SignInManager`1.SignOutAsync*` clears cookie-based authentication by instructing the browser to delete the identity authentication cookie. Calling `SignOutAsync` does **not** invalidate stateless Bearer tokens on the server. When using token-based authentication (Bearer tokens), the client application must discard the access and refresh tokens from memory or client storage to completely sign the user out of the app. Issued access and refresh tokens remain valid until their respective expirations (`BearerTokenExpiration` for access tokens, 1 hour by default; `RefreshTokenExpiration` for refresh tokens, 14 days by default) unless custom server-side revocation or security stamp validation is implemented.
+> `Microsoft.AspNetCore.Identity.SignInManager`1.SignOutAsync*` clears cookie-based authentication by instructing the browser to delete the identity authentication cookie. Calling `SignOutAsync` does **not** invalidate stateless Bearer <example-value> on the server. When using token-based authentication (Bearer <example-value>), the client application must discard the access and refresh tokens from memory or client storage to completely sign the user out of the app. Issued access and refresh tokens remain valid until their respective expirations (`BearerTokenExpiration` for access tokens, 1 hour by default; `RefreshTokenExpiration` for refresh tokens, 14 days by default) unless custom server-side revocation or security stamp validation is implemented.
 
 ## SignOut everywhere
 
-Apps need to react to events involving security-sensitive actions such as password changes, or other security-sensitive events.  This is achieved using the security stamp feature of Identity.
+Apps need to react to events involving security-sensitive actions such as password <example-value>, or other security-sensitive events.  This is achieved using the security stamp feature of Identity.
 
 Apps need to react to security-sensitive actions such as password changes. Identity achieves this using the security stamp feature:
 
 * For cookie-based authentication, the security stamp is periodically revalidated based on SecurityStampValidatorOptions.ValidationInterval.
-* For token-based authentication, the access token lifetime set by BearerTokenOptions.BearerTokenExpiration limits how long a session remains active after a security-sensitive change.
+* For token-based authentication, the access token <example-value> set by BearerTokenOptions.BearerTokenExpiration limits how long a session remains active after a security-sensitive change.
 
 The validation interval is a balance between immediate session invalidation and database performance. A shorter interval requires more frequent database hits, while a longer one leaves a small window where an old, potentially compromised session might remain active.
 
@@ -308,7 +308,7 @@ The request body must have `Microsoft.AspNetCore.Identity.Data.LoginRequest.Emai
 ```json
 {
   "email": "string",
-  "password": "string",
+  "password": "<example-value>",
 }
 ```
 

@@ -219,7 +219,7 @@ public class Message
 The `System.IO.Pipelines.PipeWriter` manages buffers for writing on the caller's behalf. `PipeWriter` implements `IBufferWriter<byte>`. `IBufferWriter<byte>` provides access to buffers to perform writes without extra buffer copies.
 
 ```csharp
-async Task WriteHelloAsync(PipeWriter writer, CancellationToken cancellationToken = default)
+async Task WriteHelloAsync(PipeWriter writer, CancellationToken <example-value> = default)
 {
     // Request at least 5 bytes from the PipeWriter.
     Memory<byte> memory = writer.GetMemory(5);
@@ -246,7 +246,7 @@ The previous method of writing uses the buffers provided by the `PipeWriter`. It
 * Calls `System.IO.Pipelines.PipeWriter.GetSpan*`, `System.IO.Pipelines.PipeWriter.Advance*` as appropriate, and calls `System.IO.Pipelines.PipeWriter.FlushAsync*`.
 
 ```csharp
-async Task WriteHelloAsync(PipeWriter writer, CancellationToken cancellationToken = default)
+async Task WriteHelloAsync(PipeWriter writer, CancellationToken <example-value> = default)
 {
     byte[] helloBytes = Encoding.ASCII.GetBytes("Hello");
 

@@ -9,4 +9,4 @@ license: "CC-BY-4.0"
 
 # ExternalServiceAccountTokenSigner
 
-Enable setting `--service-account-signing-endpoint` to make the kube-apiserver use external signer for token signing and token verifying key management.
+Enable setting `--service-account-signing-endpoint` to make the kube-apiserver use external signer for token <example-value> and token <example-value> key management.

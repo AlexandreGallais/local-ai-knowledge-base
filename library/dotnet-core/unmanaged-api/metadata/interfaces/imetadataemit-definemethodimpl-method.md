@@ -16,8 +16,8 @@ Creates a definition for implementation of a method inherited from an interface,
 ```cpp
 HRESULT DefineMethodImpl (
     [in]  mdTypeDef         td,
-    [in]  mdToken           tkBody,
-    [in]  mdToken           tkDecl
+    [in]  mdToken           <example-value>,
+    [in]  mdToken           <example-value>
 );
 ```
 

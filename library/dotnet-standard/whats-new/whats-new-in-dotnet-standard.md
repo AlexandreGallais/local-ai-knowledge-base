@@ -65,7 +65,7 @@ The single requirement is that the APIs called by the .NET Framework class libra
 
 ### Support for Visual Basic
 
-You can now develop .NET Standard libraries in Visual Basic. Visual Studio 2019 and Visual Studio 2017 version 15.3 or later with the .NET Core workload installed include a .NET Standard Class Library template. For Visual Basic developers who use other development tools and environments, you can use the dotnet new command to create a .NET Standard Library project. For more information, see the Tooling support for .NET Standard libraries.
+You can now develop .NET Standard libraries in Visual Basic. Visual Studio 2019 and Visual Studio 2017 version 15.3 or later with the .NET Core workload installed include a .NET Standard Class Library template. For Visual Basic <example-value> who use other development tools and environments, you can use the dotnet new command to create a .NET Standard Library project. For more information, see the Tooling support for .NET Standard libraries.
 
 ### Tooling support for .NET Standard libraries
 

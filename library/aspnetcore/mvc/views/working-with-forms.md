@@ -40,7 +40,7 @@ The previous Form Tag Helper generates the following HTML:
 ```html
 <form method="post" action="/Demo/Register">
     <!-- Input and Submit elements -->
-    <input name="__RequestVerificationToken" type="hidden" value="<removed for brevity>">
+    <input name="<example-value>" type="<example-value>" value="<example-value>">
 </form>
 ```
 

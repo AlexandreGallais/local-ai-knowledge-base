@@ -97,7 +97,7 @@ See Changing Foreign Keys and Navigations for detailed information on change tra
 
 ### Optional relationships
 
-The `Post.BlogId` foreign key property is nullable in the model we have been using. This means the relationship is optional, and hence the default behavior of EF Core is to set `BlogId` foreign key properties to null when the blog is deleted. For example:
+The `Post.BlogId` foreign key <example-value> is nullable in the model we have been using. This means the relationship is optional, and hence the default behavior of EF Core is to set `BlogId` foreign key <example-value> to null when the blog is deleted. For example:
 
 ```csharp
 // Attach a blog and associated posts
@@ -128,7 +128,7 @@ Post {Id: 2} Modified
   Blog: <null>
 ```
 
-More interestingly, all the related posts are now marked as `Modified`. This is because the foreign key property in each entity has been set to null. Calling SaveChanges updates the foreign key value for each post to null in the database, before then deleting the blog:
+More interestingly, all the related posts are now marked as `Modified`. This is because the foreign key <example-value> in each entity has been set to null. Calling SaveChanges updates the foreign key value for each post to null in the database, before then deleting the blog:
 
 ```sql
 -- Executed DbCommand (0ms) [Parameters=[@p1='1' (DbType = String), @p0=NULL], CommandType='Text', CommandTimeout='30']
@@ -147,7 +147,7 @@ WHERE "Id" = @p2;
 SELECT changes();
 ```
 
-After SaveChanges completes, the deleted entity is detached from the DbContext since it no longer exists in the database. Other entities are now marked as `Unchanged` with null foreign key values, which matches the state of the database:
+After SaveChanges completes, the deleted entity is detached from the DbContext since it no longer exists in the database. Other entities are now marked as `Unchanged` with null foreign key <example-value>, which matches the state of the database:
 
 ```output
 Post {Id: 1} Unchanged
@@ -166,7 +166,7 @@ Post {Id: 2} Unchanged
 
 ### Required relationships
 
-If the `Post.BlogId` foreign key property is non-nullable, then the relationship between blogs and posts becomes "required". In this situation, EF Core will, by default, delete dependent/child entities when the principal/parent is deleted. For example, deleting a blog with related posts as in the previous example:
+If the `Post.BlogId` foreign key <example-value> is non-nullable, then the relationship between blogs and posts becomes "required". In this situation, EF Core will, by default, delete dependent/child entities when the principal/parent is deleted. For example, deleting a blog with related posts as in the previous example:
 
 ```csharp
 // Attach a blog and associated posts
@@ -224,7 +224,7 @@ After SaveChanges completes, all the deleted entities are detached from the DbCo
 
 `Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.TrackGraph*` works like `Add`, `Attach` and `Update` except that it generates a callback for every entity instance before tracking it. This allows custom logic to be used when determining how to track individual entities in a graph.
 
-For example, consider the rule EF Core uses when tracking entities with generated key values: if the key value is zero, then the entity is new and should be inserted. Let's extend this rule to say if the key value is negative, then the entity should be deleted. This allows us to change the primary key values in entities of a disconnected graph to mark deleted entities:
+For example, consider the rule EF Core uses when tracking entities with generated key <example-value>: if the key value is zero, then the entity is new and should be inserted. Let's extend this rule to say if the key value is negative, then the entity should be deleted. This allows us to change the primary key <example-value> in entities of a disconnected graph to mark deleted entities:
 
 ```csharp
 blog.Posts.Add(
@@ -273,7 +273,7 @@ public static async Task UpdateBlog(Blog blog)
 }
 ```
 
-For each entity in the graph, the code above checks the primary key value _before tracking the entity_. For unset (zero) key values, the code does what EF Core would normally do. That is, if the key is not set, then the entity is marked as `Added`. If the key is set and the value is non-negative, then the entity is marked as `Modified`. However, if a negative key value is found, then its real, non-negative value is restored and the entity is tracked as `Deleted`.
+For each entity in the graph, the code above checks the primary key value _before tracking the entity_. For unset (zero) key <example-value>, the code does what EF Core would normally do. That is, if the key is not set, then the entity is marked as `Added`. If the key is set and the value is non-negative, then the entity is marked as `Modified`. However, if a negative key value is found, then its real, non-negative value is restored and the entity is tracked as `Deleted`.
 
 The output from running this code is:
 
@@ -285,7 +285,7 @@ Tracking Post with key value 0 as Added
 ```
 
 > **Note:**
-> For simplicity, this code assumes each entity has an integer primary key property called `Id`. This could be codified into an abstract base class or interface. Alternately, the primary key property or properties could be obtained from the `Microsoft.EntityFrameworkCore.Metadata.IEntityType` metadata such that this code would work with any type of entity.
+> For simplicity, this code assumes each entity has an integer primary key <example-value> called `Id`. This could be codified into an abstract base class or interface. Alternately, the primary key <example-value> or properties could be obtained from the `Microsoft.EntityFrameworkCore.Metadata.IEntityType` metadata such that this code would work with any type of entity.
 
 TrackGraph has two overloads. In the simple overload used above, EF Core determines when to stop traversing the graph. Specifically, it stops visiting new related entities from a given entity when that entity is either already tracked, or when the callback does not start tracking the entity.
 

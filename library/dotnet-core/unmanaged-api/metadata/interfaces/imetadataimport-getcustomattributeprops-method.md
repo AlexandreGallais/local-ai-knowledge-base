@@ -29,10 +29,10 @@ HRESULT GetCustomAttributeProps (
  [in] A metadata token that represents the custom attribute to be retrieved.
 
  `ptkObj`
- [out, optional] A metadata token representing the object that the custom attribute modifies. This value can be any type of metadata token except `mdCustomAttribute`.
+ [out, optional] A metadata token <example-value> the object that the custom attribute modifies. This value can be any type of metadata token <example-value> `mdCustomAttribute`.
 
  `ptkType`
- [out, optional] An `mdMethodDef` or `mdMemberRef` metadata token representing the `System.Type` of the returned custom attribute.
+ [out, optional] An `mdMethodDef` or `mdMemberRef` metadata token <example-value> the `System.Type` of the returned custom attribute.
 
  `ppBlob`
  [out, optional] A pointer to an array of data that is the value of the custom attribute.

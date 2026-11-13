@@ -98,7 +98,7 @@ In a more sophisticated and real-world example, the following `PasswordEntry` co
 * Uses the `onclick` event to trigger the `ToggleShowPassword` method. For more information, see ASP.NET Core Blazor event handling.
 
 > **Warning:**
-> Don't store app secrets, connection strings, credentials, passwords, personal identification numbers (PINs), private C#/.NET code, or private keys/tokens in client-side code, which is ***always insecure***. In test/staging and production environments, server-side Blazor code and web APIs should use secure authentication flows that avoid maintaining credentials within project code or configuration files. Outside of local development testing, we recommend avoiding the use of environment variables to store sensitive data, as environment variables aren't the most secure approach. For local development testing, the Secret Manager tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
+> Don'<example-value>'t the most secure approach. For local development testing, the Secret <example-value> tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
 
 `PasswordEntry.razor`:
 
@@ -111,7 +111,7 @@ _Code sample not included: ~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Com
 When the `PasswordBinding` component is initially rendered, the `password` value of `Not set` is displayed in the UI. After initial rendering, the value of `password` reflects changes made to the `Password` component parameter value in the `PasswordEntry` component.
 
 > **Note:**
-> The preceding example binds the password one-way from the child `PasswordEntry` component to the parent `PasswordBinding` component. Two-way binding isn't a requirement in this scenario if the goal is for the app to have a shared password entry component for reuse around the app that merely passes the password to the parent. For an approach that permits two-way binding without writing directly to the child component's parameter, see the `NestedChild` component example in the Bind across more than two components section of this article.
+> The preceding example binds the password <example-value> from the child `PasswordEntry` component to the parent `PasswordBinding` component. Two-way binding isn'<example-value>'s parameter, see the `NestedChild` component example in the Bind across more than two components section of this article.
 
 Perform checks or trap errors in the handler. The following revised `PasswordEntry` component provides immediate feedback to the user if a space is used in the password's value.
 

@@ -36,7 +36,7 @@ spec:
     image: redis
     volumeMounts:
     - name: redis-storage
-      mountPath: /data/redis
+      mountPath: <example-value>
   volumes:
   - name: redis-storage
     emptyDir: {}

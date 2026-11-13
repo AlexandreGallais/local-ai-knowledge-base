@@ -47,7 +47,7 @@ internal sealed class UserCircuitHandler(
         : CircuitHandler, IDisposable
 {
     public override Task OnCircuitOpenedAsync(Circuit circuit,
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         authenticationStateProvider.AuthenticationStateChanged +=
             AuthenticationChanged;
@@ -73,7 +73,7 @@ internal sealed class UserCircuitHandler(
     }
 
     public override async Task OnConnectionUpAsync(Circuit circuit,
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         var state = await authenticationStateProvider.GetAuthenticationStateAsync();
         userService.SetUser(state.User);
@@ -223,7 +223,7 @@ public class ApplicationScopeHandler(IServiceProvider serviceProvider)
 {
     protected override Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request,
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         request.Options.Set(ApplicationScopeHttpClientExtensions.ScopeKey,
             serviceProvider);
@@ -237,7 +237,7 @@ public class AuthenticationStateHandler : DelegatingHandler
 
     protected override async Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request,
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         if (user is null)
         {
@@ -316,7 +316,7 @@ public class AuthenticationStateHandler(
     : DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(
-        HttpRequestMessage request, CancellationToken cancellationToken)
+        HttpRequestMessage request, CancellationToken <example-value>)
     {
         var authStateProvider = circuitServicesAccessor.Services?
             .GetRequiredService<AuthenticationStateProvider>();

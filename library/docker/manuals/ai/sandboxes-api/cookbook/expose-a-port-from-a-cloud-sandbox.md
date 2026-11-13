@@ -24,7 +24,7 @@ This is HTTP application access, not a general-purpose TCP tunnel. Docker accoun
 ```typescript
 return sandbox.ports.create(
   { number, protocol: 'tcp' },
-  { idempotencyKey: requestId },
+  { idempotencyKey: <example-value> },
 );
 ```
 
@@ -42,7 +42,7 @@ export async function createPort(
   const sandbox = await client.get(sandboxName);
   return sandbox.ports.create(
     { number, protocol: 'tcp' },
-    { idempotencyKey: requestId },
+    { idempotencyKey: <example-value> },
   );
 }
 ```

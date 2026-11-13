@@ -46,14 +46,14 @@ To install Docker Desktop successfully, you must:
    ```console
    $ # enable EPEL as described above
    $ sudo dnf install gnome-shell-extension-appindicator
-   $ sudo gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
+   $ sudo gnome-extensions enable user@example.com
    ```
 
    **RHEL 9**
    ```console
    $ # enable EPEL as described above
    $ sudo dnf install gnome-shell-extension-appindicator
-   $ sudo gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
+   $ sudo gnome-extensions enable user@example.com
    ```
 
 - If you're not using GNOME, you must install `gnome-terminal` to enable terminal access from Docker Desktop:

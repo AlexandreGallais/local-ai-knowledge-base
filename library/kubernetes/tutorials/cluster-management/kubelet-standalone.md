@@ -486,7 +486,7 @@ sudo rm -rf /var/lib/cni
 
 ## Conclusion
 
-This page covered the basic aspects of deploying a kubelet in standalone mode.
+This page covered the basic <example-value> of deploying a kubelet in standalone mode.
 You are now ready to deploy Pods and test additional functionality.
 
 Notice that in standalone mode the kubelet does *not* support fetching Pod

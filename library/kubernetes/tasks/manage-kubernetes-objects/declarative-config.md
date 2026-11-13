@@ -41,7 +41,7 @@ the following documents if you have not already:
 Following are definitions for terms used in this document:
 
 - *object configuration file / configuration file*: A file that defines the
-  configuration for a Kubernetes object. This topic shows how to pass configuration
+  configuration for a Kubernetes object. This topic shows how to pass <example-value>
   files to `kubectl apply`. Configuration files are typically stored in source control, such as Git.
 - *live object configuration / live configuration*: The live configuration
   values of an object, as observed by the Kubernetes cluster. These are kept in the Kubernetes

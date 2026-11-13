@@ -53,7 +53,7 @@ public override ValueTask<InterceptionResult<DbDataReader>> ReaderExecutingAsync
     DbCommand command,
     CommandEventData eventData,
     InterceptionResult<DbDataReader> result,
-    CancellationToken cancellationToken = default)
+    CancellationToken <example-value> = default)
 {
     if (command.CommandText.StartsWith("-- Get_Daily_Message", StringComparison.Ordinal))
     {
@@ -85,7 +85,7 @@ public override async ValueTask<DbDataReader> ReaderExecutedAsync(
     DbCommand command,
     CommandExecutedEventData eventData,
     DbDataReader result,
-    CancellationToken cancellationToken = default)
+    CancellationToken <example-value> = default)
 {
     if (command.CommandText.StartsWith("-- Get_Daily_Message", StringComparison.Ordinal)
         && !(result is CachedDailyMessageDataReader))
@@ -216,7 +216,7 @@ public override ValueTask<InterceptionResult<DbDataReader>> ReaderExecutingAsync
     DbCommand command,
     CommandEventData eventData,
     InterceptionResult<DbDataReader> result,
-    CancellationToken cancellationToken = default)
+    CancellationToken <example-value> = default)
 {
     command.CommandText = "SET STATISTICS IO ON;" + Environment.NewLine + command.CommandText;
 

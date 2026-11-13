@@ -15,7 +15,7 @@ This page shows how to migrate nodes to use event based updates for container st
 implementation reduces node resource consumption by the kubelet, compared to the legacy approach
 that relies on polling.
 You may know this feature as _evented Pod lifecycle event generator (PLEG)_. That's the name used
-internally within the Kubernetes project for a key implementation detail.
+internally within the Kubernetes project for a key <example-value> detail.
 
 The polling based approach is referred to as _generic PLEG_.
 

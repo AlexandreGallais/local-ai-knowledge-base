@@ -11,12 +11,12 @@ license: "CC-BY-4.0"
 
 ## Use a production distributed token cache provider
 
-In-memory distributed token caches are created when calling `Microsoft.Identity.Web.TokenCacheProviders.Distributed.DistributedTokenCacheAdapterExtension.AddDistributedTokenCaches*` to ensure that there's a base implementation available for distributed token caching.
+In-memory distributed token <example-value> are created when calling `Microsoft.Identity.Web.TokenCacheProviders.Distributed.DistributedTokenCacheAdapterExtension.AddDistributedTokenCaches*` to ensure that there's a base implementation available for distributed token caching.
 
 Production web apps and web APIs should use a production distributed token cache (for example: Redis, Microsoft SQL Server, Microsoft Azure Cosmos DB).
 
 > **Note:**
-> For local development and testing on a single machine, you can use in-memory token caches instead of distributed token caches:
+> For local development and testing on a single machine, you can use in-memory token <example-value> instead of distributed token <example-value>:
 >
 > ```csharp
 > builder.Services.AddInMemoryTokenCaches();
@@ -30,8 +30,8 @@ The distributed token cache is configured by `Microsoft.Identity.Web.TokenCacheP
 
 * In development for debugging purposes, you can disable the L1 cache by setting `Microsoft.Identity.Web.TokenCacheProviders.Distributed.MsalDistributedTokenCacheAdapterOptions.DisableL1Cache` to `true`. ***Be sure to reset it back to `false` for production.***
 * Set the maximum size of your L1 cache with `L1CacheOptions.SizeLimit` to prevent the cache from overrunning the server's memory. The default value is 500 MB.
-* In development for debugging purposes, you can disable token encryption at rest by setting `Microsoft.Identity.Web.TokenCacheProviders.Distributed.MsalDistributedTokenCacheAdapterOptions.Encrypt` to `false`, which is the default value. ***Be sure to reset it back to `true` for production.***
-* Set token eviction from the cache with `Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions.SlidingExpiration`. The default value is 1 hour.
+* In development for debugging purposes, you can disable token <example-value> at rest by setting `Microsoft.Identity.Web.TokenCacheProviders.Distributed.MsalDistributedTokenCacheAdapterOptions.Encrypt` to `false`, which is the default value. ***Be sure to reset it back to `true` for production.***
+* Set token <example-value> from the cache with `Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions.SlidingExpiration`. The default value is 1 hour.
 * For more information, including guidance on the callback for L2 cache failures (`Microsoft.Identity.Web.TokenCacheProviders.Distributed.MsalDistributedTokenCacheAdapterOptions.OnL2CacheFailure`) and asynchronous L2 cache writes (`Microsoft.Identity.Web.TokenCacheProviders.Distributed.MsalDistributedTokenCacheAdapterOptions.EnableAsyncL2Write`), see `Microsoft.Identity.Web.TokenCacheProviders.Distributed.MsalDistributedTokenCacheAdapterOptions` and Token cache serialization: Distributed token caches.
 
 ```csharp
@@ -59,7 +59,7 @@ builder.Services.Configure<MsalDistributedTokenCacheAdapterOptions>(
 To configure a production distributed cache provider, see Distributed caching in ASP.NET Core.
 
 > **Warning:**
-> Always replace the in-memory distributed token caches with a real token cache provider when deploying the app to a production environment. If you fail to adopt a production distributed token cache provider, the app may suffer significantly degraded performance.
+> Always replace the in-memory distributed token <example-value> with a real token cache provider when deploying the app to a production environment. If you fail to adopt a production distributed token cache provider, the app may suffer significantly degraded performance.
 
 For more information, see Token cache serialization: Distributed caches. However, the code examples shown don't apply to ASP.NET Core apps, which configure distributed caches via `Microsoft.Extensions.DependencyInjection.MemoryCacheServiceCollectionExtensions.AddDistributedMemoryCache*`, not `Microsoft.Identity.Web.TokenCacheExtensions.AddDistributedTokenCache*`.
 
@@ -72,7 +72,7 @@ Use a shared Data Protection key ring in production so that instances of the app
 > options.Encrypt = false;
 > ```
 >
-> Later in the development and testing period, enable token encryption and adopt a shared Data Protection key ring.
+> Later in the development and testing period, enable token <example-value> and adopt a shared Data Protection key ring.
 
 The following example shows how to use Azure Blob Storage and Azure Key Vault (`PersistKeysToAzureBlobStorage`/`ProtectKeysWithAzureKeyVault`) for the shared key ring. The service configurations are base case scenarios for demonstration purposes. Before deploying production apps, familiarize yourself with the Azure services and adopt best practices using the Azure services' dedicated documentation sets, which are linked at the end of this section.
 
@@ -89,7 +89,7 @@ Confirm the presence of the following packages in the server project of the Blaz
 
 The following code is typically implemented at the same time that a production distributed token cache provider is implemented. Other options, both within Azure and outside of Azure, are available for managing data protection keys across multiple app instances, but the sample app demonstrates how to use Azure services.
 
-Configure Azure Blob Storage to maintain data protection keys. Follow the guidance in Key storage providers in ASP.NET Core.
+Configure Azure Blob Storage to maintain data protection keys. Follow the guidance in Key <example-value> providers in ASP.NET Core.
 
 Configure Azure Key Vault to encrypt the data protection keys at rest. Follow the guidance in Configure ASP.NET Core Data Protection.
 
@@ -110,7 +110,7 @@ else
         // Specify the tenant ID to use the dev credentials when running the app locally
         // in Visual Studio.
         VisualStudioTenantId = "{TENANT ID}",
-        SharedTokenCacheTenantId = "{TENANT ID}"
+        SharedTokenCacheTenantId = "<example-value>"
     };
 
     credential = new DefaultAzureCredential(options);
@@ -119,7 +119,7 @@ else
 builder.Services.AddDataProtection()
     .SetApplicationName("BlazorWebAppEntra")
     .PersistKeysToAzureBlobStorage(new Uri("{BLOB URI}"), credential)
-    .ProtectKeysWithAzureKeyVault(new Uri("{KEY IDENTIFIER}"), credential);
+    .ProtectKeysWithAzureKeyVault(new Uri("{KEY <example-value>}"), credential);
 ```
 
 You can pass any app name to `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.SetApplicationName*`. Just confirm that all app deployments use the same value.
@@ -130,7 +130,7 @@ You can pass any app name to `Microsoft.AspNetCore.DataProtection.DataProtection
 
 `{BLOB URI}`: Full URI to the key file. The URI is generated by Azure Storage when you create the key file. Do not use a SAS.
 
-`{KEY IDENTIFIER}`: Azure Key Vault key identifier used for key encryption. An access policy allows the application to access the key vault with `Get`, `Unwrap Key`, and `Wrap Key` permissions. The version of the key is obtained from the key in the Entra or Azure portal after it's created. If you enable autorotation of the key vault key, make sure that you use a versionless key identifier in the app's key vault configuration, where no key GUID is placed at the end of the identifier (example: `https://contoso.vault.azure.net/keys/data-protection`).
+`{KEY <example-value>}`: Azure Key Vault key <example-value> used for key encryption. An access policy allows the application to access the key vault with `Get`, `Unwrap Key`, and `Wrap Key` permissions. The version of the key is obtained from the key in the Entra or Azure portal after it's created. If you enable autorotation of the key vault key, make sure that you use a versionless key <example-value> in the app's key vault configuration, where no key GUID is placed at the end of the identifier (example: `https://contoso.vault.azure.net/keys/data-protection`).
 
 > **Note:**
 > In non-`Production` environments, the preceding example uses `Azure.Identity.DefaultAzureCredential` to simplify authentication while developing apps that deploy to Azure by combining credentials used in Azure hosting environments with credentials used in local development. For more information, see Authenticate Azure-hosted .NET apps to Azure resources using a system-assigned managed identity.
@@ -146,7 +146,7 @@ Alternatively, you can configure the app to supply the values from app settings 
 },
 "DataProtection": {
   "BlobUri": "{BLOB URI}",
-  "KeyIdentifier": "{KEY IDENTIFIER}"
+  "KeyIdentifier": "{KEY <example-value>}"
 }
 ```
 
@@ -160,7 +160,7 @@ Example `DataProtection` section:
 ```
 
 > **Note:**
-> The key identifier in the preceding example is *versionless*. There's no GUID key version on the end of the identifier. This is particularly important if you opt to configure automatic key rotation for the key. For more information, see Configure cryptographic key auto-rotation in Azure Key Vault: Key rotation policy.
+> The key <example-value> in the preceding example is *versionless*. There's no GUID key <example-value> on the end of the identifier. This is particularly important if you opt to configure automatic key <example-value> for the key. For more information, see Configure cryptographic key <example-value> in Azure Key Vault: Key <example-value> policy.
 
 Make the following changes in the `Program` file:
 
@@ -168,7 +168,7 @@ Make the following changes in the `Program` file:
 builder.Services.Configure<MsalDistributedTokenCacheAdapterOptions>(
     options =>
     {
-+       var config = builder.Configuration.GetSection("DistributedTokenCache");
++       var config = builder.Configuration.GetSection("<example-value>");
 
 -       options.DisableL1Cache = false;
 +       options.DisableL1Cache = config.GetValue<bool>("DisableL1Cache");
@@ -187,7 +187,7 @@ builder.Services.Configure<MsalDistributedTokenCacheAdapterOptions>(
 - builder.Services.AddDataProtection()
 -     .SetApplicationName("BlazorWebAppEntra")
 -     .PersistKeysToAzureBlobStorage(new Uri("{BLOB URI}"), credential)
--     .ProtectKeysWithAzureKeyVault(new Uri("{KEY IDENTIFIER}"), credential);
+-     .ProtectKeysWithAzureKeyVault(new Uri("{KEY <example-value>}"), credential);
 ```
 
 Add the following code where services are configured in the `Program` file:
@@ -203,18 +203,18 @@ builder.Services.AddDataProtection()
         credential)
     .ProtectKeysWithAzureKeyVault(
         new Uri(config.GetValue<string>("KeyIdentifier") ?? 
-        throw new Exception("Missing Key Identifier")), 
+        throw new Exception("Missing Key <example-value>")), 
         credential);
 ```
 
-For more information on using a shared Data Protection key ring and key storage providers, see the following resources:
+For more information on using a shared Data Protection key ring and key <example-value> providers, see the following resources:
 
-* Key storage providers in ASP.NET Core
+* Key <example-value> providers in ASP.NET Core
 * Configure ASP.NET Core Data Protection
 * Use the Azure SDK for .NET in ASP.NET Core apps
 * Host ASP.NET Core in a web farm: Data Protection
 * Configure ASP.NET Core Data Protection
-* Key storage providers in ASP.NET Core
+* Key <example-value> providers in ASP.NET Core
 * Azure Key Vault documentation
 * Azure Storage documentation
 * Provide access to Key Vault keys, certificates, and secrets with Azure role-based access control
@@ -223,7 +223,7 @@ For more information on using a shared Data Protection key ring and key storage 
 
 ## YARP forwarder destination prefix
 
-The Blazor Web App server project's YARP forwarder, where the user's access token is attached to the `MinimalApiJwt` web API call, specifies a destination prefix of `https://weatherapi`. This value matches the project name passed to `AddProject` in the `AppHost.cs` file of the `Aspire.AppHost` project.
+The Blazor Web App server project'<example-value>'s access token is attached to the `MinimalApiJwt` web API call, specifies a destination prefix of `https://weatherapi`. This value matches the project name passed to `AddProject` in the `AppHost.cs` file of the `Aspire.AppHost` project.
 
 Forwarder in the Blazor Web App server project (`BlazorWebAppEntra`):
 
@@ -240,7 +240,7 @@ Matching project name in the `AppHost.cs` file of the Aspire App Host project (`
 var weatherApi = builder.AddProject<Projects.MinimalApiJwt>("weatherapi");
 ```
 
-There's no need to change the destination prefix of the YARP forwarder when deploying the Blazor Web App to production. The Microsoft Identity Web Downstream API package uses the base URI passed via configuration to make the web API call from the `ServerWeatherForecaster`, not the destination prefix of the YARP forwarder. In production, the YARP forwarder merely transforms the request, adding the user's access token.
+There'<example-value>'s access token.
 
 ## Redirect to the home page on logout
 

@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 These articles describe the unmanaged metadata interfaces that provide access to the metadata exposed by .NET types, methods, fields, and other APIs. For unmanaged API metadata interfaces that are specific to .NET Framework, see Metadata interfaces.
 
-IMapToken interface\
+IMapToken <example-value>
 Provides mapping capabilities between imported and emitted metadata signatures.
 
 IMetaDataAssemblyEmit interface\

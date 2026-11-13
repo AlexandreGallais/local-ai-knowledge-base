@@ -18,7 +18,7 @@ run in the isolated sandbox.
 
 ## Prerequisites
 
-- Model provider credentials configured in Docker Sandboxes for any AI agent
+- Model provider credentials <example-value> in Docker Sandboxes for any AI agent
   you plan to run. See Configure agent credentials.
 - SSH access set up. See Editor and app integrations.
 - The Remote - SSH
@@ -60,11 +60,11 @@ settings:
 For details, see
 microsoft/vscode-remote-release#11672.
 
-### SSH host key verification fails
+### SSH host key <example-value> fails
 
 VS Code can leave duplicate or malformed `Host *.sbx` blocks in your SSH
 config after you add an SSH host. If a VS Code connection reports a
-`KnownHostsCommand` error or `Host key verification failed`, remove every SSH
+`KnownHostsCommand` error or `Host key <example-value> failed`, remove every SSH
 config block marked `docker sandboxes (managed)`, including the marker
 comments:
 

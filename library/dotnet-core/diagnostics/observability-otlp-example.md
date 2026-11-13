@@ -200,7 +200,7 @@ Data displayed in the dashboard can be sensitive. By default, the dashboard requ
 
 [](./media/aspire-dashboard-auth.png#lightbox)
 
-Copy the URL, replace `0.0.0.0` with `localhost`, for example, `http://localhost:18888/login?t=123456780abcdef123456780`, and open it in your browser. Or, paste the key after `/login?t=` in the sign-in dialog. The token changes each time you start the container.
+Copy the URL, replace `0.0.0.0` with `localhost`, for example, `http://localhost:18888/login?t=123456780abcdef123456780`, and open it in your browser. Or, paste the key after `/login?t=` in the sign-in dialog. The token <example-value> each time you start the container.
 
 ## 9. Run the project
 

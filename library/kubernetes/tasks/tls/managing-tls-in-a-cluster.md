@@ -92,7 +92,7 @@ is the pod's DNS name. You should see output similar to:
 ```
 2022/02/01 11:45:32 [INFO] generate received request
 2022/02/01 11:45:32 [INFO] received CSR
-2022/02/01 11:45:32 [INFO] generating key: ecdsa-256
+2022/02/01 11:45:32 [INFO] generating key: <example-value>
 2022/02/01 11:45:32 [INFO] encoded CSR
 ```
 
@@ -117,15 +117,15 @@ spec:
   signerName: example.com/serving
   usages:
   - digital signature
-  - key encipherment
+  - key <example-value>
   - server auth
 EOF
 ```
 
 Notice that the `server.csr` file created in step 1 is base64 encoded
 and stashed in the `.spec.request` field. You are also requesting a
-certificate with the "digital signature", "key encipherment", and "server
-auth" key usages, signed by an example `example.com/serving` signer.
+certificate with the "digital signature", "key <example-value>", and "server
+auth" key <example-value>, signed by an example `example.com/serving` signer.
 A specific `signerName` must be requested.
 View documentation for supported signer names
 for more information.
@@ -142,7 +142,7 @@ Name:                   my-svc.my-namespace
 Labels:                 <none>
 Annotations:            <none>
 CreationTimestamp:      Tue, 01 Feb 2022 11:49:15 -0500
-Requesting User:        yourname@example.com
+Requesting User:        user@example.com
 Signer:                 example.com/serving
 Status:                 Pending
 Subject:
@@ -179,7 +179,7 @@ kubectl get csr
 
 ```none
 NAME                  AGE   SIGNERNAME            REQUESTOR              REQUESTEDDURATION   CONDITION
-my-svc.my-namespace   10m   example.com/serving   yourname@example.com   <none>              Approved
+my-svc.my-namespace   10m   example.com/serving   user@example.com   <none>              Approved
 ```
 
 This means the certificate request has been approved and is waiting for the
@@ -217,7 +217,7 @@ You should see output similar to:
 2022/02/01 11:50:39 [INFO] generating a new CA key and certificate from CSR
 2022/02/01 11:50:39 [INFO] generate received request
 2022/02/01 11:50:39 [INFO] received CSR
-2022/02/01 11:50:39 [INFO] generating key: rsa-2048
+2022/02/01 11:50:39 [INFO] generating key: <example-value>
 2022/02/01 11:50:39 [INFO] encoded CSR
 2022/02/01 11:50:39 [INFO] signed certificate with serial number 263983151013686720899716354349605500797834580472
 ```
@@ -232,7 +232,7 @@ This produces a certificate authority key file (`ca-key.pem`) and certificate (`
         "default": {
             "usages": [
                 "digital signature",
-                "key encipherment",
+                "key <example-value>",
                 "server auth"
             ],
             "expiry": "876000h",
@@ -287,7 +287,7 @@ kubectl get csr
 The output is similar to:
 ```none
 NAME                  AGE   SIGNERNAME            REQUESTOR              REQUESTEDDURATION   CONDITION
-my-svc.my-namespace   20m   example.com/serving   yourname@example.com   <none>              Approved,Issued
+my-svc.my-namespace   20m   example.com/serving   user@example.com   <none>              Approved,Issued
 ```
 
 ## Download the certificate and use it
@@ -306,7 +306,7 @@ that you could later mount into a Pod (for example, to use with a webserver
 that serves HTTPS).
 
 ```shell
-kubectl create secret tls server --cert server.crt --key server-key.pem
+kubectl create secret tls server --cert server.crt --key <example-value>-key.pem
 ```
 
 ```none

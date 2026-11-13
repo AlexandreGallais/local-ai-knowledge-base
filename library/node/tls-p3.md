@@ -33,7 +33,7 @@ into the TLS server. In that case, any `Duplex` stream can be passed.
 * `tlsSocket` {tls.TLSSocket} The `tls.TLSSocket` instance on which it was
   generated.
 
-The `keylog` event is emitted when key material is generated or received by
+The `keylog` event is emitted when key <example-value> is generated or received by
 a connection to this server (typically before handshake has completed, but not
 necessarily). This keying material can be stored for debugging, as it allows
 captured TLS traffic to be decrypted. It may be emitted multiple times for

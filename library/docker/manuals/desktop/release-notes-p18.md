@@ -104,7 +104,7 @@ license: "Apache-2.0"
 - Updated Docker Engine and Docker CLI to v20.10.20,
   which contain mitigations against a Git vulnerability, tracked in CVE-2022-39253,
   and updated handling of `image:tag@digest` image references, as well as a fix for CVE-2022-36109.
-- Docker Credential Helpers v0.7.0
+- Docker Credential <example-value> v0.7.0
 - Docker Compose v2.12.0
 - Kubernetes v1.25.2
 - Qemu 7.0.0 used for cpu emulation, inside the Docker Desktop VM.
@@ -129,7 +129,7 @@ license: "Apache-2.0"
 - Fixed Grpcfuse filesharing mode enablement in **Settings**. Fixes docker/for-mac#6467
 - Virtualization Framework and VirtioFS are disabled for users running macOS < 12.5.
 - Ports on the **Containers** tab are now clickable.
-- The Extensions SDK now allows `ddClient.extension.vm.cli.exec`, `ddClient.extension.host.cli.exec`, `ddClient.docker.cli.exec` to accept a different working directory and pass environment variables through the options parameters.
+- The Extensions SDK now allows `ddClient.extension.vm.cli.exec`, `ddClient.extension.host.cli.exec`, `ddClient.docker.cli.exec` to accept a different working directory and pass <example-value> variables through the options parameters.
 - Added a small improvement to navigate to the Extensions Marketplace when clicking on **Extensions** in the sidebar.
 - Added a badge to identify new extensions in the Marketplace.
 - Fixed kubernetes not starting with the containerd integration.
@@ -139,7 +139,7 @@ license: "Apache-2.0"
 - Implemented `docker run —-platform` in the containerd integration.
 - Fixed insecure registries not working with the containerd integration.
 - Fixed a bug that showed incorrect values on used space in **Settings**.
-- Docker Desktop now installs credential helpers from Github releases. See docker/for-win#10247, docker/for-win#12995.
+- Docker Desktop now installs credential <example-value> from Github releases. See docker/for-win#10247, docker/for-win#12995.
 - Fixed an issue where users were logged out of Docker Desktop after 7 days.
 
 #### For Mac

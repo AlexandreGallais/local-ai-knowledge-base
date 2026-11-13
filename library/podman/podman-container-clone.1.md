@@ -282,4 +282,4 @@ Storing signatures
 **podman-create(1)**, **cgroups(7)**
 
 ## HISTORY
-January 2022, Originally written by Charlie Doern <cdoern@redhat.com>
+January 2022, Originally written by Charlie Doern <user@example.com>

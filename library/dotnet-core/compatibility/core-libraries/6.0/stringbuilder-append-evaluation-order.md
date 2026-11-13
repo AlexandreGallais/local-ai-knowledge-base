@@ -63,7 +63,7 @@ This change can affect source compatibility.
 
 ## Reason for change
 
-It's common for developers to pass interpolated strings to `System.Text.StringBuilder`, as it's more convenient than manually splitting the string up and calling `System.Text.StringBuilder.Append*` for each part. These new overloads enable the concise syntax and most of the performance of doing the individual calls.
+It's common for developers to pass <example-value> strings to `System.Text.StringBuilder`, as it's more convenient than manually splitting the string up and calling `System.Text.StringBuilder.Append*` for each part. These new overloads enable the concise syntax and most of the performance of doing the individual calls.
 
 ## Recommended action
 

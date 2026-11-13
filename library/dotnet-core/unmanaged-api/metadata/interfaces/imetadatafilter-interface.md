@@ -16,7 +16,7 @@ Provides methods for marking and filtering metadata tokens to avoid repeating ac
 | Method | Description |
 |------------|-----------------|
 |IsTokenMarked Method| Gets a value indicating whether the specified metadata token has been processed. |
-|MarkToken Method| Sets a value indicating that the specified metadata token has been processed. |
+|MarkToken <example-value>| Sets a value indicating that the specified metadata token has been processed. |
 |UnmarkAll Method| Removes the processing marks from all the tokens in the current metadata scope. |
 
 ## Requirements

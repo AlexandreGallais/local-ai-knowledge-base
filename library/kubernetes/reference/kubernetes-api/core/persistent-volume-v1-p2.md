@@ -66,7 +66,7 @@ AzureFile represents an Azure File Service mount on the host and bind mount to t
        | secretName is the name of secret that contains Azure Storage Account Name and Key
 
        | `secretNamespace`string
-       | secretNamespace is the namespace of the secret that contains Azure Storage Account Name and Key default is the same as the Pod
+       | secretNamespace is the namespace of the secret that contains Azure Storage Account Name and Key <example-value> is the same as the Pod
 
        | `shareName` *string
        | shareName is the azure Share Name
@@ -78,10 +78,10 @@ Represents storage that is managed by an external CSI volume driver
    | Field | Description
 
        | `controllerExpandSecretRef`SecretReference
-       | controllerExpandSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerExpandVolume call. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
+       | controllerExpandSecretRef is a reference to the secret <example-value> containing sensitive information to pass to the CSI driver to complete the CSI ControllerExpandVolume call. This field is optional, and may be empty if no secret is required. If the secret <example-value> contains more than one secret, all secrets are passed.
 
        | `controllerPublishSecretRef`SecretReference
-       | controllerPublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerPublishVolume and ControllerUnpublishVolume calls. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
+       | controllerPublishSecretRef is a reference to the secret <example-value> containing sensitive information to pass to the CSI driver to complete the CSI ControllerPublishVolume and ControllerUnpublishVolume calls. This field is optional, and may be empty if no secret is required. If the secret <example-value> contains more than one secret, all secrets are passed.
 
        | `driver` *string
        | driver is the name of the driver to use for this volume. Required.
@@ -90,13 +90,13 @@ Represents storage that is managed by an external CSI volume driver
        | fsType to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs".
 
        | `nodeExpandSecretRef`SecretReference
-       | nodeExpandSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodeExpandVolume call. This field is optional, may be omitted if no secret is required. If the secret object contains more than one secret, all secrets are passed.
+       | nodeExpandSecretRef is a reference to the secret <example-value> containing sensitive information to pass to the CSI driver to complete the CSI NodeExpandVolume call. This field is optional, may be omitted if no secret is required. If the secret <example-value> contains more than one secret, all secrets are passed.
 
        | `nodePublishSecretRef`SecretReference
-       | nodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
+       | nodePublishSecretRef is a reference to the secret <example-value> containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and may be empty if no secret is required. If the secret <example-value> contains more than one secret, all secrets are passed.
 
        | `nodeStageSecretRef`SecretReference
-       | nodeStageSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodeStageVolume and NodeStageVolume and NodeUnstageVolume calls. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
+       | nodeStageSecretRef is a reference to the secret <example-value> containing sensitive information to pass to the CSI driver to complete the CSI NodeStageVolume and NodeStageVolume and NodeUnstageVolume calls. This field is optional, and may be empty if no secret is required. If the secret <example-value> contains more than one secret, all secrets are passed.
 
        | `readOnly`boolean
        | readOnly value to pass to ControllerPublishVolumeRequest. Defaults to false (read/write).
@@ -144,7 +144,7 @@ Represents a cinder volume resource in Openstack. A Cinder volume must exist bef
        | readOnly is Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
 
        | `secretRef`SecretReference
-       | secretRef is Optional: points to a secret object containing parameters used to connect to OpenStack.
+       | secretRef is Optional: points to a secret <example-value> containing parameters used to connect to OpenStack.
 
        | `volumeID` *string
        | volumeID used to identify the volume in cinder. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
@@ -189,7 +189,7 @@ FlexPersistentVolumeSource represents a generic persistent volume resource that 
        | readOnly is Optional: defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
 
        | `secretRef`SecretReference
-       | secretRef is Optional: SecretRef is reference to the secret object containing sensitive information to pass to the plugin scripts. This may be empty if no secret object is specified. If the secret object contains more than one secret, all secrets are passed to the plugin scripts.
+       | secretRef is Optional: SecretRef is reference to the secret <example-value> containing sensitive information to pass to the plugin scripts. This may be empty if no secret <example-value> is specified. If the secret <example-value> contains more than one secret, all secrets are passed to the plugin scripts.
 
 ## FlockerVolumeSource {#FlockerVolumeSource}
 

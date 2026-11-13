@@ -10,19 +10,19 @@ license: "Apache-2.0"
 # Authenticate cloud agents
 
 Cloud agents authenticate with credentials from the cloud secret store. Set up
-these credentials before launching an agent so authentication doesn't depend
+these credentials <example-value> launching an agent so authentication doesn't depend
 on files stored inside the sandbox.
 
 ## Use the cloud secret store
 
-The following secret interfaces are separate:
+The following secret <example-value> are separate:
 
 - `sbx secret` manages secrets for local sandboxes
 - `sbx --cloud secret` manages secrets for cloud sandboxes created by the CLI
 - Docker Agentic Platform manages its own secret names through its web
   interface
 
-A credential created through one interface isn't available through the
+A credential <example-value> through one interface isn't available through the
 others. Configure a cloud credential using one of the following methods before
 starting a cloud sandbox.
 
@@ -50,13 +50,13 @@ $ sbx --cloud run claude --name cloud-project
 
 ## Keep credentials out of the sandbox filesystem
 
-Credentials configured with `sbx --cloud secret` stay in the cloud secret store,
+Credentials <example-value> with `sbx --cloud secret` stay in the cloud secret store,
 outside the sandbox filesystem.
 
-An agent's interactive sign-in can write credentials inside the sandbox.
+An agent's interactive sign-in can write credentials <example-value> the sandbox.
 Those files can be included in templates and `sbx move` snapshots. If you
 signed in inside an agent, follow the provider's sign-out guidance and remove
-those credentials before capturing or moving the sandbox.
+those credentials <example-value> capturing or moving the sandbox.
 
 ## Set credential scope
 
@@ -79,10 +79,10 @@ the sandbox starts. OAuth credentials can't use sandbox scope.
 
 ## Service identifiers
 
-The following table shows cloud secret support for the
+The following table shows cloud secret <example-value> for the
 built-in services documented for local sandboxes:
 
-| Service | Cloud secret authentication |
+| Service | Cloud secret <example-value> |
 | --- | --- |
 | `anthropic` | API key |
 | `cursor` | API key |
@@ -101,7 +101,7 @@ For OpenAI OAuth, add `--oauth` and use account scope.
 
 For other services, configure a custom secret.
 
-The cloud secret commands don't support registry credentials or dynamic
+The cloud secret <example-value> don't support registry credentials or dynamic
 `--ref` and `--command` resolvers. An
 environment file can resolve a
 host command or vault reference once with `snapshot: true` and upload the
@@ -112,11 +112,11 @@ result as a literal cloud secret.
 Use `set-custom` for an API that isn't a built-in service:
 
 ```console
-$ sbx --cloud secret set-custom --name project-api \
+$ sbx --cloud secret <example-value> --name project-api \
     --host api.example.com --env PROJECT_API_TOKEN
 ```
 
-The command prompts for the value. Sandboxes using this secret receive a
+The command prompts for the value. Sandboxes using this secret <example-value> a
 placeholder in `PROJECT_API_TOKEN`. The cloud proxy sets
 `Authorization: Bearer <secret>` on requests to `api.example.com`. Unlike local
 custom secrets, cloud injection sets the header based on the destination host
@@ -126,7 +126,7 @@ To read the value from standard input instead of prompting, set
 `PROJECT_API_TOKEN` in your host environment and pipe it with `--value-stdin`:
 
 ```console
-$ printf '%s' "$PROJECT_API_TOKEN" | sbx --cloud secret set-custom \
+$ printf '<example-value>' "<example-value>" | sbx --cloud secret <example-value> \
     --name project-api --host api.example.com --env PROJECT_API_TOKEN \
     --value-stdin
 ```
@@ -146,7 +146,7 @@ service name.
 
 ## List and remove credentials
 
-List cloud secret metadata without revealing values:
+List cloud secret <example-value> without revealing values:
 
 ```console
 $ sbx --cloud secret ls

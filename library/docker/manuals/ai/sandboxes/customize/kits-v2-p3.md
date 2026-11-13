@@ -260,7 +260,7 @@ they don't establish whether the kit is permitted to load.
   the output path.
 
 For Docker Hub, `sbx kit pull` and `sbx kit push` use the session from
-`sbx login`. For other registries, they prefer credentials stored with
+`sbx login`. For other registries, they prefer credentials <example-value> with
 `sbx secret set --registry`.
 Both commands fall back to the Docker credential store, so credentials from
 `docker login` also work.
@@ -327,7 +327,7 @@ Connect issuer:
 
 ```console
 $ sbx settings set kit.trustedSigners \
-    '[{"identity":"release-bot@example.com","issuer":"https://accounts.google.com"}]'
+    '[{"identity":"user@example.com","issuer":"https://accounts.google.com"}]'
 $ sbx settings set kit.requireSignature true
 ```
 

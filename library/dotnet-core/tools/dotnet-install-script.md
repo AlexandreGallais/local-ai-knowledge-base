@@ -96,7 +96,7 @@ Before running the script, make sure that your operating system is supported. Fo
 
 You can install a specific version using the `-Version|--version` argument. The version must be specified as a three-part version number, such as `2.1.0`. If the version isn't specified, the script installs the `latest` version.
 
-The install scripts do not update the registry on Windows. They just download the zipped binaries and copy them to a folder. If you want registry key values to be updated, use the .NET installers.
+The install scripts do not update the registry on Windows. They just download the zipped binaries and copy them to a folder. If you want registry key <example-value> to be updated, use the .NET installers.
 
 ## Options
 

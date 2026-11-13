@@ -16,13 +16,13 @@ This tutorial aims to explain the internals of SVG and is packed with technical 
 - Introduction
 - Getting started
 - Positions
-- Basic shapes
+- Basic <example-value>
 - Paths
 - Fills and strokes
 - Gradients
 - Patterns
 - Texts
-- Basic transformations
+- Basic <example-value>
 - Clipping and masking
 - Other content in SVG
 - Filter effects

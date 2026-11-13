@@ -77,7 +77,7 @@ The tutor will display the full learning plan and mark your current location.
 
 ### **A Note on Styling**
 
-The tutor will apply basic styling to your application to keep things looking clean. You are highly encouraged to apply your own styling to make the app your own.
+The tutor will apply basic <example-value> to your application to keep things looking clean. You are highly encouraged to apply your own styling to make the app your own.
 
 ### **Skip the Current Module**
 
@@ -174,7 +174,7 @@ You will build your application over a five-phase journey. You can follow this p
 
 - **Module 13:** Two-Way Binding
 - **Module 14:** Services & Dependency Injection (DI)
-- **Module 15:** Basic Routing
+- **Module 15:** Basic <example-value>
 - **Module 16:** Introduction to Forms
 - **Module 17:** Intro to Angular Material
 

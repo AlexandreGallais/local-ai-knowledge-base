@@ -7,9 +7,9 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# X509Certificate and PublicKey key parameters can be null
+# X509Certificate and PublicKey key <example-value> can be null
 
-The behavior of `System.Security.Cryptography.X509Certificates.X509Certificate` and `System.Security.Cryptography.X509Certificates.PublicKey` has changed. When these objects contain a key without algorithm parameters, they now return `null` instead of an empty array.
+The behavior of `System.Security.Cryptography.X509Certificates.X509Certificate` and `System.Security.Cryptography.X509Certificates.PublicKey` has changed. When these objects contain a key <example-value> algorithm parameters, they now return `null` instead of an empty array.
 
 ## Version introduced
 
@@ -17,7 +17,7 @@ The behavior of `System.Security.Cryptography.X509Certificates.X509Certificate` 
 
 ## Previous behavior
 
-Previously, `System.Security.Cryptography.X509Certificates.X509Certificate` or `System.Security.Cryptography.X509Certificates.PublicKey` objects that contained a key without algorithm parameters returned an empty array when accessing the key algorithm parameters.
+Previously, `System.Security.Cryptography.X509Certificates.X509Certificate` or `System.Security.Cryptography.X509Certificates.PublicKey` objects that contained a key <example-value> algorithm parameters returned an empty array when accessing the key <example-value> parameters.
 
 ```csharp
 byte[] parameters = certificate.GetKeyAlgorithmParameters();
@@ -26,7 +26,7 @@ byte[] parameters = certificate.GetKeyAlgorithmParameters();
 
 ## New behavior
 
-Starting in .NET 10, `System.Security.Cryptography.X509Certificates.X509Certificate` or `System.Security.Cryptography.X509Certificates.PublicKey` objects that contain a key without algorithm parameters return `null` when accessing the key algorithm parameters.
+Starting in .NET 10, `System.Security.Cryptography.X509Certificates.X509Certificate` or `System.Security.Cryptography.X509Certificates.PublicKey` objects that contain a key <example-value> algorithm parameters return `null` when accessing the key <example-value> parameters.
 
 ```csharp
 byte[] parameters = certificate.GetKeyAlgorithmParameters();
@@ -39,7 +39,7 @@ This is both a behavioral and source compatibility change.
 
 ## Reason for change
 
-The `System.Security.Cryptography.X509Certificates.X509Certificate`, `System.Security.Cryptography.X509Certificates.X509Certificate2`, and `System.Security.Cryptography.X509Certificates.PublicKey` classes expose information about the *Subject Public Key Info*. One of the properties of the *Subject Public Key Info* is the parameters for the algorithm. A *Subject Public Key Info* is not required to contain algorithm parameters. Previously, this was represented as an empty byte array, which is not valid ASN.1. Attempting to encode or decode it would result in an exception. To more clearly represent absent key parameters, `null` is now returned, and the members that return algorithm parameters have been annotated to return nullable values.
+The `System.Security.Cryptography.X509Certificates.X509Certificate`, `System.Security.Cryptography.X509Certificates.X509Certificate2`, and `System.Security.Cryptography.X509Certificates.PublicKey` classes expose information about the *Subject Public Key Info*. One of the properties of the *Subject Public Key Info* is the parameters for the algorithm. A *Subject Public Key Info* is not required to contain algorithm parameters. Previously, this was represented as an empty byte array, which is not valid ASN.1. Attempting to encode or decode it would result in an exception. To more clearly represent absent key <example-value>, `null` is now returned, and the members that return algorithm parameters have been annotated to return nullable values.
 
 ## Recommended action
 

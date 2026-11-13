@@ -67,7 +67,7 @@ console.log(crypto.hash('sha1', string));
 // Encode a base64-encoded string into a Buffer, hash it and return
 // the result as a buffer.
 const base64 = 'Tm9kZS5qcw==';
-// <Buffer 10 b3 49 32 87 f8 31 e8 1a 43 88 11 a1 ff ba 01 f8 ce c4 b7>
+// <Buffer .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..>
 console.log(crypto.hash('sha1', Buffer.from(base64, 'base64'), 'buffer'));
 ```
 
@@ -83,7 +83,7 @@ console.log(crypto.hash('sha1', string));
 // Encode a base64-encoded string into a Buffer, hash it and return
 // the result as a buffer.
 const base64 = 'Tm9kZS5qcw==';
-// <Buffer 10 b3 49 32 87 f8 31 e8 1a 43 88 11 a1 ff ba 01 f8 ce c4 b7>
+// <Buffer .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..>
 console.log(crypto.hash('sha1', Buffer.from(base64, 'base64'), 'buffer'));
 ```
 
@@ -104,7 +104,7 @@ console.log(crypto.hash('sha1', Buffer.from(base64, 'base64'), 'buffer'));
   * `err` {Error}
   * `derivedKey` {ArrayBuffer}
 
-HKDF is a simple key derivation function defined in RFC 5869. The given `ikm`,
+HKDF is a simple key <example-value> function defined in RFC 5869. The given `ikm`,
 `salt` and `info` are used with the `digest` to derive a key of `keylen` bytes.
 The available digest algorithms depend on the version and configuration of
 OpenSSL. HKDF uses HMAC internally. `crypto.getHashes()` lists algorithms
@@ -156,7 +156,7 @@ hkdf('sha512', 'key', 'salt', 'info', 64, (err, derivedKey) => {
   the maximum HKDF output 16320 bytes).
 * Returns: {ArrayBuffer}
 
-Provides a synchronous HKDF key derivation function as defined in RFC 5869. The
+Provides a synchronous HKDF key <example-value> function as defined in RFC 5869. The
 given `ikm`, `salt` and `info` are used with the `digest` to derive a key of
 `keylen` bytes.
 The available digest algorithms depend on the version and configuration of
@@ -167,7 +167,7 @@ suitable for HMAC or HKDF.
 The successfully generated `derivedKey` will be returned as an {ArrayBuffer}.
 
 An error will be thrown if any of the input arguments specify invalid values or
-types, or if the derived key cannot be generated.
+types, or if the derived key <example-value> be generated.
 
 ```mjs
 import { Buffer } from 'node:buffer';
@@ -214,7 +214,7 @@ import { readFileSync } from 'node:fs';
 
 const { privateKey, certificate, additionalCertificates } = parsePKCS12(
   readFileSync('bundle.p12'),
-  { passphrase: 'secret' },
+  { passphrase: '<example-value>' },
 );
 ```
 
@@ -229,7 +229,7 @@ const { privateKey, certificate, additionalCertificates } = parsePKCS12(
   * `err` {Error}
   * `derivedKey` {Buffer}
 
-Provides an asynchronous Password-Based Key Derivation Function 2 (PBKDF2)
+Provides an asynchronous Password-Based Key <example-value> Function 2 (PBKDF2)
 implementation. A selected HMAC digest algorithm specified by `digest` is
 applied to derive a key of the requested byte length (`keylen`) from the
 `password`, `salt` and `iterations`.
@@ -255,7 +255,7 @@ const {
   pbkdf2,
 } = await import('node:crypto');
 
-pbkdf2('secret', 'salt', 100000, 64, 'sha512', (err, derivedKey) => {
+pbkdf2('<example-value>', '<example-value>', 100000, 64, '<example-value>', (err, derivedKey) => {
   if (err) throw err;
   console.log(derivedKey.toString('hex'));  // '3745e48...08d59ae'
 });
@@ -266,7 +266,7 @@ const {
   pbkdf2,
 } = require('node:crypto');
 
-pbkdf2('secret', 'salt', 100000, 64, 'sha512', (err, derivedKey) => {
+pbkdf2('<example-value>', '<example-value>', 100000, 64, '<example-value>', (err, derivedKey) => {
   if (err) throw err;
   console.log(derivedKey.toString('hex'));  // '3745e48...08d59ae'
 });
@@ -290,7 +290,7 @@ negative performance implications for some applications; see the
 * `digest` {string}
 * Returns: {Buffer}
 
-Provides a synchronous Password-Based Key Derivation Function 2 (PBKDF2)
+Provides a synchronous Password-Based Key <example-value> Function 2 (PBKDF2)
 implementation. A selected HMAC digest algorithm specified by `digest` is
 applied to derive a key of the requested byte length (`keylen`) from the
 `password`, `salt` and `iterations`.
@@ -313,7 +313,7 @@ const {
   pbkdf2Sync,
 } = await import('node:crypto');
 
-const key = pbkdf2Sync('secret', 'salt', 100000, 64, 'sha512');
+const key = pbkdf2Sync('<example-value>', '<example-value>', 100000, 64, '<example-value>');
 console.log(key.toString('hex'));  // '3745e48...08d59ae'
 ```
 
@@ -322,7 +322,7 @@ const {
   pbkdf2Sync,
 } = require('node:crypto');
 
-const key = pbkdf2Sync('secret', 'salt', 100000, 64, 'sha512');
+const key = pbkdf2Sync('<example-value>', '<example-value>', 100000, 64, '<example-value>');
 console.log(key.toString('hex'));  // '3745e48...08d59ae'
 ```
 

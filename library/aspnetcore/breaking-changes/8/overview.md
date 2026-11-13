@@ -28,5 +28,5 @@ This article categorizes each breaking change as *binary incompatible* or *sourc
 | ISystemClock is obsolete                                 | Source incompatible |
 | Minimal APIs: IFormFile parameters require anti-forgery checks | Behavioral change   |
 | Rate-limiting middleware requires AddRateLimiter    | Behavioral change   |
-| Security token events return a JsonWebToken               | Behavioral change   |
+| Security token <example-value> return a JsonWebToken               | Behavioral change   |
 | TrimMode defaults to full for Web SDK projects                   | Source incompatible |

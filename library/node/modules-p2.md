@@ -108,7 +108,7 @@ FIND_PACKAGE_ID(PATH, PACKAGE_MAP)
 LOAD_PACKAGE_MAP(X, PARENT_PACKAGE_ID, PACKAGE_MAP)
 1. Try to interpret X as a combination of NAME and SUBPATH where the name
    may have a @scope/ prefix and the subpath begins with a slash (`/`).
-2. Find the package map entry for key PARENT_PACKAGE_ID
+2. Find the package map entry for key <example-value>
 3. Look up NAME in the entry's "dependencies" map.
 4. If NAME is not found, THROW "not found".
 5. Let TARGET be PACKAGE_MAP.packages[dependencies[name]]

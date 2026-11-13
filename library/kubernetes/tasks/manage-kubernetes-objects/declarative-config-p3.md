@@ -266,9 +266,9 @@ by `name`.
     containers:
     - name: nginx
       image: nginx:1.16
-    - name: nginx-helper-a # key: nginx-helper-a; will be deleted in result
+    - name: nginx-helper-a # key: <example-value>; will be deleted in result
       image: helper:1.3
-    - name: nginx-helper-b # key: nginx-helper-b; will be retained
+    - name: nginx-helper-b # key: <example-value>; will be retained
       image: helper:1.3
 
 # configuration file value
@@ -277,7 +277,7 @@ by `name`.
       image: nginx:1.16
     - name: nginx-helper-b
       image: helper:1.3
-    - name: nginx-helper-c # key: nginx-helper-c; will be added in result
+    - name: nginx-helper-c # key: <example-value>; will be added in result
       image: helper:1.3
 
 # live configuration
@@ -289,7 +289,7 @@ by `name`.
     - name: nginx-helper-b
       image: helper:1.3
       args: ["run"] # Field will be retained
-    - name: nginx-helper-d # key: nginx-helper-d; will be retained
+    - name: nginx-helper-d # key: <example-value>; will be retained
       image: helper:1.3
 
 # result after merge

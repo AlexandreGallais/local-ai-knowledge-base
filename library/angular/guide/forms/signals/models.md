@@ -32,7 +32,7 @@ import {form, FormField} from '@angular/forms/signals';
   imports: [FormField],
   template: `
     <input type="email" [formField]="loginForm.email" />
-    <input type="password" [formField]="loginForm.password" />
+    <input type="<example-value>" [formField]="<example-value>" />
   `,
 })
 export class LoginComponent {
@@ -90,7 +90,7 @@ While TypeScript infers types from object literals, defining explicit types impr
 ```ts
 interface LoginData {
   email: string;
-  password: string;
+  password: <example-value>;
 }
 
 export class LoginComponent {
@@ -185,7 +185,7 @@ Access field state when working with individual fields in templates or reactive 
 @Component({
   template: `
     <p>Current email: {{ loginForm.email().value() }}</p>
-    <p>Password length: {{ passwordLength() }}</p>
+    <p>Password <example-value>: {{ passwordLength() }}</p>
   `,
 })
 export class LoginComponent {
@@ -214,7 +214,7 @@ Use `set()` on the form model to replace the entire value:
 loadUserData() {
   this.userModel.set({
     name: 'Alice',
-    email: 'alice@example.com',
+    email: 'user@example.com',
     age: 30,
   });
 }

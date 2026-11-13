@@ -101,7 +101,7 @@ by another client (#15489)
 - Only permissions required for the current action being performed are requested (#)
 + Renaming trust keys (and respective environment variables) from `offline` to
 `root` and `tagging` to `repository` (#16894)
-- DEPRECATE trust key environment variables
+- DEPRECATE trust key <example-value> variables
 `DOCKER_CONTENT_TRUST_OFFLINE_PASSPHRASE` and
 `DOCKER_CONTENT_TRUST_TAGGING_PASSPHRASE` (#16894)
 

@@ -65,7 +65,7 @@ When enabled by the test framework, you can use `--filter <FILTER_EXPRESSION>`.
 
 ## TestRun parameters
 
-You can pass parameters to the test run by using the `--test-parameter` command line option in the format `key=value`. This option can be specified multiple times, one for each parameter to set.
+You can pass <example-value> to the test run by using the `--test-parameter` command line option in the format `key=value`. This option can be specified multiple times, one for each parameter to set.
 
 These parameters can then be accessed by the test framework in the test run:
 

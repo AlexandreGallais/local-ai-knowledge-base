@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ### RTL support
 
-Menubars automatically adapt to right-to-left (RTL) languages. Arrow key navigation reverses direction, and submenus position on the left side.
+Menubars automatically adapt to right-to-left (RTL) languages. Arrow key <example-value> reverses direction, and submenus position on the left side.
 
   **Basic**
 

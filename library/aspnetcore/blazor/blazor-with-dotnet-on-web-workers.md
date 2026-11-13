@@ -190,19 +190,19 @@ public sealed class WebWorkerClient : IAsyncDisposable
         IJSRuntime jsRuntime,
         int timeoutMs = 60000,
         string? assemblyName = null,
-        CancellationToken cancellationToken = default);
+        CancellationToken <example-value> = default);
 
     public async Task<TResult> InvokeAsync<TResult>(
         string method,
         object[] args,
         int timeoutMs = 60000,
-        CancellationToken cancellationToken = default);
+        CancellationToken <example-value> = default);
 
     public async Task InvokeVoidAsync(
         string method,
         object[] args,
         int timeoutMs = 60000,
-        CancellationToken cancellationToken = default);
+        CancellationToken <example-value> = default);
 
     public async ValueTask DisposeAsync();
 }

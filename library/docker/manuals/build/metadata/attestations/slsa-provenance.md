@@ -91,7 +91,7 @@ attestations created using the `min` mode:
         }
       },
       {
-        "uri": "pkg:docker/golang@1.19.4-alpine?platform=linux%2Farm64",
+        "uri": "pkg:docker/user@example.com?platform=linux%2Farm64",
         "digest": {
           "sha256": "a9b24b67dc83b3383d22a14941c2b2b2ca6a103d805cac6820fd1355943beaf1"
         }
@@ -123,7 +123,7 @@ attestations created using the `min` mode:
       "https://mobyproject.org/buildkit@v1#metadata": {
         "vcs": {
           "revision": "a9ba846486420e07d30db1107411ac3697ecab68",
-          "source": "git@github.com:<org>/<repo>.git"
+          "source": "user@example.com:<org>/<repo>.git"
         }
       }
     }
@@ -150,10 +150,10 @@ detailed information for analysis.
 > Note that `mode=max` exposes the values of
 > build arguments.
 >
-> If you're misusing build arguments to pass credentials, authentication
+> If you're misusing build arguments to pass <example-value>, authentication
 > tokens, or other secrets, you should refactor your build to pass the secrets using
-> secret mounts instead.
-> Secret mounts don't leak outside of the build and are never included in provenance attestations.
+> secret <example-value> instead.
+> Secret <example-value> don't leak outside of the build and are never included in provenance attestations.
 
 ## Version
 
@@ -230,7 +230,7 @@ attestation with `mode=max` looks like:
         }
       },
       {
-        "uri": "pkg:docker/golang@1.19.4-alpine?platform=linux%2Farm64",
+        "uri": "pkg:docker/user@example.com?platform=linux%2Farm64",
         "digest": {
           "sha256": "a9b24b67dc83b3383d22a14941c2b2b2ca6a103d805cac6820fd1355943beaf1"
         }
@@ -299,7 +299,7 @@ attestation with `mode=max` looks like:
       "https://mobyproject.org/buildkit@v1#metadata": {
         "vcs": {
           "revision": "a9ba846486420e07d30db1107411ac3697ecab68-dirty",
-          "source": "git@github.com:<org>/<repo>.git"
+          "source": "user@example.com:<org>/<repo>.git"
         },
         "source": {
           "locations": {

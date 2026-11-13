@@ -48,7 +48,7 @@ The following configuration adds an endpoint named `MySniEndpoint` that uses SNI
           "*.example.org": {
             "Certificate": {
               "Path": "<path to .pfx file>",
-              "Password": "$CREDENTIAL_PLACEHOLDER$"
+              "Password": "<example-value>"
             }
           },
           "*": {
@@ -62,7 +62,7 @@ The following configuration adds an endpoint named `MySniEndpoint` that uses SNI
     "Certificates": {
       "Default": {
         "Path": "<path to .pfx file>",
-        "Password": "$CREDENTIAL_PLACEHOLDER$"
+        "Password": "<example-value>"
       }
     }
   }
@@ -251,7 +251,7 @@ When you use the HTTP/2 protocol for the connection, the following TLS restricti
 * Requires TLS version 1.2 or later
 * Renegotiation is disabled
 * Compression is disabled
-* Minimum ephemeral key exchange sizes:
+* Minimum ephemeral key <example-value> sizes:
   * Elliptic curve Diffie-Hellman (ECDHE) (see [RFC 4492]): 224 bits minimum
   * Finite field Diffie-Hellman (DHE) (see TLS12 in [RFC 5246]): 2,048 bits minimum
 * The Cipher suite isn't prohibited.
@@ -302,7 +302,7 @@ builder.WebHost.ConfigureKestrel((context, serverOptions) =>
 {
     serverOptions.Listen(IPAddress.Any, 8000, listenOptions =>
     {
-        listenOptions.UseHttps("testCert.pfx", "testPassword");
+        listenOptions.UseHttps("<example-value>", "<example-value>");
         listenOptions.Protocols = HttpProtocols.Http1AndHttp2AndHttp3;
     });
 });

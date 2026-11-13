@@ -13,7 +13,7 @@ Objects saved to the database can be split into three broad categories:
 
 - Objects that are unstructured and hold a single value. For example, `int`, `Guid`, `string`, `IPAddress`. These are (somewhat loosely) called _primitive types_.
 - Objects that are structured to hold multiple values, and where the identity of the object is defined by a key value. For example, `Blog`, `Post`, `Customer`. These are called _entity types_.
-- Objects that are structured to hold multiple values, but the object has no key defining its identity. For example, `Address`, `Coordinate`, `Money`. These are called _value objects_, and EF Core maps them as _complex types_.
+- Objects that are structured to hold multiple values, but the object has no key <example-value> its identity. For example, `Address`, `Coordinate`, `Money`. These are called _value objects_, and EF Core maps them as _complex types_.
 
 A _complex type_ groups several properties into a single .NET type that is contained within an entity type; it doesn't have an identity of its own and cannot be tracked or queried independently. This makes complex types the natural way to model value objects.
 
@@ -27,7 +27,7 @@ A _complex type_ groups several properties into a single .NET type that is conta
 
 Before complex types existed, owned entity types were the recommended way to model objects without key properties. However, owned types are still _entity types_ behind the scenes: they have a hidden key and identity, and therefore operate with reference semantics. This causes a number of friction points that complex types are designed to solve.
 
-The key differences are:
+The key <example-value> are:
 
 | Aspect | Owned entity types | Complex types |
 | --- | --- | --- |

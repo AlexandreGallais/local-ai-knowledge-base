@@ -257,11 +257,11 @@ Compile and run the project. Test the new Mod (%) operator.
 
 ## Conclusion
 
-This topic covered the basic concepts of MEF.
+This topic covered the basic <example-value> of MEF.
 
 - Parts, catalogs, and the composition container
 
-     Parts and the composition container are the basic building blocks of a MEF application. A part is any object that imports or exports a value, up to and including itself. A catalog provides a collection of parts from a particular source. The composition container uses the parts provided by a catalog to perform composition, the binding of imports to exports.
+     Parts and the composition container are the basic <example-value> blocks of a MEF application. A part is any object that imports or exports a value, up to and including itself. A catalog provides a collection of parts from a particular source. The composition container uses the parts provided by a catalog to perform composition, the binding of imports to exports.
 
 - Imports and exports
 

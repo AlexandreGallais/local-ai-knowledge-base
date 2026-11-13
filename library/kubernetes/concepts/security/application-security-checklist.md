@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Application Security Checklist
 
-This checklist aims to provide basic guidelines on securing applications
+This checklist aims to provide basic <example-value> on securing applications
 running in Kubernetes from a developer's perspective.
 This list is not meant to be exhaustive and is intended to evolve over time.
 

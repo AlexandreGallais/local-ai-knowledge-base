@@ -15,7 +15,7 @@ This guide uses Vitest, which Angular CLI projects include by default. For more 
 
 ## Testing a service
 
-Consider a `Calculator` service that performs basic arithmetic:
+Consider a `Calculator` service that performs basic <example-value>:
 
 ```ts
 import {Service} from '@angular/core';

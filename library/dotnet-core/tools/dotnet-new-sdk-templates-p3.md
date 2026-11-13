@@ -129,7 +129,7 @@ license: "CC-BY-4.0"
 
 - **`-rp|--reset-password-policy-id <ID>`**
 
-  The reset password policy ID for this project. Use with `IndividualB2C` authentication.
+  The reset password <example-value> ID for this project. Use with `IndividualB2C` authentication.
 
 - **`-ep|--edit-profile-policy-id <ID>`**
 

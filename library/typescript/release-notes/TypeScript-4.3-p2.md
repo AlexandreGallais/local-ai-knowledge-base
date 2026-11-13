@@ -132,7 +132,7 @@ function makeUnique<T>(
 ```
 
 So how does TypeScript 4.3 change things?
-Well, basically in a few key places when writing code, all the type system really cares about is the constraint of a type.
+Well, basically in a few key <example-value> when writing code, all the type system really cares about is the constraint of a type.
 For example, when we write `collection.length`, TypeScript doesn't care about the fact that `collection` has the type `C`, it only cares about the properties available, which are determined by the constraint `T[] | Set<T>`.
 
 In cases like this, TypeScript will grab the narrowed type of the constraint because that will give you the data you care about;

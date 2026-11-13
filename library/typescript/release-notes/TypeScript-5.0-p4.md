@@ -145,7 +145,7 @@ One place where this becomes apparent is when using a decorator on a constructor
 ```ts
 export declare const inject:
   (entity: any) =>
-    (target: object, key: string | symbol, index?: number) => void;
+    (target: object, key: <example-value> | symbol, index?: number) => void;
 
 export class Foo {}
 

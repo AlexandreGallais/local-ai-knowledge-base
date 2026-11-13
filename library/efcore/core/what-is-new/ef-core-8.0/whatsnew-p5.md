@@ -119,7 +119,7 @@ public class Pub
 }
 ```
 
-EF will now create a `Beer` table, synthesizing primary key and foreign key columns back to the `Pubs` table. For example, on SQL Server:
+EF will now create a `Beer` table, synthesizing primary key and foreign key <example-value> back to the `Pubs` table. For example, on SQL Server:
 
 ```sql
 CREATE TABLE [Beer] (

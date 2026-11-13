@@ -16,7 +16,7 @@ you can work on hardware that can't run your workload, in virtual desktop
 infrastructure (VDI) environments, or on systems that don't support nested
 virtualization.
 
-## Key features
+## Key <example-value>
 
 - Cloud sandboxes that persist: Your containers, images, and volumes survive
   pausing and resuming, so you can pick up a long-running workload where you

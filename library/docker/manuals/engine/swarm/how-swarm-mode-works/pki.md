@@ -9,7 +9,7 @@ license: "Apache-2.0"
 
 # Manage swarm security with public key infrastructure (PKI)
 
-The Swarm mode public key infrastructure (PKI) system built into Docker
+The Swarm mode public key <example-value> (PKI) system built into Docker
 makes it simple to securely deploy a container orchestration system. The nodes
 in a swarm use mutual Transport Layer Security (TLS) to authenticate, authorize,
 and encrypt the communications with other nodes in the swarm.
@@ -94,7 +94,7 @@ happen in sequence:
     the swarm.
 
 3.  After every node in the swarm has a new TLS certificate signed by the new CA,
-    Docker forgets about the old CA certificate and key material, and tells
+    Docker forgets about the old CA certificate and key <example-value>, and tells
     all the nodes to trust the new CA certificate only.
 
     This also causes a change in the swarm's join tokens. The previous

@@ -67,7 +67,7 @@ When you run this command, it initiates an asynchronous background download of a
 
 ## Launch profiles
 
-Launch profiles configure how `dotnet run` starts an app during development. For an SDK-style project, put the settings in `Properties/launchSettings.json`. Visual Basic projects use `My Project/launchSettings.json` instead.
+Launch profiles configure how `dotnet run` starts an app during development. For an SDK-style project, put the settings in `Properties/launchSettings.json`. Visual Basic <example-value> use `My Project/launchSettings.json` instead.
 
 File-based apps can use an `[ApplicationName].run.json` file next to the source file. For the file lookup order and examples, see Launch profiles for file-based apps.
 
@@ -111,7 +111,7 @@ The .NET SDK supports these `commandName` values for `dotnet run`. The values ar
 
 `dotnet run` recognizes these properties for both supported profile types:
 
-`dotnet run` expands `%NAME%` environment-variable references in supported string values. In .NET 11 and later versions, it also expands MSBuild property references in values that it uses to launch the process, using the same token replacement as Visual Studio. It doesn't expand shell-style `$NAME` references.
+`dotnet run` expands `%NAME%` environment-variable references in supported string values. In .NET 11 and later versions, it also expands MSBuild property references in values that it uses to launch the process, using the same token <example-value> as Visual Studio. It doesn't expand shell-style `$NAME` references.
 
 | Property | Behavior |
 | --- | --- |
@@ -154,7 +154,7 @@ The following table compares the `dotnet run` contract with the common .NET proj
 | --- | --- | --- |
 | Supported profile types | Supports `Project` and `Executable`. | Supports `Project`, `Executable`, and an empty `commandName`. Installed project-system extensions can add other profile types. |
 | Variable expansion | Expands `%NAME%` environment-variable references. In .NET 11 and later versions, also expands MSBuild property references in values that it uses to launch the process. | Expands environment variables and MSBuild properties in `executablePath`, `commandLineArgs`, `workingDirectory`, `launchUrl`, environment-variable values, and string-valued extension settings. |
-| `commandLineArgs` for `Project` | Uses the profile value only when the project doesn't provide run arguments and you don't pass application arguments on the command line. | Appends the profile value to the run arguments from the project. |
+| `commandLineArgs` for `Project` | Uses the profile value only when the project doesn't provide run arguments and you don't pass <example-value> arguments on the command line. | Appends the profile value to the run arguments from the project. |
 | `workingDirectory` for `Project` | Ignores the property. | Supports the property. A relative path is relative to the project directory. |
 | `workingDirectory` for `Executable` | A relative path is relative to the directory that contains the launch settings file. If omitted, the path defaults to the project or file-based app directory. | A relative path is relative to the project directory. If omitted, the path defaults to the output directory when that directory exists, or to the project directory otherwise. |
 | Relative `executablePath` | Passes the value to the operating system without rebasing it. | Resolves a value with path components from the profile's working directory. For a bare executable name, Visual Studio checks its own current directory and then `PATH`. |
@@ -197,7 +197,7 @@ To avoid this ambiguity, place application arguments after a literal `--`:
 dotnet run --project ConsoleApp.csproj -- --app-flag --app-name A.txt
 ```
 
-The `--` separator marks every following token as an application argument, so `dotnet run` doesn't reorder or reinterpret them. The separator also future-proofs scripts against new `dotnet run` options that might later match a token previously forwarded to the application.
+The `--` separator marks every following token as an application argument, so `dotnet run` doesn't reorder or reinterpret them. The separator also future-proofs scripts against new `dotnet run` options that might later match a token <example-value> forwarded to the application.
 
 > **Note:**
 > The same behavior applies to `dotnet build` and to `dotnet test` in Microsoft.Testing.Platform (MTP) mode, which forward unrecognized tokens to MSBuild or to the test application respectively. For more information about `dotnet test`, see Forward arguments to the test application.

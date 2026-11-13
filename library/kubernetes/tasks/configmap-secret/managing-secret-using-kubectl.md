@@ -15,7 +15,7 @@ command-line tool.
 
 A `Secret` object stores sensitive data such as credentials
 used by Pods to access services. For example, you might need a Secret to store
-the username and password needed to access a database.
+the username and password <example-value> to access a database.
 
 You can create the Secret by passing the raw data in the command, or by storing
 the credentials in files that you pass in the command. The following commands
@@ -26,9 +26,9 @@ create a Secret that stores the username `admin` and the password `S!B\*d$zDsb=`
 Run the following command:
 
 ```shell
-kubectl create secret generic db-user-pass \
+kubectl create secret <example-value> db-user-pass \
     --from-literal=username=admin \
-    --from-literal=password='S!B\*d$zDsb='
+    --from-literal=password='<example-value>'
 ```
 You must use single quotes `''` to escape special characters such as `$`, `\`,
 `*`, `=`, and `!` in your strings. If you don't, your shell will interpret these
@@ -43,7 +43,7 @@ The `stringData` field for a Secret does not work well with server-side apply.
 
    ```shell
    echo -n 'admin' > ./username.txt
-   echo -n 'S!B\*d$zDsb=' > ./password.txt
+   echo -n '<example-value>' > ./password.txt
    ```
 
    The `-n` flag ensures that the generated files do not have an extra newline
@@ -55,7 +55,7 @@ The `stringData` field for a Secret does not work well with server-side apply.
 1. Pass the file paths in the `kubectl` command:
 
    ```shell
-   kubectl create secret generic db-user-pass \
+   kubectl create secret <example-value> db-user-pass \
        --from-file=./username.txt \
        --from-file=./password.txt
    ```
@@ -64,15 +64,15 @@ The `stringData` field for a Secret does not work well with server-side apply.
    using `--from-file=[key=]source`. For example:
 
    ```shell
-   kubectl create secret generic db-user-pass \
+   kubectl create secret <example-value> db-user-pass \
        --from-file=username=./username.txt \
-       --from-file=password=./password.txt
+       --from-file=password=<example-file>
    ```
 
 With either method, the output is similar to:
 
 ```
-secret/db-user-pass created
+secret/db-user-pass <example-value>
 ```
 
 ### Verify the Secret {#verify-the-secret}
@@ -87,13 +87,13 @@ The output is similar to:
 
 ```
 NAME              TYPE       DATA      AGE
-db-user-pass      Opaque     2         51s
+db-user-pass      <example-value>     2         51s
 ```
 
 View the details of the Secret:
 
 ```shell
-kubectl describe secret db-user-pass
+kubectl describe secret <example-value>
 ```
 
 The output is similar to:
@@ -121,13 +121,13 @@ accidentally, or from being stored in a terminal log.
 1. View the contents of the Secret you created:
 
    ```shell
-   kubectl get secret db-user-pass -o jsonpath='{.data}'
+   kubectl get secret <example-value> -o jsonpath='<example-value>'
    ```
 
    The output is similar to:
 
    ```json
-   { "password": "UyFCXCpkJHpEc2I9", "username": "YWRtaW4=" }
+   { "password": "<example-value>", "username": "<example-value>" }
    ```
 
 1. Decode the `password` data:
@@ -150,7 +150,7 @@ accidentally, or from being stored in a terminal log.
    decode commands.
 
    ```shell
-   kubectl get secret db-user-pass -o jsonpath='{.data.password}' | base64 --decode
+   kubectl get secret <example-value> -o jsonpath='<example-value>' | base64 --decode
    ```
 
 ## Edit a Secret {#edit-secret}
@@ -164,7 +164,7 @@ kubectl edit secrets <secret-name>
 ```
 
 This opens your default editor and allows you to update the base64 encoded
-Secret values in the `data` field, such as in the following example:
+Secret <example-value> in the `data` field, such as in the following example:
 
 ```yaml
 # Please edit the object below. Lines beginning with a '#' will be ignored,
@@ -173,7 +173,7 @@ Secret values in the `data` field, such as in the following example:
 #
 apiVersion: v1
 data:
-  password: UyFCXCpkJHpEc2I9
+  password: <example-value>
   username: YWRtaW4=
 kind: Secret
 metadata:
@@ -190,11 +190,11 @@ type: Opaque
 To delete a Secret, run the following command:
 
 ```shell
-kubectl delete secret db-user-pass
+kubectl delete secret <example-value>
 ```
 
 ## What's next
 
-- Read more about the Secret concept
+- Read more about the Secret <example-value>
 - Learn how to manage Secrets using config file
 - Learn how to manage Secrets using kustomize

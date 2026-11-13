@@ -94,7 +94,7 @@ On Windows, it is not yet possible to set up a named pipe server in a worker.
 ## How it works
 
 The worker processes are spawned using the `child_process.fork()` method,
-so that they can communicate with the parent via IPC and pass server
+so that they can communicate with the parent via IPC and pass <example-value>
 handles back and forth.
 
 The cluster module supports two methods of distributing incoming

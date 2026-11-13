@@ -45,4 +45,4 @@ podman pod is a set of subcommands that manage pods, or groups of containers.
 **podman(1)**
 
 ## HISTORY
-July 2018, Originally compiled by Peter Hunt <pehunt@redhat.com>
+July 2018, Originally compiled by Peter Hunt <user@example.com>

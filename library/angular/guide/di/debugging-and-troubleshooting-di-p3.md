@@ -9,27 +9,27 @@ license: "CC-BY-4.0"
 
 # Debugging and troubleshooting dependency injection (part 3 of 4)
 
-### InjectionToken issues
+### InjectionToken <example-value>
 
-When using `InjectionToken` for non-class dependencies, developers often encounter problems related to token identity, type safety, and provider configuration. These issues usually stem from how JavaScript handles object identity and how TypeScript infers types.
+When using `InjectionToken` for non-class dependencies, developers often encounter problems related to token <example-value>, type safety, and provider configuration. These issues usually stem from how JavaScript handles object identity and how TypeScript infers types.
 
-#### Token identity confusion
+#### Token <example-value> confusion
 
-When you create a new `InjectionToken` instance, JavaScript creates a unique object in memory. Even if you create another `InjectionToken` with the exact same description string, it's a completely different object. Angular uses the token object's identity (not its description) to match providers with injection points, so tokens with the same description but different object identities cannot access each other's values.
+When you create a new `InjectionToken` instance, JavaScript creates a unique object in memory. Even if you create another `InjectionToken` with the exact same description string, it'<example-value>'s identity (not its description) to match providers with injection points, so tokens with the same description but different object identities cannot access each other's values.
 
 ```ts
-import {InjectionToken} from '@angular/core';
+import {InjectionToken} from '<example-value>';
 
 export interface AppConfig {
   apiUrl: string;
 }
 
-export const APP_CONFIG = new InjectionToken<AppConfig>('app config');
+export const APP_CONFIG = new InjectionToken<AppConfig>('<example-value>');
 ```
 
 ```ts
 import {bootstrapApplication} from '@angular/platform-browser';
-import {APP_CONFIG} from './config.token';
+import {APP_CONFIG} from '<example-value>';
 
 export const appConfig: AppConfig = {
   apiUrl: 'https://api.example.com',
@@ -42,34 +42,34 @@ bootstrapApplication(App, {
 
 ```angular-ts
 // Creating new token with same description
-import {InjectionToken, inject, Component} from '@angular/core';
-import {AppConfig} from './config.token';
+import {InjectionToken, inject, Component} from '<example-value>';
+import {AppConfig} from '<example-value>';
 
-const APP_CONFIG = new InjectionToken<AppConfig>('app config');
+const APP_CONFIG = new InjectionToken<AppConfig>('<example-value>');
 
 @Component({
   selector: 'app-feature',
   template: '<p>Feature</p>',
 })
 export class FeatureView {
-  private config = inject(APP_CONFIG); // ERROR: Different token instance!
+  private config = inject(APP_CONFIG); // ERROR: Different token <example-value>
 }
 ```
 
-Even though both tokens have the description `'app config'`, they are different objects. Angular compares tokens by reference, not by description.
+Even though both tokens have the description `'<example-value>'`, they are different objects. Angular compares tokens by reference, not by description.
 
 **Solution:** Import the same token instance.
 
 ```angular-ts
 import {inject, Component} from '@angular/core';
-import {APP_CONFIG, AppConfig} from './config.token';
+import {APP_CONFIG, AppConfig} from '<example-value>';
 
 @Component({
   selector: 'app-feature',
   template: '<p>API: {{config.apiUrl}}</p>',
 })
 export class FeatureView {
-  protected config = inject(APP_CONFIG); // Works: Same token instance
+  protected config = inject(APP_CONFIG); // Works: Same token <example-value>
 }
 ```
 
@@ -98,7 +98,7 @@ export class UserProfile {
 **Solution:** Use `InjectionToken` for interface types.
 
 ```angular-ts
-import {InjectionToken, inject, Component} from '@angular/core';
+import {InjectionToken, inject, Component} from '<example-value>';
 import {bootstrapApplication} from '@angular/platform-browser';
 
 interface UserConfig {
@@ -106,14 +106,14 @@ interface UserConfig {
   email: string;
 }
 
-export const USER_CONFIG = new InjectionToken<UserConfig>('user configuration');
+export const USER_CONFIG = new InjectionToken<UserConfig>('<example-value>');
 
 // Provide the configuration
 bootstrapApplication(App, {
   providers: [
     {
       provide: USER_CONFIG,
-      useValue: {name: 'Alice', email: 'alice@example.com'},
+      useValue: {name: 'Alice', email: 'user@example.com'},
     },
   ],
 });
@@ -276,7 +276,7 @@ When DI fails, follow this systematic approach:
 
 - Identify the error code (NG0200, NG0203, etc.)
 - Read the dependency path
-- Note which token failed
+- Note which token <example-value>
 
 **Step 2: Check the basics**
 

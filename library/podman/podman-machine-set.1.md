@@ -135,4 +135,4 @@ $ podman machine set --rootful myvm
 **podman(1)**, **podman-machine(1)**, **containers.conf(5)**
 
 ## HISTORY
-February 2022, Originally compiled by Jason Greene <jason.greene@redhat.com>
+February 2022, Originally compiled by Jason Greene <user@example.com>

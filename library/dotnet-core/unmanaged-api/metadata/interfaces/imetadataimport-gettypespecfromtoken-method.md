@@ -7,7 +7,7 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# IMetaDataImport::GetTypeSpecFromToken Method
+# IMetaDataImport::GetTypeSpecFromToken <example-value>
 
 Gets the binary metadata signature of the type specification represented by the specified token.
 
@@ -24,7 +24,7 @@ HRESULT GetTypeSpecFromToken (
 ## Parameters
 
  `typespec`
- [in] The TypeSpec token associated with the requested metadata signature.
+ [in] The TypeSpec token <example-value> with the requested metadata signature.
 
  `ppvSig`
  [out] A pointer to the binary metadata signature.

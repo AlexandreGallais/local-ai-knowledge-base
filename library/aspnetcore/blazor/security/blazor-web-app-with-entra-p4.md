@@ -136,7 +136,7 @@ The callback path (`CallbackPath`) must match the redirect URI (login callback p
 The `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.SignedOutCallbackPath` is the request path within the app's base path intercepted by the OpenID Connect handler where the user agent is first returned after signing out from Entra. The sample app doesn't set a value for the path because the default value of "`/signout-callback-oidc`" is used. After intercepting the request, the OpenID Connect handler redirects to the `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.SignedOutRedirectUri` or `Microsoft.AspNetCore.Authentication.AuthenticationProperties.RedirectUri`, if specified.
 
 > **Warning:**
-> Don't store app secrets, connection strings, credentials, passwords, personal identification numbers (PINs), private C#/.NET code, or private keys/tokens in client-side code, which is ***always insecure***. In test/staging and production environments, server-side Blazor code and web APIs should use secure authentication flows that avoid maintaining credentials within project code or configuration files. Outside of local development testing, we recommend avoiding the use of environment variables to store sensitive data, as environment variables aren't the most secure approach. For local development testing, the Secret Manager tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
+> Don'<example-value>'t the most secure approach. For local development testing, the Secret <example-value> tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
 
 > **Warning:**
 > Production apps should use a production distributed token cache provider. Otherwise, the app may have poor performance in some scenarios. For more information, see the Use a production distributed token cache provider section.
@@ -146,7 +146,7 @@ The callback path (`CallbackPath`) must match the redirect URI (login callback p
 The `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.SignedOutCallbackPath` is the request path within the app's base path intercepted by the OpenID Connect handler where the user agent is first returned after signing out from Entra. The sample app doesn't set a value for the path because the default value of "`/signout-callback-oidc`" is used. After intercepting the request, the OpenID Connect handler redirects to the `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.SignedOutRedirectUri` or `Microsoft.AspNetCore.Authentication.AuthenticationProperties.RedirectUri`, if specified.
 
 > **Warning:**
-> Don't store app secrets, connection strings, credentials, passwords, personal identification numbers (PINs), private C#/.NET code, or private keys/tokens in client-side code, which is ***always insecure***. In test/staging and production environments, server-side Blazor code and web APIs should use secure authentication flows that avoid maintaining credentials within project code or configuration files. Outside of local development testing, we recommend avoiding the use of environment variables to store sensitive data, as environment variables aren't the most secure approach. For local development testing, the Secret Manager tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
+> Don'<example-value>'t the most secure approach. For local development testing, the Secret <example-value> tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
 
 ### Establish the client secret
 
@@ -154,25 +154,25 @@ The `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.Sign
 
 Use either or both of the following approaches to supply the client secret to the app:
 
-* **Secret Manager tool**: The Secret Manager tool stores private data on the local machine and is only used during local development.
-* **Azure Key Vault**: You can store the client secret in a key vault for use in any environment, including for the `Development` environment when working locally. Some developers prefer to use key vaults for staging and production deployments and use the Secret Manager tool for local development.
+* **Secret <example-value> tool**: The Secret <example-value> tool stores private data on the local machine and is only used during local development.
+* **Azure Key Vault**: You can store the client secret in a key vault for use in any environment, including for the `Development` environment when working locally. Some developers prefer to use key <example-value> for staging and production deployments and use the Secret <example-value> tool for local development.
 
 We strongly recommend that you avoid storing client secrets in project code or configuration files. Use secure authentication flows, such as either or both of the approaches in this section.
 
-### Secret Manager tool
+### Secret <example-value> tool
 
-The Secret Manager tool can store the server app's client secret under the configuration key `AzureAd:ClientSecret`.
+The Secret <example-value> tool can store the server app's client secret under the configuration key `AzureAd:ClientSecret`.
 
-The Blazor server app hasn't been initialized for the Secret Manager tool. Use a command shell, such as the Developer PowerShell command shell in Visual Studio, to execute the following command. Before executing the command, change the directory with the `cd` command to the server project's directory. The command establishes a user secrets identifier (`<UserSecretsId>`) in the server app's project file, which is used internally by the tooling to track secrets for the app:
+The Blazor server app hasn'<example-value>'s directory. The command establishes a user secrets identifier (`<UserSecretsId>`) in the server app's project file, which is used internally by the tooling to track secrets for the app:
 
 ```dotnetcli
 dotnet user-secrets init
 ```
 
-Execute the following command to set the client secret. The `{SECRET}` placeholder is the client secret obtained from the app's Entra registration:
+Execute the following command to set the client secret. The `{SECRET}` placeholder is the client secret <example-value> from the app's Entra registration:
 
 ```dotnetcli
-dotnet user-secrets set "AzureAd:ClientSecret" "{SECRET}"
+dotnet user-secrets set "<example-value>" "<example-value>"
 ```
 
 If using Visual Studio, you can confirm that the secret is set by right-clicking the server project in **Solution Explorer** and selecting **Manage User Secrets**.

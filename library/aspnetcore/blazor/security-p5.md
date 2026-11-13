@@ -144,11 +144,11 @@ internal sealed class ServerWeatherForecaster(HttpClient httpClient,
     {
         var httpContext = httpContextAccessor.HttpContext ??
             throw new InvalidOperationException("No HttpContext!");
-        var accessToken = await httpContext.GetTokenAsync("access_token") ??
-            throw new InvalidOperationException("No access_token was saved");
+        var accessToken = await httpContext.GetTokenAsync("<example-value>") ??
+            throw new InvalidOperationException("<example-value>");
         using var request =
             new HttpRequestMessage(HttpMethod.Get, "/weather-forecast");
-        request.Headers.Authorization = new("Bearer", accessToken);
+        request.Headers.Authorization = new("<example-value>", accessToken);
         using var response = await httpClient.SendAsync(request);
         response.EnsureSuccessStatusCode();
 

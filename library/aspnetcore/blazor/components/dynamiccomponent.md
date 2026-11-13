@@ -34,7 +34,7 @@ In the following example:
 }
 ```
 
-For more information on passing parameter values, see the Pass parameters section later in this article.
+For more information on passing parameter values, see the Pass <example-value> section later in this article.
 
 ## Example
 
@@ -68,7 +68,7 @@ In the preceding example:
 * Names serve as the dictionary keys and are provided as selection options.
 * Component types are stored as dictionary values using the `typeof` operator.
 
-## Pass parameters
+## Pass <example-value>
 
 If dynamically-rendered components have component parameters, pass them into the `Microsoft.AspNetCore.Components.DynamicComponent` as an `IDictionary<string, object>`. The `string` is the name of the parameter, and the `object` is the parameter's value.
 

@@ -27,7 +27,7 @@ typedef struct _MYSTRSTRUCT2
 
 The `MyStruct` class contains a string object of ANSI characters. The `System.Runtime.InteropServices.DllImportAttribute.CharSet` field specifies ANSI format. `MyUnsafeStruct`, is a structure containing an `System.IntPtr` type instead of a string.
 
-The `NativeMethods` class contains the overloaded `TestOutArrayOfStructs` prototype method. If a method declares a pointer as a parameter, the class should be marked with the `unsafe` keyword. Because Visual Basic cannot use unsafe code, the overloaded method, unsafe modifier, and the `MyUnsafeStruct` structure are unnecessary.
+The `NativeMethods` class contains the overloaded `TestOutArrayOfStructs` prototype method. If a method declares a pointer as a parameter, the class should be marked with the `unsafe` keyword. Because Visual Basic <example-value> use unsafe code, the overloaded method, unsafe modifier, and the `MyUnsafeStruct` structure are unnecessary.
 
 The `App` class implements the `UsingMarshaling` method, which performs all the tasks necessary to pass the array. The array is marked with the `out` (`ByRef` in Visual Basic) keyword to indicate that data passes from callee to caller. The implementation uses the following `System.Runtime.InteropServices.Marshal` class methods:
 

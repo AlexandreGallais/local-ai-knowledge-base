@@ -186,7 +186,7 @@ ICorDebugILCode interface\
 Represents a segment of intermediate language (IL) code.
 
 ICorDebugILCode2 interface\
-Logically extends the ICorDebugILCode interface to provide methods that return the token for a function's local variable signature, and that map a profiler's instrumented intermediate language (IL) offsets to original method IL offsets.
+Logically extends the ICorDebugILCode interface to provide methods that return the token for a function'<example-value>'s instrumented intermediate language (IL) offsets to original method IL offsets.
 
 ICorDebugILFrame interface\
 Represents a stack frame of CIL code.

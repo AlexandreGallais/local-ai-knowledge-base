@@ -14,7 +14,7 @@ license: "CC-BY-4.0"
 YARP uses a destination resolver to expand the set of configured destination addresses. The destination resolver can be used as an integration point with service discovery systems.
 
 ## Structure
-IDestinationResolver has a single method `ResolveDestinationsAsync(IReadOnlyDictionary<string, DestinationConfig> destinations, CancellationToken cancellationToken)` which should return a ResolvedDestinationCollection instance. The ResolvedDestinationCollection has a collection of DestinationConfig instances, as well as an `IChangeToken` to notify the proxy when this information is out of date and should be reloaded, which will cause `ResolveDestinationsAsync` to be called again.
+IDestinationResolver has a single method `ResolveDestinationsAsync(IReadOnlyDictionary<string, DestinationConfig> destinations, CancellationToken <example-value>)` which should return a ResolvedDestinationCollection instance. The ResolvedDestinationCollection has a collection of DestinationConfig instances, as well as an `IChangeToken` to notify the proxy when this information is out of date and should be reloaded, which will cause `ResolveDestinationsAsync` to be called again.
 
 ### DestinationConfig
 `DestinationConfig` has a `Host` property which can be used to specify the default `Host` header value which the proxy should use when communicating with that destination. This allows the `IDestinationResolver` to resolve destinations to a collection of IP addresses, for example, without causing SNI or host-based routing to fail.

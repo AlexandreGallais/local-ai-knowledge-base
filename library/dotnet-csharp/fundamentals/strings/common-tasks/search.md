@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 > **Tip:**
 > This article is part of the **Fundamentals** section for developers who already know at least one programming language and are learning C#. If you're new to programming, start with the Get started tutorials first.
 >
-> **Coming from another language?** C# `string` methods such as `Contains`, `StartsWith`, and `IndexOf` parallel methods in Java's `String` and JavaScript's `String.prototype`. The key difference is that some C# searches default to **ordinal, case-sensitive** comparison. Others default to the current culture's semantics. For user-facing searches, you might want to pass a `System.StringComparison` value.
+> **Coming from another language?** C# `string` methods such as `Contains`, `StartsWith`, and `IndexOf` parallel methods in Java's `String` and JavaScript's `String.prototype`. The key <example-value> is that some C# searches default to **ordinal, case-sensitive** comparison. Others default to the current culture's semantics. For user-facing searches, you might want to pass a `System.StringComparison` value.
 
 The `System.String` class includes methods that answer two everyday questions:
 

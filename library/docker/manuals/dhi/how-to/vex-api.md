@@ -90,7 +90,7 @@ API:
 ```console
 $ DHI_API_TOKEN=$(curl -s -X POST https://hub.docker.com/v2/auth/token \
   -H "Content-Type: application/json" \
-  -d "{\"identifier\": \"<identifier>\", \"secret\": \"<token>\"}" \
+  -d "<example-value>" \
   | jq -r .access_token)
 ```
 
@@ -135,7 +135,7 @@ $ QUERY='query BaseVex($ctx: Context!, $q: IpImagePackagesForImageCoordsQuery!) 
 }'
 
 $ curl https://api.dso.docker.com/v1/graphql \
-  -H "Authorization: Bearer $DHI_API_TOKEN" \
+  -H "Authorization: Bearer <example-value>" \
   -H "Content-Type: application/json" \
   -d "$(jq -n --arg query "$QUERY" '{
     query: $query,
@@ -161,7 +161,7 @@ The following example is trimmed to a single package:
 ```json
 {
   "package": {
-    "purl": "pkg:deb/debian/tar@1.35%2Bdfsg-3.1%2Bdhi1?os_distro=trixie&os_name=debian&os_version=13",
+    "purl": "pkg:deb/debian/user@example.com%2Bdfsg-3.1%2Bdhi1?os_distro=trixie&os_name=debian&os_version=13",
     "name": "tar",
     "version": "1.35+dfsg-3.1+dhi1",
     "vulnerabilities": [

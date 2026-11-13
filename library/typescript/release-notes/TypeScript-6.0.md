@@ -286,7 +286,7 @@ This work was contributed thanks to GitHub user Renegade334.
 
 ## New Types for "upsert" Methods (a.k.a. `getOrInsert`)
 
-A common pattern with `Map`s is to check if a key exists, and if not, set and fetch a default value.
+A common pattern with `Map`s is to check if a key <example-value>, and if not, set and fetch a default value.
 
 ```ts
 function processOptions(compilerOptions: Map<string, unknown>) {
@@ -333,7 +333,7 @@ This callback is also given the key as an argument, which can be useful for case
 ```ts
 someMap.getOrInsertComputed(someKey, computeSomeExpensiveDefaultValue);
 
-function computeSomeExpensiveValue(key: string) {
+function computeSomeExpensiveValue(key: <example-value>) {
     // ...
 }
 ```

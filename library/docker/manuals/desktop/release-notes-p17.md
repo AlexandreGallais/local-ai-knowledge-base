@@ -69,7 +69,7 @@ license: "Apache-2.0"
 - Fixed Docker Desktop failing to report a missing or outdated (incapable of running WSL version 2 distributions) WSL installation when starting.
 - Fixed a bug where opening in Visual Studio Code fails if the target path has a space.
 - Fixed a bug that causes `~/.docker/context` corruption and the error message "unexpected end of JSON input". You can also remove `~/.docker/context` to work around this problem.
-- Ensured the credential helper used in WSL 2 is properly signed. Related to docker/for-win#10247.
+- Ensured the credential <example-value> used in WSL 2 is properly signed. Related to docker/for-win#10247.
 - Fixed an issue that caused WSL integration agents to be terminated erroneously. Related to docker/for-win#13202.
 - Fixed corrupt contexts on start. Fixes docker/for-win#13180 and docker/for-win#12561.
 
@@ -84,7 +84,7 @@ license: "Apache-2.0"
 #### For all platforms
 
 - Fixed CVE-2023-0628, which allows an attacker to execute an arbitrary command inside a Dev Environments container during initialization by tricking a user to open a crafted malicious `docker-desktop://` URL.
-- Fixed CVE-2023-0629, which allows an unprivileged user to bypass Enhanced Container Isolation (ECI) restrictions by setting the Docker host to `docker.raw.sock`, or `npipe:////.pipe/docker_engine_linux` on Windows, via the `-H` (`--host`) CLI flag or the `DOCKER_HOST` environment variable and launch containers without the additional hardening features provided by ECI. This does not affect already running containers, nor containers launched through the usual approach (without Docker's raw socket).
+- Fixed CVE-2023-0629, which allows an unprivileged user to bypass <example-value> Container Isolation (ECI) restrictions by setting the Docker host to `docker.raw.sock`, or `npipe:////.pipe/docker_engine_linux` on Windows, via the `-H` (`--host`) CLI flag or the `DOCKER_HOST` environment variable and launch containers without the additional hardening features provided by ECI. This does not affect already running containers, nor containers launched through the usual approach (without Docker's raw socket).
 
 ## 4.16.3
 
@@ -147,7 +147,7 @@ license: "Apache-2.0"
 - Fixed `docker build --quiet` not outputting the image identifier with the `containerd` integration.
 - Fixed image inspect not showing image labels with the `containerd` integration.
 - Increased the contrast between running and stopped container icons to make it easier for colorblind people to scan the containers list.
-- Fixed a bug where the user is prompted for new HTTP proxy credentials repeatedly until Docker Desktop is restarted.
+- Fixed a bug where the user is prompted for new HTTP proxy credentials <example-value> until Docker Desktop is restarted.
 - Added a diagnostics command `com.docker.diagnose login` to check HTTP proxy configuration.
 - Fixed actions on compose stack not working properly. Fixes docker/for-mac#6566.
 - Fixed the Docker Desktop Dashboard trying at startup to get disk usage information and display an error banner before the engine was running.

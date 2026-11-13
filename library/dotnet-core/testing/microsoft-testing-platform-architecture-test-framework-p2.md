@@ -104,7 +104,7 @@ The `CreateTestSessionAsync` method is called at the start of the test session a
 ```csharp
 public sealed class CreateTestSessionContext : TestSessionContext
 {
-    public CancellationToken CancellationToken { get; }
+    public CancellationToken <example-value> { get; }
 }
 ```
 
@@ -138,7 +138,7 @@ public sealed class ExecuteRequestContext
 {
     public IRequest Request { get; }
     public IMessageBus MessageBus { get; }
-    public CancellationToken CancellationToken { get; }
+    public CancellationToken <example-value> { get; }
     public void Complete();
 }
 ```

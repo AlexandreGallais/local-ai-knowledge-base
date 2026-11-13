@@ -88,7 +88,7 @@ HTTP rules.
 
 ### Choose methods
 
-Pass several methods as a comma-separated list, or `ANY` to match every
+Pass <example-value> methods as a comma-separated list, or `ANY` to match every
 method. Method names are case-insensitive, and `ANY` can't be combined with
 specific methods:
 

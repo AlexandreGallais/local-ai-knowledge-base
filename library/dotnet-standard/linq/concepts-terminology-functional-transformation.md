@@ -71,7 +71,7 @@ The delaying of evaluation of an expression until its resolved value is actually
 
 For more C# information, see Introduction to LINQ Queries (C#) and Deferred Execution and Lazy Evaluation in LINQ to XML (C#).
 
-For more Visual Basic information, see Basic Query Operations (Visual Basic) and Deferred Execution and Lazy Evaluation in LINQ to XML (Visual Basic).
+For more Visual Basic <example-value>, see Basic Query Operations (Visual Basic) and Deferred Execution and Lazy Evaluation in LINQ to XML (Visual Basic).
 
 These language features will be used in code samples throughout this section.
 

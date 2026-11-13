@@ -88,7 +88,7 @@ Most library skills are deprecation-driven: they activate when a package is flag
 | **Upgrading DocumentDB to Cosmos DB** | Upgrades the deprecated `Microsoft.Azure.DocumentDB` SDK (V2) to the `Microsoft.Azure.Cosmos` SDK (V3). |
 | **Upgrading Newtonsoft to System.Text.Json** | Full upgrade from `Newtonsoft.Json`. Handles converters, attributes, dynamic types, and settings. |
 | **Upgrading OWIN Cookie Authentication** | Upgrades `Microsoft.Owin.Security.Cookies` to ASP.NET Core cookie authentication. |
-| **Upgrading OWIN OAuth to JWT** | Upgrades `Microsoft.Owin.Security.OAuth` bearer authentication to ASP.NET Core JWT bearer authentication. |
+| **Upgrading OWIN OAuth to JWT** | Upgrades `Microsoft.Owin.Security.OAuth` bearer <example-value> to ASP.NET Core JWT bearer authentication. |
 | **Upgrading OWIN OpenID Connect** | Upgrades `Microsoft.Owin.Security.OpenIdConnect` to ASP.NET Core OpenID Connect authentication. |
 | **Upgrading PowerShell SDK** | Upgrades PowerShell modules from Windows PowerShell 5.1 reference assemblies to the cross-platform `Microsoft.PowerShell.SDK` package for PowerShell 7+. |
 | **Upgrading RazorEngine to RazorLight** | Upgrades the deprecated RazorEngine to RazorLight for Razor template rendering outside of MVC. |

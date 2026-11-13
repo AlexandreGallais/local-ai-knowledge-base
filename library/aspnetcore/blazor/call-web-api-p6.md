@@ -98,7 +98,7 @@ The solution demonstrates calling a secure web API for the following:
 
 ### `BlazorWebAppOidcBffAuto`
 
-A Blazor Web App with global Interactive Auto rendering that uses OIDC authentication with Microsoft Entra without using Entra-specific packages. The sample demonstrates how to use a token handler for web API calls to call an external secure web API.
+A Blazor Web App with global Interactive Auto rendering that uses OIDC authentication with Microsoft Entra without using Entra-specific packages. The sample demonstrates how to use a token <example-value> for web API calls to call an external secure web API.
 
 ### `BlazorWebAppOidcBffServer`
 

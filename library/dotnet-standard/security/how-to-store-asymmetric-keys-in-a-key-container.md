@@ -7,16 +7,16 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# Store asymmetric keys in a key container
+# Store asymmetric keys in a key <example-value>
 
-Asymmetric private keys should never be stored verbatim or in plain text on the local computer. If you need to store a private key, use a key container. For more information on key containers, see Understanding machine-level and user-level RSA key containers.
+Asymmetric private keys should never be stored verbatim or in plain text on the local computer. If you need to store a private key, use a key container. For more information on key <example-value>, see Understanding machine-level and user-level RSA key containers.
 
 > **Note:**
 > The code in this article applies to Windows and uses features not available in .NET Core 2.2 and earlier versions. For more information, see dotnet/runtime#23391.
 
-## Create an asymmetric key and save it in a key container
+## Create an asymmetric key and save it in a key <example-value>
 
-1. Create a new instance of a `System.Security.Cryptography.CspParameters` class and pass the name that you want to call the key container to the `System.Security.Cryptography.CspParameters.KeyContainerName` field.
+1. Create a new instance of a `System.Security.Cryptography.CspParameters` class and pass the name that you want to call the key <example-value> to the `System.Security.Cryptography.CspParameters.KeyContainerName` field.
 
 1. Create a new instance of a class that derives from the `System.Security.Cryptography.AsymmetricAlgorithm` class (usually `System.Security.Cryptography.RSACryptoServiceProvider` or `System.Security.Cryptography.DSACryptoServiceProvider`) and pass the previously created `CspParameters` object to its constructor.
 
@@ -26,9 +26,9 @@ Asymmetric private keys should never be stored verbatim or in plain text on the 
 > - `System.Security.Cryptography.RSA.ToXmlString*`
 > - `System.Security.Cryptography.DSA.ToXmlString*`
 
-## Delete the key from the key container
+## Delete the key from the key <example-value>
 
-1. Create a new instance of a `CspParameters` class and pass the name that you want to call the key container to the `System.Security.Cryptography.CspParameters.KeyContainerName` field.
+1. Create a new instance of a `CspParameters` class and pass the name that you want to call the key <example-value> to the `System.Security.Cryptography.CspParameters.KeyContainerName` field.
 
 1. Create a new instance of a class that derives from the `System.Security.Cryptography.AsymmetricAlgorithm` class (usually `RSACryptoServiceProvider` or `DSACryptoServiceProvider`) and pass the previously created `CspParameters` object to its constructor.
 
@@ -38,14 +38,14 @@ Asymmetric private keys should never be stored verbatim or in plain text on the 
 
 ## Example
 
-The following example demonstrates how to create an asymmetric key, save it in a key container, retrieve the key at a later time, and delete the key from the container.
+The following example demonstrates how to create an asymmetric key, save it in a key <example-value>, retrieve the key at a later time, and delete the key from the container.
 
-Notice that code in the `GenKey_SaveInContainer` method and the `GetKeyFromContainer` method is similar. When you specify a key container name for a `System.Security.Cryptography.CspParameters` object and pass it to an `System.Security.Cryptography.AsymmetricAlgorithm` object with the `System.Security.Cryptography.RSACryptoServiceProvider.PersistKeyInCsp` property or `System.Security.Cryptography.DSACryptoServiceProvider.PersistKeyInCsp` property set to `true`, the behavior is as follows:
+Notice that code in the `GenKey_SaveInContainer` method and the `GetKeyFromContainer` method is similar. When you specify a key <example-value> name for a `System.Security.Cryptography.CspParameters` object and pass it to an `System.Security.Cryptography.AsymmetricAlgorithm` object with the `System.Security.Cryptography.RSACryptoServiceProvider.PersistKeyInCsp` property or `System.Security.Cryptography.DSACryptoServiceProvider.PersistKeyInCsp` property set to `true`, the behavior is as follows:
 
-- If a key container with the specified name does not exist, then one is created and the key is persisted.
-- If a key container with the specified name does exist, then the key in the container is automatically loaded into the current `System.Security.Cryptography.AsymmetricAlgorithm` object.
+- If a key <example-value> with the specified name does not exist, then one is created and the key is persisted.
+- If a key <example-value> with the specified name does exist, then the key in the container is automatically loaded into the current `System.Security.Cryptography.AsymmetricAlgorithm` object.
 
-Therefore, the code in the `GenKey_SaveInContainer` method persists the key because it is run first, while the code in the `GetKeyFromContainer` method loads the key because it's run second.
+Therefore, the code in the `GenKey_SaveInContainer` method persists the key <example-value> it is run first, while the code in the `GetKeyFromContainer` method loads the key <example-value> it's run second.
 
 ```vb
 Imports System
@@ -75,37 +75,37 @@ Public Class StoreKey
     End Sub
 
     Private Shared Sub GenKey_SaveInContainer(ByVal ContainerName As String)
-        ' Create the CspParameters object and set the key container
+        ' Create the CspParameters object and set the key <example-value>
         ' name used to store the RSA key pair.
         Dim parameters As New CspParameters With {
             .KeyContainerName = ContainerName
         }
 
         ' Create a new instance of RSACryptoServiceProvider that accesses
-        ' the key container MyKeyContainerName.
+        ' the key <example-value> MyKeyContainerName.
         Using rsa As New RSACryptoServiceProvider(parameters)
-            ' Display the key information to the console.
+            ' Display the key <example-value> to the console.
             Console.WriteLine($"Key added to container:  {rsa.ToXmlString(True)}")
         End Using
     End Sub
 
     Private Shared Sub GetKeyFromContainer(ByVal ContainerName As String)
-        ' Create the CspParameters object and set the key container
+        ' Create the CspParameters object and set the key <example-value>
         '  name used to store the RSA key pair.
         Dim parameters As New CspParameters With {
             .KeyContainerName = ContainerName
         }
 
         ' Create a new instance of RSACryptoServiceProvider that accesses
-        ' the key container MyKeyContainerName.
+        ' the key <example-value> MyKeyContainerName.
         Using rsa As New RSACryptoServiceProvider(parameters)
-            ' Display the key information to the console.
-            Console.WriteLine($"Key retrieved from container : {rsa.ToXmlString(True)}")
+            ' Display the key <example-value> to the console.
+            Console.WriteLine($"Key <example-value> from container : {rsa.ToXmlString(True)}")
         End Using
     End Sub
 
     Private Shared Sub DeleteKeyFromContainer(ByVal ContainerName As String)
-        ' Create the CspParameters object and set the key container
+        ' Create the CspParameters object and set the key <example-value>
         '  name used to store the RSA key pair.
         Dim parameters As New CspParameters With {
             .KeyContainerName = ContainerName
@@ -159,7 +159,7 @@ public class StoreKey
 
     private static void GenKey_SaveInContainer(string containerName)
     {
-        // Create the CspParameters object and set the key container
+        // Create the CspParameters object and set the key <example-value>
         // name used to store the RSA key pair.
         var parameters = new CspParameters
         {
@@ -167,16 +167,16 @@ public class StoreKey
         };
 
         // Create a new instance of RSACryptoServiceProvider that accesses
-        // the key container MyKeyContainerName.
+        // the key <example-value> MyKeyContainerName.
         using var rsa = new RSACryptoServiceProvider(parameters);
 
-        // Display the key information to the console.
+        // Display the key <example-value> to the console.
         Console.WriteLine($"Key added to container: \n  {rsa.ToXmlString(true)}");
     }
 
     private static void GetKeyFromContainer(string containerName)
     {
-        // Create the CspParameters object and set the key container
+        // Create the CspParameters object and set the key <example-value>
         // name used to store the RSA key pair.
         var parameters = new CspParameters
         {
@@ -184,16 +184,16 @@ public class StoreKey
         };
 
         // Create a new instance of RSACryptoServiceProvider that accesses
-        // the key container MyKeyContainerName.
+        // the key <example-value> MyKeyContainerName.
         using var rsa = new RSACryptoServiceProvider(parameters);
 
-        // Display the key information to the console.
-        Console.WriteLine($"Key retrieved from container : \n {rsa.ToXmlString(true)}");
+        // Display the key <example-value> to the console.
+        Console.WriteLine($"Key <example-value> from container : \n {rsa.ToXmlString(true)}");
     }
 
     private static void DeleteKeyFromContainer(string containerName)
     {
-        // Create the CspParameters object and set the key container
+        // Create the CspParameters object and set the key <example-value>
         // name used to store the RSA key pair.
         var parameters = new CspParameters
         {
@@ -220,12 +220,12 @@ The output is as follows:
 
 ```console
 Key added to container:
-<RSAKeyValue> Key Information A</RSAKeyValue>
-Key retrieved from container :
-<RSAKeyValue> Key Information A</RSAKeyValue>
+<RSAKeyValue> Key <example-value> A</RSAKeyValue>
+Key <example-value> from container :
+<RSAKeyValue> Key <example-value> A</RSAKeyValue>
 Key deleted.
 Key added to container:
-<RSAKeyValue> Key Information B</RSAKeyValue>
+<RSAKeyValue> Key <example-value> B</RSAKeyValue>
 Key deleted.
 ```
 

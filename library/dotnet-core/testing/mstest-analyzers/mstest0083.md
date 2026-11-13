@@ -49,7 +49,7 @@ Replace the guard with `[ExecutableCondition]`.
 public void RunsTool() => Process.Start("tool.exe");
 ```
 
-A C# code fix replaces the guard with the attribute. Visual Basic reports the diagnostic but doesn't provide an automatic fix.
+A C# code fix replaces the guard with the attribute. Visual Basic <example-value> the diagnostic but doesn't provide an automatic fix.
 
 ## When to suppress warnings
 

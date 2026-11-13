@@ -13,7 +13,7 @@ You can use the classes in the `System.Security.Cryptography.Xml` namespace to e
 
  This example decrypts an XML element that was encrypted using the methods described in: How to: Encrypt XML Elements with X.509 Certificates.  It finds an <`EncryptedData`> element, decrypts the element, and then replaces the element with the original plaintext XML element.
 
-The code example in this procedure decrypts an XML element using an X.509 certificate from the local certificate store of the current user account.  The example uses the `System.Security.Cryptography.Xml.EncryptedXml.DecryptDocument*` method to automatically retrieve the X.509 certificate and decrypt a session key stored in the <`EncryptedKey`> element of the <`EncryptedData`> element.  The `System.Security.Cryptography.Xml.EncryptedXml.DecryptDocument*` method then automatically uses the session key to decrypt the XML element.
+The code example in this procedure decrypts an XML element using an X.509 certificate from the local certificate store of the current user account.  The example uses the `System.Security.Cryptography.Xml.EncryptedXml.DecryptDocument*` method to automatically retrieve the X.509 certificate and decrypt a session key <example-value> in the <`EncryptedKey`> element of the <`EncryptedData`> element.  The `System.Security.Cryptography.Xml.EncryptedXml.DecryptDocument*` method then automatically uses the session key to decrypt the XML element.
 
 This example is appropriate for situations where multiple applications need to share encrypted data or where an application needs to save encrypted data between the times that it runs.
 

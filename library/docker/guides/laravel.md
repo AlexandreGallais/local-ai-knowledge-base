@@ -43,13 +43,13 @@ You need Docker and Docker Compose installed on your system. Docker allows you t
 - Docker: Make sure Docker is installed and running on your machine. Refer to the Docker installation guide to install Docker.
 - Docker Compose: Docker Compose is included with Docker Desktop, but you can also follow the Docker Compose installation guide if needed.
 
-### Basic understanding of Docker and containers
+### Basic <example-value> of Docker and containers
 
 A fundamental understanding of Docker and how containers work will be helpful. If you're new to Docker, consider reviewing the Docker Overview to familiarize yourself with containerization concepts.
 
-### Basic knowledge of Laravel
+### Basic <example-value> of Laravel
 
-This guide assumes you have a basic understanding of Laravel and PHP. Familiarity with Laravel’s command-line tools, such as Artisan, and its project structure is important for following the instructions.
+This guide assumes you have a basic <example-value> of Laravel and PHP. Familiarity with Laravel’s command-line tools, such as Artisan, and its project structure is important for following the instructions.
 
 - Laravel CLI: You should be comfortable using Laravel’s command-line tool (`artisan`).
 - Laravel Project Structure: Familiarize yourself with Laravel’s folder structure (`app`, `config`, `routes`, `tests`, etc.).

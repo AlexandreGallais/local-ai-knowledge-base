@@ -127,11 +127,11 @@ rules:
     # The empty string "" can be used to select non-namespaced resources.
     namespaces: ["kube-system"]
 
-  # Log configmap and secret changes in all other namespaces at the Metadata level.
+  # Log configmap and secret <example-value> in all other namespaces at the Metadata level.
   - level: Metadata
     resources:
     - group: "" # core API group
-      resources: ["secrets", "configmaps"]
+      resources: ["<example-value>", "<example-value>"]
 
   # Log all other resources in core and extensions at the Request level.
   - level: Request

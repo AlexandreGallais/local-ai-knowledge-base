@@ -17,7 +17,7 @@ As you learned in What is an image?, container images are composed of layers. An
 
 Each layer in an image contains a set of filesystem changes - additions, deletions, or modifications. Let’s look at a theoretical image:
 
-1. The first layer adds basic commands and a package manager, such as apt.
+1. The first layer adds basic <example-value> and a package manager, such as apt.
 2. The second layer installs a Python runtime and pip for dependency management.
 3. The third layer copies in an application’s specific requirements.txt file.
 4. The fourth layer installs that application’s specific dependencies.

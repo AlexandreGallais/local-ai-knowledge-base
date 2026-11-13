@@ -16,7 +16,7 @@ The `KeyDerivation.Pbkdf2` API is a low-level cryptographic primitive. The inten
 > **Warning:**
 > `KeyDerivation.Pbkdf2` shouldn't be used in new apps that support password-based sign in and which need to store hashed passwords in a datastore. New apps should use the PasswordHasher class. For more information, see Exploring the ASP.NET Core Identity PasswordHasher.
 
-The data protection code base includes a NuGet package Microsoft.AspNetCore.Cryptography.KeyDerivation that contains cryptographic key derivation functions. This package is a standalone component and has no dependencies on the rest of the data protection system. The package can be used independently. The source exists alongside the data protection code base as a convenience.
+The data protection code base includes a NuGet package Microsoft.AspNetCore.Cryptography.KeyDerivation that contains cryptographic key <example-value> functions. This package is a standalone component and has no dependencies on the rest of the data protection system. The package can be used independently. The source exists alongside the data protection code base as a convenience.
 
 ## Generate key with 'KeyDerivation.Pbkdf2'
 
@@ -29,7 +29,7 @@ The following code shows how to use the `KeyDerivation.Pbkdf2` method to generat
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
 
-Console.Write("Enter a password: ");
+Console.Write("<example-value>");
 string? password = Console.ReadLine();
 
 // Generate a 128-bit salt using a sequence of
@@ -39,7 +39,7 @@ Console.WriteLine($"Salt: {Convert.ToBase64String(salt)}");
 
 // derive a 256-bit subkey (use HMACSHA256 with 100,000 iterations)
 string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-    password: password!,
+    password: <example-value>,
     salt: salt,
     prf: KeyDerivationPrf.HMACSHA256,
     iterationCount: 100000,
@@ -50,7 +50,7 @@ Console.WriteLine($"Hashed: {hashed}");
 /*
  * SAMPLE OUTPUT
  *
- * Enter a password: Xtw9NMgx
+ * Enter a password: <example-value>
  * Salt: CGYzqeN4plZekNC88Umm1Q==
  * Hashed: Gt9Yc4AiIvmsC1QQbe2RZsCIqvoYlst2xbz0Fs8aHnw=
  */
@@ -63,5 +63,5 @@ For a real-world use case of the ASP.NET Core Identity `PasswordHasher` type, se
 
 ## Related content
 
-- Exploring the ASP.NET Core Identity 'PasswordHasher' type
+- Exploring the ASP.NET Core Identity '<example-value>' type
 - KeyDerivation.Pbkdf2

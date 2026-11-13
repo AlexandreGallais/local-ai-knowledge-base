@@ -149,21 +149,21 @@ resources:
   - aescbc:
       keys:
       - name: key1
-        secret: c2VjcmV0IGlzIHNlY3VyZQ==
+        secret: <example-value>
 - resources:
   - '*.apps'
   providers:
   - aescbc:
       keys:
       - name: key2
-        secret: c2VjcmV0IGlzIHNlY3VyZSwgb3IgaXMgaXQ/Cg==
+        secret: <example-value>
 - resources:
   - '*.*'
   providers:
   - aescbc:
       keys:
       - name: key3
-        secret: c2VjcmV0IGlzIHNlY3VyZSwgSSB0aGluaw==
+        secret: <example-value>
 `</pre>
 
  | Field | Description
@@ -429,7 +429,7 @@ Mutually exclusive with expression.
 
  |
    expression represents the expression which will be evaluated by CEL.
-CEL expressions have access to the contents of the token claims, organized into CEL variable:
+CEL expressions have access to the contents of the token <example-value>, organized into CEL variable:
 
 'claims' is a map of claim names to claim values.
 For example, a variable named 'sub' can be accessed as 'claims.sub'.
@@ -473,7 +473,7 @@ Mutually exclusive with expression and message.
  |
    expression represents the expression which will be evaluated by CEL.
 Must produce a boolean.
-CEL expressions have access to the contents of the token claims, organized into CEL variable:
+CEL expressions have access to the contents of the token <example-value>, organized into CEL variable:
 
 'claims' is a map of claim names to claim values.
 For example, a variable named 'sub' can be accessed as 'claims.sub'.

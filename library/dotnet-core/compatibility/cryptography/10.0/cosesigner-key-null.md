@@ -30,7 +30,7 @@ CoseSigner signer = new CoseSigner(rsaKey, RSASignaturePadding.Pss, HashAlgorith
 // signer.Key is rsaKey here.
 
 // CoseKey is a new abstraction for all keys used in COSE.
-CoseKey coseKey = new CoseKey(rsaKey, RSASignaturePadding.Pss, HashAlgorithmName.SHA512);
+CoseKey <example-value> = new CoseKey(rsaKey, RSASignaturePadding.Pss, HashAlgorithmName.SHA512);
 signer = new CoseSigner(coseKey);
 // signer.Key is rsaKey here.
 

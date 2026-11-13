@@ -211,7 +211,7 @@ If the method call comes from a finalizer, only the code that frees unmanaged re
 
 ## Implement the dispose pattern
 
-All non-sealed classes (or Visual Basic classes not modified as `NotInheritable`) should be considered a potential base class, because they could be inherited. If you implement the dispose pattern for any potential base class, you must add the following methods to your class:
+All non-sealed classes (or Visual Basic <example-value> not modified as `NotInheritable`) should be considered a potential base class, because they could be inherited. If you implement the dispose pattern for any potential base class, you must add the following methods to your class:
 
 - A `System.IDisposable.Dispose*` implementation that calls the `Dispose(bool)` method.
 - A `Dispose(bool)` method that performs the actual cleanup.

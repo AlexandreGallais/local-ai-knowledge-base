@@ -19,8 +19,8 @@ In the examples that follow:
 * The `AuthenticationType` is set to `Identity.Application` either explicitly or by default.
 * A common app name, `SharedCookieApp`, is used to enable the data protection system to share data protection keys.
 * `Identity.Application` is used as the authentication scheme. Whatever scheme is used, it must be used consistently *within and across* the shared cookie apps either as the default scheme or by explicitly setting it. The scheme is used when encrypting and decrypting cookies, so a consistent scheme must be used across apps.
-* A common data protection key storage location is used.
-  * In ASP.NET Core apps, `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.PersistKeysToFileSystem*` is used to set the key storage location.
+* A common data protection key <example-value> location is used.
+  * In ASP.NET Core apps, `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.PersistKeysToFileSystem*` is used to set the key <example-value> location.
   * In .NET Framework apps, cookie authentication middleware uses an implementation of `Microsoft.AspNetCore.DataProtection.DataProtectionProvider`. `DataProtectionProvider` provides data protection services for the encryption and decryption of authentication cookie payload data. The `DataProtectionProvider` instance is isolated from the data protection system used by other parts of the app. DataProtectionProvider.Create(System.IO.DirectoryInfo, Action\<IDataProtectionBuilder>) accepts a `System.IO.DirectoryInfo` to specify the location for data protection key storage.
 * `DataProtectionProvider` requires the Microsoft.AspNetCore.DataProtection.Extensions NuGet package:
   * In .NET Framework apps, add a package reference to Microsoft.AspNetCore.DataProtection.Extensions.
@@ -30,7 +30,7 @@ In the examples that follow:
 
 When using ASP.NET Core Identity:
 
-* Data protection keys and the app name must be shared among apps. A common key storage location is provided to the `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.PersistKeysToFileSystem*` method in the following examples. Use `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.SetApplicationName*` to configure a common shared app name (`SharedCookieApp` in the following examples). For more information, see Configure ASP.NET Core Data Protection.
+* Data protection keys and the app name must be shared among apps. A common key <example-value> location is provided to the `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.PersistKeysToFileSystem*` method in the following examples. Use `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.SetApplicationName*` to configure a common shared app name (`SharedCookieApp` in the following examples). For more information, see Configure ASP.NET Core Data Protection.
 * Use the `Microsoft.Extensions.DependencyInjection.IdentityServiceCollectionExtensions.ConfigureApplicationCookie*` extension method to set up the data protection service for cookies.
 * The default authentication type is `Identity.Application`.
 
@@ -117,7 +117,7 @@ options.Cookie.Domain = ".contoso.com";
 
 ## Encrypt data protection keys at rest
 
-For production deployments, configure the `DataProtectionProvider` to encrypt keys at rest with DPAPI or an X509Certificate. For more information, see Key encryption at rest in Windows and Azure using ASP.NET Core. In the following example, a certificate thumbprint is provided to `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.ProtectKeysWithCertificate*`:
+For production deployments, configure the `DataProtectionProvider` to encrypt keys at rest with DPAPI or an X509Certificate. For more information, see Key <example-value> at rest in Windows and Azure using ASP.NET Core. In the following example, a certificate thumbprint is provided to `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.ProtectKeysWithCertificate*`:
 
 ```csharp
 using Microsoft.AspNetCore.DataProtection;

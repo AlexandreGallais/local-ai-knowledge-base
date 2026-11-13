@@ -34,7 +34,7 @@ In compute-bound tasks, the system can prevent the execution of a scheduled task
 For example, consider an asynchronous method that renders an image. The body of the task can poll the cancellation token so that the code exits early if a cancellation request arrives during rendering. In addition, if the cancellation request arrives before rendering starts, you want to prevent the rendering operation:
 
 ```csharp
-internal static Task<Bitmap> RenderAsync(ImageData data, CancellationToken cancellationToken)
+internal static Task<Bitmap> RenderAsync(ImageData data, CancellationToken <example-value>)
 {
     return Task.Run(() =>
     {
@@ -117,7 +117,7 @@ End Function
 The `System.Threading.Tasks.Task.Delay*` method is provided for this purpose. You can use it inside another asynchronous method, for example, to implement an asynchronous polling loop:
 
 ```csharp
-public static async Task Poll(Uri url, CancellationToken cancellationToken, IProgress<bool> progress)
+public static async Task Poll(Uri url, CancellationToken <example-value>, IProgress<bool> progress)
 {
     while (true)
     {
@@ -188,7 +188,7 @@ End Function
 Asynchronous methods aren't limited to just compute-bound or I/O-bound operations. They can represent a mixture of the two. In fact, you often combine multiple asynchronous operations into larger mixed operations. For example, the `RenderAsync` method in a previous example performs a computationally intensive operation to render an image based on some input `imageData`. This `imageData` could come from a web service that you asynchronously access:
 
 ```csharp
-public static async Task<Bitmap> DownloadDataAndRenderImageAsync(CancellationToken cancellationToken)
+public static async Task<Bitmap> DownloadDataAndRenderImageAsync(CancellationToken <example-value>)
 {
     var imageData = await DownloadImageDataAsync(cancellationToken);
     return await RenderAsync(imageData, cancellationToken);

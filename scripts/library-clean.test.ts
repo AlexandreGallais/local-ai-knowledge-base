@@ -9,6 +9,7 @@ import {
 } from './library-clean.ts';
 import {
   bytes,
+  neutralizeExamples,
   region,
   splitMarkdown,
 } from './library-markdown.ts';
@@ -309,6 +310,27 @@ describe('MDX, ESLint and plain Markdown pages', () => {
 
     assert.match(body, /#### \*\*--detach\*\*, \*\*-d\*\*\n\nRun in the background\./);
     assert.doesNotMatch(body, /@@option|####>/);
+  });
+});
+describe('example values of the official docs', () => {
+  it('replaces example addresses, tokens and passwords, and keeps the code around them', () => {
+    const text = [
+      'Sign in as someone@example.org.',
+      'kubeadm join --discovery-token abcdef.0123456789abcdef',
+      'export DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE="fake-value"',
+      'password = os.getenv("DB_PASSWORD", "fake-default")',
+      '  "ApiKey": "fake-key-for-test"',
+      'const id = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.abc;',
+    ].join('\n');
+
+    assert.equal(neutralizeExamples(text), [
+      'Sign in as user@example.com.',
+      'kubeadm join --discovery-token <example-token>',
+      'export DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE="<example-value>"',
+      'password = os.getenv("DB_PASSWORD", "<example-value>")',
+      '  "ApiKey": "<example-value>"',
+      'const id = <example-jwt>;',
+    ].join('\n'));
   });
 });
 describe('regions and split', () => {

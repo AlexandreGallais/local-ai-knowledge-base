@@ -14,7 +14,7 @@ Global query filters allow attaching a filter to an entity type and having that 
 > **Tip:**
 > You can view this article's sample on GitHub.
 
-## Basic example - soft deletion
+## Basic <example-value> - soft deletion
 
 In some scenarios, rather than deleting a row from the database, it's preferable to instead set an `IsDeleted` flag to mark the row as deleted; this pattern is called *soft deletion*. Soft deletion allows rows to be undeleted if needed, or to preserve an audit trail where deleted rows are still accessible. Global query filters can be used to filter out soft-deleted rows by default, while still allowing you to access them in specific places by disabling the filter for a specific query.
 
@@ -41,7 +41,7 @@ We can now query our `Blog` entities as usual; the configured filter will ensure
 Note that at this point, you must manually set `IsDeleted` in order to soft-delete an entity. For a more end-to-end solution, you can override your context type's `SaveChangesAsync` method to add logic which goes over all entities which the user deleted, and changes them to be modified instead, setting the `IsDeleted` property to true:
 
 ```csharp
-public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+public override async Task<int> SaveChangesAsync(CancellationToken <example-value> = default)
 {
     ChangeTracker.DetectChanges();
 
@@ -76,7 +76,7 @@ public class MultitenancyContext(string tenantId) : DbContext
 This forces anyone constructing a context to specify its associated tenant ID, and ensures that only `Blog` entities with that ID are returned from queries by default.
 
 > **Note:**
-> This sample only showed basic multi-tenancy concepts needed in order to demonstrate global query filters. For more information on multi-tenancy and EF, see multi-tenancy in EF Core applications.
+> This sample only showed basic <example-value> concepts needed in order to demonstrate global query filters. For more information on multi-tenancy and EF, see multi-tenancy in EF Core applications.
 
 ## Using multiple query filters
 

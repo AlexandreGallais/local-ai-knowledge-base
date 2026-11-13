@@ -121,7 +121,7 @@ Capacity:        1Gi
 Message:
 Source:
     Type:          HostPath (bare host directory volume)
-    Path:          /tmp/data
+    Path:          <example-value>
     HostPathType:
 Events:            <none>
 ```

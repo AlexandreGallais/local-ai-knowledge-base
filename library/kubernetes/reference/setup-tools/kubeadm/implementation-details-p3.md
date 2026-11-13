@@ -80,17 +80,17 @@ alternatively, each step can be invoked individually.
 #### Create a bootstrap token
 
 `kubeadm init` creates a first bootstrap token, either generated automatically or provided by the
-user with the `--token` flag; as documented in bootstrap token specification, token should be
+user with the `--token` flag; as documented in bootstrap token <example-value>, token <example-value> be
 saved as a secret with name `bootstrap-token-<token-id>` under `kube-system` namespace.
 
 Please note that:
 
-1. The default token created by `kubeadm init` will be used to validate temporary user during TLS
+1. The default token <example-value> by `kubeadm init` will be used to validate temporary user during TLS
    bootstrap process; those users will be member of
   `system:bootstrappers:kubeadm:default-node-token` group
 1. The token has a limited validity, default 24 hours (the interval may be changed with the `—token-ttl` flag)
 1. Additional tokens can be created with the `kubeadm token`
-   command, that provide other useful functions for token management as well.
+   command, that provide other useful functions for token <example-value> as well.
 
 #### Allow joining nodes to call CSR API
 
@@ -199,9 +199,9 @@ There are 2 main schemes for discovery. The first is to use a shared token along
 address of the API server.
 The second is to provide a file (that is a subset of the standard kubeconfig file).
 
-#### Shared token discovery
+#### Shared token <example-value>
 
-If `kubeadm join` is invoked with `--discovery-token`, token discovery is used; in this case the
+If `kubeadm join` is invoked with `--discovery-token`, token <example-value> is used; in this case the
 node basically retrieves the cluster CA certificates from the `cluster-info` ConfigMap in the
 `kube-public` namespace.
 
@@ -212,8 +212,8 @@ In order to prevent "man in the middle" attacks, several steps are taken:
 
 - Then the CA certificate goes through following validation steps:
 
-  - Basic validation: using the token ID against a JWT signature
-  - Pub key validation: using provided `--discovery-token-ca-cert-hash`. This value is available
+  - Basic <example-value>: using the token ID against a JWT signature
+  - Pub key <example-value>: using provided `--discovery-token-ca-cert-hash`. This value is available
     in the output of `kubeadm init` or can be calculated using standard tools (the hash is
     calculated over the bytes of the Subject Public Key Info (SPKI) object as in RFC7469). The
     `--discovery-token-ca-cert-hash flag` may be repeated multiple times to allow more than one public key.

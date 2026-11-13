@@ -50,7 +50,7 @@ $ docker run --rm -d --mount \
   -p 5432:5432 \
   --network postgresnet \
   --name db \
-  -e POSTGRES_PASSWORD=mysecretpassword \
+  -e POSTGRES_PASSWORD=<example-value> \
   -e POSTGRES_DB=example \
   postgres:18
 ```
@@ -172,7 +172,7 @@ For the sample application, you'll use a variation of the backend from the react
      -e PG_DBNAME=example \
      -e PG_HOST=db \
      -e PG_USER=postgres \
-     -e PG_PASSWORD=mysecretpassword \
+     -e PG_PASSWORD=<example-value> \
      -e ADDRESS=0.0.0.0:8000 \
      -e RUST_LOG=debug \
      rust-backend-image
@@ -222,7 +222,7 @@ services:
       - PG_DBNAME=example
       - PG_HOST=db
       - PG_USER=postgres
-      - PG_PASSWORD=mysecretpassword
+      - PG_PASSWORD=<example-value>
       - ADDRESS=0.0.0.0:8000
       - RUST_LOG=debug
     # The commented out section below is an example of how to define a PostgreSQL
@@ -261,7 +261,7 @@ secrets:
 
 Note that the file doesn't specify a network for those 2 services. When you use Compose, it automatically creates a network and connects the services to it. For more information see Networking in Compose.
 
-Before you run the application using Compose, notice that this Compose file specifies a `password.txt` file to hold the database's password. You must create this file as it's not included in the source repository.
+Before you run the application using Compose, notice that this Compose file specifies a `password.txt` file to hold the database'<example-value>'s not included in the source repository.
 
 In the cloned repository's directory, create a new directory named `db` and inside that directory create a file named `password.txt` that contains the password for the database. Using your favorite IDE or text editor, add the following contents to the `password.txt` file.
 

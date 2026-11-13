@@ -30,13 +30,13 @@ interface Options {
    */
   ignoreWithDirectives?: string[];
   /**
-   * Require key events to specify a key via a pseudo-event, e.g. `(keydown.enter)`. A bare `(keydown)` will not satisfy the rule.
+   * Require key <example-value> to specify a key via a pseudo-event, e.g. `(keydown.enter)`. A bare `(keydown)` will not satisfy the rule.
    *
    * Default: `false`
    */
   requireKeyCode?: boolean;
   /**
-   * Only key events whose key (the last segment of the pseudo-event, e.g. `enter` in `(keydown.shift.enter)`) is in this list satisfy the rule. Implies `requireKeyCode`.
+   * Only key <example-value> whose key (the last segment of the pseudo-event, e.g. `enter` in `(keydown.shift.enter)`) is in this list satisfy the rule. Implies `requireKeyCode`.
    *
    * Default: `[]`
    */

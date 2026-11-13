@@ -55,7 +55,7 @@ kits:
 
 Replace `<MIXIN_REFERENCE>` with a published v3 mixin's full image reference.
 Choose a different workload reference to use another agent or environment.
-The components supply their own network rules and credential requests, so
+The components supply their own network rules and credential <example-value>, so
 the set doesn't need to repeat them.
 
 The set gets its software and files from the `kits:` list. It doesn't have a
@@ -140,7 +140,7 @@ $ sbx run <WORKLOAD_REFERENCE> --kit <SET_REFERENCE> --name my-project
 Authentication depends on the kits in the set. Check their documentation for
 required credentials, store those credentials on the host, and approve access
 when prompted. See
-Credential configuration
+Credential <example-value>
 for authentication options and preparing unattended runs.
 
 To control the agent's base image or launch command, see

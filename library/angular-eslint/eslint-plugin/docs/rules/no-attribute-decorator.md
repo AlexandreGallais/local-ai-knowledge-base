@@ -67,7 +67,7 @@ class Test {
 ```ts
 class Test {
   constructor(
-    @Inject(TOKEN) token: string,
+    @Inject(TOKEN) token: <example-value>,
     randomNumber: number,
     @Attribute() foo: string,
     ~~~~~~~~~~~~

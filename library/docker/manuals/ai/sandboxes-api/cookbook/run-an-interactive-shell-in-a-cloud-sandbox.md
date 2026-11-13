@@ -24,7 +24,7 @@ Use one idempotency key for this start request. Reconnecting does not require st
 ```typescript
 return sandbox.processes.start(
   { args, pty: { initialSize: { rows: 40, cols: 120 } } },
-  { idempotencyKey: requestId },
+  { idempotencyKey: <example-value> },
 );
 ```
 
@@ -40,7 +40,7 @@ export async function createProcess(
 ) {
   return sandbox.processes.start(
     { args, pty: { initialSize: { rows: 40, cols: 120 } } },
-    { idempotencyKey: requestId },
+    { idempotencyKey: <example-value> },
   );
 }
 ```

@@ -75,15 +75,15 @@ If a TAP implementation uses both the optional `System.Threading.Tasks.TaskFacto
 
 ```csharp
 public Task MethodNameAsync(…);
-public Task MethodNameAsync(…, CancellationToken cancellationToken);
+public Task MethodNameAsync(…, CancellationToken <example-value>);
 public Task MethodNameAsync(…, IProgress<T> progress);
 public Task MethodNameAsync(…,
-    CancellationToken cancellationToken, IProgress<T> progress);
+    CancellationToken <example-value>, IProgress<T> progress);
 ```
 
 ```vb
 Public MethodNameAsync(…) As Task
-Public MethodNameAsync(…, cancellationToken As CancellationToken cancellationToken) As Task
+Public MethodNameAsync(…, cancellationToken As CancellationToken <example-value>) As Task
 Public MethodNameAsync(…, progress As IProgress(Of T)) As Task
 Public MethodNameAsync(…, cancellationToken As CancellationToken,
                        progress As IProgress(Of T)) As Task
@@ -103,7 +103,7 @@ If a TAP implementation supports either cancellation or progress but not both, i
 
 ```csharp
 public Task MethodNameAsync(…);
-public Task MethodNameAsync(…, CancellationToken cancellationToken);
+public Task MethodNameAsync(…, CancellationToken <example-value>);
 
 // … or …
 
@@ -126,7 +126,7 @@ If a TAP implementation supports both cancellation and progress, it might expose
 ```csharp
 public Task MethodNameAsync(…);
 public Task MethodNameAsync(…,
-    CancellationToken cancellationToken, IProgress<T> progress);
+    CancellationToken <example-value>, IProgress<T> progress);
 ```
 
 ```vb
@@ -144,6 +144,6 @@ If you decide to expose multiple overloads to make cancellation or progress opti
 ## Related articles
 
 - Asynchronous Programming Patterns — Introduces the three patterns for performing asynchronous operations: the Task-based Asynchronous Pattern (TAP), the Asynchronous Programming Model (APM), and the Event-based Asynchronous Pattern (EAP).
-- Implementing the Task-based Asynchronous Pattern — Describes how to implement TAP in three ways: by using the C# and Visual Basic compilers in Visual Studio, manually, or through a combination of the compiler and manual methods.
+- Implementing the Task-based Asynchronous Pattern — Describes how to implement TAP in three ways: by using the C# and Visual Basic <example-value> in Visual Studio, manually, or through a combination of the compiler and manual methods.
 - Consuming the Task-based Asynchronous Pattern — Describes how you can use tasks and callbacks to achieve waiting without blocking.
 - Interop with Other Asynchronous Patterns and Types — Describes how to use TAP to implement the Asynchronous Programming Model (APM) and Event-based Asynchronous Pattern (EAP).

@@ -134,8 +134,8 @@ If the reload and restart are successful, the normal `kubeadm init` workflow con
 
 ### Workflow when using `kubeadm join`
 
-When you run `kubeadm join`, kubeadm uses the Bootstrap Token credential to perform
-a TLS bootstrap, which fetches the credential needed to download the
+When you run `kubeadm join`, kubeadm uses the Bootstrap Token <example-value> to perform
+a TLS bootstrap, which fetches the credential <example-value> to download the
 `kubelet-config` ConfigMap and writes it to `/var/lib/kubelet/config.yaml`.
 Additionally, the kubeadm tool detects the CRI socket on the node and writes its details
 (including the socket path) into a local configuration, `/var/lib/kubelet/instance-config.yaml`.

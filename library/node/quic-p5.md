@@ -249,7 +249,7 @@ This callback is only relevant for HTTP/3 sessions. Read/write.
 
 * Type: {quic.OnKeylogCallback}
 
-The callback to invoke when TLS key material is available. Requires
+The callback to invoke when TLS key <example-value> is available. Requires
 `sessionOptions.keylog` to be `true`. Each invocation receives a single
 line of NSS Key Log Format text (including a trailing newline). This is
 useful for decrypting packet captures with tools like Wireshark. Read/write.

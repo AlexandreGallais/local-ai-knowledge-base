@@ -176,13 +176,13 @@ option. Your cluster requirements may need a different configuration.
    ```sh
    ...
    You can now join any number of control-plane node by running the following command on each as a root:
-       kubeadm join 192.168.0.200:6443 --token 9vr73a.a8uxyaju799qwdjv --discovery-token-ca-cert-hash sha256:7c2e69131a36ae2a042a339b33381c6d0d43887e2de83720eff5359e26aec866 --control-plane --certificate-key f8902e114ef118304e561c3ecd4d0b543adc226b7a07f675f56564185ffe0c07
+       kubeadm join 192.168.0.200:6443 --token <example-token> --discovery-token-ca-cert-hash sha256:7c2e69131a36ae2a042a339b33381c6d0d43887e2de83720eff5359e26aec866 --control-plane --certificate-key <example-value>
 
    Please note that the certificate-key gives access to cluster sensitive data, keep it secret!
    As a safeguard, uploaded-certs will be deleted in two hours; If necessary, you can use kubeadm init phase upload-certs to reload certs afterward.
 
    Then you can join any number of worker nodes by running the following on each as root:
-       kubeadm join 192.168.0.200:6443 --token 9vr73a.a8uxyaju799qwdjv --discovery-token-ca-cert-hash sha256:7c2e69131a36ae2a042a339b33381c6d0d43887e2de83720eff5359e26aec866
+       kubeadm join 192.168.0.200:6443 --token <example-token> --discovery-token-ca-cert-hash sha256:7c2e69131a36ae2a042a339b33381c6d0d43887e2de83720eff5359e26aec866
    ```
 
    - Copy this output to a text file. You will need it later to join control plane and worker nodes to
@@ -207,7 +207,7 @@ option. Your cluster requirements may need a different configuration.
    The certificate key is a hex encoded string that is an AES key of size 32 bytes.
 
    **Note:**
-   The `kubeadm-certs` Secret and the decryption key expire after two hours.
+   The `kubeadm-certs` Secret and the decryption key <example-value> after two hours.
 
    **Caution:**
    As stated in the command output, the certificate key gives access to cluster sensitive data, keep it secret!
@@ -235,7 +235,7 @@ For each additional control plane node you should:
    It should look something like this:
 
    ```sh
-   sudo kubeadm join 192.168.0.200:6443 --token 9vr73a.a8uxyaju799qwdjv --discovery-token-ca-cert-hash sha256:7c2e69131a36ae2a042a339b33381c6d0d43887e2de83720eff5359e26aec866 --control-plane --certificate-key f8902e114ef118304e561c3ecd4d0b543adc226b7a07f675f56564185ffe0c07
+   sudo kubeadm join 192.168.0.200:6443 --token <example-token> --discovery-token-ca-cert-hash sha256:7c2e69131a36ae2a042a339b33381c6d0d43887e2de83720eff5359e26aec866 --control-plane --certificate-key <example-value>
    ```
 
    - The `--control-plane` flag tells `kubeadm join` to create a new control plane.
@@ -262,7 +262,7 @@ in the kubeadm config file.
 1. Copy the following files from any etcd node in the cluster to the first control plane node:
 
    ```sh
-   export CONTROL_PLANE="ubuntu@10.0.0.7"
+   export CONTROL_PLANE="user@example.com"
    scp /etc/kubernetes/pki/etcd/ca.crt "${CONTROL_PLANE}":
    scp /etc/kubernetes/pki/apiserver-etcd-client.crt "${CONTROL_PLANE}":
    scp /etc/kubernetes/pki/apiserver-etcd-client.key "${CONTROL_PLANE}":
@@ -333,5 +333,5 @@ Worker nodes can be joined to the cluster with the command you stored previously
 as the output from the `kubeadm init` command:
 
 ```sh
-sudo kubeadm join 192.168.0.200:6443 --token 9vr73a.a8uxyaju799qwdjv --discovery-token-ca-cert-hash sha256:7c2e69131a36ae2a042a339b33381c6d0d43887e2de83720eff5359e26aec866
+sudo kubeadm join 192.168.0.200:6443 --token <example-token> --discovery-token-ca-cert-hash sha256:7c2e69131a36ae2a042a339b33381c6d0d43887e2de83720eff5359e26aec866
 ```

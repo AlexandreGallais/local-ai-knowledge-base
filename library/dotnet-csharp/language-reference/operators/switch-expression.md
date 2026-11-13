@@ -59,7 +59,7 @@ public static class SwitchExample
     }
 }
 ```
-The preceding example shows the basic elements of a `switch` expression:
+The preceding example shows the basic <example-value> of a `switch` expression:
 
 - An expression followed by the `switch` keyword. In the preceding example, it's the `direction` method parameter.
 - The *`switch` expression arms*, separated by commas. Each `switch` expression arm contains a *pattern*, an optional *case guard*, the `=>` token, and an *expression*.

@@ -15,7 +15,7 @@ As far as naming conventions for identifiers go, dangling underscores may be the
 let _foo;
 ```
 
-There is a long history of marking "private" members with dangling underscores in JavaScript, beginning with SpiderMonkey adding nonstandard methods such as `__defineGetter__()`. Since that time, using a single underscore prefix has become the most popular convention for indicating a member is not part of the public interface of an object.
+There is a long history of marking "private" members with dangling underscores in JavaScript, beginning with SpiderMonkey <example-value> nonstandard methods such as `__defineGetter__()`. Since that time, using a single underscore prefix has become the most popular convention for indicating a member is not part of the public interface of an object.
 
 It is recommended to use the formal private class features introduced in ECMAScript 2022 for encapsulating private data and methods rather than relying on naming conventions.
 

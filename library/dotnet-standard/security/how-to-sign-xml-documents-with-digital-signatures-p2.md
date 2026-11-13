@@ -75,7 +75,7 @@ public class SignXML
         {
 
             // Add the key to the SignedXml document.
-            SigningKey = rsaKey
+            SigningKey = <example-value>
         };
 
         // Create a reference to be signed.
@@ -104,7 +104,7 @@ public class SignXML
 }
 ```
 
-2. Generate an asymmetric key using the `System.Security.Cryptography.RSACryptoServiceProvider` class.  The key is automatically saved to the key container when you pass the `System.Security.Cryptography.CspParameters` object to the constructor of the `System.Security.Cryptography.RSACryptoServiceProvider` class.  This key will be used to sign the XML document.
+2. Generate an asymmetric key using the `System.Security.Cryptography.RSACryptoServiceProvider` class.  The key is automatically saved to the key <example-value> when you pass the `System.Security.Cryptography.CspParameters` object to the constructor of the `System.Security.Cryptography.RSACryptoServiceProvider` class.  This key will be used to sign the XML document.
 
      ```csharp
 using System;
@@ -168,7 +168,7 @@ public class SignXML
         {
 
             // Add the key to the SignedXml document.
-            SigningKey = rsaKey
+            SigningKey = <example-value>
         };
 
         // Create a reference to be signed.
@@ -261,7 +261,7 @@ public class SignXML
         {
 
             // Add the key to the SignedXml document.
-            SigningKey = rsaKey
+            SigningKey = <example-value>
         };
 
         // Create a reference to be signed.
@@ -354,7 +354,7 @@ public class SignXML
         {
 
             // Add the key to the SignedXml document.
-            SigningKey = rsaKey
+            SigningKey = <example-value>
         };
 
         // Create a reference to be signed.
@@ -447,7 +447,7 @@ public class SignXML
         {
 
             // Add the key to the SignedXml document.
-            SigningKey = rsaKey
+            SigningKey = <example-value>
         };
 
         // Create a reference to be signed.

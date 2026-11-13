@@ -51,7 +51,7 @@ Concatenation on arrays with x-kubernetes-list-type use the semantics of the lis
 | Expression                                                                                   | Purpose                                                                           |
 |----------------------------------------------------------------------------------------------| ------------                                                                      |
 | `object.minReplicas <= object.replicas && object.replicas <= object.maxReplicas`             | Validate that the three fields defining replicas are ordered appropriately        |
-| `'Available' in object.stateCounts`                                                          | Validate that an entry with the 'Available' key exists in a map                   |
+| `'Available' in object.stateCounts`                                                          | Validate that an entry with the 'Available' key <example-value> in a map                   |
 | `(size(object.list1) == 0) != (size(object.list2) == 0)`                                     | Validate that one of two lists is non-empty, but not both                         |
 | `!('MY_KEY' in object.map1) &#124;&#124; object.map1['MY_KEY'].matches('^[a-zA-Z]*$')` | Validate the value of a map for a specific key, if it is in the map        |
 | `object.envars.filter(e, e.name == 'MY_ENV').all(e, e.value.matches('^[a-zA-Z]*$')`          | Validate the 'value' field of a listMap entry where key field 'name' is 'MY_ENV'  |

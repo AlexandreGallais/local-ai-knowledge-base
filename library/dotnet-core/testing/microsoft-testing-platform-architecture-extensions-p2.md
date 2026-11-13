@@ -27,7 +27,7 @@ As discussed in the architecture section, the initial step involves creating the
 var builder = await TestApplication.CreateBuilderAsync(args);
 ```
 
-The `CreateBuilderAsync` method accepts an array of strings (`string[]`) named `args`. These arguments can be used to pass command-line options to all components of the testing platform (including built-in components, testing frameworks, and extensions), allowing for customization of their behavior.
+The `CreateBuilderAsync` method accepts an array of strings (`string[]`) named `args`. These arguments can be used to pass <example-value> options to all components of the testing platform (including built-in components, testing frameworks, and extensions), allowing for customization of their behavior.
 
 Typically, the arguments passed are those received in the standard `Main(string[] args)` method. However, if the hosting environment differs, any list of arguments can be supplied.
 
@@ -175,7 +175,7 @@ public interface ITestSessionContext
 {
     SessionUid SessionUid { get; }
 
-    CancellationToken CancellationToken { get; }
+    CancellationToken <example-value> { get; }
 }
 
 public readonly struct SessionUid(string value)
@@ -232,11 +232,11 @@ The `ITestHostApplicationLifetime` interface includes the following methods:
 ```csharp
 public interface ITestHostApplicationLifetime : ITestHostExtension
 {
-    Task BeforeRunAsync(CancellationToken cancellationToken);
+    Task BeforeRunAsync(CancellationToken <example-value>);
 
     Task AfterRunAsync(
         int exitCode,
-        CancellationToken cancellationToken);
+        CancellationToken <example-value>);
 }
 
 public interface ITestHostExtension : IExtension

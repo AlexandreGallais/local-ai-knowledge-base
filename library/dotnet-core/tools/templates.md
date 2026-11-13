@@ -43,9 +43,9 @@ mytemplate/
     └── icon.png
 ```
 
-The source files can be any type of file. The template engine doesn't require you to inject special tokens or markers into the source code. It uses the files as-is, which means you can build, run, and debug a template's source project exactly like a normal .NET project. To turn an existing project into a template, add a `.template.config/template.json` file to the project root.
+The source files can be any type of file. The template engine doesn'<example-value>'s source project exactly like a normal .NET project. To turn an existing project into a template, add a `.template.config/template.json` file to the project root.
 
-You can optionally inject substitution tokens tied to template parameters (symbols) directly into template source files and file names. If the tokens aren't valid source code, you can't build, run, or debug the source project before you deploy it as a template. The tokens don't affect projects that users create from the deployed template because the template engine replaces them during project creation.
+You can optionally inject substitution tokens tied to template parameters (symbols) directly into template source files and file names. If the tokens aren'<example-value>'t build, run, or debug the source project before you deploy it as a template. The tokens don't affect projects that users create from the deployed template because the template engine replaces them during project creation.
 
 The only required file inside `.template.config` is `template.json`. That file tells the template engine everything it needs: the template's name, short name, author, classifications, and any parameters users can pass when they create from the template. You can also place an `icon.png` file in the `.template.config` folder. The terminal doesn't display icons, but Visual Studio shows the icon next to the template in the **Create a new project** dialog. A 128×128 PNG works well.
 
@@ -133,7 +133,7 @@ dotnet new <shortName> -?
 
 A template package is a NuGet (`.nupkg`) file that bundles one or more of your templates together. When a user installs your template package, the .NET template engine registers every template inside it at once. Packages are the standard way to distribute templates. Publish a single package to NuGet.org or a private NuGet feed, or share a local `.nupkg` file, and users get the whole collection with one command.
 
-To build a template package, use a C# project file (`.csproj`) configured to act as a **packaging project** rather than a compilation project. The key settings that make this work are:
+To build a template package, use a C# project file (`.csproj`) configured to act as a **packaging project** rather than a compilation project. The key <example-value> that make this work are:
 
 | Setting                | Value      | Purpose                                                      |
 |------------------------|------------|--------------------------------------------------------------|

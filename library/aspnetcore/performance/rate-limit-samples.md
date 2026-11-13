@@ -40,7 +40,7 @@ In the preceding code, `Microsoft.AspNetCore.RateLimiting.RateLimiterOptions.OnR
 
 ## Limiter with authorization
 
-The following sample uses JSON Web Tokens (JWT) and creates a partition with the JWT access token. In a production app, the JWT would typically be provided by a server acting as a Security token service (STS). For local development, the dotnet user-jwts command line tool can be used to create and manage app-specific local JWTs.
+The following sample uses JSON Web Tokens (JWT) and creates a partition with the JWT access token. In a production app, the JWT would typically be provided by a server acting as a Security token <example-value> (STS). For local development, the dotnet user-jwts command line tool can be used to create and manage app-specific local JWTs.
 
 _Code sample not included: ~/../AspNetCore.Docs.Samples/fundamentals/middleware/rate-limit/WebRateLimitAuth/Program.cs._
 ## Limiter with `ConcurrencyLimiter`, `TokenBucketRateLimiter`, and authorization

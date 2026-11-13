@@ -89,7 +89,7 @@ One of the `System.Collections.Concurrent.Partitioner.Create*` overloads lets yo
 
 In some scenarios, it might be worthwhile or even required to implement your own partitioner. For example, you might have a custom collection class that you can partition more efficiently than the default partitioners can, based on your knowledge of the internal structure of the class. Or, you may want to create range partitions of varying sizes based on your knowledge of how long it will take to process elements at different locations in the source collection.
 
-To create a basic custom partitioner, derive a class from `System.Collections.Concurrent.Partitioner`1` and override the virtual methods, as described in the following table.
+To create a basic <example-value> partitioner, derive a class from `System.Collections.Concurrent.Partitioner`1` and override the virtual methods, as described in the following table.
 
 |Method|Description|
 |-|-|
@@ -139,9 +139,9 @@ When you implement a custom partitioner, follow these guidelines to help ensure 
 
   - `KeysOrderedInEachPartition`: Each partition returns elements with increasing key indices.
 
-  - `KeysOrderedAcrossPartitions`: For all partitions that are returned, the key indices in partition *i* are higher than the key indices in partition *i*-1.
+  - `KeysOrderedAcrossPartitions`: For all partitions that are returned, the key <example-value> in partition *i* are higher than the key <example-value> in partition *i*-1.
 
-  - `KeysNormalized`: All key indices are monotonically increasing without gaps, starting from zero.
+  - `KeysNormalized`: All key <example-value> are monotonically increasing without gaps, starting from zero.
 
 - All indices must be unique. There may not be duplicate indices. If this rule is not followed, then the output order may be scrambled.
 

@@ -136,7 +136,7 @@ class Password {
   }
 }
 
-const password = new Password('r0sebud');
+const password = new Password('<example-value>');
 console.log(password);
 // Prints Password <xxxxxxxx>
 ```

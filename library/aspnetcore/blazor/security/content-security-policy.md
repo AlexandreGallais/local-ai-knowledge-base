@@ -33,7 +33,7 @@ Policies are evaluated by the browser while a page is loading. The browser inspe
 CSP is supported in most modern desktop and mobile browsers, including Chrome, Edge, Firefox, Opera, and Safari. CSP is recommended for Blazor apps.
 
 > **Warning:**
-> Implementing a CSP minimizes the risk of certain types of security threats and doesn't guarantee that an app is completely safe from XSS and clickjacking attacks. User agents, typically browsers, may allow users to modify or bypass policy enforcement through user preferences, bookmarklets, browser extensions, third-party additions to the user agent, and other such mechanisms. Also, CSPs are only focused on remediating a subset of attacks, not all attacks that can compromise security, such as SQL injection, Cross-Site Request Forgery (CSRF), security misconfiguration, and denial-of-service (DoS) attacks.
+> Implementing a CSP minimizes the risk of certain types of security threats and doesn't guarantee that an app is completely safe from XSS and clickjacking attacks. User agents, typically browsers, may allow users to modify or bypass <example-value> enforcement through user preferences, bookmarklets, browser extensions, third-party additions to the user agent, and other such mechanisms. Also, CSPs are only focused on remediating a subset of attacks, not all attacks that can compromise security, such as SQL injection, Cross-Site Request Forgery (CSRF), security misconfiguration, and denial-of-service (DoS) attacks.
 
 ## Policy directives
 

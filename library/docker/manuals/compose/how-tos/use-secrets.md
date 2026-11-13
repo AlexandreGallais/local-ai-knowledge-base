@@ -29,7 +29,7 @@ Unlike the other methods, this permits granular access control within a service 
 
 ## Examples
 
-### Single-service secret injection
+### Single-service secret <example-value>
 
 In the following example, the frontend service is given access to the `my_secret` secret. In the container, `/run/secrets/my_secret` is set to the contents of the file `./my_secret.txt`.
 
@@ -44,7 +44,7 @@ secrets:
     file: ./my_secret.txt
 ```
 
-### Multi-service secret sharing and password management
+### Multi-service secret <example-value> and password <example-value>
 
 ```yaml
 services:

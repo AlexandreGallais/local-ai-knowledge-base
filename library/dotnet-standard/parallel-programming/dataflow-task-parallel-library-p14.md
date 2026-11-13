@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Dataflow (Task Parallel Library) (part 14 of 15)
 
-The following basic example creates a `System.Threading.Tasks.Dataflow.BatchedJoinBlock`2` object that holds results, `System.Int32` values, and errors that are `System.Exception` objects. This example performs multiple operations and writes results to the `System.Threading.Tasks.Dataflow.BatchedJoinBlock`2.Target1` property, and errors to the `System.Threading.Tasks.Dataflow.BatchedJoinBlock`2.Target2` property, of the `System.Threading.Tasks.Dataflow.BatchedJoinBlock`2` object. Because the count of successful and failed operations is unknown in advance, the `System.Collections.Generic.IList`1` objects enable each target to receive zero or more values.
+The following basic <example-value> creates a `System.Threading.Tasks.Dataflow.BatchedJoinBlock`2` object that holds results, `System.Int32` values, and errors that are `System.Exception` objects. This example performs multiple operations and writes results to the `System.Threading.Tasks.Dataflow.BatchedJoinBlock`2.Target1` property, and errors to the `System.Threading.Tasks.Dataflow.BatchedJoinBlock`2.Target2` property, of the `System.Threading.Tasks.Dataflow.BatchedJoinBlock`2` object. Because the count of successful and failed operations is unknown in advance, the `System.Collections.Generic.IList`1` objects enable each target to receive zero or more values.
 
  ```csharp
 using System;

@@ -7,7 +7,7 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# Basic Queries (LINQ to XML)
+# Basic <example-value> (LINQ to XML)
 
 This section provides examples of basic LINQ to XML queries.
 

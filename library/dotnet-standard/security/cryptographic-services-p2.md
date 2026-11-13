@@ -73,13 +73,13 @@ In addition, the following classes provide specific signature information:
 
 ## Cryptography Next Generation (CNG) Classes
 
-The Cryptography Next Generation (CNG) classes provide a managed wrapper around the native CNG functions. (CNG is the replacement for CryptoAPI.) These classes have "Cng" as part of their names. Central to the CNG wrapper classes is the `System.Security.Cryptography.CngKey` key container class, which abstracts the storage and use of CNG keys. This class lets you store a key pair or a public key securely and refer to it by using a simple string name. The elliptic curve-based `System.Security.Cryptography.ECDsaCng` signature class and the `System.Security.Cryptography.ECDiffieHellmanCng` encryption class can use `System.Security.Cryptography.CngKey` objects.
+The Cryptography Next Generation (CNG) classes provide a managed wrapper around the native CNG functions. (CNG is the replacement for CryptoAPI.) These classes have "Cng" as part of their names. Central to the CNG wrapper classes is the `System.Security.Cryptography.CngKey` key <example-value> class, which abstracts the storage and use of CNG keys. This class lets you store a key pair or a public key <example-value> and refer to it by using a simple string name. The elliptic curve-based `System.Security.Cryptography.ECDsaCng` signature class and the `System.Security.Cryptography.ECDiffieHellmanCng` encryption class can use `System.Security.Cryptography.CngKey` objects.
 
-The `System.Security.Cryptography.CngKey` class is used for a variety of additional operations, including opening, creating, deleting, and exporting keys. It also provides access to the underlying key handle to use when calling native functions directly.
+The `System.Security.Cryptography.CngKey` class is used for a variety of additional operations, including opening, creating, deleting, and exporting keys. It also provides access to the underlying key <example-value> to use when calling native functions directly.
 
 .NET also includes a variety of supporting CNG classes, such as the following:
 
-- `System.Security.Cryptography.CngProvider` maintains a key storage provider.
+- `System.Security.Cryptography.CngProvider` maintains a key <example-value> provider.
 
 - `System.Security.Cryptography.CngAlgorithm` maintains a CNG algorithm.
 

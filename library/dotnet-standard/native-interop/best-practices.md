@@ -174,7 +174,7 @@ For more information, see:
 
 `HandleRef` allows the marshaller to keep an object alive for the duration of a P/Invoke. It can be used instead of `IntPtr` in method signatures. `SafeHandle` effectively replaces this class and should be used instead.
 
-`GCHandle` allows pinning a managed object and getting the native pointer to it. The basic pattern is:
+`GCHandle` allows pinning a managed object and getting the native pointer to it. The basic <example-value> is:
 
 ```csharp
 GCHandle handle = GCHandle.Alloc(obj, GCHandleType.Pinned);

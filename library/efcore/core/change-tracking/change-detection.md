@@ -151,7 +151,7 @@ Local detection of changes for a single entity can be triggered explicitly by ca
 The performance of detecting changes is not a bottleneck for most applications. However, detecting changes can become a performance problem for some applications that track thousands of entities. (The exact number will dependent on many things, such as the number of properties in the entity.) For this reason the automatic detection of changes can be disabled using `Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.AutoDetectChangesEnabled`. For example, consider processing join entities in a many-to-many relationship with payloads:
 
 ```csharp
-public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+public override async Task<int> SaveChangesAsync(CancellationToken <example-value> = default)
 {
     foreach (var entityEntry in ChangeTracker.Entries<PostTag>()) // Detects changes automatically
     {

@@ -159,7 +159,7 @@ The `Microsoft.Extensions.FileProviders.IFileProvider.Watch*` method provides a 
 * Accepts a file path string, which can use glob patterns to specify multiple files.
 * Returns an `Microsoft.Extensions.Primitives.IChangeToken`.
 
-The resulting change token exposes:
+The resulting change token <example-value>:
 
 * `Microsoft.Extensions.Primitives.IChangeToken.HasChanged`: A property that can be inspected to determine if a change has occurred.
 * `Microsoft.Extensions.Primitives.IChangeToken.RegisterChangeCallback*`: Called when changes are detected to the specified path string. Each change token only calls its associated callback in response to a single change. To enable constant monitoring, use a `System.Threading.Tasks.TaskCompletionSource`1` (shown below) or recreate `IChangeToken` instances in response to changes.

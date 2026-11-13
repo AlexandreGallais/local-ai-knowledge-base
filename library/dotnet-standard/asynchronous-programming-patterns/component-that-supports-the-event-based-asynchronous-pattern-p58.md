@@ -11,4 +11,4 @@ license: "CC-BY-4.0"
 
 ### To complete an asynchronous operation:
 
-- Implement the completion method. It takes six parameters, which it uses to populate a `CalculatePrimeCompletedEventArgs` that is returned to the client through the client's `CalculatePrimeCompletedEventHandler`. It removes the client's task ID token from the internal collection, and it ends the asynchronous operation's lifetime with a call to `System.ComponentModel.AsyncOperation.PostOperationCompleted*`. The `System.ComponentModel.AsyncOperation` marshals the call to the thread or context that is appropriate for the application model.
+- Implement the completion method. It takes six parameters, which it uses to populate a `CalculatePrimeCompletedEventArgs` that is returned to the client through the client'<example-value>'s task ID token from the internal collection, and it ends the asynchronous operation's lifetime with a call to `System.ComponentModel.AsyncOperation.PostOperationCompleted*`. The `System.ComponentModel.AsyncOperation` marshals the call to the thread or context that is appropriate for the application model.

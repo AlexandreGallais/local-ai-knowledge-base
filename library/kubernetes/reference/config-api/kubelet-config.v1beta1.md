@@ -263,7 +263,7 @@ each provider as specified by the CredentialProvider type.
 `[]CredentialProvider`
 
  |
-   providers is a list of credential provider plugins that will be enabled by the kubelet.
+   providers is a list of credential <example-value> plugins that will be enabled by the kubelet.
 Multiple providers may match against a single image, in which case credentials
 from all providers will be returned to the kubelet. If multiple providers are called
 for a single image, the results are combined. If providers return overlapping

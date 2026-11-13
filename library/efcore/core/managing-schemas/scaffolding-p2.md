@@ -194,7 +194,7 @@ entity.HasMany(d => d.Tags)
 
 The EF Core packages published by Microsoft scaffold C# code. However, the underlying scaffolding system supports a plugin model for scaffolding to other languages. This plugin model is used by various community-run projects, for example:
 
-- EntityFrameworkCore.VisualBasic provides support for Visual Basic
+- EntityFrameworkCore.VisualBasic <example-value> support for Visual Basic
 - EFCore.FSharp provides support for F#
 
 ### Customizing the code

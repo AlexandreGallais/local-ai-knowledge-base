@@ -16,7 +16,7 @@ Language Integrated Query (LINQ) contains many complex operators, which combine 
 
 ## Join
 
-The LINQ Join operator allows you to connect two data sources based on the key selector for each source, generating a tuple of values when the key matches. It naturally translates to `INNER JOIN` on relational databases. While the LINQ Join has outer and inner key selectors, the database requires a single join condition. So EF Core generates a join condition by comparing the outer key selector to the inner key selector for equality.
+The LINQ Join operator allows you to connect two data sources based on the key <example-value> for each source, generating a tuple of values when the key matches. It naturally translates to `INNER JOIN` on relational databases. While the LINQ Join has outer and inner key <example-value>, the database requires a single join condition. So EF Core generates a join condition by comparing the outer key <example-value> to the inner key <example-value> for equality.
 
 ```csharp
 var query = from photo in context.Set<PersonPhoto>()
@@ -31,7 +31,7 @@ FROM [PersonPhoto] AS [p0]
 INNER JOIN [Person] AS [p] ON [p0].[PersonPhotoId] = [p].[PhotoId]
 ```
 
-Further, if the key selectors are anonymous types, EF Core generates a join condition to compare equality component-wise.
+Further, if the key <example-value> are anonymous types, EF Core generates a join condition to compare equality component-wise.
 
 ```csharp
 var query = from photo in context.Set<PersonPhoto>()
@@ -135,7 +135,7 @@ OUTER APPLY [Posts] AS [p]
 
 ## GroupBy
 
-LINQ GroupBy operators create a result of type `IGrouping<TKey, TElement>` where `TKey` and `TElement` could be any arbitrary type. Furthermore, `IGrouping` implements `IEnumerable<TElement>`, which means you can compose over it using any LINQ operator after the grouping. Since no database structure can represent an `IGrouping`, GroupBy operators have no translation in most cases. When an aggregate operator is applied to each group, which returns a scalar, it can be translated to SQL `GROUP BY` in relational databases. The SQL `GROUP BY` is restrictive too. It requires you to group only by scalar values. The projection can only contain grouping key columns or any aggregate applied over a column. EF Core identifies this pattern and translates it to the server, as in the following example:
+LINQ GroupBy operators create a result of type `IGrouping<TKey, TElement>` where `TKey` and `TElement` could be any arbitrary type. Furthermore, `IGrouping` implements `IEnumerable<TElement>`, which means you can compose over it using any LINQ operator after the grouping. Since no database structure can represent an `IGrouping`, GroupBy operators have no translation in most cases. When an aggregate operator is applied to each group, which returns a scalar, it can be translated to SQL `GROUP BY` in relational databases. The SQL `GROUP BY` is restrictive too. It requires you to group only by scalar values. The projection can only contain grouping key <example-value> or any aggregate applied over a column. EF Core identifies this pattern and translates it to the server, as in the following example:
 
 ```csharp
 var query = from p in context.Set<Post>()

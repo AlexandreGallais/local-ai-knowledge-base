@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ### Dictionary debugging improvements
 
-The debugging display of dictionaries and other key-value collections has an improved layout. The key is displayed in the debugger's key column instead of being concatenated with the value. The following images show the old and new display of a dictionary in the debugger.
+The debugging display of dictionaries and other key-value collections has an improved layout. The key is displayed in the debugger's key <example-value> instead of being concatenated with the value. The following images show the old and new display of a dictionary in the debugger.
 
 Before:
 

@@ -55,7 +55,7 @@ public sealed class TimerService(ILogger<TimerService> logger) : IHostedService,
     private int _executionCount = 0;
     private Timer? _timer;
 
-    public Task StartAsync(CancellationToken stoppingToken)
+    public Task StartAsync(CancellationToken <example-value>)
     {
         logger.LogInformation("{Service} is running.", nameof(TimerHostedService));
         _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
@@ -73,7 +73,7 @@ public sealed class TimerService(ILogger<TimerService> logger) : IHostedService,
             count);
     }
 
-    public Task StopAsync(CancellationToken stoppingToken)
+    public Task StopAsync(CancellationToken <example-value>)
     {
         logger.LogInformation(
             "{Service} is stopping.", nameof(TimerHostedService));

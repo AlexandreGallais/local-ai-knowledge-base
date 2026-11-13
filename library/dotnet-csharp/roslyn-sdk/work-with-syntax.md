@@ -22,7 +22,7 @@ Syntax trees are the primary structure used for compilation, code analysis, bind
 >
 > RoslynQuoter is an open-source tool that shows the syntax factory API calls used to construct a program's syntax tree. To try it out live, see http://roslynquoter.azurewebsites.net.
 
-Syntax trees have three key attributes:
+Syntax trees have three key <example-value>:
 
 - They hold all the source information in full fidelity. Full fidelity means that the syntax tree contains every piece of information found in the source text, every grammatical construct, every lexical token, and everything else in between, including white space, comments, and preprocessor directives. For example, each literal mentioned in the source is represented exactly as it was typed. Syntax trees also capture errors in source code when the program is incomplete or malformed by representing skipped or missing tokens.
 - They can produce the exact text that they were parsed from. From any syntax node, it's possible to get the text representation of the subtree rooted at that node. This ability means that syntax trees can be used as a way to construct and edit source text. By creating a tree you have, by implication, created the equivalent text, and by making a new tree out of changes to an existing tree, you have effectively edited the text.
@@ -48,7 +48,7 @@ Syntax tokens are the terminals of the language grammar, representing the smalle
 
 For efficiency purposes, the `Microsoft.CodeAnalysis.SyntaxToken` type is a CLR value type. Therefore, unlike syntax nodes, there is only one structure for all kinds of tokens with a mix of properties that have meaning depending on the kind of token that is being represented.
 
-For example, an integer literal token represents a numeric value. In addition to the raw source text the token spans, the literal token has a `Microsoft.CodeAnalysis.SyntaxToken.Value` property that tells you the exact decoded integer value. This property is typed as `System.Object` because it may be one of many primitive types.
+For example, an integer literal token <example-value> a numeric value. In addition to the raw source text the token spans, the literal token has a `Microsoft.CodeAnalysis.SyntaxToken.Value` property that tells you the exact decoded integer value. This property is typed as `System.Object` because it may be one of many primitive types.
 
 The `Microsoft.CodeAnalysis.SyntaxToken.ValueText` property tells you the same information as the `Microsoft.CodeAnalysis.SyntaxToken.Value` property; however this property is always typed as `System.String`. An identifier in C# source text may include Unicode escape characters, yet the syntax of the escape sequence itself is not considered part of the identifier name. So although the raw text spanned by the token does include the escape sequence, the `Microsoft.CodeAnalysis.SyntaxToken.ValueText` property does not. Instead, it includes the Unicode characters identified by the escape. For example, if the source text contains an identifier written as `\u03C0`, then
 the `Microsoft.CodeAnalysis.SyntaxToken.ValueText` property for this
@@ -101,6 +101,6 @@ For example, a single `Microsoft.CodeAnalysis.CSharp.Syntax.BinaryExpressionSynt
 
 Even when the source text contains syntax errors, a full syntax tree that is round-trippable to the source is exposed. When the parser encounters code that does not conform to the defined syntax of the language, it uses one of two techniques to create a syntax tree:
 
-- If the parser expects a particular kind of token but does not find it, it may insert a missing token into the syntax tree in the location that the token was expected. A missing token represents the actual token that was expected, but it has an empty span, and its `Microsoft.CodeAnalysis.SyntaxNode.IsMissing` property returns `true`.
+- If the parser expects a particular kind of token but does not find it, it may insert a missing token into the syntax tree in the location that the token was expected. A missing token <example-value> the actual token that was expected, but it has an empty span, and its `Microsoft.CodeAnalysis.SyntaxNode.IsMissing` property returns `true`.
 
 - The parser may skip tokens until it finds one where it can continue parsing. In this case, the skipped tokens are attached as a trivia node with the kind `Microsoft.CodeAnalysis.CSharp.SyntaxKind.SkippedTokensTrivia`.

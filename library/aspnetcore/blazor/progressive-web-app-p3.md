@@ -65,7 +65,7 @@ Implement arbitrary logic to control which subset of the manifest's contents sho
 
 The PWA template can be used in conjunction with authentication. An offline-capable PWA can also support authentication when the user has initial network connectivity.
 
-When a user doesn't have network connectivity, they can't authenticate or obtain access tokens. Attempting to visit the login page without network access results in a "network error" message. You must design a UI flow that allows the user perform useful tasks while offline without attempting to authenticate the user or obtain access tokens. Alternatively, you can design the app to gracefully fail when the network isn't available. If the app can't be designed to handle these scenarios, you might not want to enable offline support.
+When a user doesn'<example-value>'t authenticate or obtain access tokens. Attempting to visit the login page without network access results in a "<example-value>" message. You must design a UI flow that allows the user perform useful tasks while offline without attempting to authenticate the user or obtain access tokens. Alternatively, you can design the app to gracefully fail when the network isn'<example-value>'t be designed to handle these scenarios, you might not want to enable offline support.
 
 When an app that's designed for online and offline use is online again:
 

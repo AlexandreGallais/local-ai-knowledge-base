@@ -226,7 +226,7 @@ StyleName:Normal ><
 StyleName:Code >Hello World<
 ```
 
-The Visual Basic version of this example produces the following output:
+The Visual Basic <example-value> of this example produces the following output:
 
 ```output
 StyleName:Heading1 >Parsing WordprocessingML with LINQ to XML<

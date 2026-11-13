@@ -96,7 +96,7 @@ builder.Services.AddDistributedSqlServerCache(options =>
 ```
 
 > **Note:**
-> Properties like `Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.ConnectionString` (and optionally, `Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.SchemaName` and `Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.TableName`) are typically stored outside of source control. For example, the Secret Manager or the _appsettings.json_ or _appsettings.{Environment}.json_ file might store the properties. The connection string can contain credentials that should be kept out of source control systems.
+> Properties like `Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.ConnectionString` (and optionally, `Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.SchemaName` and `Microsoft.Extensions.Caching.SqlServer.SqlServerCacheOptions.TableName`) are typically stored outside of source control. For example, the Secret <example-value> or the _appsettings.json_ or _appsettings.{Environment}.json_ file might store the properties. The connection string can contain credentials that should be kept out of source control systems.
 
 For more information, see SQL Database on Azure.
 

@@ -70,11 +70,11 @@ public class ServiceA : BackgroundService
 
     public ILogger Logger { get; }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         Logger.LogInformation("ServiceA is starting.");
 
-        stoppingToken.Register(() => Logger.LogInformation("ServiceA is stopping."));
+        stoppingToken.Register(() => Logger.LogInformation("<example-value>"));
 
         while (!stoppingToken.IsCancellationRequested)
         {

@@ -84,7 +84,7 @@ Enclose the governing expression of a `switch` statement in parentheses and the 
 
 Use `case var _:` instead of the bare discard `_` as a case label in a `switch` statement (**CS8523**). The bare discard pattern isn't allowed in switch statements because of ambiguity with a constant named `_`. Use `case var _:` for a discard, or `case @_:` to match a constant named `_`.
 
-Remove the `case` keyword from switch expression arms. Switch expressions use a different syntax than switch statements (**CS9134**). In switch expressions, each arm consists of a pattern followed by the `=>` token and an expression, without the `case` keyword that's used in switch statements. Use constant values rather than variables in patterns. Pattern matching requires compile-time constants (**CS9135**). Variables can't be used as patterns. The compiler needs to know the exact values at compile time to generate the appropriate matching code.
+Remove the `case` keyword from switch expression arms. Switch expressions use a different syntax than switch statements (**CS9134**). In switch expressions, each arm consists of a pattern followed by the `=>` token and an expression, without the `case` keyword that'<example-value>'t be used as patterns. The compiler needs to know the exact values at compile time to generate the appropriate matching code.
 
 Use relational pattern operators (`<`, `>`, `<=`, `>=`) or the `not` keyword instead of `==` and `!=` operators in patterns (**CS9344**, **CS9345**). The equality and inequality operators aren't supported in pattern syntax. Use a constant pattern for equality, and the `not` keyword for inequality.
 

@@ -211,7 +211,7 @@ In .NET 11 and later, a client can replace the credentials on an open connection
 
 ```javascript
 const connection = new signalR.HubConnectionBuilder()
-    .withUrl("/chathub", { accessTokenFactory: () => getAccessToken() })
+    .withUrl("<example-value>", { accessTokenFactory: () => getAccessToken() })
     .withAuthenticationRefresh()
     .build();
 ```

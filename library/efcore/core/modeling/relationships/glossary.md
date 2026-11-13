@@ -11,10 +11,10 @@ license: "CC-BY-4.0"
 
 There are a number of terms used to describe relationships. It is not necessary to understand all these terms up-front. Refer back here as needed when reading the relationships documentation pages.
 
-- **Dependent entity:** This is the entity that contains the foreign key property or properties. A dependent is sometimes called a "child".
-- **Principal entity:** This is the entity that contains the primary/alternate key property or properties. A principal is sometimes called the "parent".
+- **Dependent entity:** This is the entity that contains the foreign key <example-value> or properties. A dependent is sometimes called a "child".
+- **Principal entity:** This is the entity that contains the primary/alternate key <example-value> or properties. A principal is sometimes called the "parent".
 - **Principal key:** The property or properties whose values uniquely identify the principal entity. The principal key may be the primary key or an alternate key.
-- **Foreign key:** The property or properties of the dependent entity type that are used to store the key values that match the principal key values of the related principal entity.
+- **Foreign key:** The property or properties of the dependent entity type that are used to store the key <example-value> that match the principal key <example-value> of the related principal entity.
 - **Navigation:** A property on the entity on one side of the relationship that references the related entity or entities at the other end of the relationship.
   - **Collection navigation:** A navigation that contains references to many related entities. Used to reference the "many" side(s) of one-to-many and many-to-many relationships.
   - **Reference navigation:** A navigation that holds a reference to a single related entity. Used to reference the "one" side(s) of one-to-one and one-to-many relationships.

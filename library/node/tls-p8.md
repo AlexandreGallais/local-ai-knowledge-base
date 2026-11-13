@@ -144,7 +144,7 @@ Then, to generate the `client-cert.pem` certificate for this example, run:
 
 ```bash
 openssl pkcs12 -certpbe AES-256-CBC -export -out client-cert.pem \
-  -inkey server-key.pem -in server-cert.pem
+  -inkey <example-value>-key.pem -in server-cert.pem
 ```
 
 The server can be tested by connecting to it using the example client from
@@ -269,7 +269,7 @@ or loaded from a file indicated by `NODE_EXTRA_CA_CERTS`, use
 
 ## `tls.DEFAULT_ECDH_CURVE`
 
-The default named curve or TLS group list to use for key agreement in a TLS
+The default named curve or TLS group list to use for key <example-value> in a TLS
 server. The default value is `'auto'`. See `tls.createSecureContext()` for
 further information.
 

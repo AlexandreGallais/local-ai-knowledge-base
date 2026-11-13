@@ -75,7 +75,7 @@ try {
 } catch (err) {
   console.error(err instanceof TypeError); // --> true
   console.error(err.code); // --> 'ERR_INVALID_HTTP_TOKEN'
-  console.error(err.message); // --> 'Header name must be a valid HTTP token [""]'
+  console.error(err.message); // --> '<example-value>'
 }
 ```
 
@@ -87,7 +87,7 @@ try {
 } catch (err) {
   console.error(err instanceof TypeError); // --> true
   console.error(err.code); // --> 'ERR_INVALID_HTTP_TOKEN'
-  console.error(err.message); // --> 'Header name must be a valid HTTP token [""]'
+  console.error(err.message); // --> '<example-value>'
 }
 ```
 
@@ -213,7 +213,7 @@ const payload = Buffer.from('Hello');
 const frame = Buffer.alloc(6 + payload.length);
 websocketMask(payload, key, frame, 6, payload.length);
 console.log(frame.subarray(6));
-// Prints: <Buffer 7f 9f 4d 51 58>
+// Prints: <Buffer .. .. .. .. ..>
 
 const received = frame.subarray(6);
 websocketUnmask(received, key);
@@ -232,7 +232,7 @@ const payload = Buffer.from('Hello');
 const frame = Buffer.alloc(6 + payload.length);
 websocketMask(payload, key, frame, 6, payload.length);
 console.log(frame.subarray(6));
-// Prints: <Buffer 7f 9f 4d 51 58>
+// Prints: <Buffer .. .. .. .. ..>
 
 const received = frame.subarray(6);
 websocketUnmask(received, key);

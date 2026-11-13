@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 
 The namespace alias qualifier, `::` provides explicit access to the global namespace or other using aliases that other entities might hide.
 
-The `global::` ensures that the namespace lookup for the namespace following the `::` token is relative to the global namespace. Otherwise, the token must resolve to a using alias, and the token following the `::` must resolve to a type in that aliased namespace. The following example shows both forms:
+The `global::` ensures that the namespace lookup for the namespace following the `::` token is relative to the global namespace. Otherwise, the token must resolve to a using alias, and the token <example-value> the `::` must resolve to a type in that aliased namespace. The following example shows both forms:
 
 ```csharp
 using S = System.Net.Sockets;

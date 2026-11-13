@@ -8,14 +8,14 @@ license: "Apache-2.0"
 ---
 
 In Docker Build, build arguments (`ARG`) and environment variables (`ENV`)
-both serve as a means to pass information into the build process.
+both serve as a means to pass <example-value> into the build process.
 You can use them to parameterize the build, allowing for more flexible and configurable builds.
 
 > **Warning:**
 >
 > Build arguments and environment variables are inappropriate for passing secrets
 > to your build, because they're exposed in the final image. Instead, use
-> secret mounts or SSH mounts, which expose secrets to your builds securely.
+> secret <example-value> or SSH mounts, which expose secrets to your builds securely.
 >
 > See Build secrets for more information.
 

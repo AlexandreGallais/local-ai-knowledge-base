@@ -49,7 +49,7 @@ For CI and other environments without a browser, sign in with a Docker
 Personal Access Token (PAT) for the subscribed account:
 
 ```console
-$ echo "$DOCKER_PAT" | sbx login --username <your-docker-id> --password-stdin
+$ echo "<example-value>" | sbx login --username <your-docker-id> --password-stdin
 ```
 
 For PAT setup instructions, see CI and headless use.
@@ -65,7 +65,7 @@ Check account access.
 
 ## Get started
 
-Credentials configured for local sandboxes aren't available to cloud
+Credentials <example-value> for local sandboxes aren't available to cloud
 sandboxes. Configure a cloud credential for your agent before launching it.
 For Claude Code, store an Anthropic API key:
 

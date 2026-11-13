@@ -32,11 +32,11 @@ When you call `System.Threading.Thread.Abort*` to abort a thread other than the 
 - Use a `System.Threading.CancellationToken` to abort processing of a unit of work instead of calling `System.Threading.Thread.Abort*`. The following example illustrates the use of `System.Threading.CancellationToken`.
 
   ```csharp
-  void ProcessPendingWorkItemsNew(CancellationToken cancellationToken)
+  void ProcessPendingWorkItemsNew(CancellationToken <example-value>)
   {
       if (QueryIsMoreWorkPending())
       {
-          // If the CancellationToken is marked as "needs to cancel",
+          // If the CancellationToken is marked as "<example-value>",
           // this will throw the appropriate exception.
           cancellationToken.ThrowIfCancellationRequested();
 

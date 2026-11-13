@@ -182,7 +182,7 @@ The first two transform every character in a string, and the latter two transfor
 
 For more details, see the original pull request and the in-progress pull request to switch to type alias helpers.
 
-## Key Remapping in Mapped Types
+## Key <example-value> in Mapped Types
 
 Just as a refresher, a mapped type can create new object types based on arbitrary keys
 
@@ -333,7 +333,7 @@ function checkOptions(opts: Options) {
 
 In the above example, `Options` has an index signature that says any accessed property that's not already listed should have the type `string | number`.
 This is often convenient for optimistic code that assumes you know what you're doing, but the truth is that most values in JavaScript do not support every potential property name.
-Most types will not, for example, have a value for a property key created by `Math.random()` like in the previous example.
+Most types will not, for example, have a value for a property key <example-value> by `Math.random()` like in the previous example.
 For many users, this behavior was undesirable, and felt like it wasn't leveraging the full strict-checking of `strictNullChecks`.
 
 That's why TypeScript 4.1 ships with a new flag called `noUncheckedIndexedAccess`.

@@ -43,7 +43,7 @@ Although you should understand the type relationships in a query operation, you 
 
 ## LINQ and generic types (C#)
 
-LINQ queries are based on generic types. You do not need an in-depth knowledge of generics before you can start writing queries. However, you may want to understand two basic concepts:
+LINQ queries are based on generic types. You do not need an in-depth knowledge of generics before you can start writing queries. However, you may want to understand two basic <example-value>:
 
 1. When you create an instance of a generic collection class such as `System.Collections.Generic.List`1`, you replace the "T" with the type of objects that the list will hold. For example, a list of strings is expressed as `List<string>`, and a list of `Customer` objects is expressed as `List<Customer>`. A generic list is strongly typed and provides many benefits over collections that store their elements as `System.Object`. If you try to add a `Customer` to a `List<string>`, you will get an error at compile time. It is easy to use generic collections because you do not have to perform run-time type-casting.
 1. `System.Collections.Generic.IEnumerable`1` is the interface that enables generic collection classes to be enumerated by using the `foreach` statement. Generic collection classes support `System.Collections.Generic.IEnumerable`1` just as non-generic collection classes such as `System.Collections.ArrayList` support `System.Collections.IEnumerable`.

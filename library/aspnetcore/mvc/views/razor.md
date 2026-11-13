@@ -40,7 +40,7 @@ The code is rendered in HTML with a single `@` symbol:
 HTML attributes and content containing email addresses don't treat the `@` symbol as a transition character. The email addresses in the following example are untouched by Razor parsing:
 
 ```razor
-<a href="mailto:Support@contoso.com">Support@contoso.com</a>
+<a href="mailto:user@example.com">user@example.com</a>
 ```
 
 ### Scalable Vector Graphics (SVG)
@@ -121,7 +121,7 @@ Explicit expressions can be used to concatenate text with an expression result:
 <p>Age@(joe.Age)</p>
 ```
 
-Without the explicit expression, `Age@joe.Age` is treated as an email address, and `Age@joe.Age` is rendered. When written as an explicit expression, `Age33` is rendered.
+Without the explicit expression, `user@example.com` is treated as an email address, and `user@example.com` is rendered. When written as an explicit expression, `Age33` is rendered.
 
 Explicit expressions can be used to render output from generic methods in `.cshtml` files. The following markup shows how to correct the error shown earlier caused by the brackets of a C# generic. The code is written as an explicit expression:
 

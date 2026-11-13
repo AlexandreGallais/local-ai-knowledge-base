@@ -133,7 +133,7 @@ You can use this attribute with the following SVG elements:
 </svg>
 ```
 
-### Accesskey example
+### Accesskey <example-value>
 
 ```html
 <svg
@@ -178,7 +178,7 @@ You can use this attribute with the following SVG elements:
 </svg>
 ```
 
-_This example is embedded in an iFrame. If you want to activate the key events, you have to click on it first._
+_This example is embedded in an iFrame. If you want to activate the key <example-value>, you have to click on it first._
 
 ## Usage notes
 

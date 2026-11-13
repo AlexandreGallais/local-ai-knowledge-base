@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Implement a DisposeAsync method
 
-The `System.IAsyncDisposable` interface was introduced as part of C# 8.0. You implement the `System.IAsyncDisposable.DisposeAsync` method when you need to perform resource cleanup, just as you would when implementing a Dispose method. One of the key differences, however, is that this implementation allows for asynchronous cleanup operations. The `System.IAsyncDisposable.DisposeAsync` returns a `System.Threading.Tasks.ValueTask` that represents the asynchronous disposal operation.
+The `System.IAsyncDisposable` interface was introduced as part of C# 8.0. You implement the `System.IAsyncDisposable.DisposeAsync` method when you need to perform resource cleanup, just as you would when implementing a Dispose method. One of the key <example-value>, however, is that this implementation allows for asynchronous cleanup operations. The `System.IAsyncDisposable.DisposeAsync` returns a `System.Threading.Tasks.ValueTask` that represents the asynchronous disposal operation.
 
 It's typical when implementing the `System.IAsyncDisposable` interface that classes also implement the `System.IDisposable` interface. A good implementation pattern of the `System.IAsyncDisposable` interface is to be prepared for either synchronous or asynchronous disposal, however, it's not a requirement. If no synchronous disposable of your class is possible, having only `System.IAsyncDisposable` is acceptable. All of the guidance for implementing the disposal pattern also applies to the asynchronous implementation. This article assumes that you're already familiar with how to implement a Dispose method.
 

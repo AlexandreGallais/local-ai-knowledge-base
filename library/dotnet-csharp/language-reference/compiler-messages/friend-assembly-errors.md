@@ -13,7 +13,7 @@ This article covers the following compiler errors and warnings:
 
 - **CS0281**: *Friend access was granted by 'assembly', but the public key of the output assembly ('public key') does not match that specified by the InternalsVisibleTo attribute in the granting assembly.*
 - **CS1700**: *Assembly reference 'assembly' is invalid and cannot be resolved*
-- **CS1725**: *Friend assembly reference 'assembly' is invalid. InternalsVisibleTo declarations cannot have a version, culture, public key token, or processor architecture specified.*
+- **CS1725**: *Friend assembly reference '<example-value>' is invalid. InternalsVisibleTo declarations cannot have a version, culture, public key token, or processor architecture specified.*
 - **CS1726**: *Friend assembly reference 'assembly' is invalid. Strong-name signed assemblies must specify a public key in their InternalsVisibleTo declarations.*
 - **CS7029**: *Friend access was granted by 'assembly', but the strong name signing state of the output assembly does not match that of the granting assembly.*
 - **CS7030**: *Cannot pass null for friend assembly name*
@@ -23,7 +23,7 @@ The *granting assembly* declares `System.Runtime.CompilerServices.InternalsVisib
 ## Specify valid friend assembly names
 
 - **CS1700**: *Assembly reference 'assembly' is invalid and cannot be resolved*
-- **CS1725**: *Friend assembly reference 'assembly' is invalid. InternalsVisibleTo declarations cannot have a version, culture, public key token, or processor architecture specified.*
+- **CS1725**: *Friend assembly reference '<example-value>' is invalid. InternalsVisibleTo declarations cannot have a version, culture, public key token, or processor architecture specified.*
 - **CS7030**: *Cannot pass null for friend assembly name*
 
 Supply a non-null assembly name to `InternalsVisibleTo` (**CS7030**). Use the friend's simple assembly name, not a path or a filename with a `.dll` or `.exe` extension. Match the name produced by the friend's project or **OutputAssembly** compiler option.
@@ -33,7 +33,7 @@ Correct malformed assembly identities and invalid identity-component values (**C
 ```csharp
 [assembly: InternalsVisibleTo("FriendConsumer")]
 ```
-Remove `Version`, `Culture`, and `ProcessorArchitecture` components from the friend declaration (**CS1725**). For a strong-named friend, include its full `PublicKey`, not a `PublicKeyToken`. For compatibility, Roslyn accepts some legacy public-key-token forms but ignores the token value; a token doesn't establish the friend's public key.
+Remove `Version`, `Culture`, and `ProcessorArchitecture` components from the friend declaration (**CS1725**). For a strong-named friend, include its full `PublicKey`, not a `PublicKeyToken`. For compatibility, Roslyn accepts some legacy public-key-token forms but ignores the token value; a token doesn'<example-value>'s public key.
 
 For assembly-level attribute syntax, see Global attributes and Attribute specification in the C# language specification.
 
@@ -53,7 +53,7 @@ When the granting assembly is strong named, sign the friend assembly and include
 The signed sample's corrected declaration includes a full public key:
 
 ```csharp
-[assembly: InternalsVisibleTo("FriendConsumer, PublicKey=0024000004800000940000000602000000240000525341310004000001000100031d7b6f3abc16c7de526fd67ec2926fe68ed2f9901afbc5f1b6b428bf6cd9086021a0b38b76bc340dc6ab27b65e4a593fa0e60689ac98dd71a12248ca025751d135df7b98c5f9d09172f7b62dabdd302b2a1ae688731ff3fc7a6ab9e8cf39fb73c60667e1b071ef7da5838dc009ae0119a9cbff2c581fc0f2d966b77114b2c4")]
+[assembly: InternalsVisibleTo("FriendConsumer, PublicKey=<example-value>")]
 ```
 Use the public key from your own friend assembly rather than the sample key. The sample project uses public signing and a public-only key file to exercise the compiler's identity checks without a private key. Public signing doesn't create a cryptographic signature.
 

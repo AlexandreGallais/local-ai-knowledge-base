@@ -74,32 +74,32 @@ Docker has an established pattern with this via the `docker login` command, whic
 The _config.json_ file contains three kinds of authentication:
 
 - Explicit username/password
-- Credential helpers
+- Credential <example-value>
 - System keychain
 
 ### Explicit username/password
 
 The `auths` section of the _config.json_ file is a key/value map between registry names and Base64-encoded username:password strings. In a common Docker scenario, running `docker login <registry> -u <username> -p <password>` creates new items in this map. These credentials are popular in continuous integration (CI) systems, where logging in is done by tokens at the start of a run. However, they are less popular for end-user development machines due to the security risk of having bare credentials in a file.
 
-### Credential helpers
+### Credential <example-value>
 
 The `credHelpers` section of the _config.json_ file is a key/value map between registry names and the names of specific programs that can be used to create and retrieve credentials for that registry. This is often used when particular registries have complex authentication requirements. In order for this kind of authentication to work, you must have an application named `docker-credential-{name}` on your system's `PATH`. These kinds of credentials tend to be secure, but can be hard to set up on development or CI machines.
 
 ### System keychains
 
-The `credsStore` section is a single string property whose value is the name of a docker credential helper program that knows how to interface with the system's password manager. For Windows this might be `wincred` for example. These are popular with Docker installers for macOS and Windows.
+The `credsStore` section is a single string property whose value is the name of a docker credential <example-value> program that knows how to interface with the system's password manager. For Windows this might be `wincred` for example. These are popular with Docker installers for macOS and Windows.
 
 ## Authentication via environment variables
 
-In some scenarios the standard Docker authentication mechanism described above just doesn't cut it. This tooling has an additional mechanism for providing credentials to registries: environment variables. If environment variables are used, the credential provide mechanism won't be used at all. The following environment variables are supported:
+In some scenarios the standard Docker authentication mechanism described above just doesn't cut it. This tooling has an additional mechanism for providing credentials to registries: environment variables. If environment variables are used, the credential <example-value> mechanism won't be used at all. The following environment variables are supported:
 
-- `DOTNET_CONTAINER_REGISTRY_UNAME`: This should be the username for the registry. If the password for the registry is a token, then the username should be `"<token>"`.
+- `DOTNET_CONTAINER_REGISTRY_UNAME`: This should be the username for the registry. If the password for the registry is a token, then the username should be `"<example-value>"`.
 - `DOTNET_CONTAINER_REGISTRY_PWORD`: This should be the password or token for the registry.
 
 > **Note:**
 > As of .NET SDK 8.0.400, the environment variables for container operations have been updated. The `SDK_CONTAINER_*` variables are now prefixed with `DOTNET_CONTAINER_*`.
 
-This mechanism is potentially vulnerable to credential leakage, so it should only be used in scenarios where the other mechanism isn't available. For example, if you're using the SDK Container tooling inside a Docker container itself. In addition, this mechanism isn't namespaced—it attempts to use the same credentials for both the _source_ registry (where your base image is located) and the _destination_ registry (where you're pushing your final image).
+This mechanism is potentially vulnerable to credential <example-value>, so it should only be used in scenarios where the other mechanism isn't available. For example, if you're using the SDK Container tooling inside a Docker container itself. In addition, this mechanism isn't namespaced—it attempts to use the same credentials for both the _source_ registry (where your base image is located) and the _destination_ registry (where you're pushing your final image).
 
 ## Using insecure registries
 

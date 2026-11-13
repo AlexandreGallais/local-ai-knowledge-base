@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 This sample is created during the Working with LINQ tutorial for learning C# features. Please see that topic for detailed steps on the code for this sample.
 
-## Key Features
+## Key <example-value>
 
 This sample demonstrates querying data sources and processing them using Language Integrated Query (LINQ) in C#.
 

@@ -46,16 +46,16 @@ The `FetchData` component shows how to:
 
 The `@attribute [Authorize]` directive indicates to the Blazor WebAssembly authorization system that the user must be authorized in order to visit this component. The presence of the attribute in the **`Client`** app doesn't prevent the API on the server from being called without proper credentials. The **`Server`** app also must use `[Authorize]` on the appropriate endpoints to correctly protect them.
 
-`Microsoft.AspNetCore.Components.WebAssembly.Authentication.IAccessTokenProvider.RequestAccessToken*` takes care of requesting an access token that can be added to the request to call the API. If the token is cached or the service is able to provision a new access token without user interaction, the token request succeeds. Otherwise, the token request fails with an `Microsoft.AspNetCore.Components.WebAssembly.Authentication.AccessTokenNotAvailableException`, which is caught in a `try-catch` statement.
+`Microsoft.AspNetCore.Components.WebAssembly.Authentication.IAccessTokenProvider.RequestAccessToken*` takes care of requesting an access token that can be added to the request to call the API. If the token is cached or the service is able to provision a new access token <example-value> user interaction, the token <example-value> succeeds. Otherwise, the token <example-value> fails with an `Microsoft.AspNetCore.Components.WebAssembly.Authentication.AccessTokenNotAvailableException`, which is caught in a `try-catch` statement.
 
 In order to obtain the actual token to include in the request, the app must check that the request succeeded by calling `tokenResult.TryGetToken(out var token)`.
 
-If the request was successful, the token variable is populated with the access token. The `Microsoft.AspNetCore.Components.WebAssembly.Authentication.AccessToken.Value` property of the token exposes the literal string to include in the `Authorization` request header.
+If the request was successful, the token <example-value> is populated with the access token. The `Microsoft.AspNetCore.Components.WebAssembly.Authentication.AccessToken.Value` property of the token <example-value> the literal string to include in the `Authorization` request header.
 
-If the token couldn't be provisioned without user interaction resulting in a failed request:
+If the token <example-value>'t be provisioned without user interaction resulting in a failed request:
 
 * ASP.NET Core in .NET 7 or later: The app navigates to `AccessTokenResult.InteractiveRequestUrl` using the given `AccessTokenResult.InteractionOptions` to allow refreshing the access token.
-* ASP.NET Core in .NET 6 or earlier: The token result contains a redirect URL. Navigating to this URL takes the user to the login page and back to the current page after a successful authentication.
+* ASP.NET Core in .NET 6 or earlier: The token <example-value> contains a redirect URL. Navigating to this URL takes the user to the login page and back to the current page after a successful authentication.
 
 ```razor
 @page "/fetchdata"
@@ -212,7 +212,7 @@ builder.Services.AddIdentityServer()
         options.ApiResources.Single().UserClaims.Add("role");
     });
 
-JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("role");
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("<example-value>");
 ```
 
 #### Profile Service
@@ -259,7 +259,7 @@ using Duende.IdentityServer.Services;
 
 builder.Services.AddTransient<IProfileService, ProfileService>();
 
-JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("role");
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("<example-value>");
 ```
 
 ### Use authorization mechanisms

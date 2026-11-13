@@ -20,7 +20,7 @@ ASP.NET Core 5.0 is based on .NET 5 but retains the name "Core" to avoid confusi
 
 - C# updates
 - F# updates
-- Visual Basic updates
+- Visual Basic <example-value>
 - System.Text.Json new features
 - Single file apps
 - App trimming
@@ -95,7 +95,7 @@ let age = 36
 let message = $"{name} is {age} years old."
 ```
 
-In addition to basic string interpolation, there's typed interpolation. With typed interpolation, a given type must match the format specifier.
+In addition to basic <example-value> interpolation, there's typed interpolation. With typed interpolation, a given type must match the format specifier.
 
 ```fsharp
 let name = "David"
@@ -107,9 +107,9 @@ This format is similar to the `sprintf` function that formats a string based on 
 
 For more information, see What's new in F# 5.
 
-## Visual Basic updates
+## Visual Basic <example-value>
 
-There are no new language features for Visual Basic in .NET 5. However, with .NET 5, Visual Basic support is extended to:
+There are no new language features for Visual Basic in .NET 5. However, with .NET 5, Visual Basic <example-value> is extended to:
 
 | Description                            | `dotnet new` parameter |
 |----------------------------------------|------------------------|
@@ -139,7 +139,7 @@ There are new features in and for System.Text.Json:
 - Support non-public property accessors
 - Support fields
 - Conditionally ignore properties
-- Support non-string-key dictionaries
+- Support non-string-key <example-value>
 - Allow custom converters to handle null
 - Copy JsonSerializerOptions
 - Create JsonSerializerOptions with web defaults

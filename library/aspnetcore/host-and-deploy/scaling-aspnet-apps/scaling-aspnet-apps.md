@@ -130,7 +130,7 @@ It's not immediately apparent why the search requests are failing. The browser t
     >
     > Azure Container Apps provides a built-in feature to manage data protection keys across replicas without requiring separate Azure Blob Storage and Azure Key Vault resources. This feature requires ASP.NET Core 8.0.4 or later (apps targeting earlier versions, such as the sample in this tutorial, must first update their target framework and container base images).
     >
-    > In Azure Container Apps, navigate to the **Development Stack** section, select **.NET**, and enable **ASP.NET Core Data Protection** (or set `properties.configuration.runtime.dotnet.autoConfigureDataProtection: true` in ARM or Bicep templates). When enabled, Azure Container Apps creates a shared key volume mount and injects the `DOTNET_ReadOnlyDataProtectionKeyDirectory` environment variable pointing to the mounted key directory so replicas share encryption keys automatically.
+    > In Azure Container Apps, navigate to the **Development Stack** section, select **.NET**, and enable **ASP.NET Core Data Protection** (or set `properties.configuration.runtime.dotnet.autoConfigureDataProtection: true` in ARM or Bicep templates). When enabled, Azure Container Apps creates a shared key <example-value> mount and injects the `DOTNET_ReadOnlyDataProtectionKeyDirectory` environment variable pointing to the mounted key <example-value> so replicas share encryption keys automatically.
 
 ## Create the Azure Services
 
@@ -184,4 +184,4 @@ Create a secret key to protect the data in the blob storage account.
 
 1. On the main overview page of the key vault, select **Keys** from the left navigation.
 1. On the **Create a key** page, select **+ Generate/Import** to open the **Create a key** flyout menu.
-1. Enter *razorkey* in the **Name** field. Leave the rest of the settings at their default values and then select **Create**. A new key appears on the key list page.
+1. Enter *razorkey* in the **Name** field. Leave the rest of the settings at their default values and then select **Create**. A new key <example-value> on the key list page.

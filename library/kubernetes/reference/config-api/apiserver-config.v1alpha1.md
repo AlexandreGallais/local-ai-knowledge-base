@@ -369,7 +369,7 @@ Mutually exclusive with expression.
 
  |
    expression represents the expression which will be evaluated by CEL.
-CEL expressions have access to the contents of the token claims, organized into CEL variable:
+CEL expressions have access to the contents of the token <example-value>, organized into CEL variable:
 
 'claims' is a map of claim names to claim values.
 For example, a variable named 'sub' can be accessed as 'claims.sub'.
@@ -413,7 +413,7 @@ Mutually exclusive with expression and message.
  |
    expression represents the expression which will be evaluated by CEL.
 Must produce a boolean.
-CEL expressions have access to the contents of the token claims, organized into CEL variable:
+CEL expressions have access to the contents of the token <example-value>, organized into CEL variable:
 
 'claims' is a map of claim names to claim values.
 For example, a variable named 'sub' can be accessed as 'claims.sub'.
@@ -517,7 +517,7 @@ Required to be unique.
 valueExpression must produce a string or string array value.
 "", [], and null values are treated as the extra mapping not being present.
 Empty string values contained within a string array are filtered out.
-CEL expressions have access to the contents of the token claims, organized into CEL variable:
+CEL expressions have access to the contents of the token <example-value>, organized into CEL variable:
 
 'claims' is a map of claim names to claim values.
 For example, a variable named 'sub' can be accessed as 'claims.sub'.

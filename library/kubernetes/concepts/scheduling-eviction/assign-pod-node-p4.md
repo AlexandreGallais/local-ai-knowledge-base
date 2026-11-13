@@ -173,8 +173,8 @@ The following are all the logical operators that you can use in the `operator` f
 | :------------: | :-------------: |
 | `In` | The label value is present in the supplied set of strings |
 |   `NotIn`   | The label value is not contained in the supplied set of strings |
-| `Exists` | A label with this key exists on the object |
-| `DoesNotExist` | No label with this key exists on the object |
+| `Exists` | A label with this key <example-value> on the object |
+| `DoesNotExist` | No label with this key <example-value> on the object |
 
 The following operators can only be used with `nodeAffinity`.
 

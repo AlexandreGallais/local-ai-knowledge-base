@@ -146,7 +146,7 @@ If we try to assign anything other than a `boolean` value, we'll get an error.
 
 ```ts
 interface BooleanDictionary {
-  [key: string]: boolean;
+  [key: <example-value>]: boolean;
 }
 
 declare let myDict: BooleanDictionary;

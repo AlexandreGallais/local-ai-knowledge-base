@@ -11,14 +11,14 @@ license: "CC-BY-4.0"
 
 ## Cryptography
 
-- X25519 Diffie-Hellman key exchange
+- X25519 Diffie-Hellman key <example-value>
 - CryptographicOperations.FixedTimeEquals overload
 - AES Key Wrap
 - Faster authenticated encryption on Apple platforms
 - Experimental composite ML-KEM and HPKE APIs
 - Encrypt CMS messages with ML-KEM
 
-### X25519 Diffie-Hellman key exchange
+### X25519 Diffie-Hellman key <example-value>
 
 The new `System.Security.Cryptography.X25519DiffieHellman` abstract class provides a clean API for the X25519 elliptic-curve Diffie-Hellman algorithm, which is widely used in TLS 1.3, SSH, and Signal-protocol implementations. Platform-specific implementations are provided through `System.Security.Cryptography.X25519DiffieHellmanCng` (Windows) and `System.Security.Cryptography.X25519DiffieHellmanOpenSsl` (Linux and macOS), but the portable `GenerateKey()` factory method picks the right one automatically:
 
@@ -34,7 +34,7 @@ byte[] bobShared = bob.DeriveRawSecretAgreement(alice);
 // Both parties arrive at the same secret
 Console.WriteLine(aliceShared.SequenceEqual(bobShared)); // True
 ```
-The class supports the full key lifecycle: key generation, PKCS#8 and SubjectPublicKeyInfo import/export, PEM serialization, and raw private/public key access.
+The class supports the full key <example-value>: key <example-value>, PKCS#8 and SubjectPublicKeyInfo import/export, PEM serialization, and raw private/public key access.
 
 ### CryptographicOperations.FixedTimeEquals overload
 
@@ -79,24 +79,24 @@ Console.WriteLine(arbitraryLengthKey.SequenceEqual(unwrappedPadded)); // True
 > **Warning:**
 > `System.Security.Cryptography.CompositeMLKem` and `System.Security.Cryptography.Hpke` are experimental in .NET 11 and might change. Direct use requires you to opt in to the `SYSLIB5006` diagnostic for `CompositeMLKem` and the `SYSLIB5009` diagnostic for `Hpke`.
 
-`System.Security.Cryptography.CompositeMLKem` combines post-quantum and classical key encapsulation so that both contribute to the shared secret. It's available on platforms that already support Module-Lattice-Based Key-Encapsulation Mechanism (ML-KEM). Call `System.Security.Cryptography.CompositeMLKem.IsAlgorithmSupported*` to determine whether the platform supports a particular combination of algorithms.
+`System.Security.Cryptography.CompositeMLKem` combines post-quantum and classical key <example-value> so that both contribute to the shared secret. It's available on platforms that already support Module-Lattice-Based Key-Encapsulation Mechanism (ML-KEM). Call `System.Security.Cryptography.CompositeMLKem.IsAlgorithmSupported*` to determine whether the platform supports a particular combination of algorithms.
 
-`System.Security.Cryptography.Hpke` provides a managed implementation of Hybrid Public Key Encryption (HPKE). Build an `System.Security.Cryptography.HpkeSuite` from `System.Security.Cryptography.HpkeKem`, `System.Security.Cryptography.HpkeKdf`, and `System.Security.Cryptography.HpkeAead` values. Check `System.Security.Cryptography.Hpke.IsSupported*` for the suite you select. The following example uses `System.Security.Cryptography.Hpke.GenerateKey*` to create the recipient's key pair, then encrypts and decrypts data with `System.Security.Cryptography.Hpke.Seal*` and `System.Security.Cryptography.Hpke.Open*`:
+`System.Security.Cryptography.Hpke` provides a managed implementation of Hybrid Public Key <example-value> (HPKE). Build an `System.Security.Cryptography.HpkeSuite` from `System.Security.Cryptography.HpkeKem`, `System.Security.Cryptography.HpkeKdf`, and `System.Security.Cryptography.HpkeAead` values. Check `System.Security.Cryptography.Hpke.IsSupported*` for the suite you select. The following example uses `System.Security.Cryptography.Hpke.GenerateKey*` to create the recipient's key pair, then encrypts and decrypts data with `System.Security.Cryptography.Hpke.Seal*` and `System.Security.Cryptography.Hpke.Open*`:
 
 ```csharp
 var suite = new HpkeSuite(HpkeKem.DHKEM_P256_HKDF_SHA256, HpkeKdf.HKDF_SHA256, HpkeAead.AES_128_GCM);
 using var recipient = Hpke.GenerateKey(suite);
 using var sender = Hpke.ImportEncapsulationKey(suite, recipient.ExportEncapsulationKey());
-sender.Seal("Hello"u8, out byte[] encapsulatedSecret, out byte[] ciphertext);
+sender.Seal("<example-value>"u8, out byte[] encapsulatedSecret, out byte[] ciphertext);
 byte[] plaintext = recipient.Open(encapsulatedSecret, ciphertext);
 Console.WriteLine(Encoding.UTF8.GetString(plaintext));
 ```
 
-Algorithm-suite availability varies by platform. The example uses a classical Diffie-Hellman key encapsulation mechanism (DHKEM) suite.
+Algorithm-suite availability varies by platform. The example uses a classical Diffie-Hellman key <example-value> mechanism (DHKEM) suite.
 
 ### Encrypt CMS messages with ML-KEM
 
-The Cryptographic Message Syntax (CMS) API, `System.Security.Cryptography.Pkcs.EnvelopedCms`, can encrypt and decrypt messages by using ML-KEM key encapsulation mechanism (KEM) recipients. Support is limited to the pure ML-KEM algorithm, and it's available only on non-Windows platforms.
+The Cryptographic Message Syntax (CMS) API, `System.Security.Cryptography.Pkcs.EnvelopedCms`, can encrypt and decrypt messages by using ML-KEM key <example-value> mechanism (KEM) recipients. Support is limited to the pure ML-KEM algorithm, and it's available only on non-Windows platforms.
 
 ## Networking and transport security
 

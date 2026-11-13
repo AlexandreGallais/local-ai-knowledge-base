@@ -59,7 +59,7 @@ In the bootstrap initialization process, the following occurs:
 1. kubelet begins
 1. kubelet sees that it does _not_ have a `kubeconfig` file
 1. kubelet searches for and finds a `bootstrap-kubeconfig` file
-1. kubelet reads its bootstrap file, retrieving the URL of the API server and a limited usage "token"
+1. kubelet reads its bootstrap file, retrieving the URL of the API server and a limited usage "<example-value>"
 1. kubelet connects to the API server, authenticates using the token
 1. kubelet now has limited credentials to create and retrieve a certificate signing request (CSR)
 1. kubelet creates a CSR for itself with the signerName set to `kubernetes.io/kube-apiserver-client-kubelet`
@@ -127,7 +127,7 @@ bootstrap credentials, the following two authenticators are recommended for ease
 of provisioning.
 
 1. Bootstrap Tokens
-1. Token authentication file
+1. Token <example-value> file
 
 Using bootstrap tokens is a simpler and more easily managed method to authenticate kubelets,
 and does not require any additional flags when starting kube-apiserver.
@@ -161,8 +161,8 @@ The process is two-fold:
 From the kubelet's perspective, one token is like another and has no special meaning.
 From the kube-apiserver's perspective, however, the bootstrap token is special.
 Due to its `type`, `namespace` and `name`, kube-apiserver recognizes it as a special token,
-and grants anyone authenticating with that token special bootstrap rights, notably treating
-them as a member of the `system:bootstrappers` group. This fulfills a basic requirement
+and grants anyone authenticating with that token <example-value> bootstrap rights, notably treating
+them as a member of the `system:bootstrappers` group. This fulfills a basic <example-value>
 for TLS bootstrapping.
 
 The details for creating the secret are available here.
@@ -173,7 +173,7 @@ If you want to use bootstrap tokens, you must enable it on kube-apiserver with t
 --enable-bootstrap-token-auth=true
 ```
 
-#### Token authentication file
+#### Token <example-value> file
 
 kube-apiserver has the ability to accept tokens as authentication.
 These tokens are arbitrary but should represent at least 128 bits of entropy derived

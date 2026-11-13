@@ -81,7 +81,7 @@ builder.WebHost.ConfigureKestrel(kestrel =>
 * WebProxy - Enables sending requests through an outbound HTTP proxy to reach the destinations. See `SocketsHttpHandler.Proxy` for details.
   - Address - The url address of the outbound proxy.
   - BypassOnLocal - A bool indicating if requests to local addresses should bypass the outbound proxy.
-  - UseDefaultCredentials - A bool indicating if the current application credentials should be use to authenticate to the outbound proxy. ASP.NET Core does not impersonate authenticated users for outbound requests.
+  - UseDefaultCredentials - A bool indicating if the current application credentials <example-value> be use to authenticate to the outbound proxy. ASP.NET Core does not impersonate authenticated users for outbound requests.
 ```json
 "WebProxy": {
   "Address": "http://myproxy:8080",

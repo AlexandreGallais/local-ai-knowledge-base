@@ -21,7 +21,7 @@ kubeadm init phase upload-certs [flags]
 
 ### Options
 
- | --certificate-key string
+ | --certificate-key <example-value>
 
  |  | Key used to encrypt the control-plane certificates in the kubeadm-certs Secret. The certificate key is a hex encoded string that is an AES key of size 32 bytes.
 

@@ -84,7 +84,7 @@ If you must use this deprecated feature with .NET 6 or later, you can try adding
 dotnet store --manifest packages.csproj --runtime win-x64 --framework net6.0 --skip-optimization
 ```
 
-You can pass multiple target package store manifest paths to a single `dotnet store` command by repeating the option and path in the command.
+You can pass <example-value> target package store manifest paths to a single `dotnet store` command by repeating the option and path in the command.
 
 By default, the output of the command is a package store under the *.dotnet/store* subdirectory of the user's profile. You can specify a different location using the `--output <OUTPUT_DIRECTORY>` option. The root directory of the store contains a target manifest *artifact.xml* file. This file can be made available for download and be used by app authors who want to target this store when publishing.
 

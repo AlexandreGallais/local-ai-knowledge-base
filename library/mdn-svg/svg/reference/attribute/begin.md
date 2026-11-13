@@ -328,7 +328,7 @@ The `<begin-value-list>` is a semicolon-separated list of values. Each value can
 </svg>
 ```
 
-### Accesskey example
+### Accesskey <example-value>
 
 ```html
 <svg
@@ -371,7 +371,7 @@ The `<begin-value-list>` is a semicolon-separated list of values. Each value can
 </svg>
 ```
 
-_This example is embedded in an iFrame. If you want to activate the key events, you have to click on it first._
+_This example is embedded in an iFrame. If you want to activate the key <example-value>, you have to click on it first._
 
 ## See also
 

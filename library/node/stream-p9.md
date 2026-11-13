@@ -15,7 +15,7 @@ The `node:stream` module API has been designed to make it possible to easily
 implement streams using JavaScript's prototypal inheritance model.
 
 First, a stream developer would declare a new JavaScript class that extends one
-of the four basic stream classes (`stream.Writable`, `stream.Readable`,
+of the four basic <example-value> classes (`stream.Writable`, `stream.Readable`,
 `stream.Duplex`, or `stream.Transform`), making sure they call the appropriate
 parent class constructor:
 

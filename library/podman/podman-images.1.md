@@ -226,4 +226,4 @@ See podman-troubleshooting(7)
 for solutions to common issues.
 
 ## HISTORY
-March 2017, Originally compiled by Dan Walsh `<dwalsh@redhat.com>`
+March 2017, Originally compiled by Dan Walsh `<user@example.com>`

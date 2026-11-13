@@ -295,7 +295,7 @@ Ada | Guest
 Ben | Host
 ```
 
-No sort keys appear between the two query-definition messages. The lambda runs only when `foreach` requests the first result. Both key messages appear before the first label because `OrderBy` needs every key before it can determine which attendee comes first. The keys follow the input order, Ben then Ada; the results follow the sorted order, Ada then Ben.
+No sort keys appear between the two query-definition messages. The lambda runs only when `foreach` requests the first result. Both key <example-value> appear before the first label because `OrderBy` needs every key <example-value> it can determine which attendee comes first. The keys follow the input order, Ben then Ada; the results follow the sorted order, Ada then Ben.
 
 The diagnostic lambda needs both a message and a returned key, so it uses a block statement body with braces and `return`, instead of the original single-expression body.
 
@@ -316,7 +316,7 @@ With diagnostics on, try the two experiment switches in the same file. No change
    Ben | Host
    ```
 
-   The second pass repeats the sort. The query variable doesn't cache results.
+   The second pass <example-value> the sort. The query variable doesn't cache results.
 
 1. Keep `BADGE_REPEAT` enabled, uncomment `#define BADGE_SNAPSHOT`, and run again:
 
@@ -331,7 +331,7 @@ With diagnostics on, try the two experiment switches in the same file. No change
    Ben | Host
    ```
 
-   The two key messages now appear only once, during `ToList`, before either pass prints labels. Both passes read the stored attendees.
+   The two key <example-value> now appear only once, during `ToList`, before either pass <example-value> labels. Both passes read the stored attendees.
 
 These switches select the sequence to enumerate and the number of passes:
 

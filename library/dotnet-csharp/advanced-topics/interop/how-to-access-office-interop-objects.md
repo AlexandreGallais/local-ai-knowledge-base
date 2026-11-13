@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # How to access Office interop objects
 
-C# has features that simplify access to Office API objects. The new features include named and optional arguments, a new type called `dynamic`, and the ability to pass arguments to reference parameters in COM methods as if they were value parameters.
+C# has features that simplify access to Office API objects. The new features include named and optional arguments, a new type called `dynamic`, and the ability to pass <example-value> to reference parameters in COM methods as if they were value parameters.
 
 In this article, you use the new features to write code that creates and displays a Microsoft Office Excel worksheet. You write code to add an Office Word document that contains an icon that is linked to the Excel worksheet.
 

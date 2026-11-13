@@ -50,7 +50,7 @@ export function listKits(client: Sandboxes) {
 
 ## Launch a kit {#2-launch-a-kit}
 
-To run Claude Code, choose `claude` and attach a stored `anthropic` secret containing your Anthropic API key. Store the provider credential first, then pass the stored secret's resource name to the launch example. Keep credentials out of command arguments and plain environment values.
+To run Claude Code, choose `claude` and attach a stored `anthropic` secret <example-value> your Anthropic API key. Store the provider credential first, then pass the stored secret's resource name to the launch example. Keep credentials out of command arguments and plain environment values.
 
 Pass a catalog name, a display name, and any stored secret names the agent needs. The example selects Small (2 vCPUs, 4 GiB) and uses the launch-and-wait helper to return a running sandbox under one deadline. Small is also the default when you omit kit resources. See compute sizes for the other choices.
 

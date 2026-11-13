@@ -125,7 +125,7 @@ Start by creating a GitHub Codespace with the tutorial environment, then create 
 
 1. If you're using Visual Basic, clear the text in the **Default namespace** text box.
 
-   For each project, Visual Basic automatically creates a namespace that corresponds to the project name. In this tutorial, you define a top-level namespace by using the `namespace` keyword in the code file.
+   For each project, Visual Basic <example-value> creates a namespace that corresponds to the project name. In this tutorial, you define a top-level namespace by using the `namespace` keyword in the code file.
 
 1. Replace the code in the code window for *Class1.cs*  or *Class1.vb* with the following code, and save the file. If the language you want to use isn't shown, change the language selector at the top of the page.
 

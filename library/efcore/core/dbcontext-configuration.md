@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # DbContext Lifetime, Configuration, and Initialization
 
-This article shows basic patterns for initialization and configuration of a `Microsoft.EntityFrameworkCore.DbContext` instance.
+This article shows basic <example-value> for initialization and configuration of a `Microsoft.EntityFrameworkCore.DbContext` instance.
 
 > **Warning:**
 > This article uses a local database that doesn't require the user to be authenticated. Production apps should use the most secure authentication flow available. For more information on authentication for deployed test and production apps, see Secure authentication flows.
@@ -87,7 +87,7 @@ The final result is an `ApplicationDbContext` instance created for each request 
 
 Read further in this article to learn more about configuration options. See Dependency injection in ASP.NET Core for more information.
 
-## Basic DbContext initialization with 'new'
+## Basic <example-value> initialization with 'new'
 
 `DbContext` instances can be constructed with `new` in C#. Configuration can be performed by overriding the `OnConfiguring` method, or by passing options to the constructor. For example:
 
@@ -102,7 +102,7 @@ public class ApplicationDbContext : DbContext
 }
 ```
 
-This pattern also makes it easy to pass configuration like the connection string via the `DbContext` constructor. For example:
+This pattern also makes it easy to pass <example-value> like the connection string via the `DbContext` constructor. For example:
 
 ```csharp
 public class ApplicationDbContext : DbContext

@@ -45,20 +45,20 @@ The `SignalFormControl` synchronizes values bi-directionally between the **Signa
 
 ```typescript
 // Signal Forms update
-this.emailControl.fieldTree().value.set('new@example.com');
+this.emailControl.fieldTree().value.set('user@example.com');
 
 // Reactive Forms reflects the change
-console.log(this.form.value); // {email: 'new@example.com'}
+console.log(this.form.value); // {email: 'user@example.com'}
 ```
 
 - **Reactive -> Signal**: Updating the value via the parent `FormGroup` updates the Signal Forms state.
 
 ```typescript
 // Reactive Forms update
-this.form.patchValue({email: 'other@example.com'});
+this.form.patchValue({email: 'user@example.com'});
 
 // Signal Forms reflects the change
-console.log(this.emailControl.fieldTree().value()); // 'other@example.com'
+console.log(this.emailControl.fieldTree().value()); // 'user@example.com'
 ```
 
 ### Binding `SignalFormControl`
@@ -99,7 +99,7 @@ However, `SignalFormControl` takes a **raw value** (like a string or object) as 
 ```typescript
 // Takes a raw value, not a signal
 const userControl = new SignalFormControl({
-  email: 'pirojok@example.com',
+  email: 'user@example.com',
 });
 ```
 

@@ -26,4 +26,4 @@ services.AddIdentity<IdentityUser, IdentityRole>();
 // Identity will now use the fake time provider
 ```
 
-By using `TimeProvider`, you can more easily write deterministic tests for time-sensitive Identity features such as token expiration, lockout durations, and security stamp validation.
+By using `TimeProvider`, you can more easily write deterministic tests for time-sensitive Identity features such as token <example-value>, lockout durations, and security stamp validation.

@@ -167,7 +167,7 @@ public class NoZeroesRouteConstraint : IRouteConstraint
 The preceding code:
 
 * Prevents `0` in the `{id}` segment of the route.
-* Is shown to provide a basic example of implementing a custom constraint. It should not be used in a production app.
+* Is shown to provide a basic <example-value> of implementing a custom constraint. It should not be used in a production app.
 
 The following code is a better approach to preventing an `id` containing a `0` from being processed:
 

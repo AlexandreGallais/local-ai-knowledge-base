@@ -185,7 +185,7 @@ Tracking Issue #31664
 
 #### Old behavior
 
-Previously, non-shadow integer properties that match the criteria to be a synthesized key property would not be persisted into the JSON document, but were instead re-synthesized on the way out.
+Previously, non-shadow integer properties that match the criteria to be a synthesized key <example-value> would not be persisted into the JSON document, but were instead re-synthesized on the way out.
 
 #### New behavior
 
@@ -193,7 +193,7 @@ Starting with EF Core 8.0, these properties are now persisted.
 
 #### Why
 
-The old behavior was a bug and prevented properties that match the synthesized key criteria from being persisted to Cosmos.
+The old behavior was a bug and prevented properties that match the synthesized key <example-value> from being persisted to Cosmos.
 
 #### Mitigations
 
@@ -230,7 +230,7 @@ Tracking Issue #27832
 
 #### Old behavior
 
-Previously when scaffolding a `DbContext` and entity types from an existing database, the navigation names for relationships were sometimes derived from a common prefix of multiple foreign key column names.
+Previously when scaffolding a `DbContext` and entity types from an existing database, the navigation names for relationships were sometimes derived from a common prefix of multiple foreign key <example-value> names.
 
 #### New behavior
 
@@ -242,7 +242,7 @@ This is an obscure naming rule which sometimes generates very poor names like, `
 
 #### Mitigations
 
-The EF Core Power Tools have an option to keep generating navigations in the old way. Alternatively, the code generated can be fully customized using T4 templates. This can be used to example the foreign key properties of scaffolding relationships and use whatever rule is appropriate for your code to generate the navigation names you need.
+The EF Core Power Tools have an option to keep generating navigations in the old way. Alternatively, the code generated can be fully customized using T4 templates. This can be used to example the foreign key <example-value> of scaffolding relationships and use whatever rule is appropriate for your code to generate the navigation names you need.
 
 ### Discriminators now have a max length
 
@@ -270,21 +270,21 @@ modelBuilder.Entity<Foo>()
     .HasMaxLength(-1);
 ```
 
-### SQL Server key values are compared case-insensitively
+### SQL Server key <example-value> are compared case-insensitively
 
 Tracking Issue #27526
 
 #### Old behavior
 
-Previously, when tracking entities with string keys with the SQL Server/Azure SQL database providers, the key values were compared using the default .NET case-sensitive ordinal comparer.
+Previously, when tracking entities with string keys with the SQL Server/Azure SQL database providers, the key <example-value> were compared using the default .NET case-sensitive ordinal comparer.
 
 #### New behavior
 
-Starting with EF Core 8.0, SQL Server/Azure SQL string key values are compared using the default .NET case-insensitive ordinal comparer.
+Starting with EF Core 8.0, SQL Server/Azure SQL string key <example-value> are compared using the default .NET case-insensitive ordinal comparer.
 
 #### Why
 
-By default, SQL Server uses case-insensitive comparisons when comparing foreign key values for matches to principal key values. This means when EF uses case-sensitive comparisons it may not connect a foreign key to a principal key when it should.
+By default, SQL Server uses case-insensitive comparisons when comparing foreign key <example-value> for matches to principal key values. This means when EF uses case-sensitive comparisons it may not connect a foreign key to a principal key when it should.
 
 #### Mitigations
 

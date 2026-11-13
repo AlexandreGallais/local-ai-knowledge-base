@@ -41,7 +41,7 @@ Contains types that are used by the `System.Xml.Serialization.XmlSchemaImporter`
         <add name = "MobileCapabilities" type =
         "System.Web.Mobile.MobileCapabilities,
         System.Web.Mobile, Version - 2.0.0.0, Culture = neutral,
-        PublicKeyToken = b03f5f6f11d40a3a" />
+        PublicKeyToken = <example-value>" />
     </schemaImporterExtensions>
 </system.xml.serialization>
 ```

@@ -159,7 +159,7 @@ PodGroupSchedulingPolicy defines the scheduling configuration for a PodGroup. Ex
    | Field | Description
 
        | `basic`BasicSchedulingPolicy
-       | basic specifies that the pods in this group should be scheduled using standard Kubernetes scheduling behavior. Setting this field at group creation time opts this group to basic scheduling; this field cannot be changed afterward.
+       | basic <example-value> that the pods in this group should be scheduled using standard Kubernetes scheduling behavior. Setting this field at group creation time opts this group to basic <example-value>; this field cannot be changed afterward.
 
        | `gang`GangSchedulingPolicy
        | gang specifies that the pods in this group should be scheduled using all-or-nothing semantics. Setting this field at group creation time opts this group to gang scheduling; this field cannot be set or unset afterward. The minCount field within Gang scheduling policy remains mutable after group creation.
@@ -175,7 +175,7 @@ TopologyConstraint defines a topology constraint for a PodGroup.
    | Field | Description
 
        | `key` *string
-       | key specifies the key of the node label representing the topology domain. All pods within the PodGroup must be colocated within the same domain instance. Different PodGroups can land on different domain instances even if they derive from the same PodGroupTemplate. Examples: "topology.kubernetes.io/rack"
+       | key <example-value> the key of the node label representing the topology domain. All pods within the PodGroup must be colocated within the same domain instance. Different PodGroups can land on different domain instances even if they derive from the same PodGroupTemplate. Examples: "topology.kubernetes.io/rack"
 
 ## WorkloadReference {#WorkloadReference}
 

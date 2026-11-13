@@ -111,7 +111,7 @@ The Azure Cosmos DB provider for EF Core has multiple overloads of the UseCosmos
 
 > **Important:**
 > Make sure to understand _Secure access to data in Azure Cosmos DB_ to understand the security implications and best practices for using each overload of the `UseCosmos` method.
-> Generally, RBAC with token credentials is the recommended access-control mechanism.
+> Generally, RBAC with token <example-value> is the recommended access-control mechanism.
 
 | Connection Mechanism       | UseCosmos Overload                                                     | More information                                                                          |
 |----------------------------|------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
@@ -126,7 +126,7 @@ It is also possible to configure the Azure Cosmos DB provider with a single conn
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder.UseCosmos(
-        "AccountEndpoint=https://localhost:8081/;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==",
+        "AccountEndpoint=https://localhost:8081/;AccountKey=<example-value>",
         databaseName: "OptionsDB",
         options =>
         {

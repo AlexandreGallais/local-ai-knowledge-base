@@ -36,7 +36,7 @@ license: "Apache-2.0"
   - Docker 17.09.0-ce
   - Docker Compose 1.16.1
   - Docker Machine 0.12.2
-  - Docker Credential Helpers 0.6.0
+  - Docker Credential <example-value> 0.6.0
   - Linux Kernel 4.9.49
   - AUFS 20170911
 
@@ -91,7 +91,7 @@ license: "Apache-2.0"
 **Upgrades**
 
 - Docker 17.06.0-ce
-- Docker Credential Helpers 0.5.2
+- Docker Credential <example-value> 0.5.2
 - Docker Machine 0.12.0
 - Docker compose 1.14.0
 - Linux Kernel 4.9.31
@@ -264,7 +264,7 @@ We did not distribute a 1.12.4 stable release
 
 - Made sure we didn't use an older Nlog library from the GAC
 
-- Fixed a password escaping regression
+- Fixed a password <example-value> regression
 
 - Supports writing large values to the database, specially for trusted CAs
 
@@ -365,7 +365,7 @@ We did not distribute a 1.12.4 stable release
 
 * `slirp`: reduce the number of sockets used by UDP NAT, reduce the probability that NAT rules time out earlier than expected
 
-* Fixed password handling for host file system sharing
+* Fixed password <example-value> for host file system sharing
 
 **Hyper-V**
 

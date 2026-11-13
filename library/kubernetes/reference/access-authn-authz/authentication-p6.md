@@ -9,81 +9,15 @@ license: "CC-BY-4.0"
 
 # Authenticating (part 6 of 9)
 
-```json
-    {
-      "aud": "kubernetes",
-      "exp": 1703232949,
-      "hd": "example.com",
-      "iat": 1701113101,
-      "iss": "https://example.com",
-      "jti": "b5b0652372cd20e345b6fdffcdc2181f4afd6f259aab4b7e35881237d29220bc",
-      "nbf": 1701113101,
-      "roles": "user,admin",
-      "sub": "auth",
-      "tenant": "72f988bf-86f1-41af-91ab-2d7cd011db4a",
-      "username": "foo"
-    }
-  ```
-
-  The token with the above `AuthenticationConfiguration` will produce the following `UserInfo` object:
-
-  ```json
-  {
-      "username": "system:foo",
-      "uid": "auth",
-      "groups": [
-          "user",
-          "admin"
-      ],
-      "extra": {
-          "example.com/tenant": ["72f988bf-86f1-41af-91ab-2d7cd011db4a"]
-      }
-  }
-  ```
-
-  which will fail user validation because the username starts with `system:`.
-  The API server will return `401 Unauthorized` error.
-
-##### Limitations {#oidc-limitations}
-
-1. Distributed claims do not work via CEL expressions.
-
-Kubernetes does not provide an OpenID Connect Identity Provider.
-You can use an existing public OpenID Connect Identity Provider or run your own Identity Provider
-that supports the OpenID Connect protocol.
-
-For an identity provider to work with Kubernetes it must:
-
-1. Support OpenID connect discovery
-
-   The public key to verify the signature is discovered from the issuer's public endpoint using OIDC discovery.
-   If you're using the authentication configuration file, the identity provider doesn't need to publicly expose the discovery endpoint.
-   You can host the discovery endpoint at a different location than the issuer (such as locally in the cluster) and specify the
-   `issuer.discoveryURL` in the configuration file.
-
-1. Run in TLS with non-obsolete ciphers
-1. Have a CA signed certificate (even if the CA is not a commercial CA or is self signed)
-
-A note about requirement #3 above, requiring a CA signed certificate. If you deploy your own
-identity provider you MUST have your identity provider's web server certificate signed by a
-certificate with the `CA` flag set to `TRUE`, even if it is self signed. This is due to GoLang's
-TLS client implementation being very strict to the standards around certificate validation. If you
-don't have a CA handy, you can create a simple CA and a signed certificate and key pair using
-standard certificate generation tools.
-
-#### Using kubectl
-
-##### Option 1 - OIDC authenticator
-
 The first option is to use the kubectl `oidc` authenticator, which sets the `id_token` as a bearer token
 for all requests and refreshes the token once it expires. After you've logged into your provider, use
 kubectl to add your `id_token`, `refresh_token`, `client_id`, and `client_secret` to configure the plugin.
 
-Providers that don't return an `id_token` as part of their refresh token response aren't supported
+Providers that don'<example-value>'t supported
 by this plugin and should use Option 2 (specifying `--token`).
 
 ```bash
-kubectl config set-credentials USER_NAME \
+kubectl config set-credentials <example-value> \
    --auth-provider=oidc \
    --auth-provider-arg=idp-issuer-url=( issuer url ) \
    --auth-provider-arg=client-id=( your client id ) \
@@ -96,14 +30,14 @@ kubectl config set-credentials USER_NAME \
 As an example, running the below command after authenticating to your identity provider:
 
 ```bash
-kubectl config set-credentials mmosley  \
+kubectl config set-credentials <example-value>  \
         --auth-provider=oidc  \
         --auth-provider-arg=idp-issuer-url=https://oidcidp.tremolo.lan:8443/auth/idp/OidcIdP  \
         --auth-provider-arg=client-id=kubernetes  \
-        --auth-provider-arg=client-secret=1db158f6-177d-4d9c-8a8b-d36869918ec5  \
-        --auth-provider-arg=refresh-token=q1bKLFOyUiosTfawzA93TzZIDzH2TNa2SMm0zEiPKTUwME6BkEo6Sql5yUWVBSWpKUGphaWpxSVAfekBOZbBhaEW+VlFUeVRGcluyVF5JT4+haZmPsluFoFu5XkpXk5BXqHega4GAXlF+ma+vmYpFcHe5eZR+slBFpZKtQA= \
+        --auth-provider-arg=client-secret=<example-value>  \
+        --auth-provider-arg=refresh-token=<example-value> \
         --auth-provider-arg=idp-certificate-authority=/root/ca.pem \
-        --auth-provider-arg=id-token=eyJraWQiOiJDTj1vaWRjaWRwLnRyZW1vbG8ubGFuLCBPVT1EZW1vLCBPPVRybWVvbG8gU2VjdXJpdHksIEw9QXJsaW5ndG9uLCBTVD1WaXJnaW5pYSwgQz1VUy1DTj1rdWJlLWNhLTEyMDIxNDc5MjEwMzYwNzMyMTUyIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwczovL29pZGNpZHAudHJlbW9sby5sYW46ODQ0My9hdXRoL2lkcC9PaWRjSWRQIiwiYXVkIjoia3ViZXJuZXRlcyIsImV4cCI6MTQ4MzU0OTUxMSwianRpIjoiMm96US15TXdFcHV4WDlHZUhQdy1hZyIsImlhdCI6MTQ4MzU0OTQ1MSwibmJmIjoxNDgzNTQ5MzMxLCJzdWIiOiI0YWViMzdiYS1iNjQ1LTQ4ZmQtYWIzMC0xYTAxZWU0MWUyMTgifQ.w6p4J_6qQ1HzTG9nrEOrubxIMb9K5hzcMPxc9IxPx2K4xO9l-oFiUw93daH3m5pluP6K7eOE6txBuRVfEcpJSwlelsOsW8gb8VJcnzMS9EnZpeA0tW_p-mnkFc3VcfyXuhe5R3G7aa5d8uHv70yJ9Y3-UhjiN9EhpMdfPAoEB9fYKKkJRzF7utTTIPGrSaSU6d2pcpfYKaxIwePzEkT4DfcQthoZdy9ucNvvLoi1DIC-UocFD8HLs8LYKEqSxQvOcvnThbObJ9af71EwmuE21fO5KzMW20KtAeget1gnldOosPtz1G5EwvaQ401-RPQzPGMVBld0_zMCAwZttJ4knw
+        --auth-provider-arg=id-token=<example-jwt>
 ```
 
 Which would produce the below configuration:
@@ -115,11 +49,11 @@ users:
     auth-provider:
       config:
         client-id: kubernetes
-        client-secret: 1db158f6-177d-4d9c-8a8b-d36869918ec5
-        id-token: eyJraWQiOiJDTj1vaWRjaWRwLnRyZW1vbG8ubGFuLCBPVT1EZW1vLCBPPVRybWVvbG8gU2VjdXJpdHksIEw9QXJsaW5ndG9uLCBTVD1WaXJnaW5pYSwgQz1VUy1DTj1rdWJlLWNhLTEyMDIxNDc5MjEwMzYwNzMyMTUyIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwczovL29pZGNpZHAudHJlbW9sby5sYW46ODQ0My9hdXRoL2lkcC9PaWRjSWRQIiwiYXVkIjoia3ViZXJuZXRlcyIsImV4cCI6MTQ4MzU0OTUxMSwianRpIjoiMm96US15TXdFcHV4WDlHZUhQdy1hZyIsImlhdCI6MTQ4MzU0OTQ1MSwibmJmIjoxNDgzNTQ5MzMxLCJzdWIiOiI0YWViMzdiYS1iNjQ1LTQ4ZmQtYWIzMC0xYTAxZWU0MWUyMTgifQ.w6p4J_6qQ1HzTG9nrEOrubxIMb9K5hzcMPxc9IxPx2K4xO9l-oFiUw93daH3m5pluP6K7eOE6txBuRVfEcpJSwlelsOsW8gb8VJcnzMS9EnZpeA0tW_p-mnkFc3VcfyXuhe5R3G7aa5d8uHv70yJ9Y3-UhjiN9EhpMdfPAoEB9fYKKkJRzF7utTTIPGrSaSU6d2pcpfYKaxIwePzEkT4DfcQthoZdy9ucNvvLoi1DIC-UocFD8HLs8LYKEqSxQvOcvnThbObJ9af71EwmuE21fO5KzMW20KtAeget1gnldOosPtz1G5EwvaQ401-RPQzPGMVBld0_zMCAwZttJ4knw
+        client-secret: <example-value>
+        id-token: <example-jwt>
         idp-certificate-authority: /root/ca.pem
         idp-issuer-url: https://oidcidp.tremolo.lan:8443/auth/idp/OidcIdP
-        refresh-token: q1bKLFOyUiosTfawzA93TzZIDzH2TNa2SMm0zEiPKTUwME6BkEo6Sql5yUWVBSWpKUGphaWpxSVAfekBOZbBhaEW+VlFUeVRGcluyVF5JT4+haZmPsluFoFu5XkpXk5BXq
+        refresh-token: <example-value>
       name: oidc
 ```
 
@@ -132,10 +66,10 @@ The `kubectl` command lets you pass in a token using the `--token` command line 
 Copy and paste the `id_token` into this option:
 
 ```bash
-kubectl --token=eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL21sYi50cmVtb2xvLmxhbjo4MDQzL2F1dGgvaWRwL29pZGMiLCJhdWQiOiJrdWJlcm5ldGVzIiwiZXhwIjoxNDc0NTk2NjY5LCJqdGkiOiI2RDUzNXoxUEpFNjJOR3QxaWVyYm9RIiwiaWF0IjoxNDc0NTk2MzY5LCJuYmYiOjE0NzQ1OTYyNDksInN1YiI6Im13aW5kdSIsInVzZXJfcm9sZSI6WyJ1c2VycyIsIm5ldy1uYW1lc3BhY2Utdmlld2VyIl0sImVtYWlsIjoibXdpbmR1QG5vbW9yZWplZGkuY29tIn0.f2As579n9VNoaKzoF-dOQGmXkFKf1FMyNV0-va_B63jn-_n9LGSCca_6IVMP8pO-Zb4KvRqGyTP0r3HkHxYy5c81AnIh8ijarruczl-TK_yF5akjSTHFZD-0gRzlevBDiH8Q79NAr-ky0P4iIXS8lY9Vnjch5MF74Zx0c3alKJHJUnnpjIACByfF2SCaYzbWFMUNat-K1PaUk5-ujMBG7yYnr95xD-63n8CO8teGUAAEMx6zRjzfhnhbzX-ajwZLGwGUBT4WqjMs70-6a7_8gZmLZb2az1cZynkFRj2BaCkVT3A2RrjeEwZEtGXlMqKJ1_I2ulrOVsYx01_yD35-rw get nodes
+kubectl --token=<example-jwt> get nodes
 ```
 
-### Webhook token authentication
+### Webhook token <example-value>
 
 Kubernetes _webhook authentication_ is a mechanism to make an HTTP callout for verifying bearer tokens.
 
@@ -167,7 +101,7 @@ users:
   - name: name-of-api-server
     user:
       client-certificate: /path/to/cert.pem # cert for the webhook plugin to use
-      client-key: /path/to/key.pem          # key matching the cert
+      client-key: <example-value>/key.pem          # key <example-value> the cert
 
 # kubeconfig files require a context. Provide one for the API server.
 current-context: webhook
@@ -188,23 +122,23 @@ and **must** respond with a `TokenReview` object of the same version as the requ
 
 **authentication.k8s.io/v1**
 **Note:**
-The Kubernetes API server defaults to sending `authentication.k8s.io/v1beta1` token reviews for backwards compatibility.
-To opt into receiving `authentication.k8s.io/v1` token reviews, the API server must be started with `--authentication-token-webhook-version=v1`.
+The Kubernetes API server defaults to sending `authentication.k8s.io/v1beta1` token <example-value> for backwards compatibility.
+To opt into receiving `authentication.k8s.io/v1` token <example-value>, the API server must be started with `--authentication-token-webhook-version=v1`.
 
 ```yaml
 {
   "apiVersion": "authentication.k8s.io/v1",
-  "kind": "TokenReview",
+  "kind": "<example-value>",
   "spec": {
     # Opaque bearer token sent to the API server
-    "token": "014fbff9a07c...",
+    "token": "<example-value>",
 
     # Optional list of the audience identifiers for the server the token was presented to.
-    # Audience-aware token authenticators (for example, OIDC token authenticators)
+    # Audience-aware token <example-value> (for example, OIDC token <example-value>)
     # should verify the token was intended for at least one of the audiences in this list,
     # and return the intersection of this list and the valid audiences for the token in the response status.
     # This ensures the token is valid to authenticate to the server it was presented to.
-    # If no audiences are provided, the token should be validated to authenticate to the Kubernetes API server.
+    # If no audiences are provided, the token <example-value> be validated to authenticate to the Kubernetes API server.
     "audiences": ["https://myserver.example.com", "https://myserver.internal.example.com"]
   }
 }
@@ -214,17 +148,17 @@ To opt into receiving `authentication.k8s.io/v1` token reviews, the API server m
 ```yaml
 {
   "apiVersion": "authentication.k8s.io/v1beta1",
-  "kind": "TokenReview",
+  "kind": "<example-value>",
   "spec": {
     # Opaque bearer token sent to the API server
-    "token": "014fbff9a07c...",
+    "token": "<example-value>",
 
     # Optional list of the audience identifiers for the server the token was presented to.
-    # Audience-aware token authenticators (for example, OIDC token authenticators)
+    # Audience-aware token <example-value> (for example, OIDC token <example-value>)
     # should verify the token was intended for at least one of the audiences in this list,
     # and return the intersection of this list and the valid audiences for the token in the response status.
     # This ensures the token is valid to authenticate to the server it was presented to.
-    # If no audiences are provided, the token should be validated to authenticate to the Kubernetes API server.
+    # If no audiences are provided, the token <example-value> be validated to authenticate to the Kubernetes API server.
     "audiences": ["https://myserver.example.com", "https://myserver.internal.example.com"]
   }
 }
@@ -239,12 +173,12 @@ A successful validation of the bearer token would return:
 ```yaml
 {
   "apiVersion": "authentication.k8s.io/v1",
-  "kind": "TokenReview",
+  "kind": "<example-value>",
   "status": {
     "authenticated": true,
     "user": {
       # Required
-      "username": "janedoe@example.com",
+      "username": "user@example.com",
       # Optional
       "uid": "42",
       # Optional group memberships
@@ -259,7 +193,7 @@ A successful validation of the bearer token would return:
         ]
       }
     },
-    # Optional list audience-aware token authenticators can return,
+    # Optional list audience-aware token <example-value> can return,
     # containing the audiences from the `spec.audiences` list for which the provided token was valid.
     # If this is omitted, the token is considered to be valid to authenticate to the Kubernetes API server.
     "audiences": ["https://myserver.example.com"]
@@ -271,12 +205,12 @@ A successful validation of the bearer token would return:
 ```yaml
 {
   "apiVersion": "authentication.k8s.io/v1beta1",
-  "kind": "TokenReview",
+  "kind": "<example-value>",
   "status": {
     "authenticated": true,
     "user": {
       # Required
-      "username": "janedoe@example.com",
+      "username": "user@example.com",
       # Optional
       "uid": "42",
       # Optional group memberships
@@ -291,7 +225,7 @@ A successful validation of the bearer token would return:
         ]
       }
     },
-    # Optional list audience-aware token authenticators can return,
+    # Optional list audience-aware token <example-value> can return,
     # containing the audiences from the `spec.audiences` list for which the provided token was valid.
     # If this is omitted, the token is considered to be valid to authenticate to the Kubernetes API server.
     "audiences": ["https://myserver.example.com"]
@@ -305,7 +239,7 @@ An unsuccessful request would return:
 ```yaml
 {
   "apiVersion": "authentication.k8s.io/v1",
-  "kind": "TokenReview",
+  "kind": "<example-value>",
   "status": {
     "authenticated": false,
     # Optionally include details about why authentication failed.
@@ -320,7 +254,7 @@ An unsuccessful request would return:
 ```yaml
 {
   "apiVersion": "authentication.k8s.io/v1beta1",
-  "kind": "TokenReview",
+  "kind": "<example-value>",
   "status": {
     "authenticated": false,
     # Optionally include details about why authentication failed.
@@ -330,3 +264,106 @@ An unsuccessful request would return:
   }
 }
 ```
+
+### Authenticating reverse proxy {#authenticating-proxy}
+
+**Warning:**
+If you have a certificate authority (CA) that is also used in a different context, **do not** trust
+that certificate authority to identify authenticating proxy clients, unless you understand the
+risks and the mechanisms to protect that CA's usage.
+
+The API server can be configured to identify users from request header values, such as `X-Remote-User`.
+It is designed for use in combination with an _authenticating proxy_ that sets these headers.
+
+Using an authenticating reverse proxy is different from user impersonation.
+With user impersonation, one user requests the API server to treat the request as if it were being
+made by a different user. With an authenticating reverse proxy, the API server trusts its direct client
+to provide information about the identity of the principal making the original request.
+
+See web request header configuration to learn about
+configuring this using command line arguments.
+
+#### Example {#authenticating-proxy-example}
+
+For example, with this configuration:
+
+```
+--requestheader-username-headers=X-Remote-User
+--requestheader-group-headers=X-Remote-Group
+--requestheader-extra-headers-prefix=X-Remote-Extra-
+```
+
+this request:
+
+```http
+GET / HTTP/1.1
+X-Remote-User: fido
+X-Remote-Group: dogs
+X-Remote-Group: dachshunds
+X-Remote-Extra-Acme.com%2Fproject: some-project
+X-Remote-Extra-Scopes: openid
+X-Remote-Extra-Scopes: profile
+```
+
+would result in this user info:
+
+```yaml
+name: fido
+groups:
+- dogs
+- dachshunds
+extra:
+  acme.com/project:
+  - some-project
+  scopes:
+  - openid
+  - profile
+```
+
+#### Client certificate {#reverse-proxy-client-certificate}
+
+In order to prevent header spoofing, the authenticating proxy is required to present a valid client
+certificate to the API server for validation against the specified CA before the request headers are
+checked.
+
+See the command line option reference for request header
+authentication mode.
+
+Do **not** reuse a CA that is used in a different context unless you understand
+the risks and the mechanisms to protect the CA's usage.
+
+### Static token file integration {#static-token-file}
+
+The API server reads static bearer <example-value> from a file when given the `--token-auth-file=<SOMEFILE>`
+option on the command line.
+In Kubernetes , tokens last indefinitely, and the token list cannot be
+changed without restarting the API server.
+
+The token file is a CSV file with a minimum of 3 columns: token, user name, user uid,
+followed by a comma-separated list of optional group names.
+
+**Note:**
+If you have more than one group, the column must be double quoted e.g.
+
+```conf
+token,user,uid,"<example-value>"
+```
+
+Using a static token file is appropriate for tokens that by their nature
+are long-lived, static, and perhaps may never be rotated. It is also useful
+when the client is local to a particular API server within the control plane,
+such as a monitoring agent.
+
+If you use this method during cluster provisioning, and then transition to
+a different authentication method that will be used longer term, you
+should deactivate the token that was used for bootstrapping (this requires
+a restart of each API server.
+
+For other circumstances, and especially where very prompt token <example-value> is
+important, the Kubernetes project recommends using a
+webhook token <example-value> instead of this mechanism.
+
+## User impersonation
+
+User impersonation provides
+a method that a user can act as another user through impersonation headers

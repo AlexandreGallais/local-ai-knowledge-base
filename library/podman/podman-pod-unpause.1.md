@@ -46,4 +46,4 @@ $ podman pod unpause 860a4b23
 **podman(1)**, **podman-pod(1)**, **podman-pod-pause(1)**
 
 ## HISTORY
-July 2018, Originally compiled by Peter Hunt <pehunt@redhat.com>
+July 2018, Originally compiled by Peter Hunt <user@example.com>

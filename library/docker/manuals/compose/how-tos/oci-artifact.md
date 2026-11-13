@@ -42,7 +42,7 @@ The publish function supports most of the composition capabilities of Compose, l
 
 ### Advanced publishing options
 
-When publishing, you can pass additional options:
+When publishing, you can pass <example-value> options:
 - `--oci-version`: Specify the OCI version (default is automatically determined).
 - `--resolve-image-digests`: Pin image tags to digests.
 - `--with-env`: Include environment variables in the published OCI artifact.
@@ -56,9 +56,9 @@ please double check that you are not leaking sensitive data
 AWS Client ID
 "services.serviceA.environment.AWS_ACCESS_KEY_ID": xxxxxxxxxx
 AWS Secret Key
-"services.serviceA.environment.AWS_SECRET_ACCESS_KEY": aws"xxxx/xxxx+xxxx+"
+"services.serviceA.environment.AWS_SECRET_ACCESS_KEY": aws"<example-value>"
 Github authentication
-"GITHUB_TOKEN": ghp_xxxxxxxxxx
+"GITHUB_TOKEN": <example-value>
 JSON Web Token
 "": xxxxxxx.xxxxxxxx.xxxxxxxx
 Private Key

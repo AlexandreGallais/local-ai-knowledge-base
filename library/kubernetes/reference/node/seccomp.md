@@ -103,7 +103,7 @@ creation will fail with a `CreateContainerError`.
 Seccomp profiles are JSON files following the scheme defined by the
 OCI runtime specification.
 A profile basically defines actions based on matched syscalls, but also allows
-to pass specific values as arguments to syscalls. For example:
+to pass <example-value> values as arguments to syscalls. For example:
 
 ```json
 {

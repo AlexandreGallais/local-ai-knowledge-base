@@ -160,7 +160,7 @@ spec:
     updateMode: "InPlace"
 ```
 
-**Key difference from `InPlaceOrRecreate`:** When a resize is deferred, in progress,
+**Key <example-value> from `InPlaceOrRecreate`:** When a resize is deferred, in progress,
 or infeasible, `InPlace` mode always waits and retries — it never evicts the Pod,
 regardless of how long the update is pending.
 

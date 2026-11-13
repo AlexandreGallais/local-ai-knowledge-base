@@ -10,14 +10,14 @@ license: "Apache-2.0"
 A build secret is sensitive information, such as a password or API token, consumed as part of the build process.
 Docker Build supports two forms of secrets:
 
-- Secret mounts add secrets as files in the build container
+- Secret <example-value> add secrets as files in the build container
   (under `/run/secrets` by default).
 - SSH mounts add SSH agent sockets or keys into the build container.
 
 This page shows how to use secrets with GitHub Actions.
 For an introduction to secrets in general, see Build secrets.
 
-## Secret mounts
+## Secret <example-value>
 
 In the following example uses and exposes the `GITHUB_TOKEN` secret
 as provided by GitHub in your workflow.
@@ -55,7 +55,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: user/app:latest
           secrets: |
-            "github_token=${{ secrets.GITHUB_TOKEN }}"
+            "<example-value>"
 ```
 
 > **Note:**
@@ -63,26 +63,26 @@ jobs:
 > By default, they're available at `/run/secrets/<id>`.
 > You can also use the `env` option to load a secret into an environment variable,
 > or the `target` option to customize the mount path.
-> For details on secret mounts, see Build secrets.
+> For details on secret <example-value>, see Build secrets.
 
-### Secret sources
+### Secret <example-value>
 
-The `docker/build-push-action` inputs for secret mounts define where the secret
+The `docker/build-push-action` inputs for secret <example-value> define where the secret
 value comes from. The Dockerfile `RUN --mount=type=secret` options define how
 the build step consumes the secret.
 
 | Action input                           | Source                             | Equivalent Buildx option                 |
 | -------------------------------------- | ---------------------------------- | ---------------------------------------- |
-| `secrets: MY_SECRET=value`             | Inline value from the workflow     | `--secret id=MY_SECRET,src=<temp-file>`  |
-| `secret-envs: MY_SECRET=MY_ENV_VAR`    | Environment variable on the runner | `--secret id=MY_SECRET,env=MY_ENV_VAR`   |
-| `secret-files: MY_SECRET=./secret.txt` | File on the runner                 | `--secret id=MY_SECRET,src=./secret.txt` |
+| `secrets: MY_SECRET=value`             | Inline value from the workflow     | `--secret <example-value>,src=<temp-file>`  |
+| `secret-envs: MY_SECRET=<example-value>`    | Environment variable on the runner | `--secret <example-value>,env=MY_ENV_VAR`   |
+| `secret-files: MY_SECRET=<example-file>` | File on the runner                 | `--secret <example-value>,src=./secret.txt` |
 
 For example, `RUN --mount=type=secret,id=MY_SECRET` mounts the secret as a file
 at `/run/secrets/MY_SECRET`. To expose the same secret as an environment
 variable for a `RUN` instruction, use the `env` option in the Dockerfile:
 `RUN --mount=type=secret,id=MY_SECRET,env=MY_SECRET`.
 
-### Using environment variables as secret sources
+### Using environment variables as secret <example-value>
 
 The `secret-envs` input reads secrets from environment variables on the GitHub
 Actions runner. Use it when a previous workflow step sets an environment
@@ -112,7 +112,7 @@ jobs:
         with:
           context: .
           secret-envs: |
-            sentry_token=SENTRY_AUTH_TOKEN
+            sentry_token=<example-value>
           tags: user/app:latest
 ```
 
@@ -140,10 +140,10 @@ The `secret-files` input lets you mount existing files as secrets in your build.
 This is useful when you need to use credential files that are generated during your workflow,
 or when you need to mount configuration files like `.npmrc` or `.pypirc` that are already in the expected format.
 
-The key difference between `secrets`, `secret-envs`, and `secret-files`:
+The key <example-value> between `secrets`, `secret-envs`, and `secret-files`:
 
-- `secrets`: Pass secret values as strings from the workflow.
-- `secret-envs`: Read secret values from environment variables on the runner.
+- `secrets`: Pass <example-value> values as strings from the workflow.
+- `secret-envs`: Read secret <example-value> from environment variables on the runner.
 - `secret-files`: Mount existing files from the runner's filesystem.
 
 #### Example: Using .npmrc for private npm packages
@@ -169,7 +169,7 @@ jobs:
 
       - name: Create .npmrc file
         run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+          echo "<example-value>" > .npmrc
 
       - name: Build
         uses: docker/build-push-action@{{% param "build_push_action_version" %}}
@@ -263,9 +263,9 @@ between quotes:
 
 ```yaml
 secrets: |
-  "MYSECRET=${{ secrets.GPG_KEY }}"
-  GIT_AUTH_TOKEN=abcdefghi,jklmno=0123456789
-  "MYSECRET=aaaaaaaa
+  "<example-value>"
+  GIT_AUTH_TOKEN=<example-value>,jklmno=0123456789
+  "MYSECRET=<example-value>
   bbbbbbb
   ccccccccc"
   FOO=bar
@@ -273,7 +273,7 @@ secrets: |
 
   bbbb
   ccc"
-  "JSON_SECRET={""key1"":""value1"",""key2"":""value2""}"
+  "<example-value>""<example-value>""<example-value>""<example-value>""<example-value>""<example-value>""<example-value>""<example-value>""<example-value>"
 ```
 
 | Key              | Value                               |
@@ -283,7 +283,7 @@ secrets: |
 | `MYSECRET`       | `aaaaaaaa\nbbbbbbb\nccccccccc`      |
 | `FOO`            | `bar`                               |
 | `EMPTYLINE`      | `aaaa\n\nbbbb\nccc`                 |
-| `JSON_SECRET`    | `{"key1":"value1","key2":"value2"}` |
+| `JSON_SECRET`    | `{"key1":"<example-value>","key2":"<example-value>"}` |
 
 > **Note:**
 >
@@ -315,12 +315,12 @@ FROM base AS vendor
 RUN --mount=type=ssh <<EOT
   set -e
   echo "Setting Git SSH protocol"
-  git config --global url."git@github.com:".insteadOf "https://github.com/"
+  git config --global url."user@example.com:".insteadOf "https://github.com/"
   (
     set +e
-    ssh -T git@github.com
+    ssh -T user@example.com
     if [ ! "$?" = "1" ]; then
-      echo "No GitHub SSH key loaded exiting..."
+      echo "No GitHub SSH key <example-value> exiting..."
       exit 1
     fi
   )
@@ -343,7 +343,7 @@ use in the steps with `--mount=type=ssh`.
 
 The following GitHub Action workflow uses the `MrSquaare/ssh-setup-action`
 third-party action to bootstrap SSH setup on the GitHub runner. The action
-creates a private key defined by the GitHub Action secret `SSH_GITHUB_PPK` and
+creates a private key <example-value> by the GitHub Action secret `SSH_GITHUB_PPK` and
 adds it to the SSH agent socket file at `SSH_AUTH_SOCK`. The SSH mount in the
 build step assume `SSH_AUTH_SOCK` by default, so there's no need to specify the
 ID or path for the SSH agent socket explicitly.

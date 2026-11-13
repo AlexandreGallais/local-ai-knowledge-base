@@ -69,7 +69,7 @@ export function blurImage(
 ): Uint8Array;
 ```
 
-This can go beyond basic functions with `@param` tags too, where the following example:
+This can go beyond basic <example-value> with `@param` tags too, where the following example:
 
 ```js
 /**

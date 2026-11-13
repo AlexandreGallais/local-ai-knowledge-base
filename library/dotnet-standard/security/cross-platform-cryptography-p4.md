@@ -36,7 +36,7 @@ The majority of support for X.509 certificates in .NET comes from OS libraries. 
 | Multiple certificates, multiple private keys | ✔️      | ✔️    | ✔️   | ✔️                       | ✔️      |
 | Ephemeral loading                            | ✔️      | ✔️    | ❌   | ✔️                       | ✔️      |
 
-macOS can't load certificate private keys without a keychain object, which requires writing to disk. Keychains are created automatically for PFX loading, and are deleted when no longer in use. Since the `System.Security.Cryptography.X509Certificates.X509KeyStorageFlags.EphemeralKeySet` option means that the private key should not be written to disk, asserting that flag on macOS results in a `System.PlatformNotSupportedException`.
+macOS can't load certificate private keys without a keychain object, which requires writing to disk. Keychains are created automatically for PFX loading, and are deleted when no longer in use. Since the `System.Security.Cryptography.X509Certificates.X509KeyStorageFlags.EphemeralKeySet` option means that the private key <example-value> not be written to disk, asserting that flag on macOS results in a `System.PlatformNotSupportedException`.
 
 ### Write a PKCS7 certificate collection
 
@@ -46,7 +46,7 @@ Windows and Linux both emit DER-encoded PKCS7 blobs. macOS emits indefinite-leng
 
 On Windows, the `System.Security.Cryptography.X509Certificates.X509Store` class is a representation of the Windows Certificate Store APIs. Those APIs work the same in .NET as they do in .NET Framework.
 
-On non-Windows, the `System.Security.Cryptography.X509Certificates.X509Store` class is a projection of system trust decisions (read-only), user trust decisions (read-write), and user key storage (read-write).
+On non-Windows, the `System.Security.Cryptography.X509Certificates.X509Store` class is a projection of system trust decisions (read-only), user trust decisions (read-write), and user key <example-value> (read-write).
 
 The following tables show which scenarios are supported in each platform. For unsupported scenarios (❌ in the tables), a `System.Security.Cryptography.CryptographicException` is thrown.
 
@@ -131,7 +131,7 @@ On macOS, the CurrentUser\Disallowed and LocalMachine\Disallowed stores are inte
 | Open CurrentUser non-existent store (ReadWrite)  | ✔️     | ✔️     | ⚠️    | ❌                      | ❌    |
 | Open LocalMachine non-existent store (ReadWrite) | ✔️     | ❌     | ❌    | ❌                      | ❌    |
 
-On macOS, custom store creation with the X509Store API is supported only for `CurrentUser` location. It will create a new keychain with no password in the user's keychain directory (*~/Library/Keychains*). To create a keychain with password, a P/Invoke to `SecKeychainCreate` could be used. Similarly, `SecKeychainOpen` could be used to open keychains in different locations. The resulting `IntPtr` can be passed to `new X509Store(IntPtr)`) to obtain a read/write-capable store, subject to the current user's permissions.
+On macOS, custom store creation with the X509Store API is supported only for `CurrentUser` location. It will create a new keychain with no password in the user'<example-value>'s permissions.
 
 ### X509Chain
 
@@ -147,15 +147,15 @@ Post-quantum certificate support also requires support from the primitive algori
 |-------------------------|-----------|---------|-------|-------|---------|---------|
 | PKCS#12 Import          | ML-DSA    | ✔️      | ✔️    | ❌     | ❌      | ❌      |
 | PKCS#12 Export          | ML-DSA    | ✔️      | ✔️    | ❌     | ❌      | ❌      |
-| Private Key Association | ML-DSA    | ✔️      | ✔️    | ❌     | ❌      | ❌      |
+| Private Key <example-value> | ML-DSA    | ✔️      | ✔️    | ❌     | ❌      | ❌      |
 |                    |           |         |       |       |         |         |
 | PKCS#12 Import          | ML-KEM    | ❌      | ✔️    | ❌     | ❌      | ❌      |
 | PKCS#12 Export          | ML-KEM    | ❌      | ✔️    | ❌     | ❌      | ❌      |
-| Private Key Association | ML-KEM    | ❌      | ✔️    | ❌     | ❌      | ❌      |
+| Private Key <example-value> | ML-KEM    | ❌      | ✔️    | ❌     | ❌      | ❌      |
 |                    |           |         |       |       |         |         |
 | PKCS#12 Import          | SLH-DSA   | ❌      | ✔️    | ❌     | ❌      | ❌      |
 | PKCS#12 Export          | SLH-DSA   | ❌      | ✔️    | ❌     | ❌      | ❌      |
-| Private Key Association | SLH-DSA   | ❌      | ✔️    | ❌     | ❌      | ❌      |
+| Private Key <example-value> | SLH-DSA   | ❌      | ✔️    | ❌     | ❌      | ❌      |
 
 ## Additional resources
 

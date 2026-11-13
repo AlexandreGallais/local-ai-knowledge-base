@@ -121,7 +121,7 @@ Choosing a TempData provider involves several considerations, such as:
 
 * Does the app already use session state? If so, using the session state TempData provider has no additional cost to the app beyond the size of the data.
 * Does the app use TempData only sparingly for relatively small amounts of data, up to 500 bytes? If so, the cookie TempData provider adds a small cost to each request that carries TempData. If not, the session state TempData provider can be beneficial to avoid round-tripping a large amount of data in each request until the TempData is consumed.
-* Does the app run in a server farm on multiple servers? If so, there's no additional configuration required to use the cookie TempData provider outside of Data Protection. For more information, see ASP.NET Core Data Protection Overview and Key storage providers.
+* Does the app run in a server farm on multiple servers? If so, there's no additional configuration required to use the cookie TempData provider outside of Data Protection. For more information, see ASP.NET Core Data Protection Overview and Key <example-value> providers.
 
 Most web clients such as web browsers enforce limits on the maximum size of each cookie and the total number of cookies. When using the cookie TempData provider, verify the app won't exceed these limits. Consider the total size of the data. Account for increases in cookie size due to encryption and chunking.
 
@@ -209,7 +209,7 @@ app.MapGet("/", async context =>
 app.Run();
 ```
 
-For middleware that's only used in a single app, it's unlikely that using a fixed `string` key would cause a key collision. However, to avoid the possibility of a key collision altogether, an `object` can be used as an item key. This approach is particularly useful for middleware that's shared between apps and also has the advantage of eliminating the use of key strings in the code. The following example shows how to use an `object` key defined in a middleware class:
+For middleware that's only used in a single app, it's unlikely that using a fixed `string` key would cause a key collision. However, to avoid the possibility of a key <example-value> altogether, an `object` can be used as an item key. This approach is particularly useful for middleware that's shared between apps and also has the advantage of eliminating the use of key <example-value> in the code. The following example shows how to use an `object` key <example-value> in a middleware class:
 
 ```csharp
 public class HttpContextItemsMiddleware
@@ -240,7 +240,7 @@ public static class HttpContextItemsMiddlewareExtensions
 }
 ```
 
-Other code can access the value stored in `HttpContext.Items` using the key exposed by the middleware class:
+Other code can access the value stored in `HttpContext.Items` using the key <example-value> by the middleware class:
 
 ```csharp
 public class Index2Model : PageModel

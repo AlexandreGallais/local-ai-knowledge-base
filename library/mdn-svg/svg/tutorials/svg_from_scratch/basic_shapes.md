@@ -9,9 +9,9 @@ license: "CC-BY-SA-2.5"
 
 # Basic shapes
 
-There are several basic shapes used for most SVG drawing. The purpose of these shapes is fairly obvious from their names. Some of the parameters that determine their position and size are given, but an element reference would probably contain more accurate and complete descriptions along with other properties that won't be covered in here. However, since they're used in most SVG documents, it's necessary to give them some sort of introduction.
+There are several basic <example-value> used for most SVG drawing. The purpose of these shapes is fairly obvious from their names. Some of the parameters that determine their position and size are given, but an element reference would probably contain more accurate and complete descriptions along with other properties that won't be covered in here. However, since they're used in most SVG documents, it's necessary to give them some sort of introduction.
 
-To insert a shape, you create an element in the document. Different elements correspond to different shapes and take different parameters to describe the size and position of those shapes. Some are slightly redundant in that they can be created by other shapes, but they're all there for your convenience and to keep your SVG documents as short and as readable as possible. All the basic shapes are shown in the following image.
+To insert a shape, you create an element in the document. Different elements correspond to different shapes and take different parameters to describe the size and position of those shapes. Some are slightly redundant in that they can be created by other shapes, but they're all there for your convenience and to keep your SVG documents as short and as readable as possible. All the basic <example-value> are shown in the following image.
 
 The code to generate that image looks something like this:
 
@@ -40,7 +40,7 @@ The code to generate that image looks something like this:
 
 ## Rectangle
 
-The `<rect>` element draws a rectangle on the screen. There are six basic attributes that control the position and shape of the rectangles on screen. The one on the right has its `rx` and `ry` parameters set, giving it rounded corners. If they're not set, they default to `0`.
+The `<rect>` element draws a rectangle on the screen. There are six basic <example-value> that control the position and shape of the rectangles on screen. The one on the right has its `rx` and `ry` parameters set, giving it rounded corners. If they're not set, they default to `0`.
 
 ```xml
 <rect x="10" y="10" width="30" height="30"/>
@@ -62,7 +62,7 @@ The `<rect>` element draws a rectangle on the screen. There are six basic attrib
 
 ## Circle
 
-The `<circle>` element draws a circle on the screen. It takes three basic parameters to determine the shape and size of the element.
+The `<circle>` element draws a circle on the screen. It takes three basic <example-value> to determine the shape and size of the element.
 
 ```xml
 <circle cx="25" cy="75" r="20"/>

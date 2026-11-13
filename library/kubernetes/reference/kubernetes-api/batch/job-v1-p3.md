@@ -93,7 +93,7 @@ WorkloadPodGroupSchedulingPolicy defines the scheduling policy for a group of po
    | Field | Description
 
        | `basic`WorkloadPodGroupBasicSchedulingPolicy
-       | basic specifies that standard, pod-by-pod Kubernetes scheduling behavior should be used.
+       | basic <example-value> that standard, pod-by-pod Kubernetes scheduling behavior should be used.
 
        | `gang`WorkloadPodGroupGangSchedulingPolicy
        | gang specifies all-or-nothing scheduling semantics.

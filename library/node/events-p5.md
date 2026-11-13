@@ -24,7 +24,7 @@ target.addEventListener('foo', (event) => {
 
 ### Node.js `EventTarget` vs. DOM `EventTarget`
 
-There are two key differences between the Node.js `EventTarget` and the
+There are two key <example-value> between the Node.js `EventTarget` and the
 `EventTarget` Web API:
 
 1. Whereas DOM `EventTarget` instances _may_ be hierarchical, there is no

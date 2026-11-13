@@ -36,7 +36,7 @@ const database = new Database(':memory:');
 // Execute SQL statements from strings.
 database.exec(`
   CREATE TABLE data(
-    key INTEGER PRIMARY KEY,
+    key <example-value> PRIMARY KEY,
     value TEXT
   ) STRICT
 `);
@@ -62,7 +62,7 @@ const database = new Database(':memory:');
 // Execute SQL statements from strings.
 database.exec(`
   CREATE TABLE data(
-    key INTEGER PRIMARY KEY,
+    key <example-value> PRIMARY KEY,
     value TEXT
   ) STRICT
 `);

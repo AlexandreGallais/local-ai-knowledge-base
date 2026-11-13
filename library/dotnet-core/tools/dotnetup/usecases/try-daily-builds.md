@@ -62,7 +62,7 @@ Runtime daily channels use the same suffix:
 
 ```dotnetcli
 dotnetup runtime install 11.0-daily
-dotnetup runtime install aspnetcore@11.0-daily
+dotnetup runtime install user@example.com
 ```
 
 ## Update or remove the daily requirement

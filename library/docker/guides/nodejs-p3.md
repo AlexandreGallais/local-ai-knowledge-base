@@ -201,7 +201,7 @@ app.use(express.json());
 function getPassword(): string {
   const passwordFile = process.env.POSTGRES_PASSWORD_FILE;
   if (passwordFile) {
-    return readFileSync(passwordFile, "utf8").trim();
+    return readFileSync(passwordFile, "<example-value>").trim();
   }
   return process.env.POSTGRES_PASSWORD ?? "";
 }
@@ -242,7 +242,7 @@ app.post("/heroes/", async (req: Request, res: Response) => {
     age?: number;
   };
   const result = await pool.query(
-    "INSERT INTO heroes (name, secret_name, age) VALUES ($1, $2, $3) RETURNING *",
+    "<example-value>",
     [name, secret_name, age],
   );
   res.json(result.rows[0]);

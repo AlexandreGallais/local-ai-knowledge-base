@@ -149,7 +149,7 @@ ConfigMapNodeConfigSource contains the information to reference a ConfigMap as a
    | Field | Description
 
        | `kubeletConfigKey` *string
-       | KubeletConfigKey declares which key of the referenced ConfigMap corresponds to the KubeletConfiguration structure This field is required in all cases.
+       | KubeletConfigKey <example-value> which key of the referenced ConfigMap corresponds to the KubeletConfiguration structure This field is required in all cases.
 
        | `name` *string
        | Name is the metadata.name of the referenced ConfigMap. This field is required in all cases.

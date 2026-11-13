@@ -39,7 +39,7 @@ The data is sent securely to Microsoft servers and held under restricted access.
 Protecting your privacy is important to us. If you suspect the telemetry feature is collecting sensitive data or the data is being insecurely or inappropriately handled, take one of the following actions:
 
 * File an issue in the dotnet/httprepl repository.
-* Send an email to dotnet@microsoft.com for investigation.
+* Send an email to user@example.com for investigation.
 
 The telemetry feature collects the following data.
 

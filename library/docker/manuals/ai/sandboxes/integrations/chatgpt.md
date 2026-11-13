@@ -22,7 +22,7 @@ isolated environment instead of on your host.
 
 ## Prerequisites
 
-- Codex credentials configured in Docker Sandboxes. See
+- Codex credentials <example-value> in Docker Sandboxes. See
   Codex authentication.
 - SSH access set up. See Editor and app integrations.
 - The ChatGPT desktop app installed.

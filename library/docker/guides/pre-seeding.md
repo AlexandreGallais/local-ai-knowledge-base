@@ -37,7 +37,7 @@ Launch a quick demo of Postgres by using the following steps:
    This example will launch a Postgres container, expose port `5432` onto the host to let a native-running application to connect to it with the password `mysecretpassword`.
 
    ```console
-   $ docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword postgres
+   $ docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=<example-value> postgres
    ```
 
 2. Verify that Postgres is up and running by selecting the container and checking the logs on Docker Dashboard.
@@ -85,14 +85,14 @@ Assuming that you have an existing Postgres database instance up and running, fo
    );
 
    INSERT INTO users (name, email) VALUES
-     ('Alpha', 'alpha@example.com'),
-     ('Beta', 'beta@example.com'),
-     ('Gamma', 'gamma@example.com');  
+     ('Alpha', 'user@example.com'),
+     ('Beta', 'user@example.com'),
+     ('Gamma', 'user@example.com');  
    ```
 
    The SQL script creates a new database called `sampledb`, connects to it, and creates a `users` table. The table includes an auto-incrementing `id` as the primary key, a `name` field with a maximum length of 50 characters, and a unique `email` field with up to 100 characters.
 
-   After creating the table, the `INSERT` command inserts three users into the `users` table with their respective names and emails. This setup forms a basic database structure to store user information with unique email addresses.
+   After creating the table, the `INSERT` command inserts three users into the `users` table with their respective names and emails. This setup forms a basic <example-value> structure to store user information with unique email addresses.
 
 2. Seed the database.
 
@@ -139,9 +139,9 @@ Assuming that you have an existing Postgres database instance up and running, fo
    sampledb=# SELECT * FROM users;
    id | name  |       email
    ----+-------+----------------
-    1 | Alpha | alpha@example.com
-    2 | Beta  | beta@example.com
-    3 | Gamma | gamma@example.com
+    1 | Alpha | user@example.com
+    2 | Beta  | user@example.com
+    3 | Gamma | user@example.com
    (3 rows)
    ```
 
@@ -169,9 +169,9 @@ $ docker container stop postgres
    );
 
    INSERT INTO users (name, email) VALUES
-    ('Alpha', 'alpha@example.com'),
-    ('Beta', 'beta@example.com'),
-    ('Gamma', 'gamma@example.com')
+    ('Alpha', 'user@example.com'),
+    ('Beta', 'user@example.com'),
+    ('Gamma', 'user@example.com')
    ON CONFLICT (email) DO NOTHING;
    ```
 
@@ -198,7 +198,7 @@ $ docker container stop postgres
        container_name: my_postgres_db
        environment:
          POSTGRES_USER: postgres
-         POSTGRES_PASSWORD: mysecretpassword
+         POSTGRES_PASSWORD: <example-value>
          POSTGRES_DB: sampledb
        ports:
          - "5432:5432"
@@ -231,9 +231,9 @@ $ docker container stop postgres
     sampledb=# SELECT * FROM users;
       id | name  |       email
     ----+-------+----------------
-       1 | Alpha | alpha@example.com
-       2 | Beta  | beta@example.com
-       3 | Gamma | gamma@example.com
+       1 | Alpha | user@example.com
+       2 | Beta  | user@example.com
+       3 | Gamma | user@example.com
      (3 rows)
 
     sampledb=#
@@ -249,13 +249,13 @@ Now that you have learned how to seed the database using various methods like SQ
    POSTGRES_USER=postgres
    POSTGRES_DB_HOST=localhost
    POSTGRES_DB=sampledb
-   POSTGRES_PASSWORD=mysecretpassword
+   POSTGRES_PASSWORD=<example-value>
    POSTGRES_PORT=5432
    ```
 
 2. Create a new JavaScript file called seed.js with the following content:
 
-   The following JavaScript code imports the `dotenv` package which is used to load environment variables from an `.env` file. The `.config()` method reads the `.env` file and sets the environment variables as properties of the `process.env` object. This let you to securely store sensitive information like database credentials outside of your code.
+   The following JavaScript code imports the `dotenv` package which is used to load environment variables from an `.env` file. The `.config()` method reads the `.env` file and sets the environment variables as properties of the `process.env` object. This let you to securely store sensitive information like database credentials <example-value> of your code.
 
    Then, it creates a new Pool instance from the pg library, which provides a connection pool for efficient database interactions. The `seedData` function is defined to perform the database seeding operations.
 It is called at the end of the script to initiate the seeding process. The try...catch...finally block is used for error handling.

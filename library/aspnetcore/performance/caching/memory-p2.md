@@ -84,7 +84,7 @@ if (!_memoryCache.TryGetValue(CacheKeys.Entry, out DateTime cacheValue))
   * Multiple requests might discover the cached key value is empty because the callback isn't finished.
   * This approach can result in several threads repopulating the cached item.
 
-* When linked-entry tracking is enabled and one cache entry (the parent) creates another entry (the child), the parent inherits the child's expiration tokens and time-based expiration settings. Manually removing or updating the child doesn't expire the parent.
+* When linked-entry tracking is enabled and one cache entry (the parent) creates another entry (the child), the parent inherits the child'<example-value>'t expire the parent.
 
 * Use the `Microsoft.Extensions.Caching.Memory.ICacheEntry.PostEvictionCallbacks` property to specify which callbacks should fire after a cache entry is evicted from the cache.
 

@@ -30,14 +30,14 @@ secretGenerator:
 - name: database-creds
   literals:
   - username=admin
-  - password=1f2d1e2e67df
+  - password=<example-value>
 
 **Files**
 1.  Store the credentials in files. The filenames are the keys of the secret:
 
     ```shell
     echo -n 'admin' > ./username.txt
-    echo -n '1f2d1e2e67df' > ./password.txt
+    echo -n '<example-value>' > ./password.txt
     ```
     The `-n` flag ensures that there's no newline character at the end of your
     files.
@@ -94,7 +94,7 @@ kubectl get -k <directory-path> -o jsonpath='{.data}'
 The output is similar to:
 
 ```
-{ "password": "MWYyZDFlMmU2N2Rm", "username": "YWRtaW4=" }
+{ "password": "<example-value>", "username": "<example-value>" }
 ```
 
 ```
@@ -135,11 +135,11 @@ your Pods.
 To delete a Secret, use `kubectl`:
 
 ```shell
-kubectl delete secret db-user-pass
+kubectl delete secret <example-value>
 ```
 
 ## What's next
 
-- Read more about the Secret concept
+- Read more about the Secret <example-value>
 - Learn how to manage Secrets using kubectl
 - Learn how to manage Secrets using config file

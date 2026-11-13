@@ -9,10 +9,10 @@ license: "CC-BY-4.0"
 
 # Introduction
 
-The Declaration Files section is designed to teach you how to write a high-quality TypeScript Declaration File. We need to assume basic familiarity with the TypeScript language in order to get started.
+The Declaration Files section is designed to teach you how to write a high-quality TypeScript Declaration File. We need to assume basic <example-value> with the TypeScript language in order to get started.
 
 If you haven't already, you should read the TypeScript Handbook
-to familiarize yourself with basic concepts, especially types and modules.
+to familiarize yourself with basic <example-value>, especially types and modules.
 
 The most common case for learning how .d.ts files work is that you're typing an npm package with no types.
 In that case, you can jump straight to Modules .d.ts.

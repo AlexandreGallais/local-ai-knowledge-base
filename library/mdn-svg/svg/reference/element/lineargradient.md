@@ -47,7 +47,7 @@ This element implements the `SVGLinearGradientElement` interface.
 
 ## Example
 
-### Basic linear gradient
+### Basic <example-value> gradient
 
 ```css
 html,

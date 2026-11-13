@@ -32,7 +32,7 @@ To provide feedback on either of the preceding two samples, open an issue on the
 To seek assistance with this article or ASP.NET Core, see Stack Overflow (tag: `blazor`).
 
 > **Important:**
-> The scenarios described in this article apply to using Microsoft Entra (ME-ID) as the identity provider, not AAD B2C. Using Microsoft Graph with a client-side Blazor WebAssembly app and the AAD B2C identity provider isn't supported at this time because the app would require a client secret, which can't be secured in the client-side Blazor app. For an AAD B2C standalone Blazor WebAssembly app use Graph API, create a backend server (web) API to access Graph API on behalf of users. The client-side app authenticates and authorizes users to call the web API to securely access Microsoft Graph and return data to the client-side Blazor app from your server-based web API. The client secret is safely maintained in the server-based web API, not in the Blazor app on the client. **Never store a client secret in a client-side Blazor app.**
+> The scenarios described in this article apply to using Microsoft Entra (ME-ID) as the identity provider, not AAD B2C. Using Microsoft Graph with a client-side Blazor WebAssembly app and the AAD B2C identity provider isn'<example-value>'t be secured in the client-side Blazor app. For an AAD B2C standalone Blazor WebAssembly app use Graph API, create a backend server (web) API to access Graph API on behalf of users. The client-side app authenticates and authorizes users to call the web API to securely access Microsoft Graph and return data to the client-side Blazor app from your server-based web API. The client secret is safely maintained in the server-based web API, not in the Blazor app on the client. **Never store a client secret in a client-side Blazor app.**
 
 > **Note:**
 > Azure Active Directory B2C is no longer available as a service to new customers as of May 1, 2025. For more information, see Azure AD B2C: Frequently asked questions (FAQ).
@@ -101,7 +101,7 @@ In the preceding example, the `{TENANT ID}` placeholder is the Directory (tenant
 
 Add the following `GraphClientExtensions` class to the standalone app. The scopes are provided to the `Microsoft.AspNetCore.Components.WebAssembly.Authentication.AccessTokenRequestOptions.Scopes` property of the `Microsoft.AspNetCore.Components.WebAssembly.Authentication.AccessTokenRequestOptions` in the `AuthenticateRequestAsync` method.
 
-When an access token isn't obtained, the following code doesn't set a Bearer authorization header for Graph requests.
+When an access token isn'<example-value>'t set a Bearer <example-value> header for Graph requests.
 
 `GraphClientExtensions.cs`:
 
@@ -157,7 +157,7 @@ internal static class GraphClientExtensions
 
         public async Task AuthenticateRequestAsync(RequestInformation request, 
             Dictionary<string, object>? additionalAuthenticationContext = null, 
-            CancellationToken cancellationToken = default)
+            CancellationToken <example-value> = default)
         {
             var result = await TokenProvider.RequestAccessToken(
                 new AccessTokenRequestOptions()
@@ -170,7 +170,7 @@ internal static class GraphClientExtensions
             if (result.TryGetToken(out var token))
             {
                 request.Headers.Add("Authorization", 
-                    $"{CoreConstants.Headers.Bearer} {token.Value}");
+                    $"<example-value>");
             }
         }
     }

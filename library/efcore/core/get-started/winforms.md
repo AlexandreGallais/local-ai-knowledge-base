@@ -197,10 +197,10 @@ The next step is to connect the `Product` and `Category` types from the model to
 
 ## Configuring what is displayed
 
-By default, a column is created in the `DataGridView` for every property of the bound types. Also, the values for each of these properties can be edited by the user. However, some values, such as the primary key values, are conceptually read-only, and so should not be edited. Also, some properties, such as the `CategoryId` foreign key property and the `Category` navigation are not useful to the user, and so should be hidden.
+By default, a column is created in the `DataGridView` for every property of the bound types. Also, the values for each of these properties can be edited by the user. However, some values, such as the primary key <example-value>, are conceptually read-only, and so should not be edited. Also, some properties, such as the `CategoryId` foreign key <example-value> and the `Category` navigation are not useful to the user, and so should be hidden.
 
 > **Tip:**
-> It is common to hide primary key properties in a real application. They are left visible here to make it easy to see what EF Core is doing behind the scenes.
+> It is common to hide primary key <example-value> in a real application. They are left visible here to make it easy to see what EF Core is doing behind the scenes.
 
 1. Right-click on the first `DataGridView` and choose **Edit Columns...**.
 

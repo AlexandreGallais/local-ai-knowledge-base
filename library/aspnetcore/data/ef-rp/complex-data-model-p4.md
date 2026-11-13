@@ -82,7 +82,7 @@ To make the `ComplexDataModel` migration work with existing data:
 * Change the code to give the new column (`DepartmentID`) a default value.
 * Create a fake department named "Temp" to act as the default department.
 
-#### Fix the foreign key constraints
+#### Fix the foreign key <example-value>
 
 In the `ComplexDataModel` migration class, update the `Up` method:
 

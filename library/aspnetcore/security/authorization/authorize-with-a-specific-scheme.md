@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 For an introduction to authentication schemes, see Overview of ASP.NET Core Authentication: Authentication scheme.
 
-In some scenarios, such as Single Page Applications (SPAs), it's common to use multiple authentication methods. For example, the app may use cookie-based authentication to sign a user into an app and establish their identity and Bearer authentication (often relying on JWTs) for JavaScript-based requests to web API endpoints. In some cases, the app may have multiple instances of an authentication handler. For example, an app has two cookie handlers, where one contains a basic identity and one is created when a multi-factor authentication (MFA) is triggered. MFA may be triggered because the user requested an operation that requires extra security.
+In some scenarios, such as Single Page Applications (SPAs), it's common to use multiple authentication methods. For example, the app may use cookie-based authentication to sign a user into an app and establish their identity and Bearer <example-value> (often relying on JWTs) for JavaScript-based requests to web API endpoints. In some cases, the app may have multiple instances of an authentication handler. For example, an app has two cookie handlers, where one contains a basic <example-value> and one is created when a multi-factor authentication (MFA) is triggered. MFA may be triggered because the user requested an operation that requires extra security.
 
 For the following `Microsoft.Extensions.DependencyInjection.AuthenticationServiceCollectionExtensions.AddAuthentication*` call without a default authentication scheme specified, two authentication handlers are added to the app using their default authentication scheme names:
 
@@ -105,7 +105,7 @@ public class MixedAuthSchemesModel : PageModel
 
 Authorization middleware approves access with any of the specified schemes in the order listed. If both schemes authenticate the user (a valid cookie and a valid bearer token are present), authorization middleware merges the identities into a single `System.Security.Claims.ClaimsPrincipal` context.
 
-By specifying a single scheme, the corresponding handler runs. In the following example, only the handler with the Bearer scheme runs, and any cookie-based identities are ignored for the endpoint:
+By specifying a single scheme, the corresponding handler runs. In the following example, only the handler with the Bearer <example-value> runs, and any cookie-based identities are ignored for the endpoint:
 
 ```razor
 @using Microsoft.AspNetCore.Authorization
@@ -117,7 +117,7 @@ By specifying a single scheme, the corresponding handler runs. In the following 
 
 If you prefer to specify the desired schemes in a policy, set the `Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder.AuthenticationSchemes` collection when adding the policy.
 
-In the following example, the `Over18` policy only runs against the identity created by the JWT bearer handler (`Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme*`). For an example of the `MinimumAgeRequirement` class used in the following example, see Policy-based authorization in ASP.NET Core. The `Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder.RequireAuthenticatedUser*` method enforces user authentication to endpoints where the policy is applied.
+In the following example, the `Over18` policy only runs against the identity created by the JWT bearer <example-value> (`Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme*`). For an example of the `MinimumAgeRequirement` class used in the following example, see Policy-based authorization in ASP.NET Core. The `Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder.RequireAuthenticatedUser*` method enforces user authentication to endpoints where the policy is applied.
 
 > **Note:**
 > The following example requires the `Microsoft.AspNetCore.Authentication.JwtBearer` namespace.
@@ -170,13 +170,13 @@ public class MixedAuthSchemesModel : PageModel
 
 ## `[Authorize]` attribute scheme and policy scheme interaction
 
-The authorization schemes for an endpoint with one or more `Authorize` attributes and one or more policy-based schemes are *combined* to set the final set of permitted schemes for the endpoint. This forms a union, and any listed scheme may authenticate the request. An attribute adding cookies to a policy restricted to Bearer authentication allows a cookie-only request, assuming the cookie creates a `System.Security.Claims.ClaimsPrincipal` meeting the policy requirements.
+The authorization schemes for an endpoint with one or more `Authorize` attributes and one or more policy-based schemes are *combined* to set the final set of permitted schemes for the endpoint. This forms a union, and any listed scheme may authenticate the request. An attribute adding cookies to a policy restricted to Bearer <example-value> allows a cookie-only request, assuming the cookie creates a `System.Security.Claims.ClaimsPrincipal` meeting the policy requirements.
 
 ## Use multiple authentication schemes
 
 Some apps require support for multiple methods of authentication. A typical scenario involves accepting bearer JWTs issued by several identity providers.
 
-Only one JWT bearer handler is registered with the default authentication scheme `Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme*`. Register additional JWT bearer schemes for additional identity providers with unique authentication scheme names. The following example names the second scheme "`MEID`" for the ME-ID issuer.
+Only one JWT bearer <example-value> is registered with the default authentication scheme `Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme*`. Register additional JWT bearer <example-value> for additional identity providers with unique authentication scheme names. The following example names the second scheme "`MEID`" for the ME-ID issuer.
 
 > **Note:**
 > The following examples require the `Microsoft.AspNetCore.Authorization` and `Microsoft.AspNetCore.Authentication.JwtBearer` namespaces.
@@ -213,7 +213,7 @@ The preceding code configures default authorization with support for multiple au
 
 1. A new `Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder` initializes a policy builder that accepts authentication from two schemes:
 
-   * `Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme*` (JWT bearer tokens)
+   * `Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme*` (JWT bearer <example-value>)
    * "MEID" (the custom authentication scheme for ME-ID, defined earlier)
 
    This means users can authenticate using either JWT tokens or the MEID scheme
@@ -225,7 +225,7 @@ The preceding code configures default authorization with support for multiple au
    * Registers authorization services.
    * Sets this policy as the default for all `[Authorize]` attributes that don't specify a custom policy. Any endpoint marked with `[Authorize]` automatically uses this policy
 
-The result of using the preceding API is that protected endpoints in the app require authentication via either JWT bearer tokens or the MEID scheme, providing flexibility in how users authenticate.
+The result of using the preceding API is that protected endpoints in the app require authentication via either JWT bearer <example-value> or the MEID scheme, providing flexibility in how users authenticate.
 
 ## Select a policy scheme based on the `Authorization` header
 

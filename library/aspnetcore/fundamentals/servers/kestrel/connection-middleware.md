@@ -51,7 +51,7 @@ builder.WebHost.ConfigureKestrel((context, serverOptions) =>
 {
     serverOptions.Listen(IPAddress.Any, 8000, listenOptions =>
     {
-        listenOptions.UseHttps("testCert.pfx", "testPassword");
+        listenOptions.UseHttps("<example-value>", "<example-value>");
 
         listenOptions.Use((context, next) =>
         {

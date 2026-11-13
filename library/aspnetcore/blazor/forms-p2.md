@@ -15,7 +15,7 @@ Antiforgery services are automatically added to Blazor apps when `Microsoft.Exte
 
 Automatic Cross-Site Request Forgery (CSRF) protection middleware is enabled by default in apps built with `WebApplication.CreateBuilder`. The middleware inspects the `Sec-Fetch-Site` and `Origin` headers on unsafe HTTP methods and records a validation verdict on the request. Blazor server-side rendering (SSR) form posts enforce that verdict and return `400 Bad Request` for cross-origin form posts that aren't trusted.
 
-Token-based antiforgery services are added to the app when `Microsoft.Extensions.DependencyInjection.RazorComponentsServiceCollectionExtensions.AddRazorComponents*` is called in the `Program` file. However, token validation only runs when antiforgery middleware is explicitly added to the request processing pipeline by calling `Microsoft.AspNetCore.Builder.AntiforgeryApplicationBuilderExtensions.UseAntiforgery*`.
+Token-based antiforgery services are added to the app when `Microsoft.Extensions.DependencyInjection.RazorComponentsServiceCollectionExtensions.AddRazorComponents*` is called in the `Program` file. However, token <example-value> only runs when antiforgery middleware is explicitly added to the request processing pipeline by calling `Microsoft.AspNetCore.Builder.AntiforgeryApplicationBuilderExtensions.UseAntiforgery*`.
 
 Adding token-based antiforgery middleware doesn't replace the automatic header-based CSRF protection middleware. When an app calls `Microsoft.AspNetCore.Builder.AntiforgeryApplicationBuilderExtensions.UseAntiforgery*`, both defense mechanisms run for a form post:
 

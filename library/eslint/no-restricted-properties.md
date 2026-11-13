@@ -161,7 +161,7 @@ myArray.push(5);
     "allowProperties": ["settings", "version"]
 }] */
 
-config.apiKey = "12345";
+config.apiKey = "<example-value>";
 config.timeout = 5000;
 ```
 

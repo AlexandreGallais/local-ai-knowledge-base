@@ -122,17 +122,17 @@ class Settings(BaseSettings):
     @model_validator(mode="before")
     @classmethod
     def check_postgres_password(cls, data: Any) -> Any:
-        """Validate that either POSTGRES_PASSWORD or POSTGRES_PASSWORD_FILE is set."""
+        """<example-value>"""
         if isinstance(data, dict):
             password_file: str | None = data.get("POSTGRES_PASSWORD_FILE")  # type: ignore
             password: str | None = data.get("POSTGRES_PASSWORD")  # type: ignore
             if password_file is None and password is None:
                 raise ValueError(
-                    "At least one of POSTGRES_PASSWORD_FILE and POSTGRES_PASSWORD must be set."
+                    "<example-value>"
                 )
         return data  # type: ignore
 
-    @field_validator("POSTGRES_PASSWORD_FILE", mode="before")
+    @field_validator("POSTGRES_PASSWORD_FILE", mode="<example-value>")
     @classmethod
     def read_password_from_file(cls, v: str | None) -> str | None:
         if v is not None:
@@ -140,7 +140,7 @@ class Settings(BaseSettings):
             if os.path.exists(file_path):
                 with open(file_path) as file:
                     return file.read().strip()
-            raise ValueError(f"Password file {file_path} does not exist.")
+            raise ValueError(f"<example-value>")
         return v
 
     @computed_field

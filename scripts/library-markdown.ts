@@ -347,6 +347,46 @@ export function splitMarkdown(text: string, max: number): string[] {
     .filter((part) => part !== '');
 }
 
+const EMAIL = /\b[\w.+-]+@[\w-]+(?:\.[\w-]+)+\b/g;
+const JWT = /\beyJ[\w-]{8,}(?:\.[\w-]*){0,2}/g;
+const SECRET_NAME = /(pass(?:word|wd)?|secret|token|api[-_]?key|access[-_]?key|account[-_]?key|client[-_]?secret|credentials?|auth|bearer|data)\b/i;
+const SECRET_VALUE = /((?:pass(?:word|wd)?|secret|token|key|credentials?|bearer|basic)["']?\s*(?:[:=]|\s)\s*)([\w+/!$\\=-]{6,})(?![\w(.])/gi;
+const SECRET_LINE = /pass(?:word|wd|phrase)|secret|token|\bpwd\b|auth-extra-groups|api-?key/i;
+const BOOTSTRAP_TOKEN = /\b[a-z\d]{6}\.[a-z\d]{16}\b/g;
+const SECRET_FILE = /((?:pass(?:word|wd)?|secret|token)=)(\.?\/[\w./-]+)/gi;
+const QUOTED = /(["'])((?:(?!\1)[^\\]|\\.)*)\1/g;
+const CONSTANT_NAME = /^[A-Z][A-Z\d_]*$/;
+const URL_PASSWORD = /(:\/\/[^\s:/@]+:)[^\s@/]+@/g;
+const BASE64_VALUE = /^(\s*[\w.-]+:\s*)([A-Za-z0-9+/]{8,}={0,2})\s*$/;
+const HEX_DUMP = /<Buffer(?: [\da-f]{2}){4,}/;
+
+// Example credentials, tokens and addresses of the official docs, replaced by neutral markers:
+// they are fake, but a published file must hold no value that looks like a real secret or person.
+export function neutralizeExamples(text: string): string {
+  return text
+    .split('\n')
+    .map((line) => {
+      const neutral = line
+        .replaceAll(EMAIL, 'user@example.com')
+        .replaceAll(JWT, '<example-jwt>')
+        .replaceAll(BOOTSTRAP_TOKEN, '<example-token>')
+        .replaceAll(SECRET_FILE, '$1<example-file>')
+        .replaceAll(URL_PASSWORD, '$1<example-password>@')
+        .replaceAll(SECRET_VALUE, '$1<example-value>');
+      const base64 = BASE64_VALUE.exec(neutral);
+
+      if (base64 !== null && (SECRET_NAME.test(neutral) || /=$/.test(base64[2] ?? ''))) {
+        return `${base64[1] ?? ''}<example-value>`;
+      }
+      // A quoted name followed by a colon is a key, not a value: it stays.
+      const keep = (literal: string, inner: string, offset: number): boolean => CONSTANT_NAME.test(inner) || inner === '' || /^\s*:/.test(neutral.slice(offset + literal.length));
+      const quoted = SECRET_LINE.test(neutral) ? neutral.replaceAll(QUOTED, (literal: string, quote: string, inner: string, offset: number) => keep(literal, inner, offset) ? literal : `${quote}<example-value>${quote}`) : neutral;
+
+      return HEX_DUMP.test(quoted) ? quoted.replaceAll(/ [\da-f]{2}(?= |>)/g, ' ..') : quoted;
+    })
+    .join('\n');
+}
+
 // The generic clean-up of every flavor: HTML, images, links, entities, empty sections, blank lines.
 export function finishMarkdown(text: string): string {
   const cleaned = mapCode(mapProse(text, cleanProse), cleanFenceInfo);

@@ -16,7 +16,7 @@ Create a new secret for use with Docker registries.
         Dockercfg secrets are used to authenticate against Docker registries.
 
         When using the Docker command line to push images, you can authenticate to a given registry by running:
-        '$ docker login DOCKER_REGISTRY_SERVER --username=DOCKER_USER --password=DOCKER_PASSWORD --email=DOCKER_EMAIL'.
+        '<example-value>'.
 
  That produces a ~/.dockercfg file that is used by subsequent 'docker push' and 'docker pull' commands to authenticate to the registry. The email address is optional.
 
@@ -25,17 +25,17 @@ Create a new secret for use with Docker registries.
         by creating a dockercfg secret and attaching it to your service account.
 
 ```
-kubectl create secret docker-registry NAME --docker-username=user --docker-password=password --docker-email=email [--docker-server=string] [--from-file=[key=]source] [--dry-run=server|client|none]
+kubectl create secret <example-value> NAME --docker-username=user --docker-password=<example-value> --docker-email=email [--docker-server=string] [--from-file=[key=]source] [--dry-run=server|client|none]
 ```
 
 ## examples
 
 ```
-  # If you do not already have a .dockercfg file, create a dockercfg secret directly
-  kubectl create secret docker-registry my-secret --docker-server=DOCKER_REGISTRY_SERVER --docker-username=DOCKER_USER --docker-password=DOCKER_PASSWORD --docker-email=DOCKER_EMAIL
+  # If you do not already have a .dockercfg file, create a dockercfg secret <example-value>
+  kubectl create secret <example-value> my-secret <example-value> --docker-username=DOCKER_USER --docker-password=<example-value> --docker-email=DOCKER_EMAIL
   
   # Create a new secret named my-secret from ~/.docker/config.json
-  kubectl create secret docker-registry my-secret --from-file=path/to/.docker/config.json
+  kubectl create secret <example-value> my-secret <example-value>/.docker/config.json
 ```
 
 ## Options
@@ -52,7 +52,7 @@ kubectl create secret docker-registry NAME --docker-username=user --docker-passw
 
  |  | Email for Docker registry
 
- | --docker-password string
+ | --docker-password <example-value>
 
  |  | Password for Docker registry authentication
 
@@ -74,7 +74,7 @@ kubectl create secret docker-registry NAME --docker-username=user --docker-passw
 
  | --from-file strings
 
- |  | Key files can be specified using their file path, in which case a default name of .dockerconfigjson will be given to them, or optionally with a name and file path, in which case the given name will be used. Specifying a directory will iterate each named file in the directory that is a valid secret key. For this command, the key should always be .dockerconfigjson.
+ |  | Key files can be specified using their file path, in which case a default name of .dockerconfigjson will be given to them, or optionally with a name and file path, in which case the given name will be used. Specifying a directory will iterate each named file in the directory that is a valid secret key. For this command, the key <example-value> always be .dockerconfigjson.
 
  | -h, --help
 
@@ -130,7 +130,7 @@ kubectl create secret docker-registry NAME --docker-username=user --docker-passw
 
  |  | Path to a client certificate file for TLS
 
- | --client-key string
+ | --client-key <example-value>
 
  |  | Path to a client key file for TLS
 
@@ -166,9 +166,9 @@ kubectl create secret docker-registry NAME --docker-username=user --docker-passw
 
  |  | If present, the namespace scope for this CLI request
 
- | --password string
+ | --password <example-value>
 
- |  | Password for basic authentication to the API server
+ |  | Password for basic <example-value> to the API server
 
  | --profile string     Default: "none"
 
@@ -202,7 +202,7 @@ kubectl create secret docker-registry NAME --docker-username=user --docker-passw
 
  |  | database host:port
 
- | --storage-driver-password string     Default: "root"
+ | --storage-driver-password <example-value>     Default: "<example-value>"
 
  |  | database password
 
@@ -222,7 +222,7 @@ kubectl create secret docker-registry NAME --docker-username=user --docker-passw
 
  |  | Server name to use for server certificate validation. If it is not provided, the hostname used to contact the server is used
 
- | --token string
+ | --token <example-value>
 
  |  | Bearer token for authentication to the API server
 
@@ -232,7 +232,7 @@ kubectl create secret docker-registry NAME --docker-username=user --docker-passw
 
  | --username string
 
- |  | Username for basic authentication to the API server
+ |  | Username for basic <example-value> to the API server
 
  | --version version[=true]
 

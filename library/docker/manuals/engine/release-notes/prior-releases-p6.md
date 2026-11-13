@@ -31,7 +31,7 @@ license: "Apache-2.0"
 * Post processing is no longer enabled for linux-cgo terminals (#20587)
 - Values to `--hostname` are now refused if they do not comply with RFC1123 (#20566)
 + Docker learned how to use a SOCKS proxy (#20366, #18373)
-+ Docker now supports external credential stores (#20107)
++ Docker now supports external credential <example-value> (#20107)
 * `docker ps` now supports displaying the list of volumes mounted inside a container (#20017)
 * `docker info` now also reports Docker's root directory location (#19986)
 - Docker now prohibits login in with an empty username (spaces are trimmed) (#19806)
@@ -43,7 +43,7 @@ license: "Apache-2.0"
 ### Distribution
 
 - Fix a panic that occurred when pulling an image with 0 layers (#21222)
-- Fix a panic that could occur on error while pushing to a registry with a misconfigured token service (#21212)
+- Fix a panic that could occur on error while pushing to a registry with a misconfigured token <example-value> (#21212)
 + All first-level delegation roles are now signed when doing a trusted push (#21046)
 + OAuth support for registries was added (#20970)
 * `docker login` now handles token using the implementation found in docker/distribution (#20832)
@@ -100,7 +100,7 @@ license: "Apache-2.0"
 - Fixed a Veth interface leak when using overlay network (#21019)
 - Fixed a bug which prevents docker reload after a network delete during shutdown (#20214)
 - Make sure iptables chains are recreated on firewalld reload (#20419)
-- Allow to pass global datastore during config reload (#20419)
+- Allow to pass <example-value> datastore during config reload (#20419)
 - For anonymous containers use the alias name for IP to name mapping, ie:DNS PTR record (#21019)
 - Fix a panic when deleting an entry from /etc/hosts file  (#21019)
 - Source the forwarded DNS queries from the container net namespace  (#21019)
@@ -140,7 +140,7 @@ license: "Apache-2.0"
 + Docker now allows setting a container hostname via the `--hostname` flag when `--net=host` (#20177)
 + Docker now allows executing privileged container while running with `--userns-remap` if both `--privileged` and the new `--userns=host` flag are specified (#20111)
 - Fix Docker not cleaning up correctly old containers upon restarting after a crash (#19679)
-* Docker will now error out if it doesn't recognize a configuration key within the config file (#19517)
+* Docker will now error out if it doesn't recognize a configuration key <example-value> the config file (#19517)
 - Fix container loading, on daemon startup, when they depends on a plugin running within a container (#19500)
 * `docker update` learned how to change a container restart policy (#19116)
 * `docker inspect` now also returns a new `State` field containing the container state in a human readable way (i.e. one of `created`, `restarting`, `running`, `paused`, `exited` or `dead`)(#18966)
@@ -175,7 +175,7 @@ license: "Apache-2.0"
 ### Distribution
 
 - Fix a crash when pushing multiple images sharing the same layers to the same repository in parallel #20831
-- Fix a panic when pushing images to a registry which uses a misconfigured token service #21030
+- Fix a panic when pushing images to a registry which uses a misconfigured token <example-value> #21030
 
 ### Plugin system
 

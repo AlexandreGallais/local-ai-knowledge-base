@@ -287,7 +287,7 @@ promptly, you can
 disable Docker Extensions
 as a workaround.
 
-## Deprecation of password logins on CLI when SSO enforced
+## Deprecation of password <example-value> on CLI when SSO enforced
 
 _Last updated July 2024_
 

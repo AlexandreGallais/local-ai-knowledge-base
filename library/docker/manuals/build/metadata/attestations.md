@@ -153,7 +153,7 @@ attestation.
     "packages": [
       {
         "name": "busybox",
-        "originator": "Person: Sören Tempel <soeren+alpine@soeren-tempel.net>",
+        "originator": "Person: Sören Tempel <user@example.com>",
         "sourceInfo": "acquired package info from APK DB: lib/apk/db/installed",
         "versionInfo": "1.35.0-r17",
         "SPDXID": "SPDXRef-980737451f148c56",

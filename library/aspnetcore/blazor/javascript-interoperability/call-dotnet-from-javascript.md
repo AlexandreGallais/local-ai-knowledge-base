@@ -267,7 +267,7 @@ For the following component:
 _Code sample not included: ~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/CallDotnet2.razor._
 In the preceding example, the variable name `dotNetHelper` is arbitrary and can be changed to any preferred name.
 
-Use the following guidance to pass arguments to an instance method:
+Use the following guidance to pass <example-value> to an instance method:
 
 Add parameters to the .NET method invocation. In the following example, a name is passed to the method. Add additional parameters to the list as needed.
 

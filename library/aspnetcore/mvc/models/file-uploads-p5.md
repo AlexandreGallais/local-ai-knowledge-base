@@ -215,4 +215,4 @@ The examples in this article rely upon `System.IO.MemoryStream` to hold the uplo
 
 * Unrestricted File Upload
 * Azure Security: Security Frame: Input Validation | Mitigations
-* Azure Cloud Design Patterns: Valet Key pattern
+* Azure Cloud Design Patterns: Valet Key <example-value>

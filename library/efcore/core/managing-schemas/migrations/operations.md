@@ -20,7 +20,7 @@ See Data operations for complete, reversible samples of inserting, updating, del
 To illustrate, let's look at implementing an operation that creates a database user using each approach. In our migrations, we want to enable writing the following code:
 
 ```csharp
-migrationBuilder.CreateUser("SQLUser1", "Password");
+migrationBuilder.CreateUser("<example-value>", "<example-value>");
 ```
 
 ## Using MigrationBuilder.Sql()
@@ -32,7 +32,7 @@ public static OperationBuilder<SqlOperation> CreateUser(
     this MigrationBuilder migrationBuilder,
     string name,
     string password)
-    => migrationBuilder.Sql($"CREATE USER {name} WITH PASSWORD '{password}';");
+    => migrationBuilder.Sql($"<example-value>");
 ```
 
 > **Tip:**
@@ -50,11 +50,11 @@ public static OperationBuilder<SqlOperation> CreateUser(
     {
         case "Npgsql.EntityFrameworkCore.PostgreSQL":
             return migrationBuilder
-                .Sql($"CREATE USER {name} WITH PASSWORD '{password}';");
+                .Sql($"<example-value>");
 
         case "Microsoft.EntityFrameworkCore.SqlServer":
             return migrationBuilder
-                .Sql($"CREATE USER {name} WITH PASSWORD = '{password}';");
+                .Sql($"<example-value>");
     }
 
     throw new Exception("Unexpected provider.");
@@ -83,7 +83,7 @@ public static OperationBuilder<CreateUserOperation> CreateUser(
     string name,
     string password)
 {
-    var operation = new CreateUserOperation { Name = name, Password = password };
+    var operation = new CreateUserOperation { Name = name, Password = <example-value> };
     migrationBuilder.Operations.Add(operation);
 
     return new OperationBuilder<CreateUserOperation>(operation);
@@ -127,7 +127,7 @@ public class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
         builder
             .Append("CREATE USER ")
             .Append(sqlHelper.DelimitIdentifier(operation.Name))
-            .Append(" WITH PASSWORD = ")
+            .Append("<example-value>")
             .Append(stringMapping.GenerateSqlLiteral(operation.Password))
             .AppendLine(sqlHelper.StatementTerminator)
             .EndCommand();

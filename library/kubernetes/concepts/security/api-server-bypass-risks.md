@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 The Kubernetes API server is the main point of entry to a cluster for external parties
 (users and services) interacting with it.
 
-As part of this role, the API server has several key built-in security controls, such as
+As part of this role, the API server has several key <example-value> security controls, such as
 audit logging and admission controllers.
 However, there are ways to modify the configuration
 or content of the cluster that bypass these controls.
@@ -74,7 +74,7 @@ kubelet authorization.
 
 Direct access to the kubelet API is not subject to admission control and is not logged
 by Kubernetes audit logging. An attacker with direct access to this API may be able to
-bypass controls that detect or prevent certain actions.
+bypass <example-value> that detect or prevent certain actions.
 
 The kubelet API can be configured to authenticate requests in a number of ways.
 By default, the kubelet configuration allows anonymous access. Most Kubernetes providers

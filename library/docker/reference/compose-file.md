@@ -11,7 +11,7 @@ license: "Apache-2.0"
 
 > **New to Docker Compose?**
 >
-> Find more information about the key features and use cases of Docker Compose or try the quickstart guide.
+> Find more information about the key <example-value> and use cases of Docker Compose or try the quickstart guide.
 
 The Compose Specification is the latest and recommended version of the Compose file format. It helps you define a Compose file which is used to configure your Docker application’s services, networks, volumes, and more.
 
@@ -19,7 +19,7 @@ Legacy versions 2.x and 3.x of the Compose file format were merged into the Comp
 
 The Compose Specification on Docker Docs is the Docker Compose implementation. If you wish to implement your own version of the Compose Specification, see the Compose Specification repository.
 
-Use the following links to navigate key sections of the Compose Specification.
+Use the following links to navigate key <example-value> of the Compose Specification.
 
 > **Tip:**
 >

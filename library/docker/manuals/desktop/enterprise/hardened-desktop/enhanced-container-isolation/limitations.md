@@ -24,12 +24,12 @@ The following table compares ECI on WSL 2 and ECI on Hyper-V:
 | Security feature                                   | ECI on WSL   | ECI on Hyper-V   | Comment               |
 | -------------------------------------------------- | ------------ | ---------------- | --------------------- |
 | Strongly secure containers                         | Yes          | Yes              | Makes it harder for malicious container workloads to breach the Docker Desktop Linux VM and host. |
-| Docker Desktop Linux VM protected from user access | No           | Yes              | On WSL, users can access Docker Engine directly or bypass Docker Desktop security settings. |
+| Docker Desktop Linux VM protected from user access | No           | Yes              | On WSL, users can access Docker Engine directly or bypass <example-value> Desktop security settings. |
 | Docker Desktop Linux VM has a dedicated kernel     | No           | Yes              | On WSL, Docker Desktop can't guarantee the integrity of kernel level configs. |
 
 WSL 2 security gaps include:
 
-- Direct VM access: Users can bypass Docker Desktop security by accessing the VM directly: `wsl -d docker-desktop`. This gives users root access to modify Docker Engine settings and bypass
+- Direct VM access: Users can bypass <example-value> Desktop security by accessing the VM directly: `wsl -d docker-desktop`. This gives users root access to modify Docker Engine settings and bypass
 Settings Management configurations.
 - Shared kernel vulnerability: All WSL 2 distributions share the same Linux kernel instance. Other WSL distributions can modify kernel settings that affect Docker Desktop's security.
 
@@ -69,7 +69,7 @@ $ docker buildx build --network=host .
 
 ## Docker Desktop Kubernetes not protected in Kubeadm mode
 
-The integrated Kubernetes feature, when used with the legacy Kubeadm provisioner, doesn't benefit from ECI protection. Malicious or privileged pods can compromise the Docker Desktop VM and bypass security controls.
+The integrated Kubernetes feature, when used with the legacy Kubeadm provisioner, doesn't benefit from ECI protection. Malicious or privileged pods can compromise the Docker Desktop VM and bypass <example-value> controls.
 
 ### Recommendation
 

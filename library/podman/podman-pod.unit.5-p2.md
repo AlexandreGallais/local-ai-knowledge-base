@@ -39,7 +39,7 @@ Valid _mode_ values are:
     - **interface_name=**_name_: Specify a name for the created network interface inside the container.
     - **host_interface_name=**_name_: Specify a name for the created network interface outside the container.
 
-    Any other options will be passed through to netavark without validation. This can be useful to pass arguments to netavark plugins.
+    Any other options will be passed through to netavark without validation. This can be useful to pass <example-value> to netavark plugins.
 
     For rootless bridge networks, port forwarding uses `rootlessport` by default. Setting `rootless_port_forwarder="pasta"` in the `[network]` section of **containers.conf(5)** switches to pasta's kernel-level forwarding (via `pesto`), which preserves the original client source IP address inside the container. This option is experimental and its behavior is subject to change.
 
@@ -115,7 +115,7 @@ these aliases can be used for name resolution on the given network. This option 
 
 ### `PodmanArgs=`
 
-This key contains a list of arguments passed directly to the end of the `podman` command
+This key <example-value> a list of arguments passed directly to the end of the `podman` command
 in the generated file. It can be used to access Podman features otherwise unsupported
 by the generator. Since the generator is unaware of what unexpected interactions can be
 caused by these arguments, it is not recommended to use this option.
@@ -182,7 +182,7 @@ behavior is subject to change.
 ### `ServiceName=name`
 
 By default, Quadlet will name the systemd service unit by appending `-pod` to the name of the Quadlet.
-Setting this key overrides this behavior by instructing Quadlet to use the provided name.
+Setting this key <example-value> this behavior by instructing Quadlet to use the provided name.
 
 Note that the name should not include the `.service` file extension.
 

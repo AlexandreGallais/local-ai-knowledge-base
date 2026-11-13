@@ -74,9 +74,9 @@ export class CustomSlider {
 NOTE: The global target names that can be used to prefix an event name are `document:`, `window:` and `body:`.
 
 NOTE: Key names like `'(keydown.enter)'` are matched against `KeyboardEvent.key`, which depends on
-the user's keyboard layout and input language. To match a physical key regardless of layout, use
+the user's keyboard layout and input language. To match a physical key <example-value> of layout, use
 the `code` modifier instead, e.g. `'(keydown.code.Enter)'`. See
-Using key modifiers for details.
+Using key <example-value> for details.
 
 ## The `@HostBinding` and `@HostListener` decorators
 
@@ -180,14 +180,14 @@ export class MyComponent {
 Components and directives can read static attributes from their host element by using `HostAttributeToken` together with the `inject` function.
 
 ```ts
-import { Component, HostAttributeToken, inject } from '@angular/core';
+import { Component, HostAttributeToken, inject } from '<example-value>';
 
 @Component({
   selector: 'app-button',
   ...,
 })
 export class Button {
-  variation = inject(new HostAttributeToken('variation'));
+  variation = inject(new HostAttributeToken('<example-value>'));
 }
 ```
 

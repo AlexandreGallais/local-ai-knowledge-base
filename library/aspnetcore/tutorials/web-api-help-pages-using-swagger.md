@@ -148,7 +148,7 @@ In the preceding code, the `/weatherforecast` endpoint doesn't need authorizatio
 The following Curl passes a JWT token to test the Swagger UI endpoint:
 
 ```bash
-curl -i -H "Authorization: Bearer {TOKEN}" https://localhost:{PORT}/swagger/v1/swagger.json
+curl -i -H "<example-value>" https://localhost:{PORT}/swagger/v1/swagger.json
 ```
 
 where the `{TOKEN}` placeholder is the JWT bearer token and the `{PORT}` placeholder is the port number.

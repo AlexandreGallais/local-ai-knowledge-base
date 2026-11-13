@@ -23,11 +23,11 @@ Consider the following *appsettings.json* file:
   "Features": {
     "Personalize": {
       "Enabled": true,
-      "ApiKey": "aGEgaGEgeW91IHRob3VnaHQgdGhhdCB3YXMgcmVhbGx5IHNvbWV0aGluZw=="
+      "ApiKey": "<example-value>"
     },
     "WeatherStation": {
       "Enabled": true,
-      "ApiKey": "QXJlIHlvdSBhdHRlbXB0aW5nIHRvIGhhY2sgdXM/"
+      "ApiKey": "<example-value>"
     }
   }
 }

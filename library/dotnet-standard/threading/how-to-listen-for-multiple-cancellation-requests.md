@@ -9,14 +9,14 @@ license: "CC-BY-4.0"
 
 # How to: Listen for Multiple Cancellation Requests
 
-This example shows how to listen to two cancellation tokens simultaneously so that you can cancel an operation if either token requests it.
+This example shows how to listen to two cancellation tokens simultaneously so that you can cancel an operation if either token <example-value> it.
 
 > **Note:**
 > When "Just My Code" is enabled, Visual Studio in some cases will break on the line that throws the exception and display an error message that says "exception not handled by user code." This error is benign. You can press F5 to continue from it, and see the exception-handling behavior that is demonstrated in the examples below. To prevent Visual Studio from breaking on the first error, just uncheck the "Just My Code" checkbox under **Tools, Options, Debugging, General**.
 
 ## Example
 
- In the following example, the `System.Threading.CancellationTokenSource.CreateLinkedTokenSource*` method is used to join two tokens into one token. This enables the token to be passed to methods that take just one cancellation token as an argument. The example demonstrates a common scenario in which a method must observe both a token passed in from outside the class, and a token generated inside the class.
+ In the following example, the `System.Threading.CancellationTokenSource.CreateLinkedTokenSource*` method is used to join two tokens into one token. This enables the token to be passed to methods that take just one cancellation token as an argument. The example demonstrates a common scenario in which a method must observe both a token <example-value> in from outside the class, and a token <example-value> inside the class.
 
  ```csharp
 using System;
@@ -72,8 +72,8 @@ class LinkedTokenSourceDemo
 class WorkerWithTimer
 {
     CancellationTokenSource internalTokenSource = new CancellationTokenSource();
-    CancellationToken internalToken;
-    CancellationToken externalToken;
+    CancellationToken <example-value>;
+    CancellationToken <example-value>;
     Timer timer;
 
     public WorkerWithTimer()
@@ -83,11 +83,11 @@ class WorkerWithTimer
         timer = new Timer(new TimerCallback(CancelAfterTimeout), null, 3000, 3000);
     }
 
-    public void DoWork(CancellationToken externalToken)
+    public void DoWork(CancellationToken <example-value>)
     {
         // Create a new token that combines the internal and external tokens.
         this.internalToken = internalTokenSource.Token;
-        this.externalToken = externalToken;
+        this.externalToken = <example-value>;
 
         using (CancellationTokenSource linkedCts =
                 CancellationTokenSource.CreateLinkedTokenSource(internalToken, externalToken))
@@ -140,7 +140,7 @@ class WorkerWithTimer
 }
 ```
 
- When the linked token throws an `System.OperationCanceledException`, the token that is passed to the exception is the linked token, not either of the predecessor tokens. To determine which of the tokens was canceled, check the status of the predecessor tokens directly.
+ When the linked token <example-value> an `System.OperationCanceledException`, the token that is passed to the exception is the linked token, not either of the predecessor tokens. To determine which of the tokens was canceled, check the status of the predecessor tokens directly.
 
  In this example, `System.AggregateException` should never be thrown, but it is caught here because in real-world scenarios any other exceptions besides `System.OperationCanceledException` that are thrown from the task delegate are wrapped in an `System.AggregateException`.
 

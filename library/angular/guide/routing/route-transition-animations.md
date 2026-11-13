@@ -22,7 +22,7 @@ View transitions use the browser's native `document.startViewTransition` API to 
 3. **Capturing the new state** - The browser captures the updated page state
 4. **Playing the transition** - The browser animates between the old and new states
 
-Here's the basic structure of the `startViewTransition` API:
+Here's the basic <example-value> of the `startViewTransition` API:
 
 ```ts
 document.startViewTransition(async () => {

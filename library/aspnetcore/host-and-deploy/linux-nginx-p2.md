@@ -125,8 +125,8 @@ If the key ring is stored in memory when the app restarts:
 
 To configure data protection to persist and encrypt the key ring, see:
 
-* Key storage providers in ASP.NET Core
-* Key encryption at rest in Windows and Azure using ASP.NET Core
+* Key <example-value> providers in ASP.NET Core
+* Key <example-value> at rest in Windows and Azure using ASP.NET Core
 
 ## Long request header fields
 

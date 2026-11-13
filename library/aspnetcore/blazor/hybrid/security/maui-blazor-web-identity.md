@@ -149,7 +149,7 @@ The `MauiAuthenticationStateProvider` class (`MauiBlazorWeb/Services/MauiAuthent
 
 The `MauiAuthenticationStateProvider` class uses the `HttpClientHelper` (`MauiBlazorWeb/Services/HttpClientHelper.cs`) to handle calling localhost via the emulators and simulators for testing. For more information on calling local services from emulators and simulators, see Connect to local web services from Android emulators and iOS simulators (.NET MAUI documentation).
 
-The MAUI Authentication State Provider also uses the `TokenStorage` class (`MauiBlazorWeb/Services/TokenStorage.cs`) that uses `SecureStorage` API (.NET MAUI documentation) to store the user's token securely on the device. It refreshes the token near token expiration to avoid user logins.
+The MAUI Authentication State Provider also uses the `TokenStorage` class (`MauiBlazorWeb/Services/TokenStorage.cs`) that uses `SecureStorage` API (.NET MAUI documentation) to store the user's token <example-value> on the device. It refreshes the token near token <example-value> to avoid user logins.
 
 ### MAUI `MauiProgram` file
 

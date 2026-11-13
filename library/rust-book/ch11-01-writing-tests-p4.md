@@ -162,7 +162,7 @@ mod tests {
 }
 ```
 
-This test will pass because the value we put in the `should_panic` attribute’s
+This test will pass <example-value> the value we put in the `should_panic` attribute’s
 `expected` parameter is a substring of the message that the `Guess::new`
 function panics with. We could have specified the entire panic message that we
 expect, which in this case would be `Guess value must be less than or equal to

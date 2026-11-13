@@ -20,7 +20,7 @@ The standard query operator methods that group data elements are listed in the f
 |Method Name|Description|C# Query Expression Syntax|More Information|
 |-----------------|-----------------|---------------------------------|----------------------|
 |GroupBy|Groups elements that share a common attribute. An `System.Linq.IGrouping`2` object represents each group.|`group … by …` -or- `group … by … into …`|`System.Linq.Enumerable.GroupBy*` `System.Linq.Queryable.GroupBy*`|
-|ToLookup|Inserts elements into a `System.Linq.Lookup`2` (a one-to-many dictionary) based on a key selector function.|Not applicable.|`System.Linq.Enumerable.ToLookup*`|
+|ToLookup|Inserts elements into a `System.Linq.Lookup`2` (a one-to-many dictionary) based on a key <example-value> function.|Not applicable.|`System.Linq.Enumerable.ToLookup*`|
 
 The following code example uses the `group by` clause to group integers in a list according to whether they're even or odd.
 
@@ -317,7 +317,7 @@ foreach (var scoreGroup in groupByCompoundKey)
 The equivalent query using method syntax is shown in the following code:
 
 ```csharp
-var groupByCompoundKey = students
+var groupByCompoundKey = <example-value>
     .GroupBy(student => new
     {
         FirstLetterOfLastName = student.LastName[0],

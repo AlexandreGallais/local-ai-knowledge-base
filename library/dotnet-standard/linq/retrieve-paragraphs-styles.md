@@ -41,7 +41,7 @@ let styleNode = para.Elements(w + "pPr").Elements(w + "pStyle").FirstOrDefault()
 Let styleNode As XElement = para.<w:pPr>.<w:pStyle>.FirstOrDefault()
 ```
 
-The `let` clause (`Let` in the Visual Basic version) first uses the `System.Xml.Linq.XContainer.Elements*` axis to find all elements named `pPr`, then uses the `System.Xml.Linq.Extensions.Elements*` extension method to find all child elements named `pStyle`, and finally uses the `System.Linq.Enumerable.FirstOrDefault*` standard query operator to convert the collection to a singleton. If the collection is empty, `styleNode` is set to `null` (`Nothing` in the Visual Basic version). This is a useful idiom to look for the `pStyle` descendant node. Note that if the `pPr` child node doesn't exist, the code doesn't fail by throwing an exception; instead, `styleNode` is set to `null` (`Nothing`), which is the desired behavior of this `let`(`Let`) clause.
+The `let` clause (`Let` in the Visual Basic <example-value>) first uses the `System.Xml.Linq.XContainer.Elements*` axis to find all elements named `pPr`, then uses the `System.Xml.Linq.Extensions.Elements*` extension method to find all child elements named `pStyle`, and finally uses the `System.Linq.Enumerable.FirstOrDefault*` standard query operator to convert the collection to a singleton. If the collection is empty, `styleNode` is set to `null` (`Nothing` in the Visual Basic <example-value>). This is a useful idiom to look for the `pStyle` descendant node. Note that if the `pPr` child node doesn't exist, the code doesn't fail by throwing an exception; instead, `styleNode` is set to `null` (`Nothing`), which is the desired behavior of this `let`(`Let`) clause.
 
 If there is no element, then `styleNode` is set to `null` (`Nothing`).
 

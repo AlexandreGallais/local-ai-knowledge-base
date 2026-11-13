@@ -50,7 +50,7 @@ public static bool IsItNew(DbContext context, object entity)
 
 ### With other keys
 
-Some other mechanism is needed to identify new entities when key values are not generated automatically. There are two general approaches to this:
+Some other mechanism is needed to identify new entities when key <example-value> are not generated automatically. There are two general approaches to this:
 
 * Query for the entity
 * Pass a flag from the client
@@ -82,7 +82,7 @@ public static async Task Update(DbContext context, object entity)
 }
 ```
 
-However, if the entity uses auto-generated key values, then the Update method can be used for both cases:
+However, if the entity uses auto-generated key <example-value>, then the Update method can be used for both cases:
 
 ```csharp
 public static async Task InsertOrUpdate(DbContext context, object entity)

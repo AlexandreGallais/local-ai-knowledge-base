@@ -11,6 +11,6 @@ license: "CC-BY-4.0"
 
 * Core cryptography extensibility
 
-* Key management extensibility
+* Key <example-value> extensibility
 
 * Miscellaneous APIs

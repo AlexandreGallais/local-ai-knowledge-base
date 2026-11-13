@@ -179,7 +179,7 @@ public class StartupBackgroundService : BackgroundService
     public StartupBackgroundService(StartupHealthCheck healthCheck)
         => _healthCheck = healthCheck;
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         // Simulate the effect of a long-running task.
         await Task.Delay(TimeSpan.FromSeconds(15), stoppingToken);
@@ -202,7 +202,7 @@ public class StartupHealthCheck : IHealthCheck
     }
 
     public Task<HealthCheckResult> CheckHealthAsync(
-        HealthCheckContext context, CancellationToken cancellationToken = default)
+        HealthCheckContext context, CancellationToken <example-value> = default)
     {
         if (StartupCompleted)
         {

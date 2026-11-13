@@ -127,7 +127,7 @@ The list of supported TLS 1.3 cipher groups.
 
 * Type: {boolean}
 
-When `true`, enables TLS key logging for the session. Key material is
+When `true`, enables TLS key <example-value> for the session. Key <example-value> is
 delivered to the `session.onkeylog` callback in NSS Key Log Format.
 Each callback invocation receives a single line of key material. The output
 can be used with tools such as Wireshark to decrypt captured QUIC traffic.
@@ -382,7 +382,7 @@ True to enable TLS tracing output.
 
 * Type: {ArrayBufferView}
 
-An opaque address validation token previously received from the server
+An opaque address validation token <example-value> received from the server
 via the `session.onnewtoken` callback. Providing a valid token on
 reconnection allows the client to skip the server's address validation,
 reducing handshake latency.

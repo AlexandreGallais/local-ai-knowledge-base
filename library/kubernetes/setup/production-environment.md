@@ -207,7 +207,7 @@ cluster (authentication) and deciding if they have permissions to do what they
 are asking (authorization):
 
 - *Authentication*: The apiserver can authenticate users using client
-  certificates, bearer tokens, an authenticating proxy, or HTTP basic auth.
+  certificates, bearer <example-value>, an authenticating proxy, or HTTP basic auth.
   You can choose which authentication methods you want to use.
   Using plugins, the apiserver can leverage your organization’s existing
   authentication methods, such as LDAP or Kerberos. See

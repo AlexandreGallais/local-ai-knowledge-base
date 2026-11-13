@@ -28,7 +28,7 @@ To run through this tutorial, you need:
 
 1.  A Docker Engine running in Swarm mode.
     If you're not familiar with Swarm mode, you might want to read
-    Swarm mode key concepts
+    Swarm mode key <example-value>
     and How services work.
 
     > **Note:**

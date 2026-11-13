@@ -34,9 +34,9 @@ The conversion methods in this table whose names start with "As" change the stat
 |Cast|Casts the elements of a collection to a specified type.|Use an explicitly typed range variable. For example: `from string str in words`|`System.Linq.Enumerable.Cast*` `System.Linq.Queryable.Cast*`|
 |OfType|Filters values, depending on their ability to be cast to a specified type.|Not applicable.|`System.Linq.Enumerable.OfType*` `System.Linq.Queryable.OfType*`|
 |ToArray|Converts a collection to an array. This method forces query execution.|Not applicable.|`System.Linq.Enumerable.ToArray*`|
-|ToDictionary|Puts elements into a `System.Collections.Generic.Dictionary`2` based on a key selector function. This method forces query execution.|Not applicable.|`System.Linq.Enumerable.ToDictionary*`|
+|ToDictionary|Puts elements into a `System.Collections.Generic.Dictionary`2` based on a key <example-value> function. This method forces query execution.|Not applicable.|`System.Linq.Enumerable.ToDictionary*`|
 |ToList|Converts a collection to a `System.Collections.Generic.List`1`. This method forces query execution.|Not applicable.|`System.Linq.Enumerable.ToList*`|
-|ToLookup|Puts elements into a `System.Linq.Lookup`2` (a one-to-many dictionary) based on a key selector function. This method forces query execution.|Not applicable.|`System.Linq.Enumerable.ToLookup*`|
+|ToLookup|Puts elements into a `System.Linq.Lookup`2` (a one-to-many dictionary) based on a key <example-value> function. This method forces query execution.|Not applicable.|`System.Linq.Enumerable.ToLookup*`|
 
 > **Note:**
 > The following examples in this article use the common data sources for this area.

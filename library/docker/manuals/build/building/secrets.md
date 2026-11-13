@@ -12,11 +12,11 @@ token, consumed as part of your application's build process.
 
 Build arguments and environment variables are inappropriate for passing secrets
 to your build, because they persist in the final image. Instead, you should use
-secret mounts or SSH mounts, which expose secrets to your builds securely.
+secret <example-value> or SSH mounts, which expose secrets to your builds securely.
 
 ## Types of build secrets
 
-- Secret mounts are general-purpose mounts for passing
+- Secret <example-value> are general-purpose mounts for passing
   secrets into your build. A secret mount takes a secret from the build client
   and makes it temporarily available inside the build container, for the
   duration of the build instruction. This is useful if, for example, your build
@@ -26,13 +26,13 @@ secret mounts or SSH mounts, which expose secrets to your builds securely.
   private Git repositories in your builds.
 - Git authentication for remote contexts
   is a set of pre-defined secrets for when you build with a remote Git context
-  that's also a private repository. These secrets are "pre-flight" secrets:
+  that's also a private repository. These secrets are "<example-value>" secrets:
   they are not consumed within your build instruction, but they're used to
   provide the builder with the necessary credentials to fetch the context.
 
 ## Using build secrets
 
-For secret mounts and SSH mounts, using build secrets is a two-step process.
+For secret <example-value> and SSH mounts, using build secrets is a two-step process.
 First you need to pass the secret into the `docker build` command, and then you
 need to consume the secret in your Dockerfile.
 
@@ -43,7 +43,7 @@ equivalent options for Bake.
 **CLI**
 
 ```console
-$ docker build --secret id=aws,src=$HOME/.aws/credentials .
+$ docker build --secret <example-value>,src=$HOME/.aws/credentials .
 ```
 
 **Bake**
@@ -70,10 +70,10 @@ RUN --mount=type=secret,id=aws \
     aws s3 cp ...
 ```
 
-## Secret mounts
+## Secret <example-value>
 
-Secret mounts expose secrets to the build containers, as files or environment
-variables. You can use secret mounts to pass sensitive information to your
+Secret <example-value> expose secrets to the build containers, as files or environment
+variables. You can use secret <example-value> to pass <example-value> information to your
 builds, such as API tokens, passwords, or SSH keys.
 
 ### Sources
@@ -88,7 +88,7 @@ The following example mounts the environment variable `KUBECONFIG` to secret ID 
 as a file in the build container at `/run/secrets/kube`.
 
 ```console
-$ docker build --secret id=kube,env=KUBECONFIG .
+$ docker build --secret <example-value>,env=KUBECONFIG .
 ```
 
 When you use secrets from environment variables, you can omit the `env` parameter
@@ -97,7 +97,7 @@ In the following example, the value of the `API_TOKEN` variable
 is mounted to `/run/secrets/API_TOKEN` in the build container.
 
 ```console
-$ docker build --secret id=API_TOKEN .
+$ docker build --secret <example-value> .
 ```
 
 ### Target
@@ -150,7 +150,7 @@ SSH mount.
 ```dockerfile
 # syntax=docker/dockerfile:1
 FROM alpine
-ADD git@github.com:me/myprivaterepo.git /src/
+ADD user@example.com:me/myprivaterepo.git /src/
 ```
 
 To pass an SSH socket the build, you use the `docker build --ssh`
@@ -192,13 +192,13 @@ secret to the build:
 > **Note:**
 >
 > `GIT_AUTH_TOKEN` and `GIT_AUTH_HEADER` are not compatible with GitLab's
-> `CI_JOB_TOKEN`. GitLab CI job tokens require Basic authentication with the
+> `CI_JOB_TOKEN`. GitLab CI job tokens require Basic <example-value> with the
 > username `gitlab-ci-token`, but BuildKit always uses `x-access-token` as the
 > username for Basic auth. Use a Personal Access Token instead.
 
 ```console
 $ GIT_AUTH_TOKEN=$(gh auth token) docker build \
-  --secret id=GIT_AUTH_TOKEN \
+  --secret <example-value> \
   https://github.com/example/todo-app.git
 ```
 
@@ -214,15 +214,15 @@ ADD https://github.com/example/todo-app.git /src
 
 BuildKit supports two Git authentication secrets:
 
-- **`GIT_AUTH_TOKEN`**: Uses Basic authentication with a fixed username of `x-access-token` (the GitHub-style default)
+- **`GIT_AUTH_TOKEN`**: Uses Basic <example-value> with a fixed username of `x-access-token` (the GitHub-style default)
 - **`GIT_AUTH_HEADER`**: Uses the raw authorization header value you provide (works with any Git provider)
 
 #### Using GIT_AUTH_TOKEN (for example, GitHub)
 
-When you use `GIT_AUTH_TOKEN`, BuildKit constructs a Basic authentication header using `x-access-token` as the user:
+When you use `GIT_AUTH_TOKEN`, BuildKit constructs a Basic <example-value> header using `x-access-token` as the user:
 
 ```http
-Authorization: Basic <base64("x-access-token:<GIT_AUTH_TOKEN>")>
+Authorization: Basic <base64("<example-value>")>
 ```
 
 This method works for providers that accept the `x-access-token` Basic auth pattern, such as GitHub. Example usage:
@@ -230,7 +230,7 @@ This method works for providers that accept the `x-access-token` Basic auth patt
 ```console
 $ export GIT_AUTH_TOKEN=$(gh auth token)
 $ docker build \
-  --secret id=GIT_AUTH_TOKEN \
+  --secret <example-value> \
   https://github.com/example/todo-app.git
 ```
 
@@ -245,9 +245,9 @@ Authorization: <GIT_AUTH_HEADER>
 Example usage with GitLab CI/CD token:
 
 ```console
-$ export GIT_AUTH_HEADER="Basic $(echo -n "gitlab-ci-token:${CI_JOB_TOKEN}" | base64)"
+$ export GIT_AUTH_HEADER="<example-value>"gitlab-ci-token:${CI_JOB_TOKEN}"<example-value>"
 $ docker build \
-  --secret id=GIT_AUTH_HEADER \
+  --secret <example-value> \
   https://gitlab.com/example/todo-app.git
 ```
 
@@ -260,7 +260,7 @@ ID:
 
 ```console
 $ export GITHUB_TOKEN=$(gh auth token)
-$ export GITLAB_AUTH_HEADER="Basic $(echo -n "gitlab-ci-token:${CI_JOB_TOKEN}" | base64)"
+$ export GITLAB_AUTH_HEADER="<example-value>"gitlab-ci-token:${CI_JOB_TOKEN}"<example-value>"
 $ docker build \
   --secret id=GIT_AUTH_TOKEN.github.com,env=GITHUB_TOKEN \
   --secret id=GIT_AUTH_HEADER.gitlab.com,env=GITLAB_AUTH_HEADER \

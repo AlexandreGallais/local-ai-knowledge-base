@@ -72,7 +72,7 @@ HRESULT DefineMethod (
 
 ## Method Implementation Information
 
- Information about the method implementation is often not known at the time the method is declared. Therefore, you do not need to pass values in the `ulCodeRVA` and `dwImplFlags` parameters when calling `DefineMethod`. The values can be supplied later through IMetaDataEmit::SetMethodImplFlags or IMetaDataEmit::SetRVA, as appropriate.
+ Information about the method implementation is often not known at the time the method is declared. Therefore, you do not need to pass <example-value> in the `ulCodeRVA` and `dwImplFlags` parameters when calling `DefineMethod`. The values can be supplied later through IMetaDataEmit::SetMethodImplFlags or IMetaDataEmit::SetRVA, as appropriate.
 
  In some situations, such as platform invocation (PInvoke) or COM interop scenarios, the method body will not be supplied, and `ulCodeRVA` should be set to zero. In these situations, the method should not be tagged as abstract, because the runtime will locate the implementation.
 

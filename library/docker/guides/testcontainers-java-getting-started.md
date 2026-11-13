@@ -97,7 +97,7 @@ class DBConnectionProvider {
   public DBConnectionProvider(String url, String username, String password) {
     this.url = url;
     this.username = username;
-    this.password = password;
+    this.password = <example-value>;
   }
 
   Connection getConnection() {

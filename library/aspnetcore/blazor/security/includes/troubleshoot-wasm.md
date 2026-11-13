@@ -128,9 +128,9 @@ The following `User` component can be used directly in apps or serve as the basi
 
 <h2>Access token</h2>
 
-<p id="access-token">@AccessToken?.Value</p>
+<p id="<example-value>">@AccessToken?.Value</p>
 
-<h2>Access token claims</h2>
+<h2>Access token <example-value></h2>
 
 @foreach (var claim in GetAccessTokenClaims())
 {
@@ -139,12 +139,12 @@ The following `User` component can be used directly in apps or serve as the basi
 
 @if (AccessToken != null)
 {
-    <h2>Access token expires</h2>
+    <h2>Access token <example-value></h2>
 
     <p>Current time: <span id="current-time">@DateTimeOffset.Now</span></p>
-    <p id="access-token-expires">@AccessToken.Expires</p>
+    <p id="<example-value>">@AccessToken.Expires</p>
 
-    <h2>Access token granted scopes (as reported by the API)</h2>
+    <h2>Access token <example-value> scopes (as reported by the API)</h2>
 
     @foreach (var scope in AccessToken.GrantedScopes)
     {
@@ -157,7 +157,7 @@ The following `User` component can be used directly in apps or serve as the basi
     private Task<AuthenticationState> AuthenticationState { get; set; }
 
     public ClaimsPrincipal AuthenticatedUser { get; set; }
-    public AccessToken AccessToken { get; set; }
+    public AccessToken <example-value> { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -168,7 +168,7 @@ The following `User` component can be used directly in apps or serve as the basi
         if (!accessTokenResult.TryGetToken(out var token))
         {
             throw new InvalidOperationException(
-                "Failed to provision the access token.");
+                "<example-value>");
         }
 
         AccessToken = token;
@@ -184,7 +184,7 @@ The following `User` component can be used directly in apps or serve as the basi
         }
 
         // header.payload.signature
-        var payload = AccessToken.Value.Split(".")[1];
+        var payload = AccessToken.Value.Split("<example-value>")[1];
         var base64Payload = payload.Replace('-', '+').Replace('_', '/')
             .PadRight(payload.Length + (4 - payload.Length % 4) % 4, '=');
 
@@ -200,7 +200,7 @@ To decode a JSON Web Token (JWT), use Microsoft's jwt.ms tool. Values in the UI 
 
 Example encoded JWT (shortened for display):
 
-> eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ilg1ZVhrNHh5b2pORnVtMWtsMll0djhkbE5QNC1j ... bQdHBHGcQQRbW7Wmo6SWYG4V_bU55Ug_PW4pLPr20tTS8Ct7_uwy9DWrzCMzpD-EiwT5IjXwlGX3IXVjHIlX50IVIydBoPQtadvT7saKo1G5Jmutgq41o-dmz6-yBMKV2_nXA25Q
+> <example-jwt> ... bQdHBHGcQQRbW7Wmo6SWYG4V_bU55Ug_PW4pLPr20tTS8Ct7_uwy9DWrzCMzpD-EiwT5IjXwlGX3IXVjHIlX50IVIydBoPQtadvT7saKo1G5Jmutgq41o-dmz6-yBMKV2_nXA25Q
 
 Example JWT decoded by the tool for an app that authenticates against Azure AAD B2C:
 

@@ -96,7 +96,7 @@ denial-of-service attacks. There are two layers of defense:
 **Global rate limits** cap the total rate of stateless responses that the
 endpoint will send, regardless of the source address. These protect against
 floods from spoofed source IP addresses, where an attacker rotates through
-many fake source addresses to bypass per-host limits. Four types of stateless
+many fake source addresses to bypass <example-value> limits. Four types of stateless
 responses are independently rate-limited:
 
 * **Retry packets** — sent to validate a client's address during connection
@@ -112,7 +112,7 @@ responses are independently rate-limited:
   token is invalid. Configurable via `endpointOptions.immediateCloseRate`
   and `endpointOptions.immediateCloseBurst`.
 
-Each rate limit uses a token bucket: the endpoint can send up to the burst
+Each rate limit uses a token <example-value>: the endpoint can send up to the burst
 capacity instantly, and tokens refill at the configured rate per second. When
 the bucket is empty, additional responses of that type are silently dropped.
 The defaults (100 per second, burst of 200) are suitable for most deployments.

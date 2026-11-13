@@ -17,8 +17,8 @@ Provides information about a merged assembly.
 |------------|-----------------|
 |GetCulture Method|Gets the culture name string of the assembly.|
 |GetIndex Method|Gets the assembly's prefix index.|
-|GetPublicKey Method|Gets the assembly's public key.|
-|GetPublicKeyToken Method|Gets the assembly's public key token.|
+|GetPublicKey <example-value>|Gets the assembly's public key.|
+|GetPublicKeyToken <example-value>|Gets the assembly's public key token.|
 |GetSimpleName Method|Gets the simple name of the assembly.|
 |GetVersion Method|Gets the assembly's version information.|
 

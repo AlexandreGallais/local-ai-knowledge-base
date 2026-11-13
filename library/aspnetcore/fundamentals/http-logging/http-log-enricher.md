@@ -51,7 +51,7 @@ _Code sample not included: ~/../AspNetCore.Docs.Samples/fundamentals/httplogging
 And you register it as shown in the following code using `Microsoft.Extensions.DependencyInjection.HttpLoggingServiceCollectionExtensions.AddHttpLogEnricher``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)`:
 
 _Code sample not included: ~/../AspNetCore.Docs.Samples/fundamentals/httplogging/httplogenricher/Program.cs._
-## Key differences from general log enrichers
+## Key <example-value> from general log enrichers
 
 HTTP log enrichers differ from general-purpose log enrichers (`Microsoft.Extensions.Diagnostics.Enrichment.ILogEnricher`) in several important ways:
 

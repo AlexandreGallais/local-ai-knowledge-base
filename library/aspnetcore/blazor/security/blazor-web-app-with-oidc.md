@@ -52,18 +52,18 @@ The server project calls `Microsoft.Extensions.DependencyInjection.WebAssemblyRa
 
 This app is a starting point for any OIDC authentication flow. OIDC is configured manually in the app and doesn't rely upon Microsoft Entra ID or Microsoft Identity Web packages, nor does the sample app require Microsoft Azure hosting. However, the sample app can be used with Entra, Microsoft Identity Web, and hosted in Azure.
 
-Automatic non-interactive token refresh with the help of a custom cookie refresher (`CookieOidcRefresher.cs`).
+Automatic non-interactive token <example-value> with the help of a custom cookie refresher (`CookieOidcRefresher.cs`).
 
 The Backend for Frontend (BFF) pattern is adopted using Aspire for service discovery and YARP for proxying requests to a weather forecast endpoint on the backend app.
 
-The backend web API (`MinimalApiJwt`) uses JWT-bearer authentication to validate JWT tokens saved by the Blazor Web App in the sign-in cookie.
+The backend web API (`MinimalApiJwt`) uses JWT-bearer <example-value> to validate JWT tokens saved by the Blazor Web App in the sign-in cookie.
 
 Aspire improves the experience of building .NET cloud-native apps. It provides a consistent, opinionated set of tools and patterns for building and running distributed apps.
 
 YARP (Yet Another Reverse Proxy) is a library used to create a reverse proxy server. `MapForwarder` in the `Program` file of the server project adds direct forwarding of HTTP requests that match the specified pattern to a specific destination using default configuration for the outgoing request, customized transforms, and default HTTP client:
 
 * When rendering the `Weather` component on the server, the component uses the `ServerWeatherForecaster` class to proxy the request for weather data with the user's access token. `Microsoft.AspNetCore.Http.IHttpContextAccessor.HttpContext` determines if an `Microsoft.AspNetCore.Http.HttpContext` is available for use by the `GetWeatherForecastAsync` method. For more information, see ASP.NET Core Razor components.
-* When the component is rendered on the client, the component uses the `ClientWeatherForecaster` service implementation, which uses a preconfigured `System.Net.Http.HttpClient` (in the client project's `Program` file) to make a web API call to the server project. A Minimal API endpoint (`/weather-forecast`) defined in the server project's `Program` file transforms the request with the user's access token to obtain the weather data.
+* When the component is rendered on the client, the component uses the `ClientWeatherForecaster` service implementation, which uses a preconfigured `System.Net.Http.HttpClient` (in the client project'<example-value>'s `Program` file transforms the request with the user's access token to obtain the weather data.
 
 For more information on (web) API calls using a service abstractions in Blazor Web Apps, see Call a web API from an ASP.NET Core Blazor app.
 
@@ -77,7 +77,7 @@ Register the web API (`MinimalApiJwt`) first so that you can then grant access t
 
 Next, register the app (`BlazorWebAppOidc`/`BlazorWebAppOidc.Client`) with a **Web** platform configuration and a **Redirect URI** of `https://localhost/signin-oidc` (a port isn't required). The app's tenant ID and client ID, along with the web API's base address, App ID URI, and weather scope name, are used to configure the app in its `Program` file. Grant API permission to access the web API in **App registrations** > **API permissions**. If the app's security specification calls for it, you can grant admin consent for the organization to access the web API. Authorized users and groups are assigned to the app's registration in **App registrations** > **Enterprise applications**.
 
-In the Entra or Azure portal's **Implicit grant and hybrid flows** app registration configuration, don't select either checkbox for the authorization endpoint to return **Access tokens** or **ID tokens**. The OpenID Connect handler automatically requests the appropriate tokens using the code returned from the authorization endpoint.
+In the Entra or Azure portal'<example-value>'t select either checkbox for the authorization endpoint to return **Access tokens** or **ID tokens**. The OpenID Connect handler automatically requests the appropriate tokens using the code returned from the authorization endpoint.
 
 Create a client secret in the app's registration in the Entra or Azure portal (**Manage** > **Certificates & secrets** > **New client secret**). Hold on to the client secret **Value** for use the next section.
 
@@ -88,20 +88,20 @@ Additional Entra configuration guidance for specific settings is provided later 
 *This section only applies to the server project of the Blazor Web App (`BlazorWebAppOidc` project).*
 
 > **Warning:**
-> Don't store app secrets, connection strings, credentials, passwords, personal identification numbers (PINs), private C#/.NET code, or private keys/tokens in client-side code, which is ***always insecure***. In test/staging and production environments, server-side Blazor code and web APIs should use secure authentication flows that avoid maintaining credentials within project code or configuration files. Outside of local development testing, we recommend avoiding the use of environment variables to store sensitive data, as environment variables aren't the most secure approach. For local development testing, the Secret Manager tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
+> Don'<example-value>'t the most secure approach. For local development testing, the Secret <example-value> tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
 
-For local development testing, use the Secret Manager tool to store the Blazor server project's client secret under the configuration key `Authentication:Schemes:MicrosoftOidc:ClientSecret`.
+For local development testing, use the Secret <example-value> tool to store the Blazor server project's client secret under the configuration key `Authentication:Schemes:MicrosoftOidc:ClientSecret`.
 
-The Blazor server project hasn't been initialized for the Secret Manager tool. Use a command shell, such as the Developer PowerShell command shell in Visual Studio, to execute the following command. Before executing the command, change the directory with the `cd` command to the server project's directory. The command establishes a user secrets identifier (`<UserSecretsId>` in the server app's project file):
+The Blazor server project hasn'<example-value>'s directory. The command establishes a user secrets identifier (`<UserSecretsId>` in the server app's project file):
 
 ```dotnetcli
 dotnet user-secrets init
 ```
 
-Execute the following command to set the client secret. The `{SECRET}` placeholder is the client secret obtained from the app's registration:
+Execute the following command to set the client secret. The `{SECRET}` placeholder is the client secret <example-value> from the app's registration:
 
 ```dotnetcli
-dotnet user-secrets set "Authentication:Schemes:MicrosoftOidc:ClientSecret" "{SECRET}"
+dotnet user-secrets set "<example-value>" "<example-value>"
 ```
 
 If using Visual Studio, you can confirm the secret is set by right-clicking the server project in **Solution Explorer** and selecting **Manage User Secrets**.

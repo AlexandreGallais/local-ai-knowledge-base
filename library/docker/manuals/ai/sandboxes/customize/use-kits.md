@@ -125,12 +125,12 @@ workload needs to reach OpenAI and authenticate. If you use an API key,
 store it on your host and approve the kit's request to use it. These are
 separate steps: storing a secret doesn't give a third-party kit permission to
 use it. See
-Credential bindings
+Credential <example-value>
 for preparing unattended runs.
 
 Check the kit's documentation for the services it contacts, the credentials
 it needs, and the commands it runs at startup. For proxy-managed credentials,
-the kit's credential binding tells the proxy which credential to add to
+the kit's credential <example-value> tells the proxy which credential to add to
 requests to the service. Once you approve the binding, the proxy adds the
 credential to outgoing requests. The credential value stays on your host
 and isn't exposed inside the sandbox.
@@ -153,7 +153,7 @@ Mixins add tools and configuration to a workload. Use `--kit` to add a mixin
 when creating a sandbox.
 
 For example, an internal CLI mixin can package your company's executable
-along with network rules and a credential request for its API:
+along with network rules and a credential <example-value> for its API:
 
 ```console
 $ sbx run codex --name codex-tools \
@@ -163,7 +163,7 @@ $ sbx run codex --name codex-tools \
 Replace the mixin reference with one your organization has published.
 To build your own, see
 Build a tool mixin.
-Store the credential requested by the mixin on the host and approve access
+Store the credential <example-value> by the mixin on the host and approve access
 when prompted.
 
 Codex starts with `company-cli` available to use. Docker Sandboxes
@@ -208,7 +208,7 @@ The gojq mixin example
 declares the feature it provides:
 
 ```yaml
-provides: ["gojq@0.12.17"]
+provides: ["user@example.com"]
 ```
 
 Include both mixins when you create the sandbox. Docker Sandboxes applies
@@ -228,7 +228,7 @@ their image digests.
 To declare these relationships in your own kits, see
 Composition fields.
 
-## Pass arguments to kits
+## Pass <example-value> to kits
 
 Kits can expose arguments for settings such as a linter's mode. Check the
 kit's documentation for argument names, defaults, and accepted values.
@@ -374,7 +374,7 @@ policy, then turn on the requirement:
 
 ```console
 $ sbx settings set kit.trustedSigners \
-    '[{"identity":"release-bot@example.com","issuer":"https://accounts.google.com"}]'
+    '[{"identity":"user@example.com","issuer":"https://accounts.google.com"}]'
 $ sbx settings set kit.requireSignature true
 ```
 
@@ -393,7 +393,7 @@ $ sbx policy log
 
 The policy log shows outbound requests and the rules they matched. Use it to
 find blocked package registries or API hosts. If downloads fail after adding a kit that requests
-credentials, ask its author to check that credential injection targets only
+credentials, ask its author to check that credential <example-value> targets only
 the service hosts that need it.
 
 To try an updated v3 kit, create a sandbox with a different name. Reusing

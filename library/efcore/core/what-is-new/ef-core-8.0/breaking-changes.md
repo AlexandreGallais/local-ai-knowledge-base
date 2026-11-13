@@ -35,7 +35,7 @@ EF Core 8 targets .NET 8. Applications targeting older .NET, .NET Core, and .NET
 | Relational model is generated in the compiled model                             | Low        |
 | Scaffolding may generate different navigation names                                      | Low        |
 | Discriminators now have a max length                                                       | Low        |
-| SQL Server key values are compared case-insensitively                                            | Low        |
+| SQL Server key <example-value> are compared case-insensitively                                            | Low        |
 | Multiple AddDbContext calls are applied in different order                                   | Low        |
 | EntityTypeAttributeConventionBase replaced with TypeAttributeConventionBase       | Low        |
 

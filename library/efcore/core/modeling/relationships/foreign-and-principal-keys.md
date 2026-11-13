@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Foreign and principal keys in relationships
 
-All one-to-one and one-to-many relationships are defined by a foreign key on the dependent end that references a primary or alternate key on the principal end. For convenience, this primary or alternate key is known as the "principal key" for the relationship. Many-to-many relationships are composed of two one-to-many relationships, each of which is itself defined by a foreign key referencing a principal key.
+All one-to-one and one-to-many relationships are defined by a foreign key on the dependent end that references a primary or alternate key on the principal end. For convenience, this primary or alternate key is known as the "principal key" for the relationship. Many-to-many relationships are composed of two one-to-many relationships, each of which is itself defined by a foreign key <example-value> a principal key.
 
 > **Tip:**
 > The code below can be found in ForeignAndPrincipalKeys.cs.
@@ -43,7 +43,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 > **Tip:**
 > Using lambda expressions in model building API ensures that the property use is available for code analysis and refactoring, and also provides the property type to the API for use in further chained methods.
 
-`HasForeignKey` can also be passed the name of the foreign key property as a string. For example, for a single property:
+`HasForeignKey` can also be passed the name of the foreign key <example-value> as a string. For example, for a single property:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -73,9 +73,9 @@ Using a string is useful when:
 - The property or properties do not exist on the entity type and should be created as shadow properties.
 - The property name is calculated or constructed based on some input to the model building process.
 
-### Non-nullable foreign key columns
+### Non-nullable foreign key <example-value>
 
-As described in _Optional and required relationships_, the nullability of the foreign key property determines whether a relationship is optional or required. However, a nullable foreign key property can be used for a required relationship using the `[Required]` attribute, or by calling `IsRequired` in the model building API. For example:
+As described in _Optional and required relationships_, the nullability of the foreign key <example-value> determines whether a relationship is optional or required. However, a nullable foreign key <example-value> can be used for a required relationship using the `[Required]` attribute, or by calling `IsRequired` in the model building API. For example:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -100,7 +100,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-The end result of this is that the foreign key column in the database is made non-nullable even if the foreign key property is nullable. The same thing can be achieved by explicitly configuring the foreign key property itself as required. For example:
+The end result of this is that the foreign key <example-value> in the database is made non-nullable even if the foreign key <example-value> is nullable. The same thing can be achieved by explicitly configuring the foreign key <example-value> itself as required. For example:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -113,14 +113,14 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ### Shadow foreign keys
 
-Foreign key properties can be created as shadow properties. A shadow property exists in the EF model but does not exist on the .NET type. EF keeps track of the property value and state internally.
+Foreign key <example-value> can be created as shadow properties. A shadow property exists in the EF model but does not exist on the .NET type. EF keeps track of the property value and state internally.
 
 Shadow foreign keys are usually used when there is a desire to hide the relational concept of a foreign key from the domain model used by application code/business logic. This application code then manipulates the relationship entirely through navigations.
 
 > **Tip:**
-> If entities are going to be serialized, for example to send over a wire, then the foreign key values can be a useful way to keep the relationship information intact when the entities are not in an object/graph form. It is therefore often pragmatic to keep foreign key properties in the .NET type for this purpose. Foreign key properties can be private, which is often a good compromise to avoid exposing the foreign key while allowing its value to travel with the entity.
+> If entities are going to be serialized, for example to send over a wire, then the foreign key <example-value> can be a useful way to keep the relationship information intact when the entities are not in an object/graph form. It is therefore often pragmatic to keep foreign key <example-value> in the .NET type for this purpose. Foreign key <example-value> can be private, which is often a good compromise to avoid exposing the foreign key while allowing its value to travel with the entity.
 
-Shadow foreign key properties are often created by convention. A shadow foreign key will also be created if the argument to `HasForeignKey` does not match any .NET property. For example:
+Shadow foreign key <example-value> are often created by convention. A shadow foreign key will also be created if the argument to `HasForeignKey` does not match any .NET property. For example:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -134,7 +134,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 By convention, a shadow foreign key gets its type from the principal key in the relationship. This type is made nullable unless the relationship is detected as or configured as required.
 
-The shadow foreign key property can also be created explicitly, which is useful for configuring facets of the property. For example, to make the property non-nullable:
+The shadow foreign key <example-value> can also be created explicitly, which is useful for configuring facets of the property. For example, to make the property non-nullable:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -151,7 +151,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 ```
 
 > **Tip:**
-> By convention, foreign key properties inherit facets such as maximum length and Unicode support from the principal key in the relationship. It is therefore rarely necessary to explicitly configure facets on a foreign key property.
+> By convention, foreign key <example-value> inherit facets such as maximum length and Unicode support from the principal key in the relationship. It is therefore rarely necessary to explicitly configure facets on a foreign key property.
 
 The creation of a shadow property if the given name does not match any property of the entity type can be disabled using `ConfigureWarnings`. For example:
 
@@ -160,9 +160,9 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder.ConfigureWarnings(b => b.Throw(CoreEventId.ShadowPropertyCreated));
 ```
 
-### Foreign key constraint names
+### Foreign key <example-value> names
 
-By convention foreign key constraints are named `FK_<dependent type name>_<principal type name>_<foreign key property name>`. For composite foreign keys, `<foreign key property name>` becomes an underscore separated list of foreign key property names.
+By convention foreign key <example-value> are named `FK_<dependent type name>_<principal type name>_<foreign key <example-value> name>`. For composite foreign keys, `<foreign key <example-value> name>` becomes an underscore separated list of foreign key <example-value> names.
 
 This can be changed in the model building API using `HasConstraintName`. For example:
 
@@ -180,12 +180,12 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 > **Tip:**
 > The constraint name is not used by the EF runtime. It is only used when creating a database schema using EF Core Migrations.
 
-### Excluding foreign key constraints from migrations
+### Excluding foreign key <example-value> from migrations
 
 > **Note:**
 > This feature is being introduced in EF Core 11, which is currently in preview.
 
-Sometimes it is useful to have the foreign key relationship represented in the EF model, but without creating the corresponding foreign key constraint in the database. This can happen with legacy databases where constraints don't exist, or in data synchronization scenarios where the order of inserting related entities might temporarily violate referential integrity constraints. In these cases, use `ExcludeForeignKeyFromMigrations` to prevent EF from generating the foreign key constraint in migrations (and `EnsureCreated`):
+Sometimes it is useful to have the foreign key <example-value> represented in the EF model, but without creating the corresponding foreign key <example-value> in the database. This can happen with legacy databases where constraints don't exist, or in data synchronization scenarios where the order of inserting related entities might temporarily violate referential integrity constraints. In these cases, use `ExcludeForeignKeyFromMigrations` to prevent EF from generating the foreign key <example-value> in migrations (and `EnsureCreated`):
 
 ```csharp
 modelBuilder.Entity<Blog>()
@@ -195,9 +195,9 @@ modelBuilder.Entity<Blog>()
     .ExcludeForeignKeyFromMigrations();
 ```
 
-With this configuration, EF will not create a foreign key constraint in the database, but the relationship is still tracked in the EF model and can be used normally for loading related data, change tracking, etc. EF will still create a database index for the foreign key column, since indexes benefit queries regardless of whether a constraint exists.
+With this configuration, EF will not create a foreign key <example-value> in the database, but the relationship is still tracked in the EF model and can be used normally for loading related data, change tracking, etc. EF will still create a database index for the foreign key <example-value>, since indexes benefit queries regardless of whether a constraint exists.
 
-To apply this across all foreign keys in the model (e.g. to globally disable all foreign key constraints), you can iterate over all foreign keys in `OnModelCreating`:
+To apply this across all foreign keys in the model (e.g. to globally disable all foreign key <example-value>), you can iterate over all foreign keys in `OnModelCreating`:
 
 ```csharp
 foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
@@ -239,7 +239,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-`HasPrincipalKey` can also be passed the name of the alternate key property as a string. For example, for a single property key:
+`HasPrincipalKey` can also be passed the name of the alternate key <example-value> as a string. For example, for a single property key:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -310,7 +310,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ## Foreign keys in many-to-many relationships
 
-In many-to-many relationships, the foreign keys are defined on the join entity type and mapped to foreign key constraints in the join table. Everything described above can also be applied to these join entity foreign keys. For example, setting the database constraint names:
+In many-to-many relationships, the foreign keys are defined on the join entity type and mapped to foreign key <example-value> in the join table. Everything described above can also be applied to these join entity foreign keys. For example, setting the database constraint names:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)

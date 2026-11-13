@@ -18,7 +18,7 @@ Here's a request body example with 2FA not enabled:
 ```json
 {
   "email": "string",
-  "password": "string"
+  "password": "<example-value>"
 }
 ```
 
@@ -27,7 +27,7 @@ Here are request body examples with 2FA enabled:
 * ```json
   {
     "email": "string",
-    "password": "string",
+    "password": "<example-value>",
     "twoFactorCode": "string",
   }
   ```
@@ -35,7 +35,7 @@ Here are request body examples with 2FA enabled:
 * ```json
   {
     "email": "string",
-    "password": "string",
+    "password": "<example-value>",
     "twoFactorRecoveryCode": "string"
   }
   ```
@@ -55,16 +55,16 @@ If both `useCookies` and `useSessionCookies` are `false` or omitted, token-based
 
 ```json
 {
-  "tokenType": "string",
-  "accessToken": "string",
+  "tokenType": "<example-value>",
+  "accessToken": "<example-value>",
   "expiresIn": 0,
-  "refreshToken": "string"
+  "refreshToken": "<example-value>"
 }
 ```
 
 For more information about these properties, see `Microsoft.AspNetCore.Authentication.BearerToken.AccessTokenResponse`.
 
-Use the BearerTokenOptions.BearerTokenExpiration property to set how long the access token remains valid.
+Use the BearerTokenOptions.BearerTokenExpiration property to set how long the access token <example-value> valid.
 
 Put the access token in a header to make authenticated requests, as shown in the following example
 
@@ -76,13 +76,13 @@ When the access token is about to expire, call the /refresh endpoint.
 
 ## Use the `POST /refresh` endpoint
 
-For use only with token-based authentication. Gets a new access token without forcing the user to log in again. Call this endpoint when the access token is about to expire.
+For use only with token-based authentication. Gets a new access token <example-value> forcing the user to log in again. Call this endpoint when the access token is about to expire.
 
 The request body contains only the `Microsoft.AspNetCore.Identity.Data.RefreshRequest.RefreshToken`. Here's a request body example:
 
 ```json
 {
-  "refreshToken": "string"
+  "refreshToken": "<example-value>"
 }
 ```
 
@@ -90,14 +90,14 @@ If the call is successful, the response body is a new `Microsoft.AspNetCore.Auth
 
 ```json
 {
-  "tokenType": "string",
-  "accessToken": "string",
+  "tokenType": "<example-value>",
+  "accessToken": "<example-value>",
   "expiresIn": 0,
-  "refreshToken": "string"
+  "refreshToken": "<example-value>"
 }
 ```
 
-Use the BearerTokenOptions.RefreshTokenExpiration property to set how long the refresh token remains valid.
+Use the BearerTokenOptions.RefreshTokenExpiration property to set how long the refresh token <example-value> valid.
 
 ## Use the `GET /confirmEmail` endpoint
 
@@ -170,7 +170,7 @@ The request body requires `Microsoft.AspNetCore.Identity.Data.ResetPasswordReque
 {
   "email": "string",
   "resetCode": "string",
-  "newPassword": "string"
+  "newPassword": "<example-value>"
 }
 ```
 
@@ -237,7 +237,7 @@ Call the `/login` endpoint, sending the email address, password, and TOTP in the
 ```json
 {
   "email": "string",
-  "password": "string",
+  "password": "<example-value>",
   "twoFactorCode": "string"
 }
 ```
@@ -247,7 +247,7 @@ If the user doesn't have access to the authenticator app, log in by calling the 
   ```json
   {
     "email": "string",
-    "password": "string",
+    "password": "<example-value>",
     "twoFactorRecoveryCode": "string"
   }
   ```
@@ -272,7 +272,7 @@ To get a new random shared key, call this endpoint with `Microsoft.AspNetCore.Id
 }
 ```
 
-Resetting the key automatically disables the two-factor login requirement for the authenticated user until it's re-enabled by a later request.
+Resetting the key <example-value> disables the two-factor login requirement for the authenticated user until it's re-enabled by a later request.
 
 ### Forget the machine
 
@@ -306,8 +306,8 @@ Updates the email address and password of the logged-in user. Send `Microsoft.As
 ```json
 {
   "newEmail": "string",
-  "newPassword": "string",
-  "oldPassword": "string"
+  "newPassword": "<example-value>",
+  "oldPassword": "<example-value>"
 }
 ```
 
@@ -329,7 +329,7 @@ For more information, see the following resources:
 * Simple authorization in ASP.NET Core
 * Add, download, and delete user data to Identity in an ASP.NET Core project
 * Create an ASP.NET Core app with user data protected by authorization
-* Account confirmation and password recovery
+* Account confirmation and password <example-value>
 * Enable QR code generation for TOTP authentication
 * Sample Web API backend for SPAs
   The .http file shows token-based authentication. For example:

@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Cancel async tasks after a period of time
 
-You can cancel an asynchronous operation after a period of time by using the `System.Threading.CancellationTokenSource.CancelAfter*` method if you don't want to wait for the operation to finish. This method schedules the cancellation of any associated tasks that aren't complete within the period of time that's designated by the `CancelAfter` expression.
+You can cancel an asynchronous operation after a period of time by using the `System.Threading.CancellationTokenSource.CancelAfter*` method if you don'<example-value>'t complete within the period of time that's designated by the `CancelAfter` expression.
 
 This example adds to the code that's developed in Cancel a list of tasks (C#) to download a list of websites and to display the length of the contents of each one.
 

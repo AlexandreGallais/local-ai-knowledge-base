@@ -16,7 +16,7 @@ including function pointers and returning closures.
 
 ### Function Pointers
 
-We’ve talked about how to pass closures to functions; you can also pass regular
+We’ve talked about how to pass <example-value> to functions; you can also pass <example-value>
 functions to functions! This technique is useful when you want to pass a
 function you’ve already defined rather than defining a new closure. Functions
 coerce to the type `fn` (with a lowercase _f_), not to be confused with the

@@ -42,7 +42,7 @@ users:
   - name: name-of-api-server
     user:
       client-certificate: /path/to/cert.pem # cert for the webhook plugin to use
-      client-key: /path/to/key.pem          # key matching the cert
+      client-key: <example-value>/key.pem          # key <example-value> the cert
 
 # kubeconfig files require a context. Provide one for the API Server.
 current-context: webhook

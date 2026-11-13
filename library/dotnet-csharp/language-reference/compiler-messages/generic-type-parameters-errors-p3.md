@@ -19,7 +19,7 @@ These errors relate to the `new()` constraint and instantiating type parameters 
 
 - Add the `new()` constraint to type parameters that you need to instantiate (**CS0304**). When you use `new T()` inside a generic type or method, the compiler must guarantee that any type argument has a parameterless constructor. The `new()` constraint provides this guarantee.
 - Ensure type arguments have public parameterless constructors (**CS0310**). When a type parameter has the `new()` constraint, any concrete type used as a type argument must be non-abstract and must provide a public parameterless constructor. Types with only private, protected, or parameterized constructors can't satisfy the `new()` constraint.
-- Remove constructor arguments when instantiating type parameters (**CS0417**). The `new()` constraint only guarantees a parameterless constructor. You can't pass arguments to `new T(arguments)`. If you need to construct instances with specific arguments, consider using a factory pattern or an interface constraint that defines the construction behavior.
+- Remove constructor arguments when instantiating type parameters (**CS0417**). The `new()` constraint only guarantees a parameterless constructor. You can't pass <example-value> to `new T(arguments)`. If you need to construct instances with specific arguments, consider using a factory pattern or an interface constraint that defines the construction behavior.
 
 For more information, see Constraints on type parameters and the `new()` constraint.
 
@@ -78,7 +78,7 @@ For more information, see Covariance and Contravariance in Generics.
 - **CS0718**: *'type': static types cannot be used as type arguments.*
 - **CS1720**: *Expression will always cause a System.NullReferenceException because the default value of 'generic type' is null.*
 - **CS1763**: *'parameter' is of type 'type'. A default parameter value of a reference type other than string can only be initialized with null.*
-- **CS8322**: *Cannot pass argument with dynamic type to generic local function with inferred type arguments.*
+- **CS8322**: *Cannot pass <example-value> with dynamic type to generic local function with inferred type arguments.*
 - **CS9338**: *Inconsistent accessibility: type is less accessible than class.*
 
 These errors relate to restrictions on how generic types and type parameters can be used in expressions, inheritance, and member access.

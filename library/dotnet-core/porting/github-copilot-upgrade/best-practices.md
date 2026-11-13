@@ -65,7 +65,7 @@ Follow these guidelines while the agent works through your upgrade.
 
 ### Use guided mode for your first upgrade
 
-The agent supports both guided and automatic modes. In guided mode, the agent pauses at key decision points for your review and approval. Start with guided mode to understand what the agent does and why. Switch to automatic mode once you're comfortable with the workflow.
+The agent supports both guided and automatic modes. In guided mode, the agent pauses at key <example-value> points for your review and approval. Start with guided mode to understand what the agent does and why. Switch to automatic mode once you're comfortable with the workflow.
 
 ### Review the assessment carefully
 
@@ -119,7 +119,7 @@ The agent works project-by-project, so large solutions take time. Be patient and
 
 ### Private package feeds
 
-For private NuGet or npm feeds, authenticate before you start the upgrade. Use your organization's credential provider or package-manager configuration. Without authentication, package restore or installation failures block progress.
+For private NuGet or npm feeds, authenticate before you start the upgrade. Use your organization's credential <example-value> or package-manager configuration. Without authentication, package restore or installation failures block progress.
 
 ### Custom build logic
 

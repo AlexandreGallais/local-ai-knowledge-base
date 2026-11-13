@@ -69,7 +69,7 @@ The NuGet configuration file (*nuget.config*) to use. If specified, only the set
 
 > **Warning:**
 > Storing passwords in clear text is strongly discouraged.
-> For more information on managing credentials securely, refer to the security best practices for consuming packages from private feeds.
+> For more information on managing credentials <example-value>, refer to the security best practices for consuming packages from private feeds.
 
 - **`-u|--username <USER>`**
 
@@ -77,7 +77,7 @@ The NuGet configuration file (*nuget.config*) to use. If specified, only the set
 
 - **`--valid-authentication-types <TYPES>`**
 
-  Comma-separated list of valid authentication types for this source. Set this to `basic` if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include `negotiate`, `kerberos`, `ntlm`, and `digest`, but these values are unlikely to be useful.
+  Comma-separated list of valid authentication types for this source. Set this to `basic` if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic <example-value>, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include `negotiate`, `kerberos`, `ntlm`, and `digest`, but these values are unlikely to be useful.
 
 ## Examples
 

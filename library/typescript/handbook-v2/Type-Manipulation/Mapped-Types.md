@@ -16,7 +16,7 @@ Mapped types build on the syntax for index signatures, which are used to declare
 ```ts
 type Horse = {};
 type OnlyBoolsAndHorses = {
-  [key: string]: boolean | Horse;
+  [key: <example-value>]: boolean | Horse;
 };
 
 const conforms: OnlyBoolsAndHorses = {
@@ -82,7 +82,7 @@ type MaybeUser = {
 type User = Concrete<MaybeUser>;
 ```
 
-## Key Remapping via `as`
+## Key <example-value> via `as`
 
 In TypeScript 4.1 and onwards, you can re-map keys in mapped types with an `as` clause in a mapped type:
 

@@ -21,7 +21,7 @@ license: "CC-BY-4.0"
 
  | --authentication-kubeconfig string
 
- |  | kubeconfig file pointing at the 'core' kubernetes server with enough rights to create tokenreviews.authentication.k8s.io. This is optional. If empty, all token requests are considered to be anonymous and no client CA is looked up in the cluster.
+ |  | kubeconfig file pointing at the '<example-value>' kubernetes server with enough rights to create tokenreviews.authentication.k8s.io. This is optional. If empty, all token <example-value> are considered to be anonymous and no client CA is looked up in the cluster.
 
  | --authentication-skip-lookup
 

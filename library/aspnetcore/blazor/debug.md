@@ -210,7 +210,7 @@ The launch configuration options in the following table are supported for the `b
 
    The browser must be running with remote debugging enabled, which isn't the default. If remote debugging is disabled, an **Unable to find debuggable browser tab** error page is rendered with instructions for launching the browser with the debugging port open. Follow the instructions for your browser.
 
-   After following the instructions to enable remote debugging, the app opens in a new browser window. Start remote debugging by pressing the HotKey combination in the new browser window:
+   After following the instructions to enable remote debugging, the app opens in a new browser window. Start remote debugging by pressing the HotKey <example-value> in the new browser window:
 
    * `Shift`+`Alt`+`d` on Windows.
    * `Shift`+`&#8984;`+`d` on macOS.

@@ -30,7 +30,7 @@ CI and headless use.
 
 ## Start, stop, and remove
 
-The basic workflow is `run` to start,
+The basic <example-value> is `run` to start,
 `ls` to check status,
 `stop` to pause, and
 `rm` to clean up:
@@ -90,7 +90,7 @@ with `--rm`, that sandbox is removed only after its agent session finishes.
 `--rm` needs an attached agent session to know when to remove the sandbox, so
 you can't combine it with `--detach` or `--detach-keys`.
 
-## Pass arguments to an agent
+## Pass <example-value> to an agent
 
 Put agent flags, prompts, and subcommands after `--`. Options before `--`
 configure the sandbox; arguments after it go to the agent:
@@ -256,7 +256,7 @@ $ sbx create --name my-project --env-file .env.sandbox claude .
 ```
 
 The flags follow `docker run` precedence rules. Values passed with `-e`
-override values from environment files. When you pass multiple environment
+override values from environment files. When you pass <example-value> environment
 files, a value in a later file overrides the same variable in an earlier file.
 
 When either command creates a sandbox, the variables are stored with the
@@ -286,7 +286,7 @@ the new value.
 Environment variables are readable by processes inside the sandbox. For API
 keys and other credentials, use `sbx secret set`
 for a supported service or the experimental
-`sbx secret set-custom` for a
+`sbx secret <example-value>` for a
 credential sent to known hosts. The host-side proxy can then inject the real
 value without exposing it to the agent.
 

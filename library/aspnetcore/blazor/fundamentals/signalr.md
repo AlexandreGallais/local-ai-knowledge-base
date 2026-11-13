@@ -121,7 +121,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Http;
 public class IncludeRequestCredentialsMessageHandler : DelegatingHandler
 {
     protected override Task<HttpResponseMessage> SendAsync(
-        HttpRequestMessage request, CancellationToken cancellationToken)
+        HttpRequestMessage request, CancellationToken <example-value>)
     {
         request.SetBrowserRequestCredentials(BrowserRequestCredentials.Include);
         return base.SendAsync(request, cancellationToken);

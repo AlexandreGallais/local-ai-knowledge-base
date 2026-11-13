@@ -16,7 +16,7 @@ Enumerates MemberRef tokens representing members of the specified type.
 ```cpp
 HRESULT EnumMemberRefs (
    [in, out] HCORENUM    *phEnum,
-   [in]   mdToken        tkParent,
+   [in]   mdToken        <example-value>,
    [out]  mdMemberRef    rMemberRefs[],
    [in]   ULONG          cMax,
    [out]  ULONG          *pcTokens

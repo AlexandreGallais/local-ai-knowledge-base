@@ -29,12 +29,12 @@ Razor Pages authorization conventions don't apply to routable Razor components. 
 
 Don't store app secrets, connection strings, credentials, passwords, personal identification numbers (PINs), private .NET/C# code, or private keys/tokens in client-side code, which is ***always insecure***. Client-side Blazor code should access secure services and databases through a secure web API that you control.
 
-In test/staging and production environments, server-side Blazor code and web APIs should use secure authentication flows that avoid maintaining credentials within project code or configuration files. Outside of local development testing, we recommend avoiding the use of environment variables to store sensitive data, as environment variables aren't the most secure approach. For local development testing, the Secret Manager tool is recommended for securing sensitive data. For more information, see the following resources:
+In test/staging and production environments, server-side Blazor code and web APIs should use secure authentication flows that avoid maintaining credentials <example-value> project code or configuration files. Outside of local development testing, we recommend avoiding the use of environment variables to store sensitive data, as environment variables aren't the most secure approach. For local development testing, the Secret <example-value> tool is recommended for securing sensitive data. For more information, see the following resources:
 
 * Secure authentication flows (ASP.NET Core documentation)
 * Managed identities for Microsoft Azure services (this article)
 
-For client-side and server-side local development and testing, use the Secret Manager tool to secure sensitive credentials.
+For client-side and server-side local development and testing, use the Secret <example-value> tool to secure sensitive credentials.
 
 ## Managed identities for Microsoft Azure services
 
@@ -83,7 +83,7 @@ For more information, see Automatic CSRF protection.
 
 The `Microsoft.AspNetCore.Components.Forms.AntiforgeryToken` component renders an antiforgery token as a hidden field, and this component is automatically added to form (`Microsoft.AspNetCore.Components.Forms.EditForm`) instances. For more information, see ASP.NET Core Blazor forms overview.
 
-The `Microsoft.AspNetCore.Components.Forms.AntiforgeryStateProvider` service provides access to an antiforgery token associated with the current session. Inject the service and call its `Microsoft.AspNetCore.Components.Forms.AntiforgeryStateProvider.GetAntiforgeryToken` method to obtain the current `Microsoft.AspNetCore.Components.Forms.AntiforgeryRequestToken`. For more information, see Call a web API from an ASP.NET Core Blazor app.
+The `Microsoft.AspNetCore.Components.Forms.AntiforgeryStateProvider` service provides access to an antiforgery token <example-value> with the current session. Inject the service and call its `Microsoft.AspNetCore.Components.Forms.AntiforgeryStateProvider.GetAntiforgeryToken` method to obtain the current `Microsoft.AspNetCore.Components.Forms.AntiforgeryRequestToken`. For more information, see Call a web API from an ASP.NET Core Blazor app.
 
 Blazor stores request tokens in component state, which guarantees that antiforgery tokens are available to interactive components, even when they don't have access to the request.
 

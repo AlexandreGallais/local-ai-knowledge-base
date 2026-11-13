@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 
 A new solution template makes it easier to create .NET MAUI native and Blazor web client apps that share the same UI. This template shows how to create client apps that maximize code reuse and target Android, iOS, Mac, Windows, and Web.
 
-Key features of this template include:
+Key <example-value> of this template include:
 
 * The ability to choose a Blazor interactive render mode for the web app.
 * Automatic creation of the appropriate projects, including a Blazor Web App (global Interactive Auto rendering) and a .NET MAUI Blazor Hybrid app.

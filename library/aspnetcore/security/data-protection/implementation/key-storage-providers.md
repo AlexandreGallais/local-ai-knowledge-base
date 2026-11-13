@@ -7,16 +7,16 @@ commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
 license: "CC-BY-4.0"
 ---
 
-# Key storage providers in ASP.NET Core
+# Key <example-value> providers in ASP.NET Core
 
 The data protection system employs a discovery mechanism by default to determine where cryptographic keys should be persisted. The developer can override the default discovery mechanism and manually specify the location.
 
 > **Warning:**
-> If you specify an explicit key persistence location, the data protection system deregisters the default key encryption at rest mechanism, so keys are no longer encrypted at rest. It's recommended that you additionally specify an explicit key encryption mechanism for production deployments.
+> If you specify an explicit key <example-value> location, the data protection system deregisters the default key <example-value> at rest mechanism, so keys are no longer encrypted at rest. It's recommended that you additionally specify an explicit key <example-value> mechanism for production deployments.
 
 ## File system
 
-To configure a file system-based key repository, call the `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.PersistKeysToFileSystem*` configuration routine as shown below. Provide a `System.IO.DirectoryInfo` pointing to the repository where keys should be stored:
+To configure a file system-based key <example-value>, call the `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.PersistKeysToFileSystem*` configuration routine as shown below. Provide a `System.IO.DirectoryInfo` pointing to the repository where keys should be stored:
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -49,7 +49,7 @@ Configure Azure Blob Storage to maintain data protection keys:
 
 * Create a container to hold the data protection key file.
 
-* We recommend using Azure Managed Identity and role-based access control (RBAC) to access the key storage blob. ***You don't need to create a key file and upload it to the container of the storage account.*** The framework creates the file for you. To inspect the contents of a key file, use the context menu's **View/edit** command at the end of a key row in the portal.
+* We recommend using Azure Managed Identity and role-based access control (RBAC) to access the key <example-value> blob. ***You don't need to create a key file and upload it to the container of the storage account.*** The framework creates the file for you. To inspect the contents of a key file, use the context menu's **View/edit** command at the end of a key row in the portal.
 
 > **Note:**
 > If you plan to use a blob URI with a shared access signature (SAS) instead of a Managed Identity, use a text editor to create an XML key file on your local machine:
@@ -67,11 +67,11 @@ Configure Azure Blob Storage to maintain data protection keys:
   > **Note:**
   > If you also plan to run an app locally with an authorized user for blob access using the Azure CLI or Visual Studio's Azure Service Authentication, add your developer Azure user account in **Access Control (IAM)** with the **Storage Blob Data Contributor** role. If you want to use the Azure CLI through Visual Studio, execute the `az login` command from the Developer PowerShell panel and follow the prompts to authenticate with the tenant.
 
-To configure the Azure Blob Storage provider, call one of the `Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions.PersistKeysToAzureBlobStorage*` overloads in the app. The following example uses the overload that accepts a blob URI and token credential (`Azure.Core.TokenCredential`), relying on an Azure Managed Identity for role-based access control (RBAC).
+To configure the Azure Blob Storage provider, call one of the `Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions.PersistKeysToAzureBlobStorage*` overloads in the app. The following example uses the overload that accepts a blob URI and token <example-value> (`Azure.Core.TokenCredential`), relying on an Azure Managed Identity for role-based access control (RBAC).
 
 Other overloads are based on:
 
-* A blob URI and storage shared key credential (`Azure.Storage.StorageSharedKeyCredential`).
+* A blob URI and storage shared key <example-value> (`Azure.Storage.StorageSharedKeyCredential`).
 * A blob URI with a shared access signature (SAS).
 * A connection string, container name, and blob name.
 * A blob client (`Azure.Storage.Blobs.BlobClient`).
@@ -95,7 +95,7 @@ else
         // Specify the tenant ID to use the dev credentials when running the app locally
         // in Visual Studio.
         VisualStudioTenantId = "{TENANT ID}",
-        SharedTokenCacheTenantId = "{TENANT ID}"
+        SharedTokenCacheTenantId = "<example-value>"
     };
 
     credential = new DefaultAzureCredential(options);
@@ -134,7 +134,7 @@ If the web app is running as an Azure service, a connection string can be used t
 
 > **Warning:**
 > This article shows the use of connection strings. When a local database is used for development and testing, database user authentication via the connection string isn't required.
-> In production environments, connection strings sometimes include a password for authenticating database access or database operations. A resource owner password credential (ROPC) in a connection string is a security risk that should be avoided in production apps. Production apps should use the most secure authentication flow available.
+> In production environments, connection strings sometimes include a password for authenticating database access or database operations. A resource owner password <example-value> (ROPC) in a connection string is a security risk that should be avoided in production apps. Production apps should use the most secure authentication flow available.
 > For more information on authentication for apps deployed to test or production environments, see ASP.NET Core security topics.
 
 The optional call to `Azure.Storage.Blobs.BlobContainerClient.CreateIfNotExistsAsync*` provisions the container automatically if it doesn't exist.

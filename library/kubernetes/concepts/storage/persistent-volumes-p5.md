@@ -32,7 +32,7 @@ spec:
     matchLabels:
       release: "stable"
     matchExpressions:
-      - {key: environment, operator: In, values: [dev]}
+      - {key: <example-value>, operator: In, values: [dev]}
 ```
 
 ### Access Modes

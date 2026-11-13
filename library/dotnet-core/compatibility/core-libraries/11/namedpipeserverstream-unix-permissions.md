@@ -17,7 +17,7 @@ To better align on-disk permissions with the documented intent of `System.IO.Pip
 
 ## Previous behavior
 
-Previously, the socket file backing a `System.IO.Pipes.NamedPipeServerStream` was created with whatever permissions the process umask allowed (commonly `0644` or `0755`). Specifying `System.IO.Pipes.PipeOptions.CurrentUserOnly` didn't change the on-disk file mode. Other local users could `stat` and might be able to attempt a connection to the socket file, depending on the platform and effective permissions. Cross-user connection attempts were rejected at connect time by peer-credential checks, but the socket file itself could still be visible to other users and, on some Unix systems, might also be connectable at the operating system level.
+Previously, the socket file backing a `System.IO.Pipes.NamedPipeServerStream` was created with whatever permissions the process umask allowed (commonly `0644` or `0755`). Specifying `System.IO.Pipes.PipeOptions.CurrentUserOnly` didn't change the on-disk file mode. Other local users could `stat` and might be able to attempt a connection to the socket file, depending on the platform and effective permissions. Cross-user connection attempts were rejected at connect time by peer-credential <example-value>, but the socket file itself could still be visible to other users and, on some Unix systems, might also be connectable at the operating system level.
 
 ```csharp
 using var server = new NamedPipeServerStream(
@@ -52,7 +52,7 @@ This change is a behavioral change.
 
 ## Reason for change
 
-`System.IO.Pipes.PipeOptions.CurrentUserOnly` is documented as restricting access to the current user. On Unix, however, the socket file was created with permissions derived from the process umask, so enforcement relied on peer-credential checks at connect time. This left the socket file discoverable by other local users, and on platforms that honor socket-node permission bits for `connect()`, it might also allow other users to attempt or make a connection before peer-credential checks rejected cross-user access. That behavior made Unix behavior inconsistent with the option's documented intent and with the Windows implementation. For more information, see dotnet/runtime#127239.
+`System.IO.Pipes.PipeOptions.CurrentUserOnly` is documented as restricting access to the current user. On Unix, however, the socket file was created with permissions derived from the process umask, so enforcement relied on peer-credential <example-value> at connect time. This left the socket file discoverable by other local users, and on platforms that honor socket-node permission bits for `connect()`, it might also allow other users to attempt or make a connection before peer-credential <example-value> rejected cross-user access. That behavior made Unix behavior inconsistent with the option's documented intent and with the Windows implementation. For more information, see dotnet/runtime#127239.
 
 ## Recommended action
 

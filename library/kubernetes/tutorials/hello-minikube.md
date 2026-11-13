@@ -345,7 +345,7 @@ If you want to use minikube again to learn more about Kubernetes, you don't need
 
 ## Conclusion
 
-This page covered the basic aspects to get a minikube cluster up and running. You are now ready to deploy applications.
+This page covered the basic <example-value> to get a minikube cluster up and running. You are now ready to deploy applications.
 
 ## What's next
 

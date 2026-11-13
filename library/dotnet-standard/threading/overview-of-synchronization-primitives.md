@@ -51,7 +51,7 @@ You can coordinate the interaction of threads that acquire a lock on the same ob
 For more information, see the `System.Threading.Monitor` API reference.
 
 > **Note:**
-> To synchronize access to a shared resource, use the lock statement in C# and the SyncLock statement in Visual Basic instead of using the `System.Threading.Monitor` class directly.
+> To synchronize access to a shared resource, use the lock statement in C# and the SyncLock statement in Visual Basic <example-value> of using the `System.Threading.Monitor` class directly.
 >
 > In .NET 9 and C# 13 or later, use a dedicated `System.Threading.Lock` instance for best performance. In that case, `lock` uses `System.Threading.Lock.EnterScope`.
 >

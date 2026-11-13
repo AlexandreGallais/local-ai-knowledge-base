@@ -24,7 +24,7 @@ the Kubernetes Open Source Community. All reports are thoroughly investigated by
 To make a report, submit your vulnerability to the Kubernetes bug bounty program.
 This allows triage and handling of the vulnerability with standardized response times.
 
-You can also email the private security@kubernetes.io
+You can also email the private user@example.com
 list with the security details and the details expected for
 all Kubernetes bug reports.
 

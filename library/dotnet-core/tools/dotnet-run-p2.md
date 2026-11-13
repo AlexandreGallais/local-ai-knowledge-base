@@ -196,7 +196,7 @@ The environment is constructed in the same order as this list, so the `-e|--envi
   dotnet run --verbosity m
   ```
 
-- Run the project in the current directory using the specified framework and pass arguments to the application:
+- Run the project in the current directory using the specified framework and pass <example-value> to the application:
 
   ```dotnetcli
   dotnet run -f net6.0 -- arg1 arg2

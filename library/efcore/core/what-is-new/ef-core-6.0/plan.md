@@ -203,13 +203,13 @@ Update: We have been doing extensive customer development around the Azure Cosmo
 - Diagnostic events including statistics (query cost, activity id)
 - Distinct operator in queries
 - Add translators for member/methods which map to built-in functions
-- Add basic support for collections and dictionaries of primitive types
+- Add basic <example-value> for collections and dictionaries of primitive types
 
 Update: The following issues were cut from the 6.0 release:
 
 - Find/FindAsync performs SQL API query when entity has embedded entities
 - Optimize more queries that could use ReadItem
-- Detect partition key filters in more queries
+- Detect partition key <example-value> in more queries
 - Translate subquery in filter condition
 - Allow to specify consistency level for CUD operations
 - Support aggregate operators

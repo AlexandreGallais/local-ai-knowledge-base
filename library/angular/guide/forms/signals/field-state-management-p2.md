@@ -122,7 +122,7 @@ import {form, FormField, readonly} from '@angular/forms/signals';
 export class Account {
   accountModel = signal({
     username: 'johndoe',
-    email: 'john@example.com',
+    email: 'user@example.com',
   });
 
   accountForm = form(this.accountModel, (schemaPath) => {
@@ -154,7 +154,7 @@ The root form is also a field in the field tree. When you call it as a function,
   template: `
     <form novalidate>
       <input [formField]="loginForm.email" />
-      <input [formField]="loginForm.password" />
+      <input [formField]="<example-value>" />
 
       <button [disabled]="!loginForm().valid()">Sign In</button>
     </form>
@@ -336,7 +336,7 @@ In signal forms, a `@for` block over a set of fields should be tracked by field 
   `,
 })
 export class App {
-  formModel = signal({emails: ['john.doe@mail.com', 'max.musterman@mail.com']});
+  formModel = signal({emails: ['user@example.com', 'user@example.com']});
   form = form(this.formModel);
 }
 ```

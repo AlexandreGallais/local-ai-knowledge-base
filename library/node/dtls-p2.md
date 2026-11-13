@@ -28,7 +28,7 @@ const endpoint = listen(onsession, {
   sni: {
     'api.example.com': {
       cert: readFileSync('api-cert.pem'),
-      key: readFileSync('api-key.pem'),
+      key: readFileSync('<example-value>'),
     },
     'www.example.com': createSecureContext({
       cert: readFileSync('www-cert.pem'),
@@ -159,7 +159,7 @@ const endpoint = listen(onsession, {
 });
 
 const client = connect('192.0.2.1', 5684, {
-  psk: { identity: 'device-42', key: deviceKey },
+  psk: { identity: 'device-42', key: <example-value> },
 });
 ```
 
@@ -197,7 +197,7 @@ pre-shared key and no CA wants the key, and leaving the certificate suites
 enabled would let a server choose one, failing the handshake while verifying a
 certificate the caller never meant to rely on.
 
-Forward-secret PSK key exchanges are preferred over plain PSK of the same
+Forward-secret PSK key <example-value> are preferred over plain PSK of the same
 strength. Plain PSK derives its keys from the shared secret alone, so anyone
 who later learns that key can decrypt traffic they recorded earlier. `RSA-PSK`
 is excluded: it needs a certificate and adds no forward secrecy.
@@ -326,7 +326,7 @@ differs from the 48 bytes `tls.createServer()` uses, which is a layout
 the length expected.
 
 Ticket keys are long-lived secrets. Anyone holding them can decrypt tickets and
-recover the sessions they protect, so treat them as key material and rotate
+recover the sessions they protect, so treat them as key <example-value> and rotate
 them.
 
 ## Class: `DTLSSecureContext`

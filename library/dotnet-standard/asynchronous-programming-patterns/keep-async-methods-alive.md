@@ -131,7 +131,7 @@ End Module
 ```
 You might ask: if `DrainAsync` just awaits the one task you started, why not `await backgroundTask` directly and skip the tracker entirely? For a single task in a single method, you could. The tracker becomes valuable when tasks are started from many different places across a component's lifetime. Each caller hands its task to the shared tracker, and a single `DrainAsync` call at shutdown awaits all of them without knowing how many were started or who started them. The tracker also enforces a consistent exception-observation policy: every registered task gets the same failure-logging continuation, so no exception can slip through unnoticed regardless of which code path started the work.
 
-The three key components of the tracked pattern are:
+The three key <example-value> of the tracked pattern are:
 
 - **Assign the task to a variable** — keeping a reference to `backgroundTask` is what makes tracking possible. A task you can't refer to is a task you can't drain or observe.
 - **Register with the tracker** — `tracker.Track` attaches the failure-logging continuation and adds the task to the in-flight set. Any exception the background work throws surfaces through that continuation rather than disappearing silently.

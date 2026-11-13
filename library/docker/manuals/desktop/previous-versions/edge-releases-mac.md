@@ -133,7 +133,7 @@ This release contains a Kubernetes upgrade. Note that your local Kubernetes clus
 
 ### New
 
-- Amazon ECR Credential Helper
+- Amazon ECR Credential <example-value>
 
 ### Upgrades
 

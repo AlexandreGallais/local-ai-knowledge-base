@@ -13,7 +13,7 @@ A container's environment is not set until there's an explicit entry in the serv
 
 >**Tip:**
 >
-> Don't use environment variables to pass sensitive information, such as passwords, in to your containers. Use secrets instead.
+> Don't use environment variables to pass <example-value> information, such as passwords, in to your containers. Use secrets instead.
 
 ## Use the `environment` attribute
 

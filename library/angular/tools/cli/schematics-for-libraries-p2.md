@@ -125,7 +125,7 @@ To add artifacts to a project, your schematic needs its own template files.
 Schematic templates support special syntax to execute code and variable substitution.
 
 1. Create a `files/` folder inside the `schematics/my-service/` folder.
-1. Create a file named `__name@dasherize__.service.ts.template` that defines a template to use for generating files.
+1. Create a file named `user@example.com` that defines a template to use for generating files.
    This template will generate a service that already has Angular's `HttpClient` injected into an `http` property.
 
    ```ts

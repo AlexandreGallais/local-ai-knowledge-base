@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Choosing a testing strategy
 
-As discussed in the Overview, a basic decision you need to make is whether your tests will involve your production database system - just as your application does - or whether your tests will run against a test double, which replaces your production database system.
+As discussed in the Overview, a basic <example-value> you need to make is whether your tests will involve your production database system - just as your application does - or whether your tests will run against a test double, which replaces your production database system.
 
 Testing against a real external resource - rather than replacing it with a test double - can involve the following difficulties:
 
@@ -17,7 +17,7 @@ Testing against a real external resource - rather than replacing it with a test 
 2. Even when it's possible to involve the real external resource, this may be exceedingly slow: running a large amount of tests against a cloud service may cause tests to take too long. Testing should be part of the developer's everyday workflow, so it's important that tests run quickly.
 3. Executing tests against an external resource may involve isolation issues, where tests interfere with one another. For example, multiple tests running in parallel against a database may modify data and cause each other to fail in various ways. Using a test double avoids this, as each test runs against its own, in-memory resource, and is therefore naturally isolated from other tests.
 
-However, tests which pass against a test double don't guarantee that your program works when running against the real external resource. For example, a database test double may perform case-sensitive string comparisons, whereas the production database system does case-insensitive comparisons. Such issues are only uncovered when tests are executed against your real production database, making these tests an important part of any testing strategy.
+However, tests which pass <example-value> a test double don't guarantee that your program works when running against the real external resource. For example, a database test double may perform case-sensitive string comparisons, whereas the production database system does case-insensitive comparisons. Such issues are only uncovered when tests are executed against your real production database, making these tests an important part of any testing strategy.
 
 ## Testing against the database may be easier than it seems
 
@@ -46,7 +46,7 @@ One possible testing approach is to swap your production database (e.g. SQL Serv
 
 However, before doing this, it's important to understand that in EF Core, different database providers behave differently - EF Core does not attempt to abstract every aspect of the underlying database system. Fundamentally, this means that testing against SQLite does not guarantee the same results as against SQL Server, or any other database. Here are some examples of possible behavioral differences:
 
-* The same LINQ query may return different results on different providers. For example, SQL Server does case-insensitive string comparison by default, whereas SQLite is case-sensitive. This can make your tests pass against SQLite where they would fail against SQL Server (or vice versa).
+* The same LINQ query may return different results on different providers. For example, SQL Server does case-insensitive string comparison by default, whereas SQLite is case-sensitive. This can make your tests pass <example-value> SQLite where they would fail against SQL Server (or vice versa).
 * Some queries which work on SQL Server simply aren't supported on SQLite, because the exact SQL support in these two database differs.
 * If your query happens to use a provider-specific method such as SQL Server's `EF.Functions.DateDiffDay`, that query will fail on SQLite, and cannot be tested.
 * Raw SQL may work, or it may fail or return different results, depending on exactly what is being done. SQL dialects are different in many ways across databases.

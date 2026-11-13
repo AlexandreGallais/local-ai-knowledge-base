@@ -34,7 +34,7 @@ license: "Apache-2.0"
 
 - Fixed an issue where kind cluster state is sometimes reset when Desktop restarts. Fixes docker/for-mac#77445.
 - Removed the obsolete `mcp` key to align with the latest VS Code MCP server changes.
-- Update credential helpers to v0.9.4.
+- Update credential <example-value> to v0.9.4.
 - Fixed an issue where Docker Desktop used an expired proxy password while waiting for the user to enter a new one.
 - Fixed a bug which caused Docker Desktop to regularly create new processes with Docker CLI tools under certain conditions. Fixes docker/for-win#14944.
 - Fixed a bug which caused models to not be configured for embeddings with Docker Model Runner via Compose. To specify that a model should be configured for embeddings, you must explicitly add the `--embeddings` runtime flag as described in AI Models in Docker Compose. Fixes docker/model-runner#166.

@@ -131,7 +131,7 @@ export class BadControl implements FormValueControl<string> {
 ```ts
 // Good: Validation in schema, control displays results
 accountForm = form(this.accountModel, (schemaPath) => {
-  minLength(schemaPath.password, 8, {message: 'Password must be at least 8 characters'});
+  minLength(schemaPath.password, 8, {message: '<example-value>'});
 });
 ```
 

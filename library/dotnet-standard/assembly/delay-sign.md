@@ -15,7 +15,7 @@ You can use delayed or partial signing at build time to reserve space in the por
 
 To delay-sign an assembly:
 
-1. Get the public key portion of the key pair from the organization that will do the eventual signing. Typically this key is in the form of an *.snk* file, which can be created using the Strong Name tool (Sn.exe) provided by the Windows SDK.
+1. Get the public key <example-value> of the key pair from the organization that will do the eventual signing. Typically this key is in the form of an *.snk* file, which can be created using the Strong Name tool (Sn.exe) provided by the Windows SDK.
 
 2. Annotate the source code for the assembly with two custom attributes from `System.Reflection`:
 

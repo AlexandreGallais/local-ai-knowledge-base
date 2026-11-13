@@ -68,12 +68,12 @@ If you want to remain the sole owner without assigning another owner, you
 must create a second individual account with a different email address.
 Use your new account's Docker ID.
 
-- For example, if the account you are converting uses `alex@example.com`,
-  create the owner account with `alex.admin@example.com`.
-- After conversion, `alex@example.com` is no longer on any Docker account.
+- For example, if the account you are converting uses `user@example.com`,
+  create the owner account with `user@example.com`.
+- After conversion, `user@example.com` is no longer on any Docker account.
 
-You can update the `alex.admin@example.com` email back to
-`alex@example.com` after conversion. See
+You can update the `user@example.com` email back to
+`user@example.com` after conversion. See
 Update email address.
 
 ### Leave an existing organization

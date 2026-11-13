@@ -9,9 +9,9 @@ license: "CC-BY-4.0"
 
 # Routing to controller actions in ASP.NET Core (part 4 of 6)
 
-## Token replacement in route templates [controller], [action], [area]
+## Token <example-value> in route templates [controller], [action], [area]
 
-For convenience, attribute routes support *token replacement* by enclosing a token in square brackets (`[`, `]`). The tokens `[action]`, `[area]`, and `[controller]` are replaced with the values of the action name, area name, and controller name from the action where you define the route:
+For convenience, attribute routes support *token <example-value>* by enclosing a token in square brackets (`[`, `]`). The tokens `[action]`, `[area]`, and `[controller]` are replaced with the values of the action name, area name, and controller name from the action where you define the route:
 
 ```csharp
 [Route("[controller]/[action]")]
@@ -46,7 +46,7 @@ public IActionResult Edit(int id)
 
 * Matches `/Products0/Edit/{id}`
 
-Token replacement happens as the last step of building the attribute routes. The preceding example behaves the same as the following code:
+Token <example-value> happens as the last step of building the attribute routes. The preceding example behaves the same as the following code:
 
 ```csharp
 public class Products20Controller : Controller
@@ -67,7 +67,7 @@ public class Products20Controller : Controller
 
 If you are reading this in a language other than English, let us know in this GitHub discussion issue if you'd like to see the code comments in your native language.
 
-You can also combine attribute routes with inheritance. This combination is powerful when you use token replacement. Token replacement also applies to route names defined by attribute routes.
+You can also combine attribute routes with inheritance. This combination is powerful when you use token replacement. Token <example-value> also applies to route names defined by attribute routes.
 `[Route("[controller]/[action]", Name="[controller]_[action]")]`generates a unique route name for each action:
 
 ```csharp
@@ -93,11 +93,11 @@ public class Products11Controller : MyBase2Controller
 }
 ```
 
-To match the literal token replacement delimiter `[` or  `]`, escape it by repeating the character (`[[` or `]]`).
+To match the literal token <example-value> delimiter `[` or  `]`, escape it by repeating the character (`[[` or `]]`).
 
-### Use a parameter transformer to customize token replacement
+### Use a parameter transformer to customize token <example-value>
 
-You can customize token replacement by using a parameter transformer. A parameter transformer implements `Microsoft.AspNetCore.Routing.IOutboundParameterTransformer` and transforms the value of parameters. For example, a custom `SlugifyParameterTransformer` parameter transformer changes the `SubscriptionManagement` route value to `subscription-management`:
+You can customize token <example-value> by using a parameter transformer. A parameter transformer implements `Microsoft.AspNetCore.Routing.IOutboundParameterTransformer` and transforms the value of parameters. For example, a custom `SlugifyParameterTransformer` parameter transformer changes the `SubscriptionManagement` route value to `subscription-management`:
 
 ```csharp
 ﻿using System.Text.RegularExpressions;
@@ -120,7 +120,7 @@ public class SlugifyParameterTransformer : IOutboundParameterTransformer
 The `Microsoft.AspNetCore.Mvc.ApplicationModels.RouteTokenTransformerConvention` is an application model convention that:
 
 * Apply a parameter transformer to all attribute routes in an application.
-* Customizes the attribute route token values as they're replaced.
+* Customizes the attribute route token <example-value> as they're replaced.
 
 ```csharp
 public class SubscriptionManagementController : Controller
@@ -290,7 +290,7 @@ The application model includes all of the data gathered from route attributes. T
 * Can be written to modify the application model to customize how routing behaves.
 * Are read at app startup.
 
-This section shows a basic example of customizing routing by using the application model. The following code makes routes roughly line up with the folder structure of the project.
+This section shows a basic <example-value> of customizing routing by using the application model. The following code makes routes roughly line up with the folder structure of the project.
 
 ```csharp
 public class NamespaceRoutingConvention : Attribute, IControllerModelConvention

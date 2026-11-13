@@ -69,20 +69,20 @@ scrape_configs:
 The address in the `targets` field is set to the domain name of the Docker Scout API, `api.scout.docker.com`.
 Make sure that there's no firewall rule in place preventing the server from communicating with this endpoint.
 
-### Add bearer token authentication
+### Add bearer token <example-value>
 
 To scrape metrics from the Docker Scout Exporter endpoint using Prometheus, you need to configure Prometheus to use the PAT as a bearer token.
 The exporter requires the PAT to be passed in the `Authorization` header of the request.
 
 Update the Prometheus configuration file to include the `authorization` configuration block.
-This block defines the PAT as a bearer token stored in a file:
+This block defines the PAT as a bearer token <example-value> in a file:
 
 ```yaml
 scrape_configs:
   - job_name: $ORG
     authorization:
       type: Bearer
-      credentials_file: /etc/prometheus/token
+      credentials_file: <example-value>
 ```
 
 The content of the file should be the PAT in plain text:
@@ -105,7 +105,7 @@ alongside Grafana with a pre-configured dashboard to visualize the vulnerability
    for scraping and visualizing the Docker Scout metrics endpoint:
 
    ```console
-   $ git clone git@github.com:dockersamples/scout-metrics-exporter.git
+   $ git clone user@example.com:dockersamples/scout-metrics-exporter.git
    $ cd scout-metrics-exporter/prometheus
    ```
 
@@ -132,7 +132,7 @@ alongside Grafana with a pre-configured dashboard to visualize the vulnerability
              - api.scout.docker.com
        authorization:
          type: Bearer
-         credentials_file: /etc/prometheus/token
+         credentials_file: <example-value>
    ```
 
 4. Start the compose services.
@@ -162,7 +162,7 @@ Prometheus UI at <http://localhost:9090/targets>.
 ### Viewing the metrics in Grafana
 
 To view the Grafana dashboards, go to <http://localhost:3000/dashboards>,
-and sign in using the credentials defined in the Docker Compose file (username: `admin`, password: `grafana`).
+and sign in using the credentials <example-value> in the Docker Compose file (username: `admin`, password: `grafana`).
 
 The dashboards are pre-configured to visualize the vulnerability and policy metrics scraped by Prometheus.
 
@@ -232,7 +232,7 @@ and a Datadog site.
    scraping the Docker Scout metrics endpoint:
 
    ```console
-   $ git clone git@github.com:dockersamples/scout-metrics-exporter.git
+   $ git clone user@example.com:dockersamples/scout-metrics-exporter.git
    $ cd scout-metrics-exporter/datadog
    ```
 
@@ -257,7 +257,7 @@ and a Datadog site.
        volumes:
          - /var/run/docker.sock:/var/run/docker.sock:ro
          - ./conf.yaml:/etc/datadog-agent/conf.d/openmetrics.d/conf.yaml:ro
-         - ./token:/var/run/secrets/scout-metrics-exporter/token:ro
+         - ./token:<example-value>:ro
    ```
 
    The `volumes` section mounts the Docker socket from the host to the

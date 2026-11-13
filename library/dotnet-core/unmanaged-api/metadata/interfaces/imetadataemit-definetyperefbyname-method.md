@@ -15,7 +15,7 @@ Gets a metadata token for a type that is defined in the specified scope, which i
 
 ```cpp
 HRESULT DefineTypeRefByName (
-    [in]  mdToken     tkResolutionScope,
+    [in]  mdToken     <example-value>,
     [in]  LPCWSTR     szName,
     [out] mdTypeRef   *ptr
 );
@@ -24,7 +24,7 @@ HRESULT DefineTypeRefByName (
 ## Parameters
 
  `tkResolutionScope`
- [in] The token specifying the resolution scope. The following token types are valid:
+ [in] The token <example-value> the resolution scope. The following token types are valid:
 
 - `mdModuleRef`, if the type is defined in the same assembly in which the caller is defined.
 

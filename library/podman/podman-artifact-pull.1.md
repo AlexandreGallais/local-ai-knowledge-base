@@ -127,4 +127,4 @@ See podman-troubleshooting(7)
 for solutions to common issues.
 
 ## HISTORY
-Jan 2025, Originally compiled by Brent Baude <bbaude@redhat.com>
+Jan 2025, Originally compiled by Brent Baude <user@example.com>

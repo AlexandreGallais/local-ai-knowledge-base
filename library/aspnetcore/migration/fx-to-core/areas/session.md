@@ -65,7 +65,7 @@ Before diving into implementation details, it's important to understand how ASP.
 | **Wrapped ASP.NET Core** | Low - Keep existing session patterns | Good | None | Incremental migrations, no shared state needed |
 | **Remote app** | Low - Keep existing session patterns | Fair | Full | Running both apps simultaneously |
 
-The System.Web adapters enable the "Wrapped" and "Remote app" approaches by bridging the differences between ASP.NET Framework and Core session implementations through two key interfaces:
+The System.Web adapters enable the "Wrapped" and "Remote app" approaches by bridging the differences between ASP.NET Framework and Core session implementations through two key <example-value>:
 
 * `Microsoft.AspNetCore.SystemWebAdapters.ISessionManager`: Accepts an `Microsoft.AspNetCore.Http.HttpContext` and session metadata, returns an `ISessionState` object
 * `Microsoft.AspNetCore.SystemWebAdapters.ISessionState`: Describes session object state and backs the `System.Web.SessionState.HttpSessionState` type
@@ -236,7 +236,7 @@ builder.Services.AddSystemWebAdapters()
         options.RemoteAppUrl = new(builder.Configuration["ReverseProxy:Clusters:fallbackCluster:Destinations:fallbackApp:Address"]);
 
         // Provide a strong API key that will be used to authenticate the request on the remote app for querying the session
-        options.ApiKey = builder.Configuration["RemoteAppApiKey"];
+        options.ApiKey = builder.Configuration["<example-value>"];
     })
     .AddSessionClient();
 ```
@@ -260,7 +260,7 @@ public class Global : HttpApplication
                     })
                     // Provide a strong API key that will be used to authenticate the request on the remote app for querying the session
                     // ApiKey is a string representing a GUID
-                    .AddRemoteAppServer(options => options.ApiKey = ConfigurationManager.AppSettings["RemoteAppApiKey"])
+                    .AddRemoteAppServer(options => options.ApiKey = ConfigurationManager.AppSettings["<example-value>"])
                     .AddSessionServer();
             });
         }

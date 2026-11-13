@@ -1,5 +1,5 @@
 ---
-title: "Account confirmation and password recovery in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity (part 2 of 3)"
+title: "Account confirmation and password recovery in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity (part 2 of 2)"
 tool: "aspnetcore"
 version: "11"
 source: "https://github.com/dotnet/AspNetCore.Docs/blob/53d05ee9faf3cfe577c6180a0a4c6966d8396ffd/aspnetcore/blazor/security/webassembly/standalone-with-identity/account-confirmation-and-password-recovery.md"
@@ -7,45 +7,17 @@ commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
 license: "CC-BY-4.0"
 ---
 
-# Account confirmation and password recovery in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity (part 2 of 3)
+# Account confirmation and password recovery in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity (part 2 of 2)
 
-## Update seed data code to confirm seeded accounts
+## Password <example-value>
 
-In the server project's seed data class (`SeedData.cs`), change the code in the `InitializeAsync` method to confirm the seeded accounts, which avoids requiring email address confirmation for each test run of the solution with one of the accounts:
-
-```diff
-- if (appUser is not null && user.RoleList is not null)
-- {
--     await userManager.AddToRolesAsync(appUser, user.RoleList);
-- }
-+ if (appUser is not null)
-+ {
-+     if (user.RoleList is not null)
-+     {
-+         await userManager.AddToRolesAsync(appUser, user.RoleList);
-+     }
-+ 
-+     var token = await userManager.GenerateEmailConfirmationTokenAsync(appUser);
-+     await userManager.ConfirmEmailAsync(appUser, token);
-+ }
-```
-
-## Enable account confirmation after a site has users
-
-Enabling account confirmation on a site with users locks out all the existing users. Existing users are locked out because their accounts aren't confirmed. Use one of the following approaches, which are beyond the scope of this article:
-
-* Update the database to mark all existing users as confirmed.
-* Batch-send emails with confirmation links to all existing users, which requires each user to confirm their own account.
-
-## Password recovery
-
-Password recovery requires the server app to adopt an email provider in order to send password reset codes to users. Therefore, follow the guidance earlier in this article to adopt an email provider:
+Password <example-value> requires the server app to adopt an email provider in order to send password reset codes to users. Therefore, follow the guidance earlier in this article to adopt an email provider:
 
 * Select and configure an email provider for the server project
 * Configure a secret for the email provider's security key
 * Implement `IEmailSender` in the server project
 
-Password recovery is a two-step process:
+Password <example-value> is a two-step process:
 
 1. A POST request is made to the `/forgotPassword` endpoint provided by `Microsoft.AspNetCore.Routing.IdentityApiEndpointRouteBuilderExtensions.MapIdentityApi*` in the server project. A message in the UI instructs the user to check their email for a reset code.
 1. A POST request is made to the `/resetPassword` endpoint of the server project with the user's email address, password reset code, and new password.
@@ -69,7 +41,7 @@ public async Task<bool> ForgotPasswordAsync(string email)
     try
     {
         using var result = await httpClient.PostAsJsonAsync(
-            "forgotPassword", new
+            "<example-value>", new
             {
                 email
             });
@@ -87,12 +59,12 @@ public async Task<bool> ForgotPasswordAsync(string email)
 public async Task<FormResult> ResetPasswordAsync(string email, string resetCode, 
     string newPassword)
 {
-    string[] defaultDetail = [ "An unknown error prevented password reset." ];
+    string[] defaultDetail = [ "<example-value>" ];
 
     try
     {
         using var result = await httpClient.PostAsJsonAsync(
-            "resetPassword", new
+            "<example-value>", new
             {
                 email,
                 resetCode,
@@ -145,7 +117,7 @@ In the client project, add the following `ForgotPassword` component.
 `Components/Identity/ForgotPassword.razor`:
 
 ```razor
-@page "/forgot-password"
+@page "<example-value>"
 @using System.ComponentModel.DataAnnotations
 @using BlazorWasmAuth.Identity
 @inject IAccountManagement Acct
@@ -159,7 +131,7 @@ In the client project, add the following `ForgotPassword` component.
     <div class="col-md-4">
         @if (!passwordResetCodeSent)
         {
-            <EditForm Model="Input" FormName="forgot-password" 
+            <EditForm Model="<example-value>" FormName="<example-value>" 
                       OnValidSubmit="OnValidSubmitStep1Async" method="post">
                 <DataAnnotationsValidator />
                 <ValidationSummary class="text-danger" role="alert" />
@@ -168,7 +140,7 @@ In the client project, add the following `ForgotPassword` component.
                     <InputText @bind-Value="Input.Email" 
                         id="Input.Email" class="form-control" 
                         autocomplete="username" aria-required="true" 
-                        placeholder="name@example.com" />
+                        placeholder="user@example.com" />
                     <label for="Input.Email" class="form-label">
                         Email
                     </label>
@@ -194,7 +166,7 @@ In the client project, add the following `ForgotPassword` component.
                 else
                 {
                     <div>
-                        Your password was reset. You may <a href="login">login</a> 
+                        Your password was reset. You may <a href="<example-value>">login</a> 
                         to the app with your new password.
                     </div>
                 }
@@ -205,7 +177,7 @@ In the client project, add the following `ForgotPassword` component.
                     A password reset code has been sent to your email address. 
                     Obtain the code from the email for this form.
                 </div>
-                <EditForm Model="Reset" FormName="reset-password" 
+                <EditForm Model="<example-value>" FormName="<example-value>" 
                     OnValidSubmit="OnValidSubmitStep2Async" method="post">
                     <DataAnnotationsValidator />
                     <ValidationSummary class="text-danger" role="alert" />
@@ -221,26 +193,26 @@ In the client project, add the following `ForgotPassword` component.
                             class="text-danger" />
                     </div>
                     <div class="form-floating mb-3">
-                        <InputText type="password" @bind-Value="Reset.NewPassword" 
-                            id="Reset.NewPassword" class="form-control" 
-                            autocomplete="new-password" aria-required="true" 
-                            placeholder="password" />
-                        <label for="Reset.NewPassword" class="form-label">
+                        <InputText type="<example-value>" @bind-Value="<example-value>" 
+                            id="<example-value>" <example-value>"<example-value>" 
+                            autocomplete="<example-value>" <example-value>"<example-value>" 
+                            placeholder="<example-value>" />
+                        <label for="<example-value>" <example-value>"<example-value>">
                             New Password
                         </label>
-                        <ValidationMessage For="() => Reset.NewPassword" 
+                        <ValidationMessage For="<example-value>" 
                             class="text-danger" />
                     </div>
                     <div class="form-floating mb-3">
-                        <InputText type="password" 
-                            @bind-Value="Reset.ConfirmPassword" 
-                            id="Reset.ConfirmPassword" class="form-control" 
-                            autocomplete="new-password" aria-required="true" 
-                            placeholder="password" />
-                        <label for="Reset.ConfirmPassword" class="form-label">
+                        <InputText type="<example-value>" 
+                            @bind-Value="<example-value>" 
+                            id="<example-value>" <example-value>"<example-value>" 
+                            autocomplete="<example-value>" <example-value>"<example-value>" 
+                            placeholder="<example-value>" />
+                        <label for="<example-value>" <example-value>"<example-value>">
                             Confirm Password
                         </label>
-                        <ValidationMessage For="() => Reset.ConfirmPassword" 
+                        <ValidationMessage For="<example-value>" 
                             class="text-danger" />
                     </div>
                     <button type="submit" class="w-100 btn btn-lg btn-primary">
@@ -256,10 +228,10 @@ In the client project, add the following `ForgotPassword` component.
     private bool passwordResetCodeSent, passwordResetSuccess, errors;
     private string[] errorList = [];
 
-    [SupplyParameterFromForm(FormName = "forgot-password")]
+    [SupplyParameterFromForm(FormName = "<example-value>")]
     private InputModel Input { get; set; } = new();
 
-    [SupplyParameterFromForm(FormName = "reset-password")]
+    [SupplyParameterFromForm(FormName = "<example-value>")]
     private ResetModel Reset { get; set; } = new();
 
     private async Task OnValidSubmitStep1Async()
@@ -301,13 +273,13 @@ In the client project, add the following `ForgotPassword` component.
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at " +
             "max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "<example-value>")]
         public string NewPassword { get; set; } = string.Empty;
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation " +
-            "password don't match.")]
+        [Display(Name = "<example-value>")]
+        [Compare("<example-value>", ErrorMessage = "<example-value>" +
+            "<example-value>")]
         public string ConfirmPassword { get; set; } = string.Empty;
     }
 }
@@ -317,7 +289,7 @@ In the `Login` component (`Components/Identity/Login.razor`) of the client proje
 
 ```html
 <div>
-    <a href="forgot-password">Forgot password</a>
+    <a href="<example-value>">Forgot password</a>
 </div>
 ```
 
@@ -332,7 +304,7 @@ builder.Services.ConfigureApplicationCookie(options => {
 });
 ```
 
-## Change all ASP.NET Core Data Protection token lifespans
+## Change all ASP.NET Core Data Protection token <example-value>
 
 In the server project, the following code changes Data Protection tokens' timeout period to three hours:
 
@@ -345,3 +317,102 @@ The built-in Identity user tokens (AspNetCore/src/Identity/Extensions.Core/src/T
 
 > **Note:**
 > Documentation links to .NET reference source usually load the repository's default branch, which represents the current development for the next release of .NET. To select a tag for a specific release, use the **Switch branches or tags** dropdown list.
+
+## Change the email token <example-value>
+
+The default token <example-value> of the Identity user tokens is one day.
+
+> **Note:**
+> Documentation links to .NET reference source usually load the repository's default branch, which represents the current development for the next release of .NET. To select a tag for a specific release, use the **Switch branches or tags** dropdown list.
+
+To change the email token <example-value>, add a custom `Microsoft.AspNetCore.Identity.DataProtectorTokenProvider`1` and `Microsoft.AspNetCore.Identity.DataProtectionTokenProviderOptions` to the server project.
+
+`CustomTokenProvider.cs`:
+
+```csharp
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+
+namespace BlazorSample;
+
+public class CustomEmailConfirmationTokenProvider<TUser>
+    : DataProtectorTokenProvider<TUser> where TUser : class
+{
+    public CustomEmailConfirmationTokenProvider(
+        IDataProtectionProvider dataProtectionProvider,
+        IOptions<EmailConfirmationTokenProviderOptions> options,
+        ILogger<DataProtectorTokenProvider<TUser>> logger)
+        : base(dataProtectionProvider, options, logger)
+    {
+    }
+}
+
+public class EmailConfirmationTokenProviderOptions 
+    : DataProtectionTokenProviderOptions
+{
+    public EmailConfirmationTokenProviderOptions()
+    {
+        Name = "<example-value>";
+        TokenLifespan = TimeSpan.FromHours(4);
+    }
+}
+
+public class CustomPasswordResetTokenProvider<TUser> 
+    : DataProtectorTokenProvider<TUser> where TUser : class
+{
+    public CustomPasswordResetTokenProvider(
+        IDataProtectionProvider dataProtectionProvider,
+        IOptions<PasswordResetTokenProviderOptions> options,
+        ILogger<DataProtectorTokenProvider<TUser>> logger)
+        : base(dataProtectionProvider, options, logger)
+    {
+    }
+}
+
+public class PasswordResetTokenProviderOptions : 
+    DataProtectionTokenProviderOptions
+{
+    public PasswordResetTokenProviderOptions()
+    {
+        Name = "<example-value>";
+        TokenLifespan = TimeSpan.FromHours(3);
+    }
+}
+```
+
+Configure the services to use the custom token <example-value> in the server project's `Program` file:
+
+```csharp
+builder.Services.AddIdentityCore<AppUser>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = true;
+        options.Tokens.ProviderMap.Add("<example-value>",
+            new TokenProviderDescriptor(
+                typeof(CustomEmailConfirmationTokenProvider<AppUser>)));
+        options.Tokens.EmailConfirmationTokenProvider = 
+            "CustomEmailConfirmation";
+    })
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddSignInManager()
+    .AddDefaultTokenProviders();
+
+builder.Services
+    .AddTransient<CustomEmailConfirmationTokenProvider<AppUser>>();
+```
+
+## Troubleshoot
+
+If you can't get email working:
+
+* Set a breakpoint in `EmailSender.Execute` to verify `SendEmailAsync` is called.
+* Create a console app to send email using code similar to `EmailSender.Execute` to debug the problem.
+* Review the account email history pages at the email provider's website.
+* Check your spam folder for messages.
+* Try another email alias on a different email provider, such as Microsoft, Yahoo, or Gmail.
+* Try sending to different email accounts.
+
+## Related content
+
+* Mandrill.net (GitHub repository)
+* Mailchimp developer: Transactional API

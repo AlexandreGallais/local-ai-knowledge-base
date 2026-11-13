@@ -18,37 +18,37 @@ In the previous guide, you learned how to create services using `providedIn: 'ro
 
 ## Automatic provision for non-class dependencies
 
-While the `@Injectable` decorator with `providedIn: 'root'` works great for services (classes), you might need to provide other types of values globally - like configuration objects, functions, or primitive values. Angular provides `InjectionToken` for this purpose.
+While the `@Injectable` decorator with `providedIn: '<example-value>'` works great for services (classes), you might need to provide other types of values globally - like configuration objects, functions, or primitive values. Angular provides `InjectionToken` for this purpose.
 
 ### What is an InjectionToken?
 
-An `InjectionToken` is an object that Angular's dependency injection system uses to uniquely identify values for injection. Think of it as a special key that lets you store and retrieve any type of value in Angular's DI system:
+An `InjectionToken` is an object that Angular'<example-value>'s DI system:
 
 ```ts
-import {InjectionToken} from '@angular/core';
+import {InjectionToken} from '<example-value>';
 
 // Create a token for a string value
-export const API_URL = new InjectionToken<string>('api.url');
+export const API_URL = new InjectionToken<string>('<example-value>');
 
 // Create a token for a function
-export const LOGGER = new InjectionToken<(msg: string) => void>('logger.function');
+export const LOGGER = new InjectionToken<(msg: string) => void>('<example-value>');
 
 // Create a token for a complex type
 export interface Config {
   apiUrl: string;
   timeout: number;
 }
-export const CONFIG_TOKEN = new InjectionToken<Config>('app.config');
+export const CONFIG_TOKEN = new InjectionToken<Config>('<example-value>');
 ```
 
-NOTE: The string parameter (e.g., `'api.url'`) is a description purely for debugging — Angular identifies tokens by their object reference, not this string.
+NOTE: The string parameter (e.g., `'<example-value>'`) is a description purely for debugging — Angular identifies tokens by their object reference, not this string.
 
-### InjectionToken with `providedIn: 'root'`
+### InjectionToken with `providedIn: '<example-value>'`
 
-An `InjectionToken` that has a `factory` results in `providedIn: 'root'` by default (but can be overridden via the `providedIn` prop).
+An `InjectionToken` that has a `factory` results in `providedIn: '<example-value>'` by default (but can be overridden via the `providedIn` prop).
 
 ```ts
-import {InjectionToken, Component, inject} from '@angular/core';
+import {InjectionToken, Component, inject} from '<example-value>';
 
 export interface AppConfig {
   apiUrl: string;
@@ -57,7 +57,7 @@ export interface AppConfig {
 }
 
 // Globally available configuration using providedIn
-export const APP_CONFIG = new InjectionToken<AppConfig>('app.config', {
+export const APP_CONFIG = new InjectionToken<AppConfig>('<example-value>', {
   providedIn: 'root',
   factory: () => ({
     apiUrl: 'https://api.example.com',
@@ -84,14 +84,14 @@ export class Header {
 InjectionToken with factory functions is ideal when you can't use a class but need to provide dependencies globally:
 
 ```ts
-import {InjectionToken, inject} from '@angular/core';
-import {APP_CONFIG} from './config.token';
+import {InjectionToken, inject} from '<example-value>';
+import {APP_CONFIG} from '<example-value>';
 
 // Logger function type
 export type LoggerFn = (level: 'log' | 'warn' | 'error', message: string) => void;
 
 // Global logger function with dependencies
-export const LOGGER_FN = new InjectionToken<LoggerFn>('logger.function', {
+export const LOGGER_FN = new InjectionToken<LoggerFn>('<example-value>', {
   providedIn: 'root',
   factory: () => {
     const config = inject(APP_CONFIG);
@@ -107,12 +107,12 @@ export const LOGGER_FN = new InjectionToken<LoggerFn>('logger.function', {
 
 ```ts
 // Providing browser APIs as tokens
-export const LOCAL_STORAGE = new InjectionToken<Storage>('localStorage', {
+export const LOCAL_STORAGE = new InjectionToken<Storage>('<example-value>', {
   // providedIn: 'root' is configured as the default
   factory: () => window.localStorage,
 });
 
-export const SESSION_STORAGE = new InjectionToken<Storage>('sessionStorage', {
+export const SESSION_STORAGE = new InjectionToken<Storage>('<example-value>', {
   providedIn: 'root',
   factory: () => window.sessionStorage,
 });
@@ -120,7 +120,7 @@ export const SESSION_STORAGE = new InjectionToken<Storage>('sessionStorage', {
 
 ```ts
 // Complex configuration with runtime logic
-export const FEATURE_FLAGS = new InjectionToken<Map<string, boolean>>('feature.flags', {
+export const FEATURE_FLAGS = new InjectionToken<Map<string, boolean>>('<example-value>', {
   providedIn: 'root',
   factory: () => {
     const flags = new Map<string, boolean>();

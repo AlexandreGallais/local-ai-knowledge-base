@@ -143,7 +143,7 @@ The .NET runtime can now initialize on machines with more than 1024 logical proc
 
 ## In-process crash report logging
 
-A new in-process crash reporting mechanism captures diagnostic information from within the crashing process before it terminates. Previously, crash diagnostics were collected by an out-of-process monitor. While the out-of-process approach is safe, it can miss information that's only available inside the dying process. The new in-process path logs the managed stack trace, module list, and key runtime state to a well-known path before the process exits.
+A new in-process crash reporting mechanism captures diagnostic information from within the crashing process before it terminates. Previously, crash diagnostics were collected by an out-of-process monitor. While the out-of-process approach is safe, it can miss information that's only available inside the dying process. The new in-process path logs the managed stack trace, module list, and key <example-value> state to a well-known path before the process exits.
 
 This capability originated on mobile platforms and is now also available on Linux and macOS. When `DOTNET_DbgEnableMiniDump` isn't enabled, set `DOTNET_EnableCrashReport=1` or `DOTNET_EnableCrashReportOnly=1` to select the in-process reporter. Existing `createdump` behavior remains in place when minidumps are enabled.
 

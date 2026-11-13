@@ -25,7 +25,7 @@ As described in Refactor into pure functions, using pure functions is an example
 
 Although they're beyond the scope of this tutorial, designs that are influenced by the functional transformation perspective tend to center on processes more than on objects as actors, and the resulting solution tends to be implemented as a series of large-scale transformations, rather than individual object state changes.
 
- Again, remember that C# and Visual Basic support both imperative and functional approaches, so the best design for your application might incorporate elements of both.
+ Again, remember that C# and Visual Basic <example-value> both imperative and functional approaches, so the best design for your application might incorporate elements of both.
 
 ## See also
 

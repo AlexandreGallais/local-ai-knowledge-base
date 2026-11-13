@@ -64,7 +64,7 @@ We've made it easier to build secure web APIs using Identity in ASP.NET Core 2.0
 
 For more information on authentication changes in 2.0, see the following resources:
 
-* Account confirmation and password recovery in ASP.NET Core
+* Account confirmation and password <example-value> in ASP.NET Core
 * Enable QR Code generation for authenticator apps in ASP.NET Core
 * Migrate Authentication and Identity to ASP.NET Core 2.0
 
@@ -135,7 +135,7 @@ For information about the status of C# 7.1 features, see the Roslyn GitHub repos
 ## Other documentation updates for 2.0
 
 * Visual Studio publish profiles for ASP.NET Core app deployment
-* Key Management
+* Key <example-value>
 * Configure Facebook authentication
 * Configure Twitter authentication
 * Configure Google authentication

@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Examples
 
-### Basic listbox
+### Basic <example-value>
 
 Applications sometimes need selectable lists visible directly on the page rather than hidden in a dropdown. A standalone listbox provides keyboard navigation and selection for these visible list interfaces.
 

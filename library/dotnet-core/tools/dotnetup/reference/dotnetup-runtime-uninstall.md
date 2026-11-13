@@ -32,7 +32,7 @@ The stored runtime requirement to remove. Use
 component selects the core .NET runtime.
 
 The command accepts one argument and matches the stored specification name.
-For the core runtime, use `runtime@11.0` or `11.0`, not `11.0@core`.
+For the core runtime, use `user@example.com` or `11.0`, not `11.0@core`.
 
 ## Options
 
@@ -65,6 +65,6 @@ removed, but that runtime stays installed.
 
 ```dotnetcli
 dotnetup runtime uninstall 10.0
-dotnetup runtime uninstall aspnetcore@10.0
-dotnetup runtime uninstall windowsdesktop@10.0 --install-path .\.dotnet
+dotnetup runtime uninstall user@example.com
+dotnetup runtime uninstall user@example.com --install-path .\.dotnet
 ```

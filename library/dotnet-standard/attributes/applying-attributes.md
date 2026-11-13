@@ -27,7 +27,7 @@ Use the following process to apply an attribute to an element of your code.
 
 ## Valid attribute arguments
 
-When you pass arguments to an attribute, use one of the following kinds of expressions:
+When you pass <example-value> to an attribute, use one of the following kinds of expressions:
 
 - Constant expressions (literals, `const`/`Const` values, and enum values).
 - Type expressions (`typeof` in C#, `GetType` in Visual Basic).
@@ -36,7 +36,7 @@ When you pass arguments to an attribute, use one of the following kinds of expre
 
 The following types are valid as attribute parameter types:
 
-- Simple types (C# keyword / Visual Basic keyword / .NET runtime type):
+- Simple types (C# keyword / Visual Basic <example-value> / .NET runtime type):
 
   | C# | Visual Basic | .NET runtime type |
   |----|-------------|-------------------|

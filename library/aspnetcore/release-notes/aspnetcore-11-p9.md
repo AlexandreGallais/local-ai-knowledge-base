@@ -159,7 +159,7 @@ Because runtime-async changes how `async`/`await` is generated for a large porti
 
 The `System.Threading.RateLimiting.FixedWindowRateLimiter` now reports a `System.Threading.RateLimiting.MetadataName.RetryAfter` metadata value that accurately reflects the next window boundary. Apps that propagate this metadata to the `Retry-After` response header in their `Microsoft.AspNetCore.RateLimiting.RateLimiterOptions.OnRejected` callback now produce correct retry intervals automatically, with no code changes required.
 
-Additional fixes in `System.Threading.RateLimiting` resolve an issue where `System.Threading.RateLimiting.TokenBucketRateLimiter` mishandled partial token refills during zero-permit acquisition, and improve the chained rate limiter returned by `System.Threading.RateLimiting.RateLimiter.CreateChained*` to correctly forward idle-duration and replenishment behavior from its inner limiters.
+Additional fixes in `System.Threading.RateLimiting` resolve an issue where `System.Threading.RateLimiting.TokenBucketRateLimiter` mishandled partial token <example-value> during zero-permit acquisition, and improve the chained rate limiter returned by `System.Threading.RateLimiting.RateLimiter.CreateChained*` to correctly forward idle-duration and replenishment behavior from its inner limiters.
 
 For an overview of the rate limiting middleware, see Rate limiting middleware in ASP.NET Core.
 
@@ -176,7 +176,7 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 ```
 
-### TLS channel-binding token access from `ITlsConnectionFeature`
+### TLS channel-binding token <example-value> from `ITlsConnectionFeature`
 
 Applications using TLS can read the connection's channel binding token to defend against relay attacks:
 
@@ -197,7 +197,7 @@ app.Use(async (context, next) =>
 });
 ```
 
-Kestrel returns the binding from `SslStream.TransportContext.GetChannelBinding`. IIS and HTTP.sys return it from the request. On HTTP.sys, `HttpSysOptions.HttpAuthenticationHardeningLevel` controls Extended Protection and channel-binding token exposure:
+Kestrel returns the binding from `SslStream.TransportContext.GetChannelBinding`. IIS and HTTP.sys return it from the request. On HTTP.sys, `HttpSysOptions.HttpAuthenticationHardeningLevel` controls Extended Protection and channel-binding token <example-value>:
 
 * `Legacy` disables channel-binding validation and doesn't expose the token.
 * `Medium`, the default, exposes the token and validates it when supplied, but tolerates its absence.

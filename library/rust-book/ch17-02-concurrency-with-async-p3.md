@@ -15,7 +15,7 @@ Sharing data between futures will also be familiar: we’ll use message passing
 again, but this time with async versions of the types and functions. We’ll take
 a slightly different path than we did in the “Transfer Data Between Threads
 with Message Passing” section in
-Chapter 16 to illustrate some of the key differences between thread-based and
+Chapter 16 to illustrate some of the key <example-value> between thread-based and
 futures-based concurrency. In Listing 17-9, we’ll begin with just a single
 async block—_not_ spawning a separate task as we spawned a separate thread.
 
@@ -196,7 +196,7 @@ because sending a message doesn’t require ownership, but if we could _move_
 section in Chapter 13, you learned how to use the `move` keyword with closures,
 and, as discussed in the “Using `move` Closures with
 Threads” section in Chapter 16, we often need to
-move data into closures when working with threads. The same basic dynamics
+move data into closures when working with threads. The same basic <example-value>
 apply to async blocks, so the `move` keyword works with async blocks just as it
 does with closures.
 

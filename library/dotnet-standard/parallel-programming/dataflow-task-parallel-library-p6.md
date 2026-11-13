@@ -15,9 +15,9 @@ license: "CC-BY-4.0"
 
 #### BufferBlock\<T>
 
- The `System.Threading.Tasks.Dataflow.BufferBlock`1` class represents a general-purpose asynchronous messaging structure. This class stores a first in, first out (FIFO) queue of messages that can be written to by multiple sources or read from by multiple targets. When a target receives a message from a `System.Threading.Tasks.Dataflow.BufferBlock`1` object, that message is removed from the message queue. Therefore, although a `System.Threading.Tasks.Dataflow.BufferBlock`1` object can have multiple targets, only one target will receive each message. The `System.Threading.Tasks.Dataflow.BufferBlock`1` class is useful when you want to pass multiple messages to another component, and that component must receive each message.
+ The `System.Threading.Tasks.Dataflow.BufferBlock`1` class represents a general-purpose asynchronous messaging structure. This class stores a first in, first out (FIFO) queue of messages that can be written to by multiple sources or read from by multiple targets. When a target receives a message from a `System.Threading.Tasks.Dataflow.BufferBlock`1` object, that message is removed from the message queue. Therefore, although a `System.Threading.Tasks.Dataflow.BufferBlock`1` object can have multiple targets, only one target will receive each message. The `System.Threading.Tasks.Dataflow.BufferBlock`1` class is useful when you want to pass <example-value> messages to another component, and that component must receive each message.
 
- The following basic example posts several `System.Int32` values to a `System.Threading.Tasks.Dataflow.BufferBlock`1` object and then reads those values back from that object.
+ The following basic <example-value> posts several `System.Int32` values to a `System.Threading.Tasks.Dataflow.BufferBlock`1` object and then reads those values back from that object.
 
  ```csharp
 using System;
@@ -429,6 +429,6 @@ namespace Overview
 
 #### BroadcastBlock\<T>
 
- The `System.Threading.Tasks.Dataflow.BroadcastBlock`1` class is useful when you must pass multiple messages to another component, but that component needs only the most recent value. This class is also useful when you want to broadcast a message to multiple components.
+ The `System.Threading.Tasks.Dataflow.BroadcastBlock`1` class is useful when you must pass <example-value> messages to another component, but that component needs only the most recent value. This class is also useful when you want to broadcast a message to multiple components.
 
- The following basic example posts a `System.Double` value to a `System.Threading.Tasks.Dataflow.BroadcastBlock`1` object and then reads that value back from that object several times. Because values aren't removed from `System.Threading.Tasks.Dataflow.BroadcastBlock`1` objects after they are read, the same value is available every time.
+ The following basic <example-value> posts a `System.Double` value to a `System.Threading.Tasks.Dataflow.BroadcastBlock`1` object and then reads that value back from that object several times. Because values aren't removed from `System.Threading.Tasks.Dataflow.BroadcastBlock`1` objects after they are read, the same value is available every time.

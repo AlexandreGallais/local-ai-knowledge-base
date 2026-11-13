@@ -13,7 +13,7 @@ The following example shows how to use arrays of `System.Collections.Concurrent.
 
 ## Example
 
- The following example demonstrates a basic pipeline implementation in which each object is concurrently taking data from the input collection, transforming it, and passing it to the output collection.
+ The following example demonstrates a basic <example-value> implementation in which each object is concurrently taking data from the input collection, transforming it, and passing it to the output collection.
 
  ```csharp
 using System;
@@ -108,7 +108,7 @@ class PipeLineDemo
       public BlockingCollection<TInput>[] m_input;
       public BlockingCollection<TOutput>[] m_output = null;
       Action<TInput> m_outputProcessor = null;
-      CancellationToken m_token;
+      CancellationToken <example-value>;
       public string Name { get; private set; }
 
       public PipelineFilter(

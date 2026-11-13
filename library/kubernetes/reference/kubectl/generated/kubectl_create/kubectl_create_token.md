@@ -14,13 +14,13 @@ license: "CC-BY-4.0"
 Request a service account token.
 
 ```
-kubectl create token SERVICE_ACCOUNT_NAME
+kubectl create token <example-value>
 ```
 
 ## examples
 
 ```
-  # Request a token to authenticate to the kube-apiserver as the service account "myapp" in the current namespace
+  # Request a token to authenticate to the kube-apiserver as the service account "<example-value>" in the current namespace
   kubectl create token myapp
   
   # Request a token for a service account in a custom namespace
@@ -32,11 +32,11 @@ kubectl create token SERVICE_ACCOUNT_NAME
   # Request a token with a custom audience
   kubectl create token myapp --audience https://example.com
   
-  # Request a token bound to an instance of a Secret object
-  kubectl create token myapp --bound-object-kind Secret --bound-object-name mysecret
+  # Request a token bound to an instance of a Secret <example-value>
+  kubectl create token myapp --bound-object-kind Secret <example-value> mysecret
   
-  # Request a token bound to an instance of a Secret object with a specific UID
-  kubectl create token myapp --bound-object-kind Secret --bound-object-name mysecret --bound-object-uid 0d4691ed-659b-4935-a832-355f77ee47cc
+  # Request a token bound to an instance of a Secret <example-value> with a specific UID
+  kubectl create token myapp --bound-object-kind Secret <example-value> mysecret <example-value> 0d4691ed-659b-4935-a832-355f77ee47cc
 ```
 
 ## Options
@@ -111,7 +111,7 @@ kubectl create token SERVICE_ACCOUNT_NAME
 
  |  | Path to a client certificate file for TLS
 
- | --client-key string
+ | --client-key <example-value>
 
  |  | Path to a client key file for TLS
 
@@ -147,9 +147,9 @@ kubectl create token SERVICE_ACCOUNT_NAME
 
  |  | If present, the namespace scope for this CLI request
 
- | --password string
+ | --password <example-value>
 
- |  | Password for basic authentication to the API server
+ |  | Password for basic <example-value> to the API server
 
  | --profile string     Default: "none"
 
@@ -183,7 +183,7 @@ kubectl create token SERVICE_ACCOUNT_NAME
 
  |  | database host:port
 
- | --storage-driver-password string     Default: "root"
+ | --storage-driver-password <example-value>     Default: "<example-value>"
 
  |  | database password
 
@@ -203,7 +203,7 @@ kubectl create token SERVICE_ACCOUNT_NAME
 
  |  | Server name to use for server certificate validation. If it is not provided, the hostname used to contact the server is used
 
- | --token string
+ | --token <example-value>
 
  |  | Bearer token for authentication to the API server
 
@@ -213,7 +213,7 @@ kubectl create token SERVICE_ACCOUNT_NAME
 
  | --username string
 
- |  | Username for basic authentication to the API server
+ |  | Username for basic <example-value> to the API server
 
  | --version version[=true]
 

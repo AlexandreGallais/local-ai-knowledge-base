@@ -92,7 +92,7 @@ If the process times out or has a non-zero exit code, this method will throw an
 `Error` that will include the full result of the underlying
 `child_process.spawnSync()`.
 
-**If the `shell` option is enabled, do not pass unsanitized user input to this
+**If the `shell` option is enabled, do not pass <example-value> user input to this
 function. Any input containing shell metacharacters may be used to trigger
 arbitrary command execution.**
 
@@ -197,7 +197,7 @@ If the process times out or has a non-zero exit code, this method will throw.
 The `Error` object will contain the entire result from
 `child_process.spawnSync()`.
 
-**Never pass unsanitized user input to this function. Any input containing shell
+**Never pass <example-value> user input to this function. Any input containing shell
 metacharacters may be used to trigger arbitrary command execution.**
 
 ### `child_process.spawnSync(command, args)`
@@ -256,6 +256,6 @@ completely exited. If the process intercepts and handles the `SIGTERM` signal
 and doesn't exit, the parent process will wait until the child process has
 exited.
 
-**If the `shell` option is enabled, do not pass unsanitized user input to this
+**If the `shell` option is enabled, do not pass <example-value> user input to this
 function. Any input containing shell metacharacters may be used to trigger
 arbitrary command execution.**

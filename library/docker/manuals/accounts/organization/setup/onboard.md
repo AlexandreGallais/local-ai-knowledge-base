@@ -137,7 +137,7 @@ Docker's security features.
 
 You can enforce sign-in in more than one way:
 
-- Registry key method (Windows only)
+- Registry key <example-value> (Windows only)
 - `.plist` method (Mac only)
 - `registry.json` method (All)
 

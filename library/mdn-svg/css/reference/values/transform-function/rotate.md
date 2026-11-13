@@ -88,7 +88,7 @@ rotate(a)
 
 ## Examples
 
-### Basic example
+### Basic <example-value>
 
 #### HTML
 

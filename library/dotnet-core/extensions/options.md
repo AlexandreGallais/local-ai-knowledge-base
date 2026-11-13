@@ -24,7 +24,7 @@ For example, to read the highlighted configuration values from an _appsettings.j
 
 ```json
 ﻿{
-    "SecretKey": "Secret key value",
+    "SecretKey": "<example-value>",
     "TransientFaultHandlingOptions": {
         "Enabled": true,
         "AutoRetryDelay": "00:00:07"
@@ -171,7 +171,7 @@ In the preceding code, changes to the JSON configuration file after the app has 
 
 `Microsoft.Extensions.Options.IOptionsMonitorCache`1` is used by `Microsoft.Extensions.Options.IOptionsMonitor`1` to cache `TOptions` instances. The `Microsoft.Extensions.Options.IOptionsMonitorCache`1` invalidates options instances in the monitor so that the value is recomputed (`Microsoft.Extensions.Options.IOptionsMonitorCache`1.TryRemove*`). Values can be manually introduced with `Microsoft.Extensions.Options.IOptionsMonitorCache`1.TryAdd*`. The `Microsoft.Extensions.Options.IOptionsMonitorCache`1.Clear*` method is used when all named instances should be recreated on demand.
 
-`Microsoft.Extensions.Options.IOptionsChangeTokenSource`1` is used to fetch the `Microsoft.Extensions.Primitives.IChangeToken` that tracks changes to the underlying `TOptions` instance. For more information on change-token primitives, see Change notifications.
+`Microsoft.Extensions.Options.IOptionsChangeTokenSource`1` is used to fetch the `Microsoft.Extensions.Primitives.IChangeToken` that tracks changes to the underlying `TOptions` instance. For more information on change-token <example-value>, see Change notifications.
 
 ### Options interfaces benefits
 

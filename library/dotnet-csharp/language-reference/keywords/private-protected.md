@@ -61,13 +61,13 @@ class DerivedClass2 : BaseClass
 This example contains two files, `Assembly1.cs` and `Assembly2.cs`.
 The first file contains a public base class, `BaseClass`, and a type derived from it, `DerivedClass1`. `BaseClass` owns a private protected member, `myValue`, which `DerivedClass1` can access as an inherited member within the same assembly.
 
-In the second file, an attempt to access `myValue` as an inherited member of `DerivedClass2` produces an error, because `private protected` members are only accessible by derived types **within the same assembly**. This restriction is the key difference from `protected` (which allows access from derived classes in any assembly) and `protected internal` (which allows access from any class within the same assembly or derived classes in any assembly).
+In the second file, an attempt to access `myValue` as an inherited member of `DerivedClass2` produces an error, because `private protected` members are only accessible by derived types **within the same assembly**. This restriction is the key <example-value> from `protected` (which allows access from derived classes in any assembly) and `protected internal` (which allows access from any class within the same assembly or derived classes in any assembly).
 
 If `Assembly1.cs` contains an `System.Runtime.CompilerServices.InternalsVisibleToAttribute` that names `Assembly2`, the derived class `DerivedClass2` has access to `private protected` members declared in `BaseClass`. `InternalsVisibleTo` makes `private protected` members visible to derived classes in other assemblies.
 
 ## Comparison with other protected access modifiers
 
-The following table summarizes the key differences between the three protected access modifiers:
+The following table summarizes the key <example-value> between the three protected access modifiers:
 
 | Access Modifier | Same Assembly, Derived Class | Same Assembly, Non-derived Class | Different Assembly, Derived Class |
 |---|:-:|:-:|:-:|

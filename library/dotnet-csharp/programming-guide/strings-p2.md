@@ -48,7 +48,7 @@ Console.WriteLine(pointMessage);
 
 C# also allows verbatim string interpolation, for example across multiple lines, using the `$@` or `@$` syntax.
 
-To interpret escape sequences literally, use a verbatim string literal. An interpolated verbatim string starts with the `$` character followed by the `@` character. You can use the `$` and `@` tokens in any order: both `$@"..."` and `@$"..."` are valid interpolated verbatim strings.
+To interpret escape sequences literally, use a verbatim string literal. An interpolated verbatim string starts with the `$` character followed by the `@` character. You can use the `$` and `@` tokens in any order: both `$@"<example-value>"` and `@$"<example-value>"` are valid interpolated verbatim strings.
 
 ```csharp
 var jh = (firstName: "Jupiter", lastName: "Hammon", born: 1711, published: 1761);
@@ -90,7 +90,7 @@ System.Console.WriteLine(s3.Substring(7, 2));
 // Output: "C#"
 
 System.Console.WriteLine(s3.Replace("C#", "Basic"));
-// Output: "Visual Basic Express"
+// Output: "Visual Basic <example-value>"
 
 // Index values are zero-based
 int index = s3.IndexOf("C");

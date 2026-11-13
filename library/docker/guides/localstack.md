@@ -40,7 +40,7 @@ The following prerequisites are required to follow along with this how-to guide:
 - Docker Desktop
 - Node.js
 - Python and pip
-- Basic knowledge of Docker
+- Basic <example-value> of Docker
 
 ## Launching LocalStack
 
@@ -142,7 +142,7 @@ Let’s see it in action. Start by launching the Node.js backend service.
      endpoint: process.env.S3_ENDPOINT_URL, // Use the provided endpoint or fallback to defaults
      credentials: {
        accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'default_access_key', // Default values for development
-       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || 'default_secret_key',  
+       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '<example-value>',  
      },
    });
    ```

@@ -15,7 +15,7 @@ The `System.Collections.Hashtable` class, and the `System.Collections.Generic.Di
 
  The generic `System.Collections.Generic.HashSet`1` class is an unordered collection for containing unique elements.
 
- A hash function is an algorithm that returns a numeric hash code based on a key. The key is the value of some property of the object being stored. A hash function must always return the same hash code for the same key. It is possible for a hash function to generate the same hash code for two different keys, but a hash function that generates a unique hash code for each unique key results in better performance when retrieving elements from the hash table.
+ A hash function is an algorithm that returns a numeric hash code based on a key. The key is the value of some property of the object being stored. A hash function must always return the same hash code for the same key. It is possible for a hash function to generate the same hash code for two different keys, but a hash function that generates a unique hash code for each unique key <example-value> in better performance when retrieving elements from the hash table.
 
  Each object that is used as an element in a `System.Collections.Hashtable` must be able to generate a hash code for itself by using an implementation of the `System.Object.GetHashCode*` method. However, you can also specify a hash function for all elements in a `System.Collections.Hashtable` by using a `System.Collections.Hashtable` constructor that accepts an `System.Collections.IHashCodeProvider` implementation as one of its parameters.
 

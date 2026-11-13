@@ -217,7 +217,7 @@ console.log(b.toString());
 const c = Buffer.allocUnsafe(5).fill('');
 
 console.log(c.fill(''));
-// Prints: <Buffer 00 00 00 00 00>
+// Prints: <Buffer .. .. .. .. ..>
 ```
 
 ```cjs
@@ -234,7 +234,7 @@ console.log(b.toString());
 const c = Buffer.allocUnsafe(5).fill('');
 
 console.log(c.fill(''));
-// Prints: <Buffer 00 00 00 00 00>
+// Prints: <Buffer .. .. .. .. ..>
 ```
 
 `value` is coerced to a `uint32` value if it is not a string, `Buffer`, or
@@ -250,7 +250,7 @@ import { Buffer } from 'node:buffer';
 // Fill a `Buffer` with character that takes up two bytes in UTF-8.
 
 console.log(Buffer.allocUnsafe(5).fill('\u0222'));
-// Prints: <Buffer c8 a2 c8 a2 c8>
+// Prints: <Buffer .. .. .. .. ..>
 ```
 
 ```cjs
@@ -259,7 +259,7 @@ const { Buffer } = require('node:buffer');
 // Fill a `Buffer` with character that takes up two bytes in UTF-8.
 
 console.log(Buffer.allocUnsafe(5).fill('\u0222'));
-// Prints: <Buffer c8 a2 c8 a2 c8>
+// Prints: <Buffer .. .. .. .. ..>
 ```
 
 If `value` contains invalid characters, it is truncated; if no valid
@@ -271,9 +271,9 @@ import { Buffer } from 'node:buffer';
 const buf = Buffer.allocUnsafe(5);
 
 console.log(buf.fill('a'));
-// Prints: <Buffer 61 61 61 61 61>
+// Prints: <Buffer .. .. .. .. ..>
 console.log(buf.fill('aazz', 'hex'));
-// Prints: <Buffer aa aa aa aa aa>
+// Prints: <Buffer .. .. .. .. ..>
 console.log(buf.fill('zz', 'hex'));
 // Throws an exception.
 ```
@@ -284,9 +284,9 @@ const { Buffer } = require('node:buffer');
 const buf = Buffer.allocUnsafe(5);
 
 console.log(buf.fill('a'));
-// Prints: <Buffer 61 61 61 61 61>
+// Prints: <Buffer .. .. .. .. ..>
 console.log(buf.fill('aazz', 'hex'));
-// Prints: <Buffer aa aa aa aa aa>
+// Prints: <Buffer .. .. .. .. ..>
 console.log(buf.fill('zz', 'hex'));
 // Throws an exception.
 ```

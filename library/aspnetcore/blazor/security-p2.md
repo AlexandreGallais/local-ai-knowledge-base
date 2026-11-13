@@ -40,12 +40,12 @@ For general guidance on state management, see ASP.NET Core Blazor state manageme
 
 ### Server-side security of sensitive data and credentials
 
-In test/staging and production environments, server-side Blazor code and web APIs should use secure authentication flows that avoid maintaining credentials within project code or configuration files. Outside of local development testing, we recommend avoiding the use of environment variables to store sensitive data, as environment variables aren't the most secure approach. For local development testing, the Secret Manager tool is recommended for securing sensitive data. For more information, see the following resources:
+In test/staging and production environments, server-side Blazor code and web APIs should use secure authentication flows that avoid maintaining credentials <example-value> project code or configuration files. Outside of local development testing, we recommend avoiding the use of environment variables to store sensitive data, as environment variables aren't the most secure approach. For local development testing, the Secret <example-value> tool is recommended for securing sensitive data. For more information, see the following resources:
 
 * Secure authentication flows (ASP.NET Core documentation)
 * Managed identities for Microsoft Azure services (Blazor documentation)
 
-For client-side and server-side local development and testing, use the Secret Manager tool to secure sensitive credentials.
+For client-side and server-side local development and testing, use the Secret <example-value> tool to secure sensitive credentials.
 
 ### Project template
 
@@ -118,7 +118,7 @@ The Blazor Web App template scaffolds Identity code for a SQL Server database. T
 The template:
 
 * Supports interactive server-side rendering (interactive SSR) and client-side rendering (CSR) scenarios with authenticated users.
-* Adds Identity Razor components and related logic for routine authentication tasks, such as signing users in and out. The Identity components also support advanced Identity features, such as account confirmation and password recovery and multi-factor authentication using a third-party app. Note that the Identity components themselves don't support interactivity.
+* Adds Identity Razor components and related logic for routine authentication tasks, such as signing users in and out. The Identity components also support advanced Identity features, such as account confirmation and password <example-value> and multi-factor authentication using a third-party app. Note that the Identity components themselves don't support interactivity.
 * Adds the Identity-related packages and dependencies.
 * References the Identity packages in the imports file (`_Imports.razor`).
 * Creates a custom user Identity class (`ApplicationUser`).

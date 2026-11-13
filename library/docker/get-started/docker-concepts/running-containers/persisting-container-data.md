@@ -58,7 +58,7 @@ In this guide, you'll practice creating and using volumes to persist data create
 2. Start a container using the Postgres image with the following command:
 
     ```console
-    $ docker run --name=db -e POSTGRES_PASSWORD=secret -d -v postgres_data:/var/lib/postgresql postgres:18
+    $ docker run --name=db -e POSTGRES_PASSWORD=<example-value> -d -v postgres_data:/var/lib/postgresql postgres:18
     ```
 
     This will start the database in the background, configure it with a password, and attach a volume to the directory PostgreSQL will persist the database files.

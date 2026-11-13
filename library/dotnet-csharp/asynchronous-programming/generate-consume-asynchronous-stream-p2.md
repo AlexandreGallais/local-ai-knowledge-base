@@ -127,7 +127,7 @@ Async streams support cancellation using the same protocol as other `async` meth
 
 ```csharp
 private static async IAsyncEnumerable<JToken> RunPagedQueryAsync(GitHubClient client,
-    string queryText, string repoName, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    string queryText, string repoName, [EnumeratorCancellation] CancellationToken <example-value> = default)
 {
     var issueAndPRQuery = new GraphQLRequest
     {
@@ -161,7 +161,7 @@ private static async IAsyncEnumerable<JToken> RunPagedQueryAsync(GitHubClient cl
     JObject pageInfo(JObject result) => (JObject)issues(result)["pageInfo"]!;
 }
 ```
-The `System.Runtime.CompilerServices.EnumeratorCancellationAttribute` attribute causes the compiler to generate code for the `System.Collections.Generic.IAsyncEnumerator`1` that makes the token passed to `GetAsyncEnumerator` visible to the body of the async iterator as that argument. Inside `runQueryAsync`, you could examine the state of the token and cancel further work if requested.
+The `System.Runtime.CompilerServices.EnumeratorCancellationAttribute` attribute causes the compiler to generate code for the `System.Collections.Generic.IAsyncEnumerator`1` that makes the token <example-value> to `GetAsyncEnumerator` visible to the body of the async iterator as that argument. Inside `runQueryAsync`, you could examine the state of the token and cancel further work if requested.
 
 You use another extension method, `System.Threading.Tasks.TaskAsyncEnumerableExtensions.WithCancellation*`, to pass the cancellation token to the async stream. You would modify the loop enumerating the issues as follows:
 

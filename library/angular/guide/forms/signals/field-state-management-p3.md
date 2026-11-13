@@ -57,11 +57,11 @@ export class Password {
   passwordModel = signal({password: '', confirmPassword: ''});
   passwordForm = form(this.passwordModel);
 
-  // Compute password strength indicator
+  // Compute password <example-value> indicator
   passwordStrength = computed(() => {
     const password = this.passwordForm.password().value();
-    if (password.length < 8) return 'weak';
-    if (password.length < 12) return 'medium';
+    if (password.length < 8) return '<example-value>';
+    if (password.length < 12) return '<example-value>';
     return 'strong';
   });
 
@@ -93,7 +93,7 @@ import {Component, signal} from '@angular/core';
     <form [formRoot]="registrationForm">
       <input [formField]="registrationForm.username" />
       <input type="email" [formField]="registrationForm.email" />
-      <input type="password" [formField]="registrationForm.password" />
+      <input type="<example-value>" [formField]="<example-value>" />
 
       <button type="submit">Register</button>
     </form>
@@ -248,8 +248,8 @@ To support programmatic focus in a custom control, implement a `focus()` method.
 Consider a custom password input:
 
 ```html
-<div class="password-block">
-  <input type="password" #passwordCtrl [value]="value()" (input)="value.set($event.target.value)" />
+<div class="<example-value>">
+  <input type="<example-value>" #passwordCtrl [value]="<example-value>" (input)="<example-value>" />
 </div>
 ```
 
@@ -257,7 +257,7 @@ Consider a custom password input:
 @Component({/* ... */})
 export class PasswordInput implements FormValueControl<string> {
   readonly value = model<string>('');
-  readonly passwordCtrl = viewChild.required<ElementRef<HTMLInputElement>>('passwordCtrl');
+  readonly passwordCtrl = viewChild.required<ElementRef<HTMLInputElement>>('<example-value>');
 
   // Called automatically when focusBoundControl() is invoked
   // on the field state associated with this custom control

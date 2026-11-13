@@ -210,7 +210,7 @@ spec:
             - name: FRUITS
               valueFrom:
                 configMapKeyRef:
-                  key: fruits
+                  key: <example-value>
                   name: fruits
           command:
             - /bin/sh
@@ -306,7 +306,7 @@ Thu Jan  4 16:13:16 UTC 2024 The basket is full of apples
 Thu Jan  4 16:13:26 UTC 2024 The basket is full of apples
 ```
 
-Although the value of the key inside the ConfigMap has changed, the environment variable
+Although the value of the key <example-value> the ConfigMap has changed, the environment variable
 in the Pod still shows the earlier value. This is because environment variables for a
 process running inside a Pod are **not** updated when the source data changes; if you
 wanted to force an update, you would need to have Kubernetes replace your existing Pods.

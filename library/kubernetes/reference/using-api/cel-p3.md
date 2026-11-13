@@ -284,7 +284,7 @@ has(object.namex) ? object.namex == 'special' : request.name == 'special'
 
 Use `has()` to check field presence. Do not use `has()` to check whether a map
 contains a key. For example, do not write
-`has(object.metadata.labels['example.com/environment'])`. For map key checks,
+`has(object.metadata.labels['example.com/environment'])`. For map key <example-value>,
 use the `in` operator instead. For example:
 
 ```cel
@@ -328,7 +328,7 @@ Table showing the relationship between OpenAPIv3 types and CEL types
    | list
 
    | 'array' with <tt>x-kubernetes-list-type=map</tt>
-   | list with map based Equality & unique key guarantees
+   | list with map based Equality & unique key <example-value>
 
    | 'array' with <tt>x-kubernetes-list-type=set</tt>
    | list with set based Equality & unique entry guarantees

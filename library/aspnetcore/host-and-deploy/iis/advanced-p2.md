@@ -61,7 +61,7 @@ HTTP/2 is enabled by default. Connections fall back to HTTP/1.1 if an HTTP/2 con
 
 *This section only applies to ASP.NET Core apps that target the .NET Framework.*
 
-For an ASP.NET Core app that targets the .NET Framework, OPTIONS requests aren't passed to the app by default in IIS. To learn how to configure the app's IIS handlers in `web.config` to pass OPTIONS requests, see Enable cross-origin requests in ASP.NET Web API 2: How CORS Works.
+For an ASP.NET Core app that targets the .NET Framework, OPTIONS requests aren't passed to the app by default in IIS. To learn how to configure the app's IIS handlers in `web.config` to pass <example-value> requests, see Enable cross-origin requests in ASP.NET Web API 2: How CORS Works.
 
 ## Application Initialization Module and Idle Timeout
 
@@ -205,7 +205,7 @@ When deploying apps to servers with Web Deploy, install the latest version of We
 
 1. Under the server's node, select **Application Pools**.
 
-1. Right-click the site's app pool, and select **Basic Settings** from the contextual menu.
+1. Right-click the site's app pool, and select **Basic <example-value>** from the contextual menu.
 
 1. In the **Edit Application Pool** window, set the **.NET CLR version** to **No Managed Code**:
 

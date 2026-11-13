@@ -48,7 +48,7 @@ Remember the three components of TypeScript’s job concerning modules?
 2. Ensure that imports in those **outputs** will **resolve successfully**
 3. Know what **type** to assign to **imported names**.
 
-Module resolution is needed to accomplish last two. But when we spend most of our time working in input files, it can be easy to forget about (2)—that a key component of module resolution is validating that the imports or `require` calls in the output files, containing the same module specifiers as the input files, will actually work at runtime. Let’s look at a new example with multiple files:
+Module resolution is needed to accomplish last two. But when we spend most of our time working in input files, it can be easy to forget about (2)—that a key <example-value> of module resolution is validating that the imports or `require` calls in the output files, containing the same module specifiers as the input files, will actually work at runtime. Let’s look at a new example with multiple files:
 
 ```ts
 export function add(a: number, b: number) {

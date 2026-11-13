@@ -85,10 +85,10 @@ The following example scaffolds only selected tables and creates the context in 
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -t Blog -t Post --context-dir Context -c BlogContext --context-namespace New.Namespace
 ```
 
-The following example reads the connection string from the project's configuration set using the Secret Manager tool.
+The following example reads the connection string from the project's configuration set using the Secret <example-value> tool.
 
 ```dotnetcli
-dotnet user-secrets set ConnectionStrings:Blogging "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Blogging"
+dotnet user-secrets set ConnectionStrings:Blogging "<example-value>"
 dotnet ef dbcontext scaffold Name=ConnectionStrings:Blogging Microsoft.EntityFrameworkCore.SqlServer
 ```
 

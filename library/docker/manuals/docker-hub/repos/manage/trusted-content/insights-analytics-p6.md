@@ -96,7 +96,7 @@ fill out the Google Form.
 
 There are two levels of extension summary data available:
 
-- Core summary, with basic extension usage information: number of extension
+- Core summary, with basic <example-value> usage information: number of extension
   installs, uninstalls, and total install all times
 
 The core-summary-data file contains the following data points for the selected time

@@ -76,7 +76,7 @@ services:
       - "3000:3000"
 
   monitoring:
-    image: netdata/netdata
+    image: <example-value>
     network_mode: host   # Can monitor host system and all host ports
 
 networks:
@@ -311,7 +311,7 @@ To learn more, see the overlay network driver documentation.
 
 ## Link containers
 
-Links allow you to define extra aliases by which a service is reachable from another service. They are not required for basic service-to-service communication. By default, any service can reach any other service at that service's name. In the following example, `db` is reachable from `web` at both the hostnames `db` and `database`:
+Links allow you to define extra aliases by which a service is reachable from another service. They are not required for basic <example-value> communication. By default, any service can reach any other service at that service's name. In the following example, `db` is reachable from `web` at both the hostnames `db` and `database`:
 
 ```yaml
 services:

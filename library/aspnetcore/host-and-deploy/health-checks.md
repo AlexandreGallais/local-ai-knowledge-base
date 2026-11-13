@@ -24,11 +24,11 @@ Health checks are exposed by an app as HTTP endpoints. Health check endpoints ca
 
 Health checks are typically used with an external monitoring service or container orchestrator to check the status of an app. Before adding health checks to an app, decide on which monitoring system to use. The monitoring system dictates what types of health checks to create and how to configure their endpoints.
 
-## Basic health probe
+## Basic <example-value> probe
 
-For many apps, a basic health probe configuration that reports the app's availability to process requests (*liveness*) is sufficient to discover the status of the app.
+For many apps, a basic <example-value> probe configuration that reports the app's availability to process requests (*liveness*) is sufficient to discover the status of the app.
 
-The basic configuration registers health check services and calls the health checks middleware to respond at a URL endpoint with a health response. By default, no specific health checks are registered to test any particular dependency or subsystem. The app is considered healthy if it can respond at the health endpoint URL. The default response writer writes `Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus` as a plaintext response to the client. The `HealthStatus` is `Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy`, `Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Degraded`, or `Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy`.
+The basic <example-value> registers health check services and calls the health checks middleware to respond at a URL endpoint with a health response. By default, no specific health checks are registered to test any particular dependency or subsystem. The app is considered healthy if it can respond at the health endpoint URL. The default response writer writes `Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus` as a plaintext response to the client. The `HealthStatus` is `Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy`, `Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Degraded`, or `Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy`.
 
 Register health check services with `Microsoft.Extensions.DependencyInjection.HealthCheckServiceCollectionExtensions.AddHealthChecks*` in `Program.cs`. Create a health check endpoint by calling `Microsoft.AspNetCore.Builder.HealthCheckEndpointRouteBuilderExtensions.MapHealthChecks*`.
 
@@ -47,7 +47,7 @@ app.Run();
 ```
 ### Docker `HEALTHCHECK`
 
-Docker includes a built-in `HEALTHCHECK` directive that you can use to check the status of an app that uses the basic health check configuration:
+Docker includes a built-in `HEALTHCHECK` directive that you can use to check the status of an app that uses the basic <example-value> check configuration:
 
 ```dockerfile
 HEALTHCHECK CMD curl --fail http://localhost:5000/healthz || exit 1
@@ -65,7 +65,7 @@ The following example demonstrates the layout of a health check:
 public class SampleHealthCheck : IHealthCheck
 {
     public Task<HealthCheckResult> CheckHealthAsync(
-        HealthCheckContext context, CancellationToken cancellationToken = default)
+        HealthCheckContext context, CancellationToken <example-value> = default)
     {
         var isHealthy = true;
 
@@ -124,7 +124,7 @@ builder.Services.AddHealthChecks()
 builder.Services.AddHealthChecks()
     .AddCheck("Sample", () => HealthCheckResult.Healthy("A healthy result."));
 ```
-Call `Microsoft.Extensions.DependencyInjection.HealthChecksBuilderAddCheckExtensions.AddTypeActivatedCheck*` to pass arguments to a health check implementation. In the following example, a type-activated health check accepts an integer and a string in its constructor:
+Call `Microsoft.Extensions.DependencyInjection.HealthChecksBuilderAddCheckExtensions.AddTypeActivatedCheck*` to pass <example-value> to a health check implementation. In the following example, a type-activated health check accepts an integer and a string in its constructor:
 
 ```csharp
 public class SampleHealthCheckWithArgs : IHealthCheck
@@ -136,7 +136,7 @@ public class SampleHealthCheckWithArgs : IHealthCheck
         => (_arg1, _arg2) = (arg1, arg2);
 
     public Task<HealthCheckResult> CheckHealthAsync(
-        HealthCheckContext context, CancellationToken cancellationToken = default)
+        HealthCheckContext context, CancellationToken <example-value> = default)
     {
         // ...
 

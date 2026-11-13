@@ -13,7 +13,7 @@ license: "MIT"
 
 * `privateKey` {Object|string|ArrayBuffer|Buffer|TypedArray|DataView|KeyObject|CryptoKey|URL}
   * `key` {string|ArrayBuffer|Buffer|TypedArray|DataView|KeyObject|CryptoKey|URL}
-    The private key material, a {KeyObject}, or a {URL} referencing an object
+    The private key <example-value>, a {KeyObject}, or a {URL} referencing an object
     for an OpenSSL STORE loader.
   * `passphrase` {string|ArrayBuffer|Buffer|TypedArray|DataView} An optional
     passphrase for the private key.

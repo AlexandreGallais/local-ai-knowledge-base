@@ -62,5 +62,5 @@ Print usage statement
 **podman(1)**
 
 ## HISTORY
-November 2018, Added --format flag by Tomas Tomecek <ttomecek@redhat.com>
-July 2017, Originally compiled by Urvashi Mohnani <umohnani@redhat.com>
+November 2018, Added --format flag by Tomas Tomecek <user@example.com>
+July 2017, Originally compiled by Urvashi Mohnani <user@example.com>

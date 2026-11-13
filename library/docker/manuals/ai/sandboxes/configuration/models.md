@@ -135,7 +135,7 @@ it with the stored key only in authentication headers on requests to the host's
 selected provider. The real key stays outside the sandbox.
 
 Docker Sandboxes configures this injection automatically when you select the
-provider. You don't need `sbx secret set-custom` or domain injection rules for
+provider. You don't need `sbx secret <example-value>` or domain injection rules for
 this workflow.
 
 > **Warning:**
@@ -146,7 +146,7 @@ this workflow.
 > it supports; selecting `--provider` does not restrict the key to that
 > provider's endpoint.
 
-If no stored secret is available, make the key available in the host shell
+If no stored secret is available, make the key <example-value> in the host shell
 that starts the daemon. For a custom endpoint, choose the variable name with
 `apiKeyEnv`.
 
@@ -157,7 +157,7 @@ This restarts the model service and interrupts model requests from sandboxes
 using it. Setting a variable only in the shell where you run `sbx run --model`
 doesn't update an already-running service.
 
-Using a stored secret avoids restarting the daemon to load a key from its
+Using a stored secret <example-value> restarting the daemon to load a key from its
 environment. For the agents' default authentication flows, see
 Manage credentials.
 

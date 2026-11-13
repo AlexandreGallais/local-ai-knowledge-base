@@ -362,7 +362,7 @@ is provided below for reference.
     "XDG_CONFIG_DIRS": "/opt/rh/devtoolset-3/root/etc/xdg:/etc/xdg",
     "MAIL": "/var/spool/mail/nodeuser",
     "PATH": "/home/nodeuser/project/node:/opt/rh/devtoolset-3/root/usr/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin",
-    "PWD": "/home/nodeuser/project/node",
+    "PWD": "<example-value>",
     "LANG": "en_US.UTF-8",
     "PS1": "\\u@\\h : \\[\\e[31m\\]\\w\\[\\e[m\\] >  ",
     "SHLVL": "2",

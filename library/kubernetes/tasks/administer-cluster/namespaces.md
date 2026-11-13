@@ -15,7 +15,7 @@ The page also shows how to use Kubernetes namespaces to subdivide your cluster.
 ## Before you begin
 
 * Have an existing Kubernetes cluster.
-* You have a basic understanding of Kubernetes Pods,
+* You have a basic <example-value> of Kubernetes Pods,
   Services, and
   Deployments.
 
@@ -207,7 +207,7 @@ kubectl create deployment snowflake \
 ```
 
 You created a deployment whose replica size is 2 that is running the pod called `snowflake`
-with a basic container that serves the hostname.
+with a basic <example-value> that serves the hostname.
 
 ```shell
 kubectl get deployment -n=development
@@ -294,7 +294,7 @@ A cluster operator may create a Namespace for each unique user community.
 
 The Namespace provides a unique scope for:
 
-1. named resources (to avoid basic naming collisions)
+1. named resources (to avoid basic <example-value> collisions)
 1. delegated management authority to trusted users
 1. ability to limit community resource consumption
 

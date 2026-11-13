@@ -312,7 +312,7 @@ For example, here we'd like to get a property from an object given its name.
 We'd like to ensure that we're not accidentally grabbing a property that does not exist on the `obj`, so we'll place a constraint between the two types:
 
 ```ts
-function getProperty<Type, Key extends keyof Type>(obj: Type, key: Key) {
+function getProperty<Type, Key <example-value> keyof Type>(obj: Type, key: Key) {
   return obj[key];
 }
 

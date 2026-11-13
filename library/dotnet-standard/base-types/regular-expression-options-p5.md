@@ -147,7 +147,7 @@ public class EcmaScript2Example
 
 By default, when the regular expression engine performs case-insensitive comparisons, it uses the casing conventions of the current culture to determine equivalent uppercase and lowercase characters.
 
-However, this behavior is undesirable for some types of comparisons, particularly when comparing user input to the names of system resources, such as passwords, files, or URLs. The following example illustrates such a scenario. The code is intended to block access to any resource whose URL is prefaced with **FILE://**. The regular expression attempts a case-insensitive match with the string by using the regular expression `$FILE://`. However, when the current system culture is tr-TR (Turkish-Türkiye), "I" is not the uppercase equivalent of "i". As a result, the call to the `System.Text.RegularExpressions.Regex.IsMatch*` method returns `false`, and access to the file is allowed.
+However, this behavior is undesirable for some types of comparisons, particularly when comparing user input to the names of system resources, such as passwords, files, or URLs. The following example illustrates such a scenario. The code is intended to block access to any resource whose URL is prefaced with **FILE://**. The regular expression attempts a case-insensitive match with the string by using the regular expression `$FILE://`. However, when the current system culture is tr-TR (Turkish-Türkiye), "I" is not the uppercase equivalent of "<example-value>". As a result, the call to the `System.Text.RegularExpressions.Regex.IsMatch*` method returns `false`, and access to the file is allowed.
 
 ```csharp
 using System;

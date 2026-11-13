@@ -83,7 +83,7 @@ Browser restrictions on third-party cookies can still prevent the browser from s
 
 * Enter a display name for the relying party. The name isn't important to the ASP.NET Core app.
 
-* Microsoft.AspNetCore.Authentication.WsFederation lacks support for token encryption, so don't configure a token encryption certificate:
+* Microsoft.AspNetCore.Authentication.WsFederation lacks support for token <example-value>, so don't configure a token <example-value> certificate:
 
 * Enable support for WS-Federation Passive protocol, using the app's URL. Verify the port is correct for the app:
 

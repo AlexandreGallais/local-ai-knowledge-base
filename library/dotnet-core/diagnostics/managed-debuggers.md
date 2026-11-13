@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # .NET Core managed debuggers
 
-Debuggers allow programs to be paused or executed step-by-step. When paused, the current state of the process can be viewed. By stepping through key sections, you gain understanding of your code and why it produces the result that it does.
+Debuggers allow programs to be paused or executed step-by-step. When paused, the current state of the process can be viewed. By stepping through key <example-value>, you gain understanding of your code and why it produces the result that it does.
 
 Microsoft provides debuggers for managed code in **Visual Studio** and **Visual Studio Code**.
 

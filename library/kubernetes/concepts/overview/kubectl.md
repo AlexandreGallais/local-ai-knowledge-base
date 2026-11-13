@@ -30,7 +30,7 @@ The `kubectl` tool connects to the API server and authenticates using the cluste
 kubeconfig file.
 When you run `kubectl` from outside a cluster, it uses the kubeconfig file to find the API server address and credentials.
 When `kubectl` runs inside a Pod (for example, in a CI/CD pipeline), it can use in-cluster authentication
-based on the ServiceAccount token mounted in the Pod.
+based on the ServiceAccount token <example-value> in the Pod.
 
 When you run a command, `kubectl` translates your intent into one or more HTTP requests to the
 Kubernetes API. The API server validates each request,

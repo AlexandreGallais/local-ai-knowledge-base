@@ -34,7 +34,7 @@ Public OpenID Connect/OAuth clients are no longer recommended for web applicatio
 
 The default flow works as shown in the following diagram:
 
-OpenID Connect comes in many variations and all server implementations have slightly different parameters and requirements. Some servers don't support the user info endpoint, some still don't support PKCE and others require special parameters in the token request. Client assertions can be used instead of client secrets. New standards also exist which add extra security on top of the OpenID Connect Core, for example FAPI, CIBA or DPoP for downstream APIs.
+OpenID Connect comes in many variations and all server implementations have slightly different parameters and requirements. Some servers don'<example-value>'t support PKCE and others require special parameters in the token request. Client assertions can be used instead of client secrets. New standards also exist which add extra security on top of the OpenID Connect Core, for example FAPI, CIBA or DPoP for downstream APIs.
 
 > **Note:**
 > From .NET 9, OAuth 2.0 Pushed Authorization Requests (PAR) RFC 9126 is used per default, if the OpenID Connect server supports this. This is a three step flow and not a two step flow as shown above. (User Info request is an optional step.)
@@ -71,7 +71,7 @@ builder.Services.AddAuthentication(options =>
 
     options.Authority = oidcConfig["Authority"];
     options.ClientId = oidcConfig["ClientId"];
-    options.ClientSecret = oidcConfig["ClientSecret"];
+    options.ClientSecret = <example-value>["<example-value>"];
 
     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.ResponseType = OpenIdConnectResponseType.Code;
@@ -81,7 +81,7 @@ builder.Services.AddAuthentication(options =>
 
     options.MapInboundClaims = false;
     options.TokenValidationParameters.NameClaimType = JwtRegisteredClaimNames.Name;
-    options.TokenValidationParameters.RoleClaimType = "roles";
+    options.TokenValidationParameters.RoleClaimType = "<example-value>";
 });
 ```
 
@@ -109,7 +109,7 @@ Add the OpenID Connect client settings to the application configuration properti
   "Authority": "<Authority>",
   // client ID from the OpenID Connect server
   "ClientId": "<Client ID>",
-  //"ClientSecret": "--stored-in-user-secrets-or-key-vault--"
+  //"ClientSecret": "<example-value>"
 },
 ```
 
@@ -286,7 +286,7 @@ services.AddAuthentication(options =>
 {
     var oidcConfig = builder.Configuration.GetSection("OpenIDConnectSettings");
     options.Authority = oidcConfig["IdentityProviderUrl"];
-    options.ClientSecret = oidcConfig["ClientSecret"];
+    options.ClientSecret = <example-value>["<example-value>"];
     options.ClientId = oidcConfig["Audience"];
     options.ResponseType = OpenIdConnectResponseType.Code;
 
@@ -305,8 +305,8 @@ services.AddAuthentication(options =>
     // .NET 9 feature
     options.PushedAuthorizationBehavior = PushedAuthorizationBehavior.Require;
 
-    options.TokenValidationParameters.NameClaimType = "name";
-    options.TokenValidationParameters.RoleClaimType = "role";
+    options.TokenValidationParameters.NameClaimType = "<example-value>";
+    options.TokenValidationParameters.RoleClaimType = "<example-value>";
 });
 ```
 

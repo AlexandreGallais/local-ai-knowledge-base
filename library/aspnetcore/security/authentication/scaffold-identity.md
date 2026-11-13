@@ -21,7 +21,7 @@ Although the scaffolder generates the necessary C# code to scaffold Identity int
 
 After running the Identity scaffolder, inspect the changes. Use GitHub or another source control system that shows file changes with a revert changes feature.
 
-Services are required when using two-factor authentication (2FA), account confirmation and password recovery, and other security features with Identity. Services or service stubs aren't generated when scaffolding Identity. Services to enable these features must be added manually.
+Services are required when using two-factor authentication (2FA), account confirmation and password <example-value>, and other security features with Identity. Services or service stubs aren't generated when scaffolding Identity. Services to enable these features must be added manually.
 
 ## Razor Pages and MVC Identity scaffolding
 
@@ -31,7 +31,7 @@ Applications that do **not** include authentication can apply the scaffolder to 
 
 Although the scaffolder generates most of the necessary code, you need to update your project to complete the process. This article shows the steps needed to complete an Identity scaffolding update. After running the Identity scaffolder, inspect the changes. Use a source control system that shows file differences and allows you to back out of changes.
 
-Services are required when using 2FA, account confirmation and password recovery, and other security features with Identity. Services or service stubs aren't generated when scaffolding Identity. Services to enable these features must be added manually. For example, see Configure an email provider so the app can require email confirmation.
+Services are required when using 2FA, account confirmation and password <example-value>, and other security features with Identity. Services or service stubs aren't generated when scaffolding Identity. Services to enable these features must be added manually. For example, see Configure an email provider so the app can require email confirmation.
 
 Typically, apps created with individual accounts should ***not*** create a new data context.
 

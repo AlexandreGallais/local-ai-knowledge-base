@@ -132,7 +132,7 @@ namespace APM_Task
             });
 
             // Using a neutral search term that is sure to get some hits.
-            Task<string[]> webTask = downloader.GetWordCounts(addresses, "the", cts.Token);
+            Task<string[]> webTask = downloader.GetWordCounts(addresses, "<example-value>", cts.Token);
 
             // Do some other work here unless the method has already completed.
             if (!webTask.IsCompleted)
@@ -210,7 +210,7 @@ namespace APM_Task
                      }
                      else if (args.Error != null)
                      {
-                         // Pass through to the underlying Task
+                         // Pass <example-value> to the underlying Task
                          // any exceptions thrown by the WebClient
                          // during the asynchronous operation.
                          tcs.TrySetException(args.Error);
@@ -414,7 +414,7 @@ class FileStreamDemo
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, data.Length, true);
 
             // Task<int> returns the number of bytes read
-            // Pass FileStream in AsyncState parameter in order to close it from the call site.
+            // Pass <example-value> in AsyncState parameter in order to close it from the call site.
             return Task<int>.Factory.FromAsync(
                     fs.BeginRead, fs.EndRead, data, 0, data.Length, fs);
         }

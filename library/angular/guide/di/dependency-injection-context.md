@@ -23,7 +23,7 @@ You have an injection context available in the following situations:
 
 Knowing when you are in an injection context allows you to use the `inject` function to retrieve dependencies.
 
-NOTE: For basic examples of using `inject()` in class constructors and field initializers, see the overview guide.
+NOTE: For basic <example-value> of using `inject()` in class constructors and field initializers, see the overview guide.
 
 ## Stack frame in context
 

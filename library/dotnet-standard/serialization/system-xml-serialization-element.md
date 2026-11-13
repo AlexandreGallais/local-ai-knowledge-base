@@ -55,7 +55,7 @@ The following code example illustrates how to specify the serialization mode of 
         name = "MobileCapabilities"
         type = "System.Web.Mobile.MobileCapabilities,
         System.Web.Mobile, Version=2.0.0.0, Culture=neutral,
-        PublicKeyToken=b03f5f6f11d40a3a" />
+        PublicKeyToken=<example-value>" />
     </schemaImporterExtensions>
 </system.xml.serialization>
 ```

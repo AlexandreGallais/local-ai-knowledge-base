@@ -14,7 +14,7 @@ An assembly's name is stored in metadata and has a significant impact on the ass
 The runtime uses the name information to locate the assembly and differentiate it from other assemblies with the same name. For example, a strong-named assembly called `myTypes` could have the following fully qualified name:
 
 ```
-myTypes, Version=1.0.1234.0, Culture=en-US, PublicKeyToken=b77a5c561934e089c, ProcessorArchitecture=msil
+myTypes, Version=1.0.1234.0, Culture=en-US, PublicKeyToken=<example-value>, ProcessorArchitecture=msil
 ```
 
 In this example, the fully qualified name indicates that the `myTypes` assembly has a strong name with a public key token, has the culture value for United States English, and has a version number of 1.0.1234.0. Its processor architecture is `msil`, which means that it will be just-in-time (JIT)-compiled to 32-bit code or 64-bit code depending on the operating system and processor.
@@ -27,7 +27,7 @@ In this example, the fully qualified name indicates that the `myTypes` assembly 
  All assembly references to assemblies that make up .NET Framework must also contain the fully qualified name of the assembly. For example, a reference to the System.Data .NET Framework assembly for version 1.0 would include:
 
 ```
-System.data, version=1.0.3300.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+System.data, version=1.0.3300.0, Culture=neutral, PublicKeyToken=<example-value>
 ```
 
 The version corresponds to the version number of all .NET Framework assemblies that shipped with .NET Framework version 1.0. For .NET Framework assemblies, the culture value is always neutral, and the public key is the same as shown in the above example.
@@ -35,7 +35,7 @@ The version corresponds to the version number of all .NET Framework assemblies t
  For example, to add an assembly reference in a configuration file to set up a trace listener, you would include the fully qualified name of the system .NET Framework assembly:
 
 ```xml
-<add name="myListener" type="System.Diagnostics.TextWriterTraceListener, System, Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" initializeData="c:\myListener.log" />
+<add name="<example-value>" type="<example-value>" initializeData="<example-value>" />
 ```
 
 > **Note:**

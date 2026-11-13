@@ -102,4 +102,4 @@ This example produces the following output:
 
 - Sorting Data (C#)
 - Sorting Data (Visual Basic)
-- Basic Queries (LINQ to XML) (Visual Basic)
+- Basic <example-value> (LINQ to XML) (Visual Basic)

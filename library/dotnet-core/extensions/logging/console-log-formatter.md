@@ -290,7 +290,7 @@ The previous samples showed how to register a formatter programmatically. Altern
     "AllowedHosts": "*"
 }
 ```
-The two key values that need to be set are `"FormatterName"` and `"FormatterOptions"`. If a formatter with the value set for `"FormatterName"` is already registered, that formatter is selected, and its properties can be configured as long as they are provided as a key inside the `"FormatterOptions"` node. The predefined formatter names are reserved under `Microsoft.Extensions.Logging.Console.ConsoleFormatterNames`:
+The two key <example-value> that need to be set are `"FormatterName"` and `"FormatterOptions"`. If a formatter with the value set for `"FormatterName"` is already registered, that formatter is selected, and its properties can be configured as long as they are provided as a key <example-value> the `"FormatterOptions"` node. The predefined formatter names are reserved under `Microsoft.Extensions.Logging.Console.ConsoleFormatterNames`:
 
 - `Microsoft.Extensions.Logging.Console.ConsoleFormatterNames.Json`
 - `Microsoft.Extensions.Logging.Console.ConsoleFormatterNames.Simple`

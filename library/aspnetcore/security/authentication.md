@@ -25,7 +25,7 @@ Authentication schemes are specified by registering authentication services in `
 * By calling a scheme-specific extension method after a call to `Microsoft.Extensions.DependencyInjection.AuthenticationServiceCollectionExtensions.AddAuthentication*`, such as `Microsoft.Extensions.DependencyInjection.JwtBearerExtensions.AddJwtBearer*` or `Microsoft.Extensions.DependencyInjection.CookieExtensions.AddCookie*`. These extension methods use `Microsoft.AspNetCore.Authentication.AuthenticationBuilder.AddScheme*` to register schemes with appropriate settings.
 * Less commonly, by calling `AuthenticationBuilder.AddScheme` directly.
 
-For example, the following code registers authentication services and handlers for cookie and JWT bearer authentication schemes:
+For example, the following code registers authentication services and handlers for cookie and JWT bearer <example-value> schemes:
 
 ```csharp
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -104,7 +104,7 @@ Based on the authentication scheme's configuration and the incoming request cont
 
 ### `RemoteAuthenticationHandler<TOptions>` vs `AuthenticationHandler<TOptions>`
 
-`Microsoft.AspNetCore.Authentication.RemoteAuthenticationHandler`1` is the class for authentication that requires a remote authentication step. When the remote authentication step is finished, the handler calls back to the `CallbackPath` set by the handler. The handler finishes the authentication step using the information passed to the `Microsoft.AspNetCore.Authentication.Twitter.TwitterHandler.HandleRemoteAuthenticateAsync*` callback path. OAuth 2.0 and OIDC both use this pattern. JWT and cookies don't since they can directly use the bearer header and cookie to authenticate. The remotely hosted provider in this case:
+`Microsoft.AspNetCore.Authentication.RemoteAuthenticationHandler`1` is the class for authentication that requires a remote authentication step. When the remote authentication step is finished, the handler calls back to the `CallbackPath` set by the handler. The handler finishes the authentication step using the information passed to the `Microsoft.AspNetCore.Authentication.Twitter.TwitterHandler.HandleRemoteAuthenticateAsync*` callback path. OAuth 2.0 and OIDC both use this pattern. JWT and cookies don't since they can directly use the bearer <example-value> and cookie to authenticate. The remotely hosted provider in this case:
 
 * Is the authentication provider.
 * Examples include Facebook, Twitter, Google, Microsoft, and any other OIDC provider that handles authenticating users using the handlers mechanism.
@@ -114,14 +114,14 @@ Based on the authentication scheme's configuration and the incoming request cont
 An authentication scheme's authenticate action is responsible for constructing the user's identity based on request context. It returns an `Microsoft.AspNetCore.Authentication.AuthenticateResult` indicating whether authentication was successful and, if so, the user's identity in an authentication ticket. See `Microsoft.AspNetCore.Authentication.AuthenticationHttpContextExtensions.AuthenticateAsync*`. Authenticate examples include:
 
 * A cookie authentication scheme constructing the user's identity from cookies.
-* A JWT bearer scheme deserializing and validating a JWT bearer token to construct the user's identity.
+* A JWT bearer <example-value> deserializing and validating a JWT bearer token to construct the user's identity.
 
 ### Challenge
 
 An authentication challenge is invoked by Authorization when an unauthenticated user requests an endpoint that requires authentication. An authentication challenge is issued, for example, when an anonymous user requests a restricted resource or follows a login link. Authorization invokes a challenge using the specified authentication schemes, or the default if none is specified. See `Microsoft.AspNetCore.Authentication.AuthenticationHttpContextExtensions.ChallengeAsync*`. Authentication challenge examples include:
 
 * A cookie authentication scheme redirecting the user to a login page.
-* A JWT bearer scheme returning a 401 result with a `www-authenticate: bearer` header.
+* A JWT bearer <example-value> returning a 401 result with a `www-authenticate: bearer` header.
 
 A challenge action should let the user know what authentication mechanism to use to access the requested resource.
 
@@ -130,7 +130,7 @@ A challenge action should let the user know what authentication mechanism to use
 An authentication scheme's forbid action is called by Authorization when an authenticated user attempts to access a resource they're not permitted to access. See `Microsoft.AspNetCore.Authentication.AuthenticationHttpContextExtensions.ForbidAsync*`. Authentication forbid examples include:
 
 * A cookie authentication scheme redirecting the user to a page indicating access was forbidden.
-* A JWT bearer scheme returning a 403 result.
+* A JWT bearer <example-value> returning a 403 result.
 * A custom authentication scheme redirecting to a page where the user can request access to the resource.
 
 A forbid action can let the user know:

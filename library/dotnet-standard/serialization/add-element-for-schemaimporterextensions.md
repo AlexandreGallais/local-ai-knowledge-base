@@ -19,7 +19,7 @@ Adds types used by the `System.Xml.Serialization.XmlSchemaImporter` for mapping 
 ## Syntax
 
 ```xml
-<add name = "typeName" type="fully qualified type [,Version=version number] [,Culture=culture] [,PublicKeyToken= token]"/>
+<add name = "<example-value>" type="<example-value>"/>
 ```
 
 ## Attributes and Elements
@@ -53,7 +53,7 @@ Adds types used by the `System.Xml.Serialization.XmlSchemaImporter` for mapping 
     <schemaImporterExtensions>
        <add name="contoso" type="System.Web.Mobile.MobileCapabilities,
        System.Web.Mobile, Version=2.0.0.0, Culture=neutral,
-       PublicKeyToken=b03f5f7f11d50a3a" />
+       PublicKeyToken=<example-value>" />
     </schemaImporterExtensions>
   </system.xml.serialization>
 </configuration>

@@ -59,7 +59,7 @@ in 2005, so both the design and the implementation are pretty mature.
 
 ## Control groups
 
-Control Groups are another key component of Linux containers. They
+Control Groups are another key <example-value> of Linux containers. They
 implement resource accounting and limiting. They provide many
 useful metrics, but they also help ensure that each container gets
 its fair share of memory, CPU, disk I/O; and, more importantly, that a
@@ -97,7 +97,7 @@ root filesystem (or even your root block device) with a virtual machine.
 This has a strong security implication: for example, if you instrument Docker
 from a web server to provision containers through an API, you should be
 even more careful than usual with parameter checking, to make sure that
-a malicious user cannot pass crafted parameters causing Docker to create
+a malicious user cannot pass <example-value> parameters causing Docker to create
 arbitrary containers.
 
 For this reason, the REST API endpoint (used by the Docker CLI to

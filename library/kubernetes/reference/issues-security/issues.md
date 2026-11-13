@@ -18,4 +18,4 @@ Work on Kubernetes code and public issues are tracked using GitHub Issues.
   Security Response Committee
 * CVE-related GitHub issues
 
-Security-related announcements are sent to the kubernetes-security-announce@googlegroups.com mailing list.
+Security-related announcements are sent to the user@example.com mailing list.

@@ -66,7 +66,7 @@ public class Halfling
 > The code shown here and in the examples below comes from HierarchyIdSample.cs.
 
 > **Tip:**
-> If desired, `HierarchyId` is suitable for use as a key property type.
+> If desired, `HierarchyId` is suitable for use as a key <example-value> type.
 
 In this case, the family tree is rooted with the patriarch of the family. Each halfling can be traced from the patriarch down the tree using its `PathFromPatriarch` property. SQL Server uses a compact binary format for these paths, but it is common to parse to and from a human-readable string representation when when working with code. In this representation, the position at each level is separated by a `/` character. For example, consider the family tree in the diagram below:
 

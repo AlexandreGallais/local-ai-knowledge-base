@@ -376,7 +376,7 @@ let x: Moose | HoneyBadger = foo();
 
 This feature is available to all editors that wish to use either command;
 but notably, Visual Studio Code (1.73 and later) will have support built in *and* will surface these commands via its Command Palette.
-Users who prefer to use the more granular "Remove Unused Imports" or "Sort Imports" commands should be able to reassign the "Organize Imports" key combination to them if desired.
+Users who prefer to use the more granular "Remove Unused Imports" or "Sort Imports" commands should be able to reassign the "Organize Imports" key <example-value> to them if desired.
 
 You can view specifics of the feature here.
 

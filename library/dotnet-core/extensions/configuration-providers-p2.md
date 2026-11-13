@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Environment variable configuration provider
 
-Using the default configuration, the `Microsoft.Extensions.Configuration.EnvironmentVariables.EnvironmentVariablesConfigurationProvider` loads configuration from environment variable key-value pairs after reading *appsettings.json*, *appsettings.*`Environment`*.json*, and Secret manager. Therefore, key values read from the environment override values read from *appsettings.json*, *appsettings.*`Environment`*.json*, and Secret manager.
+Using the default configuration, the `Microsoft.Extensions.Configuration.EnvironmentVariables.EnvironmentVariablesConfigurationProvider` loads configuration from environment variable key-value pairs after reading *appsettings.json*, *appsettings.*`Environment`*.json*, and Secret manager. Therefore, key <example-value> read from the environment override values read from *appsettings.json*, *appsettings.*`Environment`*.json*, and Secret manager.
 
 The `:` delimiter doesn't work with environment variable hierarchical keys on all platforms. For example, the `:` delimiter is not supported by Bash. The double underscore (`__`), which is supported on all platforms, automatically replaces any `:` delimiters in environment variables.
 
@@ -28,7 +28,7 @@ public class TransientFaultHandlingOptions
 The following `set` commands set the environment keys and values of `SecretKey` and `TransientFaultHandlingOptions`.
 
 ```dotnetcli
-set SecretKey="Secret key from environment"
+set SecretKey="<example-value>"
 set TransientFaultHandlingOptions__Enabled="true"
 set TransientFaultHandlingOptions__AutoRetryDelay="00:00:13"
 ```
@@ -40,7 +40,7 @@ With Visual Studio 2019 and later, you can specify environment variables using t
 The following setx commands can be used to set the environment keys and values on Windows. Unlike `set`, `setx` settings are persisted. `/M` sets the variable in the system environment. If the `/M` switch isn't used, a user environment variable is set.
 
 ```dotnetcli
-setx SecretKey "Secret key from setx environment" /M
+setx SecretKey "<example-value>" /M
 setx TransientFaultHandlingOptions__Enabled "true" /M
 setx TransientFaultHandlingOptions__AutoRetryDelay "00:00:05" /M
 ```
@@ -110,7 +110,7 @@ Starting in .NET 10, seven additional prefixes are recognized for a total of 11:
 
 When an environment variable is discovered and loaded into configuration with any of the recognized prefixes:
 
-- The configuration key is created by removing the environment variable prefix and adding a configuration key section (`ConnectionStrings`).
+- The configuration key is created by removing the environment variable prefix and adding a configuration key <example-value> (`ConnectionStrings`).
 - A new configuration key-value pair is created that represents the database connection provider when a provider name is associated with the prefix.
 
 The following table shows the configuration entries produced for each prefix. Prefixes marked _.NET 10+_ are only processed when running on .NET 10 or later.
@@ -145,7 +145,7 @@ On Azure App Service, select **Add** on the **Settings** > **Environment variabl
 Using the default configuration, the `Microsoft.Extensions.Configuration.CommandLine.CommandLineConfigurationProvider` loads configuration from command-line argument key-value pairs after the following configuration sources:
 
 - *appsettings.json* and *appsettings*.`Environment`.*json* files.
-- App secrets (Secret Manager) in the `Development` environment.
+- App secrets (Secret <example-value>) in the `Development` environment.
 - Environment variables.
 
 By default, configuration values set on the command line override configuration values set with all the other configuration providers.
@@ -157,19 +157,19 @@ With Visual Studio 2019 and later, you can specify command-line arguments using 
 The following command sets keys and values using `=`:
 
 ```dotnetcli
-dotnet run SecretKey="Secret key from command line"
+dotnet run SecretKey="<example-value>"
 ```
 
 The following command sets keys and values using `/`:
 
 ```dotnetcli
-dotnet run /SecretKey "Secret key set from forward slash"
+dotnet run /SecretKey "<example-value>"
 ```
 
 The following command sets keys and values using `--`:
 
 ```dotnetcli
-dotnet run --SecretKey "Secret key set from double hyphen"
+dotnet run --SecretKey "<example-value>"
 ```
 
 The key value:
@@ -190,7 +190,7 @@ Overloads permit specifying:
 - An `Action<KeyPerFileConfigurationSource>` delegate that configures the source.
 - Whether the directory is optional and the path to the directory.
 
-The double-underscore (`__`) is used as a configuration key delimiter in file names. For example, the file name `Logging__LogLevel__System` produces the configuration key `Logging:LogLevel:System`.
+The double-underscore (`__`) is used as a configuration key <example-value> in file names. For example, the file name `Logging__LogLevel__System` produces the configuration key `Logging:LogLevel:System`.
 
 Call `ConfigureAppConfiguration` when building the host to specify the app's configuration:
 
@@ -219,7 +219,7 @@ HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 builder.Configuration.AddInMemoryCollection(
     new Dictionary<string, string?>
     {
-        ["SecretKey"] = "Dictionary MyKey Value",
+        ["<example-value>"] = "<example-value>",
         ["TransientFaultHandlingOptions:Enabled"] = bool.TrueString,
         ["TransientFaultHandlingOptions:AutoRetryDelay"] = "00:00:07",
         ["Logging:LogLevel:Default"] = "Warning"

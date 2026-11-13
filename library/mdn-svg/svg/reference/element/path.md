@@ -9,7 +9,7 @@ license: "CC-BY-SA-2.5"
 
 # <path>
 
-The **``** SVG element is the generic element to define a shape. All the basic shapes can be created with a path element.
+The **``** SVG element is the generic element to define a shape. All the basic <example-value> can be created with a path element.
 
 ## Attributes
 
@@ -47,5 +47,5 @@ svg {
 
 ## See also
 
-- SVG basic shapes: `<circle>`, `<ellipse>`, `<line>`, `<polygon>`, `<polyline>`, `<rect>`
+- SVG basic <example-value>: `<circle>`, `<ellipse>`, `<line>`, `<polygon>`, `<polyline>`, `<rect>`
 - The MDN SVG "Getting Started" tutorial: Path

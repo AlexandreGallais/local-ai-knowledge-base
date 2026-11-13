@@ -175,6 +175,6 @@ Even if `@key` isn't used, Blazor preserves child element and component instance
 Generally, it makes sense to supply one of the following values for `@key`:
 
 * Model object instances. For example, the `Person` instance (`person`) was used in the earlier example. This ensures preservation based on object reference equality.
-* Unique identifiers. For example, unique identifiers can be based on primary key values of type `int`, `string`, or `Guid`.
+* Unique identifiers. For example, unique identifiers can be based on primary key <example-value> of type `int`, `string`, or `Guid`.
 
 Ensure that values used for `@key` don't clash. If clashing values are detected within the same parent element, Blazor throws an exception because it can't deterministically map old elements or components to new elements or components. Only use distinct values, such as object instances or primary key values.

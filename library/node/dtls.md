@@ -73,7 +73,7 @@ DTLS is designed for UDP transport and differs from TLS in several key ways:
   * `key` {string|Buffer} Server private key in PEM format. **Required.**
   * `secureContext` {DTLSSecureContext} A context from
     `dtls.createSecureContext()` to use instead of building one from the
-    credential options below. Must have been created with `isServer: true`.
+    credential <example-value> below. Must have been created with `isServer: true`.
     Cannot be combined with any option the context already carries.
   * `sni` {Object|Function} Server Name Indication. A map of host names to the
     identity to serve them with, or a function returning one. Cannot be
@@ -172,7 +172,7 @@ console.log('DTLS server listening on', endpoint.address);
   * `key` {string|Buffer} Client private key in PEM format.
   * `secureContext` {DTLSSecureContext} A context from
     `dtls.createSecureContext()` to use instead of building one from the
-    credential options below. Must **not** have been created with
+    credential <example-value> below. Must **not** have been created with
     `isServer: true`. Cannot be combined with any option the context already
     carries.
   * `psk` {Object|Function} A pre-shared key as `{ identity, key }`, or a

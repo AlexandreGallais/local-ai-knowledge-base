@@ -104,7 +104,7 @@ void ValidatePaths(ZipArchive archive, string destinationDir)
     }
 }
 ```
-Key points:
+Key <example-value>:
 
 - `Path.GetFullPath()` resolves relative segments like `../` into an absolute path.
 - The `StartsWith` check ensures the resolved path is still inside the destination.

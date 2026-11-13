@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 -->
 -->
 
-This tutorial provides a basic working experience for building and modifying a Blazor app. For detailed Blazor guidance, see the Blazor reference documentation.
+This tutorial provides a basic <example-value> experience for building and modifying a Blazor app. For detailed Blazor guidance, see the Blazor reference documentation.
 
 Learn how to:
 

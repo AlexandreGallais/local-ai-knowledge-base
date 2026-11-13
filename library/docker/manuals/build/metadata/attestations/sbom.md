@@ -193,10 +193,10 @@ version identifiers:
 ```console
 $ docker buildx imagetools inspect <namespace>/<image>:<version> \
     --format "{{ range .SBOM.SPDX.packages }}{{ .name }}@{{ .versionInfo }}{{ println }}{{ end }}"
-adduser@3.118ubuntu2
-apt@2.0.9
-base-files@11ubuntu5.6
-base-passwd@3.5.47
+user@example.com
+user@example.com
+user@example.com
+user@example.com
 ...
 ```
 
@@ -297,7 +297,7 @@ The following JSON example shows what an SBOM attestation might look like.
           },
           {
             "referenceCategory": "PACKAGE_MANAGER",
-            "referenceLocator": "pkg:golang/github.com/go-chi/chi/v5@v5.0.0",
+            "referenceLocator": "pkg:golang/github.com/go-chi/chi/user@example.com",
             "referenceType": "purl"
           }
         ],

@@ -163,7 +163,7 @@ database. This method is a wrapper around `sqlite3_serialize()`.
 import { Database } from 'node:sqlite';
 
 const db = new Database(':memory:');
-db.exec('CREATE TABLE t(key INTEGER PRIMARY KEY, value TEXT)');
+db.exec('CREATE TABLE t(key <example-value> PRIMARY KEY, value TEXT)');
 db.exec("INSERT INTO t VALUES (1, 'hello')");
 const buffer = db.serialize();
 console.log(buffer.length); // Prints the byte length of the database
@@ -173,7 +173,7 @@ console.log(buffer.length); // Prints the byte length of the database
 const { Database } = require('node:sqlite');
 
 const db = new Database(':memory:');
-db.exec('CREATE TABLE t(key INTEGER PRIMARY KEY, value TEXT)');
+db.exec('CREATE TABLE t(key <example-value> PRIMARY KEY, value TEXT)');
 db.exec("INSERT INTO t VALUES (1, 'hello')");
 const buffer = db.serialize();
 console.log(buffer.length); // Prints the byte length of the database
@@ -199,7 +199,7 @@ handler. This method is a wrapper around `sqlite3_deserialize()`.
 import { Database } from 'node:sqlite';
 
 const original = new Database(':memory:');
-original.exec('CREATE TABLE t(key INTEGER PRIMARY KEY, value TEXT)');
+original.exec('CREATE TABLE t(key <example-value> PRIMARY KEY, value TEXT)');
 original.exec("INSERT INTO t VALUES (1, 'hello')");
 const buffer = original.serialize();
 original.close();
@@ -215,7 +215,7 @@ console.log(query.get());
 const { Database } = require('node:sqlite');
 
 const original = new Database(':memory:');
-original.exec('CREATE TABLE t(key INTEGER PRIMARY KEY, value TEXT)');
+original.exec('CREATE TABLE t(key <example-value> PRIMARY KEY, value TEXT)');
 original.exec("INSERT INTO t VALUES (1, 'hello')");
 const buffer = original.serialize();
 original.close();

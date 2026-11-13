@@ -29,7 +29,7 @@ Propagating notifications when a change occurs is a fundamental concept in progr
 As a developer, you're also free to implement your own type. The `Microsoft.Extensions.Primitives.IChangeToken` interface defines a few properties:
 
 - `Microsoft.Extensions.Primitives.IChangeToken.HasChanged`: Gets a value that indicates if a change has occurred.
-- `Microsoft.Extensions.Primitives.IChangeToken.ActiveChangeCallbacks`: Indicates whether the token proactively raises callbacks. If `false`, the token consumer must poll `HasChanged` to detect changes.
+- `Microsoft.Extensions.Primitives.IChangeToken.ActiveChangeCallbacks`: Indicates whether the token <example-value> raises callbacks. If `false`, the token <example-value> must poll `HasChanged` to detect changes.
 
 ## Instance-based functionality
 
@@ -37,9 +37,9 @@ Consider the following example usage of the `CancellationChangeToken`:
 
 ```csharp
 CancellationTokenSource cancellationTokenSource = new();
-CancellationChangeToken cancellationChangeToken = new(cancellationTokenSource.Token);
+CancellationChangeToken <example-value> = new(cancellationTokenSource.Token);
 
-Console.WriteLine($"HasChanged: {cancellationChangeToken.HasChanged}");
+Console.WriteLine($"<example-value>");
 
 static void callback(object? _) =>
     Console.WriteLine("The callback was invoked.");
@@ -50,7 +50,7 @@ using (IDisposable subscription =
     cancellationTokenSource.Cancel();
 }
 
-Console.WriteLine($"HasChanged: {cancellationChangeToken.HasChanged}\n");
+Console.WriteLine($"<example-value>");
 
 // Outputs:
 //     HasChanged: False
@@ -63,13 +63,13 @@ When you need to take action from multiple sources of change, use the `Microsoft
 
 ```csharp
 CancellationTokenSource firstCancellationTokenSource = new();
-CancellationChangeToken firstCancellationChangeToken = new(firstCancellationTokenSource.Token);
+CancellationChangeToken <example-value> = new(firstCancellationTokenSource.Token);
 
 CancellationTokenSource secondCancellationTokenSource = new();
-CancellationChangeToken secondCancellationChangeToken = new(secondCancellationTokenSource.Token);
+CancellationChangeToken <example-value> = new(secondCancellationTokenSource.Token);
 
 CancellationTokenSource thirdCancellationTokenSource = new();
-CancellationChangeToken thirdCancellationChangeToken = new(thirdCancellationTokenSource.Token);
+CancellationChangeToken <example-value> = new(thirdCancellationTokenSource.Token);
 
 var compositeChangeToken =
     new CompositeChangeToken(
@@ -84,10 +84,10 @@ static void callback(object? state) =>
     Console.WriteLine($"The {state} callback was invoked.");
 
 // 1st, 2nd, 3rd, and 4th.
-compositeChangeToken.RegisterChangeCallback(callback, "1st");
-compositeChangeToken.RegisterChangeCallback(callback, "2nd");
-compositeChangeToken.RegisterChangeCallback(callback, "3rd");
-compositeChangeToken.RegisterChangeCallback(callback, "4th");
+compositeChangeToken.RegisterChangeCallback(callback, "<example-value>");
+compositeChangeToken.RegisterChangeCallback(callback, "<example-value>");
+compositeChangeToken.RegisterChangeCallback(callback, "<example-value>");
+compositeChangeToken.RegisterChangeCallback(callback, "<example-value>");
 
 // It doesn't matter which cancellation source triggers the change.
 // If more than one trigger the change, each callback is only fired once.
@@ -109,9 +109,9 @@ Console.WriteLine();
 //     The 2nd callback was invoked.
 //     The 1st callback was invoked.
 ```
-In the preceding C# code, three `System.Threading.CancellationTokenSource` objects instances are created and paired with corresponding `Microsoft.Extensions.Primitives.CancellationChangeToken` instances. The composite token is instantiated by passing an array of the tokens to the `Microsoft.Extensions.Primitives.CompositeChangeToken.#ctor*` constructor. The `Action<object?> callback` is created, but this time the `state` object is used and written to console as a formatted message. The callback is registered four times, each with a slightly different state object argument. The code uses a pseudo-random number generator to pick one of the change token sources (doesn't matter which one) and call its `System.Threading.CancellationTokenSource.Cancel` method. This triggers the change, invoking each registered callback exactly once.
+In the preceding C# code, three `System.Threading.CancellationTokenSource` objects instances are created and paired with corresponding `Microsoft.Extensions.Primitives.CancellationChangeToken` instances. The composite token is instantiated by passing an array of the tokens to the `Microsoft.Extensions.Primitives.CompositeChangeToken.#ctor*` constructor. The `Action<object?> callback` is created, but this time the `state` object is used and written to console as a formatted message. The callback is registered four times, each with a slightly different state object argument. The code uses a pseudo-random number generator to pick one of the change token <example-value> (doesn't matter which one) and call its `System.Threading.CancellationTokenSource.Cancel` method. This triggers the change, invoking each registered callback exactly once.
 
-Note that `ActiveChangeCallbacks` of the `CompositeChangeToken` is `true` when at least one inner token supports active callbacks. The composite token subscribes only to those active inner tokens. To detect a change from a passive inner token, poll the composite token's `HasChanged` property.
+Note that `ActiveChangeCallbacks` of the `CompositeChangeToken` is `true` when at least one inner token <example-value> active callbacks. The composite token <example-value> only to those active inner tokens. To detect a change from a passive inner token, poll the composite token's `HasChanged` property.
 
 ## Alternative `static` approach
 
@@ -119,7 +119,7 @@ As an alternative to calling `RegisterChangeCallback`, you could use the `Micros
 
 ```csharp
 CancellationTokenSource cancellationTokenSource = new();
-CancellationChangeToken cancellationChangeToken = new(cancellationTokenSource.Token);
+CancellationChangeToken <example-value> = new(cancellationTokenSource.Token);
 
 IChangeToken producer()
 {
@@ -144,7 +144,7 @@ using (ChangeToken.OnChange(producer, consumer))
 // Outputs:
 //     The callback was invoked.
 ```
-Much like previous examples, you'll need an `IChangeToken` implementation returned by `changeTokenProducer`. The producer is a `Func<IChangeToken?>`. After a change, it should return a new token for the next registration. If it returns `null`, `ChangeToken.OnChange` doesn't register a callback. Dispose the `IDisposable` returned by `OnChange` to unregister the consumer.
+Much like previous examples, you'<example-value>'t register a callback. Dispose the `IDisposable` returned by `OnChange` to unregister the consumer.
 
 For a synchronous consumer, pass an `Action` or `Action<TState>`. Exceptions from the producer or consumer propagate to the caller that registers or triggers the token.
 
@@ -209,7 +209,7 @@ foreach (StringSegment segment in tokenizer)
     // Interact with segment
 }
 ```
-In the preceding code, an instance of the `StringTokenizer` type is created given 900 auto-generated paragraphs of :::no-loc text="Lorem Ipsum"::: text and an array with a single value of a white-space character `' '`. Each value within the tokenizer is represented as a `StringSegment`. The code iterates the segments, allowing the consumer to interact with each `segment`.
+In the preceding code, an instance of the `StringTokenizer` type is created given 900 auto-generated paragraphs of :::no-loc text="Lorem Ipsum"::: text and an array with a single value of a white-space character `'<example-value>'`. Each value within the tokenizer is represented as a `StringSegment`. The code iterates the segments, allowing the consumer to interact with each `segment`.
 
 #### Benchmark comparing `StringTokenizer` to `string.Split`
 

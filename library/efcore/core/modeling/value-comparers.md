@@ -35,7 +35,7 @@ modelBuilder
 
 See mutable classes below for further details.
 
-Note that value comparers are also used when determining whether two key values are the same when resolving relationships; this is explained below.
+Note that value comparers are also used when determining whether two key <example-value> are the same when resolving relationships; this is explained below.
 
 ## Shallow vs. deep comparison
 
@@ -189,9 +189,9 @@ The snapshot is created by cloning the list with `ToList`. Again, this is only n
 > **Note:**
 > Value converters and comparers are constructed using expressions rather than simple delegates. This is because EF Core inserts these expressions into a much more complex expression tree that is then compiled into an entity shaper delegate. Conceptually, this is similar to compiler inlining. For example, a simple conversion may just be a compiled in cast, rather than a call to another method to do the conversion.
 
-## Key comparers
+## Key <example-value>
 
-The background section covers why key comparisons may require special semantics. Make sure to create a comparer that is appropriate for keys when setting it on a primary, principal, or foreign key property.
+The background section covers why key <example-value> may require special semantics. Make sure to create a comparer that is appropriate for keys when setting it on a primary, principal, or foreign key property.
 
 Use `Microsoft.EntityFrameworkCore.MutablePropertyExtensions.SetKeyValueComparer*` in the rare cases where different semantics is required on the same property.
 

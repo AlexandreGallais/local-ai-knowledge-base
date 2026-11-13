@@ -106,7 +106,7 @@ namespace ContactManager.Data
                     City = "Redmond",
                     State = "WA",
                     Zip = "10999",
-                    Email = "debra@example.com"
+                    Email = "user@example.com"
                 },
                 new Contact
                 {
@@ -115,7 +115,7 @@ namespace ContactManager.Data
                     City = "Redmond",
                     State = "WA",
                     Zip = "10999",
-                    Email = "thorsten@example.com"
+                    Email = "user@example.com"
                 },
                 new Contact
                 {
@@ -124,7 +124,7 @@ namespace ContactManager.Data
                     City = "Redmond",
                     State = "WA",
                     Zip = "10999",
-                    Email = "yuhong@example.com"
+                    Email = "user@example.com"
                 },
                 new Contact
                 {
@@ -133,7 +133,7 @@ namespace ContactManager.Data
                     City = "Redmond",
                     State = "WA",
                     Zip = "10999",
-                    Email = "jon@example.com"
+                    Email = "user@example.com"
                 },
                 new Contact
                 {
@@ -142,7 +142,7 @@ namespace ContactManager.Data
                     City = "Redmond",
                     State = "WA",
                     Zip = "10999",
-                    Email = "diliana@example.com"
+                    Email = "user@example.com"
                 }
              );
             context.SaveChanges();

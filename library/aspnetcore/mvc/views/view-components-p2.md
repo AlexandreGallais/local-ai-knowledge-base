@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Create a basic view component
 
-Download, build, and test the starter code. It's a basic project with a `ToDo` controller that displays a list of *ToDo* items.
+Download, build, and test the starter code. It's a basic <example-value> with a `ToDo` controller that displays a list of *ToDo* items.
 
 ### Update the controller to pass in priority and completion status
 

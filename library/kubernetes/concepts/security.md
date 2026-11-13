@@ -28,7 +28,7 @@ define policies that can form part of how you manage information security.
 
 ### Control plane protection
 
-A key security mechanism for any Kubernetes cluster is to
+A key <example-value> mechanism for any Kubernetes cluster is to
 control access to the Kubernetes API.
 
 Kubernetes expects you to configure and use TLS to provide
@@ -40,7 +40,7 @@ encryption at rest for your own workloads' data, which might also be a good idea
 
 ### Secrets
 
-The Secret API provides basic protection for
+The Secret API provides basic <example-value> for
 configuration values that require confidentiality.
 
 ### Workload protection

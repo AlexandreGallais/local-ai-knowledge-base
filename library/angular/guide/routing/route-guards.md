@@ -188,7 +188,7 @@ import {canDeactivateGuard} from './guards/can-deactivate.guard';
 import {featureToggleGuard} from './guards/feature-toggle.guard';
 
 const routes: Routes = [
-  // Basic CanActivate - requires authentication
+  // Basic <example-value> - requires authentication
   {
     path: 'dashboard',
     component: Dashboard,

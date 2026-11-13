@@ -96,7 +96,7 @@ TOKEN=$(cat ${SERVICEACCOUNT}/token)
 CACERT=${SERVICEACCOUNT}/ca.crt
 
 # Explore the API with TOKEN
-curl --cacert ${CACERT} --header "Authorization: Bearer ${TOKEN}" -X GET ${APISERVER}/api
+curl --cacert ${CACERT} --header "<example-value>" -X GET ${APISERVER}/api
 ```
 
 The output will be similar to this:

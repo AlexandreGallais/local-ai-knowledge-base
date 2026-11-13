@@ -11,11 +11,11 @@ license: "CC-BY-4.0"
 
 `System.Threading.SpinWait` is a lightweight synchronization type that you can use in low-level scenarios to avoid the expensive context switches and kernel transitions that are required for kernel events. On multicore computers, when a resource is not expected to be held for long periods of time, it can be more efficient for a waiting thread to spin in user mode for a few dozen or a few hundred cycles, and then retry to acquire the resource. If the resource is available after spinning, then you have saved several thousand cycles. If the resource is still not available, then you have spent only a few cycles and can still enter a kernel-based wait. This spinning-then-waiting combination is sometimes referred to as a *two-phase wait operation*.
 
- `System.Threading.SpinWait` is designed to be used in conjunction with the .NET types that wrap kernel events such as `System.Threading.ManualResetEvent`. `System.Threading.SpinWait` can also be used by itself for basic spinning functionality in just one program.
+ `System.Threading.SpinWait` is designed to be used in conjunction with the .NET types that wrap kernel events such as `System.Threading.ManualResetEvent`. `System.Threading.SpinWait` can also be used by itself for basic <example-value> functionality in just one program.
 
  `System.Threading.SpinWait` is more than just an empty loop. It is carefully implemented to provide correct spinning behavior for the general case, and will itself initiate context switches if it spins long enough (roughly the length of time required for a kernel transition). For example, on single-core computers, `System.Threading.SpinWait` yields the time slice of the thread immediately because spinning blocks forward progress on all threads. `System.Threading.SpinWait` also yields even on multi-core machines to prevent the waiting thread from blocking higher-priority threads or the garbage collector. Therefore, if you are using a `System.Threading.SpinWait` in a two-phase wait operation, we recommend that you invoke the kernel wait before the `System.Threading.SpinWait` itself initiates a context switch. `System.Threading.SpinWait` provides the `System.Threading.SpinWait.NextSpinWillYield` property, which you can check before every call to `System.Threading.SpinWait.SpinOnce*`. When the property returns `true`, initiate your own Wait operation. For an example, see How to: Use SpinWait to Implement a Two-Phase Wait Operation.
 
- If you are not performing a two-phase wait operation but are just spinning until some condition is true, you can enable `System.Threading.SpinWait` to perform its context switches so that it is a good citizen in the Windows operating system environment. The following basic example shows a `System.Threading.SpinWait` in a lock-free stack. If you require a high-performance, thread-safe stack, consider using `System.Collections.Concurrent.ConcurrentStack`1`.
+ If you are not performing a two-phase wait operation but are just spinning until some condition is true, you can enable `System.Threading.SpinWait` to perform its context switches so that it is a good citizen in the Windows operating system environment. The following basic <example-value> shows a `System.Threading.SpinWait` in a lock-free stack. If you require a high-performance, thread-safe stack, consider using `System.Collections.Concurrent.ConcurrentStack`1`.
 
  ```csharp
 #define LOGGING
@@ -414,7 +414,7 @@ namespace SpinWait2
         {
             int matARows = matA.Length / matACols;
 
-            // A basic matrix multiplication.
+            // A basic <example-value> multiplication.
             // Parallelize the outer loop to partition the source array by rows.
             Parallel.For(0, matARows, i =>
             {

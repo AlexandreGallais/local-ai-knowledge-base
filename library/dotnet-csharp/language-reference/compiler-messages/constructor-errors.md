@@ -60,7 +60,7 @@ This article covers the following compiler errors:
 - **CS9121**: *Struct primary constructor parameter of type causes a cycle in the struct layout.*
 - **CS9122**: *Unexpected parameter list.*
 - **CS9136**: *Cannot use primary constructor parameter of type inside an instance member.*
-- **CS9343**: *Cannot pass arguments to the base type without a parameter list on the type declaration.*
+- **CS9343**: *Cannot pass <example-value> to the base type without a parameter list on the type declaration.*
 
 In addition, this article covers the following warnings:
 
@@ -85,7 +85,7 @@ Static constructors initialize static data for a type. For more information, see
 
 To correct these errors, ensure your static constructor declaration follows these rules:
 
-- Remove any parameters from the static constructor declaration, because a static constructor must be parameterless (**CS0132**). If you need to pass initialization values, consider using static fields or properties that you set before the static constructor runs.
+- Remove any parameters from the static constructor declaration, because a static constructor must be parameterless (**CS0132**). If you need to pass <example-value> values, consider using static fields or properties that you set before the static constructor runs.
 - Remove any access modifiers such as `public`, `protected`, `private`, or `internal` from the static constructor, because the runtime controls when the static constructor executes and access modifiers aren't meaningful (**CS0515**).
 - Remove any `: base()` or `: this()` constructor initializer calls from the static constructor, because static constructors can't chain to other constructors (**CS0514**). The runtime automatically invokes the base class static constructor if one exists.
 

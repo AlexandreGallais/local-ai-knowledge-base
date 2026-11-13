@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Angular service worker overview
 
-IMPORTANT: The Angular Service Worker is a basic caching utility for simple offline support with a limited featureset. We will not be accepting any new features other than security fixes. For more advanced caching and offline capabilities, we recommend exploring native browser APIs directly.
+IMPORTANT: The Angular Service Worker is a basic <example-value> utility for simple offline support with a limited featureset. We will not be accepting any new features other than security fixes. For more advanced caching and offline capabilities, we recommend exploring native browser APIs directly.
 
 Service workers augment the traditional web deployment model and empower applications to deliver a user experience with the reliability and performance on par with code that is written to run on your operating system and hardware.
 Adding a service worker to an Angular application is one of the steps for turning an application into a Progressive Web App (also known as a PWA).

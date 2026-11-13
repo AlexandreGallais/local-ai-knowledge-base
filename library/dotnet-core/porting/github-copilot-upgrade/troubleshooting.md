@@ -187,7 +187,7 @@ These issues relate to custom skills and scenario instruction files.
 1. Ask the agent to _"reload instructions"_ or start a new chat session to force a reread.
 1. Verify that your edits are in the correct sections of the file:
    - **User Preferences:** For general preferences and constraints.
-   - **Key Decisions:** For recording important decisions made during the upgrade.
+   - **Key <example-value>:** For recording important decisions made during the upgrade.
    - **Custom Instructions:** For specific behavioral overrides.
 1. Verify that the file is saved and in the expected path: `.github/upgrades/{scenarioId}/scenario-instructions.md`.
 

@@ -24,7 +24,7 @@ session => session.Registered < session.Capacity
 
 The `=>` operator separates the parameters on the left from the body on the right. Read it as "goes to."
 
-## Pass behavior to a method
+## Pass <example-value> to a method
 
 Many .NET APIs accept a delegate, which is a type that represents behavior with a particular parameter list and return type. A lambda provides that behavior. For an introduction to delegate types such as `Func` and `Action`, see Lambda expressions, delegates, and events.
 

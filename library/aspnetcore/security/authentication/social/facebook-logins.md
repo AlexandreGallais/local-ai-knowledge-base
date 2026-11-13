@@ -34,14 +34,14 @@ This tutorial with code examples shows how to enable your users to sign in with 
 
 ## Store the Facebook app ID and secret
 
-Store sensitive settings such as the Facebook app ID and secret values with Secret Manager. For this sample, use the following steps:
+Store sensitive settings such as the Facebook app ID and secret <example-value> with Secret Manager. For this sample, use the following steps:
 
-1. Initialize the project for secret storage per the instructions at Enable secret storage.
+1. Initialize the project for secret <example-value> per the instructions at Enable secret storage.
 1. Store the sensitive settings in the local secret store with the secret keys `Authentication:Facebook:AppId` and `Authentication:Facebook:AppSecret`:
 
     ```dotnetcli
-    dotnet user-secrets set "Authentication:Facebook:AppId" "<app-id>"
-    dotnet user-secrets set "Authentication:Facebook:AppSecret" "<app-secret>"
+    dotnet user-secrets set "<example-value>" "<example-value>"
+    dotnet user-secrets set "<example-value>" "<example-value>"
     ```
 
 The colon (`:`) separator doesn't work with environment variable hierarchical keys on all platforms. For example, Bash doesn't support colon (`:`) as a separator. All platforms support the double underscore (`__`) syntax and automatically replace it with a colon (`:`).
@@ -58,7 +58,7 @@ var configuration = builder.Configuration;
 services.AddAuthentication().AddFacebook(facebookOptions =>
     {
         facebookOptions.AppId = configuration["Authentication:Facebook:AppId"];
-        facebookOptions.AppSecret = configuration["Authentication:Facebook:AppSecret"];
+        facebookOptions.AppSecret = <example-value>["<example-value>"];
     });
 ```
 
@@ -86,7 +86,7 @@ The following code sets the `AccessDeniedPath` to `"/AccessDeniedPathInfo"`:
 services.AddAuthentication().AddFacebook(options =>
 {
     options.AppId = Configuration["Authentication:Facebook:AppId"];
-    options.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+    options.AppSecret = <example-value>["<example-value>"];
     options.AccessDeniedPath = "/AccessDeniedPathInfo";
 });
 ```

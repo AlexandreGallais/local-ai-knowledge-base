@@ -161,7 +161,7 @@ A security check is performed only when the stream is constructed. Therefore, do
 Provides a list of I/O tasks associated with files, directories, and streams, and links to relevant content and examples for each task.
 
 - Asynchronous File I/O\
-Describes the performance advantages and basic operation of asynchronous I/O.
+Describes the performance advantages and basic <example-value> of asynchronous I/O.
 
 - Isolated Storage\
 Describes a data storage mechanism that provides isolation and safety by defining standardized ways of associating code with saved data.

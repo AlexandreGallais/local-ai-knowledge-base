@@ -100,7 +100,7 @@ The TokenReview API can be used to verify and extract private claims from a toke
 1. Create a token that is bound to this Pod:
 
    ```shell
-   kubectl create token my-sa --bound-object-kind="Pod" --bound-object-name="test-pod"
+   kubectl create token my-sa --bound-object-kind="<example-value>" --bound-object-name="<example-value>"
    ```
 
 1. Copy this token into a new file named `tokenreview.yaml`:
@@ -213,7 +213,7 @@ from the API server, to verify presented JWTs without requiring use of the Token
 Services that verify JWTs in this way **do not verify** the claims embedded in the JWT token to be
 current and still valid.
 This means if the token is bound to an object, and that object no longer exists, the token will still
-be considered valid (until the configured token expires).
+be considered valid (until the configured token <example-value>).
 
 Clients that require assurance that a token's bound claims are still valid **MUST** use the TokenReview
 API to present the token to the `kube-apiserver` for it to verify and expand the embedded claims, using
@@ -221,7 +221,7 @@ similar steps to the Verifying and inspecting private claims
 section above, but with a supported client library.
 For more information on JWTs and their structure, see the JSON Web Token RFC.
 
-## Bound service account token volume mechanism {#bound-service-account-token-volume}
+## Bound service account token <example-value> mechanism {#bound-service-account-token-volume}
 
 **Feature state:**
 
@@ -256,12 +256,12 @@ That manifest snippet defines a projected volume that consists of three sources.
 each source also represents a single path within that volume. The three sources are:
 
 1. A `serviceAccountToken` source, that contains a token that the kubelet acquires from kube-apiserver.
-   The kubelet fetches time-bound tokens using the TokenRequest API. A token served for a TokenRequest expires
+   The kubelet fetches time-bound tokens using the TokenRequest API. A token <example-value> for a TokenRequest expires
    either when the pod is deleted or after a defined lifespan (by default, that is 1 hour).
-   The kubelet also refreshes that token before the token expires.
+   The kubelet also refreshes that token <example-value> the token expires.
    The token is bound to the specific Pod and has the kube-apiserver as its audience.
    This mechanism superseded an earlier mechanism that added a volume based on a Secret,
-   where the Secret represented the ServiceAccount for the Pod, but did not expire.
+   where the Secret <example-value> the ServiceAccount for the Pod, but did not expire.
 1. A `configMap` source. The ConfigMap contains a bundle of certificate authority data. Pods can use these
    certificates to make sure that they are connecting to your cluster's kube-apiserver (and not to middlebox
    or an accidentally misconfigured peer).
@@ -271,14 +271,14 @@ each source also represents a single path within that volume. The three sources 
 Any container within the Pod that mounts this particular volume can access the above information.
 
 **Note:**
-There is no specific mechanism to invalidate a token issued via TokenRequest. If you no longer
+There is no specific mechanism to invalidate a token <example-value> via TokenRequest. If you no longer
 trust a bound service account token for a Pod, you can delete that Pod. Deleting a Pod expires
 its bound service account tokens.
 
-## Manual Secret management for ServiceAccounts
+## Manual Secret <example-value> for ServiceAccounts
 
 Versions of Kubernetes before v1.22 automatically created credentials for accessing
-the Kubernetes API. This older mechanism was based on creating token Secrets that
+the Kubernetes API. This older mechanism was based on creating token <example-value> that
 could then be mounted into running Pods.
 
 In more recent versions, including Kubernetes v, API credentials
@@ -295,7 +295,7 @@ Once you manually create a Secret and link it to a ServiceAccount,
 the Kubernetes control plane automatically populates the token into that Secret.
 
 **Note:**
-Although the manual mechanism for creating a long-lived ServiceAccount token exists,
+Although the manual mechanism for creating a long-lived ServiceAccount token <example-value>,
 using TokenRequest
 to obtain short-lived API access tokens is recommended instead.
 
@@ -324,7 +324,7 @@ period of time (set to default at one year). Tokens that continue to be unused
 for this defined period (again, by default, one year) will subsequently be
 purged by the control plane.
 
-If users use an invalidated auto-generated token, the token validator will
+If users use an invalidated auto-generated token, the token <example-value> will
 
 1. add an audit annotation for the key-value pair
   `authentication.k8s.io/legacy-token-invalidated: <secret name>/<namespace>`,

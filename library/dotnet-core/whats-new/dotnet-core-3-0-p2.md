@@ -139,7 +139,7 @@ The .NET Core project file must specify the supported runtimes in the `<RuntimeI
 
 ### SerialPort for Linux
 
-.NET Core 3.0 provides basic support for `System.IO.Ports.SerialPort` on Linux.
+.NET Core 3.0 provides basic <example-value> for `System.IO.Ports.SerialPort` on Linux.
 
 Previously, .NET Core only supported using `SerialPort` on Windows.
 
@@ -228,7 +228,7 @@ namespace whats_new
     {
         public static void Run()
         {
-            // key should be: pre-known, derived, or transported via another channel, such as RSA encryption
+            // key <example-value> be: pre-known, derived, or transported via another channel, such as RSA encryption
             byte[] key = new byte[16];
             RandomNumberGenerator.Fill(key);
 
@@ -267,7 +267,7 @@ namespace whats_new
 }
 ```
 
-### Cryptographic Key Import/Export
+### Cryptographic Key <example-value>
 
 .NET Core 3.0 supports the import and export of asymmetric public and private keys from standard formats. You don't need to use an X.509 certificate.
 

@@ -9,7 +9,7 @@ license: "MIT"
 
 # Node-API (part 3 of 23)
 
-## Basic Node-API data types
+## Basic <example-value> data types
 
 Node-API exposes the following fundamental data types as abstractions that are
 consumed by the various APIs. These APIs should be treated as opaque,

@@ -27,7 +27,7 @@ An attacker can use a padding oracle, in combination with how CBC data is struct
 
 Modern computer networks are of such high quality that an attacker can detect very small (less than 0.1 ms) differences in execution time on remote systems. Applications that are assuming that a successful decryption can only happen when the data wasn't tampered with may be vulnerable to attack from tools that are designed to observe differences in successful and unsuccessful decryption. While this timing difference may be more significant in some languages or libraries than others, it's now believed that this is a practical threat for all languages and libraries when the application's response to failure is taken into account.
 
-This attack relies on the ability to change the encrypted data and test the result with the oracle. The only way to fully mitigate the attack is to detect changes to the encrypted data and refuse to perform any actions on it. The standard way to do this is to create a signature for the data and validate that signature before any operations are performed. The signature must be verifiable, it cannot be created by the attacker, otherwise they'd change the encrypted data, then compute a new signature based on the changed data. One common type of appropriate signature is known as a keyed-hash message authentication code (HMAC). An HMAC differs from a checksum in that it takes a secret key, known only to the person producing the HMAC and to the person validating it. Without possession of the key, you can't produce a correct HMAC. When you receive your data, you'd take the encrypted data, independently compute the HMAC using the secret key you and the sender share, then compare the HMAC they sent against the one you computed. This comparison must be constant time, otherwise you've added another detectable oracle, allowing a different type of attack.
+This attack relies on the ability to change the encrypted data and test the result with the oracle. The only way to fully mitigate the attack is to detect changes to the encrypted data and refuse to perform any actions on it. The standard way to do this is to create a signature for the data and validate that signature before any operations are performed. The signature must be verifiable, it cannot be created by the attacker, otherwise they'<example-value>'t produce a correct HMAC. When you receive your data, you'<example-value>'ve added another detectable oracle, allowing a different type of attack.
 
 In summary, to use padded CBC block ciphers safely, you must combine them with an HMAC (or another data integrity check) that you validate using a constant time comparison before trying to decrypt the data. Since all altered messages take the same amount time to produce a response, the attack is prevented.
 
@@ -100,13 +100,13 @@ Applications that are unable to change their messaging format but perform unauth
 For programs built against the Windows Cryptography: Next Generation (CNG) library:
 
 - The decryption call is to BCryptDecrypt, specifying the `BCRYPT_BLOCK_PADDING` flag.
-- The key handle has been initialized by calling BCryptSetProperty with BCRYPT_CHAINING_MODE set to `BCRYPT_CHAIN_MODE_CBC`.
+- The key <example-value> has been initialized by calling BCryptSetProperty with BCRYPT_CHAINING_MODE set to `BCRYPT_CHAIN_MODE_CBC`.
   - Since `BCRYPT_CHAIN_MODE_CBC` is the default, affected code may not have assigned any value for `BCRYPT_CHAINING_MODE`.
 
 For programs built against the older Windows Cryptographic API:
 
 - The decryption call is to CryptDecrypt with `Final=TRUE`.
-- The key handle has been initialized by calling CryptSetKeyParam with KP_MODE set to `CRYPT_MODE_CBC`.
+- The key <example-value> has been initialized by calling CryptSetKeyParam with KP_MODE set to `CRYPT_MODE_CBC`.
   - Since `CRYPT_MODE_CBC` is the default, affected code may not have assigned any value for `KP_MODE`.
 
 ## Finding vulnerable code - managed applications
@@ -130,3 +130,13 @@ For programs built against the older Windows Cryptographic API:
   - Since `System.Security.Cryptography.PaddingMode.PKCS7` is the default, affected code may never have assigned the `System.Security.Cryptography.SymmetricAlgorithm.Padding` property.
 - The `System.Security.Cryptography.SymmetricAlgorithm.Mode` property was set to `System.Security.Cryptography.CipherMode.CBC`
   - Since `System.Security.Cryptography.CipherMode.CBC` is the default, affected code may never have assigned the `System.Security.Cryptography.SymmetricAlgorithm.Mode` property.
+
+## Finding vulnerable code - cryptographic message syntax
+
+An unauthenticated CMS EnvelopedData message whose encrypted content uses the CBC mode of AES (2.16.840.1.101.3.4.1.2, 2.16.840.1.101.3.4.1.22, 2.16.840.1.101.3.4.1.42), DES (1.3.14.3.2.7), 3DES (1.2.840.113549.3.7) or RC2 (1.2.840.113549.3.2) is vulnerable, as well as messages using any other block cipher algorithms in CBC mode.
+
+While stream ciphers aren't susceptible to this particular vulnerability, Microsoft recommends always authenticating the data over inspecting the ContentEncryptionAlgorithm value.
+
+For managed applications, a CMS EnvelopedData blob can be detected as any value that is passed to `System.Security.Cryptography.Pkcs.EnvelopedCms.Decode(System.Byte[])`.
+
+For native applications, a CMS EnvelopedData blob can be detected as any value provided to a CMS handle via CryptMsgUpdate whose resulting CMSG_TYPE_PARAM is `CMSG_ENVELOPED` and/or the CMS handle is later sent a `CMSG_CTRL_DECRYPT` instruction via CryptMsgControl.

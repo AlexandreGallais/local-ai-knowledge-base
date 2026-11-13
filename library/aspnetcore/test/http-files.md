@@ -191,7 +191,7 @@ In the preceding example, the `$shared` environment defines the `HostAddress` va
 
 ## Request variables
 
-You can pass values from one HTTP request to another within the same `.http` file.
+You can pass <example-value> from one HTTP request to another within the same `.http` file.
 
 1. Create a single-line comment located just before a request URL to name the following request. For example, the following lines show alternative ways to name the request `login`:
 
@@ -326,8 +326,8 @@ To get a value from user secrets, use an environment file that is located in the
 {
   "dev": {
     "ApiKeyDev": {
-      "provider": "AspnetUserSecrets",
-      "secretName": "config:ApiKeyDev"
+      "provider": "<example-value>",
+      "secretName": "<example-value>"
     }
   }
 }

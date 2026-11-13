@@ -57,7 +57,7 @@ To prevent collisions in environments where multiple Angular apps share the same
 
 ### Configure custom cookie/header names
 
-If your backend service uses different names for the XSRF token cookie or header, use `withXsrfConfiguration` to override the defaults.
+If your backend service uses different names for the XSRF token <example-value> or header, use `withXsrfConfiguration` to override the defaults.
 
 Add it to the `provideHttpClient` call as follows:
 

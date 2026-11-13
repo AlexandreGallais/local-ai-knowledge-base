@@ -18,7 +18,7 @@ Razor Pages can make coding page-focused scenarios easier and more productive th
 
 If you're looking for a tutorial that uses the Model-View-Controller approach, see Get started with ASP.NET Core MVC.
 
-This article covers the architecture, concepts, and patterns that make Razor Pages effective for building page-focused web applications. It explains how Razor Pages work, their key components, and best practices for implementation. If you prefer hands-on learning with step-by-step instructions, see Tutorial: Create a Razor Pages web app with ASP.NET Core. For an overview of ASP.NET Core, see the Introduction to ASP.NET Core.
+This article covers the architecture, concepts, and patterns that make Razor Pages effective for building page-focused web applications. It explains how Razor Pages work, their key <example-value>, and best practices for implementation. If you prefer hands-on learning with step-by-step instructions, see Tutorial: Create a Razor Pages web app with ASP.NET Core. For an overview of ASP.NET Core, see the Introduction to ASP.NET Core.
 
 # Visual Studio
 

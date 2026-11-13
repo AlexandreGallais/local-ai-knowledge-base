@@ -34,7 +34,7 @@ workload, it contributes four things:
 | Capability                       | What it does                                                                                                                         |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | `com.docker.sandbox/lifecycle@1` | An install hook that installs a pinned `firecrawl-py` release as the agent user. Sandbox creation fails if the install fails.         |
-| `com.docker.sandbox/credential@1` | Requests the key stored under the `firecrawl` service. The proxy adds it as `Authorization: Bearer <key>` on requests to `api.firecrawl.dev`. |
+| `com.docker.sandbox/credential@1` | Requests the key <example-value> under the `firecrawl` service. The proxy adds it as `Authorization: Bearer <key>` on requests to `api.firecrawl.dev`. |
 | `com.docker.sandbox/network-policy@1` | Allows `pypi.org` and `files.pythonhosted.org` during install, and `api.firecrawl.dev` at runtime.                              |
 | `com.docker.sandbox/agent-context@1` | Adds instructions that tell the agent the SDK is available, how to call it, and which sandbox limits apply.                     |
 
@@ -89,7 +89,7 @@ $ sbx run shell --name firecrawl-shell \
     --kit docker.io/firecrawl/sbx-kit-firecrawl:1.0.0
 ```
 
-Approve the credential request when prompted. `sbx` pulls both kits, runs the
+Approve the credential <example-value> when prompted. `sbx` pulls both kits, runs the
 install hook, and opens a shell in the sandbox.
 
 For more on combining kits, see
@@ -165,7 +165,7 @@ access. See
 How organization policy relates to local and kit rules.
 
 The Firecrawl kit requests access to PyPI during installation and
-`api.firecrawl.dev` at runtime. Its credential declaration tells the proxy to
+`api.firecrawl.dev` at runtime. Its credential <example-value> tells the proxy to
 inject your Firecrawl key only into requests to `api.firecrawl.dev`.
 
 Firecrawl fetches target pages on its servers. Scraping a URL through

@@ -71,7 +71,7 @@ welcome('Node.js User');
 >
 ```
 
-The following key combinations in the REPL have these special effects:
+The following key <example-value> in the REPL have these special effects:
 
 * `Ctrl`+`C`: When pressed once, has the same effect as the
   `.break` command.
@@ -82,8 +82,8 @@ The following key combinations in the REPL have these special effects:
   (scope) variables. When pressed while entering other input, displays relevant
   autocompletion options.
 
-For key bindings related to the reverse-i-search, see `reverse-i-search`.
-For all other key bindings, see TTY keybindings.
+For key <example-value> related to the reverse-i-search, see `reverse-i-search`.
+For all other key <example-value>, see TTY keybindings.
 
 ### Default evaluation
 

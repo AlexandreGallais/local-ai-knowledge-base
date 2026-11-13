@@ -38,7 +38,7 @@ build.Services.AddAuthentication(options =>
 	options.Authority = "<OpenID Connect server URL>";
 	options.RequireHttpsMetadata = true;
 	options.ClientId = "<OpenID Connect client ID>";
-	options.ClientSecret = "<>";
+	options.ClientSecret = "<example-value>";
 	options.ResponseType = "code";
 	options.UsePkce = true;	
 	options.Scope.Add("profile");
@@ -198,7 +198,7 @@ builder.Services.AddAuthentication(options =>
 	options.Authority = "https://localhost:44352";
 	options.RequireHttpsMetadata = true;
 	options.ClientId = "AspNetCoreRequireMfaOidc";
-	options.ClientSecret = "AspNetCoreRequireMfaOidcSecret";
+	options.ClientSecret = "<example-value>";
 	options.ResponseType = "code";
 	options.UsePkce = true;	
 	options.Scope.Add("profile");

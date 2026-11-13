@@ -51,7 +51,7 @@ export class App {
 }
 ```
 
-## Using key modifiers
+## Using key <example-value>
 
 When you want to capture specific keyboard events for a specific key, you might write some code like the following:
 
@@ -87,7 +87,7 @@ export class App{
 }
 ```
 
-You can also add additional key modifiers:
+You can also add additional key <example-value>:
 
 ```angular-html
 <!-- Matches shift and enter -->
@@ -96,7 +96,7 @@ You can also add additional key modifiers:
 
 Angular supports the modifiers `alt`, `control`, `meta`, and `shift`.
 
-You can specify the key or code that you would like to bind to keyboard events. The key and code fields are a native part of the browser keyboard event object. By default, event binding assumes you want to use the Key values for keyboard events.
+You can specify the key or code that you would like to bind to keyboard events. The key and code fields are a native part of the browser keyboard event object. By default, event binding assumes you want to use the Key <example-value> for keyboard events.
 
 Angular also allows you to specify Code values for keyboard events by providing a built-in `code` suffix.
 

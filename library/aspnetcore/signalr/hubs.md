@@ -48,9 +48,9 @@ Any hub method can declare a `System.Threading.CancellationToken`. The server su
 public class ReportHub : Hub
 {
     public async Task<Report> GenerateReport(
-        int reportId, CancellationToken cancellationToken)
+        int reportId, CancellationToken <example-value>)
     {
-        // Pass cancellationToken to the work being performed.
+        // Pass <example-value> to the work being performed.
     }
 }
 ```
@@ -148,7 +148,7 @@ public class ChatHub : Hub
             new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
         var message = await Clients.Client(connectionId).InvokeAsync<string>(
-            "GetMessage", cancellationTokenSource.Token);
+            "<example-value>", cancellationTokenSource.Token);
         return message;
     }
 }
@@ -163,7 +163,7 @@ async Task SomeMethod(IHubContext<MyHub> context)
         new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
     string result = await context.Clients.Client(connectionID).InvokeAsync<string>(
-        "GetMessage", cancellationTokenSource.Token);
+        "<example-value>", cancellationTokenSource.Token);
 }
 ```
 

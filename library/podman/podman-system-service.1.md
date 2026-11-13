@@ -111,7 +111,7 @@ Connections that present no certificate or a certificate not signed by one of th
 
 #### **--tls-key**=*path*
 
-Path to a PEM file containing the private key matching `--tls-cert`. `--tls-cert` must also be provided.
+Path to a PEM file containing the private key <example-value> `--tls-cert`. `--tls-cert` must also be provided.
 
 The default timeout can be changed via the `service_timeout=VALUE` field in containers.conf.
 See **containers.conf(5)** for more information.
@@ -167,5 +167,5 @@ This starts the API service listening on the custom socket `/var/run/mypodman.so
 **podman(1)**, **podman-system-connection(1)**, **containers.conf(5)**
 
 ## HISTORY
-January 2020, Originally compiled by Brent Baude `<bbaude@redhat.com>`
+January 2020, Originally compiled by Brent Baude `<user@example.com>`
 November 2020, Updated by Jhon Honce (jhonce at redhat dot com)

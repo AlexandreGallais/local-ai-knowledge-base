@@ -13,7 +13,7 @@ There are many configuration providers available for common configuration source
 
 ## Custom configuration provider
 
-The sample app demonstrates how to create a basic configuration provider that reads configuration key-value pairs from a database using Entity Framework (EF) Core.
+The sample app demonstrates how to create a basic <example-value> provider that reads configuration key-value pairs from a database using Entity Framework (EF) Core.
 
 The provider has the following characteristics:
 

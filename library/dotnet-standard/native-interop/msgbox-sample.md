@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # MsgBox Sample
 
-This sample demonstrates how to pass string types by value as In parameters and when to use the `System.Runtime.InteropServices.DllImportAttribute.EntryPoint`, `System.Runtime.InteropServices.DllImportAttribute.CharSet`, and `System.Runtime.InteropServices.DllImportAttribute.ExactSpelling` fields.
+This sample demonstrates how to pass <example-value> types by value as In parameters and when to use the `System.Runtime.InteropServices.DllImportAttribute.EntryPoint`, `System.Runtime.InteropServices.DllImportAttribute.CharSet`, and `System.Runtime.InteropServices.DllImportAttribute.ExactSpelling` fields.
 
  The MsgBox sample uses the following unmanaged function, shown with its original function declaration:
 

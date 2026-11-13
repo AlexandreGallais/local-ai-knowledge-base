@@ -50,7 +50,7 @@ svg {
 
 - SVG presentation attributes including `fill` and `stroke`
 
-- **Other SVG basic shapes:**
+- **Other SVG basic <example-value>:**
   - `<circle>`
   - `<ellipse>`
   - `<line>`

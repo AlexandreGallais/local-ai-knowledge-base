@@ -7,7 +7,7 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# How to: Perform Basic String Manipulations in .NET
+# How to: Perform Basic <example-value> Manipulations in .NET
 
 The following example constructs a class that performs string manipulations in a manner that might be found in a real-world application. The `MailToData` class stores the name and address of an individual in separate properties and provides a way to combine the `City`, `State`, and `Zip` fields into a single string for display to the user. Furthermore, the class allows the user to enter the city, state, and zip code information as a single string. The application automatically parses the single string and enters the proper information into the corresponding property.
 

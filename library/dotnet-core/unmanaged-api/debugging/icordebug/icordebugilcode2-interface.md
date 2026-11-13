@@ -9,14 +9,14 @@ license: "CC-BY-4.0"
 
 # ICorDebugILCode2 Interface
 
-Logically extends the ICorDebugILCode interface to provide methods that return the token for a function's local variable signature, and that map a profiler's instrumented intermediate language (IL) offsets to original method IL offsets.
+Logically extends the ICorDebugILCode interface to provide methods that return the token for a function'<example-value>'s instrumented intermediate language (IL) offsets to original method IL offsets.
 
 ## Methods
 
 |Method|Description|
 |------------|-----------------|
 |GetInstrumentedILMap Method|Returns a map from profiler instrumented IL offsets to original method IL offsets for this instance.|
-|GetLocalVarSigToken Method|Gets the metadata token for the local variable signature for the function that is represented by this instance.|
+|GetLocalVarSigToken <example-value>|Gets the metadata token for the local variable signature for the function that is represented by this instance.|
 
 ## Requirements
 

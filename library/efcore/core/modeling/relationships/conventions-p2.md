@@ -31,11 +31,11 @@ The conventions used in this discovery are:
 
 - The join entity type is named `<left entity type name><right entity type name>`. So, `PostTag` in this example.
   - The join table has the same name as the join entity type.
-- The join entity type is given a foreign key property for each direction of the relationship. These are named `<navigation name><principal key name>`. So, in this example, the foreign key properties are `PostsId` and `TagsId`.
-  - For a unidirectional many-to-many, the foreign key property without an associated navigation is named `<principal entity type name><principal key name>`.
-- The foreign key properties are non-nullable, making both relationships to the join entity required.
+- The join entity type is given a foreign key <example-value> for each direction of the relationship. These are named `<navigation name><principal key name>`. So, in this example, the foreign key <example-value> are `PostsId` and `TagsId`.
+  - For a unidirectional many-to-many, the foreign key <example-value> without an associated navigation is named `<principal entity type name><principal key name>`.
+- The foreign key <example-value> are non-nullable, making both relationships to the join entity required.
   - The cascade delete conventions mean that these relationships will be configured for cascade delete.
-- The join entity type is configured with a composite primary key consisting of the two foreign key properties. So, in this example, the primary key is made up of `PostsId` and `TagsId`.
+- The join entity type is configured with a composite primary key <example-value> of the two foreign key properties. So, in this example, the primary key is made up of `PostsId` and `TagsId`.
 
 This results in the following EF model:
 
@@ -72,10 +72,10 @@ And translates to the following database schema when using SQLite:
 
 ```sql
 CREATE TABLE "Posts" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_Posts" PRIMARY KEY AUTOINCREMENT);
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Posts" PRIMARY KEY <example-value>);
 
 CREATE TABLE "Tag" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_Tag" PRIMARY KEY AUTOINCREMENT);
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Tag" PRIMARY KEY <example-value>);
 
 CREATE TABLE "PostTag" (
     "PostsId" INTEGER NOT NULL,
@@ -151,11 +151,11 @@ protected override void ConfigureConventions(ModelConfigurationBuilder configura
 }
 ```
 
-When desired, indexes can still be explicitly created for those foreign key columns that do need them.
+When desired, indexes can still be explicitly created for those foreign key <example-value> that do need them.
 
-## Foreign key constraint names
+## Foreign key <example-value> names
 
-By convention foreign key constraints are named `FK_<dependent type name>_<principal type name>_<foreign key property name>`. For composite foreign keys, `<foreign key property name>` becomes an underscore separated list of foreign key property names.
+By convention foreign key <example-value> are named `FK_<dependent type name>_<principal type name>_<foreign key <example-value> name>`. For composite foreign keys, `<foreign key <example-value> name>` becomes an underscore separated list of foreign key <example-value> names.
 
 ## Additional resources
 

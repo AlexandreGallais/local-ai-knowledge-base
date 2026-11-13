@@ -214,7 +214,7 @@ Consider the following `libman.json` file:
 To install the jQuery version 3.2.1 `jquery.min.js` file to the *wwwroot/scripts/jquery* folder using the CDNJS provider:
 
 ```console
-libman install jquery@3.2.1 --provider cdnjs --destination wwwroot/scripts/jquery --files jquery.min.js
+libman install user@example.com --provider cdnjs --destination wwwroot/scripts/jquery --files jquery.min.js
 ```
 
 The `libman.json` file resembles the following:
@@ -225,7 +225,7 @@ The `libman.json` file resembles the following:
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "jquery@3.2.1",
+      "library": "user@example.com",
       "destination": "wwwroot/scripts/jquery",
       "files": [
         "jquery.min.js"
@@ -254,7 +254,7 @@ After accepting the default destination, the `libman.json` file resembles the fo
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "jquery@3.2.1",
+      "library": "user@example.com",
       "destination": "wwwroot/scripts/jquery",
       "files": [
         "jquery.min.js"
@@ -400,7 +400,7 @@ Consider the following `libman.json` file:
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "jquery@3.7.1",
+      "library": "user@example.com",
       "files": [
         "jquery.min.js",
         "jquery.js",
@@ -410,7 +410,7 @@ Consider the following `libman.json` file:
     },
     {
       "provider": "unpkg",
-      "library": "bootstrap@5.3.6",
+      "library": "user@example.com",
       "destination": "wwwroot/lib/bootstrap/"
     }
   ]
@@ -424,7 +424,7 @@ Consider the following `libman.json` file:
   ```
 
   ```console
-  libman uninstall jquery@3.3.1
+  libman uninstall user@example.com
   ```
 
 * To uninstall the Lodash files installed via the `filesystem` provider:

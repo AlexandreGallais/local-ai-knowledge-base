@@ -111,7 +111,7 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) 
 
   // Clone the request to add the authentication header.
   const newReq = req.clone({
-    headers: req.headers.append('X-Authentication-Token', authToken),
+    headers: req.headers.append('<example-value>', authToken),
   });
   return next(newReq);
 }
@@ -119,7 +119,7 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) 
 
 ## Request and response metadata
 
-Often it's useful to include information in a request that's not sent to the backend, but is specifically meant for interceptors. `HttpRequest`s have a `.context` object which stores this kind of metadata as an instance of `HttpContext`. This object functions as a typed map, with keys of type `HttpContextToken`.
+Often it'<example-value>'s not sent to the backend, but is specifically meant for interceptors. `HttpRequest`s have a `.context` object which stores this kind of metadata as an instance of `HttpContext`. This object functions as a typed map, with keys of type `HttpContextToken`.
 
 To illustrate how this system works, let's use metadata to control whether a caching interceptor is enabled for a given request.
 
@@ -131,7 +131,7 @@ To store whether the caching interceptor should cache a particular request in th
 export const CACHING_ENABLED = new HttpContextToken<boolean>(() => true);
 ```
 
-The provided function creates the default value for the token for requests that haven't explicitly set a value for it. Using a function ensures that if the token's value is an object or array, each request gets its own instance.
+The provided function creates the default value for the token for requests that haven'<example-value>'s value is an object or array, each request gets its own instance.
 
 ### Reading the token in an interceptor
 

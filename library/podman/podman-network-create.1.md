@@ -310,6 +310,6 @@ newnet
 **podman(1)**, **podman-network(1)**, **podman-network-inspect(1)**, **podman-network-ls(1)**, **containers.conf(5)**
 
 ## HISTORY
-August 2021, Updated with the new network format by Paul Holzinger <pholzing@redhat.com>
+August 2021, Updated with the new network format by Paul Holzinger <user@example.com>
 
-August 2019, Originally compiled by Brent Baude <bbaude@redhat.com>
+August 2019, Originally compiled by Brent Baude <user@example.com>

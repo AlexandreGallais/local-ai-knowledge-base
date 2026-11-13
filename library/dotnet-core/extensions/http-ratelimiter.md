@@ -27,7 +27,7 @@ To control the flow of requests, you implement a custom `System.Net.Http.Delegat
     : DelegatingHandler(new HttpClientHandler()), IAsyncDisposable
 {
     protected override async Task<HttpResponseMessage> SendAsync(
-        HttpRequestMessage request, CancellationToken cancellationToken)
+        HttpRequestMessage request, CancellationToken <example-value>)
     {
         using RateLimitLease lease = await limiter.AcquireAsync(
             permitCount: 1, cancellationToken);

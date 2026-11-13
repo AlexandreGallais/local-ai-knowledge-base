@@ -120,7 +120,7 @@ Layer(s) to encrypt: 0-indexed layer indices with support for negative indexing 
 
 #### **--encryption-key**=*key*
 
-The [protocol:keyfile] specifies the encryption protocol, which can be JWE (RFC7516), PGP (RFC4880), and PKCS7 (RFC2315) and the key material required for image encryption. For instance, jwe:/path/to/key.pem or pgp:admin@example.com or pkcs7:/path/to/x509-file.
+The [protocol:keyfile] specifies the encryption protocol, which can be JWE (RFC7516), PGP (RFC4880), and PKCS7 (RFC2315) and the key <example-value> required for image encryption. For instance, jwe:/path/to/key.pem or pgp:user@example.com or pkcs7:/path/to/x509-file.
 
 #### **--force-compression**
 

@@ -9,109 +9,6 @@ license: "CC-BY-4.0"
 
 # Authenticating (part 7 of 9)
 
-### Authenticating reverse proxy {#authenticating-proxy}
-
-**Warning:**
-If you have a certificate authority (CA) that is also used in a different context, **do not** trust
-that certificate authority to identify authenticating proxy clients, unless you understand the
-risks and the mechanisms to protect that CA's usage.
-
-The API server can be configured to identify users from request header values, such as `X-Remote-User`.
-It is designed for use in combination with an _authenticating proxy_ that sets these headers.
-
-Using an authenticating reverse proxy is different from user impersonation.
-With user impersonation, one user requests the API server to treat the request as if it were being
-made by a different user. With an authenticating reverse proxy, the API server trusts its direct client
-to provide information about the identity of the principal making the original request.
-
-See web request header configuration to learn about
-configuring this using command line arguments.
-
-#### Example {#authenticating-proxy-example}
-
-For example, with this configuration:
-
-```
---requestheader-username-headers=X-Remote-User
---requestheader-group-headers=X-Remote-Group
---requestheader-extra-headers-prefix=X-Remote-Extra-
-```
-
-this request:
-
-```http
-GET / HTTP/1.1
-X-Remote-User: fido
-X-Remote-Group: dogs
-X-Remote-Group: dachshunds
-X-Remote-Extra-Acme.com%2Fproject: some-project
-X-Remote-Extra-Scopes: openid
-X-Remote-Extra-Scopes: profile
-```
-
-would result in this user info:
-
-```yaml
-name: fido
-groups:
-- dogs
-- dachshunds
-extra:
-  acme.com/project:
-  - some-project
-  scopes:
-  - openid
-  - profile
-```
-
-#### Client certificate {#reverse-proxy-client-certificate}
-
-In order to prevent header spoofing, the authenticating proxy is required to present a valid client
-certificate to the API server for validation against the specified CA before the request headers are
-checked.
-
-See the command line option reference for request header
-authentication mode.
-
-Do **not** reuse a CA that is used in a different context unless you understand
-the risks and the mechanisms to protect the CA's usage.
-
-### Static token file integration {#static-token-file}
-
-The API server reads static bearer tokens from a file when given the `--token-auth-file=<SOMEFILE>`
-option on the command line.
-In Kubernetes , tokens last indefinitely, and the token list cannot be
-changed without restarting the API server.
-
-The token file is a CSV file with a minimum of 3 columns: token, user name, user uid,
-followed by a comma-separated list of optional group names.
-
-**Note:**
-If you have more than one group, the column must be double quoted e.g.
-
-```conf
-token,user,uid,"group1,group2,group3"
-```
-
-Using a static token file is appropriate for tokens that by their nature
-are long-lived, static, and perhaps may never be rotated. It is also useful
-when the client is local to a particular API server within the control plane,
-such as a monitoring agent.
-
-If you use this method during cluster provisioning, and then transition to
-a different authentication method that will be used longer term, you
-should deactivate the token that was used for bootstrapping (this requires
-a restart of each API server.
-
-For other circumstances, and especially where very prompt token rotation is
-important, the Kubernetes project recommends using a
-webhook token authenticator instead of this mechanism.
-
-## User impersonation
-
-User impersonation provides
-a method that a user can act as another user through impersonation headers
-
 ## Authentication configuration {#api-server-authn-config}
 
 You can configure Kubernetes authentication either using
@@ -132,7 +29,7 @@ describes all of the relevant command line arguments in more detail.
 `--anonymous-auth`
 : Controls whether clients who have not authenticated can make request via the API server's secure port. Anonymous requests have a username of `system:anonymous`, and a group name of `system:unauthenticated`. Also see anonymous requests.
 
-#### Bootstrap token configuration {#api-server-authn-config-cli-bootstrap}
+#### Bootstrap token <example-value> {#api-server-authn-config-cli-bootstrap}
 
 `--enable-bootstrap-token-auth`
 : When this flag is set, you can use bootstrap tokens to authenticate.
@@ -166,7 +63,7 @@ describes all of the relevant command line arguments in more detail.
 : The URL of the OpenID issuer. The URL scheme **must** be `https`. If the issuer's OIDC discovery URL is `https://accounts.provider.example/.well-known/openid-configuration`, the value should be `https://accounts.provider.example`.
 
 `--oidc-required-claim`
-: A claim that must be present in a token before Kubernetes authenticates a client. Format is `key=value`. You can specify this argument more than once.
+: A claim that must be present in a token <example-value> Kubernetes authenticates a client. Format is `key=value`. You can specify this argument more than once.
 
 `--oidc-signing-algs`
 : The signing algorithms accepted. Allowed values are: RS256, RS384, RS512, ES256, ES384, ES512, PS256, PS384, PS512. Values are defined by RFC 7518.  Default is `RS512`.
@@ -177,7 +74,7 @@ describes all of the relevant command line arguments in more detail.
 : Defines the authentication audience for service account tokens.
 
 `--service-account-extend-token-expiration`
-: This flag turns on projected service account expiration extension during token generation, which helps safe transition from legacy tokens to bound service account token feature. See authenticating service account credentials.
+: This flag turns on projected service account expiration extension during token <example-value>, which helps safe transition from legacy tokens to bound service account token feature. See authenticating service account credentials.
 
 `--service-account-issuer`
 : Identifier of the service account token issuer. The issuer asserts this identifier in `iss` claim of each issued token. The Kubernetes project recommends using a URL here, with the scheme set to `https`.
@@ -192,7 +89,7 @@ describes all of the relevant command line arguments in more detail.
 : If true, the API server validates that ServiceAccount tokens exist in etcd as part of authentication.
 
 `--service-account-max-token-expiration`
-: The maximum validity duration of a token created by the service account token issuer, as a Kubernetes duration string.
+: The maximum validity duration of a token <example-value> by the service account token <example-value>, as a Kubernetes duration string.
 
 `--service-account-signing-endpoint`
 : Path to socket where an external JWT signer is listening. You can use this to integrate with an external token signer.
@@ -200,7 +97,7 @@ describes all of the relevant command line arguments in more detail.
 `--service-account-signing-key-file`
 : Path to the file that contains the current private key of the service account token issuer. Changes made to this file while the API server is running are **not** re-read.
 
-#### Static token configuration {#api-server-authn-config-cli-bearer}
+#### Static token <example-value> {#api-server-authn-config-cli-bearer}
 
 `--token-auth-file`
 : Path to the configuration file for static bearer tokens. Changes made to this file while the API server is running are **not** re-read.

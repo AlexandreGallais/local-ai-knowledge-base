@@ -77,4 +77,4 @@ $ podman kill --cidfile /home/user/cidfile-1 --cidfile ./cidfile-2
 **podman(1)**, **podman-stop(1)**
 
 ## HISTORY
-September 2017, Originally compiled by Brent Baude <bbaude@redhat.com>
+September 2017, Originally compiled by Brent Baude <user@example.com>

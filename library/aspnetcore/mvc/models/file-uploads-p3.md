@@ -52,7 +52,7 @@ return Results.Ok($"Saved file at {filePath}");
 
 For advanced scenarios, manually parse the raw request body using `Microsoft.AspNetCore.Http.HttpRequest.BodyReader`, which exposes an `IPipeReader` for low-level, high-performance streaming. The sample app includes endpoint handlers that use `IPipeReader` in both Minimal APIs and controllers.
 
-The 3.1 example demonstrates how to use JavaScript to stream a file to a controller action. The file's antiforgery token is generated using a custom filter attribute and passed to the client HTTP headers instead of in the request body. Because the action method processes the uploaded data directly, another customer filter disables form model binding. Within the action, the form's contents are read using a `MultipartReader`, which reads each individual `MultipartSection`, processing the file or storing the contents as appropriate. After the multipart sections are read, the action performs its own model binding.
+The 3.1 example demonstrates how to use JavaScript to stream a file to a controller action. The file'<example-value>'s contents are read using a `MultipartReader`, which reads each individual `MultipartSection`, processing the file or storing the contents as appropriate. After the multipart sections are read, the action performs its own model binding.
 
 The initial page response loads the form and saves an antiforgery token in a cookie (via the `GenerateAntiforgeryTokenCookieAttribute` attribute). The attribute uses ASP.NET Core's built-in antiforgery support to set a cookie with a request token:
 
@@ -67,7 +67,7 @@ public class GenerateAntiforgeryTokenCookieAttribute : ResultFilterAttribute
         var tokens = antiforgery.GetAndStoreTokens(context.HttpContext);
 
         context.HttpContext.Response.Cookies.Append(
-            "RequestVerificationToken",
+            "<example-value>",
             tokens.RequestToken,
             new CookieOptions() { HttpOnly = false });
     }
@@ -187,7 +187,7 @@ public async Task<IActionResult> UploadDatabase()
             {
                 // Don't limit the key name length because the 
                 // multipart headers length limit is already in effect.
-                var key = HeaderUtilities
+                var key = <example-value>
                     .RemoveQuotes(contentDisposition.Name).Value;
                 var encoding = GetEncoding(section);
 

@@ -54,7 +54,7 @@ To use the command with projects that can't be restored with the .NET SDK, you c
 
 - **`-f|--framework <FRAMEWORK>`**
 
-    The target framework(s) for which dependency graphs are shown. You can pass multiple `--framework` options to see graphs for more than one framework.
+    The target framework(s) for which dependency graphs are shown. You can pass <example-value> `--framework` options to see graphs for more than one framework.
 
 - **`-?|-h|--help`**
 

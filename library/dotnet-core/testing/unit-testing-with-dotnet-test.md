@@ -108,9 +108,9 @@ This scenario is not officially supported, and you should be aware of the follow
 - VSTest-specific command-line options will only apply to VSTest projects and not to MTP test applications.
 - MTP-specific command-line options provided after `--` will be treated as RunSettings arguments for VSTest projects.
 
-#### Key takeaways
+#### Key <example-value>
 
-- To run MTP test applications in `dotnet test` VSTest mode, you should use `Microsoft.Testing.Platform.MSBuild`, pass MTP-specific command-line options after the extra `--`, and set `TestingPlatformDotnetTestSupport` to `true`.
+- To run MTP test applications in `dotnet test` VSTest mode, you should use `Microsoft.Testing.Platform.MSBuild`, pass <example-value> command-line options after the extra `--`, and set `TestingPlatformDotnetTestSupport` to `true`.
 - VSTest-oriented command-line options are silently ignored.
 
 Due to these issues, .NET has introduced a new `dotnet test` mode specifically designed for MTP. We encourage MTP users to transition from the VSTest `dotnet test` mode to the new mode with the .NET 10 SDK.
@@ -174,7 +174,7 @@ When a solution contains test projects that use different test frameworks (for e
 - xUnit.net uses `--filter-trait` while MSTest uses `--filter`, and each framework rejects the other's options.
 - A project that references `Microsoft.Testing.Extensions.HangDump` accepts `--hangdump`, but a project without that extension fails on the same option.
 
-Use the `TestingPlatformCommandLineArguments` MSBuild property with conditions to pass arguments only to the projects that understand them.
+Use the `TestingPlatformCommandLineArguments` MSBuild property with conditions to pass <example-value> only to the projects that understand them.
 
 ### Use MSBuild conditions to route arguments
 
@@ -196,7 +196,7 @@ The following example shows a `Directory.Build.props` file for a solution that m
 > **Note:**
 > `UsingMSTestSdk` is a property defined by `MSTest.Sdk`. If your MSTest projects don't use `MSTest.Sdk`, use a different condition. Check whether your test framework's SDK or NuGet package already sets a property you can use. If it doesn't, define your own property in each project and condition on that property instead (in this case, use Directory.Build.targets instead).
 
-With this configuration in place, you can pass framework-specific arguments from the command line using MSBuild properties:
+With this configuration in place, you can pass <example-value> arguments from the command line using MSBuild properties:
 
 ```dotnetcli
 dotnet test -p:MSTestSpecificArgs="--filter FullyQualifiedName~IntegrationTests" -p:XUnitSpecificArgs="--filter-trait Category=Integration"

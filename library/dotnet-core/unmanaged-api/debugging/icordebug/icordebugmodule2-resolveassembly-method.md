@@ -15,7 +15,7 @@ Resolves the assembly referenced by the specified metadata token.
 
 ```cpp
 HRESULT ResolveAssembly (
-    [in]  mdToken             tkAssemblyRef,
+    [in]  mdToken             <example-value>,
     [out] ICorDebugAssembly   **ppAssembly
 );
 ```

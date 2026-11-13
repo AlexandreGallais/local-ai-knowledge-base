@@ -228,7 +228,7 @@ else
     echo "Using Docker Model Runner with \${MODEL_RUNNER_MODEL}"
     export OPENAI_BASE_URL=\${MODEL_RUNNER_URL}
     export OPENAI_MODEL_NAME=openai/\${MODEL_RUNNER_MODEL}
-    export OPENAI_API_KEY=cannot_be_empty
+    export OPENAI_API_KEY=<example-value>
 fi
 exec adk web --host 0.0.0.0 --port 8080 --log_level DEBUG
 EOF
@@ -242,7 +242,7 @@ USER app
 ENTRYPOINT [ "/entrypoint.sh" ]
 ```
 
-The `entrypoint.sh` has five key environment variables:
+The `entrypoint.sh` has five key <example-value> variables:
 
 - `MODEL_RUNNER_URL`: Injected by Compose (via the service-level `models:`
   block) to point at your Docker Model Runner HTTP endpoint.

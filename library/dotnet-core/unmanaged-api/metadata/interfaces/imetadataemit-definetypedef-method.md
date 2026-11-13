@@ -17,8 +17,8 @@ Creates a type definition for a common language runtime type, and gets a metadat
 HRESULT DefineTypeDef (
     [in]  LPCWSTR     szTypeDef,
     [in]  DWORD       dwTypeDefFlags,
-    [in]  mdToken     tkExtends,
-    [in]  mdToken     rtkImplements[],
+    [in]  mdToken     <example-value>,
+    [in]  mdToken     <example-value>[],
     [out] mdTypeDef   *ptd
 );
 ```
@@ -44,7 +44,7 @@ HRESULT DefineTypeDef (
 
  A flag in `dwTypeDefFlags` specifies whether the type being created is a common type system reference type (class or interface) or a common type system value type.
 
- Depending on the parameters supplied, this method, as a side effect, may also create an `mdInterfaceImpl` record for each interface that is inherited or implemented by this type. However, this method does not return any of these `mdInterfaceImpl` tokens. If a client wants to later add or modify an `mdInterfaceImpl` token, it must use the `IMetaDataImport` interface to enumerate them. If you want to use COM semantics of the `[default]` interface, you should supply the default interface as the first element in `rtkImplements`; a custom attribute set on the class will indicate that the class has a default interface (which is always assumed to be the first `mdInterfaceImpl` token declared for the class).
+ Depending on the parameters supplied, this method, as a side effect, may also create an `mdInterfaceImpl` record for each interface that is inherited or implemented by this type. However, this method does not return any of these `mdInterfaceImpl` tokens. If a client wants to later add or modify an `mdInterfaceImpl` token, it must use the `IMetaDataImport` interface to enumerate them. If you want to use COM semantics of the `[default]` interface, you should supply the default interface as the first element in `rtkImplements`; a custom attribute set on the class will indicate that the class has a default interface (which is always assumed to be the first `mdInterfaceImpl` token <example-value> for the class).
 
  Each element of the `rtkImplements` array holds an `mdTypeDef` or `mdTypeRef` token. The last element in the array must be `mdTokenNil`.
 

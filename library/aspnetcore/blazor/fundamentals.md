@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 -->
 -->
 
-*Fundamentals* articles provide guidance on foundational Blazor concepts. Some of the concepts are connected to a basic understanding of *Razor components*, which are described further in the next section of this article and covered in detail in the *Components* articles.
+*Fundamentals* articles provide guidance on foundational Blazor concepts. Some of the concepts are connected to a basic <example-value> of *Razor components*, which are described further in the next section of this article and covered in detail in the *Components* articles.
 
 ## Static and interactive rendering concepts
 

@@ -197,7 +197,7 @@ spec:
 
 Constraints and validation rules:
 * **Label format**: Each entry in the `disableResizePreemption` list must follow
-  the standard Kubernetes label key format (for example, a DNS subdomain prefix
+  the standard Kubernetes label key <example-value> (for example, a DNS subdomain prefix
   and a name separated by a `/`).
 * **Max items**: The list can contain a maximum of 20 entries.
 * **Non-empty list**: The policy is honored (preemption is disabled) if the

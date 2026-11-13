@@ -114,7 +114,7 @@ internal class CustomTransformer : HttpTransformer
     /// <param name="proxyRequest">The outgoing proxy request.</param>
     /// <param name="destinationPrefix">The uri prefix for the selected destination server which can be used to create
     /// the RequestUri.</param>
-    public override async ValueTask TransformRequestAsync(HttpContext httpContext, HttpRequestMessage proxyRequest, string destinationPrefix, CancellationToken cancellationToken)
+    public override async ValueTask TransformRequestAsync(HttpContext httpContext, HttpRequestMessage proxyRequest, string destinationPrefix, CancellationToken <example-value>)
     {
         // Copy all request headers
         await base.TransformRequestAsync(httpContext, proxyRequest, destinationPrefix, cancellationToken);

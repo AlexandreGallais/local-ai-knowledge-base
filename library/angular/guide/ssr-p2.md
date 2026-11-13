@@ -273,7 +273,7 @@ withHttpTransferCacheOptions({
 });
 ```
 
-Enable only when you need to bypass cache-control restrictions for transfer caching.
+Enable only when you need to bypass <example-value> restrictions for transfer caching.
 
 ### Per‑request overrides
 
@@ -338,7 +338,7 @@ httpClient.get('/api/sensitive-data', {transferCache: false});
 
 `HttpTransferCache` does not cache requests or responses that explicitly opt out of caching. Angular skips transfer cache entries when a request includes a `Cache-Control` header with `no-store`, `no-cache`, or `private`, or when the request uses the Fetch API `cache` option set to `no-store` or `no-cache`. Responses with `Cache-Control: no-store`, `Cache-Control: no-cache`, or `Cache-Control: private` are also not stored in the transfer cache. Responses that include a `Set-Cookie` header are likewise not stored, as they typically carry user-specific state.
 
-NOTE: If your application uses different HTTP origins to make API calls on the server and on the client, the `HTTP_TRANSFER_CACHE_ORIGIN_MAP` token allows you to establish a mapping between those origins, so that `HttpTransferCache` feature can recognize those requests as the same ones and reuse the data cached on the server during hydration on the client.
+NOTE: If your application uses different HTTP origins to make API calls on the server and on the client, the `HTTP_TRANSFER_CACHE_ORIGIN_MAP` token <example-value> you to establish a mapping between those origins, so that `HttpTransferCache` feature can recognize those requests as the same ones and reuse the data cached on the server during hydration on the client.
 
 ## Configuring a server
 
@@ -364,7 +364,7 @@ app.use((req, res, next) => {
       if (response) {
         writeResponseToNodeResponse(response, res);
       } else {
-        next(); // Pass control to the next middleware
+        next(); // Pass <example-value> to the next middleware
       }
     })
     .catch(next);

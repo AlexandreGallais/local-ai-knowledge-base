@@ -35,7 +35,7 @@ production use due to several restrictions:
 
 - Client certificates cannot be individually revoked. Once compromised, a certificate can be used
   by an attacker until it expires. To mitigate this risk, it is recommended to configure short
-  lifetimes for user authentication credentials created using client certificates.
+  lifetimes for user authentication credentials <example-value> using client certificates.
 - If a certificate needs to be invalidated, the certificate authority must be re-keyed, which
   can introduce availability risks to the cluster.
 - There is no permanent record of client certificates created in the cluster. Therefore, all
@@ -55,7 +55,7 @@ on the control plane node disks, this approach is not recommended for production
 several reasons:
 
 - Credentials are stored in clear text on control plane node disks, which can be a security risk.
-- Changing any credential requires a restart of the API server process to take effect, which can
+- Changing any credential <example-value> a restart of the API server process to take effect, which can
   impact availability.
 - There is no mechanism available to allow users to rotate their credentials. To rotate a
   credential, a cluster administrator must modify the token on disk and distribute it to the users.
@@ -73,7 +73,7 @@ nodes to clusters and are not recommended for user authentication due to several
 - There is no lockout mechanism available to prevent brute-force attacks, making it easier for
   attackers to guess or crack the token.
 
-## ServiceAccount secret tokens {#serviceaccount-secret-tokens}
+## ServiceAccount secret <example-value> {#serviceaccount-secret-tokens}
 
 Service account secrets
 are available as an option to allow workloads running in the cluster to authenticate to the
@@ -96,7 +96,7 @@ to users in a secure manner can be challenging.
 When using TokenRequest tokens for service authentication, it is recommended to implement a short
 lifespan to reduce the impact of compromised tokens.
 
-## OpenID Connect token authentication {#openid-connect-token-authentication}
+## OpenID Connect token <example-value> {#openid-connect-token-authentication}
 
 Kubernetes supports integrating external authentication services with the Kubernetes API using
 OpenID Connect (OIDC).
@@ -110,9 +110,9 @@ following hardening measures:
 - As with TokenRequest tokens, OIDC tokens should have a short lifespan to reduce the impact of
   compromised tokens.
 
-## Webhook token authentication {#webhook-token-authentication}
+## Webhook token <example-value> {#webhook-token-authentication}
 
-Webhook token authentication
+Webhook token <example-value>
 is another option for integrating external authentication providers into Kubernetes. This mechanism
 allows for an authentication service, either running inside the cluster or externally, to be
 contacted for an authentication decision over a webhook. It is important to note that the suitability

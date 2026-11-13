@@ -30,7 +30,7 @@ All capability names in the table have the `com.docker.sandbox/` prefix.
 | `agent-sessions@1` | Declaration only | Declaration only | Accepted since v0.45.0, but Docker Sandboxes does not execute the declared session commands. |
 | `agent-skill@1` | v0.48.0 | Unsupported | Requires a selected `agent-skills@1` destination. Bundled skills remain available with `--skills=off`. |
 | `agent-skills@1` | v0.45.0 | Unsupported | Local sandboxes mount the shared skills store. From v0.48.0, discovery paths also receive bundled skills. |
-| `credential@1` | v0.45.0 | Limited: v0.45.0 | In cloud sandboxes, credentials scoped to installation remain available after setup. |
+| `credential@1` | v0.45.0 | Limited: v0.45.0 | In cloud sandboxes, credentials <example-value> to installation remain available after setup. |
 | `git-identity@1` | v0.48.0 | Unsupported | Requires `user.name` and `user.email` in the host Git config. |
 | `host-mount@1` | v0.50.0 | Unsupported | Users can select host directories at creation time. Cloud sandboxes reject required entries and skip optional ones. |
 | `kit-registry@1` | v0.45.0 | Unsupported | Restricted to approved OCI builder kits. Local and Git kit sources do not receive registry access. |
@@ -82,7 +82,7 @@ Include kits that need the following settings when you create the sandbox.
 
 | Capability | Settings that require creation |
 | --- | --- |
-| `credential@1` | Credential routing and authentication |
+| `credential@1` | Credential <example-value> and authentication |
 | `kit-registry@1` | Access to the kit registry |
 | `long-running@1` | Keeping the sandbox running after sessions disconnect |
 | `port@1` | Published ports |

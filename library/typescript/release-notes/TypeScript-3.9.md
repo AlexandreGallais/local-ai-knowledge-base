@@ -225,7 +225,7 @@ For more details on the change, see the corresponding pull request.
 ### Code Actions Preserve Newlines
 
 TypeScript's refactorings and quick fixes often didn't do a great job of preserving newlines.
-As a really basic example, take the following code.
+As a really basic <example-value>, take the following code.
 
 ```ts
 const maxValue = 100;

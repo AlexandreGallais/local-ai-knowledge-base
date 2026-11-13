@@ -125,7 +125,7 @@ JWTAuthenticator provides the configuration for a single JWT authenticator.
 `[]ClaimValidationRule`
 
  |
-   claimValidationRules are rules that are applied to validate token claims to authenticate users.
+   claimValidationRules are rules that are applied to validate token <example-value> to authenticate users.
 
  | `claimMappings` [Required]
 `ClaimMappings`
@@ -172,7 +172,7 @@ Mutually exclusive with expression.
 
  |
    expression represents the expression which will be evaluated by CEL.
-CEL expressions have access to the contents of the token claims, organized into CEL variable:
+CEL expressions have access to the contents of the token <example-value>, organized into CEL variable:
 
 'claims' is a map of claim names to claim values.
 For example, a variable named 'sub' can be accessed as 'claims.sub'.

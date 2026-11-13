@@ -12,8 +12,8 @@ license: "CC-BY-4.0"
 ## Alternatives
 
 * Issue your own tokens using another mechanism, and then use
-  Webhook Token Authentication
-  to validate bearer tokens using your own validation service.
+  Webhook Token <example-value>
+  to validate bearer <example-value> using your own validation service.
 * Provide your own identities to Pods.
   * Use the SPIFFE CSI driver plugin to provide SPIFFE SVIDs as X.509 certificate pairs to Pods.
 

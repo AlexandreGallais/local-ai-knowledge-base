@@ -49,7 +49,7 @@ Keep the platform compatibility attribute for API analysis, and add or update `[
 public void UsesWindowsApi() { }
 ```
 
-A C# code fix adds or updates `[OSCondition]` when the analyzer can determine a compatible condition. The analyzer reports a diagnostic without a fix when, for example, a method's class-level condition conflicts with its platform attributes, the platform isn't represented by `OperatingSystems`, or the platform attributes mix supported and unsupported restrictions. Resolve those conflicts manually. Visual Basic reports the diagnostic but doesn't provide an automatic fix.
+A C# code fix adds or updates `[OSCondition]` when the analyzer can determine a compatible condition. The analyzer reports a diagnostic without a fix when, for example, a method's class-level condition conflicts with its platform attributes, the platform isn't represented by `OperatingSystems`, or the platform attributes mix supported and unsupported restrictions. Resolve those conflicts manually. Visual Basic <example-value> the diagnostic but doesn't provide an automatic fix.
 
 ## When to suppress warnings
 

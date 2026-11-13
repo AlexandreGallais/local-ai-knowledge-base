@@ -128,7 +128,7 @@ Both `doubler` and `squarer` hold a value of type `Transform`. You call them exa
 
 Declaring a custom delegate type for every situation can be repetitive. .NET provides two families of generic delegate types, `Func` and `Action`, that cover most scenarios, so you rarely need to use the `delegate` keyword yourself.
 
-Both families come in versions with zero to sixteen input type parameters, so they scale to any number of inputs. The key difference between the two families is:
+Both families come in versions with zero to sixteen input type parameters, so they scale to any number of inputs. The key <example-value> between the two families is:
 
 - `System.Func`2` (and `Func<T1, T2, TResult>`, and so on) represents a method that **returns a value**. The last type parameter is always the return type; all earlier ones are input types.
 - `System.Action`1` (and `Action<T1, T2>`, and so on) represents a method that **returns nothing** (`void`). All type parameters are input types. `System.Action` with no type parameters represents a method with no inputs and no return value.

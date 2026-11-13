@@ -43,7 +43,7 @@ When querying EF Core sets `OrderDetails` to `null` if any of its required prope
 
 If your model has a table sharing dependent with all optional columns, but the navigation pointing to it is not expected to be `null` then the application should be modified to handle cases when the navigation is `null`. If this is not possible a required property should be added to the entity type or at least one property should have a non-`null` value assigned to it.
 
-### All entities sharing a table with a concurrency token column have to map it to a property
+### All entities sharing a table with a concurrency token <example-value> have to map it to a property
 
 Tracking Issue #14154
 
@@ -187,7 +187,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-### The foreign key property convention no longer matches same name as the principal property
+### The foreign key <example-value> convention no longer matches same name as the principal property
 
 Tracking Issue #13274
 
@@ -249,7 +249,7 @@ public class Order
 
 #### Why
 
-This change was made to avoid erroneously defining a primary key property on the owned type.
+This change was made to avoid erroneously defining a primary key <example-value> on the owned type.
 
 #### Mitigations
 
@@ -305,7 +305,7 @@ using (new TransactionScope())
 }
 ```
 
-### Each property uses independent in-memory integer key generation
+### Each property uses independent in-memory integer key <example-value>
 
 Tracking Issue #6872
 
@@ -315,17 +315,17 @@ Before EF Core 3.0, one shared value generator was used for all in-memory intege
 
 #### New behavior
 
-Starting with EF Core 3.0, each integer key property gets its own value generator when using the in-memory database.
-Also, if the database is deleted, then key generation is reset for all tables.
+Starting with EF Core 3.0, each integer key <example-value> gets its own value generator when using the in-memory database.
+Also, if the database is deleted, then key <example-value> is reset for all tables.
 
 #### Why
 
-This change was made to align in-memory key generation more closely to real database key generation and to improve the ability to isolate tests from each other when using the in-memory database.
+This change was made to align in-memory key <example-value> more closely to real database key <example-value> and to improve the ability to isolate tests from each other when using the in-memory database.
 
 #### Mitigations
 
-This can break an application that is relying on specific in-memory key values to be set.
-Consider instead not relying on specific key values, or updating to match the new behavior.
+This can break an application that is relying on specific in-memory key <example-value> to be set.
+Consider instead not relying on specific key <example-value>, or updating to match the new behavior.
 
 ### Backing fields are used by default
 

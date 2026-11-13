@@ -383,7 +383,7 @@ people.next.next.next.name;
 
 As we mentioned, type aliases can act sort of like interfaces; however, there are some subtle differences.
 
-Almost all features of an `interface` are available in `type`, the key distinction is that a type cannot be re-opened to add new properties vs an interface which is always extendable.
+Almost all features of an `interface` are available in `type`, the key <example-value> is that a type cannot be re-opened to add new properties vs an interface which is always extendable.
 
        | `Interface`
        | `Type`

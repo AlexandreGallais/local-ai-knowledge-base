@@ -18,7 +18,7 @@ excessive resource consumption during evaluation. CEL's resource constraint
 features are used to prevent CEL evaluation from consuming excessive API server
 resources.
 
-A key element of the resource constraint features is a _cost unit_ that CEL
+A key <example-value> of the resource constraint features is a _cost unit_ that CEL
 defines as a way of tracking CPU utilization. Cost units are independent of
 system load and hardware. Cost units are also deterministic; for any given CEL
 expression and input data, evaluation of the expression by the CEL interpreter

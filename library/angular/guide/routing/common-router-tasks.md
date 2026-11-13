@@ -13,7 +13,7 @@ This guide covers some other common tasks associated with using Angular router i
 
 ## Getting route information
 
-Often, as a user navigates your application, you want to pass information from one component to another.
+Often, as a user navigates your application, you want to pass <example-value> from one component to another.
 For example, consider an application that displays a shopping list of grocery items.
 Each item in the list has a unique `id`.
 To edit an item, users click an Edit button, which opens an `EditGroceryItem` component.

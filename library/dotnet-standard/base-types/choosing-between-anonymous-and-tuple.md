@@ -93,7 +93,7 @@ The previous examples are all functionally equivalent, however, there are slight
 
 You might want to always use `System.ValueTuple` over `System.Tuple`, and anonymous types, but there are tradeoffs you should consider. The `System.ValueTuple` types are mutable, whereas `System.Tuple` are read-only. Anonymous types can be used in expression trees, while tuples cannot. The following table is an overview of some of the key differences.
 
-### Key differences
+### Key <example-value>
 
 | Name                     | Access modifier | Type     | Custom member name | Deconstruction support | Expression tree support |
 |--------------------------|-----------------|----------|--------------------|------------------------|-------------------------|

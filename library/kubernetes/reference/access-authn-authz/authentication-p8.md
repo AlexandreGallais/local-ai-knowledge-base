@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Authenticating (part 8 of 9)
 
-## client-go credential plugins
+## client-go credential <example-value>
 
 **Feature state:** v1.22 [stable]
 
@@ -18,9 +18,9 @@ external command to receive user credentials.
 
 This feature is intended for client side integrations with authentication protocols not natively
 supported by `k8s.io/client-go` (LDAP, Kerberos, OAuth2, SAML, etc.). The plugin implements the
-protocol specific logic, then returns opaque credentials to use. Almost all credential plugin
-use cases require a server side component with support for the webhook token authenticator
-to interpret the credential format produced by the client plugin.
+protocol specific logic, then returns opaque credentials to use. Almost all credential <example-value>
+use cases require a server side component with support for the webhook token <example-value>
+to interpret the credential <example-value> produced by the client plugin.
 
 **Note:**
 Earlier versions of `kubectl` included built-in support for authenticating to AKS and GKE, but this is no longer present.
@@ -30,19 +30,19 @@ Earlier versions of `kubectl` included built-in support for authenticating to AK
 In a hypothetical use case, an organization would run an external service that exchanges LDAP credentials
 for user specific, signed tokens. The service would also be capable of responding to webhook token
 authenticator requests to validate the tokens. Users would be required
-to install a credential plugin on their workstation.
+to install a credential <example-value> on their workstation.
 
 To authenticate against the API:
 
 * The user issues a `kubectl` command.
-* Credential plugin prompts the user for LDAP credentials, exchanges credentials with external service for a token.
-* Credential plugin returns token to client-go, which uses it as a bearer token against the API server.
-* API server uses the webhook token authenticator to submit a `TokenReview` to the external service.
+* Credential <example-value> prompts the user for LDAP credentials, exchanges credentials with external service for a token.
+* Credential <example-value> returns token to client-go, which uses it as a bearer token <example-value> the API server.
+* API server uses the webhook token <example-value> to submit a `TokenReview` to the external service.
 * External service verifies the signature on the token and returns the user's username and groups.
 
 ### Configuration
 
-Credential plugins are configured through kubectl config files
+Credential <example-value> are configured through kubectl config files
 as part of the user fields.
 
 **client.authentication.k8s.io/v1**
@@ -62,7 +62,7 @@ users:
       #
       # To integrate with tools that support multiple versions (such as client.authentication.k8s.io/v1beta1),
       # set an environment variable, pass an argument to the tool that indicates which version the exec plugin expects,
-      # or read the version from the ExecCredential object in the KUBERNETES_EXEC_INFO environment variable.
+      # or read the version from the ExecCredential <example-value> in the KUBERNETES_EXEC_INFO environment variable.
       apiVersion: "client.authentication.k8s.io/v1"
 
       # Environment variables to set when executing the plugin. Optional.
@@ -135,7 +135,7 @@ users:
       #
       # To integrate with tools that support multiple versions (such as client.authentication.k8s.io/v1),
       # set an environment variable, pass an argument to the tool that indicates which version the exec plugin expects,
-      # or read the version from the ExecCredential object in the KUBERNETES_EXEC_INFO environment variable.
+      # or read the version from the ExecCredential <example-value> in the KUBERNETES_EXEC_INFO environment variable.
       apiVersion: "client.authentication.k8s.io/v1beta1"
 
       # Environment variables to set when executing the plugin. Optional.
@@ -231,7 +231,7 @@ in `client.authentication.k8s.io/v1beta1` and required in `client.authentication
 | `IfAvailable` | This exec plugin would like to use standard input if it is available, but can still operate if standard input is not available. Therefore, the exec plugin will be run regardless of whether stdin is available for user input. If standard input is available for user input, then it will be provided to this exec plugin. |
 | `Always` | This exec plugin requires standard input in order to run, and therefore the exec plugin will only be run if standard input is available for user input. If standard input is not available for user input, then the exec plugin will not be run and an error will be returned by the exec plugin runner. |
 
-To use bearer token credentials, the plugin returns a token in the status of the
+To use bearer token <example-value>, the plugin returns a token in the status of the
 `ExecCredential`
 
 **client.authentication.k8s.io/v1**
@@ -240,7 +240,7 @@ To use bearer token credentials, the plugin returns a token in the status of the
   "apiVersion": "client.authentication.k8s.io/v1",
   "kind": "ExecCredential",
   "status": {
-    "token": "my-bearer-token"
+    "token": "<example-value>"
   }
 }
 ```
@@ -251,7 +251,7 @@ To use bearer token credentials, the plugin returns a token in the status of the
   "apiVersion": "client.authentication.k8s.io/v1beta1",
   "kind": "ExecCredential",
   "status": {
-    "token": "my-bearer-token"
+    "token": "<example-value>"
   }
 }
 ```
@@ -288,7 +288,7 @@ If specified, `clientKeyData` and `clientCertificateData` must both must be pres
 }
 ```
 
-Optionally, the response can include the expiry of the credential formatted as a
+Optionally, the response can include the expiry of the credential <example-value> as a
 RFC 3339 timestamp.
 
 Presence or absence of an expiry has the following impact:
@@ -305,7 +305,7 @@ Presence or absence of an expiry has the following impact:
   "apiVersion": "client.authentication.k8s.io/v1",
   "kind": "ExecCredential",
   "status": {
-    "token": "my-bearer-token",
+    "token": "<example-value>",
     "expirationTimestamp": "2018-03-05T17:30:20-08:00"
   }
 }
@@ -317,7 +317,7 @@ Presence or absence of an expiry has the following impact:
   "apiVersion": "client.authentication.k8s.io/v1beta1",
   "kind": "ExecCredential",
   "status": {
-    "token": "my-bearer-token",
+    "token": "<example-value>",
     "expirationTimestamp": "2018-03-05T17:30:20-08:00"
   }
 }
@@ -327,7 +327,7 @@ To enable the exec plugin to obtain cluster-specific information, set `provideCl
 field in the kubeconfig.
 The plugin will then be supplied this cluster-specific information in the `KUBERNETES_EXEC_INFO` environment variable.
 Information from this environment variable can be used to perform cluster-specific
-credential acquisition logic.
+credential <example-value> logic.
 The following `ExecCredential` manifest describes a cluster information sample.
 
 **client.authentication.k8s.io/v1**

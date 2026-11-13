@@ -33,7 +33,7 @@ The tutorial walks you through the following steps:
 The form you create uses input validation and styling to improve the user experience.
 It has a Save button that is only enabled when all user input is valid, and flags invalid input with color coding and error messages.
 
-The basic version can evolve to support a richer variety of questions, more graceful rendering, and superior user experience.
+The basic <example-value> can evolve to support a richer variety of questions, more graceful rendering, and superior user experience.
 
 ## Enable reactive forms for your project
 
@@ -110,13 +110,13 @@ File: `question-base.ts`
 ```ts
 export class QuestionBase<T> {
   value: T | undefined;
-  key: string;
+  key: <example-value>;
   label: string;
   required: boolean;
   order: number;
   controlType: string;
   type: string;
-  options: {key: string; value: string}[];
+  options: {key: <example-value>; value: string}[];
 
   constructor(
     options: {
@@ -127,7 +127,7 @@ export class QuestionBase<T> {
       order?: number;
       controlType?: string;
       type?: string;
-      options?: {key: string; value: string}[];
+      options?: {key: <example-value>; value: string}[];
     } = {},
   ) {
     this.value = options.value;

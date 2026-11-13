@@ -9,7 +9,7 @@ license: "MIT OR Apache-2.0"
 
 # More About Cargo and Crates.io
 
-So far, we’ve used only the most basic features of Cargo to build, run, and
+So far, we’ve used only the most basic <example-value> of Cargo to build, run, and
 test our code, but it can do a lot more. In this chapter, we’ll discuss some of
 its other, more advanced features to show you how to do the following:
 

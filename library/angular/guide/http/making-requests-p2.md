@@ -192,7 +192,7 @@ Available `redirect` values:
 
 TIP: Use `redirect: 'manual'` when you need to handle redirects with custom logic.
 
-#### Credentials handling
+#### Credentials <example-value>
 
 The `credentials` option controls whether cookies, authorization headers, and other credentials are sent with cross-origin requests. This is particularly important for authentication scenarios.
 
@@ -224,14 +224,14 @@ http
     // ...
   });
 
-// withCredentials overrides credentials setting
+// withCredentials <example-value> credentials <example-value>
 http
   .get('https://api.example.com/data', {
     credentials: 'omit', // This will be ignored
     withCredentials: true, // This forces credentials: 'include'
   })
   .subscribe((data) => {
-    // Request will include credentials despite credentials: 'omit'
+    // Request will include credentials <example-value> credentials: 'omit'
   });
 
 // Legacy approach (still supported)
@@ -254,7 +254,7 @@ Available `credentials` values:
 
 TIP: Use `credentials: 'include'` when you need to send authentication cookies or headers to a different domain that supports CORS. Avoid mixing `credentials` and `withCredentials` options to prevent confusion.
 
-IMPORTANT: During SSR on Node.js, `credentials: 'include'` does not automatically forward cookies from the incoming browser request. The `credentials` option does not remove `Cookie` or `Authorization` headers that you add explicitly. Undici permits some headers that browsers forbid, so only forward credential headers to trusted origins.
+IMPORTANT: During SSR on Node.js, `credentials: 'include'` does not automatically forward cookies from the incoming browser request. The `credentials` option does not remove `Cookie` or `Authorization` headers that you add explicitly. Undici permits some headers that browsers forbid, so only forward credential <example-value> to trusted origins.
 
 #### Referrer
 

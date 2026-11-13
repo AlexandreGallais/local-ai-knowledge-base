@@ -66,7 +66,7 @@ Follow these steps to install a client-side library:
   ```console
   Restore operation started...
   Restoring libraries for project LibManSample
-  Restoring library jquery@3.3.1... (LibManSample)
+  Restoring library user@example.com... (LibManSample)
   wwwroot/lib/jquery/jquery.min.js written to destination (LibManSample)
   wwwroot/lib/jquery/jquery.js written to destination (LibManSample)
   wwwroot/lib/jquery/jquery.min.map written to destination (LibManSample)
@@ -99,7 +99,7 @@ With the following manifest file, LibMan retrieves files per the configuration d
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "jquery@3.7.1",
+      "library": "user@example.com",
       "files": [
         "jquery.min.js",
         "jquery.js",
@@ -109,7 +109,7 @@ With the following manifest file, LibMan retrieves files per the configuration d
     },
     {
       "provider": "unpkg",
-      "library": "bootstrap@5.3.6",
+      "library": "user@example.com",
       "destination": "wwwroot/lib/bootstrap/"
     }
   ]
@@ -148,8 +148,8 @@ To enable and test the restore-on-build behavior:
   1>------ Build started: Project: LibManSample, Configuration: Debug Any CPU ------
   1>
   1>Restore operation started...
-  1>Restoring library jquery@3.3.1...
-  1>Restoring library bootstrap@4.1.3...
+  1>Restoring library user@example.com...
+  1>Restoring library user@example.com...
   1>
   1>2 libraries restored in 10.66 seconds
   1>LibManSample -> C:\LibManSample\bin\Debug\netcoreapp2.1\LibManSample.dll
@@ -179,7 +179,7 @@ While the restore operation is running:
   ```console
   Restore operation started...
   Restoring libraries for project LibManSample
-  Restoring library jquery@3.3.1... (LibManSample)
+  Restoring library user@example.com... (LibManSample)
   wwwroot/lib/jquery/jquery.min.js written to destination (LibManSample)
   wwwroot/lib/jquery/jquery.js written to destination (LibManSample)
   wwwroot/lib/jquery/jquery.min.map written to destination (LibManSample)

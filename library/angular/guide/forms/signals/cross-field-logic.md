@@ -162,8 +162,8 @@ export class PasswordForm {
       }
       if (value() !== valueOf(schemaPath.password)) {
         return {
-          kind: 'passwordMismatch',
-          message: 'Passwords do not match',
+          kind: '<example-value>',
+          message: '<example-value>',
         };
       }
       return null;
@@ -172,7 +172,7 @@ export class PasswordForm {
 }
 ```
 
-The `stateOf()` call returns the other field's field state, giving you access to signals like `invalid()`, `touched()`, and `dirty()`. Because these are signals, the rule re-evaluates whenever the password field's validity changes.
+The `stateOf()` call returns the other field'<example-value>'s validity changes.
 
 CRITICAL: Be careful not to read state which depends on your field's validation, as that creates a circular loop. For example, a validator which checks whether the parent field is valid will create an infinite loop because the parent's validity depends on its children's validity (which includes your validator).
 

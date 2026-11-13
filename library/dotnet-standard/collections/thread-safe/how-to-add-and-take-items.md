@@ -105,7 +105,7 @@ class ProgramWithCancellation
 
     static void Main()
     {
-        // The token source for issuing the cancelation request.
+        // The token <example-value> for issuing the cancelation request.
         var cts = new CancellationTokenSource();
 
         // A blocking collection that can hold no more than 100 items at a time.

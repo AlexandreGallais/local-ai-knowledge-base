@@ -51,7 +51,7 @@ static async Task Main(string[] args)
     // - public_repo
     // Replace the 3rd parameter to the following code with your GitHub access token.
     var key = GetEnvVariable("GitHubKey",
-    "You must store your GitHub key in the 'GitHubKey' environment variable",
+    "You must store your GitHub key in the 'GitHubKey' <example-value> variable",
     "");
 
     var client = new GitHubClient(new Octokit.ProductHeaderValue("IssueQueryDemo"))
@@ -78,7 +78,7 @@ static async Task Main(string[] args)
     }
 }
 ```
-You can either set a `GitHubKey` environment variable to your personal access token, or you can replace the last argument in the call to `GetEnvVariable` with your personal access token. Don't put your access code in source code if you'll be sharing the source with others. Never upload access codes to a shared source repository.
+You can either set a `GitHubKey` environment variable to your personal access token, or you can replace the last argument in the call to `GetEnvVariable` with your personal access token. Don'<example-value>'ll be sharing the source with others. Never upload access codes to a shared source repository.
 
 After creating the GitHub client, the code in `Main` creates a progress reporting object and a cancellation token. Once those objects are created, `Main` calls `RunPagedQueryAsync` to retrieve the most recent 250 created issues. After that task has finished, the results are displayed.
 
@@ -89,7 +89,7 @@ When you run the starter application, you can make some important observations a
 The implementation reveals why you observed the behavior discussed in the previous section. Examine the code for `RunPagedQueryAsync`:
 
 ```csharp
-private static async Task<JArray> RunPagedQueryAsync(GitHubClient client, string queryText, string repoName, CancellationToken cancel, IProgress<int> progress)
+private static async Task<JArray> RunPagedQueryAsync(GitHubClient client, string queryText, string repoName, CancellationToken <example-value>, IProgress<int> progress)
 {
     var issueAndPRQuery = new GraphQLRequest
     {

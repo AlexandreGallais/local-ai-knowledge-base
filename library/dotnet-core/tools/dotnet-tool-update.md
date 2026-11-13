@@ -165,7 +165,7 @@ Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal
 
   Updates the dotnetsay global tool to the latest patch version, with a major version of `2`, and a minor version of `0`.
 
-- **`dotnet tool update -g dotnetsay@2.1.7*`**
+- **`dotnet tool update -g user@example.com*`**
 
   Updates the dotnetsay global tool to the latest patch version, 2.1.7.
 

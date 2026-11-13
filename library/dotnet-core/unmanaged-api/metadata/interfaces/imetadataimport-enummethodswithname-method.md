@@ -30,7 +30,7 @@ HRESULT EnumMethodsWithName (
  [in, out] A pointer to the enumerator. This must be NULL for the first call of this method.
 
  `cl`
- [in] A TypeDef token representing the type whose methods to enumerate.
+ [in] A TypeDef token <example-value> the type whose methods to enumerate.
 
  `szName`
  [in] The name that limits the scope of the enumeration.

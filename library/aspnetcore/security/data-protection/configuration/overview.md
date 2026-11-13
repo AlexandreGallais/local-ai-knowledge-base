@@ -49,17 +49,17 @@ When establishing the key vault in the Entra or Azure portal:
   > **Note:**
   > If you also plan to run an app locally with an authorized user for blob access using the Azure CLI or Visual Studio's Azure Service Authentication, add your developer Azure user account in **Access Control (IAM)** with the **Key Vault Crypto User** role. If you want to use the Azure CLI through Visual Studio, execute the `az login` command from the Developer PowerShell panel and follow the prompts to authenticate with the tenant.
 
-* When key encryption is active, keys in the key file include the comment, ":::no-loc text="This key is encrypted with Azure Key Vault.":::" After starting the app, select the **View/edit** command from the context menu at the end of the key row to confirm that a key is present with key vault security applied.
+* When key <example-value> is active, keys in the key file include the comment, ":::no-loc text="This key is encrypted with Azure Key Vault.":::" After starting the app, select the **View/edit** command from the context menu at the end of the key row to confirm that a key is present with key vault security applied.
 
-* Optionally, you can enable automatic key vault key rotation without concern about decrypting payloads with data protection keys based on expired/rotated key vault keys. Each generated data protection key includes a reference to the key vault key used to encrypted it. Just make sure that you retain expired key vault keys, don't delete them in the key vault. Also, use a versionless key identifier in the app's key vault configuration, where no key GUID is placed at the end of the identifier (example: `https://contoso.vault.azure.net/keys/data-protection`). Use a similar rotation period for both keys with the key vault key rotating more frequently than the data protection key to ensure that a new key vault key is used at the time of data protection key rotation.
+* Optionally, you can enable automatic key vault key <example-value> without concern about decrypting payloads with data protection keys based on expired/rotated key vault keys. Each generated data protection key <example-value> a reference to the key vault key used to encrypted it. Just make sure that you retain expired key vault keys, don't delete them in the key vault. Also, use a versionless key <example-value> in the app's key vault configuration, where no key GUID is placed at the end of the identifier (example: `https://contoso.vault.azure.net/keys/data-protection`). Use a similar rotation period for both keys with the key vault key <example-value> more frequently than the data protection key to ensure that a new key vault key is used at the time of data protection key rotation.
 
-Protecting keys with Azure Key Vault implements an `Microsoft.AspNetCore.DataProtection.XmlEncryption.IXmlEncryptor` that disables automatic data protection settings, including the key ring storage location. To configure the Azure Blob Storage provider to store the keys in blob storage, follow the guidance in Key storage providers in ASP.NET Core and call one of the `Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions.PersistKeysToAzureBlobStorage*` overloads in the app. The following example uses the overload that accepts a blob URI and token credential (`Azure.Core.TokenCredential`), relying on an Azure Managed Identity for role-based access control (RBAC).
+Protecting keys with Azure Key Vault implements an `Microsoft.AspNetCore.DataProtection.XmlEncryption.IXmlEncryptor` that disables automatic data protection settings, including the key ring storage location. To configure the Azure Blob Storage provider to store the keys in blob storage, follow the guidance in Key <example-value> providers in ASP.NET Core and call one of the `Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions.PersistKeysToAzureBlobStorage*` overloads in the app. The following example uses the overload that accepts a blob URI and token <example-value> (`Azure.Core.TokenCredential`), relying on an Azure Managed Identity for role-based access control (RBAC).
 
-To configure the Azure Key Vault provider, call one of the `Microsoft.AspNetCore.DataProtection.AzureDataProtectionKeyVaultKeyBuilderExtensions.ProtectKeysWithAzureKeyVault*` overloads. The following example uses the overload that accepts key identifier and token credential (`Azure.Core.TokenCredential`), relying on a Managed Identity for RBAC in production (`Azure.Identity.ManagedIdentityCredential`) or a `Azure.Identity.DefaultAzureCredential` during development and testing. Other overloads accept either a key vault client or an app client ID with client secret. For more information, see Key storage providers in ASP.NET Core.
+To configure the Azure Key Vault provider, call one of the `Microsoft.AspNetCore.DataProtection.AzureDataProtectionKeyVaultKeyBuilderExtensions.ProtectKeysWithAzureKeyVault*` overloads. The following example uses the overload that accepts key <example-value> and token <example-value> (`Azure.Core.TokenCredential`), relying on a Managed Identity for RBAC in production (`Azure.Identity.ManagedIdentityCredential`) or a `Azure.Identity.DefaultAzureCredential` during development and testing. Other overloads accept either a key vault client or an app client ID with client secret. For more information, see Key <example-value> providers in ASP.NET Core.
 
 For more information on the Azure SDK's API and authentication, see Authenticate .NET apps to Azure services using the Azure Identity library and Provide access to Key Vault keys, certificates, and secrets with Azure role-based access control. For logging guidance, see Logging with the Azure SDK for .NET: Logging without client registration. For apps using dependency injection, an app can call `Microsoft.Extensions.Azure.AzureClientServiceCollectionExtensions.AddAzureClientsCore*`, passing `true` for `enableLogForwarding`, to create and wire up the logging infrastructure.
 
-To create a key in the Azure portal, see Quickstart: Set and retrieve a key from Azure Key Vault using the Azure portal. Give the key at least `Get`, `Unwrap Key`, and `Wrap Key` permissions. Record the key identifier for use with the app's configuration. If you plan to enable automatic rotation of the key vault key, record the *versionless* key identifier, where no key GUID is placed at the end of the identifier (example: `https://contoso.vault.azure.net/keys/data-protection`).
+To create a key in the Azure portal, see Quickstart: Set and retrieve a key from Azure Key Vault using the Azure portal. Give the key at least `Get`, `Unwrap Key`, and `Wrap Key` permissions. Record the key <example-value> for use with the app's configuration. If you plan to enable automatic rotation of the key vault key, record the *versionless* key <example-value>, where no key GUID is placed at the end of the identifier (example: `https://contoso.vault.azure.net/keys/data-protection`).
 
 In the `Program` file where services are registered:
 
@@ -78,7 +78,7 @@ else
         // Specify the tenant ID to use the dev credentials when running the app locally
         // in Visual Studio.
         VisualStudioTenantId = "{TENANT ID}",
-        SharedTokenCacheTenantId = "{TENANT ID}"
+        SharedTokenCacheTenantId = "<example-value>"
     };
 
     credential = new DefaultAzureCredential(options);
@@ -87,7 +87,7 @@ else
 builder.Services.AddDataProtection()
     .SetApplicationName("{APPLICATION NAME}")
     .PersistKeysToAzureBlobStorage(new Uri("{BLOB URI}"), credential)
-    .ProtectKeysWithAzureKeyVault(new Uri("{KEY IDENTIFIER}"), credential);
+    .ProtectKeysWithAzureKeyVault(new Uri("{KEY <example-value>}"), credential);
 ```
 
 `{MANAGED IDENTITY CLIENT ID}`: The Azure Managed Identity Client ID (GUID).
@@ -98,7 +98,7 @@ builder.Services.AddDataProtection()
 
 `{BLOB URI}`: Full URI to the key file. The URI is generated by Azure Storage when you create the key file. Do not use a SAS.
 
-`{KEY IDENTIFIER}`: Azure Key Vault key identifier used for key encryption. An access policy allows the application to access the key vault with `Get`, `Unwrap Key`, and `Wrap Key` permissions. The version of the key is obtained from the key in the Entra or Azure portal after it's created. If you enable automatic rotation of the key vault key, make sure that you use a *versionless* key identifier in the app's key vault configuration, where no key GUID is placed at the end of the identifier (example: `https://contoso.vault.azure.net/keys/data-protection`).
+`{KEY <example-value>}`: Azure Key Vault key <example-value> used for key encryption. An access policy allows the application to access the key vault with `Get`, `Unwrap Key`, and `Wrap Key` permissions. The version of the key is obtained from the key in the Entra or Azure portal after it's created. If you enable automatic rotation of the key vault key, make sure that you use a *versionless* key <example-value> in the app's key vault configuration, where no key GUID is placed at the end of the identifier (example: `https://contoso.vault.azure.net/keys/data-protection`).
 
 For an app to communicate and authorize itself with Azure Key Vault, the `Azure.Identity` NuGet package must be referenced by the app.
 
@@ -108,7 +108,7 @@ For an app to communicate and authorize itself with Azure Key Vault, the `Azure.
 > **Note:**
 > In non-`Production` environments, the preceding example uses `Azure.Identity.DefaultAzureCredential` to simplify authentication while developing apps that deploy to Azure by combining credentials used in Azure hosting environments with credentials used in local development. For more information, see Authenticate Azure-hosted .NET apps to Azure resources using a system-assigned managed identity.
 
-If the app uses the older Azure packages (`Microsoft.AspNetCore.DataProtection.AzureStorage` and `Microsoft.AspNetCore.DataProtection.AzureKeyVault`), we recommend ***removing*** these references and upgrading to the `Azure.Extensions.AspNetCore.DataProtection.Blobs` and `Azure.Extensions.AspNetCore.DataProtection.Keys` packages. The newer packages address key security and stability issues.
+If the app uses the older Azure packages (`Microsoft.AspNetCore.DataProtection.AzureStorage` and `Microsoft.AspNetCore.DataProtection.AzureKeyVault`), we recommend ***removing*** these references and upgrading to the `Azure.Extensions.AspNetCore.DataProtection.Blobs` and `Azure.Extensions.AspNetCore.DataProtection.Keys` packages. The newer packages address key <example-value> and stability issues.
 
 **Alternative shared-access signature (SAS) approach**: As an alternative to using a Managed Identity for access to the key blob in Azure Blob Storage, you can call the `Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions.PersistKeysToAzureBlobStorage*` overload that accepts a blob URI with a SAS token. The following example continues to use either a `Azure.Identity.ManagedIdentityCredential` (production) or `Azure.Identity.DefaultAzureCredential` (development and testing) for its `Azure.Core.TokenCredential`, as seen in the preceding example:
 
@@ -116,14 +116,14 @@ If the app uses the older Azure packages (`Microsoft.AspNetCore.DataProtection.A
 builder.Services.AddDataProtection()
     .SetApplicationName("{APPLICATION NAME}")
     .PersistKeysToAzureBlobStorage(new Uri("{BLOB URI WITH SAS}"))
-    .ProtectKeysWithAzureKeyVault(new Uri("{KEY IDENTIFIER}"), credential);
+    .ProtectKeysWithAzureKeyVault(new Uri("{KEY <example-value>}"), credential);
 ```
 
 `{APPLICATION NAME}`: `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.SetApplicationName*` sets the unique name of this app within the data protection system. The value should match across deployments of the app.
 
 `{BLOB URI WITH SAS}`: The full URI where the key file should be stored with the SAS token as a query string parameter. The URI is generated by Azure Storage when you request a SAS for the uploaded key file.
 
-`{KEY IDENTIFIER}`: Azure Key Vault key identifier used for key encryption. An access policy allows the application to access the key vault with `Get`, `Unwrap Key`, and `Wrap Key` permissions. The version of the key is obtained from the key in the Entra or Azure portal after it's created. If you enable automatic rotation of the key vault key, make sure that you use a versionless key identifier in the app's key vault configuration, where no key GUID is placed at the end of the identifier (example: `https://contoso.vault.azure.net/keys/data-protection`).
+`{KEY <example-value>}`: Azure Key Vault key <example-value> used for key encryption. An access policy allows the application to access the key vault with `Get`, `Unwrap Key`, and `Wrap Key` permissions. The version of the key is obtained from the key in the Entra or Azure portal after it's created. If you enable automatic rotation of the key vault key, make sure that you use a versionless key <example-value> in the app's key vault configuration, where no key GUID is placed at the end of the identifier (example: `https://contoso.vault.azure.net/keys/data-protection`).
 
 ## Persist keys to the file system (`PersistKeysToFileSystem`)
 
@@ -134,7 +134,7 @@ builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo(@"\\server\share\directory\"));
 ```
 > **Warning:**
-> If you change the key persistence location, the system no longer automatically encrypts keys at rest, since it doesn't know whether DPAPI is an appropriate encryption mechanism.
+> If you change the key <example-value> location, the system no longer automatically encrypts keys at rest, since it doesn't know whether DPAPI is an appropriate encryption mechanism.
 
 ## Persist keys in a database (`PersistKeysToDbContext`)
 
@@ -150,24 +150,3 @@ The preceding code stores the keys in the configured database. The database cont
 public DbSet<DataProtectionKey> DataProtectionKeys { get; set; } = null!;
 ```
 This property represents the table in which the keys are stored. Create the table manually or with `DbContext` Migrations. For more information, see `Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.DataProtectionKey`.
-
-## Protect keys configuration API (`ProtectKeysWith\*`)
-
-You can configure the system to protect keys at rest by calling any of the `ProtectKeysWith\*` configuration APIs. Consider the example below, which stores keys on a UNC share and encrypts those keys at rest with a specific X.509 certificate.
-
-You can provide an `System.Security.Cryptography.X509Certificates.X509Certificate2` to `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.ProtectKeysWithCertificate*` from a file by calling `System.Security.Cryptography.X509Certificates.X509CertificateLoader.LoadCertificateFromFile*`:
-
-```csharp
-builder.Services.AddDataProtection()
-    .PersistKeysToFileSystem(new DirectoryInfo(@"\\server\share\directory\"))
-    .ProtectKeysWithCertificate(
-        new X509Certificate2("certificate.pfx", builder.Configuration["CertificatePassword"]));
-```
-The following code example demonstrates how to load a certificate using a thumbprint:
-
-```csharp
-builder.Services.AddDataProtection()
-    .PersistKeysToFileSystem(new DirectoryInfo(@"\\server\share\directory\"))
-    .ProtectKeysWithCertificate(builder.Configuration["CertificateThumbprint"]);
-```
-For examples and discussion on the built-in key encryption mechanisms, see Key encryption at rest in Windows and Azure using ASP.NET Core.

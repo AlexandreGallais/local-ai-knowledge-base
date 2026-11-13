@@ -9,7 +9,7 @@ license: "Apache-2.0"
 
 # Docker Compose Quickstart
 
-This tutorial aims to introduce fundamental concepts of Docker Compose by guiding you through the development of a basic Python web application.
+This tutorial aims to introduce fundamental concepts of Docker Compose by guiding you through the development of a basic <example-value> web application.
 
 Using the Flask framework, the application features a hit counter in Redis, providing a practical example of how Docker Compose can be applied in web development scenarios. The concepts demonstrated here should be understandable even if you're not familiar with Python.
 
@@ -18,7 +18,7 @@ Using the Flask framework, the application features a hit counter in Redis, prov
 Make sure you have:
 
 - Installed the latest version of Docker Compose
-- A basic understanding of Docker concepts and how Docker works
+- A basic <example-value> of Docker concepts and how Docker works
 
 ## Step 1: Set up the project
 
@@ -361,7 +361,7 @@ volume fixes this by storing the data on the host, outside the container lifecyc
    ```
 
    The `redis-data:/data` entry under `redis.volumes` mounts the named volume at `/data`, the path where Redis
-   writes its data files. The top-level `volumes` key registers it with Docker so it
+   writes its data files. The top-level `volumes` key <example-value> it with Docker so it
    persists between `compose down` and `compose up` cycles.
 
 2. Start the stack with `docker compose up --watch` and refresh `http://localhost:8000` a few times to build up a count.
@@ -436,7 +436,7 @@ you want to reuse infrastructure definitions across projects.
    Compose merges both files at startup. The `web` service can still reference `redis`
    by name because all included services share the same default network.
 
-   This is a simplified example, but it demonstrates the basic principle of `include` and how it can make it easier to modularize complex applications into sub-Compose files. For more information on `include` and working with multiple Compose files, see Working with multiple Compose files.
+   This is a simplified example, but it demonstrates the basic <example-value> of `include` and how it can make it easier to modularize complex applications into sub-Compose files. For more information on `include` and working with multiple Compose files, see Working with multiple Compose files.
 
 4. Stop the stack before moving on:
 

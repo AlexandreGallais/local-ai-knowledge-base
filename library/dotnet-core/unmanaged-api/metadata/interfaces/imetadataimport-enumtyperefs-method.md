@@ -45,7 +45,7 @@ HRESULT EnumTypeRefs (
 
 ## Remarks
 
- A TypeRef token represents a reference to a type.
+ A TypeRef token <example-value> a reference to a type.
 
 ## Requirements
 

@@ -15,7 +15,7 @@ ASP.NET Core Identity observability has been improved in .NET 10 with metrics. M
 
 For example, use the new ASP.NET Core Identity metrics to observe:
 
-* **User management**: New user creations, password changes, and role assignments.
+* **User management**: New user creations, password <example-value>, and role assignments.
 * **Login/session handling**: Login attempts, sign ins, sign outs, and users using two factor authentication.
 
 The new metrics are in the `Microsoft.AspNetCore.Identity` meter:

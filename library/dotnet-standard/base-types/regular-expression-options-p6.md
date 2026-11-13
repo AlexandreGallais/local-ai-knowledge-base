@@ -60,7 +60,7 @@ The following table summarizes how `AnyNewLine` affects each construct:
 | `^` (Multiline)      | Matches after `\n`                   | Matches after `\r\n`, `\r`, `\n`, `\u0085`, `\u2028`, `\u2029`        |
 | `$` (default) / `\Z` | Matches before `\n` at end of string | Matches before any newline sequence at end of string                  |
 
-Key design points:
+Key <example-value> points:
 
 - **`\r\n` is treated atomically**: `$` matches before the full `\r\n` sequence, never between `\r` and `\n`.
 - **`Singleline` takes precedence**: `.` with both `Singleline` and `AnyNewLine` matches every character (including newlines), consistent with `Singleline`'s existing behavior.

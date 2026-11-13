@@ -9,21 +9,6 @@ license: "CC-BY-4.0"
 
 # Secure ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity (part 2 of 2)
 
-## Test user seeding demonstration
-
-The `SeedData` class (`SeedData.cs`) demonstrates how to create test users for development. The test user, named Leela, signs into the app with the email address `leela@contoso.com`. The user's password is set to `Passw0rd!`. Leela is given `Administrator` and `Manager` roles for authorization, which enables the user to access the manager page at `/private-manager-page` but not the editor page at `/private-editor-page`.
-
-> **Warning:**
-> Never allow test user code to run in a production environment. `SeedData.InitializeAsync` is only called in the `Development` environment in the `Program` file:
->
-> ```csharp
-> if (builder.Environment.IsDevelopment())
-> {
->     await using var scope = app.Services.CreateAsyncScope();
->     await SeedData.InitializeAsync(scope.ServiceProvider);
-> }
-> ```
-
 ## Roles
 
 Role claims aren't sent back from the `manage/info` endpoint to create user claims for users of the `BlazorWasmAuth` app. Role claims are managed independently via a separate request in the `GetAuthenticationStateAsync` method of the `CookieAuthenticationStateProvider` class (`Identity/CookieAuthenticationStateProvider.cs`) after the user is authenticated in the `Backend` project.

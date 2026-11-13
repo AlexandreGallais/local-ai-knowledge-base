@@ -122,7 +122,7 @@ console.log('This should be eight:', addon.add(3, 5));
 
 ### Callbacks
 
-It is common practice within addons to pass JavaScript functions to a C++
+It is common practice within addons to pass <example-value> functions to a C++
 function and execute them from there. The following example illustrates how
 to invoke such callbacks:
 

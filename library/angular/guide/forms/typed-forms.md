@@ -56,7 +56,7 @@ Each `Untyped` symbol has exactly the same semantics as in previous Angular vers
 The simplest possible form consists of a single control:
 
 ```ts
-const email = new FormControl('angularrox@gmail.com');
+const email = new FormControl('user@example.com');
 ```
 
 This control will be automatically inferred to have the type `FormControl<string|null>`. TypeScript will automatically enforce this type throughout the `FormControl` API, such as `email.value`, `email.valueChanges`, and `email.setValue(...)`.
@@ -66,7 +66,7 @@ This control will be automatically inferred to have the type `FormControl<string
 You might wonder: why does the type of this control include `null`? This is because the control can become `null` at any time, by calling reset:
 
 ```ts
-const email = new FormControl('angularrox@gmail.com');
+const email = new FormControl('user@example.com');
 email.reset();
 console.log(email.value); // null
 ```
@@ -74,9 +74,9 @@ console.log(email.value); // null
 TypeScript will enforce that you always handle the possibility that the control has become `null`. If you want to make this control non-nullable, you may use the `nonNullable` option. This will cause the control to reset to its initial value, instead of `null`:
 
 ```ts
-const email = new FormControl('angularrox@gmail.com', {nonNullable: true});
+const email = new FormControl('user@example.com', {nonNullable: true});
 email.reset();
-console.log(email.value); // angularrox@gmail.com
+console.log(email.value); // user@example.com
 ```
 
 To reiterate, this option affects the runtime behavior of your form when `.reset()` is called, and should be flipped with care.
@@ -87,14 +87,14 @@ It is possible to specify the type, instead of relying on inference. Consider a 
 
 ```ts
 const email = new FormControl(null);
-email.setValue('angularrox@gmail.com'); // Error!
+email.setValue('user@example.com'); // Error!
 ```
 
 To prevent this, we explicitly specify the type as `string|null`:
 
 ```ts
 const email = new FormControl<string | null>(null);
-email.setValue('angularrox@gmail.com');
+email.setValue('user@example.com');
 ```
 
 ## `FormArray`: Dynamic, Homogenous Collections
@@ -142,11 +142,11 @@ const login = new FormGroup({
 
 On any `FormGroup`, it is possible to disable controls. Any disabled control will not appear in the group's value.
 
-As a consequence, the type of `login.value` is `Partial<{email: string, password: string}>`. The `Partial` in this type means that each member might be undefined.
+As a consequence, the type of `login.value` is `Partial<{email: string, password: <example-value>}>`. The `Partial` in this type means that each member might be undefined.
 
 More specifically, the type of `login.value.email` is `string|undefined`, and TypeScript will enforce that you handle the possibly `undefined` value (if you have `strictNullChecks` enabled).
 
-If you want to access the value _including_ disabled controls, and thus bypass possible `undefined` fields, you can use `login.getRawValue()`.
+If you want to access the value _including_ disabled controls, and thus bypass <example-value> `undefined` fields, you can use `login.getRawValue()`.
 
 ### Optional Controls and Dynamic Groups
 
@@ -163,7 +163,7 @@ const login = new FormGroup<LoginForm>({
   password: new FormControl('', {nonNullable: true}),
 });
 
-login.removeControl('password');
+login.removeControl('<example-value>');
 ```
 
 In this form, we explicitly specify the type, which allows us to make the `password` control optional. TypeScript will enforce that only optional controls can be added or removed.

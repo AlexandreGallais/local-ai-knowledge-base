@@ -217,7 +217,7 @@ services:
     image: postgres:18
     environment:
       POSTGRES_USER: example
-      POSTGRES_PASSWORD: example
+      POSTGRES_PASSWORD: <example-value>
       POSTGRES_DB: appdb
     volumes:
       - db-data:/var/lib/postgresql

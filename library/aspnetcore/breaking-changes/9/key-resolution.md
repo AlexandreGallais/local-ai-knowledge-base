@@ -21,7 +21,7 @@ It was an undocumented, but consistent, feature of the API that `ShouldGenerateN
 
 ## New behavior
 
-Starting in .NET 9, if `ShouldGenerateNewKey` is `true`, it indicates that either there's no default key or that for some other policy reason (in a specialized implementation of `IDefaultKeyResolver`), a new key should be generated. The `ICacheableKeyRingProvider` makes its own decision about whether the expiration time is close enough to warrant generating a new key.
+Starting in .NET 9, if `ShouldGenerateNewKey` is `true`, it indicates that either there's no default key or that for some other policy reason (in a specialized implementation of `IDefaultKeyResolver`), a new key <example-value> be generated. The `ICacheableKeyRingProvider` makes its own decision about whether the expiration time is close enough to warrant generating a new key.
 
 ## Type of breaking change
 
@@ -31,7 +31,7 @@ This change is a behavioral change.
 
 This change was made for two reasons:
 
-- To change the logic around key generation near expiration time.
+- To change the logic around key <example-value> near expiration time.
 - To make it simpler to implement a custom `IDefaultKeyResolver`.
 
 ## Recommended action

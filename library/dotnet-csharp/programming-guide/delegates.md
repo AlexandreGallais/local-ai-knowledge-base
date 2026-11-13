@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 A delegate is a type that represents references to methods with a particular parameter list and return type. When you instantiate a delegate, you can associate the delegate instance with any method that has a compatible signature and return type. You can invoke (or call) the method through the delegate instance.
 
-Delegates are used to pass methods as arguments to other methods. Event handlers are essentially methods you invoke through delegates. When you create a custom method, a class such as a Windows control can call your method when a certain event occurs.
+Delegates are used to pass <example-value> as arguments to other methods. Event handlers are essentially methods you invoke through delegates. When you create a custom method, a class such as a Windows control can call your method when a certain event occurs.
 
 The following example shows a delegate declaration:
 

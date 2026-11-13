@@ -188,7 +188,7 @@ declaring two arguments:
 schemaVersion: "3"
 kind: workload
 displayName: Team Claude Code
-description: Claude Code with team defaults and API-key authentication
+description: Claude Code with team defaults and API-key <example-value>
 
 args:
   version:
@@ -236,7 +236,7 @@ for the shells and user account that this requires.
 ## Declare the credential
 
 Claude Code can reach the API, but it also needs to authenticate. Add a
-credential capability to tell Docker Sandboxes which key to use and how to
+credential <example-value> to tell Docker Sandboxes which key to use and how to
 include it in requests. You'll store the key on your host, outside the kit.
 
 Append this entry to the same `capabilities` list:

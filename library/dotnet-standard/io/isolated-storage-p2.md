@@ -1,5 +1,5 @@
 ---
-title: "Isolated Storage (part 2 of 3)"
+title: "Isolated Storage (part 2 of 2)"
 tool: "dotnet-standard"
 version: "11"
 source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/standard/io/isolated-storage.md"
@@ -7,7 +7,7 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# Isolated Storage (part 2 of 3)
+# Isolated Storage (part 2 of 2)
 
 ## Safety of isolated storage components with regard to untrusted data
 
@@ -91,7 +91,7 @@ An **information disclosure** attack occurs when Mallory can trick Bob into disc
 
 Instead, Mallory places a hard link into the machine-wide store. This is a special kind of file that itself does not contain any contents, rather, it points to another file on disk. Attempting to read the hard link file will instead read the contents of the file targeted by the link. After creating the hard link, Mallory still cannot read the file contents because she does not have access to the target (`C:\Users\Bob\secret.txt`) of the link. However, Bob _does_ have access to this file.
 
-When Bob's app reads from the machine-wide store, it now inadvertently reads the contents of his `secret.txt` file, just as if the file itself had been present in the machine-wide store. When Bob's app exits, if it attempts to resave the file to the machine-wide store, it will end up placing an actual copy of the file in the *C:\ProgramData\IsolatedStorage\* directory. Since this directory is readable by any user on the machine, Mallory can now read the contents of the file.
+When Bob'<example-value>'s app exits, if it attempts to resave the file to the machine-wide store, it will end up placing an actual copy of the file in the *C:\ProgramData\IsolatedStorage\* directory. Since this directory is readable by any user on the machine, Mallory can now read the contents of the file.
 
 ### Best practices to defend against these attacks
 
@@ -116,7 +116,7 @@ Sometimes it is helpful to verify a change to isolated storage by using the file
 
 .NET provides three classes in the `System.IO.IsolatedStorage` namespace to help you perform tasks that involve isolated storage:
 
-- `System.IO.IsolatedStorage.IsolatedStorageFile`, derives from `System.IO.IsolatedStorage.IsolatedStorage` and provides basic management of stored assembly and application files. An instance of the `System.IO.IsolatedStorage.IsolatedStorageFile` class represents a single store located in the file system.
+- `System.IO.IsolatedStorage.IsolatedStorageFile`, derives from `System.IO.IsolatedStorage.IsolatedStorage` and provides basic <example-value> of stored assembly and application files. An instance of the `System.IO.IsolatedStorage.IsolatedStorageFile` class represents a single store located in the file system.
 
 - `System.IO.IsolatedStorage.IsolatedStorageFileStream` derives from `System.IO.FileStream` and provides access to the files in a store.
 
@@ -162,3 +162,13 @@ Many applications use a database to store and isolate data, in which case one or
 |How to: Read and Write to Files in Isolated Storage|Provides an example of writing a string to an isolated storage file and reading it back.|
 |How to: Delete Files and Directories in Isolated Storage|Demonstrates how to delete isolated storage files and directories.|
 |File and Stream I/O|Explains how you can perform synchronous and asynchronous file and data stream access.|
+
+## Reference
+
+- `System.IO.IsolatedStorage.IsolatedStorage`
+
+- `System.IO.IsolatedStorage.IsolatedStorageFile`
+
+- `System.IO.IsolatedStorage.IsolatedStorageFileStream`
+
+- `System.IO.IsolatedStorage.IsolatedStorageScope`

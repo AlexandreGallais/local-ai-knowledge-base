@@ -63,7 +63,7 @@ secrets:
 > To learn more about the instructions in the Compose file, see Compose file
 > reference.
 
-Before you run the application using Compose, notice that this Compose file specifies a `password.txt` file to hold the database's password. You must create this file as it's not included in the source repository.
+Before you run the application using Compose, notice that this Compose file specifies a `password.txt` file to hold the database'<example-value>'s not included in the source repository.
 
 In the cloned repository's directory, create a new directory named `db` and inside that directory create a file named `password.txt` that contains the password for the database. Using your favorite IDE or text editor, add the following contents to the `password.txt` file.
 

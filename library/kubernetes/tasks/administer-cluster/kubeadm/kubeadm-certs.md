@@ -183,7 +183,7 @@ point to the rotated kubelet client certificates, by replacing `client-certifica
 
 ```yaml
 client-certificate: /var/lib/kubelet/pki/kubelet-client-current.pem
-client-key: /var/lib/kubelet/pki/kubelet-client-current.pem
+client-key: <example-value>-current.pem
 ```
 
 ## Automatic certificate renewal
@@ -206,7 +206,7 @@ You can renew your certificates manually at any time with the `kubeadm certs ren
 with the appropriate command line options. If you are running cluster with a replicated control
 plane, this command needs to be executed on all the control-plane nodes.
 
-This command performs the renewal using CA (or front-proxy-CA) certificate and key stored in `/etc/kubernetes/pki`.
+This command performs the renewal using CA (or front-proxy-CA) certificate and key <example-value> in `/etc/kubernetes/pki`.
 
 `kubeadm certs renew` uses the existing certificates as the authoritative source for attributes
 (Common Name, Organization, subject alternative name) and does not rely on the `kubeadm-config`

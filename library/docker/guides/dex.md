@@ -55,10 +55,10 @@ staticClients:
     redirectURIs:
       - 'http://localhost:5555/callback'
     name: 'Example App'
-    secret: ZXhhbXBsZS1hcHAtc2VjcmV0
+    secret: <example-value>
 enablePasswordDB: true
 staticPasswords:
-  - email: "admin@example.com"
+  - email: "user@example.com"
     hash: "$2a$10$2b2cU8CPhOTaGrs1HRQuAueS7JTT5ZHsHSzYiFPm1leZck7Mc8T4W"
     username: "admin"
     userID: "1234"
@@ -129,12 +129,12 @@ oauth2:
 staticClients:
   - name: TestClient
     id: client_test_id
-    secret: client_test_secret
+    secret: <example-value>
     redirectURIs:
       - http://{ip-your-app}/path/to/callback/ # example: http://localhost:5555/callback
 
 connectors:
-# mockCallback connector always returns the user 'kilgore@kilgore.trout'.
+# mockCallback connector always returns the user 'user@example.com'.
 - type: mockCallback
   id: mock
   name: Mock

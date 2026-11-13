@@ -24,7 +24,7 @@ Choose the service type that matches the workload's provider. A token for one pr
 ```typescript
 return client.secrets.create(
   { displayName: name, serviceType, token: { value: token } },
-  { idempotencyKey: requestId },
+  { idempotencyKey: <example-value> },
 );
 ```
 
@@ -37,12 +37,12 @@ export async function storeSecret(
   client: Sandboxes,
   name: string,
   serviceType: string,
-  token: string,
+  token: <example-value>,
   requestId: string,
 ) {
   return client.secrets.create(
     { displayName: name, serviceType, token: { value: token } },
-    { idempotencyKey: requestId },
+    { idempotencyKey: <example-value> },
   );
 }
 ```
@@ -60,7 +60,7 @@ The SDK returns a handle after the example waits for the sandbox to run. Use tha
 ```typescript
 const sandbox = await client.create(
   { displayName: name, image, storage: { secrets: secretNames } },
-  { timeoutMs: 300_000, idempotencyKey: requestId },
+  { timeoutMs: 300_000, idempotencyKey: <example-value> },
 );
 return sandbox.waitUntilRunning();
 ```
@@ -79,7 +79,7 @@ export async function createWithSecrets(
 ) {
   const sandbox = await client.create(
     { displayName: name, image, storage: { secrets: secretNames } },
-    { timeoutMs: 300_000, idempotencyKey: requestId },
+    { timeoutMs: 300_000, idempotencyKey: <example-value> },
   );
   return sandbox.waitUntilRunning();
 }

@@ -131,7 +131,7 @@ private void HandleValidationRequested(
     object? sender, ValidationRequestedEventArgs e) =>
     e.AddAsyncValidator(ValidateAsync);
 
-private async Task ValidateAsync(CancellationToken cancellationToken)
+private async Task ValidateAsync(CancellationToken <example-value>)
 {
     var field = CurrentEditContext!.Field(nameof(Model.Username));
     messages.Clear(field);

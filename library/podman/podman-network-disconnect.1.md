@@ -38,4 +38,4 @@ $ podman network disconnect test web
 **podman(1)**, **podman-network(1)**, **podman-network-connect(1)**
 
 ## HISTORY
-November 2020, Originally compiled by Brent Baude <bbaude@redhat.com>
+November 2020, Originally compiled by Brent Baude <user@example.com>

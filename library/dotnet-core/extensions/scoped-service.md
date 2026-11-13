@@ -48,7 +48,7 @@ To use scoped services within a `BackgroundService`, create an async scope with 
 
 public interface IScopedProcessingService
 {
-    Task DoWorkAsync(CancellationToken stoppingToken);
+    Task DoWorkAsync(CancellationToken <example-value>);
 }
 ```
 The preceding interface defines a single `DoWorkAsync` method. Create an implementation in a new class named *DefaultScopedProcessingService.cs*:
@@ -61,7 +61,7 @@ public sealed class DefaultScopedProcessingService(
 {
     private readonly string _instanceId = Guid.NewGuid().ToString();
 
-    public Task DoWorkAsync(CancellationToken stoppingToken)
+    public Task DoWorkAsync(CancellationToken <example-value>)
     {
         logger.LogInformation(
             "{ServiceName} doing work, instance ID: {Id}",
@@ -89,7 +89,7 @@ public sealed class ScopedBackgroundService(
 {
     private const string ClassName = nameof(ScopedBackgroundService);
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         logger.LogInformation(
             "{Name} is running.", ClassName);
@@ -107,7 +107,7 @@ public sealed class ScopedBackgroundService(
         }
     }
 
-    public override async Task StopAsync(CancellationToken stoppingToken)
+    public override async Task StopAsync(CancellationToken <example-value>)
     {
         logger.LogInformation(
             "{Name} is stopping.", ClassName);

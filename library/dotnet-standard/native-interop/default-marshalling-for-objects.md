@@ -151,7 +151,7 @@ The following table shows managed object types and their corresponding COM varia
 |`System.UIntPtr`|**VT_UINT**|
 |`System.Array`|**VT_ARRAY**|
 
-Using the `MarshalObject` interface defined in the previous example, the following code example demonstrates how to pass various types of variants to a COM server.
+Using the `MarshalObject` interface defined in the previous example, the following code example demonstrates how to pass <example-value> types of variants to a COM server.
 
 ```vb
 Dim mo As New MarshalObject()
@@ -173,7 +173,7 @@ mo.SetVariant((single)27.0);   // Marshal as variant of type VT_R4.
 mo.SetVariant((double)27.0);   // Marshal as variant of type VT_R8.
 ```
 
-COM types that do not have corresponding managed types can be marshalled using wrapper classes such as `System.Runtime.InteropServices.ErrorWrapper`, `System.Runtime.InteropServices.DispatchWrapper`, `System.Runtime.InteropServices.UnknownWrapper`, and `System.Runtime.InteropServices.CurrencyWrapper`. The following code example demonstrates how to use these wrappers to pass various types of variants to a COM server.
+COM types that do not have corresponding managed types can be marshalled using wrapper classes such as `System.Runtime.InteropServices.ErrorWrapper`, `System.Runtime.InteropServices.DispatchWrapper`, `System.Runtime.InteropServices.UnknownWrapper`, and `System.Runtime.InteropServices.CurrencyWrapper`. The following code example demonstrates how to use these wrappers to pass <example-value> types of variants to a COM server.
 
 ```vb
 Imports System.Runtime.InteropServices

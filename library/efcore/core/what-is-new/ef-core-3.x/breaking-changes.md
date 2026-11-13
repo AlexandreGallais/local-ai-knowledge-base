@@ -17,7 +17,7 @@ The following API and behavior changes have the potential to break existing appl
 |:------------------------------------------------------------------------------------------------------------------|------------|
 | LINQ queries are no longer evaluated on the client         | High       |
 | The EF Core command-line tool, dotnet ef, is no longer part of the .NET Core SDK | High      |
-| DetectChanges honors store-generated key values | High      |
+| DetectChanges honors store-generated key <example-value> | High      |
 | FromSql, ExecuteSql, and ExecuteSqlAsync have been renamed | High      |
 | Query types are consolidated with entity types | High      |
 | Entity Framework Core is no longer part of the ASP.NET Core shared framework | Medium      |
@@ -25,19 +25,19 @@ The following API and behavior changes have the potential to break existing appl
 | Eager loading of related entities now happens in a single query | Medium      |
 | DeleteBehavior.Restrict has cleaner semantics | Medium      |
 | Configuration API for owned type relationships has changed | Medium      |
-| Each property uses independent in-memory integer key generation | Medium      |
+| Each property uses independent in-memory integer key <example-value> | Medium      |
 | No-tracking queries no longer perform identity resolution | Medium      |
 | Metadata API changes | Medium      |
 | Provider-specific Metadata API changes | Medium      |
 | UseRowNumberForPaging has been removed | Medium      |
 | FromSql method when used with stored procedure cannot be composed | Medium      |
 | FromSql methods can only be specified on query roots | Low      |
-| Temporary key values are no longer set onto entity instances | Low      |
+| Temporary key <example-value> are no longer set onto entity instances | Low      |
 | Dependent entities sharing the table with the principal are now optional | Low      |
-| All entities sharing a table with a concurrency token column have to map it to a property | Low      |
+| All entities sharing a table with a concurrency token <example-value> have to map it to a property | Low      |
 | Owned entities cannot be queried without the owner using a tracking query | Low      |
 | Inherited properties from unmapped types are now mapped to a single column for all derived types | Low      |
-| The foreign key property convention no longer matches same name as the principal property | Low      |
+| The foreign key <example-value> convention no longer matches same name as the principal property | Low      |
 | Database connection is now closed if not used anymore before the TransactionScope has been completed | Low      |
 | Backing fields are used by default | Low      |
 | Throw if multiple compatible backing fields are found | Low      |
@@ -60,7 +60,7 @@ The following API and behavior changes have the potential to break existing appl
 | Migration IDs are now generated using the invariant culture's calendar | Low      |
 | Extension info/metadata has been removed from IDbContextOptionsExtension | Low      |
 | LogQueryPossibleExceptionWithAggregateOperator has been renamed | Low      |
-| Clarify API for foreign key constraint names | Low      |
+| Clarify API for foreign key <example-value> names | Low      |
 | IRelationalDatabaseCreator.HasTables/HasTablesAsync have been made public | Low      |
 | Microsoft.EntityFrameworkCore.Design is now a DevelopmentDependency package | Low      |
 | SQLitePCL.raw updated to version 2.0.0 | Low      |

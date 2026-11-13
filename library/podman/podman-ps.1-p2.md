@@ -172,4 +172,4 @@ standalone-container is in pod  ()
 **podman(1)**, **buildah(1)**, **crio(8)**
 
 ## HISTORY
-August 2017, Originally compiled by Urvashi Mohnani <umohnani@redhat.com>
+August 2017, Originally compiled by Urvashi Mohnani <user@example.com>

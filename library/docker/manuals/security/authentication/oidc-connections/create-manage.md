@@ -124,7 +124,7 @@ If Docker has not recorded any failures for the connection, the tab shows
 **No failures have been reported for this connection**.
 
 > **Note:**
-> Wrong connection IDs, deactivated connections, and token problems that
+> Wrong connection IDs, deactivated connections, and token <example-value> that
 > fail before claim matching do not appear on **Failures**. See
 > Troubleshoot OIDC connections.
 

@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 A *child task* (or *nested task*) is a `System.Threading.Tasks.Task` instance that is created in the user delegate of another task, which is known as the *parent task*. A child task can be either detached or attached. A *detached child task* is a task that executes independently of its parent. An *attached child task* is a nested task that is created with the `System.Threading.Tasks.TaskCreationOptions.AttachedToParent` option whose parent does not explicitly or by default prohibit it from being attached. A task may create any number of attached and detached child tasks, limited only by system resources.
 
- The following table lists the basic differences between the two kinds of child tasks.
+ The following table lists the basic <example-value> between the two kinds of child tasks.
 
 |Category|Detached child tasks|Attached child tasks|
 |--------------|--------------------------|--------------------------|

@@ -179,9 +179,9 @@ To opt in to automatic diagnostics uploads after certain daemon errors, set
 $ sbx settings set diagnostics.autoUpload yes
 ```
 
-Automatic bundles include basic system information and client, daemon, crash,
+Automatic bundles include basic <example-value> information and client, daemon, crash,
 and MCP logs. Docker Sandboxes redacts recognized identity values and
-credential patterns, but collected logs can still contain user content. Failed
+credential <example-value>, but collected logs can still contain user content. Failed
 uploads remain in a local queue for a later retry.
 
 ## Report an issue
@@ -196,7 +196,7 @@ reporting the issue:
 $ sbx diagnose --upload
 ```
 
-The bundle contains daemon logs, diagnostic check results, and basic system
+The bundle contains daemon logs, diagnostic check results, and basic <example-value>
 information. When `--upload` is confirmed, the bundle is uploaded to Docker
 support and the command prints a diagnostics ID. Include this ID in your
 issue so the team can correlate it with the uploaded bundle.

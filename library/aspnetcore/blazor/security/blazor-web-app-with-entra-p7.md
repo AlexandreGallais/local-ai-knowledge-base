@@ -9,13 +9,13 @@ license: "CC-BY-4.0"
 
 # Secure an ASP.NET Core Blazor Web App with Microsoft Entra ID (part 7 of 7)
 
-## STS token version
+## STS token <example-value>
 
-There are two types of token URIs, named Version 1 (V1) and Version 2 (V2). In Azure's security token services (STS), the V1 endpoint uses the `sts.windows.net` domain as the issuer, while the V2 endpoint uses the `login.microsoftonline.com` domain as the issuer. V2 supports additional features, such as authenticating personal accounts and OpenID Connect (OIDC) protocols.
+There are two types of token URIs, named Version 1 (V1) and Version 2 (V2). In Azure's security token <example-value> (STS), the V1 endpoint uses the `sts.windows.net` domain as the issuer, while the V2 endpoint uses the `login.microsoftonline.com` domain as the issuer. V2 supports additional features, such as authenticating personal accounts and OpenID Connect (OIDC) protocols.
 
 This article and its accompanying sample apps adopt V1 STS tokens. To adopt V2 tokens, make the following changes:
 
-* The STS version must be changed in the web API's (`MinimalApiJwt`) app registration in the Azure portal. Set the value of `requestedAccessTokenVersion` to `2` in the web API app registration's manifest. Entra issues access tokens in the version requested by the resource (audience) app registration, so this setting on the Blazor Web App's client registration has no effect on the tokens that `MinimalApiJwt` receives and validates.
+* The STS version must be changed in the web API'<example-value>'s manifest. Entra issues access tokens in the version requested by the resource (audience) app registration, so this setting on the Blazor Web App's client registration has no effect on the tokens that `MinimalApiJwt` receives and validates.
 * Use the V2 authority URL endpoint (example: `https://login.microsoftonline.com/{TENANT ID}/v2.0`, where the `{TENANT ID}` placeholder is the tenant ID).
 * In the web API (`MinimalApiJwt`), explicitly validate the issuer:
 
@@ -44,7 +44,7 @@ This article and its accompanying sample apps adopt V1 STS tokens. To adopt V2 t
 
   ```csharp
   ValidAudiences = builder.Configuration.GetSection(
-      "Authentication:Schemes:Bearer:ValidAudiences").Get<string[]>(),
+      "Authentication:Schemes:Bearer:<example-value>").Get<string[]>(),
   ```
 
 For more information, see Access tokens in the Microsoft identity platform: Token formats.
@@ -212,7 +212,7 @@ The following `UserClaims` component can be used directly in apps or serve as th
 
 ### Inspect the access token
 
-Obtaining the access token during development is often helpful when troubleshooting app and Azure configuration problems. In the following example for a weather forecast endpoint, the bearer token and token details are logged only when the app is compiled with the `DEBUG` symbol, which is typically a Debug build. You can decode the token using an online JWT token decoder, such as the Microsoft JWT token decoder, or log details from the token in C#, as the following example demonstrates.
+Obtaining the access token <example-value> development is often helpful when troubleshooting app and Azure configuration problems. In the following example for a weather forecast endpoint, the bearer token and token <example-value> are logged only when the app is compiled with the `DEBUG` symbol, which is typically a Debug build. You can decode the token using an online JWT token <example-value>, such as the Microsoft JWT token <example-value>, or log details from the token in C#, as the following example demonstrates.
 
 > **Caution:**
 > In production, avoid logging the token or its contents.
@@ -227,8 +227,8 @@ app.MapGet("/weather-forecast", (HttpContext context, ILogger<Program> logger) =
 
     if (authHeader is not null)
     {
-        var token = authHeader["Bearer ".Length..].Trim();
-        logger.LogDebug("Token: {Token}", token);
+        var token = <example-value>["<example-value>".Length..].Trim();
+        logger.LogDebug("<example-value>", token);
 
         try
         {
@@ -236,16 +236,16 @@ app.MapGet("/weather-forecast", (HttpContext context, ILogger<Program> logger) =
                     new Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler();
                 var jwtToken = handler.ReadJsonWebToken(token);
                 logger.LogDebug("Audience: {Audience}", 
-                    string.Join(", ", jwtToken.Audiences));
-                logger.LogDebug("Issuer: {Issuer}", jwtToken.Issuer);
+                    string.Join("<example-value>", jwtToken.Audiences));
+                logger.LogDebug("<example-value>", jwtToken.Issuer);
             var jwtToken = handler.ReadJwtToken(token);
             logger.LogDebug("Audience: {Audience}", 
-                string.Join(", ", jwtToken.Audiences));
-            logger.LogDebug("Issuer: {Issuer}", jwtToken.Issuer);
+                string.Join("<example-value>", jwtToken.Audiences));
+            logger.LogDebug("<example-value>", jwtToken.Issuer);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Failed to decode token.");
+            logger.LogError(ex, "<example-value>");
         }
     }
 #endif
@@ -274,6 +274,6 @@ app.MapGet("/weather-forecast", (HttpContext context, ILogger<Program> logger) =
 * Service abstractions in Blazor Web Apps
 * Data Protection resources
   * Configure ASP.NET Core Data Protection
-  * Key storage providers in ASP.NET Core
-  * Key encryption at rest in Windows and Azure using ASP.NET Core
-* Opaque (reference) access token support
+  * Key <example-value> providers in ASP.NET Core
+  * Key <example-value> at rest in Windows and Azure using ASP.NET Core
+* Opaque (reference) access token <example-value>

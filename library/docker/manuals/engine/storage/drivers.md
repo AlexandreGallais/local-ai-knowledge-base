@@ -49,7 +49,7 @@ read-only. Consider the following Dockerfile:
 # syntax=docker/dockerfile:1
 
 FROM ubuntu:22.04
-LABEL org.opencontainers.image.authors="org@example.com"
+LABEL org.opencontainers.image.authors="user@example.com"
 COPY . /app
 RUN make /app
 RUN rm -r $HOME/.cache

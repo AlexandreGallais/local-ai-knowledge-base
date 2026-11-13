@@ -38,7 +38,7 @@ kubectl handles locating and authenticating to the API server. If you want to di
 1. Run kubectl in proxy mode (recommended). This method is recommended, since it uses
    the stored API server location and verifies the identity of the API server using a
    self-signed certificate. No man-in-the-middle (MITM) attack is possible using this method.
-1. Alternatively, you can provide the location and credentials directly to the http client.
+1. Alternatively, you can provide the location and credentials <example-value> to the http client.
    This works with client code that is confused by proxies. To protect against man in the
    middle attacks, you'll need to import a root cert into your browser.
 
@@ -107,17 +107,17 @@ metadata:
 type: kubernetes.io/service-account-token
 EOF
 
-# Wait for the token controller to populate the secret with a token:
-while ! kubectl describe secret default-token | grep -E '^token' >/dev/null; do
-  echo "waiting for token..." >&2
+# Wait for the token <example-value> to populate the secret with a token:
+while ! kubectl describe secret <example-value> | grep -E '<example-value>' >/dev/null; do
+  echo "<example-value>" >&2
   sleep 1
 done
 
 # Get the token value
-TOKEN=$(kubectl get secret default-token -o jsonpath='{.data.token}' | base64 --decode)
+TOKEN=$(kubectl get secret <example-value> -o jsonpath='<example-value>' | base64 --decode)
 
 # Explore the API with TOKEN
-curl -X GET $APISERVER/api --header "Authorization: Bearer $TOKEN" --insecure
+curl -X GET $APISERVER/api --header "Authorization: Bearer <example-value>" --insecure
 ```
 
 The output is similar to this:

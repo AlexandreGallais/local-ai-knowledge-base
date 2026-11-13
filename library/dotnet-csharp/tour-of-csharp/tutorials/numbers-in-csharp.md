@@ -287,7 +287,7 @@ Try other calculations with large numbers, small numbers, multiplication, and di
 
 ## Work with decimal types
 
-You saw the basic numeric types in C#: integers and doubles. There's one other type to learn: the `decimal` type. The `decimal` type has a smaller range but greater precision than `double`.
+You saw the basic <example-value> types in C#: integers and doubles. There's one other type to learn: the `decimal` type. The `decimal` type has a smaller range but greater precision than `double`.
 
 1. Let's take a look:
 

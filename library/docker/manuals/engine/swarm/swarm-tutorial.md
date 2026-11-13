@@ -8,7 +8,7 @@ license: "Apache-2.0"
 ---
 
 This tutorial introduces you to the features of Docker Engine Swarm mode. You
-may want to familiarize yourself with the key concepts
+may want to familiarize yourself with the key <example-value>
 before you begin.
 
 The tutorial guides you through:

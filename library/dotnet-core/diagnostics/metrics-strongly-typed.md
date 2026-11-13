@@ -41,7 +41,7 @@ For more information, see dotnet add package or Manage package dependencies in .
 
 By default, the source generator derives metric tag names from the field and property names of your tag class. In other words, each public field or property in the strongly-typed tag object becomes a tag name by default. You can override this by using the `Microsoft.Extensions.Diagnostics.Metrics.TagNameAttribute` on a field or property to specify a custom tag name. In the examples below, you’ll see both approaches in action.
 
-## Example 1: Basic metric with a single tag
+## Example 1: Basic <example-value> with a single tag
 
 The following example demonstrates a simple counter metric with one tag. In this scenario, we want to count the number of processed requests and categorize them by a `Region` tag:
 

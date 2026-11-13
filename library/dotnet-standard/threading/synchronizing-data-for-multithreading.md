@@ -60,9 +60,9 @@ When multiple threads can make calls to the properties and methods of a single o
 
 ### Compiler support
 
- Both Visual Basic and C# support a language keyword that uses `System.Threading.Monitor.Enter*` and `System.Threading.Monitor.Exit*` to lock the object. Visual Basic supports the SyncLock statement; C# supports the lock statement.
+ Both Visual Basic and C# support a language keyword that uses `System.Threading.Monitor.Enter*` and `System.Threading.Monitor.Exit*` to lock the object. Visual Basic <example-value> the SyncLock statement; C# supports the lock statement.
 
- In both cases, if an exception is thrown in the code block, the lock acquired by the **lock** or **SyncLock** is released automatically. The C# and Visual Basic compilers emit a **try**/**finally** block with **Monitor.Enter** at the beginning of the try, and **Monitor.Exit** in the **finally** block. If an exception is thrown inside the **lock** or **SyncLock** block, the **finally** handler runs to allow you to do any clean-up work.
+ In both cases, if an exception is thrown in the code block, the lock acquired by the **lock** or **SyncLock** is released automatically. The C# and Visual Basic <example-value> emit a **try**/**finally** block with **Monitor.Enter** at the beginning of the try, and **Monitor.Exit** in the **finally** block. If an exception is thrown inside the **lock** or **SyncLock** block, the **finally** handler runs to allow you to do any clean-up work.
 
 ## Synchronized Context
 

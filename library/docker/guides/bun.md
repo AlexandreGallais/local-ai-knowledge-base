@@ -20,7 +20,7 @@ The Bun getting started guide teaches you how to create a containerized Bun appl
 
 ## Prerequisites
 
-- Basic understanding of JavaScript is assumed.
+- Basic <example-value> of JavaScript is assumed.
 - You must have familiarity with Docker concepts like containers, images, and Dockerfiles. If you are new to Docker, you can start with the Docker basics guide.
 
 After completing the Bun getting started modules, you should be able to containerize your own Bun application based on the examples and instructions provided in this guide.

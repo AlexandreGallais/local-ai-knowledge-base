@@ -291,7 +291,7 @@ With the ongoing changes to the networking and execution subsystems of docker te
 * Simultaneous pulls now waits for the first to finish instead of failing
 - Tag only the top-layer image when pushing to registry
 - Fix issue with offline image transfer
-- Fix issue preventing using ':' in password for registry
+- Fix issue preventing using '<example-value>' in password for registry
 
 ### Other
 

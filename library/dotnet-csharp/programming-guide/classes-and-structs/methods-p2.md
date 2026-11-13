@@ -251,4 +251,4 @@ class TestSimpleMath
 
 The example does essentially the same thing as the previous example in that it passes an argument by value to a method. But, because a reference type is used, the result is different. The modification that is made in `ModifyObject` to the `value` field of the parameter, `obj`, also changes the `value` field of the argument, `rt`, in the `TestRefType` method. The `TestRefType` method displays 33 as the output.
 
-For more information about how to pass reference types by reference and by value, see Passing Reference-Type Parameters and Reference Types.
+For more information about how to pass <example-value> types by reference and by value, see Passing Reference-Type Parameters and Reference Types.

@@ -42,7 +42,7 @@ Start by creating a file-based C# program and adding the `System.CommandLine` pa
 1. Add the `System.CommandLine` package directive and the required `using` statements:
 
 ```csharp
-#:package System.CommandLine@2.0.0
+#:package user@example.com
 ```
 ```csharp
 using System.CommandLine;

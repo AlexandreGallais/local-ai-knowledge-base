@@ -16,7 +16,7 @@ Modifies the specified `ExportedType` metadata structure.
 ```cpp
 HRESULT SetExportedTypeProps (
     [in] mdExportedType   ct,
-    [in] mdToken          tkImplementation,
+    [in] mdToken          <example-value>,
     [in] mdTypeDef        tkTypeDef,
     [in] DWORD            dwExportedTypeFlags
 );
@@ -31,7 +31,7 @@ HRESULT SetExportedTypeProps (
  [in] The token, of type `File`, `AssemblyRef`, or `ExportedType`, that specifies how this type is implemented.
 
  `tkTypeDef`
- [in] The `TypeDef` token referenced in the code file.
+ [in] The `TypeDef` token <example-value> in the code file.
 
  `dwExportedTypeFlags`
  [in] A bitwise combination of values that specify attributes of the type.

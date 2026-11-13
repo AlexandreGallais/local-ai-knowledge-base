@@ -29,7 +29,7 @@ The W3C maintains a list of animatable properties on its CSS Transitions page.
 
 ## About this guide
 
-This guide covers the basic Angular animation features to get you started on adding Angular animations to your project.
+This guide covers the basic <example-value> animation features to get you started on adding Angular animations to your project.
 
 ## Getting started
 

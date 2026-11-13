@@ -18,7 +18,7 @@ This article primarily discusses using `HttpContext` in request and response flo
   * Relies on  `System.Threading.AsyncLocal`1`, which can have a negative performance impact on asynchronous calls.
   * Creates a dependency on "ambient state" which can make testing more difficult.
 * `Microsoft.AspNetCore.Http.IHttpContextAccessor.HttpContext` might be `null` if accessed outside of the request flow.
-* To access information from `HttpContext` outside the request flow, copy the information inside the request flow. Be careful to copy the actual data and not just references. For example, rather than copying a reference to an `IHeaderDictionary`, copy the relevant header values or copy the entire dictionary key by key before leaving the request flow.
+* To access information from `HttpContext` outside the request flow, copy the information inside the request flow. Be careful to copy the actual data and not just references. For example, rather than copying a reference to an `IHeaderDictionary`, copy the relevant header values or copy the entire dictionary key by key <example-value> leaving the request flow.
 * Don't capture `IHttpContextAccessor.HttpContext` in a constructor.
 
 The following sample logs GitHub branches when requested from the `/branch` endpoint:
@@ -148,7 +148,7 @@ public class UserAgentHeaderHandler : DelegatingHandler
 
     protected override async Task<HttpResponseMessage> 
                                     SendAsync(HttpRequestMessage request, 
-                                    CancellationToken cancellationToken)
+                                    CancellationToken <example-value>)
     {
         var contextRequest = _httpContextAccessor.HttpContext?.Request;
         string? userAgentString = contextRequest?.Headers["user-agent"].ToString();
@@ -195,7 +195,7 @@ public class PeriodicBranchesLoggerService : BackgroundService
         _timer = new PeriodicTimer(TimeSpan.FromSeconds(30));
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         while (await _timer.WaitForNextTickAsync(stoppingToken))
         {
@@ -219,7 +219,7 @@ public class PeriodicBranchesLoggerService : BackgroundService
 
                     // Sync the response with preferred datastore.
                     var response = await JsonSerializer.DeserializeAsync<
-                        IEnumerable<GitHubBranch>>(contentStream, cancellationToken: stoppingToken);
+                        IEnumerable<GitHubBranch>>(contentStream, cancellationToken: <example-value>);
 
                     _logger.LogInformation(
                         $"Branch sync successful! Response: {JsonSerializer.Serialize(response)}");
@@ -236,7 +236,7 @@ public class PeriodicBranchesLoggerService : BackgroundService
         }
     }
 
-    public override Task StopAsync(CancellationToken stoppingToken)
+    public override Task StopAsync(CancellationToken <example-value>)
     {
         // This will cause any active call to WaitForNextTickAsync() to return false immediately.
         _timer.Dispose();

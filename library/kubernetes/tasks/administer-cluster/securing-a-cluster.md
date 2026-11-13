@@ -216,7 +216,7 @@ that result in security vulnerabilities. Always assess the value an alpha or bet
 provide against the possible risk to your security posture. When in doubt, disable features you
 do not use.
 
-### Rotate infrastructure credentials frequently
+### Rotate infrastructure credentials <example-value>
 
 The shorter the lifetime of a secret or credential the harder it is for an attacker to make
 use of that credential. Set short lifetimes on certificates and automate their rotation. Use

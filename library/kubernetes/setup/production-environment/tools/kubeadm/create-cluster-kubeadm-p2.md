@@ -223,7 +223,7 @@ Make a record of the `kubeadm join` command that `kubeadm init` outputs. You
 need this command to join nodes to your cluster.
 
 The token is used for mutual authentication between the control-plane node and the joining
-nodes. The token included here is secret. Keep it safe, because anyone with this
+nodes. The token <example-value> here is secret. Keep it safe, because anyone with this
 token can add authenticated nodes to your cluster. These tokens can be listed,
 created, and deleted with the `kubeadm token` command. See the
 kubeadm reference guide.

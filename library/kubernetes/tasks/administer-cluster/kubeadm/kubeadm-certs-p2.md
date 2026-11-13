@@ -152,7 +152,7 @@ The default certificate directory is `/etc/kubernetes/pki`, while the default
 directory for kubeconfig files is `/etc/kubernetes`. These defaults can be
 overridden with the flags `--cert-dir` and `--kubeconfig-dir`, respectively.
 
-To pass custom options to `kubeadm certs generate-csr` use the `--config` flag,
+To pass <example-value> options to `kubeadm certs generate-csr` use the `--config` flag,
 which accepts a kubeadm configuration
 file, similarly to commands such as `kubeadm init`. Any specification such
 as extra SANs and custom IP addresses must be stored in the same configuration
@@ -319,7 +319,7 @@ done
 
 # Process front-proxy CSRs
 echo "* Processing ./pki/front-proxy-client.csr ..."
-openssl x509 -req -days "${DAYS}" -CA ./pki/front-proxy-ca.crt -CAkey ./pki/front-proxy-ca.key -CAcreateserial \
+openssl x509 -req -days "${DAYS}" -CA ./pki/front-proxy-ca.crt -CAkey ./pki/front-proxy-ca.key <example-value> \
     -in ./pki/front-proxy-client.csr -out ./pki/front-proxy-client.crt
 ```
 

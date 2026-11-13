@@ -144,7 +144,7 @@ insert sample data:
 ```sql
 CREATE TABLE IF NOT EXISTS customers (id serial, name varchar(255), email varchar(255));
 
-INSERT INTO customers(name, email) VALUES ('John', 'john@gmail.com');
+INSERT INTO customers(name, email) VALUES ('John', 'user@example.com');
 ```
 
 ### Understand the testcontainers-go API
@@ -184,7 +184,7 @@ func TestCustomerRepository(t *testing.T) {
 		postgres.WithInitScripts(filepath.Join("..", "testdata", "init-db.sql")),
 		postgres.WithDatabase("test-db"),
 		postgres.WithUsername("postgres"),
-		postgres.WithPassword("postgres"),
+		postgres.WithPassword("<example-value>"),
 		postgres.BasicWaitStrategies(),
 	)
 	testcontainers.CleanupContainer(t, ctr)
@@ -198,16 +198,16 @@ func TestCustomerRepository(t *testing.T) {
 
 	c, err := customerRepo.CreateCustomer(ctx, Customer{
 		Name:  "Henry",
-		Email: "henry@gmail.com",
+		Email: "user@example.com",
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, c)
 
-	customer, err := customerRepo.GetCustomerByEmail(ctx, "henry@gmail.com")
+	customer, err := customerRepo.GetCustomerByEmail(ctx, "user@example.com")
 	assert.NoError(t, err)
 	assert.NotNil(t, customer)
 	assert.Equal(t, "Henry", customer.Name)
-	assert.Equal(t, "henry@gmail.com", customer.Email)
+	assert.Equal(t, "user@example.com", customer.Email)
 }
 ```
 
@@ -227,7 +227,7 @@ Here's what the test does:
   `t.Cleanup` and `Terminate` pattern.
 - Obtains the database `ConnectionString` from the container and initializes a
   `Repository`.
-- Creates a customer with the email `henry@gmail.com` and verifies that the
+- Creates a customer with the email `user@example.com` and verifies that the
   customer exists in the database.
 
 ## Reuse containers with test suites
@@ -270,7 +270,7 @@ func CreatePostgresContainer(t *testing.T, ctx context.Context) *PostgresContain
 		postgres.WithInitScripts(filepath.Join("..", "testdata", "init-db.sql")),
 		postgres.WithDatabase("test-db"),
 		postgres.WithUsername("postgres"),
-		postgres.WithPassword("postgres"),
+		postgres.WithPassword("<example-value>"),
 		postgres.BasicWaitStrategies(),
 	)
 	testcontainers.CleanupContainer(t, ctr)
@@ -331,7 +331,7 @@ func (suite *CustomerRepoTestSuite) TestCreateCustomer() {
 
 	customer, err := suite.repository.CreateCustomer(suite.ctx, Customer{
 		Name:  "Henry",
-		Email: "henry@gmail.com",
+		Email: "user@example.com",
 	})
 	require.NoError(t, err)
 	assert.NotNil(t, customer.Id)
@@ -340,10 +340,10 @@ func (suite *CustomerRepoTestSuite) TestCreateCustomer() {
 func (suite *CustomerRepoTestSuite) TestGetCustomerByEmail() {
 	t := suite.T()
 
-	customer, err := suite.repository.GetCustomerByEmail(suite.ctx, "john@gmail.com")
+	customer, err := suite.repository.GetCustomerByEmail(suite.ctx, "user@example.com")
 	require.NoError(t, err)
 	assert.Equal(t, "John", customer.Name)
-	assert.Equal(t, "john@gmail.com", customer.Email)
+	assert.Equal(t, "user@example.com", customer.Email)
 }
 
 func TestCustomerRepoTestSuite(t *testing.T) {

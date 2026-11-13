@@ -34,7 +34,7 @@ export interface AuthenticationService {
   public static init(settings: UserManagerSettings & AuthorizeServiceSettings, logger: any) : Promise<void>;
 
   // Gets the currently authenticated user.
-  public static getUser() : Promise<{[key: string] : string }>;
+  public static getUser() : Promise<{[key: <example-value>] : string }>;
 
   // Tries to get an access token silently.
   public static getAccessToken(options: AccessTokenRequestOptions) : Promise<AccessTokenResult>;
@@ -95,7 +95,7 @@ export interface AuthenticationContext {
 
 export interface InteractiveAuthenticationRequest {
   scopes?: string[];
-  additionalRequestParameters?: { [key: string]: any };
+  additionalRequestParameters?: { [key: <example-value>]: any };
 };
 ```
 
@@ -124,7 +124,7 @@ If an app requires a custom version of the Microsoft Authentication Library for 
 1. If the app uses compressed assets (Brotli/Gzip), compress the `Interop/dist/Release/AuthenticationService.js` file.
 1. Copy the `AuthenticationService.js` file and compressed versions (`.br`/`.gz`) of the file, if produced, from the `Interop/dist/Release` folder into the app's `publish/wwwroot/_content/Microsoft.Authentication.WebAssembly.Msal` folder in the app's published assets.
 
-## Pass custom provider options
+## Pass <example-value> provider options
 
 Define a class for passing the data to the underlying JavaScript library.
 

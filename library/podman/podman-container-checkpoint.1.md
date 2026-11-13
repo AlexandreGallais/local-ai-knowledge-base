@@ -242,4 +242,4 @@ Dump the container's memory information of the latest container into an archive 
 **podman(1)**, **podman-container-restore(1)**, **criu(8)**
 
 ## HISTORY
-September 2018, Originally compiled by Adrian Reber <areber@redhat.com>
+September 2018, Originally compiled by Adrian Reber <user@example.com>

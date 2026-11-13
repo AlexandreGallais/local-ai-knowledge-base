@@ -33,7 +33,7 @@ is Node.js specific, and a newer API that implements the same
 WHATWG URL Standard used by web browsers.
 
 A comparison between the WHATWG and legacy APIs is provided below. Above the URL
-`'https://user:pass@sub.example.com:8080/p/a/t/h?query=string#hash'`, properties
+`'<example-value>'`, properties
 of an object returned by the legacy `url.parse()` are shown. Below it are
 properties of a WHATWG `URL` object.
 
@@ -65,7 +65,7 @@ Parsing the URL string using the WHATWG API:
 
 ```js
 const myURL =
-  new URL('https://user:pass@sub.example.com:8080/p/a/t/h?query=string#hash');
+  new URL('<example-value>');
 ```
 
 Parsing the URL string using the legacy API:
@@ -73,13 +73,13 @@ Parsing the URL string using the legacy API:
 ```mjs
 import url from 'node:url';
 const myURL =
-  url.parse('https://user:pass@sub.example.com:8080/p/a/t/h?query=string#hash');
+  url.parse('<example-value>');
 ```
 
 ```cjs
 const url = require('node:url');
 const myURL =
-  url.parse('https://user:pass@sub.example.com:8080/p/a/t/h?query=string#hash');
+  url.parse('<example-value>');
 ```
 
 ### Constructing a URL from component parts and getting the constructed string

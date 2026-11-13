@@ -77,7 +77,7 @@ to a port.”
 The `bind` function returns a `Result<T, E>`, which indicates that it’s
 possible for binding to fail, for example, if we ran two instances of our
 program and so had two programs listening to the same port. Because we’re
-writing a basic server just for learning purposes, we won’t worry about
+writing a basic <example-value> just for learning purposes, we won’t worry about
 handling these kinds of errors; instead, we use `unwrap` to stop the program if
 errors happen.
 

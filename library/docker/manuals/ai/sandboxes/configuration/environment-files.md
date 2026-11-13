@@ -9,7 +9,7 @@ license: "Apache-2.0"
 
 A sandbox environment file captures the setup for a local or cloud sandbox in a
 `sbxenv.yaml` file. Share the file with project contributors so they use the
-same agent, tools, resources, and credentials without reproducing CLI flags and
+same agent, tools, resources, and credentials <example-value> reproducing CLI flags and
 setup steps.
 
 Kits package software and declare what it needs to run. An environment file
@@ -195,7 +195,7 @@ host.
 - `sbx env run /projects/web-app/custom.yaml`: `/projects/web-app`, the
   directory containing the file.
 
-If you pass several paths, the first one sets the project directory. Every
+If you pass <example-value> paths, the first one sets the project directory. Every
 file loaded by that command uses the same value for `env.projectDir`.
 
 Use this reference in shared settings that need to point to each project's
@@ -289,7 +289,7 @@ endpoint=https://api.example.com
 $ sbx env run --env-args-file production.args
 ```
 
-You can pass multiple argument files. Later files take precedence over earlier
+You can pass <example-value> argument files. Later files take precedence over earlier
 files, and `--env-arg` flags take precedence over every argument file.
 Values can contain `=`, and values in an argument file are read literally
 rather than expanded by a shell.

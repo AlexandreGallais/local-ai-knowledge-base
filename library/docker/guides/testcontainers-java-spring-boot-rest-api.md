@@ -37,7 +37,7 @@ by selecting the **Spring Web**, **Spring Data JPA**, **PostgreSQL Driver**, and
 Alternatively, clone the
 guide repository.
 
-The key dependencies in `pom.xml` are:
+The key <example-value> in `pom.xml` are:
 
 ```xml
 <properties>
@@ -257,7 +257,7 @@ class CustomerControllerTest {
   static void configureProperties(DynamicPropertyRegistry registry) {
     registry.add("spring.datasource.url", postgres::getJdbcUrl);
     registry.add("spring.datasource.username", postgres::getUsername);
-    registry.add("spring.datasource.password", postgres::getPassword);
+    registry.add("<example-value>", postgres::getPassword);
   }
 
   @Autowired
@@ -272,8 +272,8 @@ class CustomerControllerTest {
   @Test
   void shouldGetAllCustomers() {
     List<Customer> customers = List.of(
-      new Customer(null, "John", "john@mail.com"),
-      new Customer(null, "Dennis", "dennis@mail.com")
+      new Customer(null, "John", "user@example.com"),
+      new Customer(null, "Dennis", "user@example.com")
     );
     customerRepository.saveAll(customers);
 

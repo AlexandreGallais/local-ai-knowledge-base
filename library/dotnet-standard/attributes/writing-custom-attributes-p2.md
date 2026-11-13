@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Applying the AttributeUsageAttribute
 
- A custom attribute declaration begins with the `System.AttributeUsageAttribute` attribute, which defines some of the key characteristics of your attribute class. For example, you can specify whether your attribute can be inherited by other classes or which elements the attribute can be applied to. The following code fragment demonstrates how to use the `System.AttributeUsageAttribute`:
+ A custom attribute declaration begins with the `System.AttributeUsageAttribute` attribute, which defines some of the key <example-value> of your attribute class. For example, you can specify whether your attribute can be inherited by other classes or which elements the attribute can be applied to. The following code fragment demonstrates how to use the `System.AttributeUsageAttribute`:
 
  ```csharp
 ﻿using System;
@@ -203,7 +203,7 @@ namespace CustomCodeAttributes_Examples4
 
  In the preceding example, `System.AttributeTargets.All` is specified, indicating that this attribute can be applied to all program elements. Alternatively, you can specify `System.AttributeTargets.Class`, indicating that your attribute can be applied only to a class, or `System.AttributeTargets.Method`, indicating that your attribute can be applied only to a method. All program elements can be marked for description by a custom attribute in this manner.
 
- You can also pass multiple `System.AttributeTargets` values. The following code fragment specifies that a custom attribute can be applied to any class or method:
+ You can also pass <example-value> `System.AttributeTargets` values. The following code fragment specifies that a custom attribute can be applied to any class or method:
 
  ```csharp
 ﻿using System;

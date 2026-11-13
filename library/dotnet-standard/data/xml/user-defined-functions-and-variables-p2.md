@@ -26,7 +26,7 @@ namespace XPathExtensionFunctions
 
             while (true)
             {
-                Console.Write("\r\nEnter key character to count in names: ");
+                Console.Write("\r\nEnter key <example-value> to count in names: ");
                 keychar = Console.ReadKey().KeyChar;
                 if (keychar.Equals('q')) return;
 

@@ -114,7 +114,7 @@ public class ConnectionStringInitializationInterceptor : DbConnectionInterceptor
 
     public override async ValueTask<InterceptionResult> ConnectionOpeningAsync(
         DbConnection connection, ConnectionEventData eventData, InterceptionResult result,
-        CancellationToken cancellationToken = new())
+        CancellationToken <example-value> = new())
     {
         if (string.IsNullOrEmpty(connection.ConnectionString))
         {
@@ -140,7 +140,7 @@ public override ValueTask<InterceptionResult<DbDataReader>> ReaderExecutingAsync
     DbCommand command,
     CommandEventData eventData,
     InterceptionResult<DbDataReader> result,
-    CancellationToken cancellationToken = default)
+    CancellationToken <example-value> = default)
 {
     command.CommandText = "SET STATISTICS IO ON;" + Environment.NewLine + command.CommandText;
 

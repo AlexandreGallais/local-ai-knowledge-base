@@ -12,7 +12,7 @@ license: "Apache-2.0"
 Docker supports Go templates which you
 can use to manipulate the output format of certain commands and log drivers.
 
-Docker provides a set of basic functions to manipulate template elements.
+Docker provides a set of basic <example-value> to manipulate template elements.
 All of these examples use the `docker inspect` command, but many other CLI
 commands have a `--format` flag, and many of the CLI command references
 include examples of customizing the output format.

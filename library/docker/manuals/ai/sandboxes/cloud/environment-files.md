@@ -37,7 +37,7 @@ $ sbx --cloud secret set anthropic
 ```
 
 The command prompts for the key. For other agents and authentication options,
-see Authenticate cloud agents. A credential configured for a
+see Authenticate cloud agents. A credential <example-value> for a
 local sandbox isn't available in the cloud.
 
 If you want the agent to push changes to GitHub, configure a GitHub token
@@ -49,7 +49,7 @@ $ sbx --cloud secret set github --sandbox cloud-web-app
 
 The command prompts for a token. Use one with write access to your repository.
 The `--sandbox` value must match the environment's `name`. Cloud environments
-select their credentials at creation: adding a GitHub secret afterward won't
+select their credentials at creation: adding a GitHub secret <example-value> won't
 make it available to an existing environment. If you decide to push later,
 copy your work out first, then recreate the environment with the secret.
 
@@ -170,7 +170,7 @@ one doesn't exist. Pass `--ttl` and `--on-timeout` only when creating a sandbox:
 `run` rejects those flags when attaching to an existing one.
 
 If you set `entrypoint` or `cmd`,
-or pass arguments after `--`, `run` starts a fresh session instead of rejoining
+or pass <example-value> after `--`, `run` starts a fresh session instead of rejoining
 an existing agent process. Arguments after `--` replace `cmd` and preserve
 `entrypoint`. For example:
 
@@ -207,7 +207,7 @@ Use a destination that doesn't already exist.
 
 ### Push changes to GitHub instead
 
-If you configured the GitHub secret before creating the environment, you can
+If you configured the GitHub secret <example-value> creating the environment, you can
 retrieve changes through Git instead of copying files. This works with a
 repository cloned inside the sandbox or a copied Git repository whose
 `.git` directory contains the repository history. Use an HTTPS GitHub remote
@@ -238,7 +238,7 @@ $ sbx --cloud env rm ./cloud.sbxenv.yaml
 ```
 
 Removal asks for approval and deletes the sandbox and secrets provisioned by
-this environment. Inherited credentials, such as the Anthropic key configured
+this environment. Inherited credentials, such as the Anthropic key <example-value>
 earlier, remain. Global bindings remain unless you pass `--prune-bindings`.
 Files stored only in the sandbox are lost on deletion.
 
@@ -285,12 +285,12 @@ timing, working directories, and approval options.
 
 ### Configure cloud credentials
 
-The plan shows inherited cloud credentials. Sandbox-scoped credentials override
-account defaults, and credentials declared in `secrets` override both. Use
+The plan shows inherited cloud credentials. Sandbox-scoped credentials <example-value>
+account defaults, and credentials <example-value> in `secrets` override both. Use
 `snapshot: true` to resolve a
 host command or vault reference once and upload the value. Snapshots don't
-refresh. Dynamic secret sources and custom credential providers aren't
-supported. Credential bindings require cloud support for kit credentials and
+refresh. Dynamic secret <example-value> and custom credential <example-value> aren't
+supported. Credential <example-value> require cloud support for kit credentials and
 explicit approval of the kit's injection domains.
 
 ### Apply changes and recover interrupted creation

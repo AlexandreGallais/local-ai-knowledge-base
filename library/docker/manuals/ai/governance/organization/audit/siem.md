@@ -59,7 +59,7 @@ to create a connector or source first.
 1. Select your destination and complete the form.
 1. Select **Save**.
 
-Docker verifies the endpoint is reachable with the supplied credential before
+Docker verifies the endpoint is reachable with the supplied credential <example-value>
 saving. If verification fails, check that the URL and credential are correct
 and that the endpoint is accessible from the internet.
 

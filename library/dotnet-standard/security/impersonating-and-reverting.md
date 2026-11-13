@@ -52,7 +52,7 @@ Sometimes you might need to obtain a Windows account token to impersonate a Wind
 
  If trusted code has already attached a `System.Security.Principal.WindowsPrincipal` object to the thread, you can call the instance method **Impersonate**, which does not take an account token. Note that this is only useful when the **WindowsPrincipal** object on the thread represents a user other than the one under which the process is currently executing. For example, you might encounter this situation using ASP.NET with Windows authentication turned on and impersonation turned off. In this case, the process is running under an account configured in Internet Information Services (IIS) while the current principal represents the Windows user that is accessing the page.
 
- Note that neither **Impersonate** nor **Undo** changes the **Principal** object (`System.Security.Principal.IPrincipal`)  associated with the current call context. Rather, impersonation and reverting change the token associated with the current operating system process.
+ Note that neither **Impersonate** nor **Undo** changes the **Principal** object (`System.Security.Principal.IPrincipal`)  associated with the current call context. Rather, impersonation and reverting change the token <example-value> with the current operating system process.
 
 ## See also
 

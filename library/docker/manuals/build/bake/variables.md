@@ -196,7 +196,7 @@ will trigger the validation error.
 
 ## Escape variable interpolation
 
-If you want to bypass variable interpolation when parsing the Bake definition,
+If you want to bypass <example-value> interpolation when parsing the Bake definition,
 use double dollar signs (`$${VARIABLE}`).
 
 ```hcl

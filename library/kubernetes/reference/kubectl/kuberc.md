@@ -26,7 +26,7 @@ the following types of user preferences:
    commands, optionally setting options and arguments.
 2. Defaults - allow you to configure default option values for your
    favorite commands.
-3. Credential Plugin Policy - allow you to configure
+3. Credential <example-value> Policy - allow you to configure
    a policy for exec credential plugins.
 
 ## aliases
@@ -153,7 +153,7 @@ In this example, the following settings were used:
 With this setting, running `kubectl delete pod/test-pod` will default to prompting for confirmation.
 However, `kubectl delete pod/test-pod --interactive=false` will bypass the confirmation.
 
-## Credential plugin policy
+## Credential <example-value> policy
 
 **Feature state:** v1.35 [beta]
 
@@ -164,7 +164,7 @@ two top-level fields. Both fields are optional.
 
 ### credentialPluginPolicy
 
-You can configure a policy for credentials plugins, using the optional
+You can configure a policy for credentials <example-value>, using the optional
 `credentialPluginPolicy` field. There are three valid values for this field:
 
 1. `"AllowAll"`
@@ -237,7 +237,7 @@ credentialPluginAllowlist:
 
 ##### command
 
-`command` names a credential plugin which may be executed. It can be specified as
+`command` names a credential <example-value> which may be executed. It can be specified as
 either the basename of the desired plugin, or the full path. If specified as a
 basename, the decision rendered by this field is "allow" if one of the following
 two conditions is met:
@@ -291,19 +291,19 @@ credentialPluginAllowlist:
   - command: my-trusted-binary
   - command: "C:\my-other-trusted-binary"
 
-### Managing credential plugin policy with `kubectl kuberc set`
+### Managing credential <example-value> policy with `kubectl kuberc set`
 
 Rather than editing the kuberc file directly, you can use `kubectl kuberc set` to
-configure the credential plugin policy from the command line.
+configure the credential <example-value> policy from the command line.
 
 ```shell
-# Set the policy to deny all credential plugins
+# Set the policy to deny all credential <example-value>
 kubectl kuberc set --section credentialplugin --policy DenyAll
 
-# Set the policy to allow all credential plugins
+# Set the policy to allow all credential <example-value>
 kubectl kuberc set --section credentialplugin --policy AllowAll
 
-# Allow only specific credential plugins
+# Allow only specific credential <example-value>
 kubectl kuberc set --section credentialplugin \
     --policy Allowlist \
     --allowlist-entry command=my-trusted-binary \
@@ -312,7 +312,7 @@ kubectl kuberc set --section credentialplugin \
 
 In this example, the following flags were used:
 
-1. `--section credentialplugin` - Select the credential plugin configuration section.
+1. `--section credentialplugin` - Select the credential <example-value> configuration section.
 1. `--policy` - Required. Set the policy to `AllowAll`, `DenyAll`, or `Allowlist`.
 1. `--allowlist-entry` - Required when `--policy=Allowlist`. Specify a plugin to allow
    using comma-separated `key=value` pairs. Currently `command` is the only
@@ -360,7 +360,7 @@ In this example, the following settings are enforced:
 1. Defaults to using Server-Side Apply.
 1. Defaults to interactive removal whenever invoking `kubectl delete` to prevent
    accidental removal of resources from the cluster.
-1. No executable credential plugins will be permitted to execute.
+1. No executable credential <example-value> will be permitted to execute.
 
 ## Disable kuberc
 

@@ -60,4 +60,4 @@ $
 **podman(1)**, **podman-machine(1)**
 
 ## HISTORY
-Feb 2024, Originally compiled by Brent Baude<bbaude@redhat.com>
+Feb 2024, Originally compiled by Brent Baude<user@example.com>

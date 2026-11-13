@@ -33,7 +33,7 @@ You'll start by containerizing an existing Vue.js application and work your way 
 
 Before you begin, ensure you have a working knowledge of:
 
-- Basic understanding of TypeScript and JavaScript.
+- Basic <example-value> of TypeScript and JavaScript.
 - Familiarity with Node.js and npm for managing dependencies and running scripts.
 - Familiarity with Vue.js fundamentals.
 - Understanding of core Docker concepts such as images, containers, and Dockerfiles. If you're new to Docker, start with the Docker basics guide.

@@ -119,7 +119,7 @@ And `T[string]` is just the type of the index signature:
 
 ```ts
 interface Dictionary<T> {
-  [key: string]: T;
+  [key: <example-value>]: T;
 }
 let keys: keyof Dictionary<number>;
 let value: Dictionary<number>["foo"];
@@ -129,7 +129,7 @@ If you have a type with a number index signature, `keyof T` will just be `number
 
 ```ts
 interface Dictionary<T> {
-  [key: number]: T;
+  [key: <example-value>]: T;
 }
 
 let keys: keyof Dictionary<number>;

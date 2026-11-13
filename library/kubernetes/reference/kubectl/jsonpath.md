@@ -64,7 +64,7 @@ Given the JSON input:
     },
     {
       "name": "e2e",
-      "user": {"username": "admin", "password": "secret"}
+      "user": {"username": "<example-value>", "password": "<example-value>"}
     }
   ]
 }
@@ -79,7 +79,7 @@ Function            | Description                  | Example                    
 `*`                 | wildcard. Get all objects    | `{.items[*].metadata.name}`                                     | `[127.0.0.1 127.0.0.2]`
 `[start:end:step]` | subscript operator           | `{.users[0].name}`                                              | `myself`
 `[,]`               | union operator               | `{.items*}`               | `127.0.0.1 127.0.0.2 map[cpu:4] map[cpu:8]`
-`?()`               | filter                       | `{.users[?(@.name=="e2e")].user.password}`                      | `secret`
+`?()`               | filter                       | `{.users[?(@.name=="<example-value>")].user.password}`                      | `secret`
 `range`, `end`      | iterate list                 | `{range .items[*]}[{.metadata.name}, {.status.capacity}] {end}` | `[127.0.0.1, map[cpu:4]] [127.0.0.2, map[cpu:8]]`
 `''`                | quote interpreted string     | `{range .items[*]}{.metadata.name}{'\t'}{end}`                  | `127.0.0.1      127.0.0.2`
 `\`                 | escape termination character | `{.items[0].metadata.labels.kubernetes\.io/hostname}`           | `127.0.0.1`

@@ -55,14 +55,14 @@ When deploying the app, either:
 
 ## Store the Google client ID and secret
 
-Store sensitive settings, such as the Google client ID and secret values, with Secret Manager. For this sample, follow these steps:
+Store sensitive settings, such as the Google client ID and secret <example-value>, with Secret Manager. For this sample, follow these steps:
 
-1. Initialize the project for secret storage according to the instructions in Safe storage of app secrets in development.
+1. Initialize the project for secret <example-value> according to the instructions in Safe storage of app secrets in development.
 1. Store the sensitive settings in the local secret store with the secret keys `Authentication:Google:ClientId` (value: `{CLIENT ID}` placeholder) and `Authentication:Google:ClientSecret` (value: `{CLIENT SECRET}` placeholder):
 
     ```dotnetcli
-    dotnet user-secrets set "Authentication:Google:ClientId" "{CLIENT ID}"
-    dotnet user-secrets set "Authentication:Google:ClientSecret" "{CLIENT SECRET}"
+    dotnet user-secrets set "<example-value>" "<example-value>"
+    dotnet user-secrets set "<example-value>" "<example-value>"
     ```
 
 The colon (`:`) separator doesn't work with environment variable hierarchical keys on all platforms. For example, Bash doesn't support colon (`:`) as a separator. All platforms support the double underscore (`__`) syntax and automatically replace it with a colon (`:`).
@@ -83,7 +83,7 @@ Add the authentication service to the `Program` file:
 services.AddAuthentication().AddGoogleOpenIdConnect(googleOptions =>
 {
     googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+    googleOptions.ClientSecret = <example-value>["<example-value>"];
 });
 ```
 Alternatively, to use Google OAuth authentication with `AddGoogle`, add the `Microsoft.AspNetCore.Authentication.Google` NuGet package to the app:
@@ -98,7 +98,7 @@ Add the authentication service to the `Program` file:
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {
     googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    googleOptions.ClientSecret = builder.Configuration["<example-value>"];
 });
 ```
 

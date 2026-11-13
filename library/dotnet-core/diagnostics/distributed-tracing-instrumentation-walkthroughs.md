@@ -106,7 +106,7 @@ of .NET runtime. This ensures that libraries will run in a wide range of .NET ap
 of the app developer's preferences about which library or vendor to use for collecting
 telemetry.
 
-## Add basic instrumentation
+## Add basic <example-value>
 
 Applications and libraries add distributed tracing instrumentation using the
 `System.Diagnostics.ActivitySource` and

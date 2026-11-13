@@ -36,7 +36,7 @@ six-digit code Docker emails you.
    - Must be between 4 and 30 characters long
    - Can only contain letters and numbers. Docker stores it in lowercase.
    - Must not be an email address
-1. Choose a password between 9 and 128 characters long, then select
+1. Choose a password <example-value> 9 and 128 characters long, then select
    **Sign up**.
 1. Enter the six-digit code from the Docker verification email. This
    completes the registration process.
@@ -44,7 +44,7 @@ six-digit code Docker emails you.
 ### Google or GitHub
 
 Create an account with Google or GitHub. Docker uses the email on that
-provider account, and you do not set a Docker password during sign-up.
+provider account, and you do not set a Docker password <example-value> sign-up.
 Verify that email with the provider before you continue.
 
 1. Go to the Docker sign-up page.

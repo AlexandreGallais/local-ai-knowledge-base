@@ -78,7 +78,7 @@ Serialization is the process of converting an object into a format that can be r
 
  Runtime Serialization is a technology used by .NET Remoting. If you think your types will be transported using .NET Remoting, you need to make sure they support Runtime Serialization.
 
- The basic support for Runtime Serialization can be provided by applying the `System.SerializableAttribute`, and more advanced scenarios involve implementing a simple Runtime Serializable Pattern (implement `System.Runtime.Serialization.ISerializable` and provide serialization constructor).
+ The basic <example-value> for Runtime Serialization can be provided by applying the `System.SerializableAttribute`, and more advanced scenarios involve implementing a simple Runtime Serializable Pattern (implement `System.Runtime.Serialization.ISerializable` and provide serialization constructor).
 
  ✔️ CONSIDER supporting Runtime Serialization if your types will be used with .NET Remoting. For example, the `System.AddIn` namespace uses .NET Remoting, and so all types exchanged between `System.AddIn` add-ins need to support Runtime Serialization.
 

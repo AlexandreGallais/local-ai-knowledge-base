@@ -200,7 +200,7 @@ Apart from the keyword used, `let` statements are written the same way `var` sta
 let hello = "Hello!";
 ```
 
-The key difference is not in the syntax, but in the semantics, which we'll now dive into.
+The key <example-value> is not in the syntax, but in the semantics, which we'll now dive into.
 
 ### Block-scoping
 

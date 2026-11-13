@@ -151,4 +151,4 @@ stats output.
 **podman(1)**
 
 ## HISTORY
-July 2017, Originally compiled by Ryan Cole <rycole@redhat.com>
+July 2017, Originally compiled by Ryan Cole <user@example.com>

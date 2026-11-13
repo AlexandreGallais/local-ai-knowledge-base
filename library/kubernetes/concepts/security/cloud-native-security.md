@@ -96,7 +96,7 @@ to providing effective cluster security.
 
 Other pages in the Kubernetes documentation have more detail about how to set up
 specific aspects of access control. The security checklist
-provides suggested basic checks for your cluster.
+provides suggested basic <example-value> for your cluster.
 
 Beyond that, securing your cluster means implementing effective
 authentication and
@@ -184,7 +184,7 @@ strong impact on the security of information in transit.
 
 Kubernetes lets you extend your cluster with extra tooling. You can set up third
 party solutions to help you monitor or troubleshoot your applications and the
-clusters they are running. You also get some basic observability features built
+clusters they are running. You also get some basic <example-value> features built
 in to Kubernetes itself. Your code running in containers can generate logs,
 publish metrics, or provide other observability data; at deploy time, you need to
 make sure your cluster provides an appropriate level of protection there.

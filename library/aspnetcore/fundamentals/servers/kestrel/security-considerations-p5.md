@@ -188,7 +188,7 @@ Rate limiting policies can be applied per-endpoint with `[EnableRateLimiting("po
 
 **What it does**: Handles Cross-Origin Resource Sharing preflight requests and validates cross-origin access.
 
-For APIs consumed by browser clients on different domains, CORS policies prevent unauthorized cross-domain data access. Key considerations:
+For APIs consumed by browser clients on different domains, CORS policies prevent unauthorized cross-domain data access. Key <example-value>:
 
 - Avoid `AllowAnyOrigin` with `AllowCredentials`—this is insecure and rejected by browsers.
 - Be specific about allowed origins, methods, and headers.
@@ -269,4 +269,4 @@ builder.WebHost.ConfigureKestrel(options =>
 - **Message size**: WebSocket message sizes aren't limited by `MaxRequestBodySize`. Application code should validate message sizes.
 - **Authentication**: WebSocket connections can't send custom headers during the handshake from browsers. Authentication typically relies on cookies or query string tokens. Validate authentication before accepting the WebSocket.
 - **Rate limiting**: Standard HTTP rate limiting middleware doesn't apply to messages sent over an established WebSocket connection. Implement application-level rate limiting if needed.
-- **Per-message deflate (compression)**: WebSocket supports optional per-message deflate compression (RFC 7692), which is **disabled by default** in ASP.NET Core. If enabled, it introduces compression-oracle risks similar to CRIME/BREACH—an attacker who can inject known plaintext into a message and observe the compressed size can infer secret content byte-by-byte. Only enable per-message deflate if the messages don't mix attacker-controlled and secret data.
+- **Per-message deflate (compression)**: WebSocket supports optional per-message deflate compression (RFC 7692), which is **disabled by default** in ASP.NET Core. If enabled, it introduces compression-oracle risks similar to CRIME/BREACH—an attacker who can inject known plaintext into a message and observe the compressed size can infer secret <example-value> byte-by-byte. Only enable per-message deflate if the messages don't mix attacker-controlled and secret data.

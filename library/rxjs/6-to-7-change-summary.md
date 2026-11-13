@@ -53,7 +53,7 @@ This document contains a detailed list of changes between RxJS 6.x and RxJS 7.x,
 
 #### fromEvent
 
-- The `fromEvent` signatures have been changed and there are now separate signatures for each type of target - DOM, Node, jQuery, etc. That means that an attempt to pass options - like `{ once: true }` - to a target that does not support an options argument will result in a TypeScript error.
+- The `fromEvent` signatures have been changed and there are now separate signatures for each type of target - DOM, Node, jQuery, etc. That means that an attempt to pass <example-value> - like `{ once: true }` - to a target that does not support an options argument will result in a TypeScript error.
 
 #### GroupedObservable
 
@@ -125,7 +125,7 @@ This document contains a detailed list of changes between RxJS 6.x and RxJS 7.x,
 
 #### Subscribable
 
-- `subscribe` will accept `Partial<Observer<T>>` now. All overloads with functions as arguments have been removed. This is because `Subscribable` is intended to map to the basic observable contract from the TC39 proposal and the return type of a call to `Symbol.observable`.
+- `subscribe` will accept `Partial<Observer<T>>` now. All overloads with functions as arguments have been removed. This is because `Subscribable` is intended to map to the basic <example-value> contract from the TC39 proposal and the return type of a call to `Symbol.observable`.
 
 #### SubscribableOrPromise
 
@@ -142,7 +142,7 @@ This document contains a detailed list of changes between RxJS 6.x and RxJS 7.x,
 #### Subscription
 
 - `_parentOrParents` property has been removed.
-- `add` method returns `void` and no longer returns a `Subscription`. Returning `Subscription` was an old behavior from the early days of version 5. If you add a function to a subscription (i.e. `subscription.add(fn)`), you can remove that function directly by calling `remove` with the same function instance. (i.e. `subscription.remove(fn)`). Previously, you needed to get the returned `Subscription` object and pass _that_ to `remove`. In version 6 and lower, the `Subscription` returned by calling `add` with another `Subscription` was always the same subscription you passed in. (meaning `subscription.add(subs1).add(subs2)` was an antipattern and the same as `subscription.add(subs1); subs1.add(subs2);`.
+- `add` method returns `void` and no longer returns a `Subscription`. Returning `Subscription` was an old behavior from the early days of version 5. If you add a function to a subscription (i.e. `subscription.add(fn)`), you can remove that function directly by calling `remove` with the same function instance. (i.e. `subscription.remove(fn)`). Previously, you needed to get the returned `Subscription` object and pass <example-value> to `remove`. In version 6 and lower, the `Subscription` returned by calling `add` with another `Subscription` was always the same subscription you passed in. (meaning `subscription.add(subs1).add(subs2)` was an antipattern and the same as `subscription.add(subs1); subs1.add(subs2);`.
 
 #### VirtualAction
 

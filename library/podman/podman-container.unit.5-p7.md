@@ -328,19 +328,19 @@ Quadlet supports templated container units, e.g., `foo@.container` creates `foo@
 You can instantiate with:
 
 ```bash
-systemctl start foo@bar.service
+systemctl start user@example.com
 ```
 
 You may also symlink instances:
 
 ```bash
-ln -s foo@.container foo@bar.container
+ln -s foo@.container user@example.com
 ```
 
 Use drop-ins for instance-specific customization:
 
 ```
-foo@bar.container.d/10-override.conf
+user@example.com/10-override.conf
 ```
 
 # DROP-IN FILES

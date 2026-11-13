@@ -11,7 +11,7 @@ license: "MIT"
 
 ### Event: `'warning'`
 
-* `warning` {Error} Key properties of the warning are:
+* `warning` {Error} Key <example-value> of the warning are:
   * `name` {string} The name of the warning. **Default:** `'Warning'`.
   * `message` {string} A system-provided description of the warning.
   * `stack` {string} A stack trace to the location in the code where the warning

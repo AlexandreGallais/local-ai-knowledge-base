@@ -9,7 +9,10 @@ license: "CC-BY-4.0"
 
 # Kubernetes Metrics Reference (part 10 of 13)
 
-Stability Level:ALPHA
+kubelet_pod_watch_events_dropped_total
+	Cumulative number of pod watch events dropped.
+
+	Stability Level:ALPHA
 	Type: Counter
 	Components:kubelet (/metrics)
 
@@ -512,7 +515,3 @@ Stability Level:ALPHA
 
 	node_collector_update_all_nodes_health_duration_seconds
 	Duration in seconds for NodeController to update the health of all nodes.
-
-	Stability Level:ALPHA
-	Type: Histogram
-	Components:kube-controller-manager (/metrics)

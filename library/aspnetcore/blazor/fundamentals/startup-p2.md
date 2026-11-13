@@ -64,7 +64,7 @@ The `{TARGET FRAMEWORK}` placeholder is the target framework moniker (for exampl
 
 **In the preceding example, the `{BLAZOR SCRIPT}` placeholder is the Blazor script path and file name.** For the location of the script, see ASP.NET Core Blazor project structure.
 
-To customize more than just the URLs for boot resources, the `loadBootResource` function can call `fetch` directly and return the result. The following example adds a custom HTTP header to the outbound requests. To retain the default integrity checking behavior, pass through the `integrity` parameter.
+To customize more than just the URLs for boot resources, the `loadBootResource` function can call `fetch` directly and return the result. The following example adds a custom HTTP header to the outbound requests. To retain the default integrity checking behavior, pass <example-value> the `integrity` parameter.
 
 ```html
 <script src="{BLAZOR SCRIPT}" autostart="false"></script>

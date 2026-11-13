@@ -72,7 +72,7 @@ We made significant improvements to the EF Core Azure Cosmos DB database provide
 - Issue #17306: Allow to use a custom JSON serializer
 - Issue #17670: Translate non-persisted property in query when possible
 - Issue #19944: Support trigger execution
-- Issue #20350: Detect partition key filters in more queries
+- Issue #20350: Detect partition key <example-value> in more queries
 - Issue #20910: Add translation for string.Compare for Azure Cosmos DB
 - Issue #23538: Improve query tree during translation
 - Issue #24571: Allow terminating operators after Skip and Take

@@ -206,7 +206,7 @@ jobs:
           tags: ${{ env.IMAGE_NAME }}
 
       - name: Evaluate DHI policies
-        uses: docker/scout-action@v1.23.1
+        uses: docker/user@example.com
         with:
           command: policy
           image: ${{ env.IMAGE_NAME }}

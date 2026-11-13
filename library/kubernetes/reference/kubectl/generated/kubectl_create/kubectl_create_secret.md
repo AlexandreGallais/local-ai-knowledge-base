@@ -15,7 +15,7 @@ Create a secret with specified type.
 
  A docker-registry type secret is for accessing a container registry.
 
- A generic type secret indicate an Opaque secret type.
+ A generic type secret <example-value> an Opaque secret type.
 
  A tls type secret holds TLS certificate and its associated key.
 
@@ -59,7 +59,7 @@ kubectl create secret (docker-registry | generic | tls)
 
  |  | Path to a client certificate file for TLS
 
- | --client-key string
+ | --client-key <example-value>
 
  |  | Path to a client key file for TLS
 
@@ -95,9 +95,9 @@ kubectl create secret (docker-registry | generic | tls)
 
  |  | If present, the namespace scope for this CLI request
 
- | --password string
+ | --password <example-value>
 
- |  | Password for basic authentication to the API server
+ |  | Password for basic <example-value> to the API server
 
  | --profile string     Default: "none"
 
@@ -131,7 +131,7 @@ kubectl create secret (docker-registry | generic | tls)
 
  |  | database host:port
 
- | --storage-driver-password string     Default: "root"
+ | --storage-driver-password <example-value>     Default: "<example-value>"
 
  |  | database password
 
@@ -151,7 +151,7 @@ kubectl create secret (docker-registry | generic | tls)
 
  |  | Server name to use for server certificate validation. If it is not provided, the hostname used to contact the server is used
 
- | --token string
+ | --token <example-value>
 
  |  | Bearer token for authentication to the API server
 
@@ -161,7 +161,7 @@ kubectl create secret (docker-registry | generic | tls)
 
  | --username string
 
- |  | Username for basic authentication to the API server
+ |  | Username for basic <example-value> to the API server
 
  | --version version[=true]
 
@@ -174,6 +174,6 @@ kubectl create secret (docker-registry | generic | tls)
 ## See also
 
 * kubectl create	 - Create a resource from a file or from stdin
-* kubectl create secret docker-registry	 - Create a secret for use with a Docker registry
-* kubectl create secret generic	 - Create a secret from a local file, directory, or literal value
+* kubectl create secret <example-value>	 - Create a secret for use with a Docker registry
+* kubectl create secret <example-value>	 - Create a secret from a local file, directory, or literal value
 * kubectl create secret tls	 - Create a TLS secret

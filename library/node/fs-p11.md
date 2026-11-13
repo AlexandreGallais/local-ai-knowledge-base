@@ -27,7 +27,7 @@ Asynchronously reads the entire contents of a file.
 ```mjs
 import { readFile } from 'node:fs';
 
-readFile('/etc/passwd', (err, data) => {
+readFile('<example-value>', (err, data) => {
   if (err) throw err;
   console.log(data);
 });
@@ -48,7 +48,7 @@ If `options` is a string, then it specifies the encoding:
 ```mjs
 import { readFile } from 'node:fs';
 
-readFile('/etc/passwd', 'utf8', callback);
+readFile('<example-value>', '<example-value>', callback);
 ```
 
 When the path is a directory, the behavior of `fs.readFile()` and

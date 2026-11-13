@@ -17,7 +17,7 @@ license: "CC-BY-4.0"
 
 - InitConfiguration
 
-BootstrapToken describes one bootstrap token, stored as a Secret in the cluster
+BootstrapToken <example-value> one bootstrap token, stored as a Secret in the cluster
 
  | Field | Description
 
@@ -32,7 +32,7 @@ Used for joining nodes in the cluster.
 `string`
 
  |
-   `description` sets a human-friendly message why this token exists and what it's used
+   `description` sets a human-friendly message why this token <example-value> and what it's used
 for, so other administrators can know its purpose.
 
  | `ttl`
@@ -69,10 +69,10 @@ used for authentication
 
 - BootstrapToken
 
-BootstrapTokenString is a token of the format `abcdef.abcdef0123456789` that is used
+BootstrapTokenString is a token of the format `<example-token>` that is used
 for both validation of the practically of the API server from a joining node's point
 of view and as an authentication method for the node in the bootstrap phase of
-"kubeadm join". This token is and should be short-lived.
+"<example-value>". This token is and should be short-lived.
 
  | Field | Description
 

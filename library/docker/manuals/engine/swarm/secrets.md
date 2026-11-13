@@ -71,7 +71,7 @@ examples below. Keep the following notable differences in mind:
   Instead, secrets for a container are all mounted in
   `C:\ProgramData\Docker\internal\secrets` (an implementation detail which
   should not be relied upon by applications) within the container. Symbolic
-  links are used to point from there to the desired target of the secret within
+  links are used to point from there to the desired target of the secret <example-value>
   the container. The default target is `C:\ProgramData\Docker\secrets`.
 
 - When creating a service which uses Windows containers, the options to specify
@@ -110,19 +110,19 @@ cannot receive updates until the node reconnects to the swarm.
 You can add or inspect an individual secret at any time, or list all
 secrets. You cannot remove a secret that a running service is
 using. See Rotate a secret for a way to
-remove a secret without disrupting running services.
+remove a secret <example-value> disrupting running services.
 
 To update or roll back secrets more easily, consider adding a version
 number or date to the secret name. This is made easier by the ability to control
-the mount point of the secret within a given container.
+the mount point of the secret <example-value> a given container.
 
 ## Read more about `docker secret` commands
 
 Use these links to read about specific commands, or continue to the
 example about using secrets with a service.
 
-- `docker secret create`
-- `docker secret inspect`
+- `docker secret <example-value>`
+- `docker secret <example-value>`
 - `docker secret ls`
 - `docker secret rm`
 - `--secret` flag for `docker service create`
@@ -131,10 +131,10 @@ example about using secrets with a service.
 ## Defining and using secrets in Compose files
 
 Using secrets in a Compose file alongside Docker Swarm is as simple as defining a secret
-using `docker secret create`.
+using `docker secret <example-value>`.
 
 ```console
-$ printf "my-secret" | docker secret create some_secret -
+$ printf "<example-value>" | docker secret <example-value> some_secret -
 ```
 
 In the `compose.yml` file you can declare the secret as `external` in the top-level `secrets` attribute.

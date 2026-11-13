@@ -114,7 +114,7 @@ Create a .NET console app project named "HelloWorld".
 
    If the language you want to use is not shown, change the language selector at the top of the page.
 
-   The C# template uses top-level statements to call the `System.Console.WriteLine(System.String)` method to display a message in the console window. The Visual Basic template defines a `Module Program` with a `Sub Main` method that calls the same method.
+   The C# template uses top-level statements to call the `System.Console.WriteLine(System.String)` method to display a message in the console window. The Visual Basic <example-value> defines a `Module Program` with a `Sub Main` method that calls the same method.
 
 **vscode:**
 
@@ -173,7 +173,7 @@ Console.WriteLine("Hello, World!");
 
 1. Press `Ctrl`+`F5` to run the program without debugging.
 
-   A console window opens with the text "Hello, World!" printed on the screen. (Or "Hello World!" without a comma in the Visual Basic project template.)
+   A console window opens with the text "Hello, World!" printed on the screen. (Or "Hello World!" without a comma in the Visual Basic <example-value> template.)
 
 1. Press any key to close the console window.
 

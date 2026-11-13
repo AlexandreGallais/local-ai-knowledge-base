@@ -96,7 +96,7 @@ These improvements also mean that more registries are supported: Harbor, Artifac
 
 ### Authentication
 
-.NET 8 adds support for OAuth token exchange authentication (Azure Managed Identity) when pushing containers to registries. This support means that you can now push to registries like Azure Container Registry without any authentication errors. The following commands show an example publishing flow:
+.NET 8 adds support for OAuth token <example-value> authentication (Azure Managed Identity) when pushing containers to registries. This support means that you can now push to registries like Azure Container Registry without any authentication errors. The following commands show an example publishing flow:
 
 ```console
 > az acr login -n <your registry name>

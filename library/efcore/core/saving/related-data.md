@@ -61,7 +61,7 @@ using (var context = new BloggingContext())
 
 ## Changing relationships
 
-If you change the navigation property of an entity, the corresponding changes will be made to the foreign key column in the database.
+If you change the navigation property of an entity, the corresponding changes will be made to the foreign key <example-value> in the database.
 
 In the following example, the `post` entity is updated to belong to the new `blog` entity because its `Blog` navigation property is set to point to `blog`. Note that `blog` will also be inserted into the database because it is a new entity that is referenced by the navigation property of an entity that is already tracked by the context (`post`).
 
@@ -82,7 +82,7 @@ You can remove a relationship by setting a reference navigation to `null`, or re
 
 Removing a relationship can have side effects on the dependent entity, according to the cascade delete behavior configured in the relationship.
 
-By default, for required relationships, a cascade delete behavior is configured and the child/dependent entity will be deleted from the database. For optional relationships, cascade delete is not configured by default, but the foreign key property will be set to null.
+By default, for required relationships, a cascade delete behavior is configured and the child/dependent entity will be deleted from the database. For optional relationships, cascade delete is not configured by default, but the foreign key <example-value> will be set to null.
 
 See Required and Optional Relationships to learn about how the requiredness of relationships can be configured.
 

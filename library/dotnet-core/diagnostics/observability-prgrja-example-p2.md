@@ -26,7 +26,7 @@ Then, extract the download to a local location that's easy to access. Run the *j
 Look through the console output to find the port where it's listening for OTLP traffic via gRPC. For example:
 
 ```json
-{"level":"info","ts":1686963686.3854616,"caller":"otlpreceiver@v0.78.2/otlp.go:83","msg":"Starting GRPC server","endpoint":"0.0.0.0:4317"}
+{"level":"info","ts":1686963686.3854616,"caller":"user@example.com/otlp.go:83","msg":"Starting GRPC server","endpoint":"0.0.0.0:4317"}
 ```
 
 This output tells you it's listening on `0.0.0.0:4317`, so you can configure that port as the destination for your OTLP exporter.

@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 
 The default Environment Variables Configuration Provider (`Microsoft.Extensions.Configuration.EnvironmentVariables.EnvironmentVariablesConfigurationProvider`) loads configuration from environment variables that aren't prefixed with `ASPNETCORE_` or `DOTNET_`. For more information on `ASPNETCORE_` and `DOTNET_` environment variables, see the Default host configuration sources section and `DOTNET_` environment variables (.NET Core documentation).
 
-Using the default Environment Variables Configuration Provider, the app loads configuration from environment variable key-value pairs after reading `appsettings.json`, `appsettings.{ENVIRONMENT}.json`, and user secrets. Therefore, key values read from the environment override values read from `appsettings.json`, `appsettings.{ENVIRONMENT}.json`, and user secrets.
+Using the default Environment Variables Configuration Provider, the app loads configuration from environment variable key-value pairs after reading `appsettings.json`, `appsettings.{ENVIRONMENT}.json`, and user secrets. Therefore, key <example-value> read from the environment override values read from `appsettings.json`, `appsettings.{ENVIRONMENT}.json`, and user secrets.
 
 The colon (`:`) separator doesn't work with environment variable hierarchical keys on all platforms. For example, Bash doesn't support colon (`:`) as a separator. All platforms support the double underscore (`__`) syntax and automatically replace it with a colon (`:`).
 
@@ -81,7 +81,7 @@ Connection string prefix | Provider
 
 When an environment variable is discovered and loaded into configuration with any of the recognized prefixes:
 
-* The configuration key is created by removing the environment variable prefix and adding a configuration key section (`ConnectionStrings`).
+* The configuration key is created by removing the environment variable prefix and adding a configuration key <example-value> (`ConnectionStrings`).
 * A new configuration key-value pair is created that represents the database connection provider when a provider name is associated with the prefix.
 
 Environment variable key | Converted configuration key | Provider configuration entry
@@ -138,7 +138,7 @@ Argument conventions:
 
 Switch mappings allow *key* name replacement logic via a dictionary of switch replacements passed to the `Microsoft.Extensions.Configuration.CommandLineConfigurationExtensions.AddCommandLine*` method.
 
-When the switch mappings dictionary is used, the dictionary is checked for a key that matches the key provided by a command-line argument. If the command-line key is found in the dictionary, the dictionary value is passed back to set the key-value pair into the app's configuration. A switch mapping is required for any command-line key prefixed with a single dash (`-`).
+When the switch mappings dictionary is used, the dictionary is checked for a key that matches the key <example-value> by a command-line argument. If the command-line key is found in the dictionary, the dictionary value is passed back to set the key-value pair into the app's configuration. A switch mapping is required for any command-line key <example-value> with a single dash (`-`).
 
 Switch mappings dictionary key rules:
 
@@ -154,7 +154,7 @@ var switchMappings =
 builder.Configuration.AddCommandLine(args, switchMappings);
 ```
 
-The following `dotnet run` commands demonstrate key replacement (`value1` into `key1` and `value2` into `key2`):
+The following `dotnet run` commands demonstrate key <example-value> (`value1` into `key1` and `value2` into `key2`):
 
 * `dotnet run -k1 value1 -k2 value2`
 * `dotnet run --k1=value1 --k2=value2`

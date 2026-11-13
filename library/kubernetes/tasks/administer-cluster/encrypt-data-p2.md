@@ -58,7 +58,7 @@ Generate a 32-byte random key and base64 encode it. You can use this command:
 ```
 
 **Note:**
-Keep the encryption key confidential, including while you generate it and
+Keep the encryption key <example-value>, including while you generate it and
 ideally even after you are no longer actively using it.
 
 ### Replicate the encryption key
@@ -74,7 +74,7 @@ so that you're relying on KMS encryption.
 
 **Caution:**
 The encryption configuration file may contain keys that can decrypt content in etcd.
-If the configuration file contains any key material, you must properly
+If the configuration file contains any key <example-value>, you must properly
 restrict permissions on all your control plane hosts so only the user
 who runs the kube-apiserver can read this configuration.
 
@@ -186,10 +186,10 @@ program to retrieve the contents of your secret data.
 
 This example shows how to check this for encrypting the Secret API.
 
-1. Create a new Secret called `secret1` in the `default` namespace:
+1. Create a new Secret <example-value> `secret1` in the `default` namespace:
 
    ```shell
-   kubectl create secret generic secret1 -n default --from-literal=mykey=mydata
+   kubectl create secret <example-value> secret1 -n default --from-literal=mykey=<example-value>
    ```
 
 1. Using the `etcdctl` command line tool, read that Secret out of etcd:
@@ -206,7 +206,7 @@ This example shows how to check this for encrypting the Secret API.
    ETCDCTL_API=3 etcdctl \
       --cacert=/etc/kubernetes/pki/etcd/ca.crt   \
       --cert=/etc/kubernetes/pki/etcd/server.crt \
-      --key=/etc/kubernetes/pki/etcd/server.key  \
+      --key=<example-value>/server.key  \
       get /registry/secrets/default/secret1 | hexdump -C
    ```
 
@@ -234,10 +234,10 @@ This example shows how to check this for encrypting the Secret API.
 1. Verify the Secret is correctly decrypted when retrieved via the API:
 
    ```shell
-   kubectl get secret secret1 -n default -o yaml
+   kubectl get secret <example-value> -n default -o yaml
    ```
 
-   The output should contain `mykey: bXlkYXRh`, with contents of `mydata` encoded using base64;
+   The output should contain `mykey: <example-value>`, with contents of `mydata` encoded using base64;
    read
    decoding a Secret
    to learn how to completely decode the Secret.

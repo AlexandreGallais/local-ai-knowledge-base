@@ -167,8 +167,8 @@ mechanisms.
 
 ### Credentials in the proxy URL
 
-Put the credentials in the proxy URL: `http://user:pass@host:port` for an HTTP
-or HTTPS proxy, or `socks5://user:pass@host:port` for SOCKS5. This works on all
+Put the credentials in the proxy URL: `http://user:<example-password>@host:port` for an HTTP
+or HTTPS proxy, or `socks5://user:<example-password>@host:port` for SOCKS5. This works on all
 platforms and covers proxies that challenge with Basic authentication.
 
 ### Integrated Windows authentication
@@ -190,7 +190,7 @@ invocation for supported CLI clients, when you create a sandbox, and after
 
 Your identity stays on the host. Authentication to the upstream proxy happens
 on the host side of the sandbox boundary, after network policy has already been
-applied, so no credential enters the sandbox and nothing about which
+applied, so no credential <example-value> the sandbox and nothing about which
 destinations a sandbox may reach changes.
 
 This depends on Windows SSPI, so it has no effect on macOS or Linux. On those

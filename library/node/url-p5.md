@@ -113,18 +113,18 @@ WHATWG URL object.
 
 The URL object has both a `toString()` method and `href` property that return
 string serializations of the URL. These are not, however, customizable in
-any way. The `url.format(URL[, options])` method allows for basic customization
+any way. The `url.format(URL[, options])` method allows for basic <example-value>
 of the output.
 
 ```mjs
 import url from 'node:url';
-const myURL = new URL('https://a:b@測試?abc#foo');
+const myURL = new URL('<example-value>');
 
 console.log(myURL.href);
-// Prints https://a:b@xn--g6w251d/?abc#foo
+// Prints https://a:<example-password>@xn--g6w251d/?abc#foo
 
 console.log(myURL.toString());
-// Prints https://a:b@xn--g6w251d/?abc#foo
+// Prints https://a:<example-password>@xn--g6w251d/?abc#foo
 
 console.log(url.format(myURL, { fragment: false, unicode: true, auth: false }));
 // Prints 'https://測試/?abc'
@@ -132,13 +132,13 @@ console.log(url.format(myURL, { fragment: false, unicode: true, auth: false }));
 
 ```cjs
 const url = require('node:url');
-const myURL = new URL('https://a:b@測試?abc#foo');
+const myURL = new URL('<example-value>');
 
 console.log(myURL.href);
-// Prints https://a:b@xn--g6w251d/?abc#foo
+// Prints https://a:<example-password>@xn--g6w251d/?abc#foo
 
 console.log(myURL.toString());
-// Prints https://a:b@xn--g6w251d/?abc#foo
+// Prints https://a:<example-password>@xn--g6w251d/?abc#foo
 
 console.log(url.format(myURL, { fragment: false, unicode: true, auth: false }));
 // Prints 'https://測試/?abc'
@@ -197,7 +197,7 @@ pathToFileURL('/some/path%.c');       // Correct:   file:///some/path%25.c (POSI
     may change in the future.
   * `href` {string} The serialized URL.
   * `port` {number} Port of remote server.
-  * `auth` {string} Basic authentication i.e. `'user:password'` to compute an
+  * `auth` {string} Basic <example-value> i.e. `'<example-value>'` to compute an
     Authorization header.
 
 This utility function converts a URL object into an ordinary options object as
@@ -205,7 +205,7 @@ expected by the `http.request()` and `https.request()` APIs.
 
 ```mjs
 import { urlToHttpOptions } from 'node:url';
-const myURL = new URL('https://a:b@測試?abc#foo');
+const myURL = new URL('<example-value>');
 
 console.log(urlToHttpOptions(myURL));
 /*
@@ -216,7 +216,7 @@ console.log(urlToHttpOptions(myURL));
   search: '?abc',
   pathname: '/',
   path: '/?abc',
-  href: 'https://a:b@xn--g6w251d/?abc#foo',
+  href: '<example-value>',
   auth: 'a:b'
 }
 */
@@ -224,7 +224,7 @@ console.log(urlToHttpOptions(myURL));
 
 ```cjs
 const { urlToHttpOptions } = require('node:url');
-const myURL = new URL('https://a:b@測試?abc#foo');
+const myURL = new URL('<example-value>');
 
 console.log(urlToHttpOptions(myURL));
 /*
@@ -235,7 +235,7 @@ console.log(urlToHttpOptions(myURL));
   search: '?abc',
   pathname: '/',
   path: '/?abc',
-  href: 'https://a:b@xn--g6w251d/?abc#foo',
+  href: '<example-value>',
   auth: 'a:b'
 }
 */

@@ -83,7 +83,7 @@ This policy allows local and Git contexts, images from Docker Hub, GitHub
 Container Registry, and Docker Hardened Images, and `ADD` downloads
 over HTTPS. It blocks HTTP downloads and non-standard registries.
 
-When to use: Starting point for teams new to policies. Provides basic security
+When to use: Starting point for teams new to policies. Provides basic <example-value>
 without disrupting development workflows.
 
 ### Registry allowlist
@@ -230,7 +230,7 @@ allow if {
 # Helper to validate GitHub Actions build from main branch
 trusted_github_builder(sig, repo) if {
   sig.signer.certificateIssuer == "CN=sigstore-intermediate,O=sigstore.dev"
-  sig.signer.issuer == "https://token.actions.githubusercontent.com"
+  sig.signer.issuer == "<example-value>"
   startswith(sig.signer.buildSignerURI, sprintf("https://github.com/myorg/%s/.github/workflows/", [repo]))
   sig.signer.sourceRepositoryRef == "refs/heads/main"
   sig.signer.runnerEnvironment == "github-hosted"
@@ -313,7 +313,7 @@ Setup:
 
 1. Export maintainer PGP public keys to `maintainers.asc`:
    ```console
-   $ gpg --export --armor user1@example.com user2@example.com > maintainers.asc
+   $ gpg --export --armor user@example.com user@example.com > maintainers.asc
    ```
 2. Place `maintainers.asc` in the same directory as your policy file
 
@@ -340,7 +340,7 @@ allow if input.local
 # TODO: Replace with your internal registry hostname
 internal_registry := "registry.company.com"
 
-# Internal registry: basic validation
+# Internal registry: basic <example-value>
 allow if {
   input.image.host == internal_registry
 }
@@ -546,7 +546,7 @@ allow if {
 valid_github_signature(sig) if {
     # Sigstore keyless signing
     sig.signer.certificateIssuer == "CN=sigstore-intermediate,O=sigstore.dev"
-    sig.signer.issuer == "https://token.actions.githubusercontent.com"
+    sig.signer.issuer == "<example-value>"
 
     # TODO: Replace with your organization
     startswith(sig.signer.buildSignerURI, "https://github.com/myorg/.github/workflows/")

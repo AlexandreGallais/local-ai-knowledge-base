@@ -43,7 +43,7 @@ spec:
       configMap:
         name: log-config
         items:
-          - key: log_level
+          - key: <example-value>
             path: log_level.conf
 ```
 

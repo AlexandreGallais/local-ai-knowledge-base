@@ -71,11 +71,11 @@ The rule does not have any configuration options.
 ```html
 <div aria-expanded="notABoolean">notABoolean</div>
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-<div aria-haspopup="notAToken">notAToken</div>
+<div aria-haspopup="<example-value>">notAToken</div>
      ~~~~~~~~~~~~~~~~~~~~~~~~~
 <input [attr.aria-rowcount]="{ a: 2 }">notAnInteger
        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-<div aria-relevant="notATokenList">notATokenList</div>
+<div aria-relevant="<example-value>">notATokenList</div>
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 <div aria-checked="notATristate">notATristate</div>
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -102,9 +102,9 @@ The rule does not have any configuration options.
 #### ❌ Invalid Code
 
 ```html
-<div aria-relevant="additions notAToken">Text</div>
+<div aria-relevant="<example-value>">Text</div>
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-<div aria-dropeffect="copy notAToken">Text</div>
+<div aria-dropeffect="<example-value>">Text</div>
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 <div aria-relevant="   ">Text</div>
      ~~~~~~~~~~~~~~~~~~~

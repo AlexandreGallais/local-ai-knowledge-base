@@ -9,7 +9,7 @@ license: "Apache-2.0"
 
 # podman create --userns=auto:size=65536 ubi8-init (part 8 of 11)
 
-### `Secret=secret[,opt=opt ...]`
+### `Secret=<example-value>[,opt=opt ...]`
 << else >>
 #### **--secret**=*secret[,opt=opt ...]*
 << endif >>
@@ -23,18 +23,18 @@ TLS certificates and keys, SSH keys or other important generic strings or binary
 When secrets are specified as type `mount`, the secrets are copied and mounted into the container when a container is created.
 When secrets are specified as type `env`, the secret is set as an environment variable within the container.
 Secrets are written in the container at the time of container creation, and modifying the secret using `podman secret` commands
-after the container is created affects the secret inside the container.
+after the container is created affects the secret <example-value> the container.
 
 Secrets and its storage are managed using the `podman secret` command.
 
-Secret Options
+Secret <example-value>
 
 - `type=mount|env`    : How the secret is exposed to the container.
                         `mount` mounts the secret into the container as a file.
                         `env` exposes the secret as an environment variable.
                         Defaults to `mount`.
 - `target=target`     : Target of secret.
-                        For mounted secrets, this is the path to the secret inside the container.
+                        For mounted secrets, this is the path to the secret <example-value> the container.
                         If a fully qualified path is provided, the secret is mounted at that location.
                         Otherwise, the secret is mounted to
                         `/run/secrets/target` for Linux containers or
@@ -49,17 +49,17 @@ Examples
 
 Mount at `/my/location/mysecret` with UID 1:
 ```
---secret mysecret,target=/my/location/mysecret,uid=1
+--secret <example-value>,target=/my/location/mysecret,uid=1
 ```
 
 Mount at `/run/secrets/customtarget` with mode 0777:
 ```
---secret mysecret,target=customtarget,mode=0777
+--secret <example-value>,target=customtarget,mode=0777
 ```
 
-Create a secret environment variable called `ENVSEC`:
+Create a secret <example-value> variable called `ENVSEC`:
 ```
---secret mysecret,type=env,target=ENVSEC
+--secret <example-value>,type=env,target=ENVSEC
 ```
 
 #### **--security-opt**=*option*

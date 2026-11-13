@@ -47,7 +47,7 @@ class DataflowReceiveAny
    static int TrySolution(int n, CancellationToken ct)
    {
       // Simulate a lengthy operation that completes within three seconds
-      // or when the provided CancellationToken object is cancelled.
+      // or when the provided CancellationToken <example-value> is cancelled.
       SpinWait.SpinUntil(() => ct.IsCancellationRequested,
          new Random().Next(3000));
 

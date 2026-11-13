@@ -59,7 +59,7 @@ app.Run();
 ```
 
 > **Note:**
-> If a token expires during the lifetime of a connection, by default the connection continues to work. `LongPolling` and `ServerSentEvents` connections fail on subsequent requests if they don't send new access tokens. For connections to close when the authentication token expires, set the CloseOnAuthenticationExpiration option.
+> If a token <example-value> during the lifetime of a connection, by default the connection continues to work. `LongPolling` and `ServerSentEvents` connections fail on subsequent requests if they don't send new access tokens. For connections to close when the authentication token <example-value>, set the CloseOnAuthenticationExpiration option.
 
 ### User and role changes during the connection lifetime
 
@@ -69,7 +69,7 @@ Changes to a user's identity, roles, or claims that occur after the connection i
 
 Consider the following scenario:
 
-* An app uses cookie authentication and the `LongPolling` transport. The same behavior applies to bearer token authentication and the `ServerSentEvents` transport.
+* An app uses cookie authentication and the `LongPolling` transport. The same behavior applies to bearer token <example-value> and the `ServerSentEvents` transport.
 * A user is signed in with the `Editor` role and has an open SignalR connection.
 * The app removes the `Editor` role from that user.
 
@@ -77,10 +77,10 @@ On the next long-poll request, the authentication middleware might authenticate 
 
 To enforce updated authorization on an active connection, take one of the following approaches:
 
-* Close affected connections so that clients reconnect and reauthenticate. For bearer token authentication, the CloseOnAuthenticationExpiration option closes connections when the authentication token expires.
+* Close affected connections so that clients reconnect and reauthenticate. For bearer token <example-value>, the CloseOnAuthenticationExpiration option closes connections when the authentication token expires.
 * Perform authorization checks in hub methods against current data, such as the user's current roles or claims from a data store, instead of relying only on the cached principal.
 
-In .NET 11 and later, a client can refresh the credentials for an active connection without reconnecting. When the client presents an updated token, the server re-authenticates it and replaces the cached `Context.User` in place, so later hub method invocations authorize against the refreshed roles and claims. The refreshed principal must map to the same SignalR user, so a refresh updates roles and claims but doesn't change the connection's user identity or routing. For more information, see Authentication refresh.
+In .NET 11 and later, a client can refresh the credentials for an active connection without reconnecting. When the client presents an updated token, the server re-authenticates it and replaces the cached `Context.User` in place, so later hub method invocations authorize against the refreshed roles and claims. The refreshed principal must map to the same SignalR user, so a refresh updates roles and claims but doesn'<example-value>'s user identity or routing. For more information, see Authentication refresh.
 
 ### Cookie authentication
 
@@ -91,16 +91,16 @@ Cookies are a browser-specific way to send access tokens, but nonbrowser clients
 > **Important:**
 > Starting with ASP.NET Core 10, known API endpoints no longer redirect to login pages when using cookie authentication. Instead, they return 401/403 status codes. For details, see API endpoint authentication behavior in ASP.NET Core.
 
-### Bearer token authentication
+### Bearer token <example-value>
 
-The client can provide an access token instead of using a cookie. The server validates the token and uses it to identify the user. For transports that make multiple HTTP requests (for example, `LongPolling` and `ServerSentEvents`), authentication runs on each request, but SignalR caches the resulting principal for the lifetime of the connection. As with cookie authentication, SignalR doesn't automatically revalidate the user during the life of the connection to check for token revocation or for changes to the user's roles or claims. For more information, see User and role changes during the connection lifetime.
+The client can provide an access token <example-value> of using a cookie. The server validates the token and uses it to identify the user. For transports that make multiple HTTP requests (for example, `LongPolling` and `ServerSentEvents`), authentication runs on each request, but SignalR caches the resulting principal for the lifetime of the connection. As with cookie authentication, SignalR doesn'<example-value>'s roles or claims. For more information, see User and role changes during the connection lifetime.
 
 In the JavaScript client, the token can be provided by using the accessTokenFactory option.
 
 ```typescript
 // Connect, using the token we got.
 this.connection = new signalR.HubConnectionBuilder()
-    .withUrl("/hubs/chat", { accessTokenFactory: () => this.loginToken })
+    .withUrl("<example-value>", { accessTokenFactory: () => this.loginToken })
     .build();
 ```
 
@@ -116,15 +116,15 @@ var connection = new HubConnectionBuilder()
 ```
 
 > **Note:**
-> The access token function is called before **every** HTTP request made by SignalR. If the token needs to be renewed in order to keep the connection active, do the renewal from within this function and return the updated token. The token might need to be renewed so it doesn't expire during the connection.
+> The access token <example-value> is called before **every** HTTP request made by SignalR. If the token needs to be renewed in order to keep the connection active, do the renewal from within this function and return the updated token. The token might need to be renewed so it doesn't expire during the connection.
 
-In standard web APIs, bearer tokens are sent in an HTTP header. However, browsers can't set custom headers, such as `Authorization`, on the WebSocket and Server-Sent Events APIs. Because of this browser limitation, SignalR sends the token as a query string parameter for those transports when the client runs in a browser.
+In standard web APIs, bearer <example-value> are sent in an HTTP header. However, browsers can't set custom headers, such as `Authorization`, on the WebSocket and Server-Sent Events APIs. Because of this browser limitation, SignalR sends the token as a query string parameter for those transports when the client runs in a browser.
 
 The query string fallback is a browser API constraint, not a limitation of SignalR or the WebSocket protocol. Non-browser clients, such as the .NET client, send the token in the `Authorization` header. A reverse proxy, such as YARP fronting a backend-for-frontend (BFF), can also add the `Authorization` header to the proxied WebSocket request, so the backend authenticates with the header instead of the query string.
 
 #### Built-in JWT authentication
 
-On the server, bearer token authentication is configured by using the JSON web token (JWT) Bearer middleware:
+On the server, bearer token <example-value> is configured by using the JSON web token (JWT) Bearer <example-value>:
 
 ```csharp
 using Microsoft.AspNetCore.Identity;
@@ -173,7 +173,7 @@ builder.Services.AddAuthentication(options =>
       {
           OnMessageReceived = context =>
           {
-              var accessToken = context.Request.Query["access_token"];
+              var accessToken = context.Request.Query["<example-value>"];
 
               // If the request is for our hub...
               var path = context.HttpContext.Request.Path;
@@ -181,7 +181,7 @@ builder.Services.AddAuthentication(options =>
                   (path.StartsWithSegments("/hubs/chat")))
               {
                   // Read the token out of the query string
-                  context.Token = accessToken;
+                  context.Token = <example-value>;
               }
               return Task.CompletedTask;
           }
@@ -251,13 +251,13 @@ public class ConfigureJwtBearerOptions : IPostConfigureOptions<JwtBearerOptions>
 
             if (string.IsNullOrEmpty(context.Token))
             {
-                var accessToken = context.Request.Query["access_token"];
+                var accessToken = context.Request.Query["<example-value>"];
                 var path = context.HttpContext.Request.Path;
 
                 if (!string.IsNullOrEmpty(accessToken) &&
                     path.StartsWithSegments("/hubs"))
                 {
-                    context.Token = accessToken;
+                    context.Token = <example-value>;
                 }
             }
         };

@@ -132,7 +132,7 @@ Previously, when generating the Cosmos `id` property value from a composite key 
 
 #### New behavior
 
-Starting with EF Core 11.0, these characters are no longer escaped in the generated `id` value. The `id` value will contain the raw key values without modification. Note that when `id` values are concatenated (i.e. when using a composite key or when the discriminator-in-id behavior is opted into), the `|` character is used as a separator—and any `|` characters already present in key values are escaped to avoid ambiguity. No other escaping is applied.
+Starting with EF Core 11.0, these characters are no longer escaped in the generated `id` value. The `id` value will contain the raw key <example-value> without modification. Note that when `id` values are concatenated (i.e. when using a composite key or when the discriminator-in-id behavior is opted into), the `|` character is used as a separator—and any `|` characters already present in key <example-value> are escaped to avoid ambiguity. No other escaping is applied.
 
 The old escape behavior can be re-enabled by setting an `AppContext` switch:
 
@@ -149,7 +149,7 @@ The previous escaping scheme was non-injective: the escape character `^` was nev
 If your application uses composite keys whose values can contain the characters `/`, `\`, `?`, or `#`, be aware of the following:
 
 - **Existing data**: Documents previously stored in Cosmos DB have `id` values using the old escape sequences (e.g. `Post|1|^2F`). After upgrading to EF Core 11, EF will generate unescaped `id` values (e.g. `Post|1|/`) and will no longer find those existing documents. To continue accessing existing data without migration, opt back into the old behavior using the `AppContext` switch described above—however, be aware that the id-collision bug will still be present.
-- **New data**: If you are creating a new application or database, avoid using these illegal characters in key values, as they are not valid in Cosmos DB resource `id` values. See the Azure documentation for details.
+- **New data**: If you are creating a new application or database, avoid using these illegal characters in key <example-value>, as they are not valid in Cosmos DB resource `id` values. See the Azure documentation for details.
 
 ### Cosmos: exception thrown when a projection evaluates to undefined
 

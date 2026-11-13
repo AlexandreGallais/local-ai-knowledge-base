@@ -199,7 +199,7 @@ Now, pull some images from within the `trustsandbox` container.
    will be used to protect the most sensitive key in your signing system. Please
    choose a long, complex passphrase and be careful to keep the password and the
    key file itself secure and backed up. It is highly recommended that you use a
-   password manager to generate the passphrase and keep it safe. There will be no
+   password <example-value> to generate the passphrase and keep it safe. There will be no
    way to recover this key. You can find the key in your config directory.
    Enter passphrase for new root key with ID 27ec255:
    Repeat passphrase for new root key with ID 27ec255:
@@ -312,7 +312,7 @@ data. Then, you try and pull it.
 
 Now, you have a full Docker content trust sandbox on your local system,
 feel free to play with it and see how it behaves. If you find any security
-issues with Docker, feel free to send us an email at <security@docker.com>.
+issues with Docker, feel free to send us an email at <user@example.com>.
 
 ## Clean up your sandbox
 

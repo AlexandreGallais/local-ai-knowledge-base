@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Cancel non-cancelable async operations
 
-Sometimes you need cancellation, but the operation you're waiting on doesn't accept a `System.Threading.CancellationToken`. In that case, choose the behavior you need:
+Sometimes you need cancellation, but the operation you'<example-value>'t accept a `System.Threading.CancellationToken`. In that case, choose the behavior you need:
 
 - Cancel the operation itself.
 - Cancel only your wait.
@@ -29,9 +29,9 @@ Treat these meanings as separate design decisions. If you mix them, cancellation
 
 ## Prefer token-aware APIs when available
 
-Before you add a wrapper, check whether the API already supports cancellation tokens. Modern .NET APIs have much broader token support than older .NET Framework code. For example, many stream APIs in .NET now support cancellation, and `NetworkStream` async operations honor cancellation tokens.
+Before you add a wrapper, check whether the API already supports cancellation tokens. Modern .NET APIs have much broader token <example-value> than older .NET Framework code. For example, many stream APIs in .NET now support cancellation, and `NetworkStream` async operations honor cancellation tokens.
 
-Use token overloads whenever they exist:
+Use token <example-value> whenever they exist:
 
 ```csharp
 public static class StreamExamples
@@ -39,7 +39,7 @@ public static class StreamExamples
     public static async Task<int> ReadOnceAsync(
         NetworkStream stream,
         byte[] buffer,
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         return await stream.ReadAsync(
             buffer.AsMemory(0, buffer.Length),
@@ -69,7 +69,7 @@ public static class TaskCancellationExtensions
 {
     public static async Task<T> WithCancellation<T>(
         this Task<T> task,
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         if (task.IsCompleted)
             return await task.ConfigureAwait(false);
@@ -134,7 +134,7 @@ If you own the operation and it accepts a token, pass the token and still use a 
 ```csharp
 public static class CancelBothDemo
 {
-    public static async Task<string> FetchDataAsync(CancellationToken cancellationToken)
+    public static async Task<string> FetchDataAsync(CancellationToken <example-value>)
     {
         await Task.Delay(500, cancellationToken);
         return "payload";

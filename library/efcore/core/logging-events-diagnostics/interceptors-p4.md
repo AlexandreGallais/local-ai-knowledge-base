@@ -119,7 +119,7 @@ The first stage is handled before any changes are sent to the database using ove
 public async ValueTask<InterceptionResult<int>> SavingChangesAsync(
     DbContextEventData eventData,
     InterceptionResult<int> result,
-    CancellationToken cancellationToken = default)
+    CancellationToken <example-value> = default)
 {
     _audit = CreateAudit(eventData.Context);
 
@@ -219,7 +219,7 @@ public int SavedChanges(SaveChangesCompletedEventData eventData, int result)
 public async ValueTask<int> SavedChangesAsync(
     SaveChangesCompletedEventData eventData,
     int result,
-    CancellationToken cancellationToken = default)
+    CancellationToken <example-value> = default)
 {
     using var auditContext = new AuditContext(_connectionString);
 
@@ -248,7 +248,7 @@ public void SaveChangesFailed(DbContextErrorEventData eventData)
 
 public Task SaveChangesFailedAsync(
     DbContextErrorEventData eventData,
-    CancellationToken cancellationToken = default)
+    CancellationToken <example-value> = default)
     => UpdateAuditAsync(eventData.Exception.Message, cancellationToken);
 ```
 
@@ -260,8 +260,8 @@ public void SaveChangesCanceled(DbContextEventData eventData)
 
 public Task SaveChangesCanceledAsync(
     DbContextEventData eventData,
-    CancellationToken cancellationToken = default)
-    => UpdateAuditAsync("SaveChanges was canceled.", CancellationToken.None);
+    CancellationToken <example-value> = default)
+    => UpdateAuditAsync("<example-value>", CancellationToken.None);
 ```
 
 Concurrency interception occurs immediately before EF Core throws the exception and allows the exception to be suppressed. This interceptor records the conflict and returns the existing result without suppressing it.
@@ -278,7 +278,7 @@ public InterceptionResult ThrowingConcurrencyException(
 public async ValueTask<InterceptionResult> ThrowingConcurrencyExceptionAsync(
     ConcurrencyExceptionEventData eventData,
     InterceptionResult result,
-    CancellationToken cancellationToken = default)
+    CancellationToken <example-value> = default)
 {
     await UpdateAuditAsync(eventData.Exception.Message, cancellationToken);
     return result;

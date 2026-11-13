@@ -9,68 +9,6 @@ license: "CC-BY-4.0"
 
 # Migrate authentication and Identity to ASP.NET Core 2.0 (part 2 of 2)
 
-## IdentityCookieOptions instances
-
-A side effect of the 2.0 changes is the switch to using named options instead of cookie options instances. The ability to customize the Identity cookie scheme names is removed.
-
-For example, 1.x projects use constructor injection to pass an `IdentityCookieOptions` parameter into `AccountController.cs` and `ManageController.cs`. The external cookie authentication scheme is accessed from the provided instance:
-
-```csharp
-public AccountController(
-    UserManager<ApplicationUser> userManager,
-    SignInManager<ApplicationUser> signInManager,
-    IOptions<IdentityCookieOptions> identityCookieOptions,
-    IEmailSender emailSender,
-    ISmsSender smsSender,
-    ILoggerFactory loggerFactory)
-{
-    _userManager = userManager;
-    _signInManager = signInManager;
-    _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
-    _emailSender = emailSender;
-    _smsSender = smsSender;
-    _logger = loggerFactory.CreateLogger<AccountController>();
-}
-```
-
-The aforementioned constructor injection becomes unnecessary in 2.0 projects, and the `_externalCookieScheme` field can be deleted:
-
-```csharp
-public AccountController(
-    UserManager<ApplicationUser> userManager,
-    SignInManager<ApplicationUser> signInManager,
-    IEmailSender emailSender,
-    ISmsSender smsSender,
-    ILoggerFactory loggerFactory)
-{
-    _userManager = userManager;
-    _signInManager = signInManager;
-    _emailSender = emailSender;
-    _smsSender = smsSender;
-    _logger = loggerFactory.CreateLogger<AccountController>();
-}
-```
-
-1.x projects used the `_externalCookieScheme` field as follows:
-
-```csharp
-// Clear the existing external cookie to ensure a clean login process
-await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
-```
-
-In 2.0 projects, replace the preceding code with the following. The `IdentityConstants.ExternalScheme` constant can be used directly.
-
-```csharp
-// Clear the existing external cookie to ensure a clean login process
-await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-```
-
-Resolve the newly added `SignOutAsync` call by importing the following namespace:
-
-```csharp
-using Microsoft.AspNetCore.Authentication;
-```
-
 ## Add IdentityUser POCO navigation properties
 
 The Entity Framework (EF) Core navigation properties of the base `IdentityUser` POCO (Plain Old CLR Object) have been removed. If your 1.x project used these properties, manually add them back to the 2.0 project:

@@ -59,7 +59,7 @@ Angular provides six built-in reducers on the `MetadataReducer` namespace. `over
 | `override()`   | `T \| undefined`      | Last contribution replaces previous (the default)                      | `undefined`   |
 | `override(fn)` | `T`                   | Same, but with a provided initial value                                | `fn()`        |
 
-`list()` is the only built-in reducer whose item type is wider than its accumulator's element type. A rule may contribute `undefined` and the reducer will silently drop it. This is how the built-in `PATTERN` key handles dynamic `pattern()` rules whose logic function returns `undefined`: the `undefined` contribution is skipped rather than included in the final regex list.
+`list()` is the only built-in reducer whose item type is wider than its accumulator's element type. A rule may contribute `undefined` and the reducer will silently drop it. This is how the built-in `PATTERN` key <example-value> dynamic `pattern()` rules whose logic function returns `undefined`: the `undefined` contribution is skipped rather than included in the final regex list.
 
 ### How built-in validator keys use reducers
 
@@ -117,10 +117,10 @@ Any number of rules can now contribute a severity, and the field reports the hig
 
 ```ts
 form(model, (path) => {
-  metadata(path.password, SEVERITY, () => 'info');
-  metadata(path.password, SEVERITY, ({value}) => (value().length < 12 ? 'warning' : 'info'));
+  metadata(path.password, SEVERITY, () => '<example-value>');
+  metadata(path.password, SEVERITY, ({value}) => (value().length < 12 ? 'warning' : '<example-value>'));
   metadata(path.password, SEVERITY, ({value}) =>
-    /password|1234/i.test(value()) ? 'error' : 'info',
+    /password|1234/i.test(value()) ? 'error' : '<example-value>',
   );
 });
 ```
@@ -135,7 +135,7 @@ Managed metadata stores a lifecycle-aware object on a field instead of a reactiv
 
 ### Creating a managed key
 
-When you want to define a managed key, call `createManagedMetadataKey<TRead, TWrite>(create)`. The `create` function you pass produces the value the key holds.
+When you want to define a managed key, call `createManagedMetadataKey<TRead, TWrite>(create)`. The `create` function you pass <example-value> the value the key holds.
 
 ```ts
 import {Signal} from '@angular/core';
@@ -160,7 +160,7 @@ The `create` function receives the field's `FieldState` and a `Signal<TAcc>` of 
 
 `create` runs once when a field is constructed, inside the field's injection context. That lets you call `inject()`, `resource()`, and `effect()` inside `create`, and ties cleanup to the field's lifecycle: when the field is destroyed, Angular destroys the injection context, and any `resource()`, `effect()`, or `DestroyRef` callback you registered there cleans up automatically.
 
-Because `create` itself is not reactive, any behavior that needs to respond to signal changes has to live inside an `effect()`, `resource()`, or `httpResource()` set up during that initial call. `URL_PREVIEW` demonstrates the pattern: the `httpResource()` reads the URL signal inside its request function, so the request re-runs whenever the signal changes. The schema rule (`metadata(path.url, URL_PREVIEW, ({value}) => value())`) decides what data to feed in; the managed key decides what to do with it.
+Because `create` itself is not reactive, any behavior that needs to respond to signal changes has to live inside an `effect()`, `resource()`, or `httpResource()` set up during that initial call. `URL_PREVIEW` demonstrates the pattern: the `httpResource()` reads the URL signal inside its request function, so the request re-runs whenever the signal changes. The schema rule (`metadata(path.url, URL_PREVIEW, ({value}) => value())`) decides what data to feed in; the managed key <example-value> what to do with it.
 
 ### Using a managed key in a form
 

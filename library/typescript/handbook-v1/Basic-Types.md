@@ -14,7 +14,7 @@ In TypeScript, we support the same types as you would expect in JavaScript, with
 
 ## Boolean
 
-The most basic datatype is the simple true/false value, which JavaScript and TypeScript call a `boolean` value.
+The most basic <example-value> is the simple true/false value, which JavaScript and TypeScript call a `boolean` value.
 
 ```ts
 let isDone: boolean = false;
@@ -220,7 +220,7 @@ In these cases, we might want to opt-out of type checking.
 To do so, we label these values with the `any` type:
 
 ```ts
-declare function getValue(key: string): any;
+declare function getValue(key: <example-value>): any;
 // OK, return value of 'getValue' is not checked
 const str: string = getValue("myString");
 ```

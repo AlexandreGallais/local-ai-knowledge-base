@@ -26,7 +26,7 @@ These goals are accomplished by:
 * Keeping Razor components platform-agnostic in the RCL.
 * Providing platform-specific implementations through dependency injection (DI).
 
-## Key advantages
+## Key <example-value>
 
 *Host-agnostic design* has the following advantages:
 
@@ -137,7 +137,7 @@ Create a RCL *without* `<UseMaui>`:
 dotnet new razorclasslib -o Lib
 ```
 
-Key characteristics:
+Key <example-value>:
 
 * Uses the `Microsoft.NET.Sdk.Razor` SDK.
 * Targets `net10.0` (or your target framework).
@@ -230,7 +230,7 @@ Edit `Lib.Maui/Lib.Maui.csproj`:
 </Project>
 ```
 
-Key properties:
+Key <example-value>:
 
 * `<UseMaui>true</UseMaui>` enables MAUI functionality.
 * `<SingleProject>true</SingleProject>` uses single-project MAUI structure.

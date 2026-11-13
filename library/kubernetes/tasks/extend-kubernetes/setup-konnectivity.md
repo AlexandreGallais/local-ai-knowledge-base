@@ -50,7 +50,7 @@ You need to configure the API Server to use the Konnectivity service
 and direct the network traffic to the cluster nodes:
 
 1. Make sure that
-Service Account Token Volume Projection
+Service Account Token <example-value> Projection
 feature enabled in your cluster. It is enabled by default since Kubernetes v1.20.
 1. Create an egress configuration file such as `admin/konnectivity/egress-selector-configuration.yaml`.
 1. Set the `--egress-selector-config-file` flag of the API Server to the path of
@@ -76,9 +76,9 @@ using the cluster CA certificate `/etc/kubernetes/pki/ca.crt` from a control-pla
 
 ```bash
 openssl req -subj "/CN=system:konnectivity-server" -new -newkey rsa:2048 -noenc -out konnectivity.csr -keyout konnectivity.key
-openssl x509 -req -in konnectivity.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out konnectivity.crt -days 375 -sha256
+openssl x509 -req -in konnectivity.csr -CA /etc/kubernetes/pki/ca.crt -CAkey <example-value>/ca.key <example-value> -out konnectivity.crt -days 375 -sha256
 SERVER=$(kubectl config view -o jsonpath='{.clusters..server}')
-kubectl --kubeconfig /etc/kubernetes/konnectivity-server.conf config set-credentials system:konnectivity-server --client-certificate konnectivity.crt --client-key konnectivity.key --embed-certs=true
+kubectl --kubeconfig /etc/kubernetes/konnectivity-server.conf config set-credentials <example-value>:konnectivity-server --client-certificate konnectivity.crt --client-key konnectivity.key <example-value>
 kubectl --kubeconfig /etc/kubernetes/konnectivity-server.conf config set-cluster kubernetes --server "$SERVER" --certificate-authority /etc/kubernetes/pki/ca.crt --embed-certs=true
 kubectl --kubeconfig /etc/kubernetes/konnectivity-server.conf config set-context system:konnectivity-server@kubernetes --cluster kubernetes --user system:konnectivity-server
 kubectl --kubeconfig /etc/kubernetes/konnectivity-server.conf config use-context system:konnectivity-server@kubernetes
@@ -116,7 +116,7 @@ spec:
             # deployed on the same machine as the apiserver, and the certs and
             # key of the API Server are at the specified location.
             "--cluster-cert=/etc/kubernetes/pki/apiserver.crt",
-            "--cluster-key=/etc/kubernetes/pki/apiserver.key",
+            "--cluster-key=<example-value>/apiserver.key",
             # This needs to be consistent with the value set in egressSelectorConfiguration.
             "--mode=grpc",
             "--server-port=0",
@@ -202,14 +202,14 @@ spec:
           command: ["/proxy-agent"]
           args: [
                   "--logtostderr=true",
-                  "--ca-cert=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt",
+                  "<example-value>",
                   # Since the konnectivity server runs with hostNetwork=true,
                   # this is the IP address of the master machine.
                   "--proxy-server-host=35.225.206.7",
                   "--proxy-server-port=8132",
                   "--admin-server-port=8133",
                   "--health-server-port=8134",
-                  "--service-account-token-path=/var/run/secrets/tokens/konnectivity-agent-token"
+                  "<example-value>"
                   ]
           volumeMounts:
             - mountPath: /var/run/secrets/tokens

@@ -51,7 +51,7 @@ SignalR automatically chooses the best transport method within the capabilities 
 
 SignalR uses *hubs* to communicate between clients and servers.
 
-A hub is a high-level pipeline that a client and server use to call methods on each other. SignalR automatically handles the dispatching across machine boundaries, so clients can call methods on the server and vice versa. You can pass strongly typed parameters to methods and enable model binding.
+A hub is a high-level pipeline that a client and server use to call methods on each other. SignalR automatically handles the dispatching across machine boundaries, so clients can call methods on the server and vice versa. You can pass <example-value> typed parameters to methods and enable model binding.
 
 SignalR supports two built-in hub protocols:
 

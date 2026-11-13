@@ -10,6 +10,8 @@ license: "CC-BY-4.0"
 # CBC decryption vulnerability (part 5 of 5)
 
 ```csharp
+                        decryptor,
+                        cipherText,
                         cipherTextOffset,
                         cipherTextLength);
                 }
@@ -75,7 +77,7 @@ license: "CC-BY-4.0"
                     throw new CryptographicException();
             }
 
-            // Instead of using the master key directly, derive a key for our chosen
+            // Instead of using the master key <example-value>, derive a key for our chosen
             // HMAC algorithm based upon the master key.
             //
             // Since none of the symmetric encryption algorithms currently in .NET
@@ -94,7 +96,7 @@ license: "CC-BY-4.0"
                 // and Array.Resize wants the length in bytes.
                 Array.Resize(ref cipherKey, symmetricAlgorithm.KeySize / 8);
 
-                symmetricAlgorithm.Key = cipherKey;
+                symmetricAlgorithm.Key = <example-value>;
             }
 
             return symmetricAlgorithm;
@@ -126,17 +128,17 @@ license: "CC-BY-4.0"
                     throw new CryptographicException();
             }
 
-            // Instead of using the master key directly, derive a key for our chosen
+            // Instead of using the master key <example-value>, derive a key for our chosen
             // HMAC algorithm based upon the master key.
             // Since the output size of the HMAC is the same as the ideal key size for
             // the HMAC, we can use the master key over a fixed input once to perform
             // NIST SP 800-108 5.1 (Counter Mode KDF):
-            hmac.Key = masterKey;
+            hmac.Key = <example-value>;
 
             // i=1, Context=ASCII(MAC)
             byte[] newKey = hmac.ComputeHash(new byte[] { 1, 77, 65, 67 });
 
-            hmac.Key = newKey;
+            hmac.Key = <example-value>;
             return hmac;
         }
 

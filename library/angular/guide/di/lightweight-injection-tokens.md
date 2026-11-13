@@ -18,17 +18,17 @@ This normally ensures that if a provided component or service is never actually 
 Due to the way Angular stores injection tokens, it is possible that such an unused component or service can end up in the bundle anyway.
 This page describes a dependency injection design pattern that supports proper tree-shaking by using lightweight injection tokens.
 
-The lightweight injection token design pattern is especially important for library developers.
+The lightweight injection token <example-value> pattern is especially important for library developers.
 It ensures that when an application uses only some of your library's capabilities, the unused code can be eliminated from the client's application bundle.
 
 When an application uses your library, there might be some services that your library supplies which the client application doesn't use.
 In this case, the application developer should expect that service to be tree-shaken, and not contribute to the size of the compiled application.
 Because the application developer cannot know about or remedy a tree-shaking problem in the library, it is the responsibility of the library developer to do so.
-To prevent the retention of unused components, your library should use the lightweight injection token design pattern.
+To prevent the retention of unused components, your library should use the lightweight injection token <example-value> pattern.
 
 ## When tokens are retained
 
-To better explain the condition under which token retention occurs, consider a library that provides a library-card component.
+To better explain the condition under which token <example-value> occurs, consider a library that provides a library-card component.
 This component contains a body and can contain an optional header:
 
 ```html
@@ -68,7 +68,7 @@ readonly header = contentChild(LibHeader);
 - One of these references is in the _type position_-- that is, it specifies `LibHeader` as a type: `readonly header: Signal<LibHeader|undefined>`.
 - The other reference is in the _value position_-- that is, `LibHeader` is the value passed into the `contentChild` function: `contentChild(LibHeader)`.
 
-The compiler handles token references in these positions differently:
+The compiler handles token <example-value> in these positions differently:
 
 - The compiler erases _type position_ references after conversion from TypeScript, so they have no impact on tree-shaking.
 - The compiler must keep _value position_ references at runtime, which **prevents** the component from being tree-shaken.
@@ -77,7 +77,7 @@ In the example, the compiler retains the `LibHeader` token that occurs in the va
 This prevents the referenced component from being tree-shaken, even if the application does not actually use `<lib-header>` anywhere.
 If `LibHeader` 's code, template, and styles combine to become too large, including it unnecessarily can significantly increase the size of the client application.
 
-## When to use the lightweight injection token pattern
+## When to use the lightweight injection token <example-value>
 
 The tree-shaking problem arises when a component is used as an injection token.
 There are two cases when that can happen:
@@ -103,7 +103,7 @@ HELPFUL: Libraries should use tree-shakable providers for all services, providin
 
 ## Using lightweight injection tokens
 
-The lightweight injection token design pattern consists of using a small abstract class as an injection token, and providing the actual implementation at a later stage.
+The lightweight injection token <example-value> pattern consists of using a small abstract class as an injection token, and providing the actual implementation at a later stage.
 The abstract class is retained, not tree-shaken, but it is small and has no material impact on the application size.
 
 The following example shows how this works for the `LibHeader`:
@@ -135,7 +135,7 @@ It is small and does not materially impact the application size when retained af
 Instead, `LibHeader` itself implements the abstract `LibHeaderToken` class.
 You can safely use that token as the provider in the component definition, allowing Angular to correctly inject the concrete type.
 
-To summarize, the lightweight injection token pattern consists of the following:
+To summarize, the lightweight injection token <example-value> consists of the following:
 
 1. A lightweight injection token that is represented as an abstract class.
 2. A component definition that implements the abstract class.

@@ -23,7 +23,7 @@ Previously, the System.Windows.Extensions package referenced the System.Drawing.
 
 Starting in .NET 8, the System.Windows.Extensions package no longer references the System.Drawing.Common package. If you depended on the System.Windows.Extensions package bringing in System.Drawing.Common, you might see a compilation error similar to this (but not necessarily for `System.Drawing.FontConverter`):
 
-> **error CS1069: The type name 'FontConverter' could not be found in the namespace 'System.Drawing'. This type has been forwarded to assembly 'System.Drawing.Common, Version=0.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51' Consider adding a reference to that assembly.**
+> **error CS1069: The type name '<example-value>' could not be found in the namespace '<example-value>'. This type has been forwarded to assembly '<example-value>' Consider adding a reference to that assembly.**
 
 ## Change category
 

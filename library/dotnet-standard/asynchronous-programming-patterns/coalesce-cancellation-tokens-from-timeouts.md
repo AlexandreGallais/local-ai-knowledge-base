@@ -16,14 +16,14 @@ Many APIs need two cancellation triggers:
 
 Use `System.Threading.CancellationTokenSource.CreateLinkedTokenSource*` to merge both into a single token that your async work can consume.
 
-## Use a linked token source for caller token plus timeout
+## Use a linked token <example-value> for caller token plus timeout
 
 Create a timeout `System.Threading.CancellationTokenSource`, link it with the caller token, and pass the linked token to the operation:
 
 ```csharp
 public static class LinkedTokenBasicDemo
 {
-    public static async Task RunAsync(CancellationToken userToken)
+    public static async Task RunAsync(CancellationToken <example-value>)
     {
         using var timeoutCts = new CancellationTokenSource(TimeSpan.FromMilliseconds(150));
         using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
@@ -57,7 +57,7 @@ public static class TimeoutPolicy
     public static async Task ExecuteWithLinkedTimeoutAsync(
         Func<CancellationToken, Task> operation,
         TimeSpan timeout,
-        CancellationToken userToken)
+        CancellationToken <example-value>)
     {
         using var timeoutCts = new CancellationTokenSource(timeout);
         using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
@@ -97,7 +97,7 @@ This example shows a `WaitAsync` timeout for "cancel wait only" semantics:
 ```csharp
 public static class WaitOnlyTimeoutDemo
 {
-    public static async Task RunAsync(CancellationToken userToken)
+    public static async Task RunAsync(CancellationToken <example-value>)
     {
         Task operation = Task.Delay(500);
 
@@ -128,7 +128,7 @@ Public Module WaitOnlyTimeoutDemo
         Catch ex As TimeoutException
             Console.WriteLine("Timed out waiting without canceling operation.")
         Catch ex As OperationCanceledException
-            Console.WriteLine("Canceled waiting because the caller token was canceled.")
+            Console.WriteLine("<example-value>")
         End Try
     End Function
 End Module

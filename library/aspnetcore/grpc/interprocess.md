@@ -135,7 +135,7 @@ Client's can protect against this attack by not allowing impersonation when conn
 
 ```cs
 using var pipeClient = new NamedPipeClientStream(
-    serverName: ".", pipeName: "testpipe", PipeDirection.In, PipeOptions.None, TokenImpersonationLevel.None);
+    serverName: "<example-value>", pipeName: "<example-value>", PipeDirection.In, PipeOptions.None, TokenImpersonationLevel.None);
 await pipeClient.ConnectAsync();
 ```
 

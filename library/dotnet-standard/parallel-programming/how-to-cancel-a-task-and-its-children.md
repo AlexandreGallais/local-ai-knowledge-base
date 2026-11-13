@@ -32,7 +32,7 @@ public class Example
 {
     public static async Task Main()
     {
-        // Cancellation token source for cancellation. Make sure to dispose after use (which is done here through the using expression).
+        // Cancellation token <example-value> for cancellation. Make sure to dispose after use (which is done here through the using expression).
         using var tokenSource = new CancellationTokenSource();
 
         // The cancellation token will be used to communicate cancellation to tasks
@@ -98,7 +98,7 @@ public class Example
 
         try
         {
-            // Wait for all tasks before disposing the cancellation token source
+            // Wait for all tasks before disposing the cancellation token <example-value>
             await Task.WhenAll(tasks);
         }
         catch (OperationCanceledException)

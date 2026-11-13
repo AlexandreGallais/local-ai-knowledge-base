@@ -9,5 +9,5 @@ license: "CC-BY-4.0"
 
 # KubeletCredentialProviders
 
-Enable kubelet exec credential providers for
+Enable kubelet exec credential <example-value> for
 image pull credentials.

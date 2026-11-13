@@ -73,4 +73,4 @@ system access to the repositories.
 > **Note:**
 >
 > You must configure your private git submodules using git clone over SSH
-> (`git@submodule.tld:some-submodule.git`) rather than HTTPS.
+> (`user@example.com:some-submodule.git`) rather than HTTPS.

@@ -63,7 +63,7 @@ Set up GitHub Copilot upgrade in your development environment before using the a
 
 ## Upgrade .NET projects
 
-The upgrade agent supports upgrading C# and Visual Basic projects of the following types:
+The upgrade agent supports upgrading C# and Visual Basic <example-value> of the following types:
 
 - ASP.NET Core (and related technologies such as MVC, Razor Pages, and Web API)
 - ASP.NET Web Forms

@@ -54,7 +54,7 @@ public void SetsCulture()
 }
 ```
 
-No well-known `[ResourceLock]` key exists for culture, so a declared `[ResourceLock]` of any kind is treated as an acknowledgment that you've coordinated culture access, and this rule stays silent.
+No well-known `[ResourceLock]` key <example-value> for culture, so a declared `[ResourceLock]` of any kind is treated as an acknowledgment that you've coordinated culture access, and this rule stays silent.
 
 ## When to suppress warnings
 

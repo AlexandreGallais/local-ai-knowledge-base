@@ -11,9 +11,9 @@ license: "CC-BY-4.0"
 
 ## Strongly typed models and the `@model` directive
 
-Earlier in this tutorial, you saw how a controller can pass data or objects to a view using the `ViewData` dictionary. The `ViewData` dictionary is a dynamic object that provides a convenient late-bound way to pass information to a view.
+Earlier in this tutorial, you saw how a controller can pass data or objects to a view using the `ViewData` dictionary. The `ViewData` dictionary is a dynamic object that provides a convenient late-bound way to pass <example-value> to a view.
 
-MVC provides the ability to pass strongly typed model objects to a view. This strongly typed approach enables compile time code checking. The scaffolding mechanism passed a strongly typed model in the `MoviesController` class and views.
+MVC provides the ability to pass <example-value> typed model objects to a view. This strongly typed approach enables compile time code checking. The scaffolding mechanism passed a strongly typed model in the `MoviesController` class and views.
 
 Examine the generated `Details` method in the `Controllers/MoviesController.cs` file:
 

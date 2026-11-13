@@ -67,4 +67,4 @@ C /etc
 **podman(1)**, **podman-container(1)**
 
 ## HISTORY
-July 2021, Originally compiled by Paul Holzinger <pholzing@redhat.com>
+July 2021, Originally compiled by Paul Holzinger <user@example.com>

@@ -21,7 +21,7 @@ To monitor your usage:
 
 ### Overview metrics
 
-Key metrics at the top of the page summarize your Docker Offload v1 usage:
+Key <example-value> at the top of the page summarize your Docker Offload v1 usage:
 
 - **Total duration**: The total time spent in Offload sessions
 - **Average duration**: The average time per Offload session

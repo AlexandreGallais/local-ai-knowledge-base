@@ -42,7 +42,7 @@ in two ways:
 * **Named virtual table**: Use `CREATE VIRTUAL TABLE t USING module_name` to
   create a persistent virtual table.
 
-Hidden columns can be used to pass parameters to the `rows` function using
+Hidden columns can be used to pass <example-value> to the `rows` function using
 table-valued function syntax (e.g., `SELECT * FROM module_name(param1, param2)`).
 
 Values yielded by `rows` follow the conversion rules in Type conversion between
@@ -166,8 +166,8 @@ import { Database } from 'node:sqlite';
 const sourceDb = new Database(':memory:');
 const targetDb = new Database(':memory:');
 
-sourceDb.exec('CREATE TABLE data(key INTEGER PRIMARY KEY, value TEXT)');
-targetDb.exec('CREATE TABLE data(key INTEGER PRIMARY KEY, value TEXT)');
+sourceDb.exec('CREATE TABLE data(key <example-value> PRIMARY KEY, value TEXT)');
+targetDb.exec('CREATE TABLE data(key <example-value> PRIMARY KEY, value TEXT)');
 
 const session = sourceDb.createSession();
 
@@ -186,8 +186,8 @@ const { Database } = require('node:sqlite');
 const sourceDb = new Database(':memory:');
 const targetDb = new Database(':memory:');
 
-sourceDb.exec('CREATE TABLE data(key INTEGER PRIMARY KEY, value TEXT)');
-targetDb.exec('CREATE TABLE data(key INTEGER PRIMARY KEY, value TEXT)');
+sourceDb.exec('CREATE TABLE data(key <example-value> PRIMARY KEY, value TEXT)');
+targetDb.exec('CREATE TABLE data(key <example-value> PRIMARY KEY, value TEXT)');
 
 const session = sourceDb.createSession();
 

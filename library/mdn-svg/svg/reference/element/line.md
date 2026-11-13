@@ -54,4 +54,4 @@ svg {
 
 ## See also
 
-- Other SVG basic shapes: `<circle>`, `<ellipse>`, `<polygon>`, **`<polyline>`**, `<rect>`
+- Other SVG basic <example-value>: `<circle>`, `<ellipse>`, `<polygon>`, **`<polyline>`**, `<rect>`

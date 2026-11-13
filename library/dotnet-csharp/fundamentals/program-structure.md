@@ -153,4 +153,4 @@ For detailed information about statements, see Statements. For information about
 - Interfaces
 - Enums
 - Delegates
-- Basic concepts in the C# language specification
+- Basic <example-value> in the C# language specification

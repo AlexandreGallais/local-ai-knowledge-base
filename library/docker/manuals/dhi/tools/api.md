@@ -28,7 +28,7 @@ optionally, `variables`.
 
 ```console
 $ curl https://api.dso.docker.com/v1/graphql \
-  -H "Authorization: Bearer <token>" \
+  -H "<example-value>" \
   -H "Content-Type: application/json" \
   -d '{"query": "...", "variables": { ... }}'
 ```
@@ -39,7 +39,7 @@ Every query takes a `Context` argument (conventionally named `ctx` in the
 | Argument | Type | Required | Description |
 |---|---|---|---|
 | `ctx` | `Context` | Yes | Scopes the request to an organization. |
-| `ctx.organization` | `String` | Yes | The Docker organization the token belongs to. |
+| `ctx.organization` | `String` | Yes | The Docker organization the token <example-value> to. |
 
 ## Authentication
 
@@ -50,18 +50,18 @@ token. Exchange it first for an access token:
 ```console
 $ curl -X POST https://hub.docker.com/v2/auth/token \
   -H "Content-Type: application/json" \
-  -d '{"identifier": "<identifier>", "secret": "<token>"}'
+  -d '<example-value>'
 ```
 
 For `identifier`, use your Docker Hub username with a PAT, or the
 organization name with an OAT. The response contains the access token:
 
 ```json
-{ "access_token": "..." }
+{ "access_token": "<example-value>" }
 ```
 
 Pass that `access_token` as `Authorization: Bearer <access_token>`. Also set
-`ctx.organization` in `variables` to the organization the token belongs to
+`ctx.organization` in `variables` to the organization the token <example-value> to
 (see Request format).
 
 ## Response format

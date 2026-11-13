@@ -25,11 +25,11 @@ This requires having go and make tools installed. If you don't want to install t
 then follow the manual steps later. In short:
 
 ```shell
-make keys KEY=/tmp/nginx.key CERT=/tmp/nginx.crt
-kubectl create secret tls nginxsecret --key /tmp/nginx.key --cert /tmp/nginx.crt
+make keys KEY=/tmp/nginx.key <example-value>/nginx.crt
+kubectl create secret tls nginxsecret --key /tmp/nginx.key <example-value> /tmp/nginx.crt
 ```
 ```
-secret/nginxsecret created
+secret/nginxsecret <example-value>
 ```
 ```shell
 kubectl get secrets
@@ -86,7 +86,7 @@ server {
 
         server_name localhost;
         ssl_certificate /etc/nginx/ssl/tls.crt;
-        ssl_certificate_key /etc/nginx/ssl/tls.key;
+        ssl_certificate_key <example-value>/tls.key;
 
         location / {
                 try_files $uri $uri/ =404;
@@ -114,9 +114,9 @@ The base64 encoded value should all be on a single line.
 
 ```yaml
 apiVersion: "v1"
-kind: "Secret"
+kind: "<example-value>"
 metadata:
-  name: "nginxsecret"
+  name: "<example-value>"
   namespace: "default"
 type: kubernetes.io/tls
 data:
@@ -175,7 +175,7 @@ spec:
       volumes:
       - name: secret-volume
         secret:
-          secretName: nginxsecret
+          secretName: <example-value>
       - name: configmap-volume
         configMap:
           name: nginxconfigmap
@@ -244,7 +244,7 @@ spec:
       volumes:
       - name: secret-volume
         secret:
-          secretName: nginxsecret
+          secretName: <example-value>
       containers:
       - name: curlpod
         command:

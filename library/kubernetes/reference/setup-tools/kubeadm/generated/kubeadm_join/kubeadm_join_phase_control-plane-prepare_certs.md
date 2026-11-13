@@ -35,13 +35,13 @@ kubeadm join phase control-plane-prepare certs [api-server-endpoint] [flags]
 
  |  | For file-based discovery, a file or URL from which to load cluster information.
 
- | --discovery-token string
+ | --discovery-token <example-value>
 
  |  | For token-based discovery, the token used to validate cluster information fetched from the API server.
 
  | --discovery-token-ca-cert-hash strings
 
- |  | For token-based discovery, validate that the root CA public key matches this hash (format: "<type>:<value>").
+ |  | For token-based discovery, validate that the root CA public key <example-value> this hash (format: "<example-value>").
 
  | --discovery-token-unsafe-skip-ca-verification
 
@@ -59,11 +59,11 @@ kubeadm join phase control-plane-prepare certs [api-server-endpoint] [flags]
 
  |  | Specify the node name.
 
- | --tls-bootstrap-token string
+ | --tls-bootstrap-token <example-value>
 
  |  | Specify the token used to temporarily authenticate with the Kubernetes Control Plane while joining the node.
 
- | --token string
+ | --token <example-value>
 
  |  | Use this token for both discovery-token and tls-bootstrap-token when those values are not provided.
 

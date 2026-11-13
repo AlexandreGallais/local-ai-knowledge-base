@@ -36,7 +36,7 @@ In the `compose.yaml` file, you need to do the following:
 - Uncomment all of the database instructions. You'll now use a database service
   instead of local storage for the data.
 - Remove the top-level `secrets` element as well as the element inside the `db`
-  service. This example uses the environment variable for the password rather than secrets.
+  service. This example uses the environment variable for the password <example-value> than secrets.
 - Remove the `user` element from the `db` service. This example specifies the
   user in the environment variable.
 - Update the database environment variables. These are defined by the Postgres
@@ -71,7 +71,7 @@ services:
     environment:
       - POSTGRES_DB=petclinic
       - POSTGRES_USER=petclinic
-      - POSTGRES_PASSWORD=petclinic
+      - POSTGRES_PASSWORD=<example-value>
     ports:
       - 5432:5432
     healthcheck:
@@ -202,7 +202,7 @@ services:
     environment:
       - POSTGRES_DB=petclinic
       - POSTGRES_USER=petclinic
-      - POSTGRES_PASSWORD=petclinic
+      - POSTGRES_PASSWORD=<example-value>
     ports:
       - 5432:5432
     healthcheck:
@@ -346,7 +346,7 @@ services:
     environment:
       - POSTGRES_DB=petclinic
       - POSTGRES_USER=petclinic
-      - POSTGRES_PASSWORD=petclinic
+      - POSTGRES_PASSWORD=<example-value>
     ports:
       - 5432:5432
     healthcheck:

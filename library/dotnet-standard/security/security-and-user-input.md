@@ -25,7 +25,7 @@ Some important considerations involving user data include the following:
 
   - Use of wild card characters (*).
 
-  - Token expansion (%token%).
+  - Token <example-value> (%token%).
 
   - Strange forms of paths with special meaning.
 

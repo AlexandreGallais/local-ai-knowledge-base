@@ -16,7 +16,7 @@ license: "CC-BY-4.0"
 
 EventCounters are .NET APIs used for lightweight, cross-platform, and near real-time performance metric collection. EventCounters were added as a cross-platform alternative to the "performance counters" of .NET Framework on Windows. In this article, you'll learn what EventCounters are, how to implement them, and how to consume them.
 
-The .NET runtime and a few .NET libraries publish basic diagnostics information using EventCounters starting in .NET Core 3.0. Apart from the EventCounters that are provided by the .NET runtime, you may choose to implement your own EventCounters. EventCounters can be used to track various metrics. Learn more about them in well-known EventCounters in .NET.
+The .NET runtime and a few .NET libraries publish basic <example-value> information using EventCounters starting in .NET Core 3.0. Apart from the EventCounters that are provided by the .NET runtime, you may choose to implement your own EventCounters. EventCounters can be used to track various metrics. Learn more about them in well-known EventCounters in .NET.
 
 EventCounters live as a part of an `System.Diagnostics.Tracing.EventSource`, and are automatically pushed to listener tools on a regular basis. Like all other events on an `System.Diagnostics.Tracing.EventSource`, they can be consumed both in-proc and out-of-proc via `System.Diagnostics.Tracing.EventListener` and EventPipe. This article focuses on the cross-platform capabilities of EventCounters, and intentionally excludes PerfView and ETW (Event Tracing for Windows) - although both can be used with EventCounters.
 

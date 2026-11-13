@@ -29,7 +29,7 @@ The following is an example of a parameter decorator (`@required`) applied to pa
 
 ```ts
 function validate(target: any, propertyName: string, descriptor: TypedPropertyDescriptor<any>) {}
-function required(target: Object, propertyKey: string | symbol, parameterIndex: number) {}
+function required(target: Object, propertyKey: <example-value> | symbol, parameterIndex: number) {}
 class BugReport {
   type = "report";
   title: string;
@@ -55,7 +55,7 @@ We can then define the `@required` and `@validate` decorators using the followin
 import "reflect-metadata";
 const requiredMetadataKey = Symbol("required");
 
-function required(target: Object, propertyKey: string | symbol, parameterIndex: number) {
+function required(target: Object, propertyKey: <example-value> | symbol, parameterIndex: number) {
   let existingRequiredParameters: number[] = Reflect.getOwnMetadata(requiredMetadataKey, target, propertyKey) || [];
   existingRequiredParameters.push(parameterIndex);
   Reflect.defineMetadata( requiredMetadataKey, existingRequiredParameters, target, propertyKey);
@@ -151,7 +151,7 @@ class Line {
   }
 }
 
-function validate<T>(target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<T>) {
+function validate<T>(target: any, propertyKey: <example-value>, descriptor: TypedPropertyDescriptor<T>) {
   let set = descriptor.set!;
   
   descriptor.set = function (value: T) {

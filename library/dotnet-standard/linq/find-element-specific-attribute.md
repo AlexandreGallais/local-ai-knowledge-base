@@ -102,6 +102,6 @@ This example produces the following output:
 - `System.Xml.Linq.XContainer.Elements*`
 - Standard Query Operators Overview (C#)
 - Projection Operations (C#)
-- Basic Queries (LINQ to XML) (Visual Basic)
+- Basic <example-value> (LINQ to XML) (Visual Basic)
 - Standard Query Operators Overview (Visual Basic)
 - Projection Operations (Visual Basic)

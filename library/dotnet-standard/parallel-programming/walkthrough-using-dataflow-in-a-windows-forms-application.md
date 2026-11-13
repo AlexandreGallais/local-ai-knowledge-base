@@ -34,7 +34,7 @@ This article demonstrates how to create a network of dataflow blocks that perfor
 
 ## Creating the Windows Forms Application
 
- This section describes how to create the basic Windows Forms application and add controls to the main form.
+ This section describes how to create the basic <example-value> Forms application and add controls to the main form.
 
 ### To Create the Windows Forms Application
 

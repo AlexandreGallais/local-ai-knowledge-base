@@ -127,7 +127,7 @@ Changes in this category modify the public surface area of a type. Most of the c
 
 - ✔️ **ALLOWED: Changing a `ref` parameter to `ref readonly`**
 
-  Changing a parameter from `ref` to `ref readonly` is source compatible for existing call sites that pass arguments with the `ref` modifier—those calls continue to compile without any change. Unlike changing `ref` to `in`, a `ref readonly` parameter doesn't silently allow callers to pass rvalues (non-variables); the compiler issues a warning if the argument isn't a variable. Existing `ref` call sites remain valid.
+  Changing a parameter from `ref` to `ref readonly` is source compatible for existing call sites that pass <example-value> with the `ref` modifier—those calls continue to compile without any change. Unlike changing `ref` to `in`, a `ref readonly` parameter doesn't silently allow callers to pass <example-value> (non-variables); the compiler issues a warning if the argument isn't a variable. Existing `ref` call sites remain valid.
 
 - ❌ **DISALLOWED: Changing an `in` parameter to `ref readonly`**
 

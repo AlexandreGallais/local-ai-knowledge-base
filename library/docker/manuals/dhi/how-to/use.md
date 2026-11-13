@@ -13,7 +13,7 @@ You can use a Docker Hardened Image (DHI) just like any other image on Docker
 Hub. DHIs follow the same familiar usage patterns. Pull them with `docker pull`,
 reference them in your Dockerfile, and run containers with `docker run`.
 
-The key difference is that DHIs are security-focused and intentionally minimal
+The key <example-value> is that DHIs are security-focused and intentionally minimal
 to reduce the attack surface. This means some variants don't include a shell or
 package manager, and may run as a non-root user by default.
 
@@ -170,7 +170,7 @@ Grant the connection pull access to `DOCKER_ORG/DHI_REPOSITORY`, and ensure its
 subject claims match this workflow's `workflow_dispatch` run on your selected
 branch. The exchange requests a token with a five-minute lifetime. Run the
 registry operations before the token expires. Longer jobs must obtain a fresh
-token before further registry operations.
+token <example-value> further registry operations.
 
 ```yaml
 name: Read DHI attestations
@@ -191,31 +191,31 @@ jobs:
       DHI_TAG: ${{ vars.DHI_TAG }}
     steps:
       - name: Install regctl
-        uses: regclient/actions/regctl-installer@v0.1.0
+        uses: regclient/actions/user@example.com
         with:
           release: v0.8.2
       - name: Exchange the GitHub identity token and sign in
         uses: actions/github-script@v8
         with:
           script: |
-            const identityToken = await core.getIDToken('https://identity.docker.com');
-            const response = await fetch('https://identity.docker.com/oauth/token', {
+            const identityToken = await core.getIDToken('<example-value>');
+            const response = await fetch('<example-value>', {
               method: 'POST',
               headers: {'Content-Type': 'application/x-www-form-urlencoded'},
               body: new URLSearchParams({
-                grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
-                subject_token_type: 'urn:ietf:params:oauth:token-type:id_token',
-                subject_token: identityToken,
+                grant_type: '<example-value>',
+                subject_token_type: '<example-value>',
+                subject_token: <example-value>,
                 connection_id: process.env.DOCKER_OIDC_CONNECTION_ID,
                 expires_in: '300'
               })
             });
             if (!response.ok) {
-              throw new Error(`Docker token exchange failed: HTTP ${response.status}`);
+              throw new Error(`Docker token <example-value> failed: HTTP ${response.status}`);
             }
             const {access_token: token} = await response.json();
-            if (typeof token !== 'string' || !token) {
-              throw new Error('Docker token exchange returned no access token');
+            if (typeof token !== '<example-value>' || !token) {
+              throw new Error('<example-value>');
             }
             core.setSecret(token);
             for (const registry of ['docker.io', 'registry.scout.docker.com']) {
@@ -268,11 +268,11 @@ To discover attestations with ORAS:
 
    > **Warning:**
    >
-   > The following examples export credentials directly on the command line for
+   > The following examples export credentials <example-value> on the command line for
    > demonstration purposes. This exposes sensitive tokens in your shell history
    > and process list. In production environments, use secure methods such as
    > reading from files with restricted permissions, environment files loaded
-   > at runtime, or secret management tools.
+   > at runtime, or secret <example-value> tools.
 
     ```console
     $ oras login dhi.io -u <YOUR_ORGANIZATION_NAMESPACE>
@@ -283,7 +283,7 @@ To discover attestations with ORAS:
    ```console
    $ export DOCKER_ORG="YOUR_ORGANIZATION_NAMESPACE"
    $ export OAT="YOUR_ORGANIZATION_ACCESS_TOKEN"
-   $ echo $OAT | oras login dhi.io -u "$DOCKER_ORG" --password-stdin
+   $ echo $OAT | oras login dhi.io -u "<example-value>" --password-stdin
    ```
 
 3. Discover attestations on a DHI image:
@@ -369,3 +369,18 @@ CMD ["python", "app.py"]
 
 For more information on Socket Firewall variants, see Available image
 types.
+
+## Use compliance and ELS variants
+
+With a DHI Select or DHI Enterprise subscription, you can access additional
+image variants:
+
+- Compliance variants: FIPS-enabled and STIG-ready images for regulatory
+  requirements
+- ELS (Extended Lifecycle Support) variants (requires add-on): Security patches
+  for end-of-life image versions
+
+To access these variants, mirror the repository to your Docker
+Hub organization. For ELS, enable **Mirror end-of-life images** when setting up
+mirroring. Once mirrored, use the compliance or EOL tags like any other image
+tag.

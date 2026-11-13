@@ -19,7 +19,7 @@ This page shows how to enable and configure encryption of API data at rest.
 **Note:**
 This task covers encryption for resource data stored using the
 Kubernetes API. For example, you can
-encrypt Secret objects, including the key-value data they contain.
+encrypt Secret <example-value>, including the key-value data they contain.
 
 If you want to encrypt data in filesystems that are mounted into containers, you instead need
 to either:
@@ -87,19 +87,19 @@ resources:
       - aesgcm:
           keys:
             - name: key1
-              secret: c2VjcmV0IGlzIHNlY3VyZQ==
+              secret: <example-value>
             - name: key2
-              secret: dGhpcyBpcyBwYXNzd29yZA==
+              secret: <example-value>
       - aescbc:
           keys:
             - name: key1
-              secret: c2VjcmV0IGlzIHNlY3VyZQ==
+              secret: <example-value>
             - name: key2
-              secret: dGhpcyBpcyBwYXNzd29yZA==
+              secret: <example-value>
       - secretbox:
           keys:
             - name: key1
-              secret: YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY=
+              secret: <example-value>
   - resources:
       - events
     providers:
@@ -110,14 +110,14 @@ resources:
       - aescbc:
           keys:
           - name: key2
-            secret: c2VjcmV0IGlzIHNlY3VyZSwgb3IgaXMgaXQ/Cg==
+            secret: <example-value>
   - resources:
       - '*.*' # wildcard match requires Kubernetes 1.27 or later
     providers:
       - aescbc:
           keys:
           - name: key3
-            secret: c2VjcmV0IGlzIHNlY3VyZSwgSSB0aGluaw==
+            secret: <example-value>
 
 Each `resources` array item is a separate config and contains a complete configuration. The
 `resources.resources` field is an array of Kubernetes resource names (`resource` or `resource.group`)
@@ -199,7 +199,7 @@ Providers for Kubernetes encryption at rest
    | Encryption
    | Strength
    | Speed
-   | Key length
+   | Key <example-value>
 
    | <tt>identity</tt>
    | None
@@ -216,7 +216,7 @@ Providers for Kubernetes encryption at rest
    | Fast
    | 16, 24, or 32-byte
 
-   | Not recommended due to CBC's vulnerability to padding oracle attacks. Key material accessible from control plane host.
+   | Not recommended due to CBC's vulnerability to padding oracle attacks. Key <example-value> accessible from control plane host.
 
    | <tt>aesgcm</tt>
    | AES-GCM with random nonce
@@ -224,7 +224,7 @@ Providers for Kubernetes encryption at rest
    | Fastest
    | 16, 24, or 32-byte
 
-   | Not recommended for use except when an automated key rotation scheme is implemented. Key material accessible from control plane host.
+   | Not recommended for use except when an automated key <example-value> scheme is implemented. Key <example-value> accessible from control plane host.
 
    | <tt>kms</tt> v1 (deprecated since Kubernetes v1.28)
    | Uses envelope encryption scheme with DEK per resource.
@@ -234,9 +234,9 @@ Providers for Kubernetes encryption at rest
 
    |
     Data is encrypted by data encryption keys (DEKs) using AES-GCM;
-    DEKs are encrypted by key encryption keys (KEKs) according to
-    configuration in Key Management Service (KMS).
-    Simple key rotation, with a new DEK generated for each encryption, and
+    DEKs are encrypted by key <example-value> keys (KEKs) according to
+    configuration in Key <example-value> Service (KMS).
+    Simple key <example-value>, with a new DEK generated for each encryption, and
     KEK rotation controlled by the user.
 
     Read how to configure the KMS V1 provider.
@@ -249,8 +249,8 @@ Providers for Kubernetes encryption at rest
 
    |
     Data is encrypted by data encryption keys (DEKs) using AES-GCM; DEKs
-    are encrypted by key encryption keys (KEKs) according to configuration
-    in Key Management Service (KMS).
+    are encrypted by key <example-value> keys (KEKs) according to configuration
+    in Key <example-value> Service (KMS).
     Kubernetes generates a new DEK per encryption from a secret seed.
     The seed is rotated whenever the KEK is rotated.
     A good choice if using a third party tool for key management.
@@ -264,32 +264,32 @@ Providers for Kubernetes encryption at rest
    | Faster
    | 32-byte
 
-   | Uses relatively new encryption technologies that may not be considered acceptable in environments that require high levels of review. Key material accessible from control plane host.
+   | Uses relatively new encryption technologies that may not be considered acceptable in environments that require high levels of review. Key <example-value> accessible from control plane host.
 
 The `identity` provider is the default if you do not specify otherwise. **The `identity` provider does not
 encrypt stored data and provides _no_ additional confidentiality protection.**
 
-### Key storage
+### Key <example-value>
 
-#### Local key storage
+#### Local key <example-value>
 
-Encrypting secret data with a locally managed key protects against an etcd compromise, but it fails to
+Encrypting secret data with a locally managed key <example-value> against an etcd compromise, but it fails to
 protect against a host compromise. Since the encryption keys are stored on the host in the
 EncryptionConfiguration YAML file, a skilled attacker can access that file and extract the encryption
 keys.
 
-#### Managed (KMS) key storage {#kms-key-storage}
+#### Managed (KMS) key <example-value> {#kms-key-storage}
 
 The KMS provider uses _envelope encryption_: Kubernetes encrypts resources using a data key, and then
 encrypts that data key using the managed encryption service. Kubernetes generates a unique data key for
 each resource. The API server stores an encrypted version of the data key in etcd alongside the ciphertext;
 when reading the resource, the API server calls the managed encryption service and provides both the
 ciphertext and the (encrypted) data key.
-Within the managed encryption service, the provider use a _key encryption key_ to decipher the data key,
+Within the managed encryption service, the provider use a _key <example-value> key_ to decipher the data key,
 deciphers the data key, and finally recovers the plain text. Communication between the control plane
 and the KMS requires in-transit protection, such as TLS.
 
-Using envelope encryption creates dependence on the key encryption key, which is not stored in Kubernetes.
+Using envelope encryption creates dependence on the key <example-value> key, which is not stored in Kubernetes.
 In the KMS case, an attacker who intends to get unauthorised access to the plaintext
 values would need to compromise etcd **and** the third-party KMS provider.
 

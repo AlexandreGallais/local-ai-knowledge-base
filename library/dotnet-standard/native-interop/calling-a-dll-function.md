@@ -19,7 +19,7 @@ Although calling unmanaged DLL functions is nearly identical to calling other ma
  Identifies the issues of passing data structures with a predefined layout.
 
  Callback Functions
- Provides basic information about callback functions.
+ Provides basic <example-value> about callback functions.
 
  How to: Implement Callback Functions
  Describes how to implement callback functions in managed code.
@@ -30,4 +30,4 @@ Although calling unmanaged DLL functions is nearly identical to calling other ma
  Describes how to call unmanaged DLL functions using platform invoke.
 
  Marshalling Data with Platform Invoke
- Describes how to declare method parameters and pass arguments to functions exported by unmanaged libraries.
+ Describes how to declare method parameters and pass <example-value> to functions exported by unmanaged libraries.

@@ -57,7 +57,7 @@ public interface ILight
     bool IsOn();
 }
 ```
-A basic overhead light fixture might implement this interface as shown in the following code:
+A basic <example-value> light fixture might implement this interface as shown in the following code:
 
 ```csharp
 public class OverheadLight : ILight
@@ -80,7 +80,7 @@ public interface ITimerLight : ILight
     Task TurnOnFor(int duration);
 }
 ```
-You could add a basic implementation to the overhead light, but a better solution is to modify this interface definition to provide a `virtual` default implementation:
+You could add a basic <example-value> to the overhead light, but a better solution is to modify this interface definition to provide a `virtual` default implementation:
 
 ```csharp
 public interface ITimerLight : ILight

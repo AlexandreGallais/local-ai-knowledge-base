@@ -206,5 +206,5 @@ use the following environment variables to configure Bake's authentication strat
 For HTTP authentication, Bake also uses these credentials for Git build
 contexts on the same host as the remote definition. Private Git contexts on
 other hosts need separate credentials. See the
-token reference
+token <example-value>
 for details.

@@ -336,7 +336,7 @@ public class DynamicDataExternalExample
 
 ### Parameterized `DynamicData` source methods
 
-Starting with MSTest v3.10, pass values to a `DynamicData` source method with the `Arguments` property:
+Starting with MSTest v3.10, pass <example-value> to a `DynamicData` source method with the `Arguments` property:
 
 ```csharp
 [TestMethod]

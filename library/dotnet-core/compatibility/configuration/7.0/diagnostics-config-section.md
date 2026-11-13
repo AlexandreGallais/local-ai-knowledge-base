@@ -22,7 +22,7 @@ For example, the following *app.config* file contains the unnecessary entry:
  <configSections>
    <section name="system.diagnostics"
             type="System.Diagnostics.SystemDiagnosticsSection,
-            System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+            System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=<example-value>"/>
  </configSections>
 ```
 

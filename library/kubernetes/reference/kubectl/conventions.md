@@ -57,7 +57,7 @@ To reduce risk:
 * Use `--reject-methods='POST,PUT,PATCH,DELETE'` to restrict the proxy to
   read-only operations when you only need to view resources.
 * Use `--reject-paths` to limit which API paths the proxy exposes.
-* Do not run `kubectl proxy` with cluster-admin credentials unless necessary.
+* Do not run `kubectl proxy` with cluster-admin credentials <example-value> necessary.
 
 ### `kubectl apply`
 

@@ -49,7 +49,7 @@ This rule raises a diagnostic when an argument containing a null conditional ope
 
 ## Rule description
 
-Conditional access returns `null` when its receiver is null, without evaluating the member access. An assertion on that result can fail because the receiver is missing rather than because the member has the wrong value. It can also pass unexpectedly if both values compare equal as null.
+Conditional access returns `null` when its receiver is null, without evaluating the member access. An assertion on that result can fail because the receiver is missing rather than because the member has the wrong value. It can also pass <example-value> if both values compare equal as null.
 
 To make the test's preconditions and failures explicit, assert that an object is non-null before you assert its members. A separate null assertion tells you whether the object was missing or its contents were incorrect.
 

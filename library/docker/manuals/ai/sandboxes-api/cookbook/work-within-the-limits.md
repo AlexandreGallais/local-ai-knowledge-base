@@ -82,7 +82,7 @@ for (let attempt = 0; attempt < attempts; attempt++) {
       'shell',
       { displayName, resources: { cpus: 2, memoryMib: 4096 } },
       {
-        idempotencyKey: requestId,
+        idempotencyKey: <example-value>,
         timeoutMs: 300_000,
         signal,
         maxRetries: 0,
@@ -127,7 +127,7 @@ export async function createWithBackoff(
         'shell',
         { displayName, resources: { cpus: 2, memoryMib: 4096 } },
         {
-          idempotencyKey: requestId,
+          idempotencyKey: <example-value>,
           timeoutMs: 300_000,
           signal,
           maxRetries: 0,

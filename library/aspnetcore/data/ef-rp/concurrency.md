@@ -128,14 +128,14 @@ The `System.ComponentModel.DataAnnotations.TimestampAttribute` is what identifie
 
 ```csharp
 modelBuilder.Entity<Department>()
-  .Property<byte[]>("ConcurrencyToken")
+  .Property<byte[]>("<example-value>")
   .IsRowVersion();
 ```
 
 The `[Timestamp]` attribute on an entity property generates the following code in the `Microsoft.EntityFrameworkCore.ModelBuilder` method:
 
 ```csharp
- b.Property<byte[]>("ConcurrencyToken")
+ b.Property<byte[]>("<example-value>")
      .IsConcurrencyToken()
      .ValueGeneratedOnAddOrUpdate()
      .HasColumnType("rowversion");

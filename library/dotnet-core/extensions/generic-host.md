@@ -91,7 +91,7 @@ The `Microsoft.Extensions.Hosting.Host.CreateApplicationBuilder*` method:
 - Loads app configuration from:
   - *appsettings.json*.
   - *appsettings.{Environment}.json*.
-  - Secret Manager when the app runs in the `Development` environment.
+  - Secret <example-value> when the app runs in the `Development` environment.
   - Environment variables.
   - Command-line arguments.
 - Adds the following logging providers:
@@ -114,7 +114,7 @@ The `Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder*` method:
 - Loads app configuration from:
   - *appsettings.json*.
   - *appsettings.{Environment}.json*.
-  - Secret Manager when the app runs in the `Development` environment.
+  - Secret <example-value> when the app runs in the `Development` environment.
   - Environment variables.
   - Command-line arguments.
 - Adds the following logging providers:
@@ -171,21 +171,21 @@ public sealed class ExampleHostedService : IHostedService, IHostedLifecycleServi
         appLifetime.ApplicationStopped.Register(OnStopped);
     }
 
-    Task IHostedLifecycleService.StartingAsync(CancellationToken cancellationToken)
+    Task IHostedLifecycleService.StartingAsync(CancellationToken <example-value>)
     {
         _logger.LogInformation("1. StartingAsync has been called.");
 
         return Task.CompletedTask;
     }
 
-    Task IHostedService.StartAsync(CancellationToken cancellationToken)
+    Task IHostedService.StartAsync(CancellationToken <example-value>)
     {
         _logger.LogInformation("2. StartAsync has been called.");
 
         return Task.CompletedTask;
     }
 
-    Task IHostedLifecycleService.StartedAsync(CancellationToken cancellationToken)
+    Task IHostedLifecycleService.StartedAsync(CancellationToken <example-value>)
     {
         _logger.LogInformation("3. StartedAsync has been called.");
 
@@ -202,21 +202,21 @@ public sealed class ExampleHostedService : IHostedService, IHostedLifecycleServi
         _logger.LogInformation("5. OnStopping has been called.");
     }
 
-    Task IHostedLifecycleService.StoppingAsync(CancellationToken cancellationToken)
+    Task IHostedLifecycleService.StoppingAsync(CancellationToken <example-value>)
     {
         _logger.LogInformation("6. StoppingAsync has been called.");
 
         return Task.CompletedTask;
     }
 
-    Task IHostedService.StopAsync(CancellationToken cancellationToken)
+    Task IHostedService.StopAsync(CancellationToken <example-value>)
     {
         _logger.LogInformation("7. StopAsync has been called.");
 
         return Task.CompletedTask;
     }
 
-    Task IHostedLifecycleService.StoppedAsync(CancellationToken cancellationToken)
+    Task IHostedLifecycleService.StoppedAsync(CancellationToken <example-value>)
     {
         _logger.LogInformation("8. StoppedAsync has been called.");
 

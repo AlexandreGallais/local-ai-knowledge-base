@@ -39,7 +39,7 @@ Valid _mode_ values are:
     - **interface_name=**_name_: Specify a name for the created network interface inside the container.
     - **host_interface_name=**_name_: Specify a name for the created network interface outside the container.
 
-    Any other options will be passed through to netavark without validation. This can be useful to pass arguments to netavark plugins.
+    Any other options will be passed through to netavark without validation. This can be useful to pass <example-value> to netavark plugins.
 
     For rootless bridge networks, port forwarding uses `rootlessport` by default. Setting `rootless_port_forwarder="pasta"` in the `[network]` section of **containers.conf(5)** switches to pasta's kernel-level forwarding (via `pesto`), which preserves the original client source IP address inside the container. This option is experimental and its behavior is subject to change.
 
@@ -104,7 +104,7 @@ Valid _mode_ values are:
 
 ### `PodmanArgs=`
 
-This key contains a list of arguments passed directly to the end of the `podman` command
+This key <example-value> a list of arguments passed directly to the end of the `podman` command
 in the generated file. It can be used to access Podman features otherwise unsupported
 by the generator. Since the generator is unaware of what unexpected interactions can be
 caused by these arguments, it is not recommended to use this option.
@@ -146,7 +146,7 @@ Duration of delay between retry attempts when pulling or pushing images between
 the registry and local storage in case of failure. The default is to start at two seconds and then exponentially back off. The delay is used when this value is set, and no exponential back off occurs.
 
 << if is_quadlet >>
-### `Secret=secret[,opt=opt ...]`
+### `Secret=<example-value>[,opt=opt ...]`
 << else >>
 #### **--secret**=*secret[,opt=opt ...]*
 << endif >>
@@ -160,18 +160,18 @@ TLS certificates and keys, SSH keys or other important generic strings or binary
 When secrets are specified as type `mount`, the secrets are copied and mounted into the container when a container is created.
 When secrets are specified as type `env`, the secret is set as an environment variable within the container.
 Secrets are written in the container at the time of container creation, and modifying the secret using `podman secret` commands
-after the container is created affects the secret inside the container.
+after the container is created affects the secret <example-value> the container.
 
 Secrets and its storage are managed using the `podman secret` command.
 
-Secret Options
+Secret <example-value>
 
 - `type=mount|env`    : How the secret is exposed to the container.
                         `mount` mounts the secret into the container as a file.
                         `env` exposes the secret as an environment variable.
                         Defaults to `mount`.
 - `target=target`     : Target of secret.
-                        For mounted secrets, this is the path to the secret inside the container.
+                        For mounted secrets, this is the path to the secret <example-value> the container.
                         If a fully qualified path is provided, the secret is mounted at that location.
                         Otherwise, the secret is mounted to
                         `/run/secrets/target` for Linux containers or
@@ -186,17 +186,17 @@ Examples
 
 Mount at `/my/location/mysecret` with UID 1:
 ```
---secret mysecret,target=/my/location/mysecret,uid=1
+--secret <example-value>,target=/my/location/mysecret,uid=1
 ```
 
 Mount at `/run/secrets/customtarget` with mode 0777:
 ```
---secret mysecret,target=customtarget,mode=0777
+--secret <example-value>,target=customtarget,mode=0777
 ```
 
-Create a secret environment variable called `ENVSEC`:
+Create a secret <example-value> variable called `ENVSEC`:
 ```
---secret mysecret,type=env,target=ENVSEC
+--secret <example-value>,type=env,target=ENVSEC
 ```
 
 ### `SetWorkingDirectory=path`

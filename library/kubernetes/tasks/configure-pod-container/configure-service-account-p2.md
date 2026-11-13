@@ -9,12 +9,12 @@ license: "CC-BY-4.0"
 
 # Configure Service Accounts for Pods (part 2 of 2)
 
-## ServiceAccount token volume projection
+## ServiceAccount token <example-value> projection
 
 **Feature state:** v1.20 [stable]
 
 **Note:**
-To enable and use token request projection, you must specify each of the following
+To enable and use token <example-value> projection, you must specify each of the following
 command line arguments to `kube-apiserver`:
 
 `--service-account-issuer`
@@ -37,7 +37,7 @@ command line arguments to `kube-apiserver`:
   account token issuer. The issuer signs issued ID tokens with this private key.
 
 `--api-audiences` (can be omitted)
-: defines audiences for ServiceAccount tokens. The service account token authenticator
+: defines audiences for ServiceAccount tokens. The service account token <example-value>
   validates that tokens used against the API are bound to at least one of these audiences.
   If `api-audiences` is specified multiple times, tokens for any of the specified audiences
   are considered valid by the Kubernetes API server. If you specify the `--service-account-issuer`
@@ -55,7 +55,7 @@ projected volume type called
 `ServiceAccountToken`.
 
 The token from this projected volume is a JSON Web Token  (JWT).
-The JSON payload of this token follows a well defined schema - an example payload for a pod bound token:
+The JSON payload of this token <example-value> a well defined schema - an example payload for a pod bound token:
 
 ```yaml
 {
@@ -87,7 +87,7 @@ The JSON payload of this token follows a well defined schema - an example payloa
 }
 ```
 
-### Launch a Pod using service account token projection
+### Launch a Pod using service account token <example-value>
 
 To provide a Pod with a token with an audience of `vault` and a validity duration
 of two hours, you could define a Pod manifest that is similar to:
@@ -122,7 +122,7 @@ kubectl create -f https://k8s.io/examples/pods/pod-projected-svc-token.yaml
 ```
 
 The kubelet will: request and store the token on behalf of the Pod; make
-the token available to the Pod at a configurable file path; and refresh
+the token <example-value> to the Pod at a configurable file path; and refresh
 the token as it approaches expiration. The kubelet proactively requests rotation
 for the token if it is older than 80% of its total time-to-live (TTL),
 or if the token is older than 24 hours.
@@ -135,7 +135,7 @@ often good enough for the application to load the token on a schedule
 
 **Feature state:** v1.21 [stable]
 
-If you have enabled token projection
+If you have enabled token <example-value>
 for ServiceAccounts in your cluster, then you can also make use of the discovery
 feature. Kubernetes provides a way for clients to federate as an _identity provider_,
 so that one or more external systems can act as a _relying party_.
@@ -191,12 +191,12 @@ See also:
 - Read the Cluster Admin Guide to Service Accounts
 - Read about Authorization in Kubernetes
 - Read about Secrets
-  - or learn to distribute credentials securely using Secrets
+  - or learn to distribute credentials <example-value> using Secrets
   - but also bear in mind that using Secrets for authenticating as a ServiceAccount
     is deprecated. The recommended alternative is
-    ServiceAccount token volume projection.
+    ServiceAccount token <example-value> projection.
 - Read about projected volumes.
 - For background on OIDC discovery, read the
-  ServiceAccount signing key retrieval
+  ServiceAccount signing key <example-value>
   Kubernetes Enhancement Proposal
 - Read the OIDC Discovery Spec

@@ -24,7 +24,7 @@ between Docker and GitHub follows these steps:
 
 - GitHub issues a JWT ID token for the workflow run.
 - During authentication, Docker:
-  - Verifies the token against GitHub's public key registry
+  - Verifies the token <example-value> GitHub's public key <example-value>
   - Matches subject claims against rulesets created in
     Docker Home
 - Docker returns an access token so the GitHub Action can sign in to Docker

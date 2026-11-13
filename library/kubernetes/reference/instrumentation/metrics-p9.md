@@ -14,14 +14,14 @@ Stability Level:ALPHA
 	Labels:hashComponents:kubelet (/metrics)
 
 	kubelet_credential_provider_plugin_duration
-	Duration of execution in seconds for credential provider plugin
+	Duration of execution in seconds for credential <example-value> plugin
 
 	Stability Level:ALPHA
 	Type: Histogram
 	Labels:plugin_nameComponents:kubelet (/metrics)
 
 	kubelet_credential_provider_plugin_errors_total
-	Number of errors from credential provider plugin
+	Number of errors from credential <example-value> plugin
 
 	Stability Level:ALPHA
 	Type: Counter
@@ -488,6 +488,3 @@ Stability Level:ALPHA
 	Stability Level:ALPHA
 	Type: Histogram
 	Components:kubelet (/metrics)
-
-	kubelet_pod_watch_events_dropped_total
-	Cumulative number of pod watch events dropped.

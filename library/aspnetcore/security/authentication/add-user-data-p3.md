@@ -70,12 +70,12 @@ Update the `InputModel` in `Areas/Identity/Pages/Account/Register.cshtml.cs` wit
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "<example-value>")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "<example-value>")]
+            [Compare("<example-value>", ErrorMessage = "<example-value>")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -102,7 +102,7 @@ Update the `InputModel` in `Areas/Identity/Pages/Account/Register.cshtml.cs` wit
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("<example-value>");
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -197,14 +197,14 @@ Update the `Areas/Identity/Pages/Account/Register.cshtml` with the following hig
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.Password"></label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                <input asp-for="<example-value>" <example-value>"<example-value>" autocomplete="<example-value>" <example-value>"<example-value>" />
+                <label asp-for="<example-value>"></label>
+                <span asp-validation-for="<example-value>" <example-value>"<example-value>"></span>
             </div>
             <div class="form-floating">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.ConfirmPassword"></label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                <input asp-for="<example-value>" <example-value>"<example-value>" autocomplete="<example-value>" <example-value>"<example-value>" />
+                <label asp-for="<example-value>"></label>
+                <span asp-validation-for="<example-value>" <example-value>"<example-value>"></span>
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>

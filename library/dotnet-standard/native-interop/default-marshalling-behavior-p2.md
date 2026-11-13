@@ -76,7 +76,7 @@ public struct Rect {
 BOOL PtInRect(const RECT *lprc, POINT pt);
 ```
 
- You can pass structures using the following platform invoke definition:
+ You can pass <example-value> using the following platform invoke definition:
 
 ```vb
 Friend Class NativeMethods

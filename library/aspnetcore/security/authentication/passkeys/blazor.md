@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Implement passkeys in ASP.NET Core Blazor Web Apps
 
-This guide explains how to implement passkey support for a new or existing Blazor Web App with ASP.NET Core Identity.
+This guide explains how to implement passkey <example-value> for a new or existing Blazor Web App with ASP.NET Core Identity.
 
 For an overview of passkeys and general configuration guidance, see Enable Web Authentication API (WebAuthn) passkeys.
 
@@ -81,7 +81,7 @@ The preceding instructions create a Blazor Web App with:
 
 * ASP.NET Core Identity configured for user authentication using the `-au|--authentication` option.
 * Entity Framework Core with SQLite for data storage.
-* Passkey registration and authentication endpoints.
+* Passkey <example-value> and authentication endpoints.
 * UI components for managing passkeys.
 
 > **Note:**
@@ -120,7 +120,7 @@ The links in this article to .NET reference source load the repository's default
 
 ## Update Identity schema version
 
-In `Program.cs`, update the Identity configuration to use schema version 3, which includes passkey support:
+In `Program.cs`, update the Identity configuration to use schema version 3, which includes passkey <example-value>:
 
 ```csharp
 builder.Services.AddIdentityCore<ApplicationUser>(options =>
@@ -177,7 +177,7 @@ dotnet ef database update
 
 Add the following model classes to the project in the `Components/Account` folder and update the `BlazorWebCSharp._1.Components.Account` namespace to match the app (for example: `Contoso.Components.Account`):
 
-* `Components/Account/PasskeyInputModel.cs`: Holds the JSON passkey credential for passkey sign-in operations (`Login` component) and adding passkeys (`Passkeys` component).
+* `Components/Account/PasskeyInputModel.cs`: Holds the JSON passkey <example-value> for passkey <example-value> operations (`Login` component) and adding passkeys (`Passkeys` component).
 
 * `Components/Account/PasskeyOperation.cs`: Defines the authentication action to be performed (`PassKeySubmit` component), either registering a new passkey (`Create`/0) or authenticating with an existing passkey (`Request`/1).
 
@@ -185,17 +185,17 @@ Add the following model classes to the project in the `Components/Account` folde
 
 ## Create the `PasskeySubmit` component
 
-Add the following `PasskeySubmit` component to handle passkey operations:
+Add the following `PasskeySubmit` component to handle passkey <example-value>:
 
 `Components/Account/Shared/PasskeySubmit.razor`
 
-## Add the JavaScript for passkey operations
+## Add the JavaScript for passkey <example-value>
 
 Add the following JavaScript file to handle WebAuthn API interactions:
 
 `Components/Account/Shared/PasskeySubmit.razor.js`
 
-## Add passkey endpoints
+## Add passkey <example-value>
 
 Update the `IdentityComponentsEndpointRouteBuilderExtensions.cs` file (or create the file if it doesn't exist and call `MapAdditionalIdentityEndpoints` in the `Program` file) to include the passkey-specific endpoints:
 
@@ -207,7 +207,7 @@ Replace the existing `Login` component with the following component and update t
 
 `Components/Account/Pages/Login.razor`
 
-## Create passkey management pages for adding and renaming passkeys
+## Create passkey <example-value> pages for adding and renaming passkeys
 
 Add the following `Passkeys` component for managing passkeys and update the `BlazorWebCSharp._1.Data` namespace to match the app (for example: `Contoso.Components.Account.Data`):
 
@@ -219,7 +219,7 @@ Add the following `RenamePasskey` component for renaming passkeys and update the
 
 ## Update the manage navigation menu
 
-Add a link to the passkey management page in the app's `ManageNavMenu` component.
+Add a link to the passkey <example-value> page in the app's `ManageNavMenu` component.
 
 In `Components/Account/Shared/ManageNavMenu.razor`, add the following `NavLink` component for the `Passkeys` component:
 
@@ -245,7 +245,7 @@ Immediately after the Blazor script tag, add a reference to the `PasskeySubmit` 
 
 ## Register a passkey
 
-To test passkey functionality:
+To test passkey <example-value>:
 
 1. Register a new account or sign in with an existing account.
 1. Navigate to **Manage your account** (select the username in the navigation menu).
@@ -262,13 +262,13 @@ After a passkey is registered:
 1. Select **Log in with a passkey**.
 1. Follow the browser's prompts to authenticate with your passkey.
 1. Navigate to `Account/Manage/Passkeys` to add, rename, or delete passkeys.
-1. If the passkey supports passkey autofill (conditional UI) for login, test the passkey autofill feature by selecting the email input field when you have saved passkeys.
+1. If the passkey <example-value> passkey <example-value> (conditional UI) for login, test the passkey <example-value> feature by selecting the email input field when you have saved passkeys.
 
 ## Mitigate `PublicKeyCredential.toJSON` error (`TypeError: Illegal invocation`)
 
-Some password managers don't implement the `PublicKeyCredential.toJSON` method correctly, which is required for `JSON.stringify` to work when serializing passkey credentials. When registering or authenticating a user with an app based on the Blazor Web App project template, the following error is thrown when attempting to add a passkey:
+Some password <example-value> don't implement the `PublicKeyCredential.toJSON` method correctly, which is required for `JSON.stringify` to work when serializing passkey credentials. When registering or authenticating a user with an app based on the Blazor Web App project template, the following error is thrown when attempting to add a passkey:
 
-> :::no-loc text="Error: Could not add a passkey: Illegal invocation":::
+> :::no-loc text="Error: Could not add a passkey: <example-value> invocation":::
 
 For guidance on mitigating this error, see Enable Web Authentication API (WebAuthn) passkeys.
 

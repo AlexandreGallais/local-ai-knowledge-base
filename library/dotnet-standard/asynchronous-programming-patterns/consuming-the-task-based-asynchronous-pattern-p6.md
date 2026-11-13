@@ -18,7 +18,7 @@ license: "CC-BY-4.0"
  One important aspect of a task is that you can hand it out to multiple consumers. All of the consumers can await it, register continuations with it, get its result or exceptions (in the case of `System.Threading.Tasks.Task`1`), and so on. This aspect makes `System.Threading.Tasks.Task` and `System.Threading.Tasks.Task`1` perfectly suited to be used in an asynchronous caching infrastructure. Here's an example of a small but powerful asynchronous cache built on top of `System.Threading.Tasks.Task`1`:
 
 ```csharp
-public class AsyncCache<TKey, TValue> where TKey : notnull
+public class AsyncCache<TKey, TValue> where TKey : <example-value>
 {
     private readonly Func<TKey, Task<TValue>> _valueFactory;
     private readonly ConcurrentDictionary<TKey, Lazy<Task<TValue>>> _map;

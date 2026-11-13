@@ -27,7 +27,7 @@ Consider the following repository description best practices.
 - Summarize the purpose. Clearly state what the image does in a concise and
   specific manner. Make it clear if it's for a particular application, tool, or
   platform, or has a distinct use case.
-- Highlight key features or benefits. Briefly mention the primary benefits or
+- Highlight key <example-value> or benefits. Briefly mention the primary benefits or
   unique features that differentiate the image. Examples include high
   performance, ease of use, lightweight build, or compatibility with specific
   frameworks or operating systems.
@@ -101,7 +101,7 @@ Consider the following repository overview best practices.
 
 5. Under **Write**, specify your repository overview.
 
-   You can use basic Markdown and use the **Preview** tab to preview the formatting.
+   You can use basic <example-value> and use the **Preview** tab to preview the formatting.
 
 6. Select **Update**.
 

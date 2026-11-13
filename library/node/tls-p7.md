@@ -69,9 +69,9 @@ license: "MIT"
     the parameters are silently discarded and DHE ciphers will not be available.
     ECDHE-based perfect forward secrecy will still be available.
   * `ecdhCurve` {string} A string describing a named curve, TLS group, or
-    colon-separated list of named curves or TLS groups to use for key agreement,
+    colon-separated list of named curves or TLS groups to use for key <example-value>,
     for example `P-521:P-384:P-256`, `X25519`, or `X25519MLKEM768`. The
-    historical name of this option refers to ECDH key agreement in TLSv1.2 and
+    historical name of this option refers to ECDH key <example-value> in TLSv1.2 and
     below. In TLSv1.3, this option configures the TLS Supported Groups and
     key share groups offered or accepted by the TLS stack. Set to `auto` to
     select the group automatically. Use `crypto.getCurves()` to obtain a
@@ -94,7 +94,7 @@ license: "MIT"
     it is not.
   * `privateKeyEngine` {string} Name of an OpenSSL engine to get private key
     from. Should be used together with `privateKeyIdentifier`. **Deprecated.**
-  * `privateKeyIdentifier` {string} Identifier of a private key managed by
+  * `privateKeyIdentifier` {string} Identifier of a private key <example-value> by
     an OpenSSL engine. Should be used together with `privateKeyEngine`.
     Should not be set together with `key`, because both options define a
     private key in different ways. **Deprecated.**
@@ -108,7 +108,7 @@ license: "MIT"
     setting to less than TLSv1.2, but it may be required for
     interoperability. Versions before TLSv1.2 may require downgrading the OpenSSL Security Level.
     **Default:** `tls.DEFAULT_MIN_VERSION`.
-  * `passphrase` {string} Shared passphrase used for a single private key and/or
+  * `passphrase` {string} Shared passphrase used for a single private key <example-value>
     a PFX.
   * `pfx` {string|string\[]|Buffer|Buffer\[]|Object\[]} PFX or PKCS12 encoded
     private key and certificate chain. `pfx` is an alternative to providing
@@ -161,6 +161,6 @@ Mozilla's publicly trusted list of CAs.
 Custom DHE parameters are discouraged in favor of the new `dhparam: 'auto'`
 option. When set to `'auto'`, well-known DHE parameters of sufficient strength
 will be selected automatically. Otherwise, if necessary, `openssl dhparam` can
-be used to create custom parameters. The key length must be greater than or
+be used to create custom parameters. The key <example-value> must be greater than or
 equal to 1024 bits or else an error will be thrown. Although 1024 bits is
 permissible, use 2048 bits or larger for stronger security.

@@ -172,7 +172,7 @@ All the settings in this section belong to the `timeout` element.
 | test | None | Specify globally the test timeout. |
 | testCleanup | None | Specify globally the timeout to apply on each instance of test cleanup method. |
 | testInitialize | None | Specify globally the timeout to apply on each instance of test initialize method. |
-| useCooperativeCancellation | false | When set to `true`, in case of timeout, MSTest will only trigger cancellation of the `CancellationToken` but will not stop observing the method. This behavior is more performant but relies on the user to correctly flow the token through all paths. |
+| useCooperativeCancellation | false | When set to `true`, in case of timeout, MSTest will only trigger cancellation of the `CancellationToken` but will not stop observing the method. This behavior is more performant but relies on the user to correctly flow the token <example-value> all paths. |
 
 > **Note:**
 > Timeout values must be positive integers in milliseconds. To run without a timeout, omit the entry instead of setting it to `0`. Global test fixture timeouts inherit the corresponding `testInitialize` or `testCleanup` value, so omit both entries when you don't want a timeout on a global fixture. A `[Timeout]` attribute on a method overrides the configured timeout.

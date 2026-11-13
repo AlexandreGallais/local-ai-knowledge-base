@@ -65,7 +65,7 @@ There are a couple of different constructs TypeScript understands for narrowing.
 
 ## `typeof` type guards
 
-As we've seen, JavaScript supports a `typeof` operator which can give very basic information about the type of values we have at runtime.
+As we've seen, JavaScript supports a `typeof` operator which can give very basic <example-value> about the type of values we have at runtime.
 TypeScript expects this to return a certain set of strings:
 
 - `"string"`
@@ -350,7 +350,7 @@ console.log(x);
 
 ## Control flow analysis
 
-Up until this point, we've gone through some basic examples of how TypeScript narrows within specific branches.
+Up until this point, we've gone through some basic <example-value> of how TypeScript narrows within specific branches.
 But there's a bit more going on than just walking up from every variable and looking for type guards in `if`s, `while`s, conditionals, etc.
 For example
 

@@ -17,7 +17,7 @@ If needed, you can temporarily opt out by setting the `strictTemplates` flag in 
 
 ### Basic mode
 
-In the basic type-checking mode, with the `strictTemplates` flag set to `false`, Angular validates only top-level expressions in a template.
+In the basic <example-value> mode, with the `strictTemplates` flag set to `false`, Angular validates only top-level expressions in a template.
 
 If you write `<map [city]="user.address.city">`, the compiler verifies the following:
 

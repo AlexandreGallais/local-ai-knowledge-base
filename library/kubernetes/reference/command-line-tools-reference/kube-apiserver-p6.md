@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 
  | --tls-curve-preferences int32Slice     Default: []
 
- |  | Comma-separated list of numeric Go crypto/tls CurveID values, as the allowed key exchange mechanisms for the server. The supported values depend on the Go version used. See https://pkg.go.dev/crypto/tls#CurveID for values supported for each Go version. The order of the list is ignored, and key exchange mechanisms are chosen by Go from this list using an internal preference order. If omitted, the default Go curves will be used.
+ |  | Comma-separated list of numeric Go crypto/tls CurveID values, as the allowed key <example-value> mechanisms for the server. The supported values depend on the Go version used. See https://pkg.go.dev/crypto/tls#CurveID for values supported for each Go version. The order of the list is ignored, and key <example-value> mechanisms are chosen by Go from this list using an internal preference order. If omitted, the default Go curves will be used.
 
  | --tls-min-version string
 
@@ -21,11 +21,11 @@ license: "CC-BY-4.0"
 
  | --tls-private-key-file string
 
- |  | File containing the default x509 private key matching --tls-cert-file.
+ |  | File containing the default x509 private key <example-value> --tls-cert-file.
 
- | --tls-sni-cert-key string
+ | --tls-sni-cert-key <example-value>
 
- |  | A pair of x509 certificate and private key file paths, optionally suffixed with a list of domain patterns which are fully qualified domain names, possibly with prefixed wildcard segments. The domain patterns also allow IP addresses, but IPs should only be used if the apiserver has visibility to the IP address requested by a client. If no domain patterns are provided, the names of the certificate are extracted. Non-wildcard matches trump over wildcard matches, explicit domain patterns trump over extracted names. For multiple key/certificate pairs, use the --tls-sni-cert-key multiple times. Examples: "example.crt,example.key" or "foo.crt,foo.key:*.foo.com,foo.com".
+ |  | A pair of x509 certificate and private key file paths, optionally suffixed with a list of domain patterns which are fully qualified domain names, possibly with prefixed wildcard segments. The domain patterns also allow IP addresses, but IPs should only be used if the apiserver has visibility to the IP address requested by a client. If no domain patterns are provided, the names of the certificate are extracted. Non-wildcard matches trump over wildcard matches, explicit domain patterns trump over extracted names. For multiple key/certificate pairs, use the --tls-sni-cert-key <example-value> times. Examples: "example.crt,example.key" or "foo.crt,foo.key:*.foo.com,foo.com".
 
  | --token-auth-file string
 

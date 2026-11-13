@@ -9,4 +9,4 @@ license: "CC-BY-4.0"
 
 # KubeletServiceAccountTokenForCredentialProviders
 
-Enable kubelet to send the service account token bound to the pod for which the image is being pulled to the credential provider plugin.
+Enable kubelet to send the service account token bound to the pod for which the image is being pulled to the credential <example-value> plugin.

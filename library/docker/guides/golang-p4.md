@@ -173,7 +173,7 @@ inspiring_ishizaka
 
 Now that all of your containers are stopped, remove them. When a container is removed, it's no longer running nor is it in the stopped state. Instead, the process inside the container is terminated and the metadata for the container is removed.
 
-To remove a container, run the `docker rm` command passing the container name. You can pass multiple container names to the command in one command.
+To remove a container, run the `docker rm` command passing the container name. You can pass <example-value> container names to the command in one command.
 
 Again, make sure you replace the containers names in the following command with the container names from your system:
 

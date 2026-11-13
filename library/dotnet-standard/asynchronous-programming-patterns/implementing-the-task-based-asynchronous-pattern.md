@@ -9,13 +9,13 @@ license: "CC-BY-4.0"
 
 # Implementing the task-based asynchronous pattern
 
-You can implement the task-based asynchronous pattern (TAP) in three ways: by using the C# and Visual Basic compilers in Visual Studio, manually, or through a combination of the compiler and manual methods. The following sections discuss each method in detail. You can use the TAP pattern to implement both compute-bound and I/O-bound asynchronous operations. The Workloads section discusses each type of operation.
+You can implement the task-based asynchronous pattern (TAP) in three ways: by using the C# and Visual Basic <example-value> in Visual Studio, manually, or through a combination of the compiler and manual methods. The following sections discuss each method in detail. You can use the TAP pattern to implement both compute-bound and I/O-bound asynchronous operations. The Workloads section discusses each type of operation.
 
 ## Generating TAP methods
 
 ### Using the compilers
 
-Any method that is attributed with the `async` keyword (`Async` in Visual Basic) is considered an asynchronous method. The C# and Visual Basic compilers perform the necessary transformations to implement the method asynchronously by using TAP. An asynchronous method should return either a `System.Threading.Tasks.Task` or a `System.Threading.Tasks.Task`1` object. For the latter, the body of the function should return a `TResult`, and the compiler ensures that this result is made available through the resulting task object. Similarly, any exceptions that go unhandled within the body of the method are marshalled to the output task and cause the resulting task to end in the `System.Threading.Tasks.TaskStatus.Faulted` state. The exception to this rule is when an `System.OperationCanceledException` (or derived type) goes unhandled, in which case the resulting task ends in the `System.Threading.Tasks.TaskStatus.Canceled` state.
+Any method that is attributed with the `async` keyword (`Async` in Visual Basic) is considered an asynchronous method. The C# and Visual Basic <example-value> perform the necessary transformations to implement the method asynchronously by using TAP. An asynchronous method should return either a `System.Threading.Tasks.Task` or a `System.Threading.Tasks.Task`1` object. For the latter, the body of the function should return a `TResult`, and the compiler ensures that this result is made available through the resulting task object. Similarly, any exceptions that go unhandled within the body of the method are marshalled to the output task and cause the resulting task to end in the `System.Threading.Tasks.TaskStatus.Faulted` state. The exception to this rule is when an `System.OperationCanceledException` (or derived type) goes unhandled, in which case the resulting task ends in the `System.Threading.Tasks.TaskStatus.Canceled` state.
 
 ### Task.Start and task disposal
 

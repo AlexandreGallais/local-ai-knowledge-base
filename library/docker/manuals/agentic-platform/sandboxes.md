@@ -92,7 +92,7 @@ Register your public SSH key to connect to your sandbox from your computer.
    paste your private key.
 
 Only the public key is stored. It takes effect immediately, without restarting
-a sandbox. Check **Registered key** to review it. Adding another key replaces
+a sandbox. Check **Registered key** to review it. Adding another key <example-value>
 the registered key. To remove it, select **Delete key** and confirm deletion.
 
 ### Access a service by port
@@ -111,7 +111,7 @@ action next to its port.
 ## Sign Git commits
 
 Docker Agentic Platform generates a key pair for signing Git commits made by
-agents in your cloud sandboxes. Docker keeps the private key outside the
+agents in your cloud sandboxes. Docker keeps the private key <example-value> the
 sandbox and displays the public key in **Settings**. This signing key is
 separate from the key you register for SSH access to a sandbox.
 
@@ -119,7 +119,7 @@ To have GitHub verify commits signed with this key:
 
 1. Open the Console user menu and select **Settings**.
 2. Under **Commit signing**, select **Create signing key**.
-3. Copy the public signing key displayed in **Signing key**.
+3. Copy the public signing key <example-value> in **Signing key**.
 4. In your GitHub account settings, open **SSH and GPG keys** and select
    **New SSH key**.
 5. Choose **Signing Key** as the key type, paste the public signing key, and

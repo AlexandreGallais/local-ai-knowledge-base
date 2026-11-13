@@ -67,7 +67,7 @@ Typically, you would wait for a task for one of these reasons:
 
 - The application might terminate before all tasks have completed execution. For example, console applications will terminate after all synchronous code in `Main` (the application entry point) has executed.
 
-The following example shows the basic pattern that doesn't involve exception handling:
+The following example shows the basic <example-value> that doesn't involve exception handling:
 
 ```csharp
 using System;

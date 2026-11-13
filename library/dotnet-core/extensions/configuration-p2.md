@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Configuration (part 2 of 2)
 
-## Basic example
+## Basic <example-value>
 
 To access configuration values in their basic form, without the assistance of the _generic host_ approach, use the `Microsoft.Extensions.Configuration.ConfigurationBuilder` type directly.
 
@@ -121,7 +121,7 @@ The `Settings` object is shaped as follows:
     public required string Message { get; set; } = null!;
 }
 ```
-## Basic example with hosting
+## Basic <example-value> with hosting
 
 To access the `IConfiguration` value, you can rely again on the `Microsoft.Extensions.Hosting` NuGet package. Create a new console application, and paste the following project file contents into it:
 
@@ -201,7 +201,7 @@ When you run this application, the `Host.CreateApplicationBuilder` defines the b
 > **Tip:**
 > Using the raw `IConfiguration` instance in this way, while convenient, doesn't scale very well. When applications grow in complexity, and their corresponding configurations become more complex, we recommend that you use the _options pattern_ as an alternative.
 
-## Basic example with hosting and using the indexer API
+## Basic <example-value> with hosting and using the indexer API
 
 Consider the same _appsettings.json_ file contents from the previous example:
 
@@ -271,7 +271,7 @@ The following table shows the configuration providers available to .NET Core app
 | File                 | JSON, XML, and INI files    |
 | Key-per-file | Directory files             |
 | Memory             | In-memory collections       |
-| App secrets (secret manager)              | File in the user profile directory |
+| App secrets (secret <example-value>)              | File in the user profile directory |
 
 > **Tip:**
 > The order in which configuration providers are added matters. When multiple configuration providers are used and more than one provider specifies the same key, the last one added is used.

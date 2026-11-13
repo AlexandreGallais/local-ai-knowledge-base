@@ -134,6 +134,6 @@ root   1     0      0.000   1h2m12.497061672s   ?     0s     sleep 100000
 **podman(1)**, **ps(1)**, **seccomp(2)**, **proc(5)**, **capabilities(7)**
 
 ## HISTORY
-July 2018, Introduce format descriptors by Valentin Rothberg <vrothberg@suse.com>
+July 2018, Introduce format descriptors by Valentin Rothberg <user@example.com>
 
-December 2017, Originally compiled by Brent Baude <bbaude@redhat.com>
+December 2017, Originally compiled by Brent Baude <user@example.com>

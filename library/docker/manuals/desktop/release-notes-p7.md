@@ -97,7 +97,7 @@ license: "Apache-2.0"
 #### For all platforms
 
 - Fixed an issue where `docker logout` from the CLI was ignored by Docker Desktop when OAuth tokens remained in the credential store, leaving the user unexpectedly signed in.
-- Fixed an issue where Docker Desktop could unexpectedly sign users out when unrelated credential updates, `docker login`, or transient network errors triggered a sign-out.
+- Fixed an issue where Docker Desktop could unexpectedly sign users out when unrelated credential <example-value>, `docker login`, or transient network errors triggered a sign-out.
 - Fixed a data loss issue where backup data could be deleted during a failed restore operation, leaving users with no data.
 - Fixed an issue where sign-in credentials (`login-info.json`) could be included in diagnostic bundles, improving privacy and security. Note that this file contains an encoded organisation(s) name, plan name, encoded username, and encoded email only. No passwords or credentials are included.
 - Fixed the footer update label incorrectly showing **Downloading** during the prepare/unpack phase of an update. It now correctly displays **Preparing**.
@@ -146,7 +146,7 @@ license: "Apache-2.0"
 
 #### For Mac
 
-- Fixed a security vulnerability where tampered user-deployed config profiles could bypass organization sign-in enforcement.
+- Fixed a security vulnerability where tampered user-deployed config profiles could bypass <example-value> sign-in enforcement.
 - Fixed a bug where a failed `vmnetd` handshake could dispatch a bogus command on a broken connection, causing unexpected networking errors.
 - Fixed a bug where the Docker Desktop Dashboard could be prematurely displayed when restoring to a fullscreen state on launch.
 - Fixed nested bind mounts showing empty child mount content on VirtioFS when using Docker Compose with multiple services sharing a volume. Fixes docker/desktop-feedback#264.

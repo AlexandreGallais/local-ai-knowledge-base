@@ -30,7 +30,7 @@ A continuation is itself a `System.Threading.Tasks.Task` and doesn't block the t
 
 ## Create a continuation for a single antecedent
 
-You create a continuation that executes when its antecedent has completed by calling the `System.Threading.Tasks.Task.ContinueWith*` method. The following example shows the basic pattern (for clarity, exception handling is omitted). It executes an antecedent task `taskA` that returns a `System.DayOfWeek` object that indicates the name of the current day of the week. When `taskA` completes, the `antecedent` represents its results in the `ContinueWith` continuation method. The result of the antecedent task is written to the console.
+You create a continuation that executes when its antecedent has completed by calling the `System.Threading.Tasks.Task.ContinueWith*` method. The following example shows the basic <example-value> (for clarity, exception handling is omitted). It executes an antecedent task `taskA` that returns a `System.DayOfWeek` object that indicates the name of the current day of the week. When `taskA` completes, the `antecedent` represents its results in the `ContinueWith` continuation method. The result of the antecedent task is written to the console.
 
 ```csharp
 ﻿using System;

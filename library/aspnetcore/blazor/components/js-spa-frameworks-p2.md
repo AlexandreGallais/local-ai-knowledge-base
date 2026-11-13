@@ -133,9 +133,9 @@ For a complete example of how to create custom elements with Blazor, see the `Cu
 > **Note:**
 > Documentation links to .NET reference source usually load the repository's default branch, which represents the current development for the next release of .NET. To select a tag for a specific release, use the **Switch branches or tags** dropdown list.
 
-### Pass parameters
+### Pass <example-value>
 
-Pass parameters to your Razor component either as HTML attributes or as JavaScript properties on the DOM element.
+Pass <example-value> to your Razor component either as HTML attributes or as JavaScript properties on the DOM element.
 
 The following `Counter` component uses an `IncrementAmount` parameter to set the increment amount of the **:::no-loc text="Click me":::** button.
 
@@ -178,7 +178,7 @@ You can update parameter values at any time using either attribute or property s
 
 Supported parameter types:
 
-* Using JavaScript property syntax, you can pass objects of any JSON-serializable type.
+* Using JavaScript property syntax, you can pass <example-value> of any JSON-serializable type.
 * Using HTML attributes, you are limited to passing objects of string, boolean, or numerical types.
 
 ## Generate Angular and React components

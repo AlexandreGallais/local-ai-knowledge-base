@@ -29,7 +29,7 @@ class XML_Migration_Samples {
   }
 
 public void XmlReader_Creation_Old() {
-// Supply the credentials necessary to access the Web server.
+// Supply the credentials <example-value> to access the Web server.
 XmlUrlResolver resolver = new XmlUrlResolver();
 resolver.Credentials = CredentialCache.DefaultCredentials;
 
@@ -42,7 +42,7 @@ reader.XmlResolver = resolver;
 //==============================
 //
 static void XmlReader_Creation_New() {
-// Supply the credentials necessary to access the Web server.
+// Supply the credentials <example-value> to access the Web server.
 XmlUrlResolver resolver = new XmlUrlResolver();
 resolver.Credentials = CredentialCache.DefaultCredentials;
 

@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # ASP.NET Core data protection overview
 
-ASP.NET Core provides a cryptographic API to protect data, including key management and rotation.
+ASP.NET Core provides a cryptographic API to protect data, including key <example-value> and rotation.
 
 Web apps often need to store sensitive data. The Windows data protection API (DPAPI) isn't intended for use in web apps.
 
@@ -32,7 +32,7 @@ Confidentiality is a requirement. Because the persisted state is trusted by the 
 * A handle or other indirect reference
 * Some server-specific data
 
-Isolation is a requirement. Because modern apps are componentized, individual components want to take advantage of this system without regard to other components in the system. For instance, consider a bearer token component using this stack. It should operate without any interference, for example, from an anti-CSRF mechanism also using the same stack.
+Isolation is a requirement. Because modern apps are componentized, individual components want to take advantage of this system without regard to other components in the system. For instance, consider a bearer token <example-value> using this stack. It should operate without any interference, for example, from an anti-CSRF mechanism also using the same stack.
 
 Some common assumptions can narrow the scope of requirements:
 
@@ -44,12 +44,12 @@ Some common assumptions can narrow the scope of requirements:
 
 ASP.NET Core data protection is an easy to use data protection stack based on the following principles:
 
-* **Configuration should be easy**. The system strives for zero configuration. In situations where developers need to configure a specific aspect, such as the key repository, those specific configurations aren't difficult.
-* **Offer basic consumer-facing APIs**. The APIs are straight forward to use correctly and difficult to use incorrectly.
-* **Don't require the developer to learn the principles of managing keys**. The system handles algorithm selection and key lifetime on behalf of the developer. Developers don't have access to the raw key material, so they don't need expert knowledge of the principles.
+* **Configuration should be easy**. The system strives for zero configuration. In situations where developers need to configure a specific aspect, such as the key <example-value>, those specific configurations aren't difficult.
+* **Offer basic <example-value> APIs**. The APIs are straight forward to use correctly and difficult to use incorrectly.
+* **Don't require the developer to learn the principles of managing keys**. The system handles algorithm selection and key <example-value> on behalf of the developer. Developers don't have access to the raw key <example-value>, so they don't need expert knowledge of the principles.
 * **Protect keys at rest as much as possible**. The system figures out an appropriate default protection mechanism and applies it automatically.
 
-The data protection APIs aren't primarily intended for indefinite persistence of confidential payloads. Other technologies, such as Windows CNG DPAPI and Azure Rights Management are more suited to the scenario of indefinite storage. They have correspondingly strong key management capabilities. That said, the ASP.NET Core data protection APIs can be used for long-term protection of confidential data.
+The data protection APIs aren't primarily intended for indefinite persistence of confidential payloads. Other technologies, such as Windows CNG DPAPI and Azure Rights Management are more suited to the scenario of indefinite storage. They have correspondingly strong key <example-value> capabilities. That said, the ASP.NET Core data protection APIs can be used for long-term protection of confidential data.
 
 ## Target audience
 
@@ -81,7 +81,7 @@ The data protection stack consists of five packages:
 * Microsoft.AspNetCore.DataProtection contains the core implementation of the data protection system, including:
 
   * Core cryptographic operations
-  * Key management
+  * Key <example-value>
   * Configuration and extensibility
 
   To instantiate the data protection system, reference `Microsoft.AspNetCore.DataProtection`. You might need to reference the data protection system when:
@@ -96,7 +96,7 @@ The data protection stack consists of five packages:
 
 * Microsoft.AspNetCore.DataProtection.SystemWeb can be installed into an existing ASP.NET 4.x app to redirect its `<machineKey>` operations to use the new ASP.NET Core data protection stack. For more information, see Replace the ASP.NET machineKey in ASP.NET Core.
 
-* Microsoft.AspNetCore.Cryptography.KeyDerivation provides an implementation of the PBKDF2 password hashing routine. It's convenient for systems that must handle user passwords securely. For more information, see Hash passwords in ASP.NET Core.
+* Microsoft.AspNetCore.Cryptography.KeyDerivation provides an implementation of the PBKDF2 password <example-value> routine. It's convenient for systems that must handle user passwords securely. For more information, see Hash passwords in ASP.NET Core.
 
 ## Related content
 

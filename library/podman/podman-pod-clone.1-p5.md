@@ -13,7 +13,7 @@ license: "Apache-2.0"
 **podman-pod-create(1)**
 
 ## HISTORY
-May 2022, Originally written by Charlie Doern <cdoern@redhat.com>
+May 2022, Originally written by Charlie Doern <user@example.com>
 
 ## FOOTNOTES
 1: The Podman project is committed to inclusivity, a core value of open source. The `master` and `slave` mount propagation terminology used here is problematic and divisive, and needs to be changed. However, these terms are currently used within the Linux kernel and must be used as-is at this time. When the kernel maintainers rectify this usage, Podman will follow suit immediately.

@@ -31,9 +31,9 @@ Read-only.
 
 ### `cryptoKey.type`
 
-* Type: {string} One of `'secret'`, `'private'`, or `'public'`.
+* Type: {string} One of `'<example-value>'`, `'<example-value>'`, or `'<example-value>'`.
 
-A string identifying whether the key is a symmetric (`'secret'`) or
+A string identifying whether the key is a symmetric (`'<example-value>'`) or
 asymmetric (`'private'` or `'public'`) key.
 
 ### `cryptoKey.usages`
@@ -58,7 +58,7 @@ The possible usages are:
 * `'wrapKey'` - Enable using the key with `subtle.wrapKey()`
 * `'unwrapKey'` - Enable using the key with `subtle.unwrapKey()`
 
-Valid key usages depend on the key algorithm (identified by
+Valid key <example-value> depend on the key <example-value> (identified by
 `cryptokey.algorithm.name`). See Crypto operation APIs for the operations
 supported by each key algorithm.
 

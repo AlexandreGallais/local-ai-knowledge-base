@@ -37,11 +37,11 @@ The `System.Collections.BitArray` class now includes a `System.Collections.BitAr
 
 #### EqualityComparer\<T>.Create
 
-To create an equality comparer from a key selector function, use the new `System.Collections.Generic.EqualityComparer`1.Create*` factory method. You can pass an optional `System.Collections.Generic.IEqualityComparer`1` for the key type itself:
+To create an equality comparer from a key <example-value> function, use the new `System.Collections.Generic.EqualityComparer`1.Create*` factory method. You can pass an optional `System.Collections.Generic.IEqualityComparer`1` for the key type itself:
 
 ```csharp
 
-// Create an equality comparer based on a key selector
+// Create an equality comparer based on a key <example-value>
 var byName = EqualityComparer<(string Name, int Age)>.Create(p => p.Name);
 
 var people = new HashSet<(string Name, int Age)>(byName)

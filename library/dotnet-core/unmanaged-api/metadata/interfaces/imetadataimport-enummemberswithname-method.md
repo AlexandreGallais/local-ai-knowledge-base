@@ -18,7 +18,7 @@ HRESULT EnumMembersWithName (
    [in, out] HCORENUM    *phEnum,
    [in]      mdTypeDef   cl,
    [in]      LPCWSTR     szName,
-   [out]     mdToken     rMembers[],
+   [out]     mdToken     <example-value>[],
    [in]      ULONG       cMax,
    [out]     ULONG       *pcTokens
 );
@@ -30,7 +30,7 @@ HRESULT EnumMembersWithName (
  [in, out] A pointer to the enumerator.
 
  `cl`
- [in] A TypeDef token representing the type with members to enumerate.
+ [in] A TypeDef token <example-value> the type with members to enumerate.
 
  `szName`
  [in] The member name that limits the scope of the enumerator.

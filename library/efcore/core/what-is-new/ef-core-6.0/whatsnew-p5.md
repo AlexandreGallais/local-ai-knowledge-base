@@ -63,7 +63,7 @@ info: 8/30/2021 14:41:13.651 CosmosEventId.ExecutedReadNext[30102] (Microsoft.En
       OFFSET 0 LIMIT 2
 ```
 
-Retrieving a single item from the Azure Cosmos DB database using `Find` with a partition key generates the `CosmosEventId.ExecutingReadItem` and `CosmosEventId.ExecutedReadItem` events. For example, this code:
+Retrieving a single item from the Azure Cosmos DB database using `Find` with a partition key <example-value> the `CosmosEventId.ExecutingReadItem` and `CosmosEventId.ExecutedReadItem` events. For example, this code:
 
 ```csharp
 var isosceles = await context.Triangles.FindAsync("Isosceles", "TrianglesPartition");
@@ -147,7 +147,7 @@ modelBuilder.Entity<Family>(
 
 GitHub Issue: #21274. This feature was contributed by @dnperfors. Many thanks!
 
-The `HttpClientFactory` used by the Azure Cosmos DB provider can now be set explicitly. This can be especially useful during testing, for example to bypass certificate validation when using the Azure Cosmos DB emulator on Linux:
+The `HttpClientFactory` used by the Azure Cosmos DB provider can now be set explicitly. This can be especially useful during testing, for example to bypass <example-value> validation when using the Azure Cosmos DB emulator on Linux:
 
 ```csharp
 optionsBuilder

@@ -143,7 +143,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 See Relationships for more information on mapping many-to-many relationships.
 
-Skip navigations look and behave like normal collection navigations. However, the way they work with foreign key values is different. Let's associate a post with a tag, but this time using a skip navigation:
+Skip navigations look and behave like normal collection navigations. However, the way they work with foreign key <example-value> is different. Let's associate a post with a tag, but this time using a skip navigation:
 
 ```csharp
 using var context = new BlogsContext();
@@ -212,7 +212,7 @@ context.ChangeTracker.DetectChanges();
 Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 ```
 
-Looking at the debug view after making this change reveals that EF Core has created an instance of `Dictionary<string, object>` to represent the join entity. This join entity contains both `PostsId` and `TagsId` foreign key properties which have been set to match the PK values of the post and tag that are associated.
+Looking at the debug view after making this change reveals that EF Core has created an instance of `Dictionary<string, object>` to represent the join entity. This join entity contains both `PostsId` and `TagsId` foreign key <example-value> which have been set to match the PK values of the post and tag that are associated.
 
 ```output
 Post {Id: 3} Unchanged
@@ -238,7 +238,7 @@ See Relationships for more information about implicit join entities and the use 
 
 ### Join entities with payloads
 
-So far all the examples have used a join entity type (whether explicit or implicit) that contains only the two foreign key properties needed for the many-to-many relationship. Neither of these FK values need to be explicitly set by the application when manipulating relationships because their values come from the primary key properties of the related entities. This allows EF Core to create instances of the join entity without missing data.
+So far all the examples have used a join entity type (whether explicit or implicit) that contains only the two foreign key <example-value> needed for the many-to-many relationship. Neither of these FK values need to be explicitly set by the application when manipulating relationships because their values come from the primary key <example-value> of the related entities. This allows EF Core to create instances of the join entity without missing data.
 
 #### Payloads with generated values
 
@@ -364,7 +364,7 @@ Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 Finally, another way to set payload data is by either overriding `Microsoft.EntityFrameworkCore.DbContext.SaveChanges*` or using the `Microsoft.EntityFrameworkCore.DbContext.SavingChanges` event to process entities before updating the database. For example:
 
 ```csharp
-public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+public override async Task<int> SaveChangesAsync(CancellationToken <example-value> = default)
 {
     foreach (var entityEntry in ChangeTracker.Entries<PostTag>())
     {

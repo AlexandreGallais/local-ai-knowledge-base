@@ -95,7 +95,7 @@ public sealed class WindowsBackgroundService(
     JokeService jokeService,
     ILogger<WindowsBackgroundService> logger) : BackgroundService
 {
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         try
         {

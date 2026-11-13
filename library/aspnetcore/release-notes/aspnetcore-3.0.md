@@ -160,7 +160,7 @@ public class DomainRestrictedRequirement :
     {
         if (hubMethodName.Equals("banUser", StringComparison.OrdinalIgnoreCase))
         {
-            return currentUsername.Equals("bob42@jabbr.net", StringComparison.OrdinalIgnoreCase);
+            return currentUsername.Equals("user@example.com", StringComparison.OrdinalIgnoreCase);
         }
 
         return currentUsername.EndsWith("@jabbr.net", StringComparison.OrdinalIgnoreCase);
@@ -177,7 +177,7 @@ Individual Hub methods can be marked with the name of the policy the code checks
 
 * All logged-in users can call the `SendMessage` method.
 * Only users who have logged in with a `@jabbr.net` email address can view users' histories.
-* Only `bob42@jabbr.net` can ban users from the chat room.
+* Only `user@example.com` can ban users from the chat room.
 
 ```csharp
 [Authorize]
@@ -263,7 +263,7 @@ public async Task UploadStream(IAsyncEnumerable<string> stream)
 }
 ```
 
-.NET client apps can pass either an `IAsyncEnumerable<T>` or `ChannelReader<T>` instance as the `stream` argument of the `UploadStream` Hub method above.
+.NET client apps can pass <example-value> an `IAsyncEnumerable<T>` or `ChannelReader<T>` instance as the `stream` argument of the `UploadStream` Hub method above.
 
 After the `for` loop has completed and the local function exits, the stream completion is sent:
 

@@ -95,7 +95,7 @@ public class HowToClassTypedInitializer
     //After initializing EmbeddedClassTypeA a2: 103|False|abc|||100003|False|BBBabc
 }
 ```
-### Key differences
+### Key <example-value>
 
 - **Without `new` keyword** (`ClassB = { BI = 100003 }`): This syntax modifies the existing instance of the property that the object constructor created. It calls member initializers on the existing object.
 

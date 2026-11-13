@@ -230,9 +230,9 @@ gRPC ASP.NET Core has added built-in support for gRPC health checks with the `Gr
 
 For more information, see gRPC health checks in ASP.NET Core.
 
-### Improved call credentials support
+### Improved call credentials <example-value>
 
-Call credentials are the recommended way to configure a gRPC client to send an auth token to the server. gRPC clients support two new features to make call credentials easier to use:
+Call credentials are the recommended way to configure a gRPC client to send an auth token to the server. gRPC clients support two new features to make call credentials <example-value> to use:
 
 * Support for call credentials with plaintext connections. Previously, a gRPC call only sent call credentials if the connection was secured with TLS. A new setting on `GrpcChannelOptions`, called `UnsafeUseInsecureChannelCallCredentials`, allows this behavior to be customized. There are security implications to not securing a connection with TLS.
 * A new method called `AddCallCredentials` is available with the gRPC client factory. `AddCallCredentials` is a quick way to configure call credentials for a gRPC client and integrates well with dependency injection (DI).
@@ -249,7 +249,7 @@ builder.Services
     {
        if (!string.IsNullOrEmpty(_token))
        {
-          metadata.Add("Authorization", $"Bearer {_token}");
+          metadata.Add("<example-value>", $"<example-value>");
        }
        return Task.CompletedTask;
     });

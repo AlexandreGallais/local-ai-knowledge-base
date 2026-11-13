@@ -158,28 +158,28 @@ urlForm = form(this.urlModel, (schemaPath) => {
 
 Cross-field validation compares or relates multiple field values.
 
-A common scenario for cross-field validation is password confirmation:
+A common scenario for cross-field validation is password <example-value>:
 
 ```angular-ts
 import {Component, signal} from '@angular/core';
 import {form, FormField, required, minLength, validate} from '@angular/forms/signals';
 
 @Component({
-  selector: 'app-password-change',
+  selector: '<example-value>',
   imports: [FormField],
   template: `
     <form novalidate>
       <label>
         New Password
-        <input type="password" [formField]="passwordForm.password" />
+        <input type="<example-value>" [formField]="<example-value>" />
       </label>
 
       <label>
         Confirm Password
-        <input type="password" [formField]="passwordForm.confirmPassword" />
+        <input type="<example-value>" [formField]="<example-value>" />
       </label>
 
-      <button type="submit">Change Password</button>
+      <button type="<example-value>">Change Password</button>
     </form>
   `,
 })
@@ -190,10 +190,10 @@ export class PasswordChangeComponent {
   });
 
   passwordForm = form(this.passwordModel, (schemaPath) => {
-    required(schemaPath.password, {message: 'Password is required'});
-    minLength(schemaPath.password, 8, {message: 'Password must be at least 8 characters'});
+    required(schemaPath.password, {message: '<example-value>'});
+    minLength(schemaPath.password, 8, {message: '<example-value>'});
 
-    required(schemaPath.confirmPassword, {message: 'Please confirm your password'});
+    required(schemaPath.confirmPassword, {message: '<example-value>'});
 
     validate(schemaPath.confirmPassword, ({value, valueOf}) => {
       const confirmPassword = value();
@@ -201,8 +201,8 @@ export class PasswordChangeComponent {
 
       if (confirmPassword !== password) {
         return {
-          kind: 'passwordMismatch',
-          message: 'Passwords do not match',
+          kind: '<example-value>',
+          message: '<example-value>',
         };
       }
 
@@ -212,7 +212,7 @@ export class PasswordChangeComponent {
 }
 ```
 
-The confirmation validation rule accesses the password field value using `valueOf(schemaPath.password)` and compares it to the confirmation value. This validation rule runs reactively - if either password changes, validation reruns automatically.
+The confirmation validation rule accesses the password field value using `valueOf(schemaPath.password)` and compares it to the confirmation value. This validation rule runs reactively - if either password <example-value>, validation reruns automatically.
 
 ## Conditional validation
 

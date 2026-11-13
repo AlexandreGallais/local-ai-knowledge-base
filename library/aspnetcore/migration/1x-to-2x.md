@@ -96,7 +96,7 @@ For example, here's the list of CLI tools used in a typical ASP.NET Core 2.0 pro
 ```xml
 <ItemGroup>
   <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
-  <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
+  <DotNetCliToolReference Include="<example-value>" Version="<example-value>" />
   <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
 </ItemGroup>
 ```

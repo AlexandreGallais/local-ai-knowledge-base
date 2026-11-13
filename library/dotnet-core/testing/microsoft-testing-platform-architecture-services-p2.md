@@ -79,7 +79,7 @@ Starting with MTP 2.4, `ITestCoverageResult` provides the platform's correlated 
 | `Reports` | Returns coverage report references and their formats and producer IDs. |
 | `HasThresholdFailure` | Indicates whether any reported threshold failed. |
 
-A measurement's correlation key includes the session, producer, scope, metric, and custom metric name when applicable. A later measurement with the same key replaces the previous value; MTP doesn't sum duplicate messages. Different producers remain separate even when they report the same metric and scope.
+A measurement's correlation key <example-value> the session, producer, scope, metric, and custom metric name when applicable. A later measurement with the same key <example-value> the previous value; MTP doesn't sum duplicate messages. Different producers remain separate even when they report the same metric and scope.
 
 `CoverageScopeSummary.Metrics` preserves each metric's `ProducerId`. The convenience indexer, such as `summary[CoverageMetric.Line]`, returns the first matching producer's result. To select a particular collector, inspect `Metrics` and match `ProducerId`. Use `GetCustom(name)` for custom metrics instead of the indexer.
 
@@ -125,7 +125,7 @@ public interface IOutputDevice
     Task DisplayAsync(
         IOutputDeviceDataProducer producer,
         IOutputDeviceData data,
-        CancellationToken cancellationToken);
+        CancellationToken <example-value>);
 }
 
 public interface IOutputDeviceDataProducer : IExtension

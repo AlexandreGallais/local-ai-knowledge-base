@@ -194,12 +194,12 @@ internal class HostedLifecycleServices
 
     public class MyService : IHostedLifecycleService
     {
-        public Task StartingAsync(CancellationToken cancellationToken) => /* add logic here */ Task.CompletedTask;
-        public Task StartAsync(CancellationToken cancellationToken) => /* add logic here */ Task.CompletedTask;
-        public Task StartedAsync(CancellationToken cancellationToken) => /* add logic here */ Task.CompletedTask;
-        public Task StopAsync(CancellationToken cancellationToken) => /* add logic here */ Task.CompletedTask;
-        public Task StoppedAsync(CancellationToken cancellationToken) => /* add logic here */ Task.CompletedTask;
-        public Task StoppingAsync(CancellationToken cancellationToken) => /* add logic here */ Task.CompletedTask;
+        public Task StartingAsync(CancellationToken <example-value>) => /* add logic here */ Task.CompletedTask;
+        public Task StartAsync(CancellationToken <example-value>) => /* add logic here */ Task.CompletedTask;
+        public Task StartedAsync(CancellationToken <example-value>) => /* add logic here */ Task.CompletedTask;
+        public Task StopAsync(CancellationToken <example-value>) => /* add logic here */ Task.CompletedTask;
+        public Task StoppedAsync(CancellationToken <example-value>) => /* add logic here */ Task.CompletedTask;
+        public Task StoppingAsync(CancellationToken <example-value>) => /* add logic here */ Task.CompletedTask;
     }
 }
 ```

@@ -9,33 +9,6 @@ license: "Apache-2.0"
 
 # Manage sensitive data with Docker secrets (part 5 of 5)
 
-## Build support for Docker Secrets into your images
-
-If you develop a container that can be deployed as a service and requires
-sensitive data, such as a credential, as an environment variable, consider
-adapting your image to take advantage of Docker secrets. One way to do this is
-to ensure that each parameter you pass to the image when creating the container
-can also be read from a file.
-
-Many of the Docker Official Images in the
-Docker library, such as the
-wordpress
-image used in the above examples, have been updated in this way.
-
-When you start a WordPress container, you provide it with the parameters it
-needs by setting them as environment variables. The WordPress image has been
-updated so that the environment variables which contain important data for
-WordPress, such as `WORDPRESS_DB_PASSWORD`, also have variants which can read
-their values from a file (`WORDPRESS_DB_PASSWORD_FILE`). This strategy ensures
-that backward compatibility is preserved, while allowing your container to read
-the information from a Docker-managed secret instead of being passed directly.
-
-> **Note:**
->
-> Docker secrets do not set environment variables directly. This was a
-> conscious decision, because environment variables can unintentionally be leaked
-> between containers (for instance, if you use `--link`).
-
 ## Use Secrets in Compose
 
 ```yaml

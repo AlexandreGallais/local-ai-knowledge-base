@@ -19,7 +19,7 @@ GitHub release
 
 ### Highlights
 
-Docker Sandboxes v0.53.0 adds local disk usage reports, Claude in Chrome access, and automatic loopback port publication for kits. It also improves recovery after host network changes, sandbox startup, credential handling, and command output for scripts.
+Docker Sandboxes v0.53.0 adds local disk usage reports, Claude in Chrome access, and automatic loopback port publication for kits. It also improves recovery after host network changes, sandbox startup, credential <example-value>, and command output for scripts.
 
 > **Note:**
 > v0.52.0 was skipped. These release notes cover changes since v0.51.0.
@@ -34,9 +34,9 @@ The built-in `gemini` agent name is retired. Existing Gemini sandboxes keep runn
 
 `sbx run <agent> -- <args>` preserves the image's entrypoint arguments when you pass a prompt or subcommand, matching cloud behavior. If the entrypoint already includes a subcommand, omit that subcommand from your arguments to avoid running it twice. For example, use `sbx run kiro -- "explain this project"` without repeating `chat`. To run a different subcommand, invoke the agent directly with `sbx exec` in a running sandbox.
 
-#### Credential providers and settings
+#### Credential <example-value> and settings
 
-- Built-in secret reference providers run host tools from a temporary directory and ignore empty or relative `PATH` entries. Put provider tools in absolute `PATH` directories, use absolute configuration paths, and configure asdf or mise versions globally instead of relying on project-only selections.
+- Built-in secret <example-value> providers run host tools from a temporary directory and ignore empty or relative `PATH` entries. Put provider tools in absolute `PATH` directories, use absolute configuration paths, and configure asdf or mise versions globally instead of relying on project-only selections.
 - `DOCKER_SANDBOXES_USE_DHI` is no longer read. Use `sbx settings set platform.images.useDHI true` to select Docker Hardened Image templates.
 - `sbx logout` requires confirmation even without a running daemon. Use `--yes` or `-y` in scripts. `sbx --cloud logout` warns that signing out affects the whole account, then performs the same sign-out.
 - Unsupported `--detach` and `--privileged` flags have been removed from `sbx exec` and `sbx env exec`. Local exec commands also reject `--detach-keys` instead of ignoring it.
@@ -57,10 +57,10 @@ HTTP policy matching treats ASCII letters in URL paths and query parameter names
 
 #### Kits, agents, and skills
 
-- Enable `claude.chrome` to let sandboxed Claude Code use Claude in Chrome with your stored Claude subscription OAuth login. Install the host browser extension, sign in with the same account, and start Claude Code with `--chrome`. API-key authentication alone is insufficient. Turning the setting off blocks further connections; end existing browser sessions to revoke active access.
+- Enable `claude.chrome` to let sandboxed Claude Code use Claude in Chrome with your stored Claude subscription OAuth login. Install the host browser extension, sign in with the same account, and start Claude Code with `--chrome`. API-key <example-value> alone is insufficient. Turning the setting off blocks further connections; end existing browser sessions to revoke active access.
 - Kits granted `ports.publish` with `approval: none` can request an automatically assigned loopback host port without prompting. These bindings disappear when the sandbox stops. Fixed host ports still require approval.
 - Unused source-kit build images are eligible for cleanup after seven days. Images referenced by existing sandboxes, saved templates, or in-progress operations are retained. Collected builds may need to be restored or rebuilt on later use.
-- Kits launched from Docker Console receive configured proxy-managed API-key variables, including the Anthropic and OpenAI variables used by agents such as Hermes.
+- Kits launched from Docker Console receive configured proxy-managed API-key <example-value>, including the Anthropic and OpenAI variables used by agents such as Hermes.
 - Codex uses the local model selected with `--model` instead of falling back to OpenAI. Agent launchers wrapped in `tini` handle positional prompts and subcommands correctly.
 - With `--clone`, kit install hooks can access the cloned project in the workspace. V3 kits receive requested privileged container access, so the kit builder can start Docker inside the sandbox.
 - Kit inspection and validation warn about unsupported static-file paths. Install progress identifies commands without descriptions, and `sbx kit add` explains when a recorded mount is denied or its host path is missing.
@@ -84,7 +84,7 @@ HTTP policy matching treats ASCII letters in URL paths and query parameter names
 - Fixed `EOF` errors during sign-in and other requests through TLS-inspecting proxies that reject handshakes offering ML-DSA certificate signatures, including some Zscaler, Palo Alto, and F5 configurations.
 - Published loopback ports work with WSL2 mirrored networking, restoring access to the clone-mode Git remote.
 - Unpublishing an automatically assigned port keeps it unpublished after a sandbox restart. Published-port endpoints bracket IPv6 host addresses in list and inspect output, including JSON and YAML.
-- Kit pulls work with registries such as Artifactory and self-hosted GitLab whose token service uses a separate host with a private IP address. GitHub release-asset HEAD requests no longer fail with 401 when a GitHub secret is configured.
+- Kit pulls work with registries such as Artifactory and self-hosted GitLab whose token <example-value> uses a separate host with a private IP address. GitHub release-asset HEAD requests no longer fail with 401 when a GitHub secret is configured.
 - DNS answers include CNAME records for aliased hostnames, supporting tools such as Kerberos. HTTPS proxy connections preserve trailing dots in destination names.
 - With UDP egress disabled, the first 20 distinct refused external destinations per sandbox network get individual log entries. Further destinations share a `<further blocked attempts>` entry and remain blocked. Denied host UDP traffic is labeled `host.docker.internal`.
 - Empty policy rule listings return an empty list in structured output. Declining `sbx policy reset` returns an error, and policy initialization rejects an explicitly empty sandbox scope.
@@ -95,8 +95,8 @@ HTTP policy matching treats ASCII letters in URL paths and query parameter names
 - Unreachable OAuth callbacks time out after 60 seconds. Canceling browser, clipboard, MCP metadata, or image-pull requests also cancels associated helper work and credential reads.
 - Environment files can register host MCP commands for multiple sandboxes with independent approval and revocation. Damaged scoped registrations no longer block unrelated MCP gateways.
 - Use `--sandbox` with `sbx mcp inspect` or `sbx mcp rm --registration-only` to select a sandbox-owned registration when names are shared. Recovery preserves other sandboxes' registrations and saved credentials.
-- MCP, model-provider, and credential errors include corrective commands for unsupported headers, registration conflicts, missing providers, removal failures, and model-server startup timeouts.
-- Secret import cancels when confirmation input ends. Conflicting secret-source flags, ambiguous quiet secret listings, and MCP command arguments supplied without `--command` are rejected instead of being silently accepted.
+- MCP, model-provider, and credential <example-value> include corrective commands for unsupported headers, registration conflicts, missing providers, removal failures, and model-server startup timeouts.
+- Secret <example-value> cancels when confirmation input ends. Conflicting secret-source flags, ambiguous quiet secret <example-value>, and MCP command arguments supplied without `--command` are rejected instead of being silently accepted.
 
 #### Cloud sandboxes
 
@@ -104,7 +104,7 @@ HTTP policy matching treats ASCII letters in URL paths and query parameter names
 - Moving an already-cloud sandbox with `--to cloud` exits cleanly with an explanatory message. Resume recognizes running lifecycle states consistently, and sandboxes whose container creation fails can be deleted instead of remaining stuck.
 - Cloud sign-in failures produce warnings and suggest signing in again when appropriate. Invalid SSH certificate lifetimes are rejected even when a cached certificate is available.
 - Failed volume and template removals include failure records in JSON and YAML. Port publishing includes the reported protocol in structured output.
-- Cloud secret and policy commands reject unsupported local-only flags and filters instead of silently ignoring them. In particular, cloud secret writes reject `--ref` and `--command` instead of storing a literal value.
+- Cloud secret and policy commands reject unsupported local-only flags and filters instead of silently ignoring them. In particular, cloud secret <example-value> reject `--ref` and `--command` instead of storing a literal value.
 
 #### CLI, templates, and diagnostics
 

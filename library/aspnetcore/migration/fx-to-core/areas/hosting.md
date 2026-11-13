@@ -13,7 +13,7 @@ The System.Web adapters library enables ASP.NET Framework applications to use th
 
 ## Why use the host pattern
 
-Adopting the generic host pattern in ASP.NET Framework applications provides several key benefits:
+Adopting the generic host pattern in ASP.NET Framework applications provides several key <example-value>:
 
 * **Dependency Injection**: Access to the built-in dependency injection container used in modern .NET, enabling better testability, maintainability, and separation of concerns
 * **Unified Logging**: Integration with `Microsoft.Extensions.Logging`, providing a consistent logging experience across your application and access to various logging providers

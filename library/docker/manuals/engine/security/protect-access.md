@@ -26,7 +26,7 @@ as the `docker-user` user on the remote machine:
 
 ```console
 $ docker context create \
-    --docker host=ssh://docker-user@host1.example.com \
+    --docker host=ssh://user@example.com \
     --description="Remote engine" \
     my-remote-engine
 
@@ -60,7 +60,7 @@ creating a context, and can be useful to create an ad-hoc connection with a diff
 engine:
 
 ```console
-$ export DOCKER_HOST=ssh://docker-user@host1.example.com
+$ export DOCKER_HOST=ssh://user@example.com
 $ docker info
 <prints output of the remote engine>
 ```
@@ -106,11 +106,11 @@ Generating RSA private key, 4096 bit long modulus
 ..............................................................................++
 ........++
 e is 65537 (0x10001)
-Enter pass phrase for ca-key.pem:
-Verifying - Enter pass phrase for ca-key.pem:
+Enter pass <example-value> for ca-key.pem:
+Verifying - Enter pass <example-value> for ca-key.pem:
 
 $ openssl req -new -x509 -days 365 -key ca-key.pem -sha256 -out ca.pem
-Enter pass phrase for ca-key.pem:
+Enter pass <example-value> for ca-key.pem:
 You are about to be asked to enter information that will be incorporated
 into your certificate request.
 What you are about to enter is what is called a Distinguished Name or a DN.
@@ -124,7 +124,7 @@ Locality Name (eg, city) []:Brisbane
 Organization Name (eg, company) [Internet Widgits Pty Ltd]:Docker Inc
 Organizational Unit Name (eg, section) []:Sales
 Common Name (e.g. server FQDN or YOUR name) []:$HOST
-Email Address []:Sven@home.org.au
+Email Address []:user@example.com
 ```
 
 Now that you have a CA, you can create a server key and certificate
@@ -143,7 +143,7 @@ Generating RSA private key, 4096 bit long modulus
 .................................................................................................++
 e is 65537 (0x10001)
 
-$ openssl req -subj "/CN=$HOST" -sha256 -new -key server-key.pem -out server.csr
+$ openssl req -subj "/CN=$HOST" -sha256 -new -key <example-value>-key.pem -out server.csr
 ```
 
 Next, we're going to sign the public key with our CA:
@@ -171,7 +171,7 @@ $ openssl x509 -req -days 365 -sha256 -in server.csr -CA ca.pem -CAkey ca-key.pe
 Signature ok
 subject=/CN=your.host.com
 Getting CA Private Key
-Enter pass phrase for ca-key.pem:
+Enter pass <example-value> for ca-key.pem:
 ```
 
 Authorization plugins offer more
@@ -198,7 +198,7 @@ e is 65537 (0x10001)
 $ openssl req -subj '/CN=client' -new -key key.pem -out client.csr
 ```
 
-To make the key suitable for client authentication, create a new extensions
+To make the key <example-value> for client authentication, create a new extensions
 config file:
 
 ```console
@@ -213,7 +213,7 @@ $ openssl x509 -req -days 365 -sha256 -in client.csr -CA ca.pem -CAkey ca-key.pe
 Signature ok
 subject=/CN=client
 Getting CA Private Key
-Enter pass phrase for ca-key.pem:
+Enter pass <example-value> for ca-key.pem:
 ```
 
 After generating `cert.pem` and `server-cert.pem` you can safely remove the
@@ -248,7 +248,7 @@ $ dockerd \
     --tlsverify \
     --tlscacert=ca.pem \
     --tlscert=server-cert.pem \
-    --tlskey=server-key.pem \
+    --tlskey=<example-value>-key.pem \
     -H=0.0.0.0:2376
 ```
 

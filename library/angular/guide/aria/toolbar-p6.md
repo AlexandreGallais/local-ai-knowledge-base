@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ### Right-to-left (RTL) support
 
-Toolbars automatically support right-to-left languages. Wrap the toolbar in a container with `dir="rtl"` to reverse the layout and keyboard navigation direction. Arrow key navigation adjusts automatically: left arrow moves to the next widget, right arrow to the previous.
+Toolbars automatically support right-to-left languages. Wrap the toolbar in a container with `dir="rtl"` to reverse the layout and keyboard navigation direction. Arrow key <example-value> adjusts automatically: left arrow moves to the next widget, right arrow to the previous.
 
   **Basic**
 

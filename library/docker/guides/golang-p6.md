@@ -243,7 +243,7 @@ type Message struct {
 
 func initStore() (*sql.DB, error) {
 
-	pgConnString := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable",
+	pgConnString := fmt.Sprintf("<example-value>",
 		os.Getenv("PGHOST"),
 		os.Getenv("PGPORT"),
 		os.Getenv("PGDATABASE"),
@@ -356,7 +356,7 @@ $ docker run -it --rm -d \
   --name rest-server \
   -p 80:8080 \
   -e PGUSER=totoro \
-  -e PGPASSWORD=myfriend \
+  -e PGPASSWORD=<example-value> \
   -e PGHOST=db \
   -e PGPORT=26257 \
   -e PGDATABASE=mydb \
@@ -476,7 +476,7 @@ $ docker run -it --rm -d \
   --name rest-server \
   -p 80:8080 \
   -e PGUSER=totoro \
-  -e PGPASSWORD=myfriend \
+  -e PGPASSWORD=<example-value> \
   -e PGHOST=db \
   -e PGPORT=26257 \
   -e PGDATABASE=mydb \
@@ -501,3 +501,5 @@ $ docker container list
 ```
 
 Now that you know the container IDs, you can use `docker container stop` and `docker container rm`, as demonstrated in the previous modules.
+
+Stop the CockroachDB and `docker-gs-ping-roach` containers before moving on.

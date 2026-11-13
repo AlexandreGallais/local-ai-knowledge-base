@@ -364,11 +364,11 @@ Discarding duplicate EntityType: Post entity with key value 4
 > This code **assumes that all duplicates are identical**. This makes it safe to arbitrarily choose one of the duplicates to track while discarding the others. If the duplicates can differ, then the code will need to decide how to determine which one to use, and how to combine property and navigation values together.
 
 > **Note:**
-> For simplicity, this code assumes each entity has a primary key property called `Id`. This could be codified into an abstract base class or interface. Alternately, the primary key property or properties could be obtained from the `Microsoft.EntityFrameworkCore.Metadata.IEntityType` metadata such that this code would work with any type of entity.
+> For simplicity, this code assumes each entity has a primary key <example-value> called `Id`. This could be codified into an abstract base class or interface. Alternately, the primary key <example-value> or properties could be obtained from the `Microsoft.EntityFrameworkCore.Metadata.IEntityType` metadata such that this code would work with any type of entity.
 
-## Failing to set key values
+## Failing to set key <example-value>
 
-Entity types are often configured to use automatically generated key values. This is the default for integer and GUID properties of non-composite keys. However, if the entity type is not configured to use automatically generated key values, then an explicit key value must be set before tracking the entity. For example, using the following entity type:
+Entity types are often configured to use automatically generated key values. This is the default for integer and GUID properties of non-composite keys. However, if the entity type is not configured to use automatically generated key <example-value>, then an explicit key value must be set before tracking the entity. For example, using the following entity type:
 
 ```csharp
 public class Pet
@@ -380,7 +380,7 @@ public class Pet
 }
 ```
 
-Consider code that attempts to track two new entity instances without setting key values:
+Consider code that attempts to track two new entity instances without setting key <example-value>:
 
 ```csharp
 using var context = new BlogsContext();
@@ -401,7 +401,7 @@ This code will throw:
 
 > System.InvalidOperationException: The instance of entity type 'Pet' cannot be tracked because another instance with the key value '{Id: 0}' is already being tracked. When attaching existing entities, ensure that only one entity instance with a given key value is attached.
 
-The fix for this is to either to set key values explicitly or configure the key property to use generated key values. See Generated Values for more information.
+The fix for this is to either to set key <example-value> explicitly or configure the key <example-value> to use generated key values. See Generated Values for more information.
 
 ## Overusing a single DbContext instance
 

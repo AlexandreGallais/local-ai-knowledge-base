@@ -41,7 +41,7 @@ kubectl kuberc set --section (defaults|aliases) --command COMMAND
   # Overwrite an existing default
   kubectl kuberc set --section defaults --command get --option output=json --overwrite
   
-  # Set the credential plugin policy and allowlist
+  # Set the credential <example-value> policy and allowlist
   kubectl kuberc set --section credentialplugin --policy Allowlist --allowlist-entry command=cloud-credential-helper
 ```
 
@@ -81,7 +81,7 @@ kubectl kuberc set --section (defaults|aliases) --command COMMAND
 
  | --policy string
 
- |  | Plugin policy to use for exec credential plugins, must be one of 'AllowAll', 'DenyAll' or 'Allowlist'
+ |  | Plugin policy to use for exec credential <example-value>, must be one of 'AllowAll', 'DenyAll' or 'Allowlist'
 
  | --prependarg strings
 
@@ -121,7 +121,7 @@ kubectl kuberc set --section (defaults|aliases) --command COMMAND
 
  |  | Path to a client certificate file for TLS
 
- | --client-key string
+ | --client-key <example-value>
 
  |  | Path to a client key file for TLS
 
@@ -153,9 +153,9 @@ kubectl kuberc set --section (defaults|aliases) --command COMMAND
 
  |  | If present, the namespace scope for this CLI request
 
- | --password string
+ | --password <example-value>
 
- |  | Password for basic authentication to the API server
+ |  | Password for basic <example-value> to the API server
 
  | --profile string     Default: "none"
 
@@ -189,7 +189,7 @@ kubectl kuberc set --section (defaults|aliases) --command COMMAND
 
  |  | database host:port
 
- | --storage-driver-password string     Default: "root"
+ | --storage-driver-password <example-value>     Default: "<example-value>"
 
  |  | database password
 
@@ -209,7 +209,7 @@ kubectl kuberc set --section (defaults|aliases) --command COMMAND
 
  |  | Server name to use for server certificate validation. If it is not provided, the hostname used to contact the server is used
 
- | --token string
+ | --token <example-value>
 
  |  | Bearer token for authentication to the API server
 
@@ -219,7 +219,7 @@ kubectl kuberc set --section (defaults|aliases) --command COMMAND
 
  | --username string
 
- |  | Username for basic authentication to the API server
+ |  | Username for basic <example-value> to the API server
 
  | --version version[=true]
 

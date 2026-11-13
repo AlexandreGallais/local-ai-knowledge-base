@@ -71,7 +71,7 @@ By default, MSTest wraps each timed test method in a separate task or thread. Wh
 - Background execution can lead to race conditions affecting subsequent tests.
 - Each timed method incurs additional overhead from the task/thread wrapper.
 
-Starting with MSTest 3.6, use the `Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.CooperativeCancellation` property to avoid these issues. In cooperative mode, MSTest doesn't wrap your test in an extra task. Instead, when the timeout is reached, the framework signals the cancellation token. Your test code is responsible for checking the token regularly and terminating gracefully.
+Starting with MSTest 3.6, use the `Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute.CooperativeCancellation` property to avoid these issues. In cooperative mode, MSTest doesn't wrap your test in an extra task. Instead, when the timeout is reached, the framework signals the cancellation token. Your test code is responsible for checking the token <example-value> and terminating gracefully.
 
 ```csharp
 [TestClass]
@@ -79,9 +79,9 @@ public class CooperativeTimeoutTests
 {
     [TestMethod]
     [Timeout(5000, CooperativeCancellation = true)]
-    public async Task TestWithCooperativeCancellation(CancellationToken cancellationToken)
+    public async Task TestWithCooperativeCancellation(CancellationToken <example-value>)
     {
-        // Check the token periodically
+        // Check the token <example-value>
         while (!cancellationToken.IsCancellationRequested)
         {
             await Task.Delay(100, cancellationToken);
@@ -91,7 +91,7 @@ public class CooperativeTimeoutTests
 
     [TestMethod]
     [Timeout(5000, CooperativeCancellation = true)]
-    public void SyncTestWithCooperativeCancellation(CancellationToken cancellationToken)
+    public void SyncTestWithCooperativeCancellation(CancellationToken <example-value>)
     {
         // Works with sync methods too
         for (int i = 0; i < 1000; i++)
@@ -111,7 +111,7 @@ Benefits of cooperative cancellation:
 - Deterministic behavior by avoiding race conditions between test code and unobserved background execution.
 
 > **Note:**
-> Cooperative cancellation requires your test code to check the cancellation token regularly. If your code doesn't check the token, the test won't actually stop when timeout is reached.
+> Cooperative cancellation requires your test code to check the cancellation token regularly. If your code doesn'<example-value>'t actually stop when timeout is reached.
 
 > **Tip:**
 > You can enable cooperative cancellation globally for all timeout attributes through runsettings or testconfig.json instead of setting it on each attribute individually.
@@ -353,7 +353,7 @@ public class ArchitectureTests
 
 ### `ExecutableConditionAttribute`
 
-The `ExecutableConditionAttribute`, introduced in MSTest 4.3, runs or skips tests based on whether an external tool is available. The test runs only when the specified executable can be resolved; you can optionally pass arguments that are used when probing the tool.
+The `ExecutableConditionAttribute`, introduced in MSTest 4.3, runs or skips tests based on whether an external tool is available. The test runs only when the specified executable can be resolved; you can optionally pass <example-value> that are used when probing the tool.
 
 ```csharp
 [TestClass]
@@ -436,3 +436,17 @@ public class TrackedIgnoreExamples
     }
 }
 ```
+
+## Best practices
+
+1. **Use parallelization wisely**: Enable parallelization for independent tests, but use `DoNotParallelize` for tests that share state.
+
+1. **Set appropriate timeouts**: Choose timeouts that allow normal execution but catch stuck tests. Consider slow CI environments.
+
+1. **Prefer cooperative cancellation**: Use cooperative cancellation to avoid the overhead of extra task wrappers and prevent background execution of timed-out tests. Enable the MSTEST0045 analyzer to enforce this practice.
+
+1. **Document ignored tests**: Always provide a reason and work item reference when ignoring tests.
+
+1. **Use retries sparingly**: Address the root cause of flaky tests rather than relying on retries.
+
+1. **Test OS-specific code appropriately**: Use `OSCondition` to run platform-specific tests only where they're applicable.

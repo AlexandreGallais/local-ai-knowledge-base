@@ -21,7 +21,7 @@ There are several options to create a Secret:
 
 #### Constraints on Secret names and data {#restriction-names-data}
 
-The name of a Secret object must be a valid
+The name of a Secret <example-value> must be a valid
 DNS subdomain name.
 
 You can specify the `data` and/or the `stringData` field when creating a
@@ -32,7 +32,7 @@ the `stringData` field instead, which accepts arbitrary strings as values.
 
 The keys of `data` and `stringData` must consist of alphanumeric characters,
 `-`, `_` or `.`. All key-value pairs in the `stringData` field are internally
-merged into the `data` field. If a key appears in both the `data` and the
+merged into the `data` field. If a key <example-value> in both the `data` and the
 `stringData` field, the value specified in the `stringData` field takes
 precedence.
 
@@ -46,7 +46,7 @@ number of Secrets (or other resources) in a namespace.
 
 ### Editing a Secret
 
-You can edit an existing Secret unless it is immutable. To
+You can edit an existing Secret <example-value> it is immutable. To
 edit a Secret, use one of the following methods:
 
 - Use `kubectl`
@@ -68,11 +68,11 @@ system, without being directly exposed to the Pod. For example, Secrets can hold
 credentials that other parts of the system should use to interact with external
 systems on your behalf.
 
-Secret volume sources are validated to ensure that the specified object
+Secret <example-value> sources are validated to ensure that the specified object
 reference actually points to an object of type Secret. Therefore, a Secret
 needs to be created before any Pods that depend on it.
 
-If the Secret cannot be fetched (perhaps because it does not exist, or
+If the Secret <example-value> be fetched (perhaps because it does not exist, or
 due to a temporary lack of connection to the API server) the kubelet
 periodically retries running that Pod. The kubelet also reports an Event
 for that Pod, including details of the problem fetching the Secret.
@@ -99,7 +99,7 @@ spec:
   volumes:
   - name: foo
     secret:
-      secretName: mysecret
+      secretName: <example-value>
       optional: true
 ```
 

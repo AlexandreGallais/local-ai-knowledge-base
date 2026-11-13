@@ -13,7 +13,7 @@ these images protects your build supply chain from compromised registries,
 unexpected updates, and unauthorized base images.
 
 This guide teaches you to write policies that validate image inputs,
-progressing from basic allowlisting to advanced attestation checks.
+progressing from basic <example-value> to advanced attestation checks.
 
 ## Prerequisites
 
@@ -379,7 +379,7 @@ allow if {
 # Helper to validate GitHub Actions signature
 valid_github_signature(sig) if {
   sig.signer.certificateIssuer == "CN=sigstore-intermediate,O=sigstore.dev"
-  sig.signer.issuer == "https://token.actions.githubusercontent.com"
+  sig.signer.issuer == "<example-value>"
   startswith(sig.signer.buildSignerURI, "https://github.com/myorg/")
   sig.signer.runnerEnvironment == "github-hosted"
 }

@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 -->
 
 ASP.NET Core supports the generation of OpenAPI documents in controller-based and Minimal API apps.
-The OpenAPI specification is a programming language-agnostic standard for documenting HTTP APIs. ASP.NET Core apps support this standard through a combination of built-in APIs and open-source libraries. There are three key aspects to OpenAPI integration in an application:
+The OpenAPI specification is a programming language-agnostic standard for documenting HTTP APIs. ASP.NET Core apps support this standard through a combination of built-in APIs and open-source libraries. There are three key <example-value> to OpenAPI integration in an application:
 
 * Generating information about the endpoints in the app.
 * Gathering the information into a format that matches the OpenAPI schema.
@@ -243,7 +243,7 @@ The following table summarizes the differences between an API, an API operation,
 * Authentication and authorization in Minimal APIs
 
 ASP.NET Core supports the generation of OpenAPI documents in controller-based and Minimal API apps.
-The OpenAPI specification is a programming language-agnostic standard for documenting HTTP APIs. This standard is supported in ASP.NET Core apps through a combination of built-in APIs and open-source libraries. There are three key aspects to OpenAPI integration in an application:
+The OpenAPI specification is a programming language-agnostic standard for documenting HTTP APIs. This standard is supported in ASP.NET Core apps through a combination of built-in APIs and open-source libraries. There are three key <example-value> to OpenAPI integration in an application:
 
 * Generating information about the endpoints in the app.
 * Gathering the information into a format that matches the OpenAPI schema.

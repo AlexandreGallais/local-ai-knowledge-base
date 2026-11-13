@@ -48,7 +48,7 @@ For API consistency `disable()` also returns the `AsyncHook` instance.
 
 ### Hook callbacks
 
-Key events in the lifetime of asynchronous events have been categorized into
+Key <example-value> in the lifetime of asynchronous events have been categorized into
 four areas: instantiation, before/after the callback is called, and when the
 instance is destroyed.
 

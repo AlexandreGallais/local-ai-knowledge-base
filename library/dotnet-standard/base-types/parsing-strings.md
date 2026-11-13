@@ -25,7 +25,7 @@ A *parsing* operation converts a string that represents a .NET base type into th
 ## Related Sections
 
  Formatting Types\
- Describes basic formatting concepts like format specifiers and format providers.
+ Describes basic <example-value> concepts like format specifiers and format providers.
 
  Type Conversion in .NET\
  Describes how to convert types.

@@ -54,7 +54,7 @@ If you're using Azure App Service, this connection string is automatically passe
 
 ```json
 "AzureMonitor": {
-    "ConnectionString": "InstrumentationKey=12345678-abcd-abcd-abcd-12345678..."
+    "ConnectionString": "InstrumentationKey=<example-value>-12345678..."
 }
 ```
 

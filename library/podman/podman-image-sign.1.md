@@ -64,12 +64,12 @@ Print usage statement.
 Override the default identity of the signature.
 
 ## EXAMPLES
-Sign the busybox image with the identity of foo@bar.com with a user's keyring and save the signature in /tmp/signatures/.
+Sign the busybox image with the identity of user@example.com with a user's keyring and save the signature in /tmp/signatures/.
 
 ```bash
-   $ sudo podman image sign --sign-by foo@bar.com --directory /tmp/signatures docker://privateregistry.example.com/foobar
+   $ sudo podman image sign --sign-by user@example.com --directory /tmp/signatures docker://privateregistry.example.com/foobar
 
-   $ sudo podman image sign --authfile=/tmp/foobar.json --sign-by foo@bar.com --directory /tmp/signatures docker://privateregistry.example.com/foobar
+   $ sudo podman image sign --authfile=/tmp/foobar.json --sign-by user@example.com --directory /tmp/signatures docker://privateregistry.example.com/foobar
 ```
 
 ## RELATED CONFIGURATION

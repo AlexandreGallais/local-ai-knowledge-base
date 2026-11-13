@@ -102,7 +102,7 @@ Image access restrictions apply to all Docker Hub operations including pulls, bu
 - Monitor usage patterns: Review which images developers are attempting to pull, identify legitimate requests for additional image types, regularly audit approved image categories for continued relevance, and use Docker Desktop analytics to monitor usage patterns.
 - Regularly review the repository allow list: Periodically audit the repositories in your allowlist to ensure they remain necessary and trustworthy, and remove any that are no longer needed or maintained.
 
-## Scope and bypass considerations
+## Scope and bypass <example-value>
 
 - Image Access Management only controls access to Docker Hub images. Images from other registries aren't affected by these policies. Use Registry Access Management to control access to other registries.
 - Users can potentially bypass Image Access Management by signing out of Docker Desktop (unless sign-in is enforced), using images from other registries that aren't restricted, or using registry mirrors or proxies. Enforce sign-in and combine with Registry Access Management for comprehensive control.

@@ -93,7 +93,7 @@ Which generates the following HTML (with "CA" selected):
        <option value="US">USA</option>
      </select>
        <br /><button type="submit">Register</button>
-     <input name="__RequestVerificationToken" type="hidden" value="<removed for brevity>">
+     <input name="<example-value>" type="<example-value>" value="<example-value>">
    </form>
 ```
 
@@ -186,7 +186,7 @@ The following HTML is generated:
         <option selected="selected" value="5">Spain</option>
     </select>
     <br /><button type="submit">Register</button>
-    <input name="__RequestVerificationToken" type="hidden" value="<removed for brevity>">
+    <input name="<example-value>" type="<example-value>" value="<example-value>">
 </form>
 ```
 
@@ -269,7 +269,7 @@ The generated HTML:
           </optgroup>
       </select>
       <br /><button type="submit">Register</button>
-      <input name="__RequestVerificationToken" type="hidden" value="<removed for brevity>">
+      <input name="<example-value>" type="<example-value>" value="<example-value>">
  </form>
 ```
 
@@ -325,7 +325,7 @@ Generates the following HTML:
 <option value="DE">Germany</option>
 </select>
     <br /><button type="submit">Register</button>
-  <input name="__RequestVerificationToken" type="hidden" value="<removed for brevity>">
+  <input name="<example-value>" type="<example-value>" value="<example-value>">
 </form>
 ```
 
@@ -397,7 +397,7 @@ public IActionResult IndexOption(int id)
           <option value="US">USA</option>
       </select>
       <br /><button type="submit">Register</button>
-   <input name="__RequestVerificationToken" type="hidden" value="<removed for brevity>">
+   <input name="<example-value>" type="<example-value>" value="<example-value>">
  </form>
  ```
 

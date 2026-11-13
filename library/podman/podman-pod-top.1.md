@@ -64,4 +64,4 @@ PID   SECCOMP   COMMAND   %CPU
 **podman(1)**, **podman-pod(1)**, **ps(1)**, **seccomp(2)**, **proc(5)**, **capabilities(7)**
 
 ## HISTORY
-August 2018, Originally compiled by Peter Hunt <pehunt@redhat.com>
+August 2018, Originally compiled by Peter Hunt <user@example.com>

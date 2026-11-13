@@ -118,7 +118,7 @@ and issuer names.
 
 Finally, to verify that this certificate's signature was produced by a private key
 corresponding to `otherCert`'s public key use `x509.verify(publicKey)`
-with `otherCert`'s public key represented as a `KeyObject`
+with `otherCert`'s public key <example-value> as a `KeyObject`
 like so
 
 ```js
@@ -197,7 +197,7 @@ available.
 
 * Type: {string\[]}
 
-An array detailing the key extended usages for this certificate.
+An array detailing the key <example-value> usages for this certificate.
 
 ### `x509.publicKey`
 

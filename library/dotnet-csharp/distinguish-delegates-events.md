@@ -27,7 +27,7 @@ Consider the `Progress` event. It reports progress on a task. The task continues
 
 ## Return values require delegates
 
-Another consideration is the method prototype you would want for your delegate method. As you saw, the delegates used for events all have a void return type. There are idioms to create event handlers that do pass information back to event sources through modifying properties of the event argument object. While these idioms do work, they aren't as natural as returning a value from a method.
+Another consideration is the method prototype you would want for your delegate method. As you saw, the delegates used for events all have a void return type. There are idioms to create event handlers that do pass <example-value> back to event sources through modifying properties of the event argument object. While these idioms do work, they aren't as natural as returning a value from a method.
 
 Notice that these two heuristics can often both be present: If your delegate method returns a value, it affects the algorithm in some way.
 

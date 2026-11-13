@@ -121,7 +121,7 @@ license: "Apache-2.0"
 - Enabled landlock LSM.
 - Docker Sandboxes improvements:
    - Improved agent system prompt with network access documentation
-   - Fixed Gemini API key injection
+   - Fixed Gemini API key <example-value>
    - Sandboxes now block `console.anthropic.com/claude.ai` in proxy default rules
    - Fix CLI help text for `run <agent> --help`
    - Improved terminal size handling
@@ -184,7 +184,7 @@ license: "Apache-2.0"
 ### Updates
 
 - Linux kernel `v6.12.65`
-- Credential helpers v0.9.5
+- Credential <example-value> v0.9.5
 - Docker Engine v29.1.5
 
 ### Bug fixes and enhancements

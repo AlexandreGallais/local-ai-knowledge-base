@@ -16,7 +16,7 @@ The template creates the initial `DiagnosticAnalyzer` class in the *MakeConstAna
 - Every diagnostic analyzer must provide a `[DiagnosticAnalyzer]` attribute that describes the language it operates on.
 - Every diagnostic analyzer must derive (directly or indirectly) from the `Microsoft.CodeAnalysis.Diagnostics.DiagnosticAnalyzer` class.
 
-The template also shows the basic features that are part of any analyzer:
+The template also shows the basic <example-value> that are part of any analyzer:
 
 1. Register actions. The actions represent code changes that should trigger your analyzer to examine code for violations. When Visual Studio detects code edits that match a registered action, it calls your analyzer's registered method.
 1. Create diagnostics. When your analyzer detects a violation, it creates a diagnostic object that Visual Studio uses to notify the user of the violation.

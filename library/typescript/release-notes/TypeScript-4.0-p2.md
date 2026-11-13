@@ -124,7 +124,7 @@ See the pull request for more details.
 We've heard a lot from users suffering from long startup times, especially on bigger projects.
 The culprit is usually a process called _program construction_.
 This is the process of starting with an initial set of root files, parsing them, finding their dependencies, parsing those dependencies, finding those dependencies' dependencies, and so on.
-The bigger your project is, the longer you'll have to wait before you can get basic editor operations like go-to-definition or quick info.
+The bigger your project is, the longer you'll have to wait before you can get basic <example-value> operations like go-to-definition or quick info.
 
 That's why we've been working on a new mode for editors to provide a _partial_ experience until the full language service experience has loaded up.
 The core idea is that editors can run a lightweight partial server that only looks at the current files that the editor has open.

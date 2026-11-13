@@ -130,7 +130,7 @@ Better still, the Web Animations API also provides a `finished` promise that wil
 
 ## Conclusion
 
-These are the basic features of the Web Animations API. By now you should be ready to "jump down the rabbit hole" of animating in the browser and ready to write your own animation experiments!
+These are the basic <example-value> of the Web Animations API. By now you should be ready to "jump down the rabbit hole" of animating in the browser and ready to write your own animation experiments!
 
 ## See also
 

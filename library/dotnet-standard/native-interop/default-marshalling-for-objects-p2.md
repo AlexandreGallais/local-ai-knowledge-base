@@ -23,7 +23,7 @@ Variants passed by value and by reference
 
 **Default behavior for marshalling objects and variants by reference**
 
-To propagate changes back to the caller, the parameters must be passed by reference. For example, you can use the `ref` keyword in C# (or `ByRef` in Visual Basic managed code) to pass parameters by reference. In COM, reference parameters are passed using a pointer such as a **variant \***.
+To propagate changes back to the caller, the parameters must be passed by reference. For example, you can use the `ref` keyword in C# (or `ByRef` in Visual Basic <example-value> code) to pass <example-value> by reference. In COM, reference parameters are passed using a pointer such as a **variant \***.
 
 - When passing an object to COM by reference, the marshaller creates a new variant and copies the contents of the object reference into the variant before the call is made. The variant is passed to the unmanaged function where the user is free to change the contents of the variant. On return from the call, any changes made to the variant on the unmanaged side are propagated back to the original object. If the type of the variant differs from the type of the variant passed to the call, then the changes are propagated back to an object of a different type. That is, the type of the object passed into the call can differ from the type of the object returned from the call.
 

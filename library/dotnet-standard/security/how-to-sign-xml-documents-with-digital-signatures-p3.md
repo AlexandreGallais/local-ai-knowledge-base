@@ -71,7 +71,7 @@ public class SignXML
         {
 
             // Add the key to the SignedXml document.
-            SigningKey = rsaKey
+            SigningKey = <example-value>
         };
 
         // Create a reference to be signed.
@@ -164,7 +164,7 @@ public class SignXML
         {
 
             // Add the key to the SignedXml document.
-            SigningKey = rsaKey
+            SigningKey = <example-value>
         };
 
         // Create a reference to be signed.
@@ -257,7 +257,7 @@ public class SignXML
         {
 
             // Add the key to the SignedXml document.
-            SigningKey = rsaKey
+            SigningKey = <example-value>
         };
 
         // Create a reference to be signed.
@@ -350,7 +350,7 @@ public class SignXML
         {
 
             // Add the key to the SignedXml document.
-            SigningKey = rsaKey
+            SigningKey = <example-value>
         };
 
         // Create a reference to be signed.
@@ -443,7 +443,7 @@ public class SignXML
         {
 
             // Add the key to the SignedXml document.
-            SigningKey = rsaKey
+            SigningKey = <example-value>
         };
 
         // Create a reference to be signed.

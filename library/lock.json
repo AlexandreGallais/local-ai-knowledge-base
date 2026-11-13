@@ -2,109 +2,109 @@
   "angular": {
     "commit": "dda2d41d948380d63619d597c9815db0aa77fd1d",
     "files": 520,
-    "bytes": 3873213,
+    "bytes": 3873770,
     "built": "2026-11-13"
   },
   "typescript-eslint": {
     "commit": "12e452f0292212bf9bf443b3988ec230f4ae7097",
     "files": 169,
-    "bytes": 493379,
+    "bytes": 493473,
     "built": "2026-11-13"
   },
   "mdn-svg": {
     "commit": "aa3f3f5d4d00cba08b88bddcfa94a84e2a4d976d",
     "files": 1073,
-    "bytes": 2376714,
+    "bytes": 2377054,
     "built": "2026-11-13"
   },
   "typescript": {
     "commit": "a93dd416c393cbc7570b829a9e0c753b2678249f",
     "files": 199,
-    "bytes": 1794365,
+    "bytes": 1794961,
     "built": "2026-11-13"
   },
   "eslint": {
     "commit": "12cbff4125db3f6446f72fa0c48c46b92b120427",
     "files": 317,
-    "bytes": 1141292,
+    "bytes": 1141370,
     "built": "2026-11-13"
   },
   "angular-eslint": {
     "commit": "7722ad2ab4da81568f19a7a29a3951fa443bf22c",
     "files": 121,
-    "bytes": 918918,
+    "bytes": 918890,
     "built": "2026-11-13"
   },
   "rxjs": {
     "commit": "e5351d02e225e275ac0e497c7b66eaa5f0c88791",
     "files": 26,
-    "bytes": 160661,
+    "bytes": 160689,
     "built": "2026-11-13"
   },
   "devcontainers": {
     "commit": "c95ffeed1d059abfe9ffbe79762dc2fa4e7c2421",
     "files": 24,
-    "bytes": 172934,
+    "bytes": 172875,
     "built": "2026-11-13"
   },
   "node": {
     "commit": "e9c277643b0249c50f6e6de5413be8a88ea11b6a",
     "files": 374,
-    "bytes": 4008572,
+    "bytes": 4011037,
     "built": "2026-11-13"
   },
   "dotnet-csharp": {
     "commit": "c3377f5f732f604c8f9bffc14d814dd35c99f3c0",
     "files": 1527,
-    "bytes": 9802297,
+    "bytes": 9802106,
     "built": "2026-11-13"
   },
   "dotnet-core": {
     "commit": "c3377f5f732f604c8f9bffc14d814dd35c99f3c0",
     "files": 2591,
-    "bytes": 9592012,
+    "bytes": 9592047,
     "built": "2026-11-13"
   },
   "dotnet-standard": {
     "commit": "c3377f5f732f604c8f9bffc14d814dd35c99f3c0",
-    "files": 1643,
-    "bytes": 12739976,
+    "files": 1642,
+    "bytes": 12739290,
     "built": "2026-11-13"
   },
   "aspnetcore": {
     "commit": "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd",
-    "files": 2144,
-    "bytes": 12551747,
+    "files": 2142,
+    "bytes": 12533341,
     "built": "2026-11-13"
   },
   "efcore": {
     "commit": "5fa9f7b63ae7ff93d631f4ddc47fdc9f72dcbdc7",
     "files": 326,
-    "bytes": 2919581,
+    "bytes": 2923108,
     "built": "2026-11-13"
   },
   "kubernetes": {
     "commit": "df9918100e7213445c18995258497b9bcbe0f624",
-    "files": 2442,
-    "bytes": 13363309,
+    "files": 2439,
+    "bytes": 13341541,
     "built": "2026-11-13"
   },
   "docker": {
     "commit": "a0442378fca4987b1235614ec917b4138b5d5e5d",
-    "files": 1298,
-    "bytes": 7770858,
+    "files": 1297,
+    "bytes": 7770378,
     "built": "2026-11-13"
   },
   "podman": {
     "commit": "055de046937d29450f310fce0fe3071485d8bed9",
     "files": 273,
-    "bytes": 1655474,
+    "bytes": 1656394,
     "built": "2026-11-13"
   },
   "rust-book": {
     "commit": "2771df165f092a4fbb9f46b5b2e7450f19010adb",
     "files": 183,
-    "bytes": 1314588,
+    "bytes": 1314849,
     "built": "2026-11-13"
   }
 }

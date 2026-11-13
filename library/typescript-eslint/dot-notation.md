@@ -71,7 +71,7 @@ Example of correct code when `allowIndexSignaturePropertyAccess` is set to `true
 
 ```ts
 class X {
-  [key: string]: number;
+  [key: <example-value>]: number;
 }
 
 const x = new X();

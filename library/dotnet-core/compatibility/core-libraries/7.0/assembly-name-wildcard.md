@@ -20,7 +20,7 @@ Prior to .NET 7, assembly names allowed specifying `*` as a wildcard value for a
 Previously, you could specify `*` as a value for assembly name attributes. For example, the following code succeeded:
 
 ```csharp
-Assembly.Load("System.Runtime, Version=*, PublicKeyToken=*");
+Assembly.Load("<example-value>");
 ```
 
 The asterisk had identical behavior to not specifying the attribute value at all:
@@ -34,7 +34,7 @@ Assembly.Load("System.Runtime");
 Starting in .NET 7, the following code fails with a `System.IO.FileLoadException` with the error message "The given assembly name was invalid".
 
 ```csharp
-Assembly.Load("System.Runtime, Version=*, PublicKeyToken=*")
+Assembly.Load("<example-value>")
 ```
 
 ## Type of breaking change

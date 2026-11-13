@@ -191,7 +191,7 @@ Attempting to validate
 custOrdDoc validated
 
 Attempting to validate after modification
-The key sequence 'AAAAA' in Keyref fails to refer to some key.
+The key <example-value> 'AAAAA' in Keyref fails to refer to some key.
 custOrdDoc did not validate
 ```
 

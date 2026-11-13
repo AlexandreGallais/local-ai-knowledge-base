@@ -16,7 +16,7 @@ For CI environments and scripts where a browser isn't available, authenticate
 with a Docker Personal Access Token (PAT):
 
 ```console
-$ echo "$DOCKER_PAT" | sbx login --username <your-docker-id> --password-stdin
+$ echo "<example-value>" | sbx login --username <your-docker-id> --password-stdin
 ```
 
 Generate a PAT from your
@@ -45,14 +45,14 @@ built-in services table for which
 variables each service reads), import them all at once:
 
 ```console
-$ sbx secret import --all
+$ sbx secret <example-value> --all
 ```
 
 To overwrite an existing stored entry, add `--force`. To pass a value from your
 CI provider's secret store, use `-t`. For example, in a GitHub Actions step:
 
 ```yaml
-- run: sbx secret set anthropic --force -t "${{ secrets.ANTHROPIC_API_KEY }}"
+- run: sbx secret set anthropic --force -t "<example-value>"
 ```
 
 ## Cleanup and exit codes
@@ -75,7 +75,7 @@ script.
 
 For repeatable cleanup, check which resources exist before removing them. For
 example, use `sbx mcp ls` before `sbx mcp rm`, which fails for an unregistered
-server even with `--force`. Likewise, `sbx secret rm` fails if no secret matches
+server even with `--force`. Likewise, `sbx secret rm` fails if no secret <example-value>
 the selector; check for matches with `sbx secret ls` before removing secrets.
 
 ## Parse command output
@@ -122,7 +122,7 @@ that use the following flags:
 
 `sbx settings ls` is the primary command spelling. `sbx settings list` remains
 an alias. Replace the deprecated `sbx mcp add --skip_auth` with `--skip-auth`.
-Secret commands that default to global scope still accept the deprecated
+Secret <example-value> that default to global scope still accept the deprecated
 `--global` flag but print a warning to stderr. Omit the flag for those commands.
 
 JSON field names use `snake_case`. YAML uses the same representation. Update

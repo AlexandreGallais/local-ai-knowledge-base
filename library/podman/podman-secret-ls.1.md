@@ -25,7 +25,7 @@ Lists all the secrets that exist. The output can be formatted to a Go template u
 
 #### **--format**=*format*
 
-Format secret output using Go template.
+Format secret <example-value> using Go template.
 
 Valid placeholders for the Go template are listed below:
 
@@ -54,7 +54,7 @@ $ podman secret ls
 
 List the name field of all secrets.
 ```
-$ podman secret ls --format "{{.Name}}"
+$ podman secret ls --format "<example-value>"
 ```
 
 List all secrets whose name includes the specified string.
@@ -66,4 +66,4 @@ $ podman secret ls --filter name=confidential
 **podman(1)**, **podman-secret(1)**
 
 ## HISTORY
-January 2021, Originally compiled by Ashley Cui <acui@redhat.com>
+January 2021, Originally compiled by Ashley Cui <user@example.com>

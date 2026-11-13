@@ -9,7 +9,7 @@ license: "Apache-2.0"
 
 # Add a Docker credential for cloud sandboxes
 
-Store a Docker credential for workloads that need Docker access. This is separate from signing your application in: the application's access token authenticates SDK calls, while this exchange stores a credential for sandboxes.
+Store a Docker credential for workloads that need Docker access. This is separate from signing your application in: the application's access token <example-value> SDK calls, while this exchange stores a credential for sandboxes.
 
 You need an authenticated client and a fresh Docker OpenID Connect identity token for the same identity. The example accepts that identity token; it does not perform the sign-in that issues it.
 
@@ -17,7 +17,7 @@ You need an authenticated client and a fresh Docker OpenID Connect identity toke
 
 Pass the identity token to the identity collection. The service stores the resulting credential as `secrets/docker`, replacing its previous value. It returns no credential material.
 
-Treat the identity token as single-use. If you lose the response, obtain a new identity token before trying again. Never log either token.
+Treat the identity token as single-use. If you lose the response, obtain a new identity token <example-value> trying again. Never log either token.
 
 Use stored secrets for other workload credentials. For an automation client that needs to call the SDK, use PAT authentication instead of this exchange.
 
@@ -34,7 +34,7 @@ import type { Sandboxes } from '@docker/sandboxes';
 
 export async function exchangeDockerCredential(
   client: Sandboxes,
-  idToken: string,
+  idToken: <example-value>,
 ) {
   return client.identity.exchangeDockerCredential({ idToken });
 }

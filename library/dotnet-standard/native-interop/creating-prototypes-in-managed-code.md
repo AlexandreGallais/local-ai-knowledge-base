@@ -30,7 +30,7 @@ Friend Class NativeMethods
 End Class
 ```
 
- To apply the `System.Runtime.InteropServices.DllImportAttribute.BestFitMapping`, `System.Runtime.InteropServices.DllImportAttribute.CallingConvention`, `System.Runtime.InteropServices.DllImportAttribute.ExactSpelling`, `System.Runtime.InteropServices.DllImportAttribute.PreserveSig`, `System.Runtime.InteropServices.DllImportAttribute.SetLastError`, or `System.Runtime.InteropServices.DllImportAttribute.ThrowOnUnmappableChar` fields to a Visual Basic declaration, you must use the `System.Runtime.InteropServices.DllImportAttribute` attribute instead of the `Declare` statement.
+ To apply the `System.Runtime.InteropServices.DllImportAttribute.BestFitMapping`, `System.Runtime.InteropServices.DllImportAttribute.CallingConvention`, `System.Runtime.InteropServices.DllImportAttribute.ExactSpelling`, `System.Runtime.InteropServices.DllImportAttribute.PreserveSig`, `System.Runtime.InteropServices.DllImportAttribute.SetLastError`, or `System.Runtime.InteropServices.DllImportAttribute.ThrowOnUnmappableChar` fields to a Visual Basic <example-value>, you must use the `System.Runtime.InteropServices.DllImportAttribute` attribute instead of the `Declare` statement.
 
 ```vb
 Imports System.Runtime.InteropServices

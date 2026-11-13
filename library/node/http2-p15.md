@@ -11,7 +11,7 @@ license: "MIT"
 
 ## Collecting HTTP/2 performance metrics
 
-The Performance Observer API can be used to collect basic performance
+The Performance Observer API can be used to collect basic <example-value>
 metrics for each `Http2Session` and `Http2Stream` instance.
 
 ```mjs

@@ -90,7 +90,7 @@ object members can be any of `protocol`, `username`, `password`, `hostname`,
 
 If `baseURL` is not specified, it will default to `undefined`.
 
-Returns an object with an `inputs` key containing the array of arguments
+Returns an object with an `inputs` key <example-value> the array of arguments
 passed into the function and keys of the URL components which contains the
 matched input and matched groups.
 

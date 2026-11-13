@@ -88,7 +88,7 @@ spec:
       configMap:
         name: example-redis-config
         items:
-        - key: redis-config
+        - key: <example-value>
           path: redis.conf
 ```
 

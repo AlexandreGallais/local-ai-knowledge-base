@@ -16,7 +16,7 @@ license: "CC-BY-4.0"
   Optional ConfigMaps). If you reference a ConfigMap that doesn't exist
   and you don't mark the reference as `optional`, the Pod won't start. Similarly, references
   to keys that don't exist in the ConfigMap will also prevent the Pod from starting, unless
-  you mark the key references as `optional`.
+  you mark the key <example-value> as `optional`.
 
 - If you use `envFrom` to define environment variables from ConfigMaps, keys that are considered
   invalid will be skipped. The pod will be allowed to start, but the invalid names will be

@@ -26,7 +26,7 @@ The functions that control complex animation sequences are:
 
 ## The query() function
 
-Most complex animations rely on the `query()` function to find child elements and apply animations to them. Basic examples include:
+Most complex animations rely on the `query()` function to find child elements and apply animations to them. Basic <example-value> include:
 
 | Examples                               | Details                                                                                                                                                                                            |
 | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

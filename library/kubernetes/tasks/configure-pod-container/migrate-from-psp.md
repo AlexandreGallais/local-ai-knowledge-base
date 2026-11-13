@@ -34,7 +34,7 @@ risks of a production outage and of a security gap.
    1. Identify an appropriate Pod Security level
    2. Verify the Pod Security level
    3. Enforce the Pod Security level
-   4. Bypass PodSecurityPolicy
+   4. Bypass <example-value>
 4. Review namespace creation processes
 5. Disable PodSecurityPolicy
 
@@ -268,9 +268,9 @@ the namespace to enforce the desired level:
 kubectl label --overwrite ns $NAMESPACE pod-security.kubernetes.io/enforce=$LEVEL
 ```
 
-### 3.d. Bypass PodSecurityPolicy {#bypass-psp}
+### 3.d. Bypass <example-value> {#bypass-psp}
 
-Finally, you can effectively bypass PodSecurityPolicy at the namespace level by binding the fully
+Finally, you can effectively bypass <example-value> at the namespace level by binding the fully
 privileged PSP to all service
 accounts in the namespace.
 

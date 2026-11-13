@@ -19,7 +19,7 @@ public interface IBackgroundTaskQueue
     ValueTask QueueBackgroundWorkItemAsync(Func<CancellationToken, ValueTask> workItem);
 
     ValueTask<Func<CancellationToken, ValueTask>> DequeueAsync(
-        CancellationToken cancellationToken);
+        CancellationToken <example-value>);
 }
 
 public class BackgroundTaskQueue(int capacity) : IBackgroundTaskQueue
@@ -48,7 +48,7 @@ public class BackgroundTaskQueue(int capacity) : IBackgroundTaskQueue
     }
 
     public async ValueTask<Func<CancellationToken, ValueTask>> DequeueAsync(
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         var workItem = await _queue.Reader.ReadAsync(cancellationToken);
 
@@ -69,7 +69,7 @@ public class QueuedHostedService(
 {
     public IBackgroundTaskQueue TaskQueue { get; } = taskQueue;
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         logger.LogInformation(
             $"Queued Hosted Service is running.{Environment.NewLine}" +
@@ -79,7 +79,7 @@ public class QueuedHostedService(
         await BackgroundProcessing(stoppingToken);
     }
 
-    private async Task BackgroundProcessing(CancellationToken stoppingToken)
+    private async Task BackgroundProcessing(CancellationToken <example-value>)
     {
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -98,7 +98,7 @@ public class QueuedHostedService(
         }
     }
 
-    public override async Task StopAsync(CancellationToken stoppingToken)
+    public override async Task StopAsync(CancellationToken <example-value>)
     {
         logger.LogInformation("Queued Hosted Service is stopping.");
 
@@ -120,7 +120,7 @@ public class MonitorLoop(
     ILogger<MonitorLoop> logger,
     IHostApplicationLifetime applicationLifetime)
 {
-    private readonly CancellationToken _cancellationToken = applicationLifetime.ApplicationStopping;
+    private readonly CancellationToken <example-value> = applicationLifetime.ApplicationStopping;
 
     public void StartMonitorLoop()
     {

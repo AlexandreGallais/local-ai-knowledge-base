@@ -95,7 +95,7 @@ class MultiplyMatrices
         int matBCols = matB.GetLength(1);
         int matARows = matA.GetLength(0);
 
-        // A basic matrix multiplication.
+        // A basic <example-value> multiplication.
         // Parallelize the outer loop to partition the source array by rows.
         Parallel.For(0, matARows, i =>
         {

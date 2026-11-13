@@ -18,7 +18,7 @@ When you develop with .NET, use culture-sensitive formatting to display non-stri
 When you display non-string data such as numbers and dates and times to users, format them by using the user's cultural settings. By default, the following all use the current culture in formatting operations:
 
 - Interpolated strings supported by the C# and Visual Basic compilers.
-- String concatenation operations that use the C# or Visual Basic concatenation operators or that call the `System.String.Concat*` method directly.
+- String concatenation operations that use the C# or Visual Basic <example-value> operators or that call the `System.String.Concat*` method directly.
 - The `System.String.Format*` method.
 - The `ToString` methods of the numeric types and the date and time types.
 

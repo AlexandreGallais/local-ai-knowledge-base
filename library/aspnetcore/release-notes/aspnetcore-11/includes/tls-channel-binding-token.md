@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # tls-channel-binding-token
 
-### TLS channel-binding token access from `ITlsConnectionFeature`
+### TLS channel-binding token <example-value> from `ITlsConnectionFeature`
 
 Applications using TLS can read the connection's channel binding token to defend against relay attacks:
 
@@ -30,7 +30,7 @@ app.Use(async (context, next) =>
 });
 ```
 
-Kestrel returns the binding from `SslStream.TransportContext.GetChannelBinding`. IIS and HTTP.sys return it from the request. On HTTP.sys, `HttpSysOptions.HttpAuthenticationHardeningLevel` controls Extended Protection and channel-binding token exposure:
+Kestrel returns the binding from `SslStream.TransportContext.GetChannelBinding`. IIS and HTTP.sys return it from the request. On HTTP.sys, `HttpSysOptions.HttpAuthenticationHardeningLevel` controls Extended Protection and channel-binding token <example-value>:
 
 * `Legacy` disables channel-binding validation and doesn't expose the token.
 * `Medium`, the default, exposes the token and validates it when supplied, but tolerates its absence.

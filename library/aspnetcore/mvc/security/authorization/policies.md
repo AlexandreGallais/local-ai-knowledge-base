@@ -16,7 +16,7 @@ This article provides additional MVC policy-based authorization scenarios follow
 Apply policies to controllers using the `[Authorize]` attribute with the policy name:
 
 _Code sample not included: ~/../AspNetCore.Docs.Samples/security/authorization/policies/6.0/AuthorizationPoliciesSample/Controllers/AtLeast21Controller.cs._
-If multiple policies are applied at the controller and action levels, ***all*** policies must pass before access is granted:
+If multiple policies are applied at the controller and action levels, ***all*** policies must pass <example-value> access is granted:
 
 _Code sample not included: ~/../AspNetCore.Docs.Samples/security/authorization/policies/6.0/AuthorizationPoliciesSample/Controllers/AtLeast21Controller2.cs._
 ## Access MVC request context in handlers

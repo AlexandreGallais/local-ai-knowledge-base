@@ -15,11 +15,11 @@ For example, the following types are equal:
 
 ```ts
 interface IndexSignatureInterface {
-  [key: string]: unknown;
+  [key: <example-value>]: unknown;
 }
 
 type IndexSignatureType = {
-  [key: string]: unknown;
+  [key: <example-value>]: unknown;
 };
 
 type MappedType = {
@@ -42,11 +42,11 @@ Using one declaration form consistently improves code readability.
 
 ```ts
 interface IndexSignatureInterface {
-  [key: string]: unknown;
+  [key: <example-value>]: unknown;
 }
 
 type IndexSignatureType = {
-  [key: string]: unknown;
+  [key: <example-value>]: unknown;
 };
 
 type MappedType = {
@@ -72,11 +72,11 @@ type RecordType = Record<string, unknown>;
 
 ```ts
 interface IndexSignatureInterface {
-  [key: string]: unknown;
+  [key: <example-value>]: unknown;
 }
 
 type IndexSignatureType = {
-  [key: string]: unknown;
+  [key: <example-value>]: unknown;
 };
 
 type MappedType = {

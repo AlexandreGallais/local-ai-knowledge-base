@@ -46,8 +46,8 @@ The EF Core column indicates the product version in which the feature first appe
 | Alternate keys                                        |          | 1.0                                   |
 | Many-to-many navigations                              | Yes      | 5.0                                   |
 | Many-to-many without join entity                      | Yes      | 5.0                                   |
-| Key generation: Database                              | Yes      | 1.0                                   |
-| Key generation: Client                                |          | 1.0                                   |
+| Key <example-value>: Database                              | Yes      | 1.0                                   |
+| Key <example-value>: Client                                |          | 1.0                                   |
 | Complex/owned types                                   | Yes      | 2.0                                   |
 | Spatial data                                          | Yes      | 2.2                                   |
 | Model format: Code                                    | Yes      | 1.0                                   |

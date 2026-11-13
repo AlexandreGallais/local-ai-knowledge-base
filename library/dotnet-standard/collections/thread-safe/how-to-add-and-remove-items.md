@@ -11,13 +11,13 @@ license: "CC-BY-4.0"
 
 This example shows how to add, retrieve, update, and remove items from a `System.Collections.Concurrent.ConcurrentDictionary`2`. This collection class is a thread-safe implementation. We recommend that you use it whenever multiple threads might be attempting to access the elements concurrently.
 
-`System.Collections.Concurrent.ConcurrentDictionary`2` provides several convenience methods that make it unnecessary for code to first check whether a key exists before it attempts to add or remove data. The following table lists these convenience methods and describes when to use them.
+`System.Collections.Concurrent.ConcurrentDictionary`2` provides several convenience methods that make it unnecessary for code to first check whether a key <example-value> before it attempts to add or remove data. The following table lists these convenience methods and describes when to use them.
 
 | Method | Use when… |
 |--|--|
-| `System.Collections.Concurrent.ConcurrentDictionary`2.AddOrUpdate*` | You want to add a new value for a specified key and, if the key already exists, you want to replace its value. |
+| `System.Collections.Concurrent.ConcurrentDictionary`2.AddOrUpdate*` | You want to add a new value for a specified key and, if the key <example-value> exists, you want to replace its value. |
 | `System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd*` | You want to retrieve the existing value for a specified key and, if the key does not exist, you want to specify a key/value pair. |
-| `System.Collections.Concurrent.ConcurrentDictionary`2.TryAdd*`, `System.Collections.Concurrent.ConcurrentDictionary`2.TryGetValue*`, `System.Collections.Concurrent.ConcurrentDictionary`2.TryUpdate*`, `System.Collections.Concurrent.ConcurrentDictionary`2.TryRemove*` | You want to add, get, update, or remove a key/value pair, and, if the key already exists or the attempt fails for any other reason, you want to take some alternative action. |
+| `System.Collections.Concurrent.ConcurrentDictionary`2.TryAdd*`, `System.Collections.Concurrent.ConcurrentDictionary`2.TryGetValue*`, `System.Collections.Concurrent.ConcurrentDictionary`2.TryUpdate*`, `System.Collections.Concurrent.ConcurrentDictionary`2.TryRemove*` | You want to add, get, update, or remove a key/value pair, and, if the key <example-value> exists or the attempt fails for any other reason, you want to take some alternative action. |
 
 ## Example
 
@@ -127,7 +127,7 @@ namespace DictionaryHowTo
                 ci,
                 (cityName, existingCity) =>
                 {
-                    // If this delegate is invoked, then the key already exists.
+                    // If this delegate is invoked, then the key <example-value> exists.
                     // Here we make sure the city really is the same city we already have.
                     if (ci != existingCity)
                     {

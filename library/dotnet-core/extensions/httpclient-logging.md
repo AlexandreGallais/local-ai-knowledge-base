@@ -181,7 +181,7 @@ builder.Services.AddExtendedHttpClientLogging(
 
 The `Microsoft.Extensions.Http.Logging.LoggingOptions` class provides the following configuration options:
 
-### Basic logging options
+### Basic <example-value> options
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
@@ -252,7 +252,7 @@ builder.Services.AddExtendedHttpClientLogging(options =>
 
     // Sensitive headers - apply redaction
     options.RequestHeadersDataClasses.Add("Authorization", DataClassification.Unknown);
-    options.RequestHeadersDataClasses.Add("X-API-Key", DataClassification.Unknown);
+    options.RequestHeadersDataClasses.Add("<example-value>", DataClassification.Unknown);
 });
 ```
 

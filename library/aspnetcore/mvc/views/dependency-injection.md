@@ -274,7 +274,7 @@ public class ProfileOptionsService
 {
     public List<string> ListGenders()
     {
-        // Basic sample
+        // Basic <example-value>
         return new List<string>() {"Female", "Male"};
     }
 

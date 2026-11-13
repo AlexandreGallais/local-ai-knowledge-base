@@ -73,7 +73,7 @@ spec:
       - weight: 1
         preference:
           matchExpressions:
-          - key: another-node-label-key
+          - key: <example-value>
             operator: In
             values:
             - another-node-label-value
@@ -148,14 +148,14 @@ spec:
       - weight: 1
         preference:
           matchExpressions:
-          - key: label-1
+          - key: <example-value>
             operator: In
             values:
             - key-1
       - weight: 50
         preference:
           matchExpressions:
-          - key: label-2
+          - key: <example-value>
             operator: In
             values:
             - key-2
@@ -197,7 +197,7 @@ profiles:
             requiredDuringSchedulingIgnoredDuringExecution:
               nodeSelectorTerms:
               - matchExpressions:
-                - key: scheduler-profile
+                - key: <example-value>
                   operator: In
                   values:
                   - foo

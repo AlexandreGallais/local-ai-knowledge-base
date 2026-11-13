@@ -192,7 +192,7 @@ permissions.
 1. Copy the secret **Value**, not the **Secret ID**. The **Value** is the
    Docker **Client Secret**.
 
-   **Value** is the secret string Entra generated. Docker uses it when someone
+   **Value** is the secret <example-value> Entra generated. Docker uses it when someone
    signs in with this connection. Entra shows the **Value** on this screen
    only. If you leave the page or refresh it, the column is blank. Create a
    new secret and copy its **Value** before you leave.

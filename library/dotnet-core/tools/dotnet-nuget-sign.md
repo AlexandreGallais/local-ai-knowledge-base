@@ -82,7 +82,7 @@ The `dotnet nuget sign` command signs all the packages matching the first argume
 
 - **`--certificate-password <PASSWORD>`**
 
-   Specifies the certificate password, if needed. If a certificate is password protected but no password is provided, the sign command will fail.
+   Specifies the certificate password, if needed. If a certificate is password <example-value> but no password is provided, the sign command will fail.
 
   > **Note:**
   > The `sign` command only supports non-interactive mode. There won't be any prompt for a password at runtime.
@@ -117,55 +117,55 @@ Prints out a description of how to use the command.
 
 ## Examples
 
-- Sign *foo.nupkg* with certificate *cert.pfx* (not password protected):
+- Sign *foo.nupkg* with certificate *cert.pfx* (not password <example-value>):
 
   ```dotnetcli
   dotnet nuget sign foo.nupkg --certificate-path cert.pfx
   ```
 
-- Sign *foo.nupkg* with certificate *cert.pfx* (password protected):
+- Sign *foo.nupkg* with certificate *cert.pfx* (password <example-value>):
 
   ```dotnetcli
-  dotnet nuget sign foo.nupkg --certificate-path cert.pfx --certificate-password password
+  dotnet nuget sign foo.nupkg --certificate-path cert.pfx --certificate-password <example-value>
   ```
 
-- Sign *foo.nupkg* with certificate (password protected) matches with the specified SHA-256 fingerprint in the default certificate store (CurrentUser\My):
+- Sign *foo.nupkg* with certificate (password <example-value>) matches with the specified SHA-256 fingerprint in the default certificate store (CurrentUser\My):
 
   ```dotnetcli
-  dotnet nuget sign foo.nupkg --certificate-fingerprint B2C40F2F8775D7B7EBEB76BD5A9D3A4BC3F4B8A4D8D7C5F8A4C6B3E7A9E2D5F1 --certificate-password password
+  dotnet nuget sign foo.nupkg --certificate-fingerprint B2C40F2F8775D7B7EBEB76BD5A9D3A4BC3F4B8A4D8D7C5F8A4C6B3E7A9E2D5F1 --certificate-password <example-value>
   ```
 
-- Sign *foo.nupkg* with certificate (password protected) matches with the specified subject name :::no-loc text="\"Test certificate for testing signing\""::: in the default certificate store (CurrentUser\My):
+- Sign *foo.nupkg* with certificate (password <example-value>) matches with the specified subject name :::no-loc text="\"Test certificate for testing signing\""::: in the default certificate store (CurrentUser\My):
 
   ```dotnetcli
-  dotnet nuget sign foo.nupkg --certificate-subject-name "Test certificate for testing signing" --certificate-password password
+  dotnet nuget sign foo.nupkg --certificate-subject-name "<example-value>" --certificate-password <example-value>
   ```
 
-- Sign *foo.nupkg* with certificate (password protected) matches with the specified SHA-256 fingerprint in the certificate store CurrentUser\Root:
+- Sign *foo.nupkg* with certificate (password <example-value>) matches with the specified SHA-256 fingerprint in the certificate store CurrentUser\Root:
 
   ```dotnetcli
-  dotnet nuget sign foo.nupkg --certificate-fingerprint B2C40F2F8775D7B7EBEB76BD5A9D3A4BC3F4B8A4D8D7C5F8A4C6B3E7A9E2D5F1 --certificate-password password --certificate-store-location CurrentUser --certificate-store-name Root
+  dotnet nuget sign foo.nupkg --certificate-fingerprint B2C40F2F8775D7B7EBEB76BD5A9D3A4BC3F4B8A4D8D7C5F8A4C6B3E7A9E2D5F1 --certificate-password <example-value> --certificate-store-location CurrentUser --certificate-store-name Root
   ```
 
-- Sign multiple NuGet packages - *foo.nupkg* and *all .nupkg files in the directory specified* with certificate *cert.pfx* (not password protected):
+- Sign multiple NuGet packages - *foo.nupkg* and *all .nupkg files in the directory specified* with certificate *cert.pfx* (not password <example-value>):
 
   ```dotnetcli
   dotnet nuget sign foo.nupkg c:\mydir\*.nupkg --certificate-path cert.pfx
   ```
 
-- Sign *foo.nupkg* with certificate *cert.pfx* (password protected), and timestamp with `http://timestamp.test`:
+- Sign *foo.nupkg* with certificate *cert.pfx* (password <example-value>), and timestamp with `http://timestamp.test`:
 
   ```dotnetcli
-  dotnet nuget sign foo.nupkg --certificate-path cert.pfx --certificate-password password --timestamper http://timestamp.test
+  dotnet nuget sign foo.nupkg --certificate-path cert.pfx --certificate-password <example-value> --timestamper http://timestamp.test
   ```
 
-- Sign *foo.nupkg* with certificate *cert.pfx* (not password protected) and save the signed package under specified directory:
+- Sign *foo.nupkg* with certificate *cert.pfx* (not password <example-value>) and save the signed package under specified directory:
 
   ```dotnetcli
   dotnet nuget sign foo.nupkg --certificate-path cert.pfx --output c:\signed\
   ```
 
-- Sign *foo.nupkg* with certificate *cert.pfx* (not password protected) and overwrite the current signature if the package is already signed:
+- Sign *foo.nupkg* with certificate *cert.pfx* (not password <example-value>) and overwrite the current signature if the package is already signed:
 
   ```dotnetcli
   dotnet nuget sign foo.nupkg --certificate-path cert.pfx --overwrite

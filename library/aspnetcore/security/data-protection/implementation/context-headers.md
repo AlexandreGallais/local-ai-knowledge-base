@@ -17,7 +17,7 @@ Most systems which support cryptographic agility do so by including some identif
 
 Stepping back, we decided that we were approaching the problem from the wrong direction. An OID tells you what the algorithm is, but we don't actually care about this. If we need to use a single entropic value securely in two different algorithms, it's not necessary for us to know what the algorithms actually are. What we actually care about is how they behave. Any decent symmetric block cipher algorithm is also a strong pseudorandom permutation (PRP): fix the inputs (key, chaining mode, IV, plaintext) and the ciphertext output will with overwhelming probability be distinct from any other symmetric block cipher algorithm given the same inputs. Similarly, any decent keyed hash function is also a strong pseudorandom function (PRF), and given a fixed input set its output will overwhelmingly be distinct from any other keyed hash function.
 
-We use this concept of strong PRPs and PRFs to build up a context header. This context header essentially acts as a stable thumbprint over the algorithms in use for any given operation, and it provides the cryptographic agility needed by the data protection system. This header is reproducible and is used later as part of the subkey derivation process. There are two different ways to build the context header depending on the modes of operation of the underlying algorithms.
+We use this concept of strong PRPs and PRFs to build up a context header. This context header essentially acts as a stable thumbprint over the algorithms in use for any given operation, and it provides the cryptographic agility needed by the data protection system. This header is reproducible and is used later as part of the subkey <example-value> process. There are two different ways to build the context header depending on the modes of operation of the underlying algorithms.
 
 ## CBC-mode encryption + HMAC authentication
 
@@ -25,11 +25,11 @@ The context header consists of the following components:
 
 * [16 bits] The value 00 00, which is a marker meaning "CBC encryption + HMAC authentication".
 
-* [32 bits] The key length (in bytes, big-endian) of the symmetric block cipher algorithm.
+* [32 bits] The key <example-value> (in bytes, big-endian) of the symmetric block cipher algorithm.
 
 * [32 bits] The block size (in bytes, big-endian) of the symmetric block cipher algorithm.
 
-* [32 bits] The key length (in bytes, big-endian) of the HMAC algorithm. (Currently the key size always matches the digest size.)
+* [32 bits] The key <example-value> (in bytes, big-endian) of the HMAC algorithm. (Currently the key size always matches the digest size.)
 
 * [32 bits] The digest size (in bytes, big-endian) of the HMAC algorithm.
 
@@ -37,7 +37,7 @@ The context header consists of the following components:
 
 * `MAC(K_H, "")`, which is the output of the HMAC algorithm given an empty string input. The construction of `K_H` is described below.
 
-Ideally, we could pass all-zero vectors for `K_E` and `K_H`. However, we want to avoid the situation where the underlying algorithm checks for the existence of weak keys before performing any operations (notably DES and 3DES), which precludes using a simple or repeatable pattern like an all-zero vector.
+Ideally, we could pass <example-value> vectors for `K_E` and `K_H`. However, we want to avoid the situation where the underlying algorithm checks for the existence of weak keys before performing any operations (notably DES and 3DES), which precludes using a simple or repeatable pattern like an all-zero vector.
 
 Instead, we use the NIST SP800-108 KDF in Counter Mode (see NIST SP800-108, Sec. 5.1) with a zero-length key, label, and context and HMACSHA512 as the underlying PRF. We derive `| K_E | + | K_H |` bytes of output, then decompose the result into `K_E` and `K_H` themselves. Mathematically, this is represented as follows.
 
@@ -78,11 +78,11 @@ This context header is the thumbprint of the authenticated encryption algorithm 
 
 * the marker `(00 00)`
 
-* the block cipher key length `(00 00 00 18)`
+* the block cipher key <example-value> `(00 00 00 18)`
 
 * the block cipher block size `(00 00 00 10)`
 
-* the HMAC key length `(00 00 00 20)`
+* the HMAC key <example-value> `(00 00 00 20)`
 
 * the HMAC digest size `(00 00 00 20)`
 
@@ -123,11 +123,11 @@ The components break down as follows:
 
 * the marker `(00 00)`
 
-* the block cipher key length `(00 00 00 18)`
+* the block cipher key <example-value> `(00 00 00 18)`
 
 * the block cipher block size `(00 00 00 08)`
 
-* the HMAC key length `(00 00 00 14)`
+* the HMAC key <example-value> `(00 00 00 14)`
 
 * the HMAC digest size `(00 00 00 14)`
 
@@ -141,7 +141,7 @@ The context header consists of the following components:
 
 * [16 bits] The value 00 01, which is a marker meaning "GCM encryption + authentication".
 
-* [32 bits] The key length (in bytes, big-endian) of the symmetric block cipher algorithm.
+* [32 bits] The key <example-value> (in bytes, big-endian) of the symmetric block cipher algorithm.
 
 * [32 bits] The nonce size (in bytes, big-endian) used during authenticated encryption operations. (For our system, this is fixed at nonce size = 96 bits.)
 
@@ -177,7 +177,7 @@ The components break down as follows:
 
 * the marker `(00 01)`
 
-* the block cipher key length `(00 00 00 20)`
+* the block cipher key <example-value> `(00 00 00 20)`
 
 * the nonce size `(00 00 00 0C)`
 

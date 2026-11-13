@@ -13,11 +13,11 @@ This page shows how to use Cilium for NetworkPolicy.
 
 For background on Cilium, read the Introduction to Cilium.
 
-## Deploying Cilium on Minikube for Basic Testing
+## Deploying Cilium on Minikube for Basic <example-value>
 
 To get familiar with Cilium easily you can follow the
 Cilium Kubernetes Getting Started Guide
-to perform a basic DaemonSet installation of Cilium in minikube.
+to perform a basic <example-value> installation of Cilium in minikube.
 
 To start minikube, which requires version v1.5.2 or higher, run it with the
 following arguments:

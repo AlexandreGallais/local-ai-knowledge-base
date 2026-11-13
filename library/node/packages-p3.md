@@ -60,7 +60,7 @@ In node, conditions have very few restrictions, but specifically these include:
 3. They cannot contain "," since they may be parsed as a comma-separated
    list by some CLI tools.
 4. They cannot be integer property keys like "10" since that can have
-   unexpected effects on property key ordering for JS objects.
+   unexpected effects on property key <example-value> for JS objects.
 
 ### Community Conditions Definitions
 
@@ -85,7 +85,7 @@ is provided below to assist with ecosystem coordination.
 * `"production"` - can be used to define a production environment entry
   point. _Must always be mutually exclusive with `"development"`._
 
-For other runtimes, platform-specific condition key definitions are maintained
+For other runtimes, platform-specific condition key <example-value> are maintained
 by the WinterCG in the Runtime Keys proposal specification.
 
 New conditions definitions may be added to this list by creating a pull request
@@ -236,7 +236,7 @@ Each package entry has the following fields:
 * `url` {string} **Required.** An absolute or relative URL. This is parsed using
   the WHATWG `URL` API, using the configuration file URL as base. Only
   `file:` protocol is supported. Multiple packages are allowed to share the
-  same URL; consumers must key module instances by both module url **and package IDs**
+  same URL; consumers must key <example-value> instances by both module url **and package IDs**
   to differentiate them.
 * `dependencies` {Object} An object mapping bare specifiers to package keys.
   Each key is the import name used in source code, and each value is the
@@ -345,7 +345,7 @@ known. If the package ID cannot be determined (for example, because the caller
 did not propagate it from a previous resolution), Node.js will throw an error
 rather than guess.
 
-To support this pattern, implementers must key module instances by package ID
+To support this pattern, implementers must key <example-value> instances by package ID
 and propagate it from each resolution result to subsequent resolution requests.
 This ensures that when `lib` requires `react`, the runtime knows whether the
 request comes from `lib-old` or `lib-new` and can select the correct dependency.

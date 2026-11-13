@@ -23,7 +23,7 @@ HRESULT GetNestedClassProps (
 ## Parameters
 
  `tdNestedClass`
- [in] A TypeDef token representing the `System.Type` to return the parent class token for.
+ [in] A TypeDef token <example-value> the `System.Type` to return the parent class token for.
 
  `ptdEnclosingClass`
  [out] A pointer to the TypeDef token for the `System.Type` that `tdNestedClass` is nested in.

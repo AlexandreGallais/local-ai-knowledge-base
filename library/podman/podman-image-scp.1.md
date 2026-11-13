@@ -94,7 +94,7 @@ Loaded image: docker.io/library/alpine:latest
 
 Copy specified image via ssh to local storage:
 ```
-$ podman image scp charliedoern@192.168.68.126:22/run/user/1000/podman/podman.sock::alpine
+$ podman image scp user@example.com:22/run/user/1000/podman/podman.sock::alpine
 WARN[0000] Unknown connection name given. Please use system connection add to specify the default remote socket location
 Getting image source signatures
 Copying blob 9450ef9feb15 [--------------------------------------] 0.0b / 0.0b
@@ -160,4 +160,4 @@ Loaded image: docker.io/library/alpine:latest
 **podman(1)**, **podman-load(1)**, **podman-save(1)**, **podman-remote(1)**, **podman-system-connection-add(1)**, **containers.conf(5)**, **containers-transports(5)**
 
 ## HISTORY
-July 2021, Originally written by Charlie Doern <cdoern@redhat.com>
+July 2021, Originally written by Charlie Doern <user@example.com>

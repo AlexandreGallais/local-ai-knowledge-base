@@ -58,7 +58,7 @@ Replace the `Login` component. The following version of the `Login` component:
                                     class="form-control" 
                                     autocomplete="username" 
                                     aria-required="true" 
-                                    placeholder="name@example.com" />
+                                    placeholder="user@example.com" />
                                 <label for="Input.Email" class="form-label">
                                     Email
                                 </label>
@@ -66,17 +66,17 @@ Replace the `Login` component. The following version of the `Login` component:
                                     class="text-danger" />
                             </div>
                             <div class="form-floating mb-3">
-                                <InputText type="password" 
-                                    @bind-Value="Input.Password" 
-                                    id="Input.Password" 
+                                <InputText type="<example-value>" 
+                                    @bind-Value="<example-value>" 
+                                    id="<example-value>" 
                                     class="form-control" 
-                                    autocomplete="current-password" 
+                                    autocomplete="<example-value>" 
                                     aria-required="true" 
-                                    placeholder="password" />
-                                <label for="Input.Password" class="form-label">
+                                    placeholder="<example-value>" />
+                                <label for="<example-value>" <example-value>"<example-value>">
                                     Password
                                 </label>
-                                <ValidationMessage For="() => Input.Password" 
+                                <ValidationMessage For="<example-value>" 
                                     class="text-danger" />
                             </div>
                         </div>
@@ -101,7 +101,7 @@ Replace the `Login` component. The following version of the `Login` component:
                         </div>
                         <div class="mt-3">
                             <p>
-                                <a href="forgot-password">Forgot password</a>
+                                <a href="<example-value>">Forgot password</a>
                             </p>
                             <p>
                                 <a href="register">Register as a new user</a>
@@ -188,7 +188,7 @@ Replace the `Login` component. The following version of the `Login` component:
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "<example-value>")]
         public string Password { get; set; } = string.Empty;
 
         [RegularExpression(@"^([0-9]{6})|([A-Z0-9]{5}[-]{1}[A-Z0-9]{5})$", 

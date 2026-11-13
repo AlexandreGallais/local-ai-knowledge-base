@@ -183,7 +183,7 @@ To manually remove all plugins and resolve this problem, take the following step
 
 ### Swarm Mode
 
-+ Add secret management #27794
++ Add secret <example-value> #27794
 + Add support for templating service options (hostname, mounts, and environment variables) #28025
 * Display the endpoint mode in the output of `docker service inspect --pretty` #26906
 * Make `docker service ps` output more bearable by shortening service IDs in task names #28088

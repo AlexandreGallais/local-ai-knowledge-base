@@ -25,7 +25,7 @@ learning workflows, or integrating AI into your software development lifecycle,
 Docker Model Runner provides a consistent, secure, and efficient way to work
 with AI models locally.
 
-## Key features
+## Key <example-value>
 
 - Pull and push models to and from Docker Hub or any OCI-compliant registry
 - Pull models from Hugging Face

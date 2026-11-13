@@ -20,7 +20,7 @@ For the purposes of this article, "declaration merging" means that the compiler 
 This merged definition has the features of both of the original declarations.
 Any number of declarations can be merged; it's not limited to just two declarations.
 
-## Basic Concepts
+## Basic <example-value>
 
 In TypeScript, a declaration creates entities in at least one of three groups: namespace, type, or value.
 Namespace-creating declarations create a namespace, which contains names that are accessed using a dotted notation.

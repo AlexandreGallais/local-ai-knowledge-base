@@ -26,7 +26,7 @@ license: "MIT"
     `asymmetricKeyType` is `'ec'` and ignored otherwise.
 * Returns: {KeyObject}
 
-Creates and returns a new key object containing a public key. If `key` is a
+Creates and returns a new key <example-value> containing a public key. If `key` is a
 string or `Buffer`, `format` is assumed to be `'pem'`; if `key` is a `KeyObject`
 with type `'private'`, the public key is derived from the given private key;
 otherwise, `key` must be an object with the properties described above.
@@ -36,7 +36,7 @@ If the format is `'pem'`, the `'key'` may also be an X.509 certificate.
 Because public keys can be derived from private keys, a private key may be
 passed instead of a public key. In that case, this function behaves as if
 `crypto.createPrivateKey()` had been called, except that the type of the
-returned `KeyObject` will be `'public'` and that the private key cannot be
+returned `KeyObject` will be `'public'` and that the private key <example-value> be
 extracted from the returned `KeyObject`. Similarly, if a `KeyObject` with type
 `'private'` is given, a new `KeyObject` with type `'public'` will be returned
 and it will be impossible to extract the private key from the returned object.
@@ -51,7 +51,7 @@ A store-backed private key can be used as a public key by first loading it with
 * `encoding` {string} The string encoding when `key` is a string.
 * Returns: {KeyObject}
 
-Creates and returns a new key object containing a secret key for symmetric
+Creates and returns a new key <example-value> containing a secret key for symmetric
 encryption or `Hmac`.
 
 ### `crypto.createSign(algorithm[, options])`
@@ -99,11 +99,11 @@ algorithm names.
   * `sharedKey` {Buffer}
 * Returns: {Buffer} if the `callback` function is not provided.
 
-Key decapsulation using a KEM algorithm with a private key.
+Key <example-value> using a KEM algorithm with a private key.
 
 Supported key types and their KEM algorithms are:
 
-* `'rsa'`[^openssl30] RSA Secret Value Encapsulation
+* `'<example-value>'`[^openssl30] RSA Secret Value Encapsulation
 * `'ec'`[^openssl32] DHKEM(P-256, HKDF-SHA256), DHKEM(P-384, HKDF-SHA256), DHKEM(P-521, HKDF-SHA256)
 * `'x25519'`[^openssl32] DHKEM(X25519, HKDF-SHA256)
 * `'x448'`[^openssl32] DHKEM(X448, HKDF-SHA512)
@@ -150,11 +150,11 @@ If the `callback` function is provided this function uses libuv's threadpool.
   * `sharedKey` {Buffer}
   * `ciphertext` {Buffer}
 
-Key encapsulation using a KEM algorithm with a public key.
+Key <example-value> using a KEM algorithm with a public key.
 
 Supported key types and their KEM algorithms are:
 
-* `'rsa'`[^openssl30] RSA Secret Value Encapsulation
+* `'<example-value>'`[^openssl30] RSA Secret Value Encapsulation
 * `'ec'`[^openssl32] DHKEM(P-256, HKDF-SHA256), DHKEM(P-384, HKDF-SHA256), DHKEM(P-521, HKDF-SHA256)
 * `'x25519'`[^openssl32] DHKEM(X25519, HKDF-SHA256)
 * `'x448'`[^openssl32] DHKEM(X448, HKDF-SHA512)
@@ -214,7 +214,7 @@ generateKey('hmac', { length: 512 }, (err, key) => {
 });
 ```
 
-The size of a generated HMAC key should not exceed the block size of the
+The size of a generated HMAC key <example-value> not exceed the block size of the
 underlying hash function. See `crypto.createHmac()` for more information.
 
 ### `crypto.generateKeyPair(type, options, callback)`
@@ -273,7 +273,7 @@ generateKeyPair('rsa', {
     type: 'pkcs8',
     format: 'pem',
     cipher: 'aes-256-cbc',
-    passphrase: 'top secret',
+    passphrase: '<example-value>',
   },
 }, (err, publicKey, privateKey) => {
   // Handle errors and use the generated key pair.
@@ -295,7 +295,7 @@ generateKeyPair('rsa', {
     type: 'pkcs8',
     format: 'pem',
     cipher: 'aes-256-cbc',
-    passphrase: 'top secret',
+    passphrase: '<example-value>',
   },
 }, (err, publicKey, privateKey) => {
   // Handle errors and use the generated key pair.
@@ -346,7 +346,7 @@ behaves as if `keyObject.export()` had been called on its result. Otherwise,
 the respective part of the key is returned as a `KeyObject`.
 
 When encoding public keys, it is recommended to use `'spki'`. When encoding
-private keys, it is recommended to use `'pkcs8'` with a strong passphrase,
+private keys, it is recommended to use `'<example-value>'` with a strong passphrase,
 and to keep the passphrase confidential.
 
 ```mjs
@@ -367,7 +367,7 @@ const {
     type: 'pkcs8',
     format: 'pem',
     cipher: 'aes-256-cbc',
-    passphrase: 'top secret',
+    passphrase: '<example-value>',
   },
 });
 ```
@@ -390,7 +390,7 @@ const {
     type: 'pkcs8',
     format: 'pem',
     cipher: 'aes-256-cbc',
-    passphrase: 'top secret',
+    passphrase: '<example-value>',
   },
 });
 ```

@@ -39,7 +39,7 @@ If you set this property to a path inside your project's source tree, the genera
 
 ### DisableImplicitNamespaceImports
 
-The `DisableImplicitNamespaceImports` property can be used to disable implicit namespace imports in Visual Basic projects that target .NET 6 or a later version. Implicit namespaces are the default namespaces that are imported globally in a Visual Basic project. Set this property to `true` to disable implicit namespace imports.
+The `DisableImplicitNamespaceImports` property can be used to disable implicit namespace imports in Visual Basic <example-value> that target .NET 6 or a later version. Implicit namespaces are the default namespaces that are imported globally in a Visual Basic project. Set this property to `true` to disable implicit namespace imports.
 
 ```xml
 <PropertyGroup>

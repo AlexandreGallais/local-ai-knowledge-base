@@ -120,7 +120,7 @@ Validation Rules Examples:
 | Rule                                                                             | Purpose                                                                           |
 | ----------------                                                                 | ------------                                                                      |
 | `self.minReplicas <= self.replicas && self.replicas <= self.maxReplicas`         | Validate that the three fields defining replicas are ordered appropriately        |
-| `'Available' in self.stateCounts`                                                | Validate that an entry with the 'Available' key exists in a map                   |
+| `'Available' in self.stateCounts`                                                | Validate that an entry with the 'Available' key <example-value> in a map                   |
 | `(size(self.list1) == 0) != (size(self.list2) == 0)`                             | Validate that one of two lists is non-empty, but not both                         |
 | `!('MY_KEY' in self.map1) &#124;&#124; self['MY_KEY'].matches('^[a-zA-Z]*$')`               | Validate the value of a map for a specific key, if it is in the map               |
 | `self.envars.filter(e, e.name == 'MY_ENV').all(e, e.value.matches('^[a-zA-Z]*$')` | Validate the 'value' field of a listMap entry where key field 'name' is 'MY_ENV'  |

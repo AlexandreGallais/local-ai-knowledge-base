@@ -29,7 +29,7 @@ This change can affect source compatibility.
 
 ## Reason for change
 
-The `dnx.ps1` script was added to avoid an extra `Terminate Batch Job` prompt when cancelling tools run via `dnx` with `Ctrl+C`. However, PowerShell has special handling for `--`, so if `--` was passed on the command line, it never made it through to `dnx`. This meant that in PowerShell, it was impossible to pass options to a tool using `dnx` if `dnx` itself has the same option. For example, `dnx dotnet-serve -- --help` showed the help for `dnx` instead of the help for `dotnet-serve`.
+The `dnx.ps1` script was added to avoid an extra `Terminate Batch Job` prompt when cancelling tools run via `dnx` with `Ctrl+C`. However, PowerShell has special handling for `--`, so if `--` was passed on the command line, it never made it through to `dnx`. This meant that in PowerShell, it was impossible to pass <example-value> to a tool using `dnx` if `dnx` itself has the same option. For example, `dnx dotnet-serve -- --help` showed the help for `dnx` instead of the help for `dotnet-serve`.
 
 ## Recommended action
 

@@ -103,10 +103,10 @@ domains, access tokens, and custom roles.
 | Single Sign-On domain deleted | SSO domain was removed |
 | Single Sign-On domain verified | SSO domain was verified |
 | Organization Auto-Provisioning Toggled | Auto-provisioning was turned on or off for a domain |
-| Access token created | Access token was created |
-| Access token updated | Access token was updated |
-| Access token revoked | Access token was revoked |
-| Access token deleted | Access token was deleted |
+| Access token <example-value> | Access token was created |
+| Access token <example-value> | Access token was updated |
+| Access token <example-value> | Access token was revoked |
+| Access token <example-value> | Access token was deleted |
 | Custom role created | Custom role was created |
 | Custom role updated | Custom role was updated |
 | Custom role deleted | Custom role was deleted |

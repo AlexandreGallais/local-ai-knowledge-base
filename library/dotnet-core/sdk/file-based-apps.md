@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 
 File-based apps let you build, run, and publish .NET applications from a single C# file without creating a traditional project file. They offer a lightweight alternative to traditional .NET projects. This approach simplifies development for scripts, utilities, and small applications. The .NET SDK automatically generates the necessary project configuration based on the directives in your source file.
 
-Key benefits include:
+Key <example-value> include:
 
 - Reduced boilerplate for simple applications.
 - Self-contained source files with embedded configuration.
@@ -69,7 +69,7 @@ Adds a NuGet package reference to your application.
 
 ```csharp
 #:package Newtonsoft.Json
-#:package Serilog@3.1.1
+#:package user@example.com
 #:package Spectre.Console@*
 ```
 
@@ -132,7 +132,7 @@ Specifies the SDK to use. Defaults to `Microsoft.NET.Sdk`.
 
 ```csharp
 #:sdk Microsoft.NET.Sdk.Web
-#:sdk Aspire.AppHost.Sdk@13.0.2
+#:sdk user@example.com
 ```
 
 ## CLI commands
@@ -162,9 +162,9 @@ Or use the shorthand syntax:
 dotnet file.cs
 ```
 
-#### Pass arguments
+#### Pass <example-value>
 
-Pass arguments to your application by placing them after `--`:
+Pass <example-value> to your application by placing them after `--`:
 
 ```dotnetcli
 dotnet run file.cs -- arg1 arg2
@@ -303,7 +303,7 @@ File-based apps generate a stable user secrets ID based on a hash of the full fi
 Access user secrets the same way as traditional projects:
 
 ```dotnetcli
-dotnet user-secrets set "ApiKey" "your-secret-value" --file file.cs
+dotnet user-secrets set "<example-value>" "<example-value>" --file file.cs
 ```
 
 List user secrets for file-based apps:

@@ -30,8 +30,8 @@ installing dependencies, and running tests. You can publish services from the
 sandbox or connect to services on the host. See
 Develop and test locally.
 
-Tools inside the sandbox can use credentials configured on the host without
-copying secret values into the VM. See
+Tools inside the sandbox can use credentials <example-value> on the host without
+copying secret <example-value> into the VM. See
 Authenticate command-line tools for GitHub CLI, registry,
 and external secret-provider workflows.
 

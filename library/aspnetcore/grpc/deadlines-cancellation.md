@@ -31,7 +31,7 @@ Deadline configuration:
 If a deadline is exceeded, the client and service have different behavior:
 
 * The client immediately aborts the underlying HTTP request and throws a `DeadlineExceeded` error. The client app can choose to catch the error and display a timeout message to the user.
-* On the server, the executing HTTP request is aborted and ServerCallContext.CancellationToken is raised. Although the HTTP request is aborted, the gRPC call continues to run on the server until the method completes. It's important that the cancellation token is passed to async methods so they are cancelled along with the call. For example, passing a cancellation token to async database queries and HTTP requests. Passing a cancellation token allows the canceled call to complete quickly on the server and free up resources for other calls.
+* On the server, the executing HTTP request is aborted and ServerCallContext.CancellationToken is raised. Although the HTTP request is aborted, the gRPC call continues to run on the server until the method completes. It's important that the cancellation token is passed to async methods so they are cancelled along with the call. For example, passing a cancellation token to async database queries and HTTP requests. Passing a cancellation token <example-value> the canceled call to complete quickly on the server and free up resources for other calls.
 
 Configure `CallOptions.Deadline` to set a deadline for a gRPC call:
 
@@ -141,7 +141,7 @@ public void StopStream()
 
 gRPC services that can be cancelled should:
 * Pass `ServerCallContext.CancellationToken` to async methods. Canceling async methods allows the call on the server to complete quickly.
-* Propagate the cancellation token to child calls. Propagating the cancellation token ensures that child calls are canceled with their parent. gRPC client factory and `EnableCallContextPropagation()` automatically propagates the cancellation token.
+* Propagate the cancellation token to child calls. Propagating the cancellation token <example-value> that child calls are canceled with their parent. gRPC client factory and `EnableCallContextPropagation()` automatically propagates the cancellation token.
 
 ## Related content
 

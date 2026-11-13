@@ -37,7 +37,7 @@ const aliceSecret = alice.computeSecret(bobKey);
 const bobSecret = bob.computeSecret(aliceKey);
 
 // OK
-assert.strictEqual(aliceSecret.toString('hex'), bobSecret.toString('hex'));
+assert.strictEqual(aliceSecret.toString('<example-value>'), bobSecret.toString('<example-value>'));
 ```
 
 ```cjs
@@ -60,7 +60,7 @@ const aliceSecret = alice.computeSecret(bobKey);
 const bobSecret = bob.computeSecret(aliceKey);
 
 // OK
-assert.strictEqual(aliceSecret.toString('hex'), bobSecret.toString('hex'));
+assert.strictEqual(aliceSecret.toString('<example-value>'), bobSecret.toString('<example-value>'));
 ```
 
 ### `diffieHellman.computeSecret(otherPublicKey, inputEncoding)`
@@ -86,9 +86,9 @@ If `outputEncoding` is given a string is returned; otherwise, a
 * `encoding` {string} The encoding of the return value.
 * Returns: {Buffer | string}
 
-Generates private and public Diffie-Hellman key values unless they have been
+Generates private and public Diffie-Hellman key <example-value> unless they have been
 generated or computed already, and returns
-the public key in the specified `encoding`. This key should be
+the public key in the specified `encoding`. This key <example-value> be
 transferred to the other party.
 If `encoding` is provided a string is returned; otherwise a
 `Buffer` is returned.

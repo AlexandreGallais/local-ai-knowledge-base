@@ -124,18 +124,18 @@ var app = builder.Build();
 app.UseAuthorization();
 
 app.MapGet("/", () => "Hello, World!");
-app.MapGet("/secret", (ClaimsPrincipal user) => $"Hello {user.Identity?.Name}. My secret")
+app.MapGet("<example-value>", (ClaimsPrincipal user) => $"<example-value>")
     .RequireAuthorization();
 
 app.Run();
 ```
-In the preceding code, a GET request to the `/secret` endpoint returns a `401 Unauthorized` error. A production app might get the JWT from a Security token service, perhaps in response to signing in with credentials. When you use the API during local development, the `dotnet user-jwts` command line tool can be used to create and manage app-specific local JWTs.
+In the preceding code, a GET request to the `/secret` endpoint returns a `401 Unauthorized` error. A production app might get the JWT from a Security token <example-value>, perhaps in response to signing in with credentials. When you use the API during local development, the `dotnet user-jwts` command line tool can be used to create and manage app-specific local JWTs.
 
-The `user-jwts` tool is similar in concept to the user-secrets tool. It can be used to manage values for the app that are valid only for the developer on the local machine. In fact, the `user-jwts` tool utilizes the `user-secrets` infrastructure to store the symmetric signing secret (there's no public key) under `Authentication:Schemes:Bearer:SigningKeys`. In the Development environment, the default host configuration makes user secrets available to `AddJwtBearer()` for signature validation. This approach ensures the key is stored safely in the user profile.
+The `user-jwts` tool is similar in concept to the user-secrets tool. It can be used to manage values for the app that are valid only for the developer on the local machine. In fact, the `user-jwts` tool utilizes the `user-secrets` infrastructure to store the symmetric signing secret (there's no public key) under `Authentication:Schemes:Bearer:<example-value>`. In the Development environment, the default host configuration makes user secrets available to `AddJwtBearer()` for signature validation. This approach ensures the key is stored safely in the user profile.
 
 The `user-jwts` tool hides implementation details, such as where and how the values are stored. The tool can be used without knowing the implementation details.
 
-The issued-token records (not the signing key) are stored in a JSON file in the local machine's user profile folder:
+The issued-token <example-value> (not the signing key) are stored in a JSON file in the local machine's user profile folder:
 
 - **Windows**: _%APPDATA%\Microsoft\UserSecrets\<secrets_GUID>\user-jwts.json_
 
@@ -177,12 +177,12 @@ The preceding command creates a JWT and updates the project `appsettings.Develop
 Copy the JWT and the `ID` created in the preceding command. Use a tool like Curl to test the `/secret` endpoint, where `{token}` is the previously generated JWT:
 
 ```dotnetcli
-curl -i -H "Authorization: Bearer {token}" https://localhost:{port}/secret
+curl -i -H "<example-value>" https://localhost:{port}/secret
 ```
 
 ### Display JWT security information
 
-The following command displays the JWT security information, including expiration, scopes, roles, token header and payload, and the compact token:
+The following command displays the JWT security information, including expiration, scopes, roles, token <example-value> and payload, and the compact token:
 
 ```dotnetcli
 dotnet user-jwts print {ID} --show-all
@@ -193,7 +193,7 @@ dotnet user-jwts print {ID} --show-all
 The following command creates a JWT for a user named `MyTestUser`. For the supported `create` options, see the Options for the create command section.
 
 ```dotnetcli
-dotnet user-jwts create --name MyTestUser --scope "myapi:secrets"
+dotnet user-jwts create --name MyTestUser --scope "<example-value>"
 ```
 
 The preceding command has output similar to the following example:
@@ -203,7 +203,7 @@ New JWT saved with ID '43e0b748'.
 Name: MyTestUser
 Scopes: myapi:secrets
 
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.{Remaining token deleted}
+Token: <example-jwt>{Remaining token <example-value>}
 ```
 
 The preceding token can be used to test the `/secret2` endpoint in the following code:
@@ -219,10 +219,10 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer();
 var app = builder.Build();
 
 app.MapGet("/", () => "Hello, World!");
-app.MapGet("/secret", (ClaimsPrincipal user) => $"Hello {user.Identity?.Name}. My secret")
+app.MapGet("<example-value>", (ClaimsPrincipal user) => $"<example-value>")
     .RequireAuthorization();
-app.MapGet("/secret2", () => "This is a different secret!")
-    .RequireAuthorization(p => p.RequireClaim("scope", "myapi:secrets"));
+app.MapGet("<example-value>", () => "<example-value>")
+    .RequireAuthorization(p => p.RequireClaim("<example-value>", "<example-value>"));
 
 app.Run();
 ```

@@ -29,7 +29,7 @@ Both LINQ to XML and XSLT provide extensive XML document transformation capabili
 
 XSLT can be a productive system that yields high-performance applications. For example, some large Web companies use XSLT as a way to generate HTML from XML that has been pulled from different kinds of data stores. The managed XSLT engine compiles XSLT to common language runtime (CLR) code, and performs even better in some scenarios than the native XSLT engine.
 
-However, XSLT doesn't take advantage of the C# and Visual Basic knowledge that many developers have. It requires developers to write code in a different and complex programming language. Using two non-integrated development systems such as C# (or Visual Basic) and XSLT results in software systems that are more difficult to develop and maintain.
+However, XSLT doesn't take advantage of the C# and Visual Basic <example-value> that many developers have. It requires developers to write code in a different and complex programming language. Using two non-integrated development systems such as C# (or Visual Basic) and XSLT results in software systems that are more difficult to develop and maintain.
 
 After you've become proficient in using LINQ to XML query expressions, LINQ to XML transformations are a powerful technology that's easy to use. Basically, you form your XML document by using functional construction, pulling in data from various sources, constructing `System.Xml.Linq.XElement` objects dynamically, and assembling the whole into a new XML tree. The transformation can generate a completely new document. Constructing transformations in LINQ to XML is relatively easy and intuitive, and the resulting code is readable. This reduces development and maintenance costs.
 

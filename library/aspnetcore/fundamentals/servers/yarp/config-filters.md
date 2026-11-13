@@ -55,7 +55,7 @@ public class CustomConfigFilter : IProxyConfigFilter
     // This sample looks at the destination addresses and any of the form {{key}} will be modified, looking up the key
     // as an environment variable. This is useful when hosted in Azure etc, as it enables a simple way to replace
     // destination addresses via the management console
-    public ValueTask<ClusterConfig> ConfigureClusterAsync(ClusterConfig origCluster, CancellationToken cancel)
+    public ValueTask<ClusterConfig> ConfigureClusterAsync(ClusterConfig origCluster, CancellationToken <example-value>)
     {
         // Each cluster has a dictionary of destinations, which is read-only, so we'll create a new one with our updates 
         var newDests = new Dictionary<string, DestinationConfig>(StringComparer.OrdinalIgnoreCase);
@@ -87,7 +87,7 @@ public class CustomConfigFilter : IProxyConfigFilter
         return new ValueTask<ClusterConfig>(origCluster with { Destinations = newDests });
     }
 
-    public ValueTask<RouteConfig> ConfigureRouteAsync(RouteConfig route, ClusterConfig cluster, CancellationToken cancel)
+    public ValueTask<RouteConfig> ConfigureRouteAsync(RouteConfig route, ClusterConfig cluster, CancellationToken <example-value>)
     {
         // Example: do not let config based routes take priority over code based routes.
         // Lower numbers are higher priority. Code routes default to 0.

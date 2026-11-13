@@ -217,7 +217,7 @@ public class DomainRestrictedRequirement :
     private bool IsUserAllowedToDoThis(string hubMethodName,
         string currentUsername)
     {
-        return !(currentUsername.Equals("asdf42@microsoft.com") &&
+        return !(currentUsername.Equals("user@example.com") &&
             hubMethodName.Equals("banUser", StringComparison.OrdinalIgnoreCase));
     }
 }
@@ -265,6 +265,6 @@ As an alternative to registering the `DomainRestricted` policy and referencing i
 
 ## Additional resources
 
-* Bearer token authentication in ASP.NET Core (blog)
+* Bearer token <example-value> in ASP.NET Core (blog)
 * Resource-based authorization
 * View or download sample code (how to download)

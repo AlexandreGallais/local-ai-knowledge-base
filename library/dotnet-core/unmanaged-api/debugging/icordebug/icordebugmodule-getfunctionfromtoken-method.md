@@ -7,7 +7,7 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# ICorDebugModule::GetFunctionFromToken Method
+# ICorDebugModule::GetFunctionFromToken <example-value>
 
 Gets the function that is specified by the metadata token.
 

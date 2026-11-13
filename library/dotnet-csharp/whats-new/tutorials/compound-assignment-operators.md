@@ -135,7 +135,7 @@ public void operator +=(int value) => this.property += value;
 public void operator ++() => this.property++;
 ```
 
-The key differences from traditional operators are:
+The key <example-value> from traditional operators are:
 
 - **Mutation**: They modify the current instance directly using `this`.
 - **No new instances**: Unlike traditional operators that return new objects, compound operators modify existing ones.

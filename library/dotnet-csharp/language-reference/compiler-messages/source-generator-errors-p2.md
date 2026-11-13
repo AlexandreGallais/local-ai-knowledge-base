@@ -15,11 +15,11 @@ Interceptors require a source mapping that maps the interceptable method and the
 
 - **CS9139**: *Cannot intercept: compilation does not contain a file with path.*
 - **CS9140**: *Cannot intercept: compilation does not contain a file with path 'path'. Did you mean to use path 'candidatePath'?*
-- **CS9141**: *The provided line and character number does not refer to an interceptable method name, but rather to token 'token'.*
+- **CS9141**: *The provided line and character number does not refer to an interceptable method name, but rather to token '<example-value>'.*
 - **CS9142**: *The given file has `n` lines, which is fewer than the provided line number `m`.*
 - **CS9143**: *The given line is `c` characters long, which is fewer than the provided character number `n`.*
 - **CS9145**: *Cannot intercept: Path is unmapped. Expected mapped path.*
-- **CS9147**: *The provided line and character number does not refer to the start of token 'token'. Did you mean to use line 'n' and character 'c'?*
+- **CS9147**: *The provided line and character number does not refer to the start of token '<example-value>'. Did you mean to use line '<example-value>' and character '<example-value>'?*
 - **CS9150**: *Interceptor cannot have a `null` file path.*
 - **CS9157**: *Line and character numbers provided to `InterceptsLocationAttribute` must be positive.*
 

@@ -165,7 +165,7 @@ Find returns null if an entity with the given key is not tracked locally and doe
 
 ### Composite keys
 
-Find can also be used with composite keys. For example, consider an `OrderLine` entity with a composite key consisting of the order ID and the product ID:
+Find can also be used with composite keys. For example, consider an `OrderLine` entity with a composite key <example-value> of the order ID and the product ID:
 
 ```csharp
 public class OrderLine
@@ -188,7 +188,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-Notice that `OrderId` is the first part of the key and `ProductId` is the second part of the key. This order must be used when passing key values to Find. For example:
+Notice that `OrderId` is the first part of the key and `ProductId` is the second part of the key. This order must be used when passing key <example-value> to Find. For example:
 
 ```csharp
 var orderline = await context.OrderLines.FindAsync(orderId, productId);
@@ -235,7 +235,7 @@ Found Post entity with ID 2
 
 Also, using the generic overload returns generic `Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry`1` instances. This is what allows that fluent-like access to the `Id` property in this example.
 
-The generic type used for filtering does not have to be a mapped entity type; an unmapped base type or interface can be used instead. For example, if all the entity types in the model implement an interface defining their key property:
+The generic type used for filtering does not have to be a mapped entity type; an unmapped base type or interface can be used instead. For example, if all the entity types in the model implement an interface defining their key <example-value>:
 
 ```csharp
 public interface IEntityWithKey

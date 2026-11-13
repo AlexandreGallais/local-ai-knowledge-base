@@ -244,4 +244,4 @@ $ podman events --format json
 **podman(1)**, **containers.conf(5)**
 
 ## HISTORY
-March 2019, Originally compiled by Brent Baude <bbaude@redhat.com>
+March 2019, Originally compiled by Brent Baude <user@example.com>

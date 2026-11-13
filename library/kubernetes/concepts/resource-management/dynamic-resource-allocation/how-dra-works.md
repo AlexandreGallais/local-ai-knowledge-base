@@ -178,7 +178,7 @@ spec:
   nodeSelector:
     nodeSelectorTerms:
     - matchExpressions:
-      - key: accelerator-type
+      - key: <example-value>
         operator: In
         values:
         - "high-performance"

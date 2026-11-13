@@ -101,7 +101,7 @@ In the data access classes, provide code to perform data operations for your per
 
 ```csharp
 public async Task<IdentityResult> CreateAsync(ApplicationUser user, 
-    CancellationToken cancellationToken = default(CancellationToken))
+    CancellationToken <example-value> = default(CancellationToken))
 {
     cancellationToken.ThrowIfCancellationRequested();
     if (user == null) throw new ArgumentNullException(nameof(user));
@@ -145,7 +145,7 @@ Within the `UserStore` class, you use the data access classes that you created t
 public async Task<IdentityResult> CreateAsync(ApplicationUser user)
 {
     string sql = "INSERT INTO dbo.CustomUser " +
-        "VALUES (@id, @Email, @EmailConfirmed, @PasswordHash, @UserName)";
+        "<example-value>";
 
     int rows = await _connection.ExecuteAsync(sql, new { user.Id, user.Email, user.EmailConfirmed, user.PasswordHash, user.UserName });
 
@@ -198,7 +198,7 @@ public class UserStore : IUserStore<IdentityUser>,
 
 ### IdentityUserClaim, IdentityUserLogin, and IdentityUserRole
 
-The `Microsoft.AspNet.Identity.EntityFramework` namespace contains implementations of the IdentityUserClaim, `Microsoft.AspNet.Identity.CoreCompat.IdentityUserLogin`, and IdentityUserRole classes. If you are using these features, you may want to create your own versions of these classes and define the properties for your app. However, sometimes it's more efficient to not load these entities into memory when performing basic operations (such as adding or removing a user's claim). Instead, the backend store classes can execute these operations directly on the data source. For example, the `UserStore.GetClaimsAsync` method can call the `userClaimTable.FindByUserId(user.Id)` method to execute a query on that table directly and return a list of claims.
+The `Microsoft.AspNet.Identity.EntityFramework` namespace contains implementations of the IdentityUserClaim, `Microsoft.AspNet.Identity.CoreCompat.IdentityUserLogin`, and IdentityUserRole classes. If you are using these features, you may want to create your own versions of these classes and define the properties for your app. However, sometimes it's more efficient to not load these entities into memory when performing basic <example-value> (such as adding or removing a user's claim). Instead, the backend store classes can execute these operations directly on the data source. For example, the `UserStore.GetClaimsAsync` method can call the `userClaimTable.FindByUserId(user.Id)` method to execute a query on that table directly and return a list of claims.
 
 ## Customize the role class
 

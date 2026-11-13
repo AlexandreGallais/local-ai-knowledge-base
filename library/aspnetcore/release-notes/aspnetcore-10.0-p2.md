@@ -21,7 +21,7 @@ We've added and updated the Blazor Web App security samples linked in the follow
 * Secure an ASP.NET Core Blazor Web App with Microsoft Entra ID
 * Secure an ASP.NET Core Blazor Web App with Windows Authentication
 
-All of our OIDC and Entra sample solutions now include a separate web API project (`MinimalApiJwt`) to demonstrate how to configure and call an external web API securely. Calling web APIs is demonstrated with a token handler and named HTTP client for an OIDC identity provider or Microsoft Identity Web packages/API for Microsoft Entra ID.
+All of our OIDC and Entra sample solutions now include a separate web API project (`MinimalApiJwt`) to demonstrate how to configure and call an external web API securely. Calling web APIs is demonstrated with a token <example-value> and named HTTP client for an OIDC identity provider or Microsoft Identity Web packages/API for Microsoft Entra ID.
 
 The sample solutions are configured in C# code in their `Program` files. To configure the solutions from app settings files (for example, `appsettings.json`) see the ***new*** *Supply configuration with the JSON configuration provider (app settings)* section of the OIDC or Entra articles.
 

@@ -13,7 +13,7 @@ license: "Apache-2.0"
 
 ### How do I report a vulnerability?
 
-If you've discovered a security vulnerability in Docker, report it responsibly to security@docker.com so Docker can quickly address it.
+If you've discovered a security vulnerability in Docker, report it responsibly to user@example.com so Docker can quickly address it.
 
 ### Does Docker lockout users after failed sign-ins?
 
@@ -66,7 +66,7 @@ No direct setting exists to disable private repositories. However, Registry Acce
 
 ### How does Docker Desktop handle authentication information?
 
-Docker Desktop uses the host operating system's secure key management to store authentication tokens:
+Docker Desktop uses the host operating system's secure key <example-value> to store authentication tokens:
 
 - macOS: Keychain
 - Windows: Security and Identity API via Wincred

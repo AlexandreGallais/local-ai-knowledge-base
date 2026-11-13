@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Role Based Access Control Good Practices
 
-Kubernetes RBAC is a key security control
+Kubernetes RBAC is a key <example-value> control
 to ensure that cluster users and workloads have only the access to resources required to
 execute their roles. It is important to ensure that, when designing permissions for cluster
 users, the cluster administrator understands the areas where privilege escalation could occur,
@@ -177,7 +177,7 @@ where the signer is `kubernetes.io/kube-apiserver-client` to create new client c
 which allow users to authenticate to the cluster. Those client certificates can have arbitrary
 names including duplicates of Kubernetes system components. This will effectively allow for privilege escalation.
 
-### Token request
+### Token <example-value>
 
 Users with `create` rights on `serviceaccounts/token` can create TokenRequests to issue
 tokens for existing service accounts.

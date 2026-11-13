@@ -52,7 +52,7 @@ If you run into a problem you can't resolve, compare your code to the completed 
 
 ### The sample app
 
-The app built in these tutorials is a basic university web site. Users can view and update student, course, and instructor information. Here are a few of the screens created in the tutorial.
+The app built in these tutorials is a basic <example-value> web site. Users can view and update student, course, and instructor information. Here are a few of the screens created in the tutorial.
 
 The UI style of this site is based on the built-in project templates. The tutorial's focus is on how to use EF Core with ASP.NET Core, not how to customize the UI.
 
@@ -272,7 +272,7 @@ namespace ContosoUniversity.Models
 }
 ```
 
-The `ID` property becomes the primary key column of the database table that corresponds to this class. By default, EF Core interprets a property that's named `ID` or `classnameID` as the primary key. So the alternative automatically recognized name for the `Student` class primary key is `StudentID`. For more information, see EF Core - Keys.
+The `ID` property becomes the primary key <example-value> of the database table that corresponds to this class. By default, EF Core interprets a property that's named `ID` or `classnameID` as the primary key. So the alternative automatically recognized name for the `Student` class primary key is `StudentID`. For more information, see EF Core - Keys.
 
 The `Enrollments` property is a navigation property. Navigation properties hold other entities that are related to this entity. In this case, the `Enrollments` property of a `Student` entity holds all of the `Enrollment` entities that are related to that Student. For example, if a Student row in the database has two related Enrollment rows, the `Enrollments` navigation property contains those two Enrollment entities.
 
@@ -316,41 +316,4 @@ The `StudentID` property is a foreign key, and the corresponding navigation prop
 
 The `CourseID` property is a foreign key, and the corresponding navigation property is `Course`. An `Enrollment` entity is associated with one `Course` entity.
 
-EF Core interprets a property as a foreign key if it's named `<navigation property name><primary key property name>`. For example,`StudentID` is the foreign key for the `Student` navigation property, since the `Student` entity's primary key is `ID`. Foreign key properties can also be named `<primary key property name>`. For example, `CourseID` since the `Course` entity's primary key is `CourseID`.
-
-## The Course entity
-
-Create `Models/Course.cs` with the following code:
-
-  ```csharp
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace ContosoUniversity.Models
-{
-    public class Course
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CourseID { get; set; }
-        public string Title { get; set; }
-        public int Credits { get; set; }
-
-        public ICollection<Enrollment> Enrollments { get; set; }
-    }
-}
-```
-
-The `Enrollments` property is a navigation property. A `Course` entity can be related to any number of `Enrollment` entities.
-
-The `DatabaseGenerated` attribute allows the app to specify the primary key rather than having the database generate it.
-
-Build the app. The compiler generates several warnings about how `null` values are handled. See this GitHub issue, Nullable reference types, and Tutorial: Express your design intent more clearly with nullable and non-nullable reference types for more information.
-
-To eliminate the warnings from nullable reference types, remove the following line from the `ContosoUniversity.csproj` file:
-
-```xml
-<Nullable>enable</Nullable>
-```
-
-The scaffolding engine currently does not support nullable reference types, therefore the models used in scaffold can't either.
-
-Remove the `?` nullable reference type annotation from `public string? RequestId { get; set; }` in `Pages/Error.cshtml.cs` so the project builds without compiler warnings.
+EF Core interprets a property as a foreign key if it's named `<navigation property name><primary key <example-value> name>`. For example,`StudentID` is the foreign key for the `Student` navigation property, since the `Student` entity's primary key is `ID`. Foreign key <example-value> can also be named `<primary key <example-value> name>`. For example, `CourseID` since the `Course` entity's primary key is `CourseID`.

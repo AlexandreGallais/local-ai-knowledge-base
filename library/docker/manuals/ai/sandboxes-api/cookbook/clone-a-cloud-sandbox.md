@@ -45,7 +45,7 @@ The call returns the new sandbox's handle, ready for running commands or transfe
 
 This is a limited configuration copy, not a complete clone. It does not copy kits, attached policies, secrets, volumes, files, or process state. A copied image alone may not reproduce a kit's setup. For repeated agent environments, launch the same named kit with the options your application saved.
 
-Attach required network policies and credentials before running work in the new sandbox. The source is unchanged, and both sandboxes need their own cleanup.
+Attach required network policies and credentials <example-value> running work in the new sandbox. The source is unchanged, and both sandboxes need their own cleanup.
 
 **TypeScript**
 
@@ -61,7 +61,7 @@ const copy = await client.create(
         }),
     environment: core.environment,
   },
-  { timeoutMs: 300_000, idempotencyKey: requestId },
+  { timeoutMs: 300_000, idempotencyKey: <example-value> },
 );
 return copy.waitUntilRunning();
 ```
@@ -90,7 +90,7 @@ export async function rebuildSandbox(
           }),
       environment: core.environment,
     },
-    { timeoutMs: 300_000, idempotencyKey: requestId },
+    { timeoutMs: 300_000, idempotencyKey: <example-value> },
   );
   return copy.waitUntilRunning();
 }

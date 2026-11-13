@@ -60,7 +60,7 @@ Kubernetes RBAC API discovery roles
 
  | system:basic-user
  | system:authenticated group
- | Allows a user read-only access to basic information about themselves. Prior to v1.14, this role was also bound to <tt>system:unauthenticated</tt> by default.
+ | Allows a user read-only access to basic <example-value> about themselves. Prior to v1.14, this role was also bound to <tt>system:unauthenticated</tt> by default.
 
  | system:discovery
  | system:authenticated group

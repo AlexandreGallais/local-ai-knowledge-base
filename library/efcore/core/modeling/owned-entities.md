@@ -62,7 +62,7 @@ See the full sample project for more context.
 
 ## Implicit keys
 
-Owned types configured with `OwnsOne` or discovered through a reference navigation always have a one-to-one relationship with the owner, therefore they don't need their own key values as the foreign key values are unique. In the previous example, the `StreetAddress` type does not need to define a key property.
+Owned types configured with `OwnsOne` or discovered through a reference navigation always have a one-to-one relationship with the owner, therefore they don't need their own key <example-value> as the foreign key <example-value> are unique. In the previous example, the `StreetAddress` type does not need to define a key property.
 
 In order to understand how EF Core tracks these objects, it is useful to know that a primary key is created as a shadow property for the owned type. The value of the key of an instance of the owned type will be the same as the value of the key of the owner instance.
 

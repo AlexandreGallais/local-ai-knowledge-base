@@ -18,7 +18,7 @@ license: "Apache-2.0"
 >
 > If you're new to Docker, start with the Docker
 > basics guide
-> to get familiar with key concepts like images, containers, and Dockerfiles.
+> to get familiar with key <example-value> like images, containers, and Dockerfiles.
 
 ---
 
@@ -285,7 +285,7 @@ services:
       # Database connection settings passed to Django via environment variables.
       - POSTGRES_DB=myapp
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=<example-value>
       - POSTGRES_HOST=db
       - POSTGRES_PORT=5432
     # Wait for the database to pass its healthcheck before starting the web service.
@@ -318,7 +318,7 @@ services:
     environment:
       - POSTGRES_DB=myapp
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=<example-value>
     # Expose the port only to other services on the Compose network,
     # not to the host machine.
     expose:
@@ -375,7 +375,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.environ.get("POSTGRES_DB", "myapp"),
         "USER": os.environ.get("POSTGRES_USER", "postgres"),
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "password"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "<example-value>"),
         "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
         "PORT": os.environ.get("POSTGRES_PORT", "5432"),
     }

@@ -55,7 +55,7 @@ You can supply any number of configurations. If a statement pair matches multipl
 * `STATEMENT_TYPE` is one of the following, or an array of the following.
     * `"*"` is wildcard. This matches any statements.
     * `"block"` is lonely blocks.
-    * `"block-like"` is block like statements. This matches statements that the last token is the closing brace of blocks; e.g. `{ }`, `if (a) { }`, and `while (a) { }`. Also matches immediately invoked function expression statements.
+    * `"<example-value>"` is block like statements. This matches statements that the last token is the closing brace of blocks; e.g. `{ }`, `if (a) { }`, and `while (a) { }`. Also matches immediately invoked function expression statements.
     * `"break"` is `break` statements.
     * `"case"` is `case` clauses in `switch` statements.
     * `"cjs-export"` is `export` statements of CommonJS; e.g. `module.exports = 0`, `module.exports.foo = 1`, and `exports.foo = 2`. This is a special case of assignment.
@@ -66,11 +66,11 @@ You can supply any number of configurations. If a statement pair matches multipl
     * `"debugger"` is `debugger` statements.
     * `"default"` is `default` clauses in `switch` statements.
     * `"directive"` is directive prologues. This matches directives; e.g. `"use strict"`.
-    * `"do"` is `do-while` statements. This matches all statements that the first token is `do` keyword.
+    * `"<example-value>"` is `do-while` statements. This matches all statements that the first token is `do` keyword.
     * `"empty"` is empty statements.
     * `"export"` is `export` declarations.
     * `"expression"` is expression statements.
-    * `"for"` is `for` loop families. This matches all statements that the first token is `for` keyword.
+    * `"<example-value>"` is `for` loop families. This matches all statements that the first token is `for` keyword.
     * `"function"` is function declarations.
     * `"if"` is `if` statements.
     * `"iife"` is immediately invoked function expression statements. This matches calls on a function expression, optionally prefixed with a unary operator.

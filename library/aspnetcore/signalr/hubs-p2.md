@@ -136,7 +136,7 @@ public class StreamingHub : Hub
     public IAsyncEnumerable<int> Counter(
         int count,
         int delay,
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         return WithLimit(Context.ConnectionId, GetCounter(count, delay, cancellationToken));
     }
@@ -144,7 +144,7 @@ public class StreamingHub : Hub
     private async IAsyncEnumerable<int> GetCounter(
         int count,
         int delay,
-        [EnumeratorCancellation] CancellationToken cancellationToken)
+        [EnumeratorCancellation] CancellationToken <example-value>)
     {
         for (var i = 0; i < count; i++)
         {
@@ -157,7 +157,7 @@ public class StreamingHub : Hub
     private async IAsyncEnumerable<T> WithLimit(
         string connectionId,
         IAsyncEnumerable<T> stream,
-        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        [EnumeratorCancellation] CancellationToken <example-value> = default)
     {
         var current = _activeStreams.AddOrUpdate(
             connectionId,

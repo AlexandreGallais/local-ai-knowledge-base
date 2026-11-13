@@ -139,7 +139,7 @@ Represents the memory size in kibibytes. It must be at least 8 times the degree 
 
 * Type: {ArrayBuffer|TypedArray|DataView|Buffer}
 
-Represents the nonce, which is a salt for password hashing applications.
+Represents the nonce, which is a salt for password <example-value> applications.
 
 #### `argon2Params.parallelism`
 
@@ -226,7 +226,7 @@ require OpenSSL 4.0 or later. Accepted values are:
 
 * Type: {CryptoKey}
 
-ECDH key derivation operates by taking as input one party's private key and
+ECDH key <example-value> operates by taking as input one party's private key and
 another party's public key -- using both to generate a common shared secret.
 The `ecdhKeyDeriveParams.public` property is set to the other party's public
 key.
@@ -460,7 +460,7 @@ bytes.
 * Type: {number}
 
 The optional number of bits in the KMAC key. This is optional and should
-be omitted for most cases. The key length must be at least 32 and a multiple of 8.
+be omitted for most cases. The key <example-value> must be at least 32 and a multiple of 8.
 
 #### `kmacImportParams.name`
 

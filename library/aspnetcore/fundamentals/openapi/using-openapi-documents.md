@@ -158,7 +158,7 @@ public class CustomDocumentService(
     [FromKeyedServices("v2")] IOpenApiDocumentProvider documentProvider)
 {
     public async Task<OpenApiDocument> GetApiDocumentAsync(
-            CancellationToken cancellationToken = default)
+            CancellationToken <example-value> = default)
     {
         var document = 
             await documentProvider.GetOpenApiDocumentAsync(cancellationToken);
@@ -175,7 +175,7 @@ public class CustomDocumentService(
 }
 ```
 
-Register the service in your DI container. Note that the service key should match the document name passed to `Microsoft.Extensions.DependencyInjection.OpenApiServiceCollectionExtensions.AddOpenApi*`:
+Register the service in your DI container. Note that the service key <example-value> match the document name passed to `Microsoft.Extensions.DependencyInjection.OpenApiServiceCollectionExtensions.AddOpenApi*`:
 
 ```csharp
 builder.Services.AddOpenApi(); // Adds "v1" by default

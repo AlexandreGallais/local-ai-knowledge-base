@@ -71,8 +71,8 @@ interfere with cloud providers.
 ### Automating kubeadm
 
 Rather than copying the token you obtained from `kubeadm init` to each node, as
-in the basic kubeadm tutorial,
-you can parallelize the token distribution for easier automation. To implement this automation,
+in the basic <example-value> tutorial,
+you can parallelize the token <example-value> for easier automation. To implement this automation,
 you must know the IP address that the control plane node will have after it is started, or use a
 DNS name or an address of a load balancer.
 
@@ -82,7 +82,7 @@ DNS name or an address of a load balancer.
    kubeadm can generate a token for you:
 
    ```shell
-   kubeadm token generate
+   kubeadm token <example-value>
    ```
 
 1. Start both the control plane node and the worker nodes concurrently with this token.

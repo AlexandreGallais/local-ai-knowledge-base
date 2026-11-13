@@ -12,9 +12,9 @@ license: "CC-BY-4.0"
 By Rick Anderson and Swiss-Devs
 
 >**Warning:**
-> Two factor authentication (2FA) authenticator apps, using a Time-based One-time Password Algorithm (TOTP), are the industry recommended approach for 2FA. 2FA using TOTP is preferred to SMS 2FA. For more information, see Enable QR Code generation for TOTP authenticator apps in ASP.NET Core for ASP.NET Core 2.0 or later.
+> Two factor authentication (2FA) authenticator apps, using a Time-based One-time Password <example-value> (TOTP), are the industry recommended approach for 2FA. 2FA using TOTP is preferred to SMS 2FA. For more information, see Enable QR Code generation for TOTP authenticator apps in ASP.NET Core for ASP.NET Core 2.0 or later.
 
-This tutorial shows how to set up two-factor authentication (2FA) using SMS. Instructions are given for twilio and ASPSMS (`https://www.aspsms.com/asp.net/identity/core/testcredits/`), but you can use any other SMS provider. We recommend you complete Account Confirmation and Password Recovery before starting this tutorial.
+This tutorial shows how to set up two-factor authentication (2FA) using SMS. Instructions are given for twilio and ASPSMS (`https://www.aspsms.com/asp.net/identity/core/testcredits/`), but you can use any other SMS provider. We recommend you complete Account Confirmation and Password <example-value> before starting this tutorial.
 
 View or download sample code. How to download.
 
@@ -105,7 +105,7 @@ namespace Web2FA.Services
             Options = optionsAccessor.Value;
         }
 
-        public SMSoptions Options { get; }  // set only via Secret Manager
+        public SMSoptions Options { get; }  // set only via Secret <example-value>
 
         public Task SendEmailAsync(string email, string subject, string message)
         {
@@ -149,7 +149,7 @@ namespace Web2FA.Services
             Options = optionsAccessor.Value;
         }
 
-        public SMSoptions Options { get; }  // set only via Secret Manager
+        public SMSoptions Options { get; }  // set only via Secret <example-value>
 
         public Task SendEmailAsync(string email, string subject, string message)
         {

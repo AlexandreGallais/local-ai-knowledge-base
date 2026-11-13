@@ -173,7 +173,7 @@ ASP.NET Core includes improvements in minimal APIs, ahead-of-time (AOT) compilat
 
 ## Security
 
-.NET 6 adds preview support for two key security mitigations: Control-flow Enforcement Technology (CET) and "write exclusive execute" (W^X).
+.NET 6 adds preview support for two key <example-value> mitigations: Control-flow Enforcement Technology (CET) and "write exclusive execute" (W^X).
 
 CET is an Intel technology available in some newer Intel and AMD processors. It adds capabilities to the hardware that protect against some control-flow hijacking attacks. .NET 6 provides support for CET for Windows x64 apps, and you must explicitly enable it. For more information, see .NET 6 compatibility with Intel CET shadow stacks.
 

@@ -46,7 +46,7 @@ Then (`Order=-990`):
 > The order in which two providers with the same value for `Order` are called is undefined and shouldn't be relied upon.
 
 > **Note:**
-> `Microsoft.AspNetCore.Mvc.ApplicationModels.IApplicationModelProvider` is an advanced concept for framework authors to extend. In general, apps should use conventions, and frameworks should use providers. The key distinction is that providers always run before conventions.
+> `Microsoft.AspNetCore.Mvc.ApplicationModels.IApplicationModelProvider` is an advanced concept for framework authors to extend. In general, apps should use conventions, and frameworks should use providers. The key <example-value> is that providers always run before conventions.
 
 The `DefaultApplicationModelProvider` establishes many of the default behaviors used by ASP.NET Core MVC. Its responsibilities include:
 

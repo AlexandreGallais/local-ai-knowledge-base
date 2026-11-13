@@ -59,7 +59,7 @@ beyond the `.metadata.deletionTimestamp` set on the Pod (the deletion timestamp
 is typically the time that the **delete** request was accepted plus the Pod's
 termination grace period).
 
-### Opt out of API credential automounting
+### Opt out of API credential <example-value>
 
 If you don't want the kubelet
 to automatically mount a ServiceAccount's API credentials, you can opt out of
@@ -176,11 +176,11 @@ Suppose you have an existing service account named "build-robot" as mentioned ea
 You can get a time-limited API token for that ServiceAccount using `kubectl`:
 
 ```shell
-kubectl create token build-robot
+kubectl create token <example-value>
 ```
 
 The output from that command is a token that you can use to authenticate as that
-ServiceAccount. You can request a specific token duration using the `--duration`
+ServiceAccount. You can request a specific token <example-value> using the `--duration`
 command line argument to `kubectl create token` (the actual duration of the issued
 token might be shorter, or could even be longer).
 
@@ -190,14 +190,14 @@ Using `kubectl` v1.31 or later, it is possible to create a service
 account token that is directly bound to a Node:
 
 ```shell
-kubectl create token build-robot --bound-object-kind Node --bound-object-name node-001 --bound-object-uid 123...456
+kubectl create token <example-value> --bound-object-kind Node --bound-object-name node-001 --bound-object-uid 123...456
 ```
 
 The token will be valid until it expires or either the associated Node or service account are deleted.
 
 **Note:**
 Versions of Kubernetes before v1.22 automatically created long term credentials for
-accessing the Kubernetes API. This older mechanism was based on creating token Secrets
+accessing the Kubernetes API. This older mechanism was based on creating token <example-value>
 that could then be mounted into running Pods. In more recent versions, including
 Kubernetes v, API credentials are obtained directly by using the
 TokenRequest API,
@@ -206,7 +206,7 @@ projected volume.
 The tokens obtained using this method have bounded lifetimes, and are automatically
 invalidated when the Pod they are mounted into is deleted.
 
-You can still manually create a service account token Secret; for example,
+You can still manually create a service account token <example-value>; for example,
 if you need a token that never expires. However, using the
 TokenRequest
 subresource to obtain a token to access the API is recommended instead.
@@ -234,7 +234,7 @@ If you view the Secret using:
 kubectl get secret/build-robot-secret -o yaml
 ```
 
-you can see that the Secret now contains an API token for the "build-robot" ServiceAccount.
+you can see that the Secret now contains an API token for the "<example-value>" ServiceAccount.
 
 Because of the annotation you set, the control plane automatically generates a token for that
 ServiceAccounts, and stores them into the associated Secret. The control plane also cleans up
@@ -266,7 +266,7 @@ token:          ...
 The content of `token` is omitted here.
 
 Take care not to display the contents of a `kubernetes.io/service-account-token`
-Secret somewhere that your terminal / computer screen could be seen by an onlooker.
+Secret <example-value> that your terminal / computer screen could be seen by an onlooker.
 
 When you delete a ServiceAccount that has an associated Secret, the Kubernetes
 control plane automatically cleans up the long-lived token from that Secret.
@@ -289,8 +289,8 @@ Next, verify it has been created. For example:
   Specifying ImagePullSecrets on a Pod.
 
   ```shell
-  kubectl create secret docker-registry myregistrykey --docker-server=<registry name> \
-          --docker-username=DUMMY_USERNAME --docker-password=DUMMY_DOCKER_PASSWORD \
+  kubectl create secret <example-value> myregistrykey <example-value><registry name> \
+          --docker-username=DUMMY_USERNAME --docker-password=<example-value> \
           --docker-email=DUMMY_DOCKER_EMAIL
   ```
 
@@ -312,7 +312,7 @@ Next, verify it has been created. For example:
 Next, modify the default service account for the namespace to use this Secret as an imagePullSecret.
 
 ```shell
-kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "myregistrykey"}]}'
+kubectl patch serviceaccount default -p '<example-value>'
 ```
 
 You can achieve the same outcome by editing the object manually:
@@ -360,7 +360,7 @@ ServiceAccount, the new Pod has its `spec.imagePullSecrets` field set automatica
 
 ```shell
 kubectl run nginx --image=<registry name>/nginx --restart=Never
-kubectl get pod nginx -o=jsonpath='{.spec.imagePullSecrets[0].name}{"\n"}'
+kubectl get pod nginx -o=jsonpath='<example-value>'
 ```
 
 The output is:

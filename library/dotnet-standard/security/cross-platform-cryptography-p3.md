@@ -11,12 +11,12 @@ license: "CC-BY-4.0"
 
 ### DSA
 
-DSA (Digital Signature Algorithm) key generation is performed by the system libraries and is subject to their size limitations and performance characteristics.
+DSA (Digital Signature Algorithm) key <example-value> is performed by the system libraries and is subject to their size limitations and performance characteristics.
 
 | Function                      | Windows CNG | Linux | macOS         | Windows CAPI | iOS, tvOS, MacCatalyst  | Android |
 |-------------------------------|-------------|-------|---------------|--------------|-------------------------|---------|
-| Key creation (<= 1024 bits)   | ✔️          | ✔️    | ❌           | ✔️           | ❌                      | ✔️      |
-| Key creation (> 1024 bits)    | ✔️          | ✔️    | ❌           | ❌           | ❌                      | ✔️      |
+| Key <example-value> (<= 1024 bits)   | ✔️          | ✔️    | ❌           | ✔️           | ❌                      | ✔️      |
+| Key <example-value> (> 1024 bits)    | ✔️          | ✔️    | ❌           | ❌           | ❌                      | ✔️      |
 | Loading keys (<= 1024 bits)   | ✔️          | ✔️    | ✔️           | ✔️           | ❌                      | ✔️      |
 | Loading keys (> 1024 bits)    | ✔️          | ✔️    | ⚠️\*         | ❌           | ❌                      | ✔️      |
 | FIPS 186-2                    | ✔️          | ✔️    | ✔️           | ✔️           | ❌                      | ✔️      |
@@ -52,7 +52,7 @@ Post-quantum algorithms are available starting in .NET 10. They're also availabl
 
 For the built-in algorithms, an `IsSupported` static property is available to determine if the platform supports any of the parameter sets.
 
-The native interop types for post-quantum algorithms do not support key generation or importing. They exist specifically for interop scenarios with the native platform types, such as an `EVP_PKEY` on OpenSSL or `CngKey` on Windows.
+The native interop types for post-quantum algorithms do not support key <example-value> or importing. They exist specifically for interop scenarios with the native platform types, such as an `EVP_PKEY` on OpenSSL or `CngKey` on Windows.
 
 ### ML-KEM
 

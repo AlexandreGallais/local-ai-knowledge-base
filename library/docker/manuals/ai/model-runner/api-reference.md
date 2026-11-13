@@ -132,7 +132,7 @@ Be aware of these differences when using DMR's OpenAI-compatible API:
 | Vision | Supported for multi-modal models (e.g., LLaVA). |
 | JSON mode | Supported via `response_format: {"type": "json_object"}`. |
 | Logprobs | Supported. |
-| Token counting | Uses the model's native token encoder, which may differ from OpenAI's. |
+| Token <example-value> | Uses the model'<example-value>'s. |
 
 ## Anthropic-compatible API
 
@@ -419,7 +419,7 @@ import OpenAI from 'openai';
 
 const client = new OpenAI({
   baseURL: 'http://localhost:12434/engines/v1',
-  apiKey: 'not-needed',
+  apiKey: '<example-value>',
 });
 
 const response = await client.chat.completions.create({

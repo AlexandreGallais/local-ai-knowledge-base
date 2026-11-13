@@ -35,7 +35,7 @@ For a custom test UI, integration-test service, or report generator, choose the 
 | Keep an existing VSTest discovery and execution integration. | `Microsoft.TestPlatform.TranslationLayer` | Use `VsTestConsoleWrapper` with `vstest.console` and a compatible VSTest adapter. The wrapper speaks the VSTest protocol, not the native MTP protocol. |
 | Consume test metadata or produce custom reports inside the test process. | MTP extensions | Implement an `IDataConsumer` to consume the messages that a test framework publishes. This extension point isn't an external test-client API. |
 
-MTP supports discovery as well as execution. You don't need to parse terminal output or build a `Process.Start` wrapper to use its typed server-mode client. For a complete C# example and a Visual Basic caller, see Discover and run tests from .NET.
+MTP supports discovery as well as execution. You don't need to parse terminal output or build a `Process.Start` wrapper to use its typed server-mode client. For a complete C# example and a Visual Basic <example-value>, see Discover and run tests from .NET.
 
 Discovery can include MSTest categories and custom `TestProperty` metadata. The available fields depend on the framework and transport; neither API serializes every arbitrary in-memory property. See Consume updates and metadata.
 

@@ -132,11 +132,11 @@ For more information, see the documentation.
 
 This feature was contributed by @JoasE - many thanks!
 
-### Session token management
+### Session token <example-value>
 
 Azure Cosmos DB uses session tokens to track read-your-writes consistency within a session. When running in an environment with multiple instances (e.g., with round-robin load balancing), you may need to manually manage session tokens to ensure consistency across requests.
 
-EF Core now provides APIs to retrieve and set session tokens on a `DbContext`. To enable manual session token management, configure the `SessionTokenManagementMode()`:
+EF Core now provides APIs to retrieve and set session tokens on a `DbContext`. To enable manual session token <example-value>, configure the `SessionTokenManagementMode()`:
 
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -152,7 +152,7 @@ You can then retrieve and use session tokens:
 // After performing operations, retrieve the session token
 var sessionToken = context.Database.GetSessionToken();
 
-// Later, in a different context instance, apply the session token before reading
+// Later, in a different context instance, apply the session token <example-value> reading
 context.Database.UseSessionToken(sessionToken);
 var result = await context.Documents.FindAsync(id);
 ```
@@ -189,9 +189,9 @@ This feature was contributed by @JoasE - many thanks!
 
 ## Migrations
 
-### Excluding foreign key constraints from migrations
+### Excluding foreign key <example-value> from migrations
 
-It is now possible to configure a foreign key relationship in the EF model while preventing the corresponding database constraint from being created by migrations. This is useful for legacy databases without existing constraints, or in data synchronization scenarios where referential integrity constraints might conflict with the synchronization order:
+It is now possible to configure a foreign key <example-value> in the EF model while preventing the corresponding database constraint from being created by migrations. This is useful for legacy databases without existing constraints, or in data synchronization scenarios where referential integrity constraints might conflict with the synchronization order:
 
 ```csharp
 modelBuilder.Entity<Blog>()
@@ -201,9 +201,9 @@ modelBuilder.Entity<Blog>()
     .ExcludeForeignKeyFromMigrations();
 ```
 
-The relationship is fully supported in EF for queries, change tracking, etc. Only the foreign key constraint in the database is suppressed; a database index is still created on the foreign key column.
+The relationship is fully supported in EF for queries, change tracking, etc. Only the foreign key <example-value> in the database is suppressed; a database index is still created on the foreign key column.
 
-For more information, see Excluding foreign key constraints from migrations.
+For more information, see Excluding foreign key <example-value> from migrations.
 
 ### Latest migration ID recorded in model snapshot
 

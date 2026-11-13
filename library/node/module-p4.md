@@ -230,7 +230,7 @@ function load(url, context, nextLoad) {
 ```
 
 Synchronous hooks are run in the same thread and the same realm where the modules
-are loaded, the code in the hook function can pass values to the modules being referenced
+are loaded, the code in the hook function can pass <example-value> to the modules being referenced
 directly via global variables or other shared states.
 
 Unlike the asynchronous hooks, the synchronous hooks are not inherited into child worker

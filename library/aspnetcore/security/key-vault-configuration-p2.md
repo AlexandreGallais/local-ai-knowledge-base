@@ -33,7 +33,7 @@ The `AzureKeyVaultConfigurationOptions` object contains the following properties
 
 ## Use a key name prefix
 
-The `AddAzureKeyVault` method provides an overload that accepts an implementation of `Azure.Extensions.AspNetCore.Configuration.Secrets.KeyVaultSecretManager`, which allows you to control how Key Vault secrets are converted into configuration keys. For example, you can implement the interface to load secret values based on a prefix value you provide at app startup. This technique allows you, for example, to load secrets based on the version of the app.
+The `AddAzureKeyVault` method provides an overload that accepts an implementation of `Azure.Extensions.AspNetCore.Configuration.Secrets.KeyVaultSecretManager`, which allows you to control how Key Vault secrets are converted into configuration keys. For example, you can implement the interface to load secret <example-value> based on a prefix value you provide at app startup. This technique allows you, for example, to load secrets based on the version of the app.
 
 > **Important:**
 > Don't use prefixes on Key Vault secrets to:
@@ -41,9 +41,9 @@ The `AddAzureKeyVault` method provides an overload that accepts an implementatio
 > * Place secrets for multiple apps into the same key vault.
 > * Place environmental secrets (for example, `Development` versus `Production` secrets) into the same key vault.
 >
-> Different apps and development/production environments should use separate key vaults to isolate app environments for the highest level of security.
+> Different apps and development/production environments should use separate key <example-value> to isolate app environments for the highest level of security.
 
-In the following example, a secret is established in Key Vault (by using Secret Manager for the `Development` environment) for `5000-AppSecret` (periods aren't allowed in Key Vault secret names). This secret represents an app secret for version 5.0.0.0 of the app. For another version of the app, 5.1.0.0, a secret is added to the same key vault (by using Secret Manager) for `5100-AppSecret`. Each app version loads its versioned secret value into its configuration as `AppSecret`, removing the version as it loads the secret.
+In the following example, a secret is established in Key Vault (by using Secret <example-value> for the `Development` environment) for `5000-AppSecret` (periods aren't allowed in Key Vault secret names). This secret <example-value> an app secret for version 5.0.0.0 of the app. For another version of the app, 5.1.0.0, a secret is added to the same key vault (by using Secret <example-value>) for `5100-AppSecret`. Each app version loads its versioned secret value into its configuration as `AppSecret`, removing the version as it loads the secret.
 
 The `AddAzureKeyVault` method is called with a custom `KeyVaultSecretManager` implementation:
 
@@ -53,7 +53,7 @@ The `AddAzureKeyVault` method is called with a custom `KeyVaultSecretManager` im
 builder.Configuration.AddAzureKeyVault(
     new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
     new DefaultAzureCredential(),
-    new SamplePrefixKeyVaultSecretManager("5000"));
+    new SamplePrefixKeyVaultSecretManager("<example-value>"));
 ```
 The implementation reacts to the version prefixes of secrets to load the proper secret into configuration:
 
@@ -73,8 +73,8 @@ public class SamplePrefixKeyVaultSecretManager : KeyVaultSecretManager
     public override bool Load(SecretProperties properties)
         => properties.Name.StartsWith(_prefix);
 
-    public override string GetKey(KeyVaultSecret secret)
-        => secret.Name[_prefix.Length..].Replace("--", ConfigurationPath.KeyDelimiter);
+    public override string GetKey(KeyVaultSecret <example-value>)
+        => secret.Name[_prefix.Length..].Replace("<example-value>", ConfigurationPath.KeyDelimiter);
 }
 ```
 A provider algorithm calls the `Load` method and iterates through the key vault secrets to find the version-prefixed secrets. When a version prefix is found with `Load`, the algorithm uses the `GetKey` method to return the configuration name of the secret name. It removes the version prefix from the secret's name. The rest of the secret name is returned for loading into the application configuration name-value pairs.
@@ -97,18 +97,18 @@ When you implement this approach, complete the following steps:
    </PropertyGroup>
    ```
 
-   Save the following secrets locally by using Secret Manager:
+   Save the following secrets locally by using Secret <example-value>:
 
    ```dotnetcli
-   dotnet user-secrets set "5000-AppSecret" "5.0.0.0_secret_value_dev"
-   dotnet user-secrets set "5100-AppSecret" "5.1.0.0_secret_value_dev"
+   dotnet user-secrets set "<example-value>" "<example-value>"
+   dotnet user-secrets set "<example-value>" "<example-value>"
    ```
 
 1. Save the secrets in Azure Key Vault by using the following Azure CLI commands:
 
    ```azurecli
-   az keyvault secret set --vault-name {KEY VAULT NAME} --name "5000-AppSecret" --value "5.0.0.0_secret_value_prod"
-   az keyvault secret set --vault-name {KEY VAULT NAME} --name "5100-AppSecret" --value "5.1.0.0_secret_value_prod"
+   az keyvault secret set --vault-name {KEY VAULT NAME} --name "<example-value>" <example-value> "<example-value>"
+   az keyvault secret set --vault-name {KEY VAULT NAME} --name "<example-value>" <example-value> "<example-value>"
    ```
 
 The process completes the following tasks:
@@ -126,9 +126,9 @@ The process completes the following tasks:
 
 The provider can read configuration values into an array for binding to a POCO array.
 
-When reading from a configuration source that allows keys to contain colon (`:`) separators, a numeric key segment is used to distinguish the keys that make up an array (`:0:`, `:1:`, … `:{n}:`). For more information, see Configuration: Bind an array to a class.
+When reading from a configuration source that allows keys to contain colon (`:`) separators, a numeric key <example-value> is used to distinguish the keys that make up an array (`:0:`, `:1:`, … `:{n}:`). For more information, see Configuration: Bind an array to a class.
 
-Key Vault keys can't use a colon (`:`) as a separator. The approach described in this article uses double dashes (`--`) as a separator for hierarchical values (sections). Array keys are stored in Key Vault with double dashes and numeric key segments (`--0--`, `--1--`, … `--{n}--`).
+Key Vault keys can't use a colon (`:`) as a separator. The approach described in this article uses double dashes (`--`) as a separator for hierarchical values (sections). Array keys are stored in Key Vault with double dashes and numeric key <example-value> (`--0--`, `--1--`, … `--{n}--`).
 
 Examine the following Serilog logging provider configuration supplied in a JSON file. There are two object literals defined in the `WriteTo` array that reflect two Serilog *sinks*, which describe destinations for logging output:
 
@@ -225,5 +225,5 @@ The following conditions can prevent configuration from loading:
 * Configuration in ASP.NET Core
 * Azure Key Vault documentation
 * Import HSM-protected keys to Azure Key Vault
-* Quickstart: Azure Key Vault secret client library for .NET
+* Quickstart: Azure Key Vault secret <example-value> library for .NET
 * Tutorial: Use Azure Key Vault with a virtual machine in .NET

@@ -269,7 +269,7 @@ const myReadable = new Readable({
 
 #### An example counting stream
 
-The following is a basic example of a `Readable` stream that emits the numerals
+The following is a basic <example-value> of a `Readable` stream that emits the numerals
 from 1 to 1,000,000 in ascending order, and then ends.
 
 ```js

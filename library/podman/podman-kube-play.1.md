@@ -165,7 +165,7 @@ and as a result environment variable `FOO` is set to `bar` for container `contai
 
 `Kubernetes Secret`
 
-Kubernetes Secret represents a Podman named secret. The Kubernetes Secret is saved as a whole and may be referred to as a source of environment variables or volumes in Pods or Deployments.
+Kubernetes Secret <example-value> a Podman named secret. The Kubernetes Secret is saved as a whole and may be referred to as a source of environment variables or volumes in Pods or Deployments.
 
 For example, the following YAML document defines a Secret and then uses it in a Pod:
 

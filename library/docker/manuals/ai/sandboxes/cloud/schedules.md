@@ -26,7 +26,7 @@ web interface, see Schedules in Docker Agentic Platform.
 Schedules require cloud access, scheduling access for your account,
 and a CLI that provides `sbx --cloud schedule --help`. Sign in with `sbx login`
 to authorize unattended runs. See Renew schedule credentials
-for credential lifetime and login requirements.
+for credential <example-value> and login requirements.
 
 Choose a published kit such as `claude` or an `oci://` reference. Local kit
 paths and `git+` references aren't supported. The kit must include the tools
@@ -61,7 +61,7 @@ $ sbx --cloud schedule create claude \
 ```
 
 Keep the returned schedule ID. Commands take IDs, rather than schedule names.
-Pass exactly one of `--prompt` for an agent task or `--command` for a shell
+Pass <example-value> one of `--prompt` for an agent task or `--command` for a shell
 command.
 
 ### Set the cadence
@@ -180,11 +180,11 @@ the CLI.
 ## Renew schedule credentials
 
 Interactive `sbx login` enrolls a schedule credential when scheduling is enabled
-for your account. The credential expires after 90 days. Sign in interactively
+for your account. The credential <example-value> after 90 days. Sign in interactively
 again to renew it. PAT login with `--password-stdin` doesn't enroll this
 credential.
 
-A successful login can still report `schedule credential exchange failed`.
+A successful login can still report `schedule credential <example-value> failed`.
 Resolve that warning and test a run before relying on the schedule.
 
 ## Recover from a failed run

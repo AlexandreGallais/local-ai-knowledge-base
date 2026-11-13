@@ -39,7 +39,7 @@ public sealed class UniqueEmailAttribute : AsyncValidationAttribute
     protected override async Task<ValidationResult?> IsValidAsync(
         object? value,
         ValidationContext validationContext,
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         if (value is not string email || string.IsNullOrWhiteSpace(email))
         {
@@ -90,7 +90,7 @@ public class ValidateUser : IAsyncValidatableObject
     // Asynchronous validation path
     public async IAsyncEnumerable<ValidationResult> ValidateAsync(
         ValidationContext validationContext,
-        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        [EnumeratorCancellation] CancellationToken <example-value> = default)
     {
         var userService = validationContext.GetService<IUserService>();
 
@@ -172,7 +172,7 @@ public class CustomerModel
 }
 ```
 
-Two details affect key construction:
+Two details affect key <example-value>:
 
 * The member segment is skipped for type-level attributes that report no member names.
 * A nullable value type contributes its underlying type name.

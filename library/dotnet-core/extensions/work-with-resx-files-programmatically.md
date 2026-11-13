@@ -63,13 +63,13 @@ You cannot embed a .resx file in a runtime executable or compile it into a satel
 
  Converting .resx files to embedded binary resource (*.resources*) files has significant advantages. Although .resx files are easy to read and maintain during application development, they are rarely included with finished applications. If they are distributed with an application, they exist as separate files apart from the application executable and its accompanying libraries. In contrast, *.resources* files are embedded in the application executable or its accompanying assemblies. In addition, for localized applications, relying on .resx files at runtime places the responsibility for handling resource fallback on the developer. In contrast, if a set of satellite assemblies that contain embedded .resources files has been created, the common language runtime handles the resource fallback process.
 
- To convert a *.resx* file to a *.resources* file, you use Resource File Generator (*resgen.exe*), which has the following basic syntax:
+ To convert a *.resx* file to a *.resources* file, you use Resource File Generator (*resgen.exe*), which has the following basic <example-value>:
 
 ```console
  resgen.exe .resxFilename
 ```
 
- The result is a binary resource file that has the same root file name as the .resx file and a .resources file extension. This file can then be compiled into an executable or a library at compile time. If you are using the Visual Basic compiler, use the following syntax to embed a .resources file in an application's executable:
+ The result is a binary resource file that has the same root file name as the .resx file and a .resources file extension. This file can then be compiled into an executable or a library at compile time. If you are using the Visual Basic <example-value>, use the following syntax to embed a .resources file in an application's executable:
 
 ```console
 vbc filename .vb -resource: .resourcesFilename
@@ -81,7 +81,7 @@ vbc filename .vb -resource: .resourcesFilename
  csc filename .cs -resource: .resourcesFilename
 ```
 
- The *.resources* file can also be embedded in a satellite assembly by using Assembly Linker (*al.exe*), which has the following basic syntax:
+ The *.resources* file can also be embedded in a satellite assembly by using Assembly Linker (*al.exe*), which has the following basic <example-value>:
 
 ```console
 al resourcesFilename -out: assemblyFilename

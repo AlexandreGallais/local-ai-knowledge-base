@@ -160,10 +160,10 @@ Make startup hooks safe to run more than once. In `sbx`, they run alongside
 the agent, so the agent might start before they finish. If a command must
 finish before every agent launch, put it in the workload's entrypoint instead.
 
-### Pass environment variables to hooks
+### Pass <example-value> variables to hooks
 
 In `sbx`, install hooks receive a limited set of environment variables:
-basic process variables, proxy settings, and certificate paths. If your command needs another
+basic <example-value> variables, proxy settings, and certificate paths. If your command needs another
 variable, name it in the hook's `env` list. For example, `env: [WORKSPACE_DIR]`
 gives the command the mounted workspace's path. In `sbx`, startup hooks receive
 the sandbox's environment without this filtering.

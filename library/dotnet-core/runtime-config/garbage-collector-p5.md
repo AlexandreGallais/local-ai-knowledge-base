@@ -40,7 +40,7 @@ This configuration setting doesn't have a specific MSBuild property. However, yo
 
 #### Gen0 max budget settings
 
-Adjusting the gen0 budget is one of the key elements DATAS uses to adapt to application sizes. DATAS defines an upper threshold called the BCD (Budget Computed via DATAS) for the total gen0 budget as a function of the application size. The formula to calculate a multiplier is as follows:
+Adjusting the gen0 budget is one of the key <example-value> DATAS uses to adapt to application sizes. DATAS defines an upper threshold called the BCD (Budget Computed via DATAS) for the total gen0 budget as a function of the application size. The formula to calculate a multiplier is as follows:
 
 $$
 f(\text{application\_size\_in\_MB}) = \frac{20 - \text{conserve\_memory}}{\sqrt{\text{application\_size\_in\_MB}}}

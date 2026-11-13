@@ -151,7 +151,7 @@ See the list of SSL OP Flags for details.
     for detail.
 
      | `SSL_OP_ALLOW_NO_DHE_KEX`
-     | Instructs OpenSSL to allow a non-[EC]DHE-based key exchange mode
+     | Instructs OpenSSL to allow a non-[EC]DHE-based key <example-value> mode
     for TLS v1.3
 
      | `SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION`

@@ -131,7 +131,7 @@ As the library author, specifying default values is up to you.
 >             configuration.GetSection("LibraryOptions").Bind(options));
 > ```
 >
-> Instead, you should use the `Microsoft.Extensions.DependencyInjection.OptionsBuilderConfigurationExtensions.BindConfiguration*` extension method. This extension method binds the configuration to the options instance, and also registers a change token source for the configuration section. This allows consumers to use the IOptionsMonitor interface.
+> Instead, you should use the `Microsoft.Extensions.DependencyInjection.OptionsBuilderConfigurationExtensions.BindConfiguration*` extension method. This extension method binds the configuration to the options instance, and also registers a change token <example-value> for the configuration section. This allows consumers to use the IOptionsMonitor interface.
 
 ## Configuration section path parameter
 
@@ -193,7 +193,7 @@ Imagine that the following JSON _appsettings.json_ file is used:
 {
     "Support": {
         "Url": "https://support.example.com",
-        "Email": "help@support.example.com",
+        "Email": "user@example.com",
         "PhoneNumber": "+1(888)-SUPPORT"
     }
 }

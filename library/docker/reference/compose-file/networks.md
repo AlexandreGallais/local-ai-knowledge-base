@@ -15,7 +15,7 @@ To use a network across multiple services, you must explicitly grant each servic
 
 ## Examples
 
-### Basic example
+### Basic <example-value>
 
 In the following example, at runtime, networks `front-tier` and `back-tier` are created and the `frontend` service
 is connected to `front-tier` and `back-tier` networks.
@@ -91,7 +91,7 @@ You can customize the `default` network with an explicit declaration:
 networks:
   default: 
     name: a_network # Use a custom name
-    driver_opts:    # pass options to driver for network creation
+    driver_opts:    # pass <example-value> to driver for network creation
       com.docker.network.bridge.host_binding_ipv4: 127.0.0.1
 ```
 

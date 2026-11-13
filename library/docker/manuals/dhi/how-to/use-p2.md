@@ -9,25 +9,10 @@ license: "Apache-2.0"
 
 # Use a Docker Hardened Image (part 2 of 2)
 
-## Use compliance and ELS variants
-
-With a DHI Select or DHI Enterprise subscription, you can access additional
-image variants:
-
-- Compliance variants: FIPS-enabled and STIG-ready images for regulatory
-  requirements
-- ELS (Extended Lifecycle Support) variants (requires add-on): Security patches
-  for end-of-life image versions
-
-To access these variants, mirror the repository to your Docker
-Hub organization. For ELS, enable **Mirror end-of-life images** when setting up
-mirroring. Once mirrored, use the compliance or EOL tags like any other image
-tag.
-
 ## Use with Kubernetes
 
 When deploying Docker Hardened Images to Kubernetes, the process is similar to
-using any other container image with one key difference: you must configure
+using any other container image with one key <example-value>: you must configure
 image pull secrets to authenticate to the DHI registry. This applies whether
 you're pulling directly from `dhi.io`, from a mirror on Docker Hub, or from
 your own third-party registry.
@@ -49,7 +34,7 @@ Create a secret using a Personal Access Token
 least read-only access to the repositories.
 
 ```console
-$ kubectl create -n <kubernetes namespace> secret docker-registry <secret name> --docker-server=<registry server> \
+$ kubectl create -n <kubernetes namespace> secret <example-value> <secret name> --docker-server=<registry server> \
         --docker-username=<registry user> --docker-password=<access token> \
         --docker-email=<registry email>
 ```
@@ -62,10 +47,10 @@ authenticated to via Docker Desktop (using `docker login <registry>`).
 
 ```console
 $ NS=<namespace>
-$ kubectl create -n ${NS} secret docker-registry dhi-pull-secret \
+$ kubectl create -n ${NS} secret <example-value> dhi-pull-secret \
     --docker-server=<registry server> \
     --docker-username=<registry user> \
-    --docker-password="$(echo https://<registry server> | docker-credential-desktop get | jq -r .Secret)" \
+    --docker-password="<example-value>" \
     --docker-email=<registry email>
 ```
 

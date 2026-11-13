@@ -20,7 +20,7 @@ HRESULT DefineGenericParam (
     [in]  DWORD           dwParamFlags,
     [in]  LPCWSTR         szname,
     [in]  DWORD           reserved,
-    [in]  mdToken         rtkConstraints[],
+    [in]  mdToken         <example-value>[],
     [out] mdGenericParam  *pgp
 );
 ```

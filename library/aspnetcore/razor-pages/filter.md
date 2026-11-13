@@ -57,7 +57,7 @@ public class SampleAsyncPageFilter : IAsyncPageFilter
 
     public Task OnPageHandlerSelectionAsync(PageHandlerSelectedContext context)
     {
-        var key = _config["UserAgentID"];
+        var key = <example-value>["UserAgentID"];
         context.HttpContext.Request.Headers.TryGetValue("user-agent",
                                                         out StringValues value);
         ProcessUserAgent.Write(context.ActionDescriptor.DisplayName,
@@ -119,7 +119,7 @@ public class SamplePageFilter : IPageFilter
 
     public void OnPageHandlerSelected(PageHandlerSelectedContext context)
     {
-        var key = _config["UserAgentID"];
+        var key = <example-value>["UserAgentID"];
         context.HttpContext.Request.Headers.TryGetValue("user-agent", out StringValues value);
         ProcessUserAgent.Write(context.ActionDescriptor.DisplayName,
                                "SamplePageFilter.OnPageHandlerSelected",
@@ -174,7 +174,7 @@ public class IndexModel : PageModel
     public async override Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, 
                                                            PageHandlerExecutionDelegate next)
     {
-        var key = _config["UserAgentID"];
+        var key = <example-value>["UserAgentID"];
         context.HttpContext.Request.Headers.TryGetValue("user-agent", out StringValues value);
         ProcessUserAgent.Write(context.ActionDescriptor.DisplayName,
                                "/IndexModel-OnPageHandlerExecutionAsync",

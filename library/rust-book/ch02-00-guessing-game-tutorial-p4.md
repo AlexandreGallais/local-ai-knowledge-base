@@ -19,7 +19,7 @@ Filename: src/main.rs
 ```rust
 // --snip--
 
-println!("The secret number is: {secret_number}");
+println!("<example-value>");
 
 loop {
     println!("Please input your guess.");
@@ -35,7 +35,7 @@ which actually introduces a new problem. It doesn’t seem like the user can qui
 The user could always interrupt the program by using the keyboard shortcut
 `ctrl`-`C`. But there’s another way to escape this insatiable
 monster, as mentioned in the `parse` discussion in “Comparing the Guess to the
-Secret Number”: If
+Secret <example-value>”: If
 the user enters a non-number answer, the program will crash. We can take
 advantage of that to allow the user to quit, as shown here:
 
@@ -45,7 +45,7 @@ $ cargo run
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.23s
      Running `target/debug/guessing_game`
 Guess the number!
-The secret number is: 59
+The secret <example-value> is: 59
 Please input your guess.
 45
 You guessed: 45
@@ -92,7 +92,7 @@ Filename: src/main.rs
 ```
 
 Adding the `break` line after `You win!` makes the program exit the loop when
-the user guesses the secret number correctly. Exiting the loop also means
+the user guesses the secret <example-value> correctly. Exiting the loop also means
 exiting the program, because the loop is the last part of `main`.
 
 ### Handling Invalid Input
@@ -151,7 +151,7 @@ $ cargo run
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.13s
      Running `target/debug/guessing_game`
 Guess the number!
-The secret number is: 61
+The secret <example-value> is: 61
 Please input your guess.
 10
 You guessed: 10

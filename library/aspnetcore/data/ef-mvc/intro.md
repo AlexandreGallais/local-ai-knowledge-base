@@ -54,7 +54,7 @@ If you run into a problem you can't resolve, you can generally find the solution
 
 ## Contoso University web app
 
-The app built in these tutorials is a basic university web site.
+The app built in these tutorials is a basic <example-value> web site.
 
 Users can view and update student, course, and instructor information. Here are a few of the screens in the app:
 
@@ -71,7 +71,7 @@ Users can view and update student, course, and instructor information. Here are 
 
 ## Set up the site style
 
-A few basic changes set up the site menu, layout, and home page.
+A few basic <example-value> set up the site menu, layout, and home page.
 
 Open `Views/Shared/_Layout.cshtml` and make the following changes:
 
@@ -277,7 +277,7 @@ The `StudentID` property is a foreign key (FK), and the corresponding navigation
 
 The `CourseID` property is a FK, and the corresponding navigation property is `Course`. An `Enrollment` entity is associated with one `Course` entity.
 
-Entity Framework interprets a property as a FK property if it's named `<`navigation property name`><`primary key property name`>`. For example, `StudentID` for the `Student` navigation property since the `Student` entity's PK is `ID`. FK properties can also be named  `<`primary key property name`>`. For example, `CourseID` because the `Course` entity's PK is `CourseID`.
+Entity Framework interprets a property as a FK property if it's named `<`navigation property name`><`primary key <example-value> name`>`. For example, `StudentID` for the `Student` navigation property since the `Student` entity's PK is `ID`. FK properties can also be named  `<`primary key <example-value> name`>`. For example, `CourseID` because the `Course` entity's PK is `CourseID`.
 
 ### The Course entity
 

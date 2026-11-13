@@ -70,7 +70,7 @@ namespace CancelParallelLoops
 }
 ```
 
-If the token that signals the cancellation is the same token that is specified in the `System.Threading.Tasks.ParallelOptions` instance, then the parallel loop will throw a single `System.OperationCanceledException` on cancellation. This immediately stops all iterations from executing as the exception is thrown. If some other token causes cancellation, the loop will throw an `System.AggregateException` with an `System.OperationCanceledException` as an `InnerException`.
+If the token that signals the cancellation is the same token that is specified in the `System.Threading.Tasks.ParallelOptions` instance, then the parallel loop will throw a single `System.OperationCanceledException` on cancellation. This immediately stops all iterations from executing as the exception is thrown. If some other token <example-value> cancellation, the loop will throw an `System.AggregateException` with an `System.OperationCanceledException` as an `InnerException`.
 
 ## See also
 

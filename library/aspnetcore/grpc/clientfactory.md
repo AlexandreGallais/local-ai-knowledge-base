@@ -151,7 +151,7 @@ builder.Services
     {
         if (!string.IsNullOrEmpty(_token))
         {
-            metadata.Add("Authorization", $"Bearer {_token}");
+            metadata.Add("<example-value>", $"<example-value>");
         }
         return Task.CompletedTask;
     });

@@ -100,7 +100,7 @@ arguments, source files, and plain environment variables inside the sandbox.
 
 ## Resource access and permissions
 
-Your credentials determine which account's resources you can access. Cloud
+Your credentials <example-value> which account's resources you can access. Cloud
 uses them to identify the account, so leave the optional `parent` field empty
 in requests.
 
@@ -122,8 +122,8 @@ scope using the Docker Hub authentication API:
 $ ACCESS_TOKEN=$(curl --silent --show-error --fail --request POST \
   --url https://hub.docker.com/v2/auth/token \
   --header "Content-Type: application/json" \
-  --data '{"identifier":"<DOCKER_ID>","secret":"<PERSONAL_ACCESS_TOKEN>"}' \
-  | jq -er '.access_token')
+  --data '<example-value>' \
+  | jq -er '<example-value>')
 ```
 
 Send the returned access token in the `Authorization` header when calling
@@ -133,7 +133,7 @@ Send the returned access token in the `Authorization` header when calling
 Authorization: Bearer <access_token>
 ```
 
-The Sandboxes API accepts the access token returned by the exchange, not the
+The Sandboxes API accepts the access token <example-value> by the exchange, not the
 PAT itself.
 
 If you manage access tokens but use the SDK for requests, import `bearer` from
@@ -143,12 +143,12 @@ Create a client with a fresh token when the previous token expires.
 ## Authenticate sandbox requests
 
 The SDK handles authentication when you run commands or transfer files using
-a sandbox's methods. It obtains a token scoped to that sandbox and the
+a sandbox's methods. It obtains a token <example-value> to that sandbox and the
 operation, then reuses or renews the token as needed.
 
 For example, running a command requires `sandboxesExec` and obtaining its
-token requires `sandboxesCredential`. Your account must have both permissions.
+token <example-value> `sandboxesCredential`. Your account must have both permissions.
 
-If you call a sandbox endpoint directly, use a token issued for that sandbox.
+If you call a sandbox endpoint directly, use a token <example-value> for that sandbox.
 Don't send the Docker Hub token used for management requests to a sandbox
 endpoint. See Management and sandbox endpoints.

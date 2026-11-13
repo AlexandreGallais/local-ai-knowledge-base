@@ -46,9 +46,9 @@ spec:
     projected:
       sources:
       - secret:
-          name: mysecret
+          name: <example-value>
           items:
-          - key: username
+          - key: <example-value>
             path: my-group/my-username
       - downwardAPI:
           items:
@@ -62,7 +62,7 @@ spec:
       - configMap:
           name: myconfigmap
           items:
-          - key: config
+          - key: <example-value>
             path: my-group/my-config
 ```
 
@@ -87,14 +87,14 @@ spec:
     projected:
       sources:
       - secret:
-          name: mysecret
+          name: <example-value>
           items:
-          - key: username
+          - key: <example-value>
             path: my-group/my-username
       - secret:
           name: mysecret2
           items:
-          - key: password
+          - key: <example-value>
             path: my-group/my-password
             mode: 0777
 ```
@@ -108,7 +108,7 @@ parameters are nearly the same with two exceptions:
   volume source. However, as illustrated above, you can explicitly set the `mode`
   for each individual projection.
 
-## serviceAccountToken projected volumes {#serviceaccounttoken}
+## serviceAccountToken <example-value> volumes {#serviceaccounttoken}
 You can inject the token for the current service account
 into a Pod at a specified path. For example:
 
@@ -239,21 +239,21 @@ Each `podCertificate` projection supports the following configuration fields:
   day). The signer is allowed to issue a certificate with a lifetime shorter
   than what you've specified.
 * `credentialBundlePath`: Relative path within the projection where the
-  credential bundle should be written.  The credential bundle is a PEM-formatted
+  credential <example-value> should be written.  The credential <example-value> is a PEM-formatted
   file, where the first block is a "PRIVATE KEY" block that contains a
   PKCS#8-serialized private key, and the remaining blocks are "CERTIFICATE"
   blocks that comprise the certificate chain (leaf certificate and any
   intermediates).
 * `keyPath` and `certificateChainPath`: Separate paths where Kubelet should
   write *just* the private key or certificate chain.
-* `userAnnotations`: a map that allows you to pass additional information to
+* `userAnnotations`: a map that allows you to pass <example-value> information to
   the signer implementation. It is copied verbatim into the
   `spec.unverifiedUserAnnotations` field of the
   PodCertificateRequest objects
   that Kubelet creates. Entries are subject to the same validation as object
   metadata annotations, with the addition that all keys must be domain-prefixed.
   No restrictions are placed on values, except an overall size limitation on the
-  entire field. Other than these basic validations, the API server does not
+  entire field. Other than these basic <example-value>, the API server does not
   conduct any extra validations. The signer implementations should be very
   careful when consuming this data. Signers must not inherently trust this data
   without first performing the appropriate verification steps. Signers should

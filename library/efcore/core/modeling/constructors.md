@@ -92,7 +92,7 @@ Some things to note:
 Once properties are being set via the constructor it can make sense to make some of them read-only. EF Core supports this, but there are some things to look out for:
 
 * Properties without setters are not mapped by convention. (Doing so tends to map properties that should not be mapped, such as computed properties.)
-* Using automatically generated key values requires a key property that is read-write, since the key value needs to be set by the key generator when inserting new entities.
+* Using automatically generated key <example-value> requires a key <example-value> that is read-write, since the key value needs to be set by the key <example-value> when inserting new entities.
 
 An easy way to avoid these things is to use private setters. For example:
 

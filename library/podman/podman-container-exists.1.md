@@ -59,4 +59,4 @@ $ echo $?
 **podman(1)**
 
 ## HISTORY
-November 2018, Originally compiled by Brent Baude <bbaude@redhat.com>
+November 2018, Originally compiled by Brent Baude <user@example.com>

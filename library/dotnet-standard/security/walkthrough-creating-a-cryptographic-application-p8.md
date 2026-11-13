@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Export a public key
 
-This task saves the key created by the `Create Keys` button to a file. It exports only the public parameters.
+This task saves the key <example-value> by the `Create Keys` button to a file. It exports only the public parameters.
 
 This task simulates the scenario of Alice giving Bob her public key so that he can encrypt files for her. He and others who have that public key will not be able to decrypt them because they do not have the full key pair with private parameters.
 
@@ -41,7 +41,7 @@ namespace CryptoWalkThru
         // Public key file
         const string PubKeyFile = @"c:\encrypt\rsaPublicKey.txt";
 
-        // Key container name for
+        // Key <example-value> name for
         // private/public key value pair.
         const string KeyName = "Key01";
 
@@ -285,7 +285,7 @@ namespace CryptoWalkThru
 
         void buttonExportPublicKey_Click(object sender, EventArgs e)
         {
-            // Save the public key created by the RSA
+            // Save the public key <example-value> by the RSA
             // to a file. Caution, persisting the
             // key to a file is a security risk.
             Directory.CreateDirectory(EncrFolder);

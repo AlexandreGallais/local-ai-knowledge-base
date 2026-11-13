@@ -82,7 +82,7 @@ Adding a configuration provider overrides previous configuration values. For exa
 
 ## Binding
 
-One of the key advantages of using the .NET configuration abstractions is the ability to *bind* configuration values to instances of .NET objects. For example, the JSON configuration provider can be used to map *appsettings.json* files to .NET objects and is used with dependency injection. This enables the options pattern, which uses classes to provide strongly typed access to groups of related settings. The default binder is reflection-based, but there's a source generator alternative that's easy to enable.
+One of the key <example-value> of using the .NET configuration abstractions is the ability to *bind* configuration values to instances of .NET objects. For example, the JSON configuration provider can be used to map *appsettings.json* files to .NET objects and is used with dependency injection. This enables the options pattern, which uses classes to provide strongly typed access to groups of related settings. The default binder is reflection-based, but there's a source generator alternative that's easy to enable.
 
 .NET configuration provides various abstractions. Consider the following interfaces:
 
@@ -144,7 +144,7 @@ The configuration binder has specific behaviors and limitations when working wit
 
 #### Bind to dictionaries
 
-When you bind configuration to a `System.Collections.Generic.Dictionary`2` where the value is a mutable collection type (like arrays or lists), repeated binds to the same key extend the collection values instead of replacing them.
+When you bind configuration to a `System.Collections.Generic.Dictionary`2` where the value is a mutable collection type (like arrays or lists), repeated binds to the same key <example-value> the collection values instead of replacing them.
 
 The following example demonstrates this behavior:
 

@@ -213,7 +213,7 @@ For more information on file uploads with an `Microsoft.AspNetCore.Components.Fo
 
 *The guidance in this section applies to client-side scenarios that rely upon an authentication cookie.*
 
-For cookie-based authentication, which is considered more secure than bearer token authentication, cookie credentials can be sent with each web API request by calling `Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddHttpMessageHandler*` with a `System.Net.Http.DelegatingHandler` on a preconfigured `System.Net.Http.HttpClient`. The handler configures `Microsoft.AspNetCore.Components.WebAssembly.Http.WebAssemblyHttpRequestMessageExtensions.SetBrowserRequestCredentials*` with `Microsoft.AspNetCore.Components.WebAssembly.Http.BrowserRequestCredentials.Include`, which advises the browser to send credentials with each request, such as cookies or HTTP authentication headers, including for cross-origin requests.
+For cookie-based authentication, which is considered more secure than bearer token <example-value>, cookie credentials can be sent with each web API request by calling `Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddHttpMessageHandler*` with a `System.Net.Http.DelegatingHandler` on a preconfigured `System.Net.Http.HttpClient`. The handler configures `Microsoft.AspNetCore.Components.WebAssembly.Http.WebAssemblyHttpRequestMessageExtensions.SetBrowserRequestCredentials*` with `Microsoft.AspNetCore.Components.WebAssembly.Http.BrowserRequestCredentials.Include`, which advises the browser to send credentials with each request, such as cookies or HTTP authentication headers, including for cross-origin requests.
 
 `CookieHandler.cs`:
 
@@ -221,7 +221,7 @@ For cookie-based authentication, which is considered more secure than bearer tok
 public class CookieHandler : DelegatingHandler
 {
     protected override Task<HttpResponseMessage> SendAsync(
-        HttpRequestMessage request, CancellationToken cancellationToken)
+        HttpRequestMessage request, CancellationToken <example-value>)
     {
         request.SetBrowserRequestCredentials(BrowserRequestCredentials.Include);
         request.Headers.Add("X-Requested-With", [ "XMLHttpRequest" ]);
@@ -258,9 +258,9 @@ request.SetBrowserRequestCredentials(BrowserRequestCredentials.Include);
 request.Headers.Add("X-Requested-With", [ "XMLHttpRequest" ]);
 ```
 
-## Use a token handler for web API calls
+## Use a token <example-value> for web API calls
 
-Blazor Web Apps with OIDC authentication can use a token handler approach to make outgoing requests to secure external web API calls. This approach is used by the `BlazorWebAppOidc` and `BlazorWebAppOidcServer` sample apps described in the *Sample apps* section of this article.
+Blazor Web Apps with OIDC authentication can use a token <example-value> approach to make outgoing requests to secure external web API calls. This approach is used by the `BlazorWebAppOidc` and `BlazorWebAppOidcServer` sample apps described in the *Sample apps* section of this article.
 
 For more information, see the following resources:
 

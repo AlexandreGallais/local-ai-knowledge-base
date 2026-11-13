@@ -87,10 +87,10 @@ class SelectSample2
     // Separate data source for contact info.
     List<ContactInfo> contactList =
     [
-        new ContactInfo {ID=111, Email="SvetlanO@Contoso.com", Phone="206-555-0108"},
-        new ContactInfo {ID=112, Email="ClaireO@Contoso.com", Phone="206-555-0298"},
-        new ContactInfo {ID=113, Email="SvenMort@Contoso.com", Phone="206-555-1130"},
-        new ContactInfo {ID=114, Email="CesarGar@Contoso.com", Phone="206-555-0521"}
+        new ContactInfo {ID=111, Email="user@example.com", Phone="206-555-0108"},
+        new ContactInfo {ID=112, Email="user@example.com", Phone="206-555-0298"},
+        new ContactInfo {ID=113, Email="user@example.com", Phone="206-555-1130"},
+        new ContactInfo {ID=114, Email="user@example.com", Phone="206-555-0521"}
     ];
 
     static void Main(string[] args)
@@ -233,9 +233,9 @@ class SelectSample2
     Garcia
 
     studentQuery3: select range_variable.Method
-    ClaireO@Contoso.com,206-555-0298
-    SvenMort@Contoso.com,206-555-1130
-    CesarGar@Contoso.com,206-555-0521
+    user@example.com,206-555-0298
+    user@example.com,206-555-1130
+    user@example.com,206-555-0521
 
     studentQuery4: select range_variable[index]
     First score = 75
@@ -263,7 +263,7 @@ class SelectSample2
     ID = 114, Average = 88.25
 
     studentQuery9: select result of join clause
-    ID = 114, Email = CesarGar@Contoso.com
+    ID = 114, Email = user@example.com
 */
 //class SelectClause
 ```

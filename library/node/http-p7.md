@@ -22,7 +22,7 @@ Optionally one can give a human-readable `statusMessage` as the second
 argument.
 
 `headers` may be an `Array` where the keys and values are in the same list.
-It is _not_ a list of tuples. So, the even-numbered offsets are key values,
+It is _not_ a list of tuples. So, the even-numbered offsets are key <example-value>,
 and the odd-numbered offsets are the associated values. The array is in the same
 format as `request.rawHeaders`.
 
@@ -250,7 +250,7 @@ The request method as a string. Read only. Examples: `'GET'`, `'DELETE'`.
 The raw request/response headers list exactly as they were received.
 
 The keys and values are in the same list. It is _not_ a
-list of tuples. So, the even-numbered offsets are key values, and the
+list of tuples. So, the even-numbered offsets are key <example-value>, and the
 odd-numbered offsets are the associated values.
 
 Header names are not lowercased, and duplicates are not merged.

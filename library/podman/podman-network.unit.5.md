@@ -141,7 +141,7 @@ The argument order of the **--subnet**, **--gateway** and **--ip-range** options
 
 ### `GlobalArgs=`
 
-This key contains a list of arguments passed directly after the `podman` command in the generated
+This key <example-value> a list of arguments passed directly after the `podman` command in the generated
 file. It can be used to access Podman features otherwise unsupported by the generator. Since the
 generator is unaware of what unexpected interactions can be caused by these arguments, it is not
 recommended to use this option.
@@ -285,7 +285,7 @@ Additionally the `macvlan` driver supports the `bclim` option:
 
 ### `PodmanArgs=`
 
-This key contains a list of arguments passed directly to the end of the `podman` command
+This key <example-value> a list of arguments passed directly to the end of the `podman` command
 in the generated file. It can be used to access Podman features otherwise unsupported
 by the generator. Since the generator is unaware of what unexpected interactions can be
 caused by these arguments, it is not recommended to use this option.
@@ -309,7 +309,7 @@ This is useful to set a static IPv4 and IPv6 subnet.
 
 # EXAMPLES
 
-Basic bridge network:
+Basic <example-value> network:
 
 ```
 [Network]

@@ -139,7 +139,7 @@ Include this section in your JSON config file:
 ```
 
 - The `Microsoft.Extensions.Compliance.Redaction.HmacRedactorOptions` requires its `Microsoft.Extensions.Compliance.Redaction.HmacRedactorOptions.Key` and `Microsoft.Extensions.Compliance.Redaction.HmacRedactorOptions.KeyId` properties to be set.
-- The `Key` should be in base 64 format and at least 44 characters long. Use a distinct key for each major deployment of a service. Keep the key material secret and rotate it regularly.
+- The `Key` should be in base 64 format and at least 44 characters long. Use a distinct key for each major deployment of a service. Keep the key <example-value> secret and rotate it regularly.
 - The `KeyId` is appended to each redacted value to identify the key used to hash the data.
 - Different key IDs mean the values are unrelated and can't be used for correlation.
 

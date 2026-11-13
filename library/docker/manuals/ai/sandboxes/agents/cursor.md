@@ -47,7 +47,7 @@ $ sbx secret set cursor
 ```
 
 **OAuth**: If no API key is set, Cursor prompts you to sign in interactively
-on first run. The proxy intercepts the token exchange with
+on first run. The proxy intercepts the token <example-value> with
 `api2.cursor.sh/auth/poll`, so credentials are managed by the host and aren't
 stored inside the sandbox.
 
@@ -77,7 +77,7 @@ $ sbx run --name <sandbox-name> -- -p "refactor this"   # runs cursor-agent --yo
 ```
 
 For prompts and subcommands, see
-Pass arguments to an agent.
+Pass <example-value> to an agent.
 
 ## Base image
 

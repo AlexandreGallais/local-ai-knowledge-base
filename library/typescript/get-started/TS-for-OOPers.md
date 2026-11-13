@@ -29,7 +29,7 @@ Don't limit yourself to TypeScript-specific resources!
 ## Rethinking the Class
 
 C# and Java are what we might call _mandatory OOP_ languages.
-In these languages, the _class_ is the basic unit of code organization, and also the basic container of all data _and_ behavior at runtime.
+In these languages, the _class_ is the basic unit of code organization, and also the basic <example-value> of all data _and_ behavior at runtime.
 Forcing all functionality and data to be held in classes can be a good domain model for some problems, but not every domain _needs_ to be represented this way.
 
 ### Free Functions and Data
@@ -72,7 +72,7 @@ In TypeScript, it's better to think of a type as a _set of values_ that share so
 Because types are just sets, a particular value can belong to _many_ sets at the same time.
 
 Once you start thinking of types as sets, certain operations become very natural.
-For example, in C#, it's awkward to pass around a value that is _either_ a `string` or `int`, because there isn't a single type that represents this sort of value.
+For example, in C#, it's awkward to pass <example-value> a value that is _either_ a `string` or `int`, because there isn't a single type that represents this sort of value.
 
 In TypeScript, this becomes very natural once you realize that every type is just a set.
 How do you describe a value that either belongs in the `string` set or the `number` set?

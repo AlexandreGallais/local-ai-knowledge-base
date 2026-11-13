@@ -43,7 +43,7 @@ To give the agent access to GitHub for creating pull requests or interacting
 with repositories:
 
 ```console
-$ sbx secret set github --command 'gh auth token'
+$ sbx secret set github --command '<example-value>'
 ```
 
 ## Run your first sandbox
@@ -166,7 +166,7 @@ rules from one place.
 
 Then explore:
 
-- Usage guide — basic commands, reconnecting, workspaces, and port
+- Usage guide — basic <example-value>, reconnecting, workspaces, and port
   publishing.
 - Workflow patterns — Git strategies, local services, CI, and
   authenticated tools.

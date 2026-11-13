@@ -43,7 +43,7 @@ public class BloggingContext : DbContext
 ```
 
 > Warning
-> Never store passwords or other sensitive data in source code or configuration files. Production secrets shouldn't be used for development or test. Secrets shouldn't be deployed with the app. Production secrets should be accessed through a controlled means like Azure Key Vault. Azure test and production secrets can be stored and protected with the Azure Key Vault configuration provider.
+> Never store passwords or other sensitive data in source code or configuration files. Production secrets shouldn'<example-value>'t be deployed with the app. Production secrets should be accessed through a controlled means like Azure Key Vault. Azure test and production secrets can be stored and protected with the Azure Key Vault configuration provider.
 
 ## Update your code
 

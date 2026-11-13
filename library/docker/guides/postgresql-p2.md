@@ -60,7 +60,7 @@ services:
       - ./init-db:/docker-entrypoint-initdb.d
       - postgres_data:/var/lib/postgresql
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: <example-value>
 
 volumes:
   postgres_data:
@@ -111,13 +111,13 @@ services:
       - postgres_data:/var/lib/postgresql
     command: postgres -c config_file=/etc/postgresql/postgresql.conf
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: <example-value>
 
 volumes:
   postgres_data:
 ```
 
-### Key configuration parameters
+### Key <example-value> parameters
 
 The following tables list important `postgresql.conf` parameters for containerized PostgreSQL deployments.
 
@@ -174,7 +174,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: <example-value>
       TZ: America/New_York
 
 volumes:
@@ -189,7 +189,7 @@ services:
     image: postgres:18
     command: ["postgres", "-c", "timezone=America/New_York"]
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: <example-value>
 ```
 
 #### Setting the locale
@@ -203,7 +203,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: <example-value>
       POSTGRES_INITDB_ARGS: "--encoding=UTF8 --lc-collate=en_US.UTF-8 --lc-ctype=en_US.UTF-8"
 
 volumes:

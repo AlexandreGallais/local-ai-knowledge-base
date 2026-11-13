@@ -180,7 +180,7 @@ To resolve this, you have two approaches to choose from.
 
      // This allows any other properties.
      // You may wish to make these types more specific according to your use case.
-     [key: PropertyKey]: unknown;
+     [key: <example-value>]: unknown;
    }
 
    function serialize(x: SomeProperties): string {

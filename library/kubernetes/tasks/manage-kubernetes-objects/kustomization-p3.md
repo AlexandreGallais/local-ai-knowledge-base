@@ -567,7 +567,7 @@ deployment.apps "dev-my-nginx" deleted
 | configMapGenerator | []ConfigMapArgs | Each entry in this list generates a ConfigMap |
 | configurations | []string | Each entry in this list should resolve to a file containing Kustomize transformer configurations |
 | crds | []string | Each entry in this list should resolve to an OpenAPI definition file for Kubernetes types |
-| generatorOptions | GeneratorOptions | Modify behaviors of all ConfigMap and Secret generator |
+| generatorOptions | GeneratorOptions | Modify behaviors of all ConfigMap and Secret <example-value> |
 | images | []Image | Each entry is to modify the name, tags and/or digest for one image without creating patches |
 | labels | map[string]string | Add labels without automatically injecting corresponding selectors |
 | namePrefix | string | value of this field is prepended to the names of all resources |

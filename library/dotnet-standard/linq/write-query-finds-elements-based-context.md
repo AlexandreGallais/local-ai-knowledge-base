@@ -175,4 +175,4 @@ id = 6
 - `System.Xml.Linq.XContainer.Descendants*`
 - `System.Xml.Linq.XNode.ElementsAfterSelf*`
 - `System.Linq.Enumerable.FirstOrDefault*`
-- Basic Queries (LINQ to XML) (Visual Basic)
+- Basic <example-value> (LINQ to XML) (Visual Basic)

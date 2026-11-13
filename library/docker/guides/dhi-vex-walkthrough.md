@@ -171,7 +171,7 @@ If Trivy isn't installed, run it in a container:
 ```console
 $ docker run --rm \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v "$(pwd)/python-vex.json:/tmp/vex.json" \
+  -v "<example-value>" \
   aquasec/trivy:latest image --scanners vuln --vex /tmp/vex.json dhi.io/python:3.13
 ```
 
@@ -196,7 +196,7 @@ If Grype isn't installed, run it in a container:
 ```console
 $ docker run --rm \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v "$(pwd)/python-vex.json:/tmp/vex.json" \
+  -v "<example-value>" \
   anchore/grype:latest docker:dhi.io/python:3.13 --vex /tmp/vex.json
 ```
 
@@ -233,7 +233,7 @@ If Trivy isn't installed, run it in a container:
 ```console
 $ docker run --rm \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v "$(pwd)/python-vex.json:/tmp/vex.json" \
+  -v "<example-value>" \
   aquasec/trivy:latest image --scanners vuln --vex /tmp/vex.json --show-suppressed dhi.io/python:3.13
 ```
 
@@ -296,7 +296,7 @@ behavior, requires authenticated access, and is classified as unimportant by
 the Debian security team.
 
 Each statement also lists the affected products as Package URLs (PURLs), for
-example `pkg:deb/debian/glibc@2.41-12%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13`.
+example `pkg:deb/debian/user@example.com%2Bdeb13u2?os_distro=trixie&os_name=debian&os_version=13`.
 Trivy matched this statement to `libc6` in the image's SBOM by comparing that
 PURL against the packages recorded in the SBOM.
 

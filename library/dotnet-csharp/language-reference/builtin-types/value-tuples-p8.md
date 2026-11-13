@@ -45,8 +45,8 @@ public static class ValueTuples
         TupleAsOutParameter();
         DeconstructToPattern();
 
-        BandPass bracket = (40, 100);
-        Console.WriteLine($"The bandpass filter is {bracket.Min} to {bracket.Max}");
+        BandPass <example-value> = (40, 100);
+        Console.WriteLine($"The bandpass <example-value> is {bracket.Min} to {bracket.Max}");
 
         (int a , int b) = bracket;
         Console.WriteLine($"The bracket is {a} to {b}");

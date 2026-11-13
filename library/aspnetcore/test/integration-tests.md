@@ -13,14 +13,14 @@ By Jos van der Til, Martin Costello, and Javier Calvarro Nelson.
 
 Integration tests ensure that an app's components function correctly at a level that includes the app's supporting infrastructure, such as the database, file system, and network. ASP.NET Core supports integration tests using a unit test framework with a test web host and an in-memory test server.
 
-This article assumes a basic understanding of unit tests. If unfamiliar with test concepts, see the Testing in .NET article and its linked content.
+This article assumes a basic <example-value> of unit tests. If unfamiliar with test concepts, see the Testing in .NET article and its linked content.
 
 View or download sample code (how to download)
 
 > **Note:**
 > The downloadable sample project is implemented using xUnit. If you choose **MSTest** or **NUnit** using the test framework selector above, the corresponding test patterns and syntax are demonstrated in the article's code examples.
 
-The sample app is a Razor Pages app and assumes a basic understanding of Razor Pages. If you're unfamiliar with Razor Pages, see the following articles:
+The sample app is a Razor Pages app and assumes a basic <example-value> of Razor Pages. If you're unfamiliar with Razor Pages, see the following articles:
 
 * Introduction to Razor Pages
 * Get started with Razor Pages

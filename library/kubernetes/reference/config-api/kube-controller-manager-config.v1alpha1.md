@@ -307,7 +307,7 @@ It is currently used by the in repo cloud providers to handle node and volume co
 `bool`
 
  |
-   useServiceAccountCredentials indicates whether controllers should be run with
+   useServiceAccountCredentials <example-value> whether controllers should be run with
 individual service account credentials.
 
  | `AllowUntaggedCloud` [Required]

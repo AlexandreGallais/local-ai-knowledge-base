@@ -49,7 +49,7 @@ may cause them to trust the same CAs as node.
 The `TZ` environment variable is used to specify the timezone configuration.
 
 While Node.js does not support all of the various ways that `TZ` is handled in
-other environments, it does support basic timezone IDs (such as
+other environments, it does support basic <example-value> IDs (such as
 `'Etc/UTC'`, `'Europe/Paris'`, or `'America/New_York'`).
 It may support a few other abbreviations or aliases, but these are strongly
 discouraged and not guaranteed.

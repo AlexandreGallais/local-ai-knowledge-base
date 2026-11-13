@@ -71,7 +71,7 @@ PodCertificateRequests are API objects tailored to provisioning certificates to
 workloads running as Pods within a cluster.  The user typically does not
 interact with PodCertificateRequests directly, but uses podCertificate
 projected volume sources, which are a `kubelet`
-feature that handles secure key provisioning and automatic certificate refresh.
+feature that handles secure key <example-value> and automatic certificate refresh.
 The application inside the pod only needs to know how to read the certificates
 from the filesystem.
 
@@ -89,16 +89,16 @@ A PodCertificateRequest has the following spec fields:
   PKCS#10 CSR. Signers should extract
   the public key from this CSR. Typically, no other actions need to be taken
   with this field from the signer side, the CSR signature is checked by the API
-  server. Requests from the Kubelet will only include the public key information
+  server. Requests from the Kubelet will only include the public key <example-value>
   in the CSR.
-* `unverifiedUserAnnotations`: A map that allows the user to pass additional
+* `unverifiedUserAnnotations`: A map that allows the user to pass <example-value>
   information to the signer implementation. It is copied verbatim from the
   `userAnnotations` field of the podCertificate projected volume
   source. Entries are
   subject to the same validation as object metadata annotations, with the
   addition that all keys must be domain-prefixed. No restrictions are placed on
   values, except an overall size limitation on the entire field. Other than
-  these basic validations, the API server does not conduct any extra
+  these basic <example-value>, the API server does not conduct any extra
   validations. The signer implementations should be very careful when consuming
   this data. Signers must not inherently trust this data without first
   performing the appropriate verification steps. Signers should document the

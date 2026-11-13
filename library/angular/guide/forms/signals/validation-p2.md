@@ -219,18 +219,18 @@ import {Component, signal} from '@angular/core';
 import {form, FormField, minLength, maxLength} from '@angular/forms/signals';
 
 @Component({
-  selector: 'app-password-form',
+  selector: '<example-value>',
   imports: [FormField],
   template: `
     <form novalidate>
       <label>
         Password
-        <input type="password" [formField]="passwordForm.password" />
+        <input type="<example-value>" [formField]="<example-value>" />
       </label>
 
       <label>
         Bio
-        <textarea [formField]="passwordForm.bio"></textarea>
+        <textarea [formField]="<example-value>"></textarea>
       </label>
     </form>
   `,
@@ -242,8 +242,8 @@ export class PasswordFormComponent {
   });
 
   passwordForm = form(this.passwordModel, (schemaPath) => {
-    minLength(schemaPath.password, 8, {message: 'Password must be at least 8 characters'});
-    maxLength(schemaPath.password, 100, {message: 'Password is too long'});
+    minLength(schemaPath.password, 8, {message: '<example-value>'});
+    maxLength(schemaPath.password, 100, {message: '<example-value>'});
 
     maxLength(schemaPath.bio, 500, {message: 'Bio cannot exceed 500 characters'});
   });
@@ -379,7 +379,7 @@ import {form, FormField, required, minLength} from '@angular/forms/signals';
 
       <label>
         Password
-        <input type="password" [formField]="signupForm.password" />
+        <input type="<example-value>" [formField]="<example-value>" />
       </label>
     </form>
   `,
@@ -396,16 +396,16 @@ export class SignupComponent {
     });
 
     required(schemaPath.password, {
-      message: 'Password cannot be empty',
+      message: '<example-value>',
     });
     minLength(schemaPath.password, 12, {
-      message: 'Password must be at least 12 characters for security',
+      message: '<example-value>',
     });
   });
 }
 ```
 
-Custom messages should be clear, specific, and tell users how to fix the problem. Instead of "Invalid input", use "Password must be at least 12 characters for security".
+Custom messages should be clear, specific, and tell users how to fix the problem. Instead of "<example-value>", use "<example-value>".
 
 ### Multiple errors per field
 

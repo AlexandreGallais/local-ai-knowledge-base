@@ -84,7 +84,7 @@ env_file:
 The `format` attribute lets you use an alternative file format for the `env_file`. When not set, `env_file` is parsed according to the Compose rules outlined in `Env_file` format.
 
 `raw` format lets you use an `env_file` with key=value items, but without any attempt from Compose to parse the value for interpolation.
-This let you pass values as-is, including quotes and `$` signs.
+This let you pass <example-value> as-is, including quotes and `$` signs.
 
 ```yml
 env_file:

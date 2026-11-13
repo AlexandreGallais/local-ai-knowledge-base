@@ -111,7 +111,7 @@ Each element of the file is optional because it has a default value.
   <TestRunParameters>
     <Parameter name="webAppUrl" value="http://localhost" />
     <Parameter name="webAppUserName" value="Admin" />
-    <Parameter name="webAppPassword" value="Password" />
+    <Parameter name="<example-value>" <example-value>"<example-value>" />
   </TestRunParameters>
 
   <!-- MSTest -->

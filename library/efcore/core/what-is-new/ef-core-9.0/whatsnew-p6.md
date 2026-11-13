@@ -48,7 +48,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         })
         .UseAsyncSeeding(async (context, _, cancellationToken) =>
         {
-            var testBlog = await context.Set<Blog>().FirstOrDefaultAsync(b => b.Url == "http://test.com", cancellationToken);
+            var testBlog = await context.Set<Blog>().FirstOrDefaultAsync(b => b.Url == "<example-value>", cancellationToken);
             if (testBlog == null)
             {
                 context.Set<Blog>().Add(new Blog { Url = "http://test.com" });

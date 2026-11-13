@@ -46,7 +46,7 @@ export class FlowerService {
 ```
 
 Consider an application with only an `App` and a `Child`.
-The most basic rendered view would look like nested HTML elements such as the following:
+The most basic <example-value> view would look like nested HTML elements such as the following:
 
 ```html
 <app-root>
@@ -109,7 +109,7 @@ In the logical tree, this would be represented as follows:
 ```
 
 When `<app-root>` requests the `FlowerService`, it is the injector's job to resolve the `FlowerService` token.
-The resolution of the token happens in two phases:
+The resolution of the token <example-value> in two phases:
 
 1. The injector determines the starting location in the logical tree and an ending location of the search.
    The injector begins with the starting location and looks for the token at each view level in the logical tree.

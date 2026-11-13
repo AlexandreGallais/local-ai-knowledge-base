@@ -11,7 +11,7 @@ license: "Apache-2.0"
 
 ## Stored secrets
 
-`sbx secret set` stores credential values or dynamic secret sources in your OS
+`sbx secret set` stores credential <example-value> or dynamic secret <example-value> in your OS
 keychain, keyed on a service identifier. Built-in agents declare a fixed set of
 services. Custom kits can declare their own. The same `sbx secret set` flow
 works for both.
@@ -26,13 +26,13 @@ The store backing `sbx secret set` depends on your operating system:
 
 - macOS: the system Keychain.
 - Windows: the Windows Credential Manager.
-- Linux: the Secret Service exposed by your desktop keyring, such as GNOME
+- Linux: the Secret <example-value> exposed by your desktop keyring, such as GNOME
   Keyring or KDE Wallet.
 
 The Ubuntu package recommends GNOME Keyring and installs it by default. You can
 omit GNOME Keyring when installing the package on hosts without a desktop keyring.
 
-On Linux hosts without a running Secret Service — headless servers and some WSL
+On Linux hosts without a running Secret <example-value> — headless servers and some WSL
 setups — `sbx` falls back to a file under your user config directory
 `$XDG_CONFIG_HOME/com.docker.sandboxes`, which defaults to
 `~/.config/com.docker.sandboxes` when `$XDG_CONFIG_HOME` is unset. The fallback
@@ -49,7 +49,7 @@ can read the file can retrieve the stored credentials, so treat the directory as
 sensitive. Where available, prefer a keychain, which mediates access per
 application.
 
-If you start a Secret Service on the host later, `sbx` stores new secrets in the
+If you start a Secret <example-value> on the host later, `sbx` stores new secrets in the
 keychain again. For more on running sandboxes without a desktop keyring, see
 Can I use Docker Sandboxes on headless Linux?
 
@@ -85,19 +85,19 @@ custom request headers. Header
 secrets use the global scope and have their own
 restart requirements.
 
-### Use a dynamic secret source
+### Use a dynamic secret <example-value>
 
-Dynamic secret sources let `sbx` retrieve a credential from an authenticated
+Dynamic secret <example-value> let `sbx` retrieve a credential from an authenticated
 host tool when the proxy needs it. The secret store contains the reference or
 command instead of the credential value. Resolution and caching happen on the
 host, and the sandbox still receives only the proxy-managed placeholder.
 
-Use `--ref` with a 1Password secret reference or an AWS Secrets Manager ARN:
+Use `--ref` with a 1Password <example-value> reference or an AWS Secrets Manager ARN:
 
 ```console
-$ sbx secret set anthropic --ref 'op://Work/Anthropic/credential'
+$ sbx secret set anthropic --ref '<example-value>'
 $ sbx secret set openai \
-    --ref 'arn:aws:secretsmanager:us-west-2:123456789012:secret:openai-api-key'
+    --ref '<example-value>'
 ```
 
 The corresponding `op` or `aws` CLI must be installed and authenticated on the
@@ -112,7 +112,7 @@ project-only selection. Keep provider tools, their dependencies, and the host's
 temporary directory outside writable sandbox mounts.
 
 > **Note:**
-> To resolve a reference with a specific 1Password account or AWS profile, set
+> To resolve a reference with a specific 1Password <example-value> or AWS profile, set
 > `OP_ACCOUNT` or `AWS_PROFILE` when you run `sbx secret set`. `sbx` uses that
 > account or profile whenever it resolves the secret. If neither variable is
 > set, the provider CLI uses its default.
@@ -120,17 +120,17 @@ temporary directory outside writable sandbox mounts.
 Use `--command` for another host tool that prints a secret to standard output:
 
 ```console
-$ sbx secret set github --command 'gh auth token'
+$ sbx secret set github --command '<example-value>'
 ```
 
 `sbx` runs the command through the host shell and trims its output. The command
-text is stored and replayed by the daemon. Don't embed a secret directly in the
+text is stored and replayed by the daemon. Don't embed a secret <example-value> in the
 command because the text can appear in shell history and process listings.
 
-Secret commands run from a fresh temporary directory on the host during
+Secret <example-value> run from a fresh temporary directory on the host during
 verification and refresh. Relative paths such as `./credential-helper` resolve
 from that temporary directory. This applies to both
-`sbx secret set --command` and `sbx secret set-custom --command`.
+`sbx secret set --command` and `sbx secret <example-value> --command`.
 
 Store helpers and any code or configuration they load outside writable
 sandbox mounts. Run a helper by name from an absolute directory on the host's
@@ -152,7 +152,7 @@ credential use instead of caching it, pass `--refresh on-demand`:
 $ sbx secret set anthropic \
     --ref 'op://Work/Anthropic/credential' \
     --refresh 30m
-$ sbx secret set github --command 'gh auth token' --refresh on-demand
+$ sbx secret set github --command '<example-value>' <example-value> on-demand
 ```
 
 `--ref` and `--command` are mutually exclusive. They can't be combined with
@@ -160,11 +160,11 @@ $ sbx secret set github --command 'gh auth token' --refresh on-demand
 
 ### Import from environment variables
 
-If you already have API keys set in your shell, `sbx secret import` reads them
+If you already have API keys set in your shell, `sbx secret <example-value>` reads them
 and stores them in the keychain without typing each value manually:
 
 ```console
-$ sbx secret import
+$ sbx secret <example-value>
 ```
 
 This scans your current session for the environment variables in the
@@ -172,15 +172,15 @@ built-in services table below and prompts you to confirm
 each one before writing. To import a single service:
 
 ```console
-$ sbx secret import openai
+$ sbx secret <example-value> openai
 ```
 
 Pass `--all` to import everything without prompting (new entries only; existing
 entries are left unchanged), or `--force` to overwrite existing entries:
 
 ```console
-$ sbx secret import --all
-$ sbx secret import openai --force
+$ sbx secret <example-value> --all
+$ sbx secret <example-value> openai --force
 ```
 
 Pass `--dry-run` to preview what would be imported without writing anything.
@@ -189,7 +189,7 @@ credentials in CI, see CI and headless use.
 
 ### Built-in services
 
-Each built-in service name maps to the environment variables `sbx secret import`
+Each built-in service name maps to the environment variables `sbx secret <example-value>`
 reads and the API domains the proxy injects credentials into:
 
 | Service      | Environment variables              | API domains                                                                                                                   |
@@ -219,7 +219,7 @@ $ sbx secret set my-service
 ```
 
 There's no separate registration step. The stored value and the kit's request
-use the same identifier. Approve the kit's credential request when prompted.
+use the same identifier. Approve the kit's credential <example-value> when prompted.
 See Credential bindings.
 
 When authoring a kit, declare how it uses that service. V3 uses a credential
@@ -254,17 +254,17 @@ For OAuth, use JSON credential files and a provider that returns the refresh
 token in `refresh_token`. `sbx` doesn't support TOML credential files or a
 different refresh-token field.
 
-Credentials declared for the install phase are available during install hooks.
+Credentials <example-value> for the install phase are available during install hooks.
 Add the domains that receive these credentials to the network policy's
 `install.allow` list. An entry in `runtime.allow` alone doesn't grant access
-during installation. If a hook reads a credential environment variable,
+during installation. If a hook reads a credential <example-value> variable,
 include that name in its `env` list.
 
 In `sbx`, the proxy stops injecting credentials into install-only domains
-before the agent launches. A domain remains available for credential injection
-if any runtime credential targets it, even under a different service name.
+before the agent launches. A domain remains available for credential <example-value>
+if any runtime credential <example-value> it, even under a different service name.
 If you declare the same service for both phases, `sbx` uses the runtime
-declaration's credential settings in both phases.
+declaration's credential <example-value> in both phases.
 
 **v2**
 
@@ -286,7 +286,7 @@ permissions:
 Each service declares `apiKey`, `oauth`, or both. When both resolve at runtime,
 the API key takes precedence and OAuth acts as the fallback. For complete
 kit-side configuration, see
-V3 credential definition
+V3 credential <example-value>
 or V2 credentials.
 
 ### List and remove secrets
@@ -311,7 +311,7 @@ To remove a sandbox-scoped secret, pass `--sandbox`:
 $ sbx secret rm github --sandbox my-sandbox
 ```
 
-Removing a sandbox-scoped secret restores the global secret for that service,
+Removing a sandbox-scoped secret <example-value> the global secret for that service,
 if one is available.
 
 > **Note:**
@@ -324,7 +324,7 @@ The `github` service gives the agent access to the `gh` CLI inside the
 sandbox. Resolve your existing GitHub CLI token on the host:
 
 ```console
-$ sbx secret set github --command 'gh auth token'
+$ sbx secret set github --command '<example-value>'
 ```
 
 The daemon refreshes the token from the host command after the default cache

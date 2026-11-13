@@ -107,7 +107,7 @@ See Working with nullable reference types in the EF Core documentation for more 
 
 The new interception API in EF Core 3.x allows providing custom logic to be invoked automatically whenever low-level database operations occur as part of the normal operation of EF Core. For example, when opening connections, committing transactions, or executing commands.
 
-Similarly to the interception features that existed in EF 6, interceptors allow you to intercept operations before or after they happen. When you intercept them before they happen, you are allowed to by-pass execution and supply alternate results from the interception logic.
+Similarly to the interception features that existed in EF 6, interceptors allow you to intercept operations before or after they happen. When you intercept them before they happen, you are allowed to by-pass <example-value> and supply alternate results from the interception logic.
 
 For example, to manipulate command text, you can create a `DbCommandInterceptor`:
 

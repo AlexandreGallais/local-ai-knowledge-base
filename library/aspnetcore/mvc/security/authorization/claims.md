@@ -60,7 +60,7 @@ For more information, see Policy-based authorization in ASP.NET Core.
 
 ## Evaluate multiple policies
 
-If multiple policies are applied at the controller and action levels, ***all*** policies must pass before access is granted:
+If multiple policies are applied at the controller and action levels, ***all*** policies must pass <example-value> access is granted:
 
 _Code sample not included: ~/../AspNetCore.Docs.Samples/security/authorization/claims/7.x/WebAll/Controllers/SalaryController.cs._
 In the preceding example, any identity that fulfills the `EmployeeOnly` policy can access the `Payslip` action, as that policy is enforced on the controller. However, in order to call the `UpdateSalary` action, the identity must fulfill *both* the `EmployeeOnly` policy and the `HumanResources` policy.
@@ -71,7 +71,7 @@ If you want more complicated policies, such as taking a date of birth claim, cal
 
 Claim *values* are compared using `StringComparison.Ordinal`. This means `Admin` (uppercase `A`) and `admin` (lowercase `a`) are always treated as different claim values, regardless of which authentication handler created the identity.
 
-Separately, the claim *type* comparison (used to locate claims by their type, such as `email`) may be case-sensitive or case-insensitive depending on the `System.Security.Claims.ClaimsIdentity` implementation. With `Microsoft.IdentityModel` in ASP.NET Core 8.0 or later (used by `Microsoft.Extensions.DependencyInjection.JwtBearerExtensions.AddJwtBearer*`, `Microsoft.Extensions.DependencyInjection.OpenIdConnectExtensions.AddOpenIdConnect*`, `Microsoft.Extensions.DependencyInjection.WsFederationExtensions.AddWsFederation*`, and `Microsoft.Identity.Web.AppBuilderExtension.AddMicrosoftIdentityWebApp*`/`Microsoft.Identity.Web.AppBuilderExtension.AddMicrosoftIdentityWebApi*`), `Microsoft.IdentityModel.Tokens.CaseSensitiveClaimsIdentity` is produced during token validation, which uses case-sensitive claim type matching.
+Separately, the claim *type* comparison (used to locate claims by their type, such as `email`) may be case-sensitive or case-insensitive depending on the `System.Security.Claims.ClaimsIdentity` implementation. With `Microsoft.IdentityModel` in ASP.NET Core 8.0 or later (used by `Microsoft.Extensions.DependencyInjection.JwtBearerExtensions.AddJwtBearer*`, `Microsoft.Extensions.DependencyInjection.OpenIdConnectExtensions.AddOpenIdConnect*`, `Microsoft.Extensions.DependencyInjection.WsFederationExtensions.AddWsFederation*`, and `Microsoft.Identity.Web.AppBuilderExtension.AddMicrosoftIdentityWebApp*`/`Microsoft.Identity.Web.AppBuilderExtension.AddMicrosoftIdentityWebApi*`), `Microsoft.IdentityModel.Tokens.CaseSensitiveClaimsIdentity` is produced during token <example-value>, which uses case-sensitive claim type matching.
 
 The default `System.Security.Claims.ClaimsIdentity` provided by the .NET runtime (used in most cases, including all cookie-based flows) still uses case-insensitive claim type matching.
 

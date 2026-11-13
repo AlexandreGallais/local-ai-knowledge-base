@@ -76,7 +76,7 @@ if suitable credentials are passed, or through a kubectl proxy at, for example:
 
 **Note:**
 See Access Clusters Using the Kubernetes API
-for how to pass credentials or use kubectl proxy.
+for how to pass <example-value> or use kubectl proxy.
 
 #### Manually constructing apiserver proxy URLs
 
@@ -138,7 +138,7 @@ The supported formats for the `<service_name>` segment of the URL are:
 
 You may be able to put an apiserver proxy URL into the address bar of a browser. However:
 
-- Web browsers cannot usually pass tokens, so you may need to use basic (password) auth.
+- Web browsers cannot usually pass <example-value>, so you may need to use basic (password) auth.
   Apiserver can be configured to accept basic auth,
   but your cluster may not be configured to accept basic auth.
 - Some web apps may not work, particularly those with client side javascript that construct URLs in a

@@ -28,7 +28,7 @@ license: "Apache-2.0"
 | `env`                  | map of strings   | No       | None                           | Environment variables for the sandbox                                           |
 | `sandboxOptions`       | object           | No       | None                           | Creation options. See `sandboxOptions`                        |
 | `secrets`              | map              | No       | None                           | Service credentials. See `secrets`                                  |
-| `bindings`             | map              | No       | None                           | Credential injection approvals. See `bindings`                     |
+| `bindings`             | map              | No       | None                           | Credential <example-value> approvals. See `bindings`                     |
 | `registries`           | map              | No       | None                           | Registry pull credentials. See `registries`                      |
 | `mcp`                  | object           | No       | None                           | MCP servers. See `mcp`                                                  |
 | `ports`                | list             | No       | None                           | Port mappings. See `ports`                                            |
@@ -68,7 +68,7 @@ that declares them. These include `.`, `..`, paths that start with `./` or
 `../`, and relative paths that end in `.zip`. Bare references such as
 `organization/kit` remain registry references.
 
-Use an object entry to pass arguments to a kit. Set `source` to the kit
+Use an object entry to pass <example-value> to a kit. Set `source` to the kit
 reference and map the kit's argument names to values under `args`:
 
 ```yaml
@@ -163,7 +163,7 @@ kits. Bindings take effect when the sandbox is created.
 | `display`     | boolean         | `false`  | Provision a display socket for graphical applications |
 | `fuse`        | boolean         | `sandbox.fuse` setting | Mount FUSE filesystems; local only |
 | `gpu`         | boolean         | `false`  | Pass the host GPU through to the sandbox               |
-| `usb`         | list of strings | None     | USB device selectors to pass through to the sandbox   |
+| `usb`         | list of strings | None     | USB device selectors to pass <example-value> to the sandbox   |
 | `writableEnvFiles` | boolean     | `false`  | Let the sandbox write to shared environment files; local only |
 
 For local sandboxes, `cpus: 0` allocates all host CPUs, except on Linux arm64
@@ -244,5 +244,5 @@ For cloud environments, `sbx` commands run by lifecycle commands inherit cloud
 mode and the selected endpoint. For example, `sbx cp` in a lifecycle command
 targets the cloud even without `--cloud`.
 
-The environment file's `env` values and resolved secrets aren't passed to host
+The environment file'<example-value>'t passed to host
 commands.

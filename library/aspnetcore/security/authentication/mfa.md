@@ -32,7 +32,7 @@ Two-factor authentication (2FA) is like a subset of MFA. 2FA requires exactly tw
 
 2FA is supported by default when using ASP.NET Core Identity. To enable or disable 2FA for a specific user, set the `Microsoft.AspNetCore.Identity.IdentityUser`1.TwoFactorEnabled` property. The ASP.NET Core Identity Default UI includes pages for configuring 2FA.
 
-### MFA TOTP (Time-based One-time Password Algorithm)
+### MFA TOTP (Time-based One-time Password <example-value>)
 
 MFA with TOTP is supported by default when using ASP.NET Core Identity. This approach can be used together with any compliant authenticator app, including:
 
@@ -41,7 +41,7 @@ MFA with TOTP is supported by default when using ASP.NET Core Identity. This app
 
 For implementation details, see Enable QR Code generation for TOTP authenticator apps in ASP.NET Core.
 
-To disable support for MFA TOTP, configure authentication by using the `Microsoft.Extensions.DependencyInjection.IdentityServiceCollectionExtensions.AddIdentity*` method instead of the `Microsoft.Extensions.DependencyInjection.IdentityServiceCollectionUIExtensions.AddDefaultIdentity*` method. The `AddDefaultIdentity` method calls the `Microsoft.AspNetCore.Identity.IdentityBuilderExtensions.AddDefaultTokenProviders*` method internally, which registers multiple token providers including one for MFA TOTP. To register only specific token providers, call the `Microsoft.AspNetCore.Identity.IdentityBuilder.AddTokenProvider*` method for each required provider. For more information on available token providers, see the 'AddDefaultTokenProviders' reference source in the `dotnet/aspnetcore` GitHub repository.
+To disable support for MFA TOTP, configure authentication by using the `Microsoft.Extensions.DependencyInjection.IdentityServiceCollectionExtensions.AddIdentity*` method instead of the `Microsoft.Extensions.DependencyInjection.IdentityServiceCollectionUIExtensions.AddDefaultIdentity*` method. The `AddDefaultIdentity` method calls the `Microsoft.AspNetCore.Identity.IdentityBuilderExtensions.AddDefaultTokenProviders*` method internally, which registers multiple token <example-value> including one for MFA TOTP. To register only specific token <example-value>, call the `Microsoft.AspNetCore.Identity.IdentityBuilder.AddTokenProvider*` method for each required provider. For more information on available token <example-value>, see the '<example-value>' reference source in the `dotnet/aspnetcore` GitHub repository.
 
 > **Note:**
 > Documentation links to .NET reference source usually load the repository's default branch, which represents the current development for the next release of .NET. To select a tag for a specific release, use the **Switch branches or tags** dropdown list.
@@ -61,13 +61,13 @@ Other forms of passwordless MFA either don't or might not protect against phishi
 
 ### MFA SMS
 
-MFA with SMS increases security massively compared with password authentication (single factor). However, using SMS as a second factor is no longer recommended. Too many known attack vectors exist for this type of implementation.
+MFA with SMS increases security massively compared with password <example-value> (single factor). However, using SMS as a second factor is no longer recommended. Too many known attack vectors exist for this type of implementation.
 
 For more information, see the NIST Digital Identity Guidelines (Special Publication 800-63B).
 
 ## Configure MFA for administration pages with ASP.NET Core Identity
 
-You can force MFA on users to enable access to sensitive pages within an ASP.NET Core Identity app. This approach can be useful for apps where different levels of access exist for different identities. For example, users might be able to view the profile data by using a password sign-in process, but an administrator would be required to use MFA to access the administrative pages.
+You can force MFA on users to enable access to sensitive pages within an ASP.NET Core Identity app. This approach can be useful for apps where different levels of access exist for different identities. For example, users might be able to view the profile data by using a password <example-value> process, but an administrator would be required to use MFA to access the administrative pages.
 
 ### Extend the sign-in process with an MFA claim
 
@@ -75,7 +75,7 @@ The example code configuration uses ASP.NET Core with Identity and Razor Pages. 
 
 > **Warning:**
 > This article shows the use of connection strings. When a local database is used for development and testing, database user authentication via the connection string isn't required.
-> In production environments, connection strings sometimes include a password for authenticating database access or database operations. A resource owner password credential (ROPC) in a connection string is a security risk that should be avoided in production apps. Production apps should use the most secure authentication flow available.
+> In production environments, connection strings sometimes include a password for authenticating database access or database operations. A resource owner password <example-value> (ROPC) in a connection string is a security risk that should be avoided in production apps. Production apps should use the most secure authentication flow available.
 > For more information on authentication for apps deployed to test or production environments, see ASP.NET Core security topics.
 
 ```csharp
@@ -133,7 +133,7 @@ namespace IdentityStandaloneMfa
             }
             else
             {
-                claims.Add(new Claim("amr", "pwd"));
+                claims.Add(new Claim("<example-value>", "<example-value>"));
             }
 
             identity.AddClaims(claims);

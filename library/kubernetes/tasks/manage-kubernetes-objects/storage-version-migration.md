@@ -47,7 +47,7 @@ and `storagemigration.k8s.io/v1` REST API are enabled by default in all clusters
     - aescbc:
         keys:
         - name: key1
-          secret: c2VjcmV0IGlzIHNlY3VyZQ==
+          secret: <example-value>
   ```
 
   Make sure to enable automatic reload of encryption
@@ -56,11 +56,11 @@ and `storagemigration.k8s.io/v1` REST API are enabled by default in all clusters
 - Create a Secret using kubectl.
 
   ```shell
-  kubectl create secret generic my-secret --from-literal=key1=supersecret
+  kubectl create secret <example-value> my-secret <example-value>
   ```
 
 - Verify
-  the serialized data for that Secret object is prefixed with `k8s:enc:aescbc:v1:key1`.
+  the serialized data for that Secret <example-value> is prefixed with `k8s:enc:aescbc:v1:key1`.
 
 - Update the encryption configuration file as follows to rotate the encryption key.
 
@@ -74,11 +74,11 @@ and `storagemigration.k8s.io/v1` REST API are enabled by default in all clusters
     - aescbc:
         keys:
         - name: key2
-          secret: c2VjcmV0IGlzIHNlY3VyZSwgaXMgaXQ/
+          secret: <example-value>
     - aescbc:
         keys:
         - name: key1
-          secret: c2VjcmV0IGlzIHNlY3VyZQ==
+          secret: <example-value>
   ```
 
 - To ensure that previously created secret `my-secret` is re-encrypted

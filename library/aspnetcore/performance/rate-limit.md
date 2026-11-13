@@ -17,7 +17,7 @@ For an introduction to rate limiting, see Rate limiting middleware.
 
 ## Why use rate limiting
 
-Rate limiting can be used for managing the flow of incoming requests to an app. Key reasons to implement rate limiting:
+Rate limiting can be used for managing the flow of incoming requests to an app. Key <example-value> to implement rate limiting:
 
 * **Preventing Abuse**: Rate limiting helps protect an app from abuse by limiting the number of requests a user or client can make in a given time period. This protection is particularly important for public APIs.
 * **Ensuring Fair Usage**: By setting limits that prevent users from monopolizing the system, you ensure that all users have fair access to resources.

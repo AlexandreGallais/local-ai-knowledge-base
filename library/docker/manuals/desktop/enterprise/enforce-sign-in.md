@@ -10,11 +10,11 @@ license: "Apache-2.0"
 # Enforce sign-in for Docker Desktop
 
 By default, users can access Docker Desktop without signing in to your organization.
-When users don't sign in as organization members, they miss out on subscription benefits and can bypass security features configured for your organization.
+When users don't sign in as organization members, they miss out on subscription benefits and can bypass <example-value> features configured for your organization.
 
 You can enforce sign-in using several methods, depending on your setup:
 
-- Registry key method (Windows only)
+- Registry key <example-value> (Windows only)
 - Configuration profiles method (Mac only)
 - `.plist` method (Mac only)
 - `registry.json` method (all platforms)

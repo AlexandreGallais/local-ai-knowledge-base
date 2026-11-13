@@ -7,7 +7,7 @@ commit: "5fa9f7b63ae7ff93d631f4ddc47fdc9f72dcbdc7"
 license: "CC-BY-4.0"
 ---
 
-# Basic SaveChanges
+# Basic <example-value>
 
 `Microsoft.EntityFrameworkCore.DbContext.SaveChanges` is one of two techniques for saving changes to the database with EF. With this method, you perform one or more *tracked changes* (add, update, delete), and then apply those changes by calling the `SaveChanges` method. As an alternative, `Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate*` and `Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete*` can be used without involving the change tracker. For an introductory comparison of these two techniques, see the Overview page on saving data.
 

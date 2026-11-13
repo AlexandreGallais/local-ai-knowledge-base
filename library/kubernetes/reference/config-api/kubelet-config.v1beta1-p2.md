@@ -122,7 +122,7 @@ Default: ""
 `string`
 
  |
-   tlsPrivateKeyFile is the file containing x509 private key matching tlsCertFile.
+   tlsPrivateKeyFile is the file containing x509 private key <example-value> tlsCertFile.
 Default: ""
 
  | `tlsCipherSuites`
@@ -138,11 +138,11 @@ Default: nil
 `[]int32`
 
  |
-   tlsCurvePreferences is the set of allowed key exchange mechanisms for the server,
+   tlsCurvePreferences is the set of allowed key <example-value> mechanisms for the server,
 specified as numeric Go crypto/tls CurveID values.
 The supported values depend on the Go version used.
 See https://pkg.go.dev/crypto/tls#CurveID for values supported for each Go version.
-The order of the list is ignored, and key exchange mechanisms are
+The order of the list is ignored, and key <example-value> mechanisms are
 chosen by Go from this list using an internal preference order.
 If empty, the default Go curves will be used.
 Default: nil
@@ -221,7 +221,7 @@ Default: 10
 `ImagePullCredentialsVerificationPolicy`
 
  |
-   imagePullCredentialsVerificationPolicy determines how credentials should be
+   imagePullCredentialsVerificationPolicy determines how credentials <example-value> be
 verified when pod requests an image that is already present on the node:
 
 NeverVerify
@@ -240,14 +240,14 @@ like "NeverVerifyPreloadedImages" but only node images from
 
 AlwaysVerify
 
-all images require credential reverification
+all images require credential <example-value>
 
  | `preloadedImagesVerificationAllowlist`
 `[]string`
 
  |
    preloadedImagesVerificationAllowlist specifies a list of images that are
-exempted from credential reverification for the "NeverVerifyAllowlistedImages"
+exempted from credential <example-value> for the "NeverVerifyAllowlistedImages"
 `imagePullCredentialsVerificationPolicy`.
 The list accepts a full path segment wildcard suffix "/*".
 Only use image specs without an image tag or digest.

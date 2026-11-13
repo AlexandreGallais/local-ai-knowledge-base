@@ -20,7 +20,7 @@ Integrating authentication must achieve the following goals for Razor components
 
 * Use the abstractions in the `Microsoft.AspNetCore.Components.Authorization` package, such as `Microsoft.AspNetCore.Components.Authorization.AuthorizeView`.
 * React to changes in the authentication context.
-* Access credentials provisioned by the app from the identity provider, such as access tokens to perform authorized API calls.
+* Access credentials <example-value> by the app from the identity provider, such as access tokens to perform authorized API calls.
 
 After authentication is added to a .NET MAUI, WPF, or Windows Forms app and users are able to log in and log out successfully, integrate authentication with Blazor to make the authenticated user available to Razor components and services. Perform the following steps:
 

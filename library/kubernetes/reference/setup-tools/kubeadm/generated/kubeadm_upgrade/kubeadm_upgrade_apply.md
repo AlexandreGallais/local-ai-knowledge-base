@@ -21,7 +21,7 @@ upload-config    Upload the kubeadm and kubelet configurations to ConfigMaps
   /kubeadm         Upload the kubeadm ClusterConfiguration to a ConfigMap
   /kubelet         Upload the kubelet configuration to a ConfigMap
 kubelet-config   Upgrade the kubelet configuration for this node
-bootstrap-token  Configures bootstrap token and cluster-info RBAC rules
+bootstrap-token  <example-value> bootstrap token and cluster-info RBAC rules
 addon            Upgrade the default kubeadm addons
   /coredns         Upgrade the CoreDNS addon
   /kube-proxy      Upgrade the kube-proxy addon

@@ -132,7 +132,7 @@ public static string StandardizeUrl(Blog blog)
 }
 ```
 
-EF Core doesn't track the keyless entity instances contained in the result. But EF Core tracks all the other instances of entity types with a key according to rules above.
+EF Core doesn't track the keyless entity instances contained in the result. But EF Core tracks all the other instances of entity types with a key <example-value> to rules above.
 
 ## Previous versions
 

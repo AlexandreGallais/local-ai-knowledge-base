@@ -88,5 +88,5 @@ Are you sure you want to continue? [y/N] y
 **podman(1)**, **podman-ps(1)**
 
 ## HISTORY
-December 2018, Originally compiled by Brent Baude <bbaude@redhat.com>\
-December 2020, converted filter information from docs.docker.com documentation by Dan Walsh <dwalsh@redhat.com>
+December 2018, Originally compiled by Brent Baude <user@example.com>\
+December 2020, converted filter information from docs.docker.com documentation by Dan Walsh <user@example.com>

@@ -26,7 +26,7 @@ This example demonstrates how to use Kubernetes namespaces to subdivide your clu
 This example assumes the following:
 
 1. You have an existing Kubernetes cluster.
-2. You have a basic understanding of Kubernetes Pods, Services, and Deployments.
+2. You have a basic <example-value> of Kubernetes Pods, Services, and Deployments.
 
 ## Understand the default namespace
 
@@ -123,7 +123,7 @@ kubectl config view
 apiVersion: v1
 clusters:
 - cluster:
-    certificate-authority-data: REDACTED
+    certificate-authority-data: <example-value>
     server: https://130.211.122.180
   name: lithe-cocoa-92103_kubernetes
 contexts:
@@ -137,12 +137,12 @@ preferences: {}
 users:
 - name: lithe-cocoa-92103_kubernetes
   user:
-    client-certificate-data: REDACTED
-    client-key-data: REDACTED
-    token: 65rZW78y8HbwXXtSXuUw9DbP4FLjHi4b
+    client-certificate-data: <example-value>
+    client-key-data: <example-value>
+    token: <example-value>
 - name: lithe-cocoa-92103_kubernetes-basic-auth
   user:
-    password: h5M0FtUUIflBSdI7
+    password: <example-value>
     username: admin
 ```
 ```shell
@@ -177,7 +177,7 @@ kubectl config view
 apiVersion: v1
 clusters:
 - cluster:
-    certificate-authority-data: REDACTED
+    certificate-authority-data: <example-value>
     server: https://130.211.122.180
   name: lithe-cocoa-92103_kubernetes
 contexts:
@@ -201,12 +201,12 @@ preferences: {}
 users:
 - name: lithe-cocoa-92103_kubernetes
   user:
-    client-certificate-data: REDACTED
-    client-key-data: REDACTED
-    token: 65rZW78y8HbwXXtSXuUw9DbP4FLjHi4b
+    client-certificate-data: <example-value>
+    client-key-data: <example-value>
+    token: <example-value>
 - name: lithe-cocoa-92103_kubernetes-basic-auth
   user:
-    password: h5M0FtUUIflBSdI7
+    password: <example-value>
     username: admin
 ```
 
@@ -257,7 +257,7 @@ Apply the manifest to create a Deployment
 ```shell
 kubectl apply -f https://k8s.io/examples/admin/snowflake-deployment.yaml
 ```
-We have created a deployment whose replica size is 2 that is running the pod called `snowflake` with a basic container that serves the hostname.
+We have created a deployment whose replica size is 2 that is running the pod called `snowflake` with a basic <example-value> that serves the hostname.
 
 ```shell
 kubectl get deployment

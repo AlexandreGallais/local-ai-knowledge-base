@@ -199,7 +199,7 @@ Subjects can be groups, users or
 ServiceAccounts.
 
 Kubernetes represents usernames as strings.
-These can be: plain names, such as "alice"; email-style names, like "bob@example.com";
+These can be: plain names, such as "alice"; email-style names, like "user@example.com";
 or numeric user IDs represented as a string. It is up to you as a cluster administrator
 to configure the authentication modules
 so that authentication produces usernames in the format you want.
@@ -227,12 +227,12 @@ with `system:serviceaccount:`, and belong to groups that have names prefixed wit
 The following examples are `RoleBinding` excerpts that only
 show the `subjects` section.
 
-For a user named `alice@example.com`:
+For a user named `user@example.com`:
 
 ```yaml
 subjects:
 - kind: User
-  name: "alice@example.com"
+  name: "user@example.com"
   apiGroup: rbac.authorization.k8s.io
 ```
 

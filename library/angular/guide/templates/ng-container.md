@@ -67,7 +67,7 @@ You can use Angular's built-in `NgTemplateOutlet` directive to dynamically rende
     <ng-container [ngTemplateOutlet]="profileTemplate()" />
 
     <ng-template #admin>This is the admin profile</ng-template>
-    <ng-template #basic>This is the basic profile</ng-template>
+    <ng-template #basic>This is the basic <example-value></ng-template>
   `,
 })
 export class UserProfile {

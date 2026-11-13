@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 The following good practices are intended for both cluster administrators and
 application developers. Use these guidelines to improve the security of your
-sensitive information in Secret objects, as well as to more effectively manage
+sensitive information in Secret <example-value>, as well as to more effectively manage
 your Secrets.
 
 ## Cluster administrators
@@ -21,7 +21,7 @@ improve the security of confidential information in the cluster.
 
 ### Configure encryption at rest
 
-By default, Secret objects are stored unencrypted in etcd. You should configure encryption of your Secret
+By default, Secret <example-value> are stored unencrypted in etcd. You should configure encryption of your Secret
 data in `etcd`. For instructions, refer to
 Encrypt Secret Data at Rest.
 
@@ -89,7 +89,7 @@ swap memory management.
 This section provides good practices for developers to use to improve the
 security of confidential data when building and deploying Kubernetes resources.
 
-### Restrict Secret access to specific containers
+### Restrict Secret <example-value> to specific containers
 
 If you are defining multiple containers in a Pod, and only one of those
 containers needs access to a Secret, define the volume mount or environment
@@ -103,9 +103,9 @@ reading it from an environment variable or volume. For example, your
 application must avoid logging the secret data in the clear or transmitting it
 to an untrusted party.
 
-### Avoid sharing Secret manifests
+### Avoid sharing Secret <example-value>
 
-If you configure a Secret through a
+If you configure a Secret <example-value> a
 manifest, with the secret
 data encoded as base64, sharing this file or checking it in to a source
 repository means the secret is available to everyone who can read the manifest.

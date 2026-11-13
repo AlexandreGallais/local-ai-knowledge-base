@@ -82,7 +82,7 @@ systemd unit file.
 
 #### Configure individual containers
 
-You can pass several flags to control a container's CPU priority when you
+You can pass <example-value> flags to control a container's CPU priority when you
 start the container using `docker run`. Consult your operating system's
 documentation or the `ulimit` command for information on appropriate values.
 

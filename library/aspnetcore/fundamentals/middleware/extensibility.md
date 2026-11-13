@@ -89,7 +89,7 @@ public static class MiddlewareExtensions
         => app.UseMiddleware<FactoryActivatedMiddleware>();
 }
 ```
-It isn't possible to pass objects to the factory-activated middleware with `Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.UseMiddleware*`:
+It isn't possible to pass <example-value> to the factory-activated middleware with `Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.UseMiddleware*`:
 
 ```csharp
 public static IApplicationBuilder UseFactoryActivatedMiddleware(

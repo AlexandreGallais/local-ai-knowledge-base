@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Custom configuration provider
 
-The sample app demonstrates how to create a basic configuration provider that reads configuration key-value pairs from a database using Entity Framework (EF).
+The sample app demonstrates how to create a basic <example-value> provider that reads configuration key-value pairs from a database using Entity Framework (EF).
 
 The provider has the following characteristics:
 

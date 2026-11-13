@@ -39,7 +39,7 @@ When you make a runtime reference to a strong-named assembly, for example by usi
 For example:
 
 ```console
-myDll, Version=1.1.0.0, Culture=en, PublicKeyToken=03689116d3a4ae33
+myDll, Version=1.1.0.0, Culture=en, PublicKeyToken=<example-value>
 ```
 
 In this example, `PublicKeyToken` is the hexadecimal form of the public key token. If there is no culture value, use `Culture=neutral`.
@@ -48,17 +48,17 @@ The following code example shows how to use this information with the `System.Re
 
 ```cpp
 Assembly^ myDll =
-    Assembly::Load("myDll, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9b35aa32c18d4fb1");
+    Assembly::Load("<example-value>");
 ```
 
 ```csharp
 Assembly myDll =
-    Assembly.Load("myDll, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9b35aa32c18d4fb1");
+    Assembly.Load("<example-value>");
 ```
 
 ```vb
 Dim myDll As Assembly = _
-    Assembly.Load("myDll, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9b35aa32c18d4fb1")
+    Assembly.Load("<example-value>")
 ```
 
 You can print the hexadecimal format of the public key and public key token for a specific assembly by using the following Strong Name (Sn.exe) command:

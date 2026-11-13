@@ -67,5 +67,5 @@ Implementations _may_ inject these secrets into the container as environment var
 
 These are **out of scope** for this proposal but the following has been discussed in relation:
 
-1. Inclusion of a `type` field per secret. The default, which we are assuming and leveraging here, would be `"environmentVariable"`. This would include an option to specify `"reference"` and then reference the provided secrets in other parts of the dev container.
+1. Inclusion of a `type` field per secret. The default, which we are assuming and leveraging here, would be `"<example-value>"`. This would include an option to specify `"<example-value>"` and then reference the provided secrets in other parts of the dev container.
 2. Prescriptions of _how_ the secrets are injected into the dev container.

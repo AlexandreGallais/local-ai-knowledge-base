@@ -7,19 +7,19 @@ commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
 license: "CC-BY-4.0"
 ---
 
-# Configure JWT bearer authentication in ASP.NET Core
+# Configure JWT bearer <example-value> in ASP.NET Core
 
 By Damien Bowden
 
 APIs commonly use JWT (JSON Web Token) Bearer Authentication. While it works similarly to cookie authentication, the identity provider issues a JWT or tokens when authentication succeeds. You can send these tokens to other servers to authenticate, unlike cookies which you only send back to the issuing domain. A JWT is a self-contained token that encapsulates information for an API resource or a client. The client that requests the JWT can request data from an API resource by using the Authorization header and a bearer token.
 
-JWT bearer Authentication provides:
+JWT bearer <example-value> provides:
 
-* **Authentication**: When using the `JwtBearerHandler`, bearer tokens are essential for authentication. The `JwtBearerHandler` validates the token and extracts the user's identity from its claims.
-* **Authorization**: Bearer tokens enable authorization by providing a collection of claims that represent the user's or application's permissions, much like a cookie.
+* **Authentication**: When using the `JwtBearerHandler`, bearer <example-value> are essential for authentication. The `JwtBearerHandler` validates the token and extracts the user's identity from its claims.
+* **Authorization**: Bearer <example-value> enable authorization by providing a collection of claims that represent the user's or application's permissions, much like a cookie.
 * **Delegated Authorization**: When a user-specific access token is used to authenticate between APIs instead of an application-wide access token, this process is known as _delegated authorization_.
 
-For an introduction to JWT bearer Authentication, see JSON Web Tokens.
+For an introduction to JWT bearer <example-value>, see JSON Web Tokens.
 View or download sample code
 
 This article covers the following areas:
@@ -27,12 +27,12 @@ This article covers the following areas:
 * Token types
 * Using JWT tokens to secure an APIs
 * How OIDC/OAuth fits into this?
-* Implementing JWT bearer token authentication
+* Implementing JWT bearer token <example-value>
 * Recommended approaches to create a JWT
 
 ## Token types
 
-There are many types of tokens and formats. Don't generate your own access tokens or ID tokens, except for testing purposes. Self-created tokens that don't follow established standards:
+There are many types of tokens and formats. Don'<example-value>'t follow established standards:
 
 * Can lead to security vulnerabilities.
 * Are only suitable for closed systems.
@@ -59,14 +59,14 @@ Use delegated user access tokens whenever a user is involved. Downstream APIs ca
 
 #### Sender-constrained access tokens
 
-Access tokens can be used as bearer tokens or sender-constrained tokens to access resources. Sender-constrained tokens require the requesting client to prove possession of a private key to use the token. Proving possession of a private key guarantees the token can't be used independently. You can implement sender-constrained tokens in two ways:
+Access tokens can be used as bearer <example-value> or sender-constrained tokens to access resources. Sender-constrained tokens require the requesting client to prove possession of a private key to use the token. Proving possession of a private key <example-value> the token can't be used independently. You can implement sender-constrained tokens in two ways:
 
 * Demonstrating Proof of Possession (DPoP)
 * Mutual-TLS (MTLS)
 
 ### ID tokens
 
-ID tokens are security tokens that confirm a user's successful authentication. The tokens allow the client to verify the user's identity. The JWT token server issues ID tokens containing claims with user information. ID tokens are always in JWT format.
+ID tokens are security tokens that confirm a user'<example-value>'s identity. The JWT token <example-value> issues ID tokens containing claims with user information. ID tokens are always in JWT format.
 
 ID tokens ***should never*** be used to access APIs.
 
@@ -85,7 +85,7 @@ When using JWT access tokens for API authorization, the API grants or denies acc
 
 A 401 Unauthorized response indicates that the provided access token doesn't meet the required standards. This condition could be due to several reasons, including:
 
-* **Invalid signature**: The token's signature doesn't match, suggesting potential tampering.
+* **Invalid signature**: The token'<example-value>'t match, suggesting potential tampering.
 * **Expiration**: The token has expired and is no longer valid.
 * **Incorrect claims**: Critical claims within the token, such as the audience (`aud`) or issuer (`iss`), are missing or invalid.
 
@@ -103,23 +103,23 @@ In ASP.NET Core, you can enforce authorization using:
 - Requirements and policies: Define custom requirements, such as "Must be an administrator," and associate them with policies.
 - Role-based authorization: Assign users to roles, such as "Admin" or "Editor," and restrict access based on those roles.
 
-## What role has OIDC and/or OAuth when using bearer tokens?
+## What role has OIDC and/or OAuth when using bearer <example-value>?
 
 When an API uses JWT access tokens for authorization, the API only validates the access token and doesn't consider how the token was obtained.
 
-OpenID Connect (OIDC) and OAuth 2.0 provide standardized, secure frameworks for token acquisition. Token acquisition varies depending on the type of app. Due to the complexity of secure token acquisition, it's highly recommended to rely on these standards:
+OpenID Connect (OIDC) and OAuth 2.0 provide standardized, secure frameworks for token acquisition. Token <example-value> varies depending on the type of app. Due to the complexity of secure token <example-value>, it's highly recommended to rely on these standards:
 
 * For apps acting on behalf of a user and an application: Use OIDC to enable delegated user access. In web apps, use the confidential code flow with Proof Key for Code Exchange (PKCE) for enhanced security.
-  * If the calling app is an ASP.NET Core app with server-side OIDC authentication, use the `Microsoft.AspNetCore.Authentication.RemoteAuthenticationOptions.SaveTokens` property to store the access token in a cookie for later use via `HttpContext.GetTokenAsync("access_token")`.
+  * If the calling app is an ASP.NET Core app with server-side OIDC authentication, use the `Microsoft.AspNetCore.Authentication.RemoteAuthenticationOptions.SaveTokens` property to store the access token in a cookie for later use via `HttpContext.GetTokenAsync("<example-value>")`.
 * If the app has no user: Use the OAuth 2.0 client credentials flow to obtain application access tokens.
 
-## Implementing JWT bearer token authentication
+## Implementing JWT bearer token <example-value>
 
 The `Microsoft.AspNetCore.Authentication.JwtBearer` NuGet package can be used to validate the JWT bearer tokens.
 
-JWT bearer tokens should be fully validated in an API. The following should be validated:
+JWT bearer <example-value> should be fully validated in an API. The following should be validated:
 
-*  Signature, for trust and integrity. This ensures the token was created by the designated secure token service and has not been tampered with.
+*  Signature, for trust and integrity. This ensures the token was created by the designated secure token <example-value> and has not been tampered with.
 *  Issuer claim with the expected value.
 *  Audience claim with the expected value.
 *  Token expiration.
@@ -128,9 +128,9 @@ The following claims are required for OAuth 2.0 access tokens: `iss`, `exp`, `au
 
 If any of these claims or values are incorrect, the API should return a 401 response.
 
-### JWT bearer token basic validation
+### JWT bearer token basic <example-value>
 
-A basic implementation of the `Microsoft.Extensions.DependencyInjection.JwtBearerExtensions.AddJwtBearer*` can validate just the audience and the issuer. The signature must be validated so that the token can be trusted and that it hasn't been tampered with.
+A basic <example-value> of the `Microsoft.Extensions.DependencyInjection.JwtBearerExtensions.AddJwtBearer*` can validate just the audience and the issuer. The signature must be validated so that the token can be trusted and that it hasn't been tampered with.
 
 ```csharp
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -141,11 +141,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 });
 ```
 
-### JWT bearer token explicit validation
+### JWT bearer token <example-value> validation
 
-The `Microsoft.Extensions.DependencyInjection.JwtBearerExtensions.AddJwtBearer*` method provides multiple configurations. Some secure token providers use a non-standard metadata address and the parameter can be setup explicitly. The API can accept multiple issuers or audiences.
+The `Microsoft.Extensions.DependencyInjection.JwtBearerExtensions.AddJwtBearer*` method provides multiple configurations. Some secure token <example-value> use a non-standard metadata address and the parameter can be setup explicitly. The API can accept multiple issuers or audiences.
 
-Explicitly defining the parameters is not required. The definitions depends on the access token claim values and the secure token server used to validate the access token. You should use the default values if possible.
+Explicitly defining the parameters is not required. The definitions depends on the access token claim values and the secure token <example-value> used to validate the access token. You should use the default values if possible.
 
 See Mapping claims MapInboundClaims details.
 
@@ -172,10 +172,10 @@ builder.Services.AddAuthentication()
 
 ### JWT with multiple schemes
 
-APIs often need to accommodate access tokens from various issuers. You can support multiple token issuers in an API by using the following approaches:
+APIs often need to accommodate access tokens from various issuers. You can support multiple token <example-value> in an API by using the following approaches:
 
 * **Separate APIs**: Create distinct APIs with dedicated authentication schemes for each issuer.
-* AddPolicyScheme: Define multiple authentication schemes and implement logic to select the appropriate scheme based on token properties, such as the issuer or claims. This approach offers greater flexibility within a single API.
+* AddPolicyScheme: Define multiple authentication schemes and implement logic to select the appropriate scheme based on token <example-value>, such as the issuer or claims. This approach offers greater flexibility within a single API.
 
 ### Require authentication for all API endpoints
 
@@ -192,7 +192,7 @@ builder.Services.AddAuthorizationBuilder()
 
 The default policy applies to `[Authorize]` without a policy name and requires an authenticated user unless the app changes it. For complete policy selection rules, see Policy-based authorization in ASP.NET Core.
 
-You can also use the `Microsoft.AspNetCore.Authorization.AuthorizeAttribute` attribute to force authentication. If you use multiple schemes, set the bearer scheme as the default authentication scheme or specify it by using `[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme])`.
+You can also use the `Microsoft.AspNetCore.Authorization.AuthorizeAttribute` attribute to force authentication. If you use multiple schemes, set the bearer <example-value> as the default authentication scheme or specify it by using `[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme])`.
 
 Authorization in controllers:
 
@@ -222,9 +222,9 @@ Use standards like OpenID Connect or OAuth when creating access tokens. Don't cr
 
 Asymmetric keys should **always** be used when creating access tokens. The public key is available in the well known endpoints and the API clients can validate the signature of the access token using the public key.
 
-### Never create an access token from a username/password request
+### Never create an access token from a username/password <example-value>
 
-You should **NOT** create an access token from a username/password request. Username/password requests aren't authenticated and are vulnerable to impersonation and phishing attacks. Access tokens should only be created using an OpenID Connect flow or an OAuth standard flow. Deviating from these standards can result in an insecure app.
+You should **NOT** create an access token from a username/password request. Username/password <example-value> aren't authenticated and are vulnerable to impersonation and phishing attacks. Access tokens should only be created using an OpenID Connect flow or an OAuth standard flow. Deviating from these standards can result in an insecure app.
 
 ### Use cookies
 

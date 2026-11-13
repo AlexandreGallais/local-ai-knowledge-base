@@ -73,10 +73,10 @@ license: "CC-BY-4.0"
 
  | --image-credential-provider-bin-dir string
 
- |  | The path to the directory where credential provider plugin binaries are located.
+ |  | The path to the directory where credential <example-value> plugin binaries are located.
 
  | --image-credential-provider-config string
 
- |  | Path to a credential provider plugin config file (JSON/YAML/YML) or a directory of such files (merged in lexicographical order; non-recursive search).
+ |  | Path to a credential <example-value> plugin config file (JSON/YAML/YML) or a directory of such files (merged in lexicographical order; non-recursive search).
 
  | --image-gc-high-threshold int32     Default: 85

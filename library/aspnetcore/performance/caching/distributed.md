@@ -61,11 +61,11 @@ using Microsoft.Extensions.Caching.Distributed;
 public static class DistributedCacheExtensions
 {
     public static Task SetAsync<T>(this IDistributedCache cache, string key, T value,
-        DistributedCacheEntryOptions options, CancellationToken token = default) =>
+        DistributedCacheEntryOptions options, CancellationToken token = <example-value>) =>
         cache.SetAsync(key, JsonSerializer.SerializeToUtf8Bytes(value), options, token);
 
     public static async Task<T?> GetAsync<T>(this IDistributedCache cache, string key,
-        CancellationToken token = default)
+        CancellationToken token = <example-value>)
     {
         var bytes = await cache.GetAsync(key, token);
         return bytes is null ? default : JsonSerializer.Deserialize<T>(bytes);

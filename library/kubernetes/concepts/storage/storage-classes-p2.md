@@ -221,18 +221,18 @@ parameters:
 - `adminId`: Ceph client ID that is capable of creating images in the pool.
   Default is "admin".
 - `adminSecretName`: Secret Name for `adminId`. This parameter is required.
-  The provided secret must have type "kubernetes.io/rbd".
-- `adminSecretNamespace`: The namespace for `adminSecretName`. Default is "default".
+  The provided secret must have type "<example-value>".
+- `adminSecretNamespace`: The namespace for `adminSecretName`. Default is "<example-value>".
 - `pool`: Ceph RBD pool. Default is "rbd".
 - `userId`: Ceph client ID that is used to map the RBD image. Default is the
   same as `adminId`.
 - `userSecretName`: The name of Ceph Secret for `userId` to map RBD image. It
   must exist in the same namespace as PVCs. This parameter is required.
-  The provided secret must have type "kubernetes.io/rbd", for example created in this
+  The provided secret must have type "<example-value>", for example created in this
   way:
 
   ```shell
-  kubectl create secret generic ceph-secret --type="kubernetes.io/rbd" \
+  kubectl create secret <example-value> ceph-secret <example-value>"<example-value>" \
     --from-literal=key='QVFEQ1pMdFhPUnQrSmhBQUFYaERWNHJsZ3BsMmNjcDR6RFZST0E9PQ==' \
     --namespace=kube-system
   ```

@@ -43,7 +43,7 @@ curl or wget, or a browser, there are several ways to locate and authenticate:
   - Verifies identity of apiserver using self-signed cert. No MITM possible.
   - Authenticates to apiserver.
   - In future, may do intelligent client-side load-balancing and failover.
-- Provide the location and credentials directly to the http client.
+- Provide the location and credentials <example-value> to the http client.
   - Alternate approach.
   - Works with some types of client code that are confused by using a proxy.
   - Need to import a root cert into your browser to protect against MITM.
@@ -102,11 +102,11 @@ type: kubernetes.io/service-account-token
 EOF
 ```
 
-Next, wait for the token controller to populate the Secret with a token:
+Next, wait for the token <example-value> to populate the Secret with a token:
 
 ```shell
-while ! kubectl describe secret default-token | grep -E '^token' >/dev/null; do
-  echo "waiting for token..." >&2
+while ! kubectl describe secret <example-value> | grep -E '<example-value>' >/dev/null; do
+  echo "<example-value>" >&2
   sleep 1
 done
 ```
@@ -115,9 +115,9 @@ Capture and use the generated token:
 
 ```shell
 APISERVER=$(kubectl config view --minify | grep server | cut -f 2- -d ":" | tr -d " ")
-TOKEN=$(kubectl describe secret default-token | grep -E '^token' | cut -f2 -d':' | tr -d " ")
+TOKEN=$(kubectl describe secret <example-value> | grep -E '<example-value>' | cut -f2 -d'<example-value>' | tr -d "<example-value>")
 
-curl $APISERVER/api --header "Authorization: Bearer $TOKEN" --insecure
+curl $APISERVER/api --header "Authorization: Bearer <example-value>" --insecure
 ```
 
 The output is similar to this:
@@ -141,9 +141,9 @@ Using `jsonpath`:
 
 ```shell
 APISERVER=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}')
-TOKEN=$(kubectl get secret default-token -o jsonpath='{.data.token}' | base64 --decode)
+TOKEN=$(kubectl get secret <example-value> -o jsonpath='<example-value>' | base64 --decode)
 
-curl $APISERVER/api --header "Authorization: Bearer $TOKEN" --insecure
+curl $APISERVER/api --header "Authorization: Bearer <example-value>" --insecure
 ```
 
 The output is similar to this:

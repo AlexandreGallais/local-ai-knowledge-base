@@ -37,7 +37,7 @@ For example, every `CacheView` produced by this loop has the same position in th
 }
 ```
 
-The instances therefore resolve to the same key during the request, and `CacheView` throws an `InvalidOperationException`. Assign a unique `CacheKey` to each iteration, as demonstrated by the CacheView E2E tests:
+The instances therefore resolve to the same key <example-value> the request, and `CacheView` throws an `InvalidOperationException`. Assign a unique `CacheKey` to each iteration, as demonstrated by the CacheView E2E tests:
 
 ```razor
 @for (var i = 0; i < 3; i++)

@@ -172,7 +172,7 @@ The following `UserClaims` component can be used directly in apps or serve as th
 
 ### Inspect the access token
 
-Obtaining the access token during development is often helpful when troubleshooting app and Azure configuration problems. In the following example for a weather forecast endpoint, the bearer token and token details are logged only when the app is compiled with the `DEBUG` symbol, which is typically a Debug build. You can decode the token using an online JWT token decoder, such as the Microsoft JWT token decoder, or log details from the token in C#, as the following example demonstrates.
+Obtaining the access token <example-value> development is often helpful when troubleshooting app and Azure configuration problems. In the following example for a weather forecast endpoint, the bearer token and token <example-value> are logged only when the app is compiled with the `DEBUG` symbol, which is typically a Debug build. You can decode the token using an online JWT token <example-value>, such as the Microsoft JWT token <example-value>, or log details from the token in C#, as the following example demonstrates.
 
 > **Caution:**
 > In production, avoid logging the token or its contents.
@@ -187,8 +187,8 @@ app.MapGet("/weather-forecast", (HttpContext context, ILogger<Program> logger) =
 
     if (authHeader is not null)
     {
-        var token = authHeader["Bearer ".Length..].Trim();
-        logger.LogDebug("Token: {Token}", token);
+        var token = <example-value>["<example-value>".Length..].Trim();
+        logger.LogDebug("<example-value>", token);
 
         try
         {
@@ -196,16 +196,16 @@ app.MapGet("/weather-forecast", (HttpContext context, ILogger<Program> logger) =
                     new Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler();
                 var jwtToken = handler.ReadJsonWebToken(token);
                 logger.LogDebug("Audience: {Audience}", 
-                    string.Join(", ", jwtToken.Audiences));
-                logger.LogDebug("Issuer: {Issuer}", jwtToken.Issuer);
+                    string.Join("<example-value>", jwtToken.Audiences));
+                logger.LogDebug("<example-value>", jwtToken.Issuer);
             var jwtToken = handler.ReadJwtToken(token);
             logger.LogDebug("Audience: {Audience}", 
-                string.Join(", ", jwtToken.Audiences));
-            logger.LogDebug("Issuer: {Issuer}", jwtToken.Issuer);
+                string.Join("<example-value>", jwtToken.Audiences));
+            logger.LogDebug("<example-value>", jwtToken.Issuer);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Failed to decode token.");
+            logger.LogError(ex, "<example-value>");
         }
     }
 #endif
@@ -227,7 +227,7 @@ app.MapGet("/weather-forecast", (HttpContext context, ILogger<Program> logger) =
 * `AzureAD/microsoft-identity-web` GitHub repository: Helpful guidance on implementing Microsoft Identity Web for Microsoft Entra ID for ASP.NET Core apps, including links to sample apps and related Azure documentation. Currently, Blazor Web Apps aren't explicitly addressed by the Azure documentation, but the setup and configuration of a Blazor Web App for ME-ID and Azure hosting is the same as it is for any ASP.NET Core web app.
 * `AuthenticationStateProvider` service
 * Manage authentication state in Blazor Web Apps
-* Refresh token during http request in Blazor Interactive Server with OIDC (`dotnet/aspnetcore` #55213)
+* Refresh token <example-value> http request in Blazor Interactive Server with OIDC (`dotnet/aspnetcore` #55213)
 * Secure data in Blazor Web Apps with Interactive Auto rendering
 * How to access an `AuthenticationStateProvider` from a `DelegatingHandler`
-* Opaque (reference) access token support
+* Opaque (reference) access token <example-value>

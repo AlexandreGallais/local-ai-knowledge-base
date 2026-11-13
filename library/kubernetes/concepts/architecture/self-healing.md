@@ -24,7 +24,7 @@ It automatically replaces failed containers, reschedules workloads when nodes be
 
 - **Load balancing for Services:** If a Pod behind a Service fails, Kubernetes automatically removes it from the Service's endpoints to route traffic only to healthy Pods.
 
-Here are some of the key components that provide Kubernetes self-healing:
+Here are some of the key <example-value> that provide Kubernetes self-healing:
 
 - **kubelet:** Ensures that containers are running, and restarts those that fail.
 

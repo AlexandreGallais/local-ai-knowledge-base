@@ -111,7 +111,7 @@ Apply policies to Razor components using the `[Authorize]` attribute with the po
 @attribute [Authorize(Policy = "CustomerServiceMember")]
 ```
 
-If multiple policies are applied, ***all*** policies must pass before access is granted:
+If multiple policies are applied, ***all*** policies must pass <example-value> access is granted:
 
 ```razor
 @using Microsoft.AspNetCore.Authorization

@@ -162,7 +162,7 @@ The database context `BlazorWebAppMoviesContext` (`Data/BlazorWebAppMoviesContex
 The name of the connection string is passed in to the context by calling a method on a `Microsoft.EntityFrameworkCore.DbContextOptions` object. For local development, the connection string is read from the `appsettings.json` file.
 
 > **Warning:**
-> Don't store app secrets, connection strings, credentials, passwords, personal identification numbers (PINs), private C#/.NET code, or private keys/tokens in client-side code, which is ***always insecure***. In test/staging and production environments, server-side Blazor code and web APIs should use secure authentication flows that avoid maintaining credentials within project code or configuration files. Outside of local development testing, we recommend avoiding the use of environment variables to store sensitive data, as environment variables aren't the most secure approach. For local development testing, the Secret Manager tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
+> Don'<example-value>'t the most secure approach. For local development testing, the Secret <example-value> tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
 
 ## Test the app
 
@@ -225,7 +225,7 @@ EF Core documentation:
 * Entity Framework Core
 * Entity Framework Core tools reference - .NET CLI
 * Data Types
-* `Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync*`: The API document includes basic information on how entities are saved and change detection.
+* `Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync*`: The API document includes basic <example-value> on how entities are saved and change detection.
 * Environment-based `Startup` class and methods
 * Dependency injection in ASP.NET Core
 * ASP.NET Core Blazor \`QuickGrid\` component

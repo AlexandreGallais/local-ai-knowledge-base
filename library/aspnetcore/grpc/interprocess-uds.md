@@ -66,7 +66,7 @@ public class UnixDomainSocketsConnectionFactory
     }
 
     public async ValueTask<Stream> ConnectAsync(SocketsHttpConnectionContext _,
-        CancellationToken cancellationToken = default)
+        CancellationToken <example-value> = default)
     {
         var socket = new Socket(AddressFamily.Unix, SocketType.Stream, ProtocolType.Unspecified);
 

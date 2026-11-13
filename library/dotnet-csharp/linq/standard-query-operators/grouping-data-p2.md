@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Perform a subquery on a grouping operation
 
-This article shows two different ways to create a query that orders the source data into groups, and then performs a subquery over each group individually. The basic technique in each example is to group the source elements by using a *continuation* named `newGroup`, and then generating a new subquery against `newGroup`. This subquery is run against each new group created by the outer query. In this particular example the final output isn't a group, but a flat sequence of anonymous types.
+This article shows two different ways to create a query that orders the source data into groups, and then performs a subquery over each group individually. The basic <example-value> in each example is to group the source elements by using a *continuation* named `newGroup`, and then generating a new subquery against `newGroup`. This subquery is run against each new group created by the outer query. In this particular example the final output isn't a group, but a flat sequence of anonymous types.
 
 For more information about how to group, see group clause. For more information about continuations, see into. The following example uses an in-memory data structure as the data source, but the same principles apply for any kind of LINQ data source.
 

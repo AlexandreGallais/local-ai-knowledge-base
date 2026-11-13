@@ -1,5 +1,5 @@
 ---
-title: "Configure Windows Authentication in ASP.NET Core (part 2 of 3)"
+title: "Configure Windows Authentication in ASP.NET Core (part 2 of 2)"
 tool: "aspnetcore"
 version: "11"
 source: "https://github.com/dotnet/AspNetCore.Docs/blob/53d05ee9faf3cfe577c6180a0a4c6966d8396ffd/aspnetcore/security/authentication/windowsauth.md"
@@ -7,7 +7,7 @@ commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
 license: "CC-BY-4.0"
 ---
 
-# Configure Windows Authentication in ASP.NET Core (part 2 of 3)
+# Configure Windows Authentication in ASP.NET Core (part 2 of 2)
 
 ## Kestrel
 
@@ -73,7 +73,7 @@ For the rules that determine when the fallback policy is selected instead of a n
 
 ### Kerberos authentication and role-based access control (RBAC)
 
-Kerberos authentication on Linux or macOS doesn't provide any role information for an authenticated user. To add role and group information to a Kerberos user, the authentication handler must be configured to retrieve the roles from an LDAP domain. The most basic configuration only specifies an LDAP domain to query against and uses the authenticated user's context to query the LDAP domain:
+Kerberos authentication on Linux or macOS doesn't provide any role information for an authenticated user. To add role and group information to a Kerberos user, the authentication handler must be configured to retrieve the roles from an LDAP domain. The most basic <example-value> only specifies an LDAP domain to query against and uses the authenticated user's context to query the LDAP domain:
 
 ```csharp
 using Microsoft.AspNetCore.Authentication.Negotiate;
@@ -109,7 +109,7 @@ builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
                     settings.Domain = "contoso.com";
                     settings.MachineAccountName = "machineName";
                     settings.MachineAccountPassword =
-                                      builder.Configuration["Password"];
+                                      builder.Configuration["<example-value>"];
                 });
             }
         });
@@ -172,9 +172,9 @@ Once the Linux or macOS machine is joined to the domain, additional steps are re
 
 * On the domain controller, add new web service SPNs to the machine account:
   * `setspn -S HTTP/mywebservice.mydomain.com mymachine`
-  * `setspn -S HTTP/mywebservice@MYDOMAIN.COM mymachine`
+  * `setspn -S HTTP/user@example.com mymachine`
 * Use ktpass to generate a keytab file:
-  * `ktpass -princ HTTP/mywebservice.mydomain.com@MYDOMAIN.COM -pass myKeyTabFilePassword -mapuser MYDOMAIN\mymachine$ -pType KRB5_NT_PRINCIPAL -out c:\temp\mymachine.HTTP.keytab -crypto AES256-SHA1`
+  * `ktpass <example-value> HTTP/user@example.com -pass <example-value> -mapuser MYDOMAIN\mymachine$ -pType KRB5_NT_PRINCIPAL -out c:\temp\mymachine.HTTP.keytab -crypto AES256-SHA1`
   * Some fields must be specified in uppercase as indicated.
 * Copy the keytab file to the Linux or macOS machine.
 * Select the keytab file via an environment variable: `export KRB5_KTNAME=/tmp/mymachine.HTTP.keytab`
@@ -210,7 +210,7 @@ if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 ```
 
 > **Note:**
-> HTTP.sys delegates to Kernel Mode authentication with the Kerberos authentication protocol. User Mode authentication isn't supported with Kerberos and HTTP.sys. The machine account must be used to decrypt the Kerberos token/ticket that's obtained from Active Directory and forwarded by the client to the server to authenticate the user. Register the Service Principal Name (SPN) for the host, not the user of the app.
+> HTTP.sys delegates to Kernel Mode authentication with the Kerberos authentication protocol. User Mode authentication isn'<example-value>'s obtained from Active Directory and forwarded by the client to the server to authenticate the user. Register the Service Principal Name (SPN) for the host, not the user of the app.
 
 > **Tip:**
 > To further protect Windows authentication over HTTPS, consider enabling channel binding token (CBT) hardening. For details, see Enable channel binding token (CBT) hardening.
@@ -270,3 +270,10 @@ While the `Microsoft.AspNetCore.Authentication.Negotiate` package enables authen
 ## Claims transformations
 
 When hosting with IIS, `Microsoft.AspNetCore.Authentication.AuthenticationService.AuthenticateAsync*` isn't called internally to initialize a user. Therefore, an `Microsoft.AspNetCore.Authentication.IClaimsTransformation` implementation used to transform claims after every authentication isn't activated by default. For more information and a code example that activates claims transformations, see Differences between in-process and out-of-process hosting.
+
+## Additional resources
+
+* dotnet publish
+* Host ASP.NET Core on Windows with IIS
+* ASP.NET Core Module (ANCM) for IIS
+* Visual Studio publish profiles (.pubxml) for ASP.NET Core app deployment

@@ -99,4 +99,4 @@ Loaded image:  registry.fedoraproject.org/fedora:latest
 **podman(1)**, **podman-save(1)**
 
 ## HISTORY
-July 2017, Originally compiled by Urvashi Mohnani <umohnani@redhat.com>
+July 2017, Originally compiled by Urvashi Mohnani <user@example.com>

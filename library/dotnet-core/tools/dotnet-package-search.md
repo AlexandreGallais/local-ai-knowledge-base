@@ -64,7 +64,7 @@ Allows the command to stop and wait for user input or action. For example, to co
 
 - **`--source `**
 
-    The package source to search. You can pass multiple --source options to search multiple package sources.
+    The package source to search. You can pass <example-value> --source options to search multiple package sources.
 
 - **`--take`**
 

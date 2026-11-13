@@ -100,4 +100,4 @@ $ podman machine os upgrade -f json
 **podman(1)**, **podman-machine(1)**, **podman-machine-os(1)**
 
 ## HISTORY
-January 2026, Originally compiled by Brent Baude <bbaude@redhat.com>
+January 2026, Originally compiled by Brent Baude <user@example.com>

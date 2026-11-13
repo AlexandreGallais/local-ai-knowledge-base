@@ -91,7 +91,7 @@ class Shape : IEquatable<Shape>
     public static bool operator !=(Shape? l, Shape? r) => !(l == r);
 }
 ```
-Key points:
+Key <example-value>:
 
 - **`virtual` typed `Equals`**: each derived class overrides this method to augment the comparison with its own fields.
 - **`GetType()` guard**: `GetType() == other.GetType()` prevents a `Circle` from equaling a `Shape` with the same color, and prevents objects of different derived types from equaling each other.

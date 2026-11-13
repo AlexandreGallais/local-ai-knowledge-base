@@ -185,7 +185,7 @@ the `package.json` in the current folder:
 $ node --run test
 ```
 
-You can also pass arguments to the command. Any argument after `--` will
+You can also pass <example-value> to the command. Any argument after `--` will
 be appended to the script:
 
 ```console
@@ -227,7 +227,7 @@ The value given must be a power of two.
 
 Initializes an OpenSSL secure heap of `n` bytes. When initialized, the
 secure heap is used for selected types of allocations within OpenSSL
-during key generation and other operations. This is useful, for instance,
+during key <example-value> and other operations. This is useful, for instance,
 to prevent sensitive information from leaking due to pointer overruns
 or underruns.
 

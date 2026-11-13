@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Reference parameters
 
-To pass arguments by reference instead of by value, use one of the following modifiers in a parameter declaration:
+To pass <example-value> by reference instead of by value, use one of the following modifiers in a parameter declaration:
 
 - `ref`: Initialize the argument before calling the method. The method can assign a new value to the parameter, but it isn't required to.
 - `out`: The calling method doesn't need to initialize the argument before calling the method. The method must assign a value to the parameter.
@@ -156,7 +156,7 @@ void ProcessLargeStructByValue(LargeStruct data)
 ```
 The `in` modifier enables the compiler to create a temporary variable for the argument and pass a readonly reference to that argument. The compiler always creates a temporary variable when the argument must be converted, when there's an implicit conversion from the argument type, or when the argument is a value that isn't a variable. For example, when the argument is a literal value, or the value returned from a property accessor. When your API requires that the argument be passed by reference, choose the `ref readonly` modifier instead of the `in` modifier.
 
-You can gain performance optimization by defining methods with `in` parameters. Some `struct` type arguments might be large in size, and when you call methods in tight loops or critical code paths, the cost of copying those structures is substantial. Declare `in` parameters to specify that you can safely pass arguments by reference because the called method doesn't modify the state of that argument. Passing those arguments by reference avoids the (potentially) expensive copy. You explicitly add the `in` modifier at the call site to ensure the argument is passed by reference, not by value. Explicitly using `in` has the following two effects:
+You can gain performance optimization by defining methods with `in` parameters. Some `struct` type arguments might be large in size, and when you call methods in tight loops or critical code paths, the cost of copying those structures is substantial. Declare `in` parameters to specify that you can safely pass <example-value> by reference because the called method doesn't modify the state of that argument. Passing those arguments by reference avoids the (potentially) expensive copy. You explicitly add the `in` modifier at the call site to ensure the argument is passed by reference, not by value. Explicitly using `in` has the following two effects:
 
 - Specifying `in` at the call site forces the compiler to select a method defined with a matching `in` parameter. Otherwise, when two methods differ only in the presence of `in`, the by value overload is a better match.
 - By specifying `in`, you declare your intent to pass an argument by reference. The argument used with `in` must represent a location that can be directly referred to. The same general rules for `out` and `ref` arguments apply: You can't use constants, ordinary properties, or other expressions that produce values. Otherwise, omitting `in` at the call site informs the compiler that it's fine to create a temporary variable to pass by read-only reference to the method. The compiler creates a temporary variable to overcome several restrictions with `in` arguments:

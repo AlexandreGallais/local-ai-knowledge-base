@@ -107,7 +107,7 @@ Links:
 
 ### Mar 6: EF Core keys and value generation
 
-In this episode, Arthur and members of the EF Team will explore generated property values and how value generation interacts with keys in the model. We will look at fully client-side value generation, as well as how to use identity columns, database sequences, or a hi-lo pattern for server-side generation. In addition, we’ll investigate how generated key values impact EF Core change tracking by determining if an entity will go into the `Added` state or not. And finally, if we have time, we’ll look at special considerations for TPC mapping, and customizations such as setting before and after save behaviors, and sentinel values.
+In this episode, Arthur and members of the EF Team will explore generated property values and how value generation interacts with keys in the model. We will look at fully client-side value generation, as well as how to use identity columns, database sequences, or a hi-lo pattern for server-side generation. In addition, we’ll investigate how generated key <example-value> impact EF Core change tracking by determining if an entity will go into the `Added` state or not. And finally, if we have time, we’ll look at special considerations for TPC mapping, and customizations such as setting before and after save behaviors, and sentinel values.
 
 Featuring:
 

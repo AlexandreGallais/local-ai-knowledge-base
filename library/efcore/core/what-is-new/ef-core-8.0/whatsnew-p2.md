@@ -18,7 +18,7 @@ Objects saved to the database can be split into three broad categories:
 
 - Objects that are unstructured and hold a single value. For example, `int`, `Guid`, `string`, `IPAddress`. These are (somewhat loosely) called "primitive types".
 - Objects that are structured to hold multiple values, and where the identity of the object is defined by a key value. For example, `Blog`, `Post`, `Customer`. These are called "entity types".
-- Objects that are structured to hold multiple values, but the object has no key defining identity. For example, `Address`, `Coordinate`.
+- Objects that are structured to hold multiple values, but the object has no key <example-value> identity. For example, `Address`, `Coordinate`.
 
 Prior to EF8, there was no good way to map the third type of object. Owned types can be used, but since owned types are actually entity types, they have semantics based on a key value, even when that key value is hidden.
 

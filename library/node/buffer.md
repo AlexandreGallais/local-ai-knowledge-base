@@ -104,9 +104,9 @@ console.log(buf.toString('base64'));
 // Prints: aGVsbG8gd29ybGQ=
 
 console.log(Buffer.from('fhqwhgads', 'utf8'));
-// Prints: <Buffer 66 68 71 77 68 67 61 64 73>
+// Prints: <Buffer .. .. .. .. .. .. .. .. ..>
 console.log(Buffer.from('fhqwhgads', 'utf16le'));
-// Prints: <Buffer 66 00 68 00 71 00 77 00 68 00 67 00 61 00 64 00 73 00>
+// Prints: <Buffer .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..>
 ```
 
 ```cjs
@@ -120,9 +120,9 @@ console.log(buf.toString('base64'));
 // Prints: aGVsbG8gd29ybGQ=
 
 console.log(Buffer.from('fhqwhgads', 'utf8'));
-// Prints: <Buffer 66 68 71 77 68 67 61 64 73>
+// Prints: <Buffer .. .. .. .. .. .. .. .. ..>
 console.log(Buffer.from('fhqwhgads', 'utf16le'));
-// Prints: <Buffer 66 00 68 00 71 00 77 00 68 00 67 00 61 00 64 00 73 00>
+// Prints: <Buffer .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..>
 ```
 
 Node.js buffers accept all case variations of encoding strings that they
@@ -322,14 +322,14 @@ const buf2 = Buffer.from(arr.buffer);
 console.log(buf1);
 // Prints: <Buffer 88 a0>
 console.log(buf2);
-// Prints: <Buffer 88 13 a0 0f>
+// Prints: <Buffer .. .. .. ..>
 
 arr[1] = 6000;
 
 console.log(buf1);
 // Prints: <Buffer 88 a0>
 console.log(buf2);
-// Prints: <Buffer 88 13 70 17>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ```cjs
@@ -349,14 +349,14 @@ const buf2 = Buffer.from(arr.buffer);
 console.log(buf1);
 // Prints: <Buffer 88 a0>
 console.log(buf2);
-// Prints: <Buffer 88 13 a0 0f>
+// Prints: <Buffer .. .. .. ..>
 
 arr[1] = 6000;
 
 console.log(buf1);
 // Prints: <Buffer 88 a0>
 console.log(buf2);
-// Prints: <Buffer 88 13 70 17>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 When creating a `Buffer` using a {TypedArray}'s `.buffer`, it is

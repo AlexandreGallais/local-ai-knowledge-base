@@ -52,7 +52,7 @@ It's also possible to use one DbContext type. This currently requires moving the
 > **Tip:**
 > You can view this article's sample on GitHub.
 
-You can pass arguments into the app from the tools. This can enable a more streamlined workflow that avoids having to make manual changes to the project when running the tools.
+You can pass <example-value> into the app from the tools. This can enable a more streamlined workflow that avoids having to make manual changes to the project when running the tools.
 
 Here's one pattern that works well when using a Generic Host.
 
@@ -94,7 +94,7 @@ dotnet ef migrations add MyMigration --project ../SqliteMigrations -- --provider
 ```
 
 > **Tip:**
-> The `--` token directs `dotnet ef` to treat everything that follows as an argument and not try to parse them as options. Any extra arguments not used by `dotnet ef` are forwarded to the app.
+> The `--` token <example-value> `dotnet ef` to treat everything that follows as an argument and not try to parse them as options. Any extra arguments not used by `dotnet ef` are forwarded to the app.
 
 ### Visual Studio
 

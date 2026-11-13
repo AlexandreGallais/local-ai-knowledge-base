@@ -1,5 +1,5 @@
 ---
-title: "Examples using the Docker Engine SDKs and Docker API (part 1 of 2)"
+title: "Examples using the Docker Engine SDKs and Docker API"
 tool: "docker"
 version: "2026-11"
 source: "https://github.com/docker/docs/blob/a0442378fca4987b1235614ec917b4138b5d5e5d/content/reference/api/engine/sdk/examples.md"
@@ -540,7 +540,7 @@ func main() {
 
 	authStr, err := authconfig.Encode(registry.AuthConfig{
 		Username: "username",
-		Password: "password",
+		Password: "<example-value>",
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -579,7 +579,7 @@ this a naive implementation. The credentials are passed as a Base-64-encoded
 JSON structure.
 
 ```console
-$ JSON=$(echo '{"username": "string", "password": "string", "serveraddress": "string"}' | base64)
+$ JSON=$(echo '<example-value>' | base64)
 
 $ curl --unix-socket /var/run/docker.sock \
   -H "Content-Type: application/tar"
@@ -590,4 +590,83 @@ $ curl --unix-socket /var/run/docker.sock \
 {"status":"Pulling fs layer","progressDetail":{},"id":"8f13703509f7"}
 {"status":"Downloading","progressDetail":{"current":32768,"total":2244027},"progress":"[\u003e                                                  ] 32.77 kB/2.244 MB","id":"8f13703509f7"}
 ...
+```
+
+## Commit a container
+
+Commit a container to create an image from its contents:
+
+**Go**
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+
+	"github.com/moby/moby/api/types/container"
+	"github.com/moby/moby/client"
+)
+
+func main() {
+	ctx := context.Background()
+	apiClient, err := client.New(client.FromEnv, client.WithUserAgent("my-application/1.0.0"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer apiClient.Close()
+
+	createResp, err := apiClient.ContainerCreate(ctx, client.ContainerCreateOptions{
+		Config: &container.Config{
+			Cmd: []string{"touch", "/helloworld"},
+		},
+		Image: "alpine",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if _, err := apiClient.ContainerStart(ctx, createResp.ID, client.ContainerStartOptions{}); err != nil {
+		log.Fatal(err)
+	}
+
+	wait := apiClient.ContainerWait(ctx, createResp.ID, client.ContainerWaitOptions{})
+	select {
+	case err := <-wait.Error:
+		if err != nil {
+			log.Fatal(err)
+		}
+	case <-wait.Result:
+	}
+
+	commitResp, err := apiClient.ContainerCommit(ctx, createResp.ID, client.ContainerCommitOptions{Reference: "helloworld"})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(commitResp.ID)
+}
+```
+
+**Python**
+
+```python
+import docker
+client = docker.from_env()
+container = client.containers.run("alpine", ["touch", "/helloworld"], detach=True)
+container.wait()
+image = container.commit("helloworld")
+print(image.id)
+```
+
+**HTTP**
+
+```console
+$ docker run -d alpine touch /helloworld
+0888269a9d584f0fa8fc96b3c0d8d57969ceea3a64acf47cd34eebb4744dbc52
+$ curl --unix-socket /var/run/docker.sock\
+  -X POST "http://localhost/v{{% param "latest_engine_api_version" %}}/commit?container=0888269a9d&repo=helloworld"
+{"Id":"sha256:6c86a5cd4b87f2771648ce619e319f3e508394b5bfc2cdbd2d60f59d52acda6c"}
 ```

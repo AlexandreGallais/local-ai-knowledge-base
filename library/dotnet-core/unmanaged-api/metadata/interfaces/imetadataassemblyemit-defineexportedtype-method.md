@@ -16,7 +16,7 @@ Creates an `ExportedType` structure containing metadata for the specified export
 ```cpp
 HRESULT DefineExportedType (
     [in]  LPCWSTR             szName,
-    [in]  mdToken             tkImplementation,
+    [in]  mdToken             <example-value>,
     [in]  mdTypeDef           tkTypeDef,
     [in]  DWORD               dwExportedTypeFlags,
     [out] mdExportedType      *pmdct
@@ -29,7 +29,7 @@ HRESULT DefineExportedType (
  [in] The name of type to be exported. For version 1.1 of the common language runtime, the name of the exported type must exactly match the name given in the `TypeDef` for the type.
 
  `tkImplementation`
- [in] A token specifying where the exported type is implemented. The valid values and their associated meanings are:
+ [in] A token <example-value> where the exported type is implemented. The valid values and their associated meanings are:
 
 - `mdFile` The type is implemented in a different file within this assembly.
 

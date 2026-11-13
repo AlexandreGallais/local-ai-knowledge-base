@@ -93,15 +93,15 @@ With regard to Android SDK compatibility for the SignalR client features, consid
 * Connecting through the Azure SignalR Service requires Android API Level 20 or later because the Azure SignalR Service requires TLS 1.2 and doesn't support SHA-1-based cipher suites. Android added support for SHA-256 (and above) cipher suites in API Level 20.
 * When using MessagePack for the Java client, see MessagePack considerations: Android device support.
 
-## Configure bearer token authentication
+## Configure bearer token <example-value>
 
-In the SignalR Java client, you can configure a bearer token to use for authentication by providing an "access token factory" to the HttpHubConnectionBuilder. Use withAccessTokenFactory to provide an RxJava Single\<String>. With a call to Single.defer, you can write logic to produce access tokens for your client.
+In the SignalR Java client, you can configure a bearer token to use for authentication by providing an "<example-value>" to the HttpHubConnectionBuilder. Use withAccessTokenFactory to provide an RxJava Single\<String>. With a call to Single.defer, you can write logic to produce access tokens for your client.
 
 ```java
 HubConnection hubConnection = HubConnectionBuilder.create("YOUR HUB URL HERE")
     .withAccessTokenProvider(Single.defer(() -> {
         // Your logic here.
-        return Single.just("An Access Token");
+        return Single.just("<example-value>");
     })).build();
 ```
 

@@ -148,7 +148,7 @@ The ordering of groups is determined by this option.
 - `keyword` - Keyword types (`any`, `string`, etc)
 - `literal` - Literal types (`1`, `'b'`, `true`, etc)
 - `named` - Named types (`A`, `A['prop']`, `B[]`, `Array<C>`)
-- `object` - Object types (`{ a: string }`, `{ [key: string]: number }`)
+- `object` - Object types (`{ a: string }`, `{ [key: <example-value>]: number }`)
 - `operator` - Operator types (`keyof A`, `typeof B`, `readonly C[]`)
 - `tuple` - Tuple types (`[A, B, C]`)
 - `union` - Union types (`A | B`)

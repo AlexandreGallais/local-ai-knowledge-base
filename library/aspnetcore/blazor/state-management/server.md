@@ -151,7 +151,7 @@ services.AddRazorComponents()
     .AddInteractiveServerComponents();
 ```
 
-In the preceding example, the `{CONNECTION STRING}` placeholder represents the Redis cache connection string, which should be provided using a secure approach, such as the Secret Manager tool in the `Development` environment or Azure Key Vault with Azure Managed Identities for Azure-deployed apps in any environment.
+In the preceding example, the `{CONNECTION STRING}` placeholder represents the Redis cache connection string, which should be provided using a secure approach, such as the Secret <example-value> tool in the `Development` environment or Azure Key Vault with Azure Managed Identities for Azure-deployed apps in any environment.
 
 For more information on the `[PersistentState]` attribute, see ASP.NET Core Blazor prerendered state persistence.
 

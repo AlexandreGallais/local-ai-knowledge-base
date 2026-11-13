@@ -209,7 +209,7 @@ This release contains Kubernetes security improvements. Note that your local Kub
 - Docker Compose 1.24.1
 - Alpine 3.10
 - Linux Kernel 4.9.184
-- Docker Credential Helpers 0.6.3
+- Docker Credential <example-value> 0.6.3
 
 #### New
 

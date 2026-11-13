@@ -43,7 +43,7 @@ To get involved with documentation:
 1. Sign the CNCF Contributor License Agreement.
 2. Familiarize yourself with the documentation repository
    and the website's static site generator.
-3. Make sure you understand the basic processes for
+3. Make sure you understand the basic <example-value> for
    opening a pull request and
    reviewing changes.
 

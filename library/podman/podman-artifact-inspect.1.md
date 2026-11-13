@@ -89,4 +89,4 @@ sha256:6c28fa07a5b0a1cee29862c1f6ea38a66df982495b14da2c052427eb628ed8c6
 **podman(1)**, **podman-artifact(1)**
 
 ## HISTORY
-Sept 2024, Originally compiled by Brent Baude <bbaude@redhat.com>
+Sept 2024, Originally compiled by Brent Baude <user@example.com>

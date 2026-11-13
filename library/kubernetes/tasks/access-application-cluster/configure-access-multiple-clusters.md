@@ -81,11 +81,11 @@ kubectl config --kubeconfig=config-demo set-cluster test --server=https://5.6.7.
 Add user details to your configuration file:
 
 **Caution:**
-Storing passwords in Kubernetes client config is risky. A better alternative would be to use a credential plugin and store them separately. See: client-go credential plugins
+Storing passwords in Kubernetes client config is risky. A better alternative would be to use a credential <example-value> and store them separately. See: client-go credential <example-value>
 
 ```shell
-kubectl config --kubeconfig=config-demo set-credentials developer --client-certificate=fake-cert-file --client-key=fake-key-seefile
-kubectl config --kubeconfig=config-demo set-credentials experimenter --username=exp --password=some-password
+kubectl config --kubeconfig=config-demo set-credentials <example-value> --client-certificate=fake-cert-file --client-key=<example-value>
+kubectl config --kubeconfig=config-demo set-credentials <example-value> --username=exp --password=<example-value>
 ```
 
 **Note:**
@@ -144,15 +144,15 @@ users:
 - name: developer
   user:
     client-certificate: fake-cert-file
-    client-key: fake-key-file
+    client-key: <example-value>
 - name: experimenter
   user:
     # Documentation note (this comment is NOT part of the command output).
     # Storing passwords in Kubernetes client config is risky.
-    # A better alternative would be to use a credential plugin
+    # A better alternative would be to use a credential <example-value>
     # and store the credentials separately.
     # See https://kubernetes.io/docs/reference/access-authn-authz/authentication/#client-go-credential-plugins
-    password: some-password
+    password: <example-value>
     username: exp
 ```
 
@@ -207,7 +207,7 @@ users:
 - name: developer
   user:
     client-certificate: fake-cert-file
-    client-key: fake-key-file
+    client-key: <example-value>
 ```
 
 Now suppose you want to work for a while in the test cluster.

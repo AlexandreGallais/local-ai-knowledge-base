@@ -64,13 +64,13 @@ A key (string) is useful to distinguish multiple parameters because properties c
 The `ITempData` interface provides the following methods for controlling value lifecycle:
 
 * `Get`: Gets the value associated with the specified key and schedules the data for deletion.
-* `Peek`: Returns the value associated with the specified key without marking the data for deletion.
+* `Peek`: Returns the value associated with the specified key <example-value> marking the data for deletion.
 * `Keep`: Marks all keys in the dictionary for retention. Values are available on the next request.
 * `Keep(string)`: Marks a specified key (string) for retention. The value is available on the next request.
 
 Data stored in `TempData` is automatically removed after the data is read unless `Keep`/`Keep(string)` is called or the data is accessed via `Peek`.
 
-The default cookie-based provider uses Data Protection for encryption. If the cookie is tampered with or can't be decrypted, `TempData` has no value for that request. The provider removes the unreadable cookie in the response rather than displaying an error page, so the next request starts without it. In a multi-server deployment, configure Data Protection so instances can read each other's cookies. Normal key rotation doesn't make existing cookies unreadable when the previous keys are retained.
+The default cookie-based provider uses Data Protection for encryption. If the cookie is tampered with or can't be decrypted, `TempData` has no value for that request. The provider removes the unreadable cookie in the response rather than displaying an error page, so the next request starts without it. In a multi-server deployment, configure Data Protection so instances can read each other's cookies. Normal key <example-value> doesn't make existing cookies unreadable when the previous keys are retained.
 
 To change the Blazor `TempData` cookie settings in the following table, configure `TempDataCookie` when calling `AddRazorComponents` in the app's `Program` file.
 

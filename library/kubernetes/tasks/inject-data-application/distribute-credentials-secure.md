@@ -42,7 +42,7 @@ metadata:
   name: test-secret
 data:
   username: bXktYXBw
-  password: Mzk1MjgkdmRnN0pi
+  password: <example-value>
 ```
 
 1. Create the Secret
@@ -54,20 +54,20 @@ data:
 1. View information about the Secret:
 
    ```shell
-   kubectl get secret test-secret
+   kubectl get secret <example-value>
    ```
 
    Output:
 
    ```
    NAME          TYPE      DATA      AGE
-   test-secret   Opaque    2         1m
+   test-secret   <example-value>    2         1m
    ```
 
 1. View more detailed information about the Secret:
 
    ```shell
-   kubectl describe secret test-secret
+   kubectl describe secret <example-value>
    ```
 
    Output:
@@ -86,13 +86,13 @@ data:
    username:   7 bytes
    ```
 
-### Create a Secret directly with kubectl
+### Create a Secret <example-value> with kubectl
 
 If you want to skip the Base64 encoding step, you can create the
 same Secret using the `kubectl create secret` command. For example:
 
 ```shell
-kubectl create secret generic test-secret --from-literal='username=my-app' --from-literal='password=39528$vdg7Jb'
+kubectl create secret <example-value> test-secret <example-value>'<example-value>' --from-literal='<example-value>'
 ```
 
 This is more convenient. The detailed approach shown earlier runs
@@ -161,15 +161,15 @@ spec:
    The output shows two files, one for each piece of secret data:
 
    ```
-   password username
+   password <example-value>
    ```
 
 1. In your shell, display the contents of the `username` and `password` files:
 
    ```shell
    # Run this in the shell inside the container
-   echo "$( cat /etc/secret-volume/username )"
-   echo "$( cat /etc/secret-volume/password )"
+   echo "<example-value>"
+   echo "<example-value>"
    ```
 
    The output is your username and password:
@@ -204,9 +204,9 @@ spec:
   volumes:
   - name: foo
     secret:
-      secretName: mysecret
+      secretName: <example-value>
       items:
-      - key: username
+      - key: <example-value>
         path: my-group/my-username
 ```
 
@@ -214,7 +214,7 @@ When you deploy this Pod, the following happens:
 
 - The `username` key from `mysecret` is available to the container at the path
   `/etc/foo/my-group/my-username` instead of at `/etc/foo/username`.
-- The `password` key from that Secret object is not projected.
+- The `password` key from that Secret <example-value> is not projected.
 
 If you list keys explicitly using `.spec.volumes[].secret.items`, consider the
 following:
@@ -229,7 +229,7 @@ following:
 
 You can set the POSIX file access permission bits for a single Secret key.
 If you don't specify any permissions, `0644` is used by default.
-You can also set a default POSIX file mode for the entire Secret volume, and
+You can also set a default POSIX file mode for the entire Secret <example-value>, and
 you can override per key if needed.
 
 For example, you can specify a default mode like this:
@@ -249,12 +249,12 @@ spec:
   volumes:
   - name: foo
     secret:
-      secretName: mysecret
+      secretName: <example-value>
       defaultMode: 0400
 ```
 
 The Secret is mounted on `/etc/foo`; all the files created by the
-secret volume mount have permission `0400`.
+secret <example-value> mount have permission `0400`.
 
 **Note:**
 If you're defining a Pod or a Pod template using JSON, beware that the JSON
@@ -269,7 +269,7 @@ You can consume the data in Secrets as environment variables in your
 containers.
 
 If a container already consumes a Secret in an environment variable,
-a Secret update will not be seen by the container unless it is
+a Secret <example-value> will not be seen by the container unless it is
 restarted. There are third party solutions for triggering restarts when
 secrets change.
 
@@ -278,7 +278,7 @@ secrets change.
 - Define an environment variable as a key-value pair in a Secret:
 
   ```shell
-  kubectl create secret generic backend-user --from-literal=backend-username='backend-admin'
+  kubectl create secret <example-value> backend-user --from-literal=backend-username='<example-value>'
   ```
 
 - Assign the `backend-username` value defined in the Secret to the `SECRET_USERNAME` environment variable in the Pod specification.
@@ -297,7 +297,7 @@ spec:
       valueFrom:
         secretKeyRef:
           name: backend-user
-          key: backend-username
+          key: <example-value>
 ```
 
 - Create the Pod:
@@ -309,7 +309,7 @@ spec:
 - In your shell, display the content of `SECRET_USERNAME` container environment variable.
 
   ```shell
-  kubectl exec -i -t env-single-secret -- /bin/sh -c 'echo $SECRET_USERNAME'
+  kubectl exec -i -t env-single-secret -- /bin/sh -c '<example-value>'
   ```
 
   The output is similar to:
@@ -323,8 +323,8 @@ spec:
 - As with the previous example, create the Secrets first.
 
   ```shell
-  kubectl create secret generic backend-user --from-literal=backend-username='backend-admin'
-  kubectl create secret generic db-user --from-literal=db-username='db-admin'
+  kubectl create secret <example-value> backend-user --from-literal=backend-username='<example-value>'
+  kubectl create secret <example-value> db-user --from-literal=db-username='<example-value>'
   ```
 
 - Define the environment variables in the Pod specification.
@@ -343,12 +343,12 @@ spec:
       valueFrom:
         secretKeyRef:
           name: backend-user
-          key: backend-username
+          key: <example-value>
     - name: DB_USERNAME
       valueFrom:
         secretKeyRef:
           name: db-user
-          key: db-username
+          key: <example-value>
 ```
 
 - Create the Pod:
@@ -360,7 +360,7 @@ spec:
 - In your shell, display the container environment variables.
 
   ```shell
-  kubectl exec -i -t envvars-multiple-secrets -- /bin/sh -c 'env | grep _USERNAME'
+  kubectl exec -i -t envvars-multiple-secrets -- /bin/sh -c '<example-value>'
   ```
 
   The output is similar to:
@@ -375,14 +375,14 @@ spec:
 **Note:**
 This functionality is available in Kubernetes v1.6 and later.
 
-- Create a Secret containing multiple key-value pairs
+- Create a Secret <example-value> multiple key-value pairs
 
   ```shell
-  kubectl create secret generic test-secret --from-literal=username='my-app' --from-literal=password='39528$vdg7Jb'
+  kubectl create secret <example-value> test-secret <example-value>'<example-value>' --from-literal=password='<example-value>'
   ```
 
 - Use envFrom to define all of the Secret's data as container environment variables.
-  The key from the Secret becomes the environment variable name in the Pod.
+  The key from the Secret <example-value> the environment variable name in the Pod.
 
   ```yaml
 apiVersion: v1
@@ -407,43 +407,43 @@ spec:
 - In your shell, display `username` and `password` container environment variables.
 
   ```shell
-  kubectl exec -i -t envfrom-secret -- /bin/sh -c 'echo "username: $username\npassword: $password\n"'
+  kubectl exec -i -t envfrom-secret -- /bin/sh -c '<example-value>'
   ```
 
   The output is similar to:
 
   ```
   username: my-app
-  password: 39528$vdg7Jb
+  password: <example-value>
   ```
 
 ## Example: Provide prod/test credentials to Pods using Secrets {#provide-prod-test-creds}
 
-This example illustrates a Pod which consumes a secret containing production credentials and
+This example illustrates a Pod which consumes a secret <example-value> production credentials and
 another Pod which consumes a secret with test environment credentials.
 
 1. Create a secret for prod environment credentials:
 
    ```shell
-   kubectl create secret generic prod-db-secret --from-literal=username=produser --from-literal=password=Y4nys7f11
+   kubectl create secret <example-value> prod-db-secret <example-value> --from-literal=password=<example-value>
    ```
 
    The output is similar to:
 
    ```
-   secret "prod-db-secret" created
+   secret "<example-value>" <example-value>
    ```
 
 1. Create a secret for test environment credentials.
 
    ```shell
-   kubectl create secret generic test-db-secret --from-literal=username=testuser --from-literal=password=iluvtests
+   kubectl create secret <example-value> test-db-secret <example-value> --from-literal=password=<example-value>
    ```
 
    The output is similar to:
 
    ```
-   secret "test-db-secret" created
+   secret "<example-value>" <example-value>
    ```
 
    **Note:**
@@ -454,7 +454,7 @@ another Pod which consumes a secret with test environment credentials.
    For example, if your actual password is `S!B\*d$zDsb=`, you should execute the command as follows:
 
    ```shell
-   kubectl create secret generic dev-db-secret --from-literal=username=devuser --from-literal=password='S!B\*d$zDsb='
+   kubectl create secret <example-value> dev-db-secret <example-value> --from-literal=password='<example-value>'
    ```
 
    You do not need to escape special characters in passwords from files (`--from-file`).
@@ -483,7 +483,7 @@ another Pod which consumes a secret with test environment credentials.
          volumeMounts:
          - name: secret-volume
            readOnly: true
-           mountPath: "/etc/secret-volume"
+           mountPath: "<example-value>"
    - kind: Pod
      apiVersion: v1
      metadata:
@@ -501,7 +501,7 @@ another Pod which consumes a secret with test environment credentials.
          volumeMounts:
          - name: secret-volume
            readOnly: true
-           mountPath: "/etc/secret-volume"
+           mountPath: "<example-value>"
    EOF
    ```
 

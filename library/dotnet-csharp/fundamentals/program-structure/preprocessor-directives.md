@@ -39,7 +39,7 @@ AnsiConsole.MarkupLine("[bold green]Hello[/] from a file-based app!");
 You can specify an exact version with `@`, or use `@*` to pull the latest version. Add multiple `#:package` directives to include more packages:
 
 ```csharp
-#:package Serilog@3.1.1
+#:package user@example.com
 ```
 
 Other `#:` directives let you reference projects, set MSBuild properties, or change the SDK:

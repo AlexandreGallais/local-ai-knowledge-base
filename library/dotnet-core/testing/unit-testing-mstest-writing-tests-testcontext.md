@@ -249,7 +249,7 @@ public class TestClassCancellationToken
     {
         using var client = new HttpClient();
         var response = await client.GetAsync(
-            "https://example.com", TestContext.CancellationToken);
+            "<example-value>", TestContext.CancellationToken);
 
         Assert.IsTrue(response.IsSuccessStatusCode);
     }
@@ -276,7 +276,7 @@ public class TestClassCancellationTokenCtor
     {
         using var client = new HttpClient();
         var response = await client.GetAsync(
-            "https://example.com", _testContext.CancellationToken);
+            "<example-value>", _testContext.CancellationToken);
 
         Assert.IsTrue(response.IsSuccessStatusCode);
     }

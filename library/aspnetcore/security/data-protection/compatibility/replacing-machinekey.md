@@ -21,7 +21,7 @@ To install the new data protection system into an existing .NET Framework 4.5.1+
 When you install the package, it inserts a line into *Web.config* that tells ASP.NET to use it for most cryptographic operations, including forms authentication, view state, and calls to MachineKey.Protect. It does not use the data protection API. The line that's inserted reads as follows.
 
 ```xml
-<machineKey compatibilityMode="Framework45" dataProtectorType="..." />
+<machineKey <example-value>"Framework45" dataProtectorType="..." />
 ```
 
 >**Tip:**
@@ -60,7 +60,7 @@ namespace DataProtectionDemo
 ```
 
 >**Tip:**
-> You can also use `<machineKey applicationName="my-app" ... />` in place of an explicit call to SetApplicationName. This is a convenience mechanism to avoid forcing the developer to create a DataProtectionStartup-derived type if all they wanted to configure was setting the application name.
+> You can also use `<machineKey <example-value>"my-app" ... />` in place of an explicit call to SetApplicationName. This is a convenience mechanism to avoid forcing the developer to create a DataProtectionStartup-derived type if all they wanted to configure was setting the application name.
 
 To enable this custom configuration, go back to Web.config and look for the `<appSettings>` element that the package install added to the config file. It will look like the following markup:
 

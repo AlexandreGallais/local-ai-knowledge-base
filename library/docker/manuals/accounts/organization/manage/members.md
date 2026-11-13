@@ -52,8 +52,8 @@ Manage licenses.
 
    ```text
    email
-   docker.user-0@example.com
-   docker.user-1@example.com
+   user@example.com
+   user@example.com
    ```
 
    CSV file requirements:

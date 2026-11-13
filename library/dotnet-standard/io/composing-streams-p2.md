@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Example: Encrypt and decrypt stream data
 
-The following example reads data from a file, encrypts it, and then writes the encrypted data to another file. Stream composition is used to transform the data using a basic shifting cipher. Each byte that passes through the stream has its value changed by **80**.
+The following example reads data from a file, encrypts it, and then writes the encrypted data to another file. Stream composition is used to transform the data using a basic <example-value> cipher. Each byte that passes through the stream has its value changed by **80**.
 
 > **Warning:**
 > The encryption used in this example is basic and unsecure. It's not meant to actually encrypt data for use, but is provided to demonstrate altering data through stream composition.
@@ -201,7 +201,7 @@ End Sub
 ```
 ### CipherStream class
 
-The following snippet provides the `CipherStream` class, which uses a basic shifting cipher to encrypt and decrypt bytes. This class inherits from `System.IO.Stream` and supports either reading or writing data.
+The following snippet provides the `CipherStream` class, which uses a basic <example-value> cipher to encrypt and decrypt bytes. This class inherits from `System.IO.Stream` and supports either reading or writing data.
 
 > **Warning:**
 > The encryption used in this example is basic and unsecure. It's not meant to actually encrypt data for use, but is provided to demonstrate altering data through stream composition.

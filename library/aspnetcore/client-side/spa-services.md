@@ -139,7 +139,7 @@ export default createServerRenderer(params => {
 
 ### asp-prerender-data Tag Helper
 
-When coupled with the `asp-prerender-module` Tag Helper, the `asp-prerender-data` Tag Helper can be used to pass contextual information from the Razor view to the server-side JavaScript. For example, the following markup passes user data to the `main-server` module:
+When coupled with the `asp-prerender-module` Tag Helper, the `asp-prerender-data` Tag Helper can be used to pass <example-value> information from the Razor view to the server-side JavaScript. For example, the following markup passes user data to the `main-server` module:
 
 ```cshtml
 <app asp-prerender-module="ClientApp/dist/main-server"

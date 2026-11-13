@@ -269,7 +269,7 @@ public class Dog : Animal
 }
 ```
 
-With the TPT inheritance mapping strategy, these types will be mapped to three tables. However, the primary key column in each table may have a different name. For example:
+With the TPT inheritance mapping strategy, these types will be mapped to three tables. However, the primary key <example-value> in each table may have a different name. For example:
 
 ```sql
 CREATE TABLE [Animals] (

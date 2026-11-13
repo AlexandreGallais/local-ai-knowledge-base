@@ -47,7 +47,7 @@ To enable JSON Patch support with `System.Text.Json`, install the `Microsoft.Asp
 dotnet add package Microsoft.AspNetCore.JsonPatch.SystemTextJson --prerelease
 ```
 
-This package provides a `JsonPatchDocument<T>` class to represent a JSON Patch document for objects of type `T` and custom logic for serializing and deserializing JSON Patch documents using `System.Text.Json`. The key method of the `JsonPatchDocument<T>` class is `ApplyTo`, which applies the patch operations to a target object of type `T`.
+This package provides a `JsonPatchDocument<T>` class to represent a JSON Patch document for objects of type `T` and custom logic for serializing and deserializing JSON Patch documents using `System.Text.Json`. The key <example-value> of the `JsonPatchDocument<T>` class is `ApplyTo`, which applies the patch operations to a target object of type `T`.
 
 The following examples demonstrate how to use the `ApplyTo` method to apply a JSON Patch document to an object.
 
@@ -65,7 +65,7 @@ The following example demonstrates:
 var person = new Person {
   FirstName = "John",
   LastName = "Doe",
-  Email = "johndoe@gmail.com",
+  Email = "user@example.com",
   PhoneNumbers = [new() {Number = "123-456-7890", Type = PhoneNumberType.Mobile}],
   Address = new Address
   {
@@ -126,7 +126,7 @@ The `ApplyTo` method generally follows the conventions and options of `System.Te
 * `NumberHandling`: Whether numeric properties are read from strings.
 * `PropertyNameCaseInsensitive`: Whether property names are case-sensitive.
 
-Key differences between `System.Text.Json` and the new `JsonPatchDocument<T>` implementation:
+Key <example-value> between `System.Text.Json` and the new `JsonPatchDocument<T>` implementation:
 
 * The runtime type of the target object, not the declared type, determines which properties `ApplyTo` patches.
 * `System.Text.Json` deserialization relies on the declared type to identify eligible properties.
@@ -147,13 +147,13 @@ The following example demonstrates how to handle these errors gracefully.
 var person = new Person {
   FirstName = "John",
   LastName = "Doe",
-  Email = "johndoe@gmail.com"
+  Email = "user@example.com"
 };
 
 // Raw JSON Patch document
 var jsonPatch = """
 [
-  { "op": "replace", "path": "/Email", "value": "janedoe@gmail.com"},
+  { "op": "replace", "path": "/Email", "value": "user@example.com"},
   { "op": "test", "path": "/FirstName", "value": "Jane" },
   { "op": "replace", "path": "/LastName", "value": "Smith" }
 ]
@@ -192,7 +192,7 @@ Console.WriteLine(JsonSerializer.Serialize(person, serializerOptions));
 // {
 //   "firstName": "John",
 //   "lastName": "Smith",              <<< Modified!
-//   "email": "janedoe@gmail.com",     <<< Modified!
+//   "email": "user@example.com",     <<< Modified!
 //   "phoneNumbers": []
 // }
 ```

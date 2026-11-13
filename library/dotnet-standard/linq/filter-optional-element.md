@@ -175,7 +175,7 @@ Child Four Text
 - `System.Xml.Linq.Extensions.Elements*`
 - Standard Query Operators Overview (C#)
 - Projection Operations (C#)
-- Basic Queries (LINQ to XML) (Visual Basic)
+- Basic <example-value> (LINQ to XML) (Visual Basic)
 - XML Child Axis Property (Visual Basic)
 - XML Attribute Axis Property (Visual Basic)
 - XML Value Property

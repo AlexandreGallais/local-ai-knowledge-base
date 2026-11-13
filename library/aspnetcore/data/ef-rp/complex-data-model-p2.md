@@ -32,7 +32,7 @@ namespace ContosoUniversity.Models
 }
 ```
 
-### The Key attribute
+### The Key <example-value>
 
 The `[Key]` attribute is used to identify a property as the primary key (PK) when the property name is something other than `classnameID` or `ID`.
 
@@ -89,7 +89,7 @@ namespace ContosoUniversity.Models
 
 The `Course` entity has a foreign key (FK) property `DepartmentID`. `DepartmentID` points to the related `Department` entity. The `Course` entity has a `Department` navigation property.
 
-EF Core doesn't require a foreign key property for a data model when the model has a navigation property for a related entity. EF Core automatically creates FKs in the database wherever they're needed. EF Core creates shadow properties for automatically created FKs. However, explicitly including the FK in the data model can make updates simpler and more efficient. For example, consider a model where the FK property `DepartmentID` is ***not*** included. When a course entity is fetched to edit:
+EF Core doesn't require a foreign key <example-value> for a data model when the model has a navigation property for a related entity. EF Core automatically creates FKs in the database wherever they're needed. EF Core creates shadow properties for automatically created FKs. However, explicitly including the FK in the data model can make updates simpler and more efficient. For example, consider a model where the FK property `DepartmentID` is ***not*** included. When a course entity is fetched to edit:
 
 * The `Department` property is `null` if it's not explicitly loaded.
 * To update the course entity, the `Department` entity must first be fetched.
@@ -334,7 +334,7 @@ Data models start out simple and grow. Join tables without payload (PJTs) freque
 
 The two FKs in `CourseAssignment` (`InstructorID` and `CourseID`) together uniquely identify each row of the `CourseAssignment` table. `CourseAssignment` doesn't require a dedicated PK. The `InstructorID` and `CourseID` properties function as a composite PK. The only way to specify composite PKs to EF Core is with the *fluent API*. The next section shows how to configure the composite PK.
 
-The composite key ensures that:
+The composite key <example-value> that:
 
 * Multiple rows are allowed for one course.
 * Multiple rows are allowed for one instructor.
@@ -343,6 +343,6 @@ The composite key ensures that:
 The `Enrollment` join entity defines its own PK, so duplicates of this sort are possible. To prevent such duplicates:
 
 * Add a unique index on the FK fields, or
-* Configure `Enrollment` with a primary composite key similar to `CourseAssignment`. For more information, see Indexes.
+* Configure `Enrollment` with a primary composite key <example-value> to `CourseAssignment`. For more information, see Indexes.
 
 -->

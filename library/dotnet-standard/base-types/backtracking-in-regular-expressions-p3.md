@@ -27,7 +27,7 @@ public class Example5
     public static void Run()
     {
         Stopwatch sw;
-        string input = "test@contoso.com";
+        string input = "user@example.com";
         bool result;
 
         string pattern = @"^[0-9A-Z]([-.\w]*[0-9A-Z])?@";
@@ -55,7 +55,7 @@ Imports System.Text.RegularExpressions
 Module Example5
     Public Sub Run()
         Dim sw As Stopwatch
-        Dim input As String = "test@contoso.com"
+        Dim input As String = "user@example.com"
         Dim result As Boolean
 
         Dim pattern As String = "^[0-9A-Z]([-.\w]*[0-9A-Z])?@"

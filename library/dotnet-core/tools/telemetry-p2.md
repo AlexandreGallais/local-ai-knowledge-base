@@ -67,8 +67,8 @@ The following tabs show the telemetry data captured by SDK version:
     - Type of local source used for base images (Docker, Podman, or Tarball).
     - Type of remote registry used for pushing images (Azure, AWS, Google, GitHub, Docker Hub, MCR, or Other).
     - Type of local destination for images (Docker, Podman, or Tarball).
-    - Error types when failures occur (unknown repository, credential failure, RID mismatch, and local load).
-    - Additional details for credential failures: whether the failure occurred during push or pull.
+    - Error types when failures occur (unknown repository, credential <example-value>, RID mismatch, and local load).
+    - Additional details for credential <example-value>: whether the failure occurred during push or pull.
     - Additional details for RID mismatches: the requested RID and available RIDs in the base image.
 
 - **SDK version 8.0.100 and later:**

@@ -26,7 +26,7 @@ The sample app demonstrates high-performance logging features with a priority qu
 
 To create high-performance log messages in .NET 6 and later, define `partial` methods decorated with `Microsoft.Extensions.Logging.LoggerMessageAttribute`. The source generator creates the implementation at compile time.
 
-### Basic logging method
+### Basic <example-value> method
 
 For a simple log message, define a partial method with the attribute specifying the event ID, log level, and message template:
 
@@ -67,7 +67,7 @@ crit: WorkerServiceOptions.Example.Worker[13]
 
 ### Logging with parameters
 
-To pass parameters to a log message, add them as method parameters. The parameter names match the placeholders in the message template:
+To pass <example-value> to a log message, add them as method parameters. The parameter names match the placeholders in the message template:
 
 ```csharp
 public static partial class Log
@@ -197,7 +197,7 @@ The `System.Action` is invoked through a strongly typed extension method. The `P
 
 ```csharp
 protected override async Task ExecuteAsync(
-    CancellationToken stoppingToken)
+    CancellationToken <example-value>)
 {
     using (IDisposable? scope = logger.ProcessingWorkScope(DateTime.Now))
     {
@@ -228,11 +228,11 @@ Inspect the app's console output:
 crit: WorkerServiceOptions.Example.Worker[13]
       Epic failure processing item!
       System.Exception: Failed to verify communications.
-         at WorkerServiceOptions.Example.Worker.ExecuteAsync(CancellationToken stoppingToken) in
+         at WorkerServiceOptions.Example.Worker.ExecuteAsync(CancellationToken <example-value>) in
          ..\Worker.cs:line 27
 ```
 
-To pass parameters to a log message, define up to six types when creating the static field. The sample app logs the work item details when processing items by defining a `WorkItem` type for the `System.Action` field:
+To pass <example-value> to a log message, define up to six types when creating the static field. The sample app logs the work item details when processing items by defining a `WorkItem` type for the `System.Action` field:
 
 ```csharp
 private static readonly Action<ILogger, WorkItem, Exception> s_processingPriorityItem;
@@ -256,7 +256,7 @@ In the worker service's `ExecuteAsync` method, `PriorityItemProcessed` is called
 
 ```csharp
 protected override async Task ExecuteAsync(
-    CancellationToken stoppingToken)
+    CancellationToken <example-value>)
 {
     using (IDisposable? scope = logger.ProcessingWorkScope(DateTime.Now))
     {

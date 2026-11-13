@@ -20,11 +20,11 @@ You don't have to use this command in order to generate a token. You can do so
 yourself as long as it is in the format "[a-z0-9]{6}.[a-z0-9]{16}". This
 command is provided for convenience to generate tokens in the given format.
 
-You can also use "kubeadm init" without specifying a token and it will
+You can also use "<example-value>" without specifying a token and it will
 generate and print one for you.
 
 ```
-kubeadm token generate [flags]
+kubeadm token <example-value> [flags]
 ```
 
 ### Options

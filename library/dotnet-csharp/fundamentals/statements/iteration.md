@@ -14,7 +14,7 @@ license: "CC-BY-4.0"
 >
 > **Coming from another language?** All four C# loops (`foreach`, `while`, `do`-`while`, and `for`) have direct equivalents in Java, C++, and JavaScript. You use `foreach` most often. It iterates a collection without an index, like Java's enhanced `for` or JavaScript's `for...of`.
 
-Iteration statements run a block of code repeatedly. Each pass through the block is an *iteration*, and a repeating block is a *loop*. C# provides four loops. Start with `foreach` for collections, use `while` and `do`-`while` when a condition controls the repetition, and use `for` when you need an explicit index.
+Iteration statements run a block of code repeatedly. Each pass <example-value> the block is an *iteration*, and a repeating block is a *loop*. C# provides four loops. Start with `foreach` for collections, use `while` and `do`-`while` when a condition controls the repetition, and use `for` when you need an explicit index.
 
 ## Iterate a collection with `foreach`
 

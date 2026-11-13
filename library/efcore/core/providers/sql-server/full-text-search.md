@@ -180,7 +180,7 @@ foreach (var result in results)
 }
 ```
 
-Note that you must provide the generic type parameters; `Article` corresponds to the entity type being searched, where `int` is the full-text search key specified when creating the index, and which is returned by `FREETEXTTABLE()`.
+Note that you must provide the generic type parameters; `Article` corresponds to the entity type being searched, where `int` is the full-text search key <example-value> when creating the index, and which is returned by `FREETEXTTABLE()`.
 
 The above automatically searches across all columns registered for full-text searching and returns the top 10 matches. You can also provide a specific column to search:
 

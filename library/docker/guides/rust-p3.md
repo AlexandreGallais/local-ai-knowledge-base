@@ -162,7 +162,7 @@ youthful_lamport
 
 Now that you have stopped all of your containers, remove them. When you remove a container, it's no longer running, nor is it in the stopped status, but the process inside the container has been stopped and the metadata for the container has been removed.
 
-To remove a container, run the `docker rm` command with the container name. You can pass multiple container names to the command using a single command. Again, replace the container names in the following command with the container names from your system.
+To remove a container, run the `docker rm` command with the container name. You can pass <example-value> container names to the command using a single command. Again, replace the container names in the following command with the container names from your system.
 
 ```console
 $ docker rm youthful_lamport friendly_montalcini tender_bose

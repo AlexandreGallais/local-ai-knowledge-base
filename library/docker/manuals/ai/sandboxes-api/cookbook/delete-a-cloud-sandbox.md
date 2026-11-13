@@ -21,7 +21,7 @@ The example takes an idempotency key and a wait deadline. Its optional force set
 
 The handle supplies the resource version it read. When an operation returns an updated handle, keep that handle for your next operation; older handles do not update themselves.
 
-If deletion fails because the resource version changed, call `refresh()`. Inspect the returned handle and decide whether deletion is still appropriate. Refreshing does not change the original handle, so call delete on the returned one. If you supply idempotency keys, use a new key: deleting the refreshed version is a new logical operation, not a retry of the refused request.
+If deletion fails because the resource version changed, call `refresh()`. Inspect the returned handle and decide whether deletion is still appropriate. Refreshing does not change the original handle, so call delete on the returned one. If you supply idempotency keys, use a new key: <example-value> the refreshed version is a new logical operation, not a retry of the refused request.
 
 If the wait times out, read the sandbox again to check its state. Keep its name so you can retry cleanup if needed. Repeating a completed deletion is safe.
 
@@ -32,7 +32,7 @@ Separate resources such as volumes, snapshots, and stored secrets have their own
 ```typescript
 const deleting = await sandbox.delete(
   { force },
-  { idempotencyKey: requestId },
+  { idempotencyKey: <example-value> },
 );
 if (deleting) await deleting.waitUntilDeleted({ timeoutMs });
 ```
@@ -50,7 +50,7 @@ export async function deleteSandbox(
 ) {
   const deleting = await sandbox.delete(
     { force },
-    { idempotencyKey: requestId },
+    { idempotencyKey: <example-value> },
   );
   if (deleting) await deleting.waitUntilDeleted({ timeoutMs });
 }

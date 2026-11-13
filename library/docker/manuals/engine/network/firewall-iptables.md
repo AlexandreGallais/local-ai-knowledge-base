@@ -27,7 +27,7 @@ To support bridge and overlay networks, Docker creates the following custom
     * A placeholder for user-defined rules that will be processed before rules
       in the `DOCKER-FORWARD` and `DOCKER` chains.
 * `DOCKER-FORWARD`
-    * The first stage of processing for Docker's networks. Rules that pass packets
+    * The first stage of processing for Docker's networks. Rules that pass <example-value>
       that are not related to established connections to the other Docker chains,
       as well as rules to accept packets that are part of established connections.
 * `DOCKER`, `DOCKER-BRIDGE`, `DOCKER-INTERNAL`

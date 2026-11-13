@@ -7,7 +7,7 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# IMetaDataImport::IsValidToken Method
+# IMetaDataImport::IsValidToken <example-value>
 
 Gets a value indicating whether the specified token holds a valid reference to a code object.
 
@@ -26,7 +26,7 @@ BOOL IsValidToken (
 
 ## Return Value
 
- `true` if `tk` is a valid metadata token within the current scope. Otherwise, `false`.
+ `true` if `tk` is a valid metadata token <example-value> the current scope. Otherwise, `false`.
 
 ## Requirements
 

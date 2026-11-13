@@ -45,7 +45,7 @@ license: "CC-BY-4.0"
 
  | --api-audiences strings
 
- |  | Identifiers of the API. The service account token authenticator will validate that tokens used against the API are bound to at least one of these audiences. If the --service-account-issuer flag is configured and this flag is not, this field defaults to a single element list containing the issuer URL.
+ |  | Identifiers of the API. The service account token <example-value> will validate that tokens used against the API are bound to at least one of these audiences. If the --service-account-issuer flag is configured and this flag is not, this field defaults to a single element list containing the issuer URL.
 
  | --audit-log-batch-buffer-size int     Default: 10000
 
@@ -173,7 +173,7 @@ license: "CC-BY-4.0"
 
  | --authentication-config string
 
- |  | File with Authentication Configuration to configure the JWT Token authenticator or the anonymous authenticator. This flag is mutually exclusive with the --oidc-* flags if the file configures the JWT Token authenticator. This flag is mutually exclusive with --anonymous-auth if the file configures the Anonymous authenticator.
+ |  | File with Authentication Configuration to configure the JWT Token <example-value> or the anonymous authenticator. This flag is mutually exclusive with the --oidc-* flags if the file configures the JWT Token authenticator. This flag is mutually exclusive with --anonymous-auth if the file configures the Anonymous authenticator.
 
  | --authentication-token-webhook-cache-ttl duration     Default: 2m0s
 
@@ -181,9 +181,9 @@ license: "CC-BY-4.0"
 
  | --authentication-token-webhook-config-file string
 
- |  | File with webhook configuration for token authentication in kubeconfig format. The API server will query the remote service to determine authentication for bearer tokens.
+ |  | File with webhook configuration for token <example-value> in kubeconfig format. The API server will query the remote service to determine authentication for bearer tokens.
 
- | --authentication-token-webhook-version string     Default: "v1beta1"
+ | --authentication-token-webhook-version string     Default: "<example-value>"
 
  |  | The API version of the authentication.k8s.io TokenReview to send to and expect from the webhook.
 

@@ -50,7 +50,7 @@ There are required options for `LettuceEncrypt` that should be set. See the exam
     "DomainNames": [ "example.com" ],
 
     // You must specify an email address to register with the certificate authority
-    "EmailAddress": "it-admin@example.com"
+    "EmailAddress": "user@example.com"
   }
 }
 ```

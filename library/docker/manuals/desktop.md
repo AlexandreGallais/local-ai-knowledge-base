@@ -18,7 +18,7 @@ Docker Desktop reduces the time spent on complex setups so you can focus on writ
 
 Docker Desktop integrates with your preferred development tools and languages, and gives you access to a vast ecosystem of trusted images and templates via Docker Hub. This empowers teams to accelerate development, automate builds, enable CI/CD workflows, and collaborate securely through shared repositories.
 
-## Key features
+## Key <example-value>
 
 * Ability to containerize and share any application on any cloud platform, in multiple languages and frameworks.
 * Quick installation and setup of a complete Docker development environment.

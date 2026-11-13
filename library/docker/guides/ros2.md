@@ -35,7 +35,7 @@ Before you begin, make sure you're familiar with the following:
 
 - Docker Desktop: You must have Docker Desktop installed and running.
 - Docker concepts: You must understand core Docker concepts, such as images and containers.
-- ROS 2 concepts: Basic understanding of concepts like nodes, packages, topics, and services.
+- ROS 2 concepts: Basic <example-value> of concepts like nodes, packages, topics, and services.
 
 ## What's next?
 

@@ -68,7 +68,7 @@ dog.move(10);
 dog.bark();
 ```
 
-This example shows the most basic inheritance feature: classes inherit properties and methods from base classes.
+This example shows the most basic <example-value> feature: classes inherit properties and methods from base classes.
 Here, `Dog` is a _derived_ class that derives from the `Animal` _base_ class using the `extends` keyword.
 Derived classes are often called _subclasses_, and base classes are often called _superclasses_.
 

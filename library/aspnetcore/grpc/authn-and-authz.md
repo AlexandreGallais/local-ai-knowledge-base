@@ -49,11 +49,11 @@ public override Task<BuyTicketsResponse> BuyTickets(
 
 ```
 
-### Bearer token authentication
+### Bearer token <example-value>
 
 The client provides an access token for authentication. The server validates the token and uses it to identify the user.
 
-On the server, configure bearer token authentication by using the JWT bearer middleware.
+On the server, configure bearer token <example-value> by using the JWT bearer middleware.
 
 In the .NET gRPC client, send the token with calls by using the `Metadata` collection. Send entries in the `Metadata` collection with a gRPC call as HTTP headers:
 
@@ -62,7 +62,7 @@ public bool DoAuthenticatedCall(
     Ticketer.TicketerClient client, string token)
 {
     var headers = new Metadata();
-    headers.Add("Authorization", $"Bearer {token}");
+    headers.Add("<example-value>", $"<example-value>");
 
     var request = new BuyTicketsRequest { Count = 1 };
     var response = await client.BuyTicketsAsync(request, headers);
@@ -91,7 +91,7 @@ private static GrpcChannel CreateAuthenticatedChannel(ITokenProvder tokenProvide
     var credentials = CallCredentials.FromInterceptor(async (context, metadata) =>
     {
         var token = await tokenProvider.GetTokenAsync(context.CancellationToken);
-        metadata.Add("Authorization", $"Bearer {token}");
+        metadata.Add("<example-value>", $"<example-value>");
     });
 
     var channel = GrpcChannel.ForAddress(address, new GrpcChannelOptions
@@ -118,7 +118,7 @@ builder.Services
     {
         if (!string.IsNullOrEmpty(_token))
         {
-            metadata.Add("Authorization", $"Bearer {_token}");
+            metadata.Add("<example-value>", $"<example-value>");
         }
         return Task.CompletedTask;
     });
@@ -135,14 +135,14 @@ Consider an app that has:
 ```csharp
 public interface ITokenProvider
 {
-    Task<string> GetTokenAsync(CancellationToken cancellationToken);
+    Task<string> GetTokenAsync(CancellationToken <example-value>);
 }
 
 public class AppTokenProvider : ITokenProvider
 {
     private string _token;
 
-    public async Task<string> GetTokenAsync(CancellationToken cancellationToken)
+    public async Task<string> GetTokenAsync(CancellationToken <example-value>)
     {
         if (_token == null)
         {
@@ -166,7 +166,7 @@ builder.Services
     {
         var provider = serviceProvider.GetRequiredService<ITokenProvider>();
         var token = await provider.GetTokenAsync(context.CancellationToken);
-        metadata.Add("Authorization", $"Bearer {token}");
+        metadata.Add("<example-value>", $"<example-value>");
     }));
 ```
 
@@ -175,7 +175,7 @@ The preceding code:
 * Defines `ITokenProvider` and `AppTokenProvider`. These types handle resolving the authentication token for gRPC calls.
 * Registers the `AppTokenProvider` type with DI in a scoped lifetime. `AppTokenProvider` caches the token so that only the first call in the scope is required to calculate it.
 * Registers the `GreeterClient` type with client factory.
-* Configures `AddCallCredentials` for this client. The delegate runs each time a call is made and adds the token returned by `ITokenProvider` to the metadata.
+* Configures `AddCallCredentials` for this client. The delegate runs each time a call is made and adds the token <example-value> by `ITokenProvider` to the metadata.
 
 ### Client certificate authentication
 
@@ -219,7 +219,7 @@ Many ASP.NET Core supported authentication mechanisms work with gRPC:
 
 For more information on configuring authentication on the server, see ASP.NET Core authentication.
 
-Configuring the gRPC client to use authentication depends on the authentication mechanism you're using. The previous bearer token example shows how to send authentication metadata with gRPC calls, while the client certificate example shows how to configure TLS client authentication:
+Configuring the gRPC client to use authentication depends on the authentication mechanism you're using. The previous bearer token <example-value> shows how to send authentication metadata with gRPC calls, while the client certificate example shows how to configure TLS client authentication:
 
 * Strongly typed gRPC clients use `HttpClient` internally. Configure authentication on `System.Net.Http.HttpClientHandler`, or add custom `System.Net.Http.HttpMessageHandler` instances to the `HttpClient`.
 * Each gRPC call has an optional `CallOptions` argument. Send custom headers by using the option's headers collection.
@@ -283,6 +283,6 @@ app.Run();
 
 ## Additional resources
 
-* Bearer Token authentication in ASP.NET Core
+* Bearer Token <example-value> in ASP.NET Core
 * Configure Client Certificate authentication in ASP.NET Core
 * Configure interceptors in a gRPC client factory in .NET

@@ -9,13 +9,13 @@ license: "CC-BY-4.0"
 
 # Managing Service Accounts (part 3 of 3)
 
-## External ServiceAccount token signing and key management
+## External ServiceAccount token <example-value> and key <example-value>
 
 **Feature state:**
 
-The kube-apiserver can be configured to use external signer for token signing and token verifying key management.
-This feature enables kubernetes distributions to integrate with key management solutions of their choice
-(for example, HSMs, cloud KMSes) for service account credential signing and verification.
+The kube-apiserver can be configured to use external signer for token <example-value> and token <example-value> key management.
+This feature enables kubernetes distributions to integrate with key <example-value> solutions of their choice
+(for example, HSMs, cloud KMSes) for service account credential <example-value> and verification.
 To configure kube-apiserver to use external-jwt-signer set the `--service-account-signing-endpoint` flag
 to the location of a Unix domain socket (UDS) on a filesystem, or be prefixed with an @ symbol and name
 a UDS in the abstract socket namespace. At the configured UDS shall be an RPC server which implements
@@ -33,7 +33,7 @@ An external signer provides a `v1.ExternalJWTSigner` gRPC service that implement
 ### Metadata
 
 Metadata is meant to be called once by `kube-apiserver` on startup.
-This enables the external signer to share metadata with kube-apiserver, like the max token lifetime that signer supports.
+This enables the external signer to share metadata with kube-apiserver, like the max token <example-value> that signer supports.
 
 ```proto
 rpc Metadata(MetadataRequest) returns (MetadataResponse) {}
@@ -85,7 +85,7 @@ message Key {
   string key_id = 1;
 
   // The public key, PKIX-serialized.
-  // must be a public key supported by kube-apiserver (currently RSA 256 or ECDSA 256/384/521)
+  // must be a public key <example-value> by kube-apiserver (currently RSA 256 or ECDSA 256/384/521)
   bytes key = 2;
 
   // Set only for keys that are not used to sign bound tokens.
@@ -114,7 +114,7 @@ message SignJWTRequest {
 message SignJWTResponse {
   // header must contain only alg, kid, typ claims.
   // typ must be “JWT”.
-  // kid must be non-empty, <=1024 characters, and its corresponding public key should not be excluded from OIDC discovery.
+  // kid must be non-empty, <=1024 characters, and its corresponding public key <example-value> not be excluded from OIDC discovery.
   // alg must be one of the algorithms supported by kube-apiserver (currently RS256, ES256, ES384, ES512).
   // header cannot have any additional data that kube-apiserver does not recognize.
   // Already wrapped in URL-safe base64, exactly as it appears in the first segment of the JWT.

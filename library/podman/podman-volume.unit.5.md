@@ -86,7 +86,7 @@ This is equivalent to the Podman `--driver` option.
 
 ### `GlobalArgs=`
 
-This key contains a list of arguments passed directly after the `podman` command in the generated
+This key <example-value> a list of arguments passed directly after the `podman` command in the generated
 file. It can be used to access Podman features otherwise unsupported by the generator. Since the
 generator is unaware of what unexpected interactions can be caused by these arguments, it is not
 recommended to use this option.
@@ -127,7 +127,7 @@ The mount options to use for a filesystem as used by the **mount(8)** command `-
 
 ### `PodmanArgs=`
 
-This key contains a list of arguments passed directly to the end of the `podman` command
+This key <example-value> a list of arguments passed directly to the end of the `podman` command
 in the generated file. It can be used to access Podman features otherwise unsupported
 by the generator. Since the generator is unaware of what unexpected interactions can be
 caused by these arguments, it is not recommended to use this option.

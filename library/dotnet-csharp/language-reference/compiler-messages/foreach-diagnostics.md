@@ -26,8 +26,8 @@ This article covers the following compiler errors and warnings:
 - **CS8415**: *Asynchronous foreach statement cannot operate on variables of type 'type' because 'type' does not contain a public instance or extension definition for 'member'. Did you mean 'foreach' rather than 'await foreach'?*
 - **CS8419**: *The body of an async-iterator method must contain a 'yield' statement.*
 - **CS8420**: *The body of an async-iterator method must contain a 'yield' statement. Consider removing 'async' from the method declaration or adding a 'yield' statement.*
-- **CS8424**: *The EnumeratorCancellationAttribute applied to parameter 'name' will have no effect. The attribute is only effective on a parameter of type CancellationToken in an async-iterator method returning IAsyncEnumerable*
-- **CS8425**: *Async-iterator 'method' has one or more parameters of type 'CancellationToken' but none of them is decorated with the 'EnumeratorCancellation' attribute, so the cancellation token parameter from the generated 'IAsyncEnumerable<>.GetAsyncEnumerator' will be unconsumed*
+- **CS8424**: *The EnumeratorCancellationAttribute applied to parameter '<example-value>' will have no effect. The attribute is only effective on a parameter of type CancellationToken in an async-iterator method returning IAsyncEnumerable*
+- **CS8425**: *Async-iterator '<example-value>' has one or more parameters of type '<example-value>' but none of them is decorated with the '<example-value>' attribute, so the cancellation token <example-value> from the generated '<example-value>' will be unconsumed*
 - **CS8426**: *The attribute [EnumeratorCancellation] cannot be used on multiple parameters*
 - **CS9353**: *'type' does not contain a definition for 'member' and no accessible extension method 'member' accepting a first argument of type 'type' could be found (did you mean to iterate over the async collection with 'await foreach' instead?)*
 
@@ -104,14 +104,14 @@ For more information on iterator methods, see Iterators and `yield` statement.
 
 ## `EnumeratorCancellation` attribute usage
 
-- **CS8424**: *The EnumeratorCancellationAttribute applied to parameter 'name' will have no effect. The attribute is only effective on a parameter of type CancellationToken in an async-iterator method returning IAsyncEnumerable*
-- **CS8425**: *Async-iterator 'method' has one or more parameters of type 'CancellationToken' but none of them is decorated with the 'EnumeratorCancellation' attribute, so the cancellation token parameter from the generated 'IAsyncEnumerable<>.GetAsyncEnumerator' will be unconsumed*
+- **CS8424**: *The EnumeratorCancellationAttribute applied to parameter '<example-value>' will have no effect. The attribute is only effective on a parameter of type CancellationToken in an async-iterator method returning IAsyncEnumerable*
+- **CS8425**: *Async-iterator '<example-value>' has one or more parameters of type '<example-value>' but none of them is decorated with the '<example-value>' attribute, so the cancellation token <example-value> from the generated '<example-value>' will be unconsumed*
 - **CS8426**: *The attribute [EnumeratorCancellation] cannot be used on multiple parameters*
 
-These diagnostics relate to the `System.Runtime.CompilerServices.EnumeratorCancellationAttribute`, which connects a `System.Threading.CancellationToken` parameter to the token supplied by `System.Collections.Generic.IAsyncEnumerable`1.GetAsyncEnumerator(System.Threading.CancellationToken)`.
+These diagnostics relate to the `System.Runtime.CompilerServices.EnumeratorCancellationAttribute`, which connects a `System.Threading.CancellationToken` parameter to the token <example-value> by `System.Collections.Generic.IAsyncEnumerable`1.GetAsyncEnumerator(System.Threading.CancellationToken)`.
 
-Apply `[EnumeratorCancellation]` only to a parameter of type `System.Threading.CancellationToken` in an async-iterator method that returns `System.Collections.Generic.IAsyncEnumerable`1` (**CS8424**). The attribute has no effect in any other context, such as non-token parameters, non-iterator methods, or methods returning other types.
+Apply `[EnumeratorCancellation]` only to a parameter of type `System.Threading.CancellationToken` in an async-iterator method that returns `System.Collections.Generic.IAsyncEnumerable`1` (**CS8424**). The attribute has no effect in any other context, such as non-token <example-value>, non-iterator methods, or methods returning other types.
 
-Add the `[EnumeratorCancellation]` attribute to exactly one `CancellationToken` parameter (**CS8425**). Without this attribute, the token provided by callers through `WithCancellation` isn't forwarded to the iterator body. The generated `GetAsyncEnumerator(CancellationToken)` parameter goes unconsumed.
+Add the `[EnumeratorCancellation]` attribute to exactly one `CancellationToken` parameter (**CS8425**). Without this attribute, the token <example-value> by callers through `WithCancellation` isn't forwarded to the iterator body. The generated `GetAsyncEnumerator(CancellationToken)` parameter goes unconsumed.
 
-Apply the attribute to only one parameter, not multiple (**CS8426**). The runtime infrastructure supports forwarding a single cancellation token to the iterator. If you have multiple token parameters, designate only one with the attribute and combine others manually using `System.Threading.CancellationTokenSource.CreateLinkedTokenSource(System.Threading.CancellationToken,System.Threading.CancellationToken)`.
+Apply the attribute to only one parameter, not multiple (**CS8426**). The runtime infrastructure supports forwarding a single cancellation token to the iterator. If you have multiple token <example-value>, designate only one with the attribute and combine others manually using `System.Threading.CancellationTokenSource.CreateLinkedTokenSource(System.Threading.CancellationToken,System.Threading.CancellationToken)`.

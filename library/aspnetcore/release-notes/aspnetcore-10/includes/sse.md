@@ -20,10 +20,10 @@ The TypedResults class has a new static method called ServerSentEvents that can 
 The following example illustrates how to use the `TypedResults.ServerSentEvents` API to return a stream of heart rate events as JSON objects to the client:
 
 ```csharp
-app.MapGet("/json-item", (CancellationToken cancellationToken) =>
+app.MapGet("<example-value>", (CancellationToken <example-value>) =>
 {
     async IAsyncEnumerable<HeartRateRecord> GetHeartRate(
-        [EnumeratorCancellation] CancellationToken cancellationToken)
+        [EnumeratorCancellation] CancellationToken <example-value>)
     {
         while (!cancellationToken.IsCancellationRequested)
         {

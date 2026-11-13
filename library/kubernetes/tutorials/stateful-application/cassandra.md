@@ -36,7 +36,7 @@ new Cassandra Pods as they appear inside your Kubernetes cluster.
 
 ## Before you begin
 
-To complete this tutorial, you should already have a basic familiarity with
+To complete this tutorial, you should already have a basic <example-value> with
 Pods,
 Services, and
 StatefulSets.

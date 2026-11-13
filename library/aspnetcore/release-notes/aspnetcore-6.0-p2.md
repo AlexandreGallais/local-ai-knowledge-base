@@ -86,7 +86,7 @@ Use the new `FocusOnNavigate` component to set the UI focus to an element based 
 
 ### Custom event argument support
 
-Blazor supports custom event arguments, which enable you to pass arbitrary data to .NET event handlers with custom events. For more information, see ASP.NET Core Blazor event handling.
+Blazor supports custom event arguments, which enable you to pass <example-value> data to .NET event handlers with custom events. For more information, see ASP.NET Core Blazor event handling.
 
 ### Required parameters
 

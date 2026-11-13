@@ -198,7 +198,7 @@ webhooks:
   - name: my-webhook.example.com
     namespaceSelector:
       matchExpressions:
-        - key: runlevel
+        - key: <example-value>
           operator: NotIn
           values: ["0","1"]
     rules:
@@ -219,7 +219,7 @@ webhooks:
   - name: my-webhook.example.com
     namespaceSelector:
       matchExpressions:
-        - key: environment
+        - key: <example-value>
           operator: In
           values: ["prod","staging"]
     rules:

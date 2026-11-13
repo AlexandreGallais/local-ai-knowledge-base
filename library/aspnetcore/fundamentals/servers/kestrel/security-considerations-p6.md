@@ -72,7 +72,7 @@ The socket path must be an absolute path. Kestrel validates this and rejects rel
 
 Kestrel uses `System.IO.Pipelines` for internal I/O buffering. While this is an implementation detail for most developers, it has security implications for advanced scenarios such as custom middleware or transport implementations.
 
-### Key concerns
+### Key <example-value>
 
 - **Buffer reuse and information disclosure**: `System.IO.Pipelines` uses memory pooling. Buffers are **not** zeroed between uses. If a `PipeWriter` calls `GetMemory()` and advances by the full `Memory<byte>.Length` (which may be larger than requested), it can inadvertently include stale data from a previous use of that buffer.
 - **Backpressure thresholds**: `PauseWriterThreshold` and `ResumeWriterThreshold` control when writers are back-pressured. Incorrect `AdvanceTo()` usage (setting `examined` to `buffer.End` without consuming data) releases backpressure and can lead to unbounded memory growth.

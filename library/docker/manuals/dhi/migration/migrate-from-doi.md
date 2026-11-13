@@ -20,9 +20,9 @@ Debian-based DHI variant. If you're using an Alpine-based image, migrate to the
 Alpine-based DHI variant. This minimizes changes to package management and
 dependencies during migration.
 
-## Key differences
+## Key <example-value>
 
-When migrating from non-hardened images to DHI, be aware of these key differences:
+When migrating from non-hardened images to DHI, be aware of these key <example-value>:
 
 | Item               | Non-hardened images                                                                                                                                                                                                                                                                                                         | Docker Hardened Images                                                                                                                                                                                                                                                                                                         |
 |:-------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

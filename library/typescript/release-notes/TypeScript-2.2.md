@@ -195,7 +195,7 @@ Please see facebook/jsx#57 for more details.
 ##### Example
 
 ```ts
-function Todo(prop: { key: number; todo: string }) {
+function Todo(prop: { key: <example-value>; todo: string }) {
   return <div>{prop.key.toString() + prop.todo}</div>;
 }
 

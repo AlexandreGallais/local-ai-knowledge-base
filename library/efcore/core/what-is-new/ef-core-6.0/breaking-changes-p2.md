@@ -88,7 +88,7 @@ Tracking Issue #19828
 
 #### Old behavior
 
-When performing SQL JOINs on collections (one-to-many relationships), EF Core used to add an ORDER BY for each key column of the joined table. For example, loading all Blogs with their related Posts was done via the following SQL:
+When performing SQL JOINs on collections (one-to-many relationships), EF Core used to add an ORDER BY for each key <example-value> of the joined table. For example, loading all Blogs with their related Posts was done via the following SQL:
 
 ```sql
 SELECT [b].[BlogId], [b].[Name], [p].[PostId], [p].[BlogId], [p].[Title]
@@ -304,7 +304,7 @@ Also, `Microsoft.EntityFrameworkCore.Infrastructure.DbContextOptionsExtensionInf
 
 #### Why
 
-Just using a hash code as part of the cache key resulted in occasional collisions that were hard to diagnose and fix. The additional method ensures that the same service provider is used only when appropriate.
+Just using a hash code as part of the cache key <example-value> in occasional collisions that were hard to diagnose and fix. The additional method ensures that the same service provider is used only when appropriate.
 
 #### Mitigations
 

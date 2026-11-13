@@ -37,7 +37,7 @@ public void Configure(IApplicationBuilder app, ILoggerFactory loggerfactory)
     app.UseIdentity();
     app.UseFacebookAuthentication(new FacebookOptions {
         AppId = Configuration["auth:facebook:appid"],
-        AppSecret = Configuration["auth:facebook:appsecret"]
+        AppSecret = <example-value>["<example-value>"]
     });
 }
 ```
@@ -58,7 +58,7 @@ public void ConfigureServices(IServiceCollection services)
             .AddFacebook(options =>
             {
                 options.AppId = Configuration["auth:facebook:appid"];
-                options.AppSecret = Configuration["auth:facebook:appsecret"];
+                options.AppSecret = <example-value>["<example-value>"];
             });
 }
 
@@ -113,7 +113,7 @@ Select one of the two options below, and make the necessary changes in `Startup.
                 });
         ```
 
-### JWT bearer Authentication
+### JWT bearer <example-value>
 
 Make the following changes in `Startup.cs`:
 * Replace the `UseJwtBearerAuthentication` method call in the `Configure` method with `UseAuthentication`:
@@ -186,7 +186,7 @@ Make the following changes in `Startup.cs`:
             .AddFacebook(options =>
             {
                 options.AppId = Configuration["auth:facebook:appid"];
-                options.AppSecret = Configuration["auth:facebook:appsecret"];
+                options.AppSecret = <example-value>["<example-value>"];
             });
     ```
 
@@ -206,7 +206,7 @@ Make the following changes in `Startup.cs`:
             .AddGoogle(options =>
             {
                 options.ClientId = Configuration["auth:google:clientid"];
-                options.ClientSecret = Configuration["auth:google:clientsecret"];
+                options.ClientSecret = <example-value>["<example-value>"];
             });
     ```
 
@@ -228,7 +228,7 @@ Make the following changes in `Startup.cs`:
             .AddMicrosoftAccount(options =>
             {
                 options.ClientId = Configuration["auth:microsoft:clientid"];
-                options.ClientSecret = Configuration["auth:microsoft:clientsecret"];
+                options.ClientSecret = <example-value>["<example-value>"];
             });
     ```
 
@@ -247,8 +247,8 @@ Make the following changes in `Startup.cs`:
     services.AddAuthentication()
             .AddTwitter(options =>
             {
-                options.ConsumerKey = Configuration["auth:twitter:consumerkey"];
-                options.ConsumerSecret = Configuration["auth:twitter:consumersecret"];
+                options.ConsumerKey = <example-value>["auth:twitter:consumerkey"];
+                options.ConsumerSecret = <example-value>["<example-value>"];
             });
     ```
 
@@ -326,3 +326,65 @@ There are two variations of Windows authentication:
   > `System.InvalidOperationException`: No authenticationScheme was specified, and there was no DefaultChallengeScheme found.
 
 For more information, see Configure Windows Authentication in ASP.NET Core.
+
+## IdentityCookieOptions instances
+
+A side effect of the 2.0 changes is the switch to using named options instead of cookie options instances. The ability to customize the Identity cookie scheme names is removed.
+
+For example, 1.x projects use constructor injection to pass an `IdentityCookieOptions` parameter into `AccountController.cs` and `ManageController.cs`. The external cookie authentication scheme is accessed from the provided instance:
+
+```csharp
+public AccountController(
+    UserManager<ApplicationUser> userManager,
+    SignInManager<ApplicationUser> signInManager,
+    IOptions<IdentityCookieOptions> identityCookieOptions,
+    IEmailSender emailSender,
+    ISmsSender smsSender,
+    ILoggerFactory loggerFactory)
+{
+    _userManager = userManager;
+    _signInManager = signInManager;
+    _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
+    _emailSender = emailSender;
+    _smsSender = smsSender;
+    _logger = loggerFactory.CreateLogger<AccountController>();
+}
+```
+
+The aforementioned constructor injection becomes unnecessary in 2.0 projects, and the `_externalCookieScheme` field can be deleted:
+
+```csharp
+public AccountController(
+    UserManager<ApplicationUser> userManager,
+    SignInManager<ApplicationUser> signInManager,
+    IEmailSender emailSender,
+    ISmsSender smsSender,
+    ILoggerFactory loggerFactory)
+{
+    _userManager = userManager;
+    _signInManager = signInManager;
+    _emailSender = emailSender;
+    _smsSender = smsSender;
+    _logger = loggerFactory.CreateLogger<AccountController>();
+}
+```
+
+1.x projects used the `_externalCookieScheme` field as follows:
+
+```csharp
+// Clear the existing external cookie to ensure a clean login process
+await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
+```
+
+In 2.0 projects, replace the preceding code with the following. The `IdentityConstants.ExternalScheme` constant can be used directly.
+
+```csharp
+// Clear the existing external cookie to ensure a clean login process
+await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+```
+
+Resolve the newly added `SignOutAsync` call by importing the following namespace:
+
+```csharp
+using Microsoft.AspNetCore.Authentication;
+```

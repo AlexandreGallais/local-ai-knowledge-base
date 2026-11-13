@@ -31,7 +31,7 @@ Provides methods for the storage and retrieval of metadata information in tables
 |GetString Method| Gets the string at the specified index from the table column in the current reference scope. |
 |GetStringHeapSize Method| Gets the size, in bytes, of the string heap. |
 |GetTableIndex Method| Gets the index for the table referenced by the specified token. |
-|GetTableInfo Method| Gets the name, row size, number of rows, number of columns, and key column index of the table at the specified table index. |
+|GetTableInfo Method| Gets the name, row size, number of rows, number of columns, and key <example-value> index of the table at the specified table index. |
 |GetUserString Method|Gets the hard-coded string at the specified index in the string column in the current scope.|
 |GetUserStringHeapSize Method| Gets the size, in bytes, of the user string heap. |
 

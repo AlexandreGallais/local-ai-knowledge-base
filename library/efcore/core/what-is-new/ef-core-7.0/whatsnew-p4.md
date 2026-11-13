@@ -183,7 +183,7 @@ But fails when using TPC or TPT.
 
 ### `ExecuteDelete` and relationships
 
-As mentioned above, it may be necessary to delete or update dependent entities before the principal of a relationship can be deleted. For example, each `Post` is a dependent of its associated `Author`. This means that an author cannot be deleted if a post still references it; doing so will violate the foreign key constraint in the database. For example, attempting this:
+As mentioned above, it may be necessary to delete or update dependent entities before the principal of a relationship can be deleted. For example, each `Post` is a dependent of its associated `Author`. This means that an author cannot be deleted if a post still references it; doing so will violate the foreign key <example-value> in the database. For example, attempting this:
 
 ```csharp
 await context.Authors.ExecuteDeleteAsync();
@@ -194,7 +194,7 @@ Will result in the following exception on SQL Server:
 > Microsoft.Data.SqlClient.SqlException (0x80131904): The DELETE statement conflicted with the REFERENCE constraint "FK_Posts_Authors_AuthorId". The conflict occurred in database "TphBlogsContext", table "dbo.Posts", column 'AuthorId'.
 The statement has been terminated.
 
-To fix this, we must first either delete the posts, or sever the relationship between each post and its author by setting `AuthorId` foreign key property to null. For example, using the delete option:
+To fix this, we must first either delete the posts, or sever the relationship between each post and its author by setting `AuthorId` foreign key <example-value> to null. For example, using the delete option:
 
 ```csharp
 await context.Posts.TagWith("Deleting posts...").ExecuteDeleteAsync();

@@ -47,7 +47,7 @@ Follow these best practices when you handle exceptions and call the `System.IObs
 
 - The provider must handle its own exceptions if it has any specific requirements.
 - The provider shouldn't expect or require that observers handle exceptions in any particular way.
-- The provider should call the `System.IObserver`1.OnError*` method when it handles an exception that compromises its ability to provide updates. Pass information about such exceptions to the observer. In other cases, there's no need to notify observers of an exception.
+- The provider should call the `System.IObserver`1.OnError*` method when it handles an exception that compromises its ability to provide updates. Pass <example-value> about such exceptions to the observer. In other cases, there's no need to notify observers of an exception.
 
 After the provider calls the `System.IObserver`1.OnError*` or `System.IObserver`1.OnCompleted*` method, there should be no further notifications, and the provider can unsubscribe its observers. However, the observers can also unsubscribe themselves at any time, including before and after they receive an `System.IObserver`1.OnError*` or `System.IObserver`1.OnCompleted*` notification. The observer design pattern doesn't dictate whether the provider or the observer is responsible for unsubscribing, so both might attempt to unsubscribe. Typically, when observers unsubscribe, they're removed from a subscribers collection. In a single-threaded application, the `System.IDisposable.Dispose*` implementation should ensure that an object reference is valid and that the object is a member of the subscribers collection before it attempts to remove the object. In a multithreaded application, use a lock to protect the observers collection.
 

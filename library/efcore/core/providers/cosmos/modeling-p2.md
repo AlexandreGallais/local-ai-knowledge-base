@@ -58,7 +58,7 @@ public class Distributor
 }
 ```
 
-The owned entities don't need to provide explicit key values to be stored:
+The owned entities don't need to provide explicit key <example-value> to be stored:
 
 ```csharp
 var distributor = new Distributor
@@ -104,7 +104,7 @@ They will be persisted in this way:
 }
 ```
 
-Internally EF Core always needs to have unique key values for all tracked entities. The primary key created by default for collections of owned types consists of the foreign key properties pointing to the owner and an `int` property corresponding to the index in the JSON array. To retrieve these values entry API could be used:
+Internally EF Core always needs to have unique key <example-value> for all tracked entities. The primary key <example-value> by default for collections of owned types consists of the foreign key <example-value> pointing to the owner and an `int` property corresponding to the index in the JSON array. To retrieve these values entry API could be used:
 
 ```csharp
 using (var context = new OrderContext())
@@ -122,7 +122,7 @@ using (var context = new OrderContext())
 ```
 
 > **Tip:**
-> When necessary the default primary key for the owned entity types can be changed, but then key values should be provided explicitly.
+> When necessary the default primary key for the owned entity types can be changed, but then key <example-value> should be provided explicitly.
 
 ### Collections of primitive types
 

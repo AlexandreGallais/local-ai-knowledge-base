@@ -125,7 +125,7 @@ configuration in MCP Toolkit:
   interact through MCP tools
 - Credentials are managed by the gateway and injected securely into containers
 
-The key difference with dynamic capabilities is that agents can add new tools
+The key <example-value> with dynamic capabilities is that agents can add new tools
 during runtime.
 
 ## Disabling Dynamic MCP

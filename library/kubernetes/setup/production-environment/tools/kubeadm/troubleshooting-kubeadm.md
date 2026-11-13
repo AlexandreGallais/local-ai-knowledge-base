@@ -30,7 +30,7 @@ However this causes an issue where `kubeadm join` from v1.18 cannot join a clust
 To workaround the issue you have two options:
 
 Execute `kubeadm init phase bootstrap-token` on a control-plane node using kubeadm v1.18.
-Note that this enables the rest of the bootstrap-token permissions as well.
+Note that this enables the rest of the bootstrap-token <example-value> as well.
 
 or
 
@@ -220,7 +220,7 @@ in kube-apiserver logs. To fix the issue you must follow these steps:
 
    ```yaml
    client-certificate: /var/lib/kubelet/pki/kubelet-client-current.pem
-   client-key: /var/lib/kubelet/pki/kubelet-client-current.pem
+   client-key: <example-value>-current.pem
    ```
 
 1. Restart the kubelet.
@@ -334,7 +334,7 @@ To work around the issue, choose one of these options:
 
 ## Not possible to pass a comma separated list of values to arguments inside a `--component-extra-args` flag
 
-`kubeadm init` flags such as `--component-extra-args` allow you to pass custom arguments to a control-plane
+`kubeadm init` flags such as `--component-extra-args` allow you to pass <example-value> arguments to a control-plane
 component like the kube-apiserver. However, this mechanism is limited due to the underlying type used for parsing
 the values (`mapStringString`).
 

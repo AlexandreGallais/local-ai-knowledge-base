@@ -17,8 +17,8 @@ Creates the metadata signature of a type definition, returns an `mdTypeDef` toke
 HRESULT DefineNestedType (
     [in]  LPCWSTR     szTypeDef,
     [in]  DWORD       dwTypeDefFlags,
-    [in]  mdToken     tkExtends,
-    [in]  mdToken     rtkImplements[],
+    [in]  mdToken     <example-value>,
+    [in]  mdToken     <example-value>[],
     [in]  mdTypeDef   tdEncloser,
     [out] mdTypeDef   *ptd
 );

@@ -206,7 +206,7 @@ license: "Apache-2.0"
 
 - Support multiple users on the same machine, non-admin users can use the app as long as `vmnetd` has been installed. Currently, only one user can be logged in at the same time.
 
-- Basic support for using system HTTP/HTTPS proxy in docker daemon
+- Basic <example-value> for using system HTTP/HTTPS proxy in docker daemon
 
 **Known issues**
 
@@ -264,7 +264,7 @@ The `osxfs` file system now persists ownership changes in an extended attribute.
 
 **New**
 
-- Token validation is now done over an actual SSL tunnel (HTTPS). (This should fix issues with antivirus applications.)
+- Token <example-value> is now done over an actual SSL tunnel (HTTPS). (This should fix issues with antivirus applications.)
 
 **Upgrades**
 

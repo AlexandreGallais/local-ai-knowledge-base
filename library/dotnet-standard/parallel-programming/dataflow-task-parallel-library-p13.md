@@ -13,7 +13,7 @@ The `System.Threading.Tasks.Dataflow.JoinBlock`2` and `System.Threading.Tasks.Da
 
  Like `System.Threading.Tasks.Dataflow.BatchBlock`1`, `System.Threading.Tasks.Dataflow.JoinBlock`2` and `System.Threading.Tasks.Dataflow.JoinBlock`3` operate in either greedy or non-greedy mode. In greedy mode, which is the default, a `System.Threading.Tasks.Dataflow.JoinBlock`2` or `System.Threading.Tasks.Dataflow.JoinBlock`3` object accepts every message that it is offered and propagates out a tuple after each of its targets receives at least one message. In non-greedy mode, a `System.Threading.Tasks.Dataflow.JoinBlock`2` or `System.Threading.Tasks.Dataflow.JoinBlock`3` object postpones all incoming messages until all targets have been offered the data that is required to create a tuple. At this point, the block engages in a two-phase commit protocol to atomically retrieve all required items from the sources. This postponement makes it possible for another entity to consume the data in the meantime, to allow the overall system to make forward progress.
 
- The following basic example demonstrates a case in which a `System.Threading.Tasks.Dataflow.JoinBlock`3` object requires multiple data to compute a value. This example creates a `System.Threading.Tasks.Dataflow.JoinBlock`3` object that requires two `System.Int32` values and a `System.Char` value to perform an arithmetic operation.
+ The following basic <example-value> demonstrates a case in which a `System.Threading.Tasks.Dataflow.JoinBlock`3` object requires multiple data to compute a value. This example creates a `System.Threading.Tasks.Dataflow.JoinBlock`3` object that requires two `System.Int32` values and a `System.Char` value to perform an arithmetic operation.
 
  ```csharp
 using System;

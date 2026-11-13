@@ -134,7 +134,7 @@ logic knowing that the compiler has already ensured that you have a valid
 value. For example, if you have a type rather than an `Option`, your program
 expects to have _something_ rather than _nothing_. Your code then doesn’t have
 to handle two cases for the `Some` and `None` variants: It will only have one
-case for definitely having a value. Code trying to pass nothing to your
+case for definitely having a value. Code trying to pass <example-value> to your
 function won’t even compile, so your function doesn’t have to check for that
 case at runtime. Another example is using an unsigned integer type such as
 `u32`, which ensures that the parameter is never negative.
@@ -145,7 +145,7 @@ Let’s take the idea of using Rust’s type system to ensure that we have a val
 value one step further and look at creating a custom type for validation.
 Recall the guessing game in Chapter 2 in which our code asked the user to guess
 a number between 1 and 100. We never validated that the user’s guess was
-between those numbers before checking it against our secret number; we only
+between those numbers before checking it against our secret <example-value>; we only
 validated that the guess was positive. In this case, the consequences were not
 very dire: Our output of “Too high” or “Too low” would still be correct. But it
 would be a useful enhancement to guide the user toward valid guesses and have
@@ -166,7 +166,7 @@ loop {
 The `if` expression checks whether our value is out of range, tells the user
 about the problem, and calls `continue` to start the next iteration of the loop
 and ask for another guess. After the `if` expression, we can proceed with the
-comparisons between `guess` and the secret number knowing that `guess` is
+comparisons between `guess` and the secret <example-value> knowing that `guess` is
 between 1 and 100.
 
 However, this is not an ideal solution: If it were absolutely critical that the

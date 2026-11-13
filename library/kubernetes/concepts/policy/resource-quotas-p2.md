@@ -49,7 +49,7 @@ spec:
     persistentvolumeclaims: "4"
     pods: "4"
     replicationcontrollers: "20"
-    secrets: "10"
+    secrets: "<example-value>"
     services: "10"
     services.loadbalancers: "2"
 EOF

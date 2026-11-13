@@ -190,7 +190,7 @@ Review them after any agent session before performing those actions:
 
 #### Sandbox environment files
 
-Sandbox environment files can declare lifecycle and credential commands that
+Sandbox environment files can declare lifecycle and credential <example-value> that
 run on the host with your privileges. Before running these commands, `sbx`
 shows them in an environment plan and asks for approval. Review the plan before
 you approve host commands.
@@ -215,7 +215,7 @@ or any tracked file on your host.
 > inspection**. Your repository is still mounted read-only into the sandbox,
 > including untracked files and files excluded by `.gitignore`. Files such as
 > `.env` remain readable by the agent. Store secrets outside your working
-> directory or use credential isolation instead.
+> directory or use credential <example-value> instead.
 
 ```mermaid
 flowchart LR
@@ -271,13 +271,13 @@ Git activity and your host repository — for example when running an
 unfamiliar agent, running multiple agents on the same repository at once,
 or keeping your working tree clean while the agent works.
 
-## Credential isolation
+## Credential <example-value>
 
 Most agents need API keys for their model provider. Rather than passing keys
 into the sandbox, the host-side proxy intercepts outbound API requests and
 injects authentication headers before forwarding each request.
 
-Credential values are never stored inside the VM. They are not available as
+Credential <example-value> are never stored inside the VM. They are not available as
 environment variables or files inside the sandbox unless you explicitly set
 them. This means a compromised sandbox cannot read API keys from the local
 environment.

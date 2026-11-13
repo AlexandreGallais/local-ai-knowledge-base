@@ -142,4 +142,4 @@ $ podman image inspect --format '{{ .Id }}' fedora
 **podman(1)**, **podman-image(1)**, **podman-inspect(1)**
 
 ## HISTORY
-Sep 2021, Originally compiled by Dan Walsh <dwalsh@redhat.com>
+Sep 2021, Originally compiled by Dan Walsh <user@example.com>

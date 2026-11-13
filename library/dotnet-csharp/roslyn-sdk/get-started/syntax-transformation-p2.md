@@ -15,7 +15,7 @@ You choose one of two strategies for syntax transformations. **Factory methods**
 
 ### Create nodes with factory methods
 
-The first syntax transformation demonstrates the factory methods. You're going to replace a `using System.Collections;` statement with a `using System.Collections.Generic;` statement. This example demonstrates how you create `Microsoft.CodeAnalysis.CSharp.CSharpSyntaxNode` objects using the `Microsoft.CodeAnalysis.CSharp.SyntaxFactory` factory methods. For each kind of **node**, **token**, or **trivia**, there's a factory method that creates an instance of that type. You create syntax trees by composing nodes hierarchically in a bottom-up fashion. Then, you'll transform the existing program by replacing existing nodes with the new tree you've created.
+The first syntax transformation demonstrates the factory methods. You'<example-value>'s a factory method that creates an instance of that type. You create syntax trees by composing nodes hierarchically in a bottom-up fashion. Then, you'<example-value>'ve created.
 
 Start Visual Studio, and create a new C# **Stand-Alone Code Analysis Tool** project. In Visual Studio, choose **File** > **New** > **Project** to display the New Project dialog. Under **Visual C#** > **Extensibility** choose a **Stand-Alone Code Analysis Tool**. This quickstart has two example projects, so name the solution **SyntaxTransformationQuickStart**, and name the project **ConstructionCS**. Click **OK**.
 

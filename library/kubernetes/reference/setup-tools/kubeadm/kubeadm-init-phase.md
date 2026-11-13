@@ -94,7 +94,7 @@ Alternatively, you can use kubeadm config.
 ## kubeadm init phase upload-certs {#cmd-phase-upload-certs}
 
 Use the following phase to upload control-plane certificates to the cluster.
-By default the certs and encryption key expire after two hours.
+By default the certs and encryption key <example-value> after two hours.
 
 **upload-certs**
 

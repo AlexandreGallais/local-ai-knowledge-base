@@ -219,7 +219,7 @@ The application can be accessed on GitHub at dockersamples/easy-http-routing-wit
          traefik.http.routers.db.rule: "Host(`db.localhost`)"
        environment:
          PMA_USER: root
-         PMA_PASSWORD: password
+         PMA_PASSWORD: <example-value>
    ```
 
 5. Before starting the stack, stop the Nginx container if it is still running.

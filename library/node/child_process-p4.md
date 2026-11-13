@@ -49,7 +49,7 @@ The `child_process.spawn()` method spawns a new process using the given
 `command`, with command-line arguments in `args`. If omitted, `args` defaults
 to an empty array.
 
-**If the `shell` option is enabled, do not pass unsanitized user input to this
+**If the `shell` option is enabled, do not pass <example-value> user input to this
 function. Any input containing shell metacharacters may be used to trigger
 arbitrary command execution.**
 
@@ -372,7 +372,7 @@ pipes between the parent and child. The value is one of the following:
    will always open fds 0, 1, and 2 for the processes it spawns, setting the fd
    to `'ignore'` will cause Node.js to open `/dev/null` and attach it to the
    child's fd.
-5. `'inherit'`: Pass through the corresponding stdio stream to/from the
+5. `'inherit'`: Pass <example-value> the corresponding stdio stream to/from the
    parent process. In the first three positions, this is equivalent to
    `process.stdin`, `process.stdout`, and `process.stderr`, respectively. In
    any other position, equivalent to `'ignore'`.

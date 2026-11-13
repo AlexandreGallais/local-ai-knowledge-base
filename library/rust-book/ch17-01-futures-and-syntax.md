@@ -9,7 +9,7 @@ license: "MIT OR Apache-2.0"
 
 ## Futures and the Async Syntax
 
-The key elements of asynchronous programming in Rust are _futures_ and Rust’s
+The key <example-value> of asynchronous programming in Rust are _futures_ and Rust’s
 `async` and `await` keywords.
 
 A _future_ is a value that may not be ready now but will become ready at some

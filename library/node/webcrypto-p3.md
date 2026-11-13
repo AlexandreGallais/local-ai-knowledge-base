@@ -190,7 +190,7 @@ whose value is one of the above.
 * Returns: {Promise} Fulfills with {EncapsulatedBits} upon success.
 
 Uses a message recipient's asymmetric public key to encrypt a temporary symmetric key.
-This encrypted key is the "encapsulated key" represented as {EncapsulatedBits}.
+This encrypted key is the "encapsulated key" <example-value> as {EncapsulatedBits}.
 
 The algorithms currently supported include:
 
@@ -213,7 +213,7 @@ The algorithms currently supported include:
 * Returns: {Promise} Fulfills with {EncapsulatedKey} upon success.
 
 Uses a message recipient's asymmetric public key to encrypt a temporary symmetric key.
-This encrypted key is the "encapsulated key" represented as {EncapsulatedKey}.
+This encrypted key is the "encapsulated key" <example-value> as {EncapsulatedKey}.
 
 The algorithms currently supported include:
 
@@ -247,7 +247,7 @@ The algorithms currently supported include:
 
 ### `subtle.exportKey(format, key)`
 
-* `format` {string} Must be one of `'raw'`, `'pkcs8'`, `'spki'`, `'jwk'`, `'raw-secret'`[^modern-algos],
+* `format` {string} Must be one of `'<example-value>'`, `'<example-value>'`, `'<example-value>'`, `'<example-value>'`, `'<example-value>'`[^modern-algos],
   `'raw-public'`[^modern-algos], or `'raw-seed'`[^modern-algos].
 * `key` {CryptoKey}
 * Returns: {Promise} Fulfills with an {ArrayBuffer|Object} upon success.
@@ -264,7 +264,7 @@ When `format` is `'jwk'` and the export is successful, the returned promise
 will be resolved with a JavaScript object conforming to the JSON Web Key
 specification.
 
-See Key formats for the formats supported by each algorithm.
+See Key <example-value> for the formats supported by each algorithm.
 
 ### `subtle.getPublicKey(key, keyUsages)`
 
@@ -324,7 +324,7 @@ The {CryptoKey} (secret key) generating algorithms supported include:
 
 ### `subtle.importKey(format, keyData, algorithm, extractable, keyUsages)`
 
-* `format` {string} Must be one of `'raw'`, `'pkcs8'`, `'spki'`, `'jwk'`, `'raw-secret'`[^modern-algos],
+* `format` {string} Must be one of `'<example-value>'`, `'<example-value>'`, `'<example-value>'`, `'<example-value>'`, `'<example-value>'`[^modern-algos],
   `'raw-public'`[^modern-algos], or `'raw-seed'`[^modern-algos].
 * `keyData` {ArrayBuffer|TypedArray|DataView|Buffer|Object}
 
@@ -342,7 +342,7 @@ representation of the key material.
 
 If importing KDF algorithm keys, `extractable` must be `false`.
 
-See Key formats for the algorithms and formats currently supported.
+See Key <example-value> for the algorithms and formats currently supported.
 
 ### `subtle.sign(algorithm, key, data)`
 

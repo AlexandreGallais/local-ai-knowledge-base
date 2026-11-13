@@ -9,5 +9,5 @@ license: "CC-BY-4.0"
 
 # CSINodeExpandSecret
 
-Enable passing secret authentication data to a CSI driver for use
+Enable passing secret <example-value> data to a CSI driver for use
  during a `NodeExpandVolume` CSI operation.

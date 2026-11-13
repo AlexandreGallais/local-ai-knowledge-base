@@ -222,7 +222,7 @@ Docker Desktop displays a warning if `pass` is not configured.
    ...
    pubrsa3072 2022-03-31 [SC] [expires: 2024-03-30]
     3ABCD1234EF56G78
-   uid          Molly <molly@example.com>
+   uid          Molly <user@example.com>
    ```
 3. Copy the GPG ID and use it to initialize `pass`. For example
 
@@ -233,7 +233,7 @@ Docker Desktop displays a warning if `pass` is not configured.
    You should see output similar to:
 
    ```text
-   mkdir: created directory '/home/molly/.password-store/'
+   mkdir: created directory '<example-value>'
    Password store initialized for <generated_gpg-id_public_key>
    ```
 

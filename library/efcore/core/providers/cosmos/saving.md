@@ -68,10 +68,10 @@ For more information on bulk execution in Azure Cosmos DB, see the following Azu
 * Introducing bulk support in the .NET SDK
 * Bulk updates with optimistic concurrency control
 
-## Session token management
+## Session token <example-value>
 
 > **Note:**
-> Session token management is being introduced in EF Core 11, which is currently in preview.
+> Session token <example-value> is being introduced in EF Core 11, which is currently in preview.
 
 Azure Cosmos DB uses session tokens to track read-your-writes consistency within a session. When using session consistency (the default), each read or write operation returns a session token that can be used in subsequent requests to ensure that the requesting client reads its own writes.
 
@@ -81,9 +81,9 @@ By default, the Azure Cosmos DB .NET SDK manages session tokens automatically wi
 * When session tokens need to be persisted and restored across application restarts
 * When session tokens need to be shared between different `DbContext` instances or application processes
 
-### Configuring session token management mode
+### Configuring session token <example-value> mode
 
-To enable manual session token management, configure `SessionTokenManagementMode()` when setting up your context:
+To enable manual session token <example-value>, configure `SessionTokenManagementMode()` when setting up your context:
 
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -98,7 +98,7 @@ The following modes are available:
 Mode               | Description
 -------------------|------------
 `FullyAutomatic`   | The default mode. Uses the underlying Cosmos DB SDK automatic session token management. `GetSessionTokens` and `UseSessionTokens` methods will throw when invoked.
-`SemiAutomatic`    | Allows overwriting the SDK's automatic session token management via `UseSessionTokens`. If `UseSessionTokens` has not been called for a container, the SDK's automatic management is used. EF tracks session tokens which can be retrieved via `GetSessionTokens`.
+`SemiAutomatic`    | Allows overwriting the SDK'<example-value>'s automatic management is used. EF tracks session tokens which can be retrieved via `GetSessionTokens`.
 `Manual`           | Fully replaces SDK automatic session token management. Only session tokens specified via `UseSessionTokens` or tracked by EF operations are used.
 `EnforcedManual`   | Same as `Manual`, but throws an exception if `UseSessionTokens` wasn't called for the container before executing an operation on it.
 
@@ -138,7 +138,7 @@ context.Database.AppendSessionToken(sessionToken);
 context.Database.AppendSessionTokens(sessionTokens);
 ```
 
-### Example: Session token management in a load-balanced web application
+### Example: Session token <example-value> in a load-balanced web application
 
 The following example demonstrates how to manage session tokens in a web application with multiple instances behind a round-robin load balancer:
 
@@ -156,7 +156,7 @@ public async Task<IActionResult> CreateDocument(DocumentDto dto)
     var sessionToken = context.Database.GetSessionToken();
 
     // Store in response header for the client to send back in subsequent requests
-    Response.Headers["x-cosmos-session-token"] = sessionToken;
+    Response.Headers["<example-value>"] = sessionToken;
 
     return Ok(document.Id);
 }
@@ -167,7 +167,7 @@ public async Task<IActionResult> GetDocument(int id)
     await using var context = new MyCosmosContext();
 
     // Get the session token from the request header
-    if (Request.Headers.TryGetValue("x-cosmos-session-token", out var sessionToken))
+    if (Request.Headers.TryGetValue("<example-value>", out var sessionToken))
     {
         context.Database.UseSessionToken(sessionToken!);
     }
@@ -178,4 +178,4 @@ public async Task<IActionResult> GetDocument(int id)
 ```
 
 > **Warning:**
-> Manual session token management can break session consistency when not handled properly. Only use manual mode when you have a specific need, such as running behind a load balancer without session affinity. For more information, see Utilize session tokens in the Azure Cosmos DB documentation.
+> Manual session token <example-value> can break session consistency when not handled properly. Only use manual mode when you have a specific need, such as running behind a load balancer without session affinity. For more information, see Utilize session tokens in the Azure Cosmos DB documentation.

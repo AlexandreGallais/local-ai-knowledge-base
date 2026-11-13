@@ -20,7 +20,7 @@ EF 9.0 brings substantial improvements to the EF Core provider for Azure Cosmos 
 
 Each document stored in an Azure Cosmos DB database has a unique resource ID. In addition, each document can contain a "partition key" which determines the logical partitioning of data such that the database can be effectively scaled. More information on choosing partition keys can be found in _Partitioning and horizontal scaling in Azure Cosmos DB_.
 
-In EF 9.0, the Azure Cosmos DB provider is significantly better at identifying partition key comparisons in your LINQ queries, and extracting them out to ensure your queries are only sent to the relevant partition; this can greatly improve the performance of your queries and reduce RU charges. For example:
+In EF 9.0, the Azure Cosmos DB provider is significantly better at identifying partition key <example-value> in your LINQ queries, and extracting them out to ensure your queries are only sent to the relevant partition; this can greatly improve the performance of your queries and reduce RU charges. For example:
 
 ```csharp
 var sessions = await context.Sessions
@@ -93,11 +93,11 @@ modelBuilder
 ```
 
 > **Tip:**
-> This partition key definition follows the example given in _Choose your hierarchical partition keys_ from the Azure Cosmos DB documentation.
+> This partition key <example-value> follows the example given in _Choose your hierarchical partition keys_ from the Azure Cosmos DB documentation.
 
 Notice how, starting with EF Core 9, properties of any mapped type can be used in the partition key. For `bool` and numeric types, like the `int SessionId` property, the value is used directly in the partition key. Other types, like the `Guid UserId` property, are automatically converted to strings.
 
-When querying, EF automatically extracts the partition key values from queries and applies them to the Azure Cosmos DB query API to ensure the queries are constrained appropriately to the fewest number of partitions possible. For example, consider the following LINQ query that supplies all three partition key values in the hierarchy:
+When querying, EF automatically extracts the partition key <example-value> from queries and applies them to the Azure Cosmos DB query API to ensure the queries are constrained appropriately to the fewest number of partitions possible. For example, consider the following LINQ query that supplies all three partition key <example-value> in the hierarchy:
 
 ```csharp
 var tenantId = "Microsoft";
@@ -123,7 +123,7 @@ info: 6/10/2024 19:06:00.017 CosmosEventId.ExecutingSqlQuery[30100] (Microsoft.E
       WHERE ((c["Discriminator"] = "UserSession") AND CONTAINS(c["Username"], "a"))
 ```
 
-Notice that the partition key comparisons have been removed from the `WHERE` clause, and are instead used as the partition key for efficient execution: `["Microsoft","00aa00aa-bb11-cc22-dd33-44ee44ee44ee",7.0]`.
+Notice that the partition key <example-value> have been removed from the `WHERE` clause, and are instead used as the partition key for efficient execution: `["Microsoft","00aa00aa-bb11-cc22-dd33-44ee44ee44ee",7.0]`.
 
 For more information, see the documentation on querying with partition keys.
 

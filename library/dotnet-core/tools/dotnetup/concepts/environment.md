@@ -125,7 +125,7 @@ For PowerShell:
 dotnetup env script --shell pwsh | Invoke-Expression
 ```
 
-`env script` follows the stored configuration when you do not pass selection
+`env script` follows the stored configuration when you do not pass <example-value>
 options. Use `--dotnet`, `--dotnetup`, or both to select the generated
 content.
 

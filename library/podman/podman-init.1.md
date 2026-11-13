@@ -69,4 +69,4 @@ a9b78bcac97e131236930e3fa0be576e95ab89c96a7cb6fb1c821b772db9f623
 **podman(1)**, **podman-start(1)**
 
 ## HISTORY
-April 2019, Originally compiled by Matthew Heon <mheon@redhat.com>
+April 2019, Originally compiled by Matthew Heon <user@example.com>

@@ -20,7 +20,7 @@ connect them to AI agents. It removes friction from tool usage by offering
 secure defaults, easy setup, and support for a growing ecosystem of LLM-based
 clients. It is the fastest way from MCP tool discovery to local execution.
 
-## Key features
+## Key <example-value>
 
 - Cross-LLM compatibility: Works with Claude, Cursor, and other MCP clients.
 - Integrated tool discovery: Browse and launch MCP servers from the Docker MCP Catalog directly in Docker Desktop.

@@ -51,7 +51,7 @@ This command also exists in two other forms for easier use
 
 - **`PACKAGE_NAME`**
 
-  The NuGet package ID of the .NET tool to execute. You can optionally specify a version using the `@` syntax, for example `dotnetsay@2.1.0`.
+  The NuGet package ID of the .NET tool to execute. You can optionally specify a version using the `@` syntax, for example `user@example.com`.
 
 - **`tool-arguments`**
 
@@ -116,7 +116,7 @@ Prints out a description of how to use the command.
 
   Downloads (if necessary) and runs the latest version of the `dotnetsay` tool.
 
-- **`dotnet tool exec dotnetsay@2.1.0`**
+- **`dotnet tool exec user@example.com`**
 
   Downloads (if necessary) and runs version 2.1.0 of the `dotnetsay` tool.
 

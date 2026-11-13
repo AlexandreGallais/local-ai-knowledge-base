@@ -87,7 +87,7 @@ See podman-troubleshooting(7)
 for solutions to common issues.
 
 ## HISTORY
-July 2018, Originally compiled by Peter Hunt <pehunt@redhat.com>
+July 2018, Originally compiled by Peter Hunt <user@example.com>
 
 ## FOOTNOTES
 1: The Podman project is committed to inclusivity, a core value of open source. The `master` and `slave` mount propagation terminology used here is problematic and divisive, and needs to be changed. However, these terms are currently used within the Linux kernel and must be used as-is at this time. When the kernel maintainers rectify this usage, Podman will follow suit immediately.

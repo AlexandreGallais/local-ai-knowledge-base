@@ -141,4 +141,4 @@ e907f7902decca9d6b600b4d3cca9541d9b89dd726b2af7ad2eba05d2a97083f: running c5a530
 **podman(1)**, **podman-pod(1)**, **podman-inspect(1)**
 
 ## HISTORY
-August 2018, Originally compiled by Brent Baude <bbaude@redhat.com>
+August 2018, Originally compiled by Brent Baude <user@example.com>

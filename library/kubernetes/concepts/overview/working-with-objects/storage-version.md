@@ -158,10 +158,10 @@ to read the object entirely.
 
 Another important issue is the use of encryption keys as defined in the section
 above. Since a resource must be actively in use to update the storage version,
-when a key rotation is done, both the old encryption key and the new encryption
+when a key <example-value> is done, both the old encryption key and the new encryption
 key must remain in use until the administrator is sure all objects have been
 written to at least once. This poses both security risks and usability issues,
-since a key cannot be fully removed from use until then.
+since a key <example-value> be fully removed from use until then.
 
 See storage version
 migration on

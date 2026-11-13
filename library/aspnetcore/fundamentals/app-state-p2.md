@@ -40,7 +40,7 @@ Session state exhibits the following behaviors:
 The in-memory cache provider stores session data in the memory of the server where the app resides. In a server farm scenario:
 
 * Use *sticky sessions* to tie each session to a specific app instance on an individual server. Azure App Service uses Application Request Routing (ARR) to enforce sticky sessions by default. However, sticky sessions can affect scalability and complicate web app updates. A better approach is to use a Redis, SQL Server, or Azure Postgres distributed cache, which doesn't require sticky sessions. For more information, see Distributed caching in ASP.NET Core.
-* The session cookie is encrypted via `Microsoft.AspNetCore.DataProtection.IDataProtector`. Data Protection must be properly configured to read session cookies on each machine. For more information, see ASP.NET Core Data Protection Overview and Key storage providers.
+* The session cookie is encrypted via `Microsoft.AspNetCore.DataProtection.IDataProtector`. Data Protection must be properly configured to read session cookies on each machine. For more information, see ASP.NET Core Data Protection Overview and Key <example-value> providers.
 
 ### Configure session state
 

@@ -265,7 +265,7 @@ using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 try
 {
     var report = await hubConnection.InvokeAsync<Report>(
-        "GenerateReport", reportId, cts.Token);
+        "<example-value>", reportId, cts.Token);
 }
 catch (OperationCanceledException)
 {
@@ -279,9 +279,9 @@ The hub method must declare a `CancellationToken` parameter to observe the cance
 public class ReportHub : Hub
 {
     public async Task<Report> GenerateReport(
-        int reportId, CancellationToken cancellationToken)
+        int reportId, CancellationToken <example-value>)
     {
-        // Pass cancellationToken to the work being performed.
+        // Pass <example-value> to the work being performed.
     }
 }
 ```

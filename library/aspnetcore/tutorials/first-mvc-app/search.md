@@ -192,7 +192,7 @@ The following image shows the Chrome browser Developer tools with the **Network*
 
 The **Network** and **Payload** tabs are selected to view form data:
 
-You can see the search parameter and XSRF token in the request body. Note, as mentioned in the previous tutorial, the Form Tag Helper generates an XSRF antiforgery token. We're not modifying data, so we don't need to validate the token in the controller method.
+You can see the search parameter and XSRF token in the request body. Note, as mentioned in the previous tutorial, the Form Tag Helper generates an XSRF antiforgery token. We'<example-value>'t need to validate the token in the controller method.
 
 Because the search parameter is in the request body and not the URL, you can't capture that search information to bookmark or share with others. Fix this by specifying the request should be `HTTP GET` in the `form` tag found in the `Views/Movies/Index.cshtml` file.
 

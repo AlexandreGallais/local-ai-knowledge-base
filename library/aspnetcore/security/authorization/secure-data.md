@@ -20,15 +20,15 @@ This tutorial shows how to create an ASP.NET Core web app with user data protect
 > **Note:**
 > The images in this article don't exactly match the latest templates.
 
-In the following image, the user `rick@contoso.com` is signed in to the web app. This user can view only _Approved_ contacts along with the **Edit**/**Delete**/**Create New** links for the contacts. In this view, only the last record (created by this user) displays the **Edit** and **Delete** links. Other users don't see the last record until a manager or administrator approves the record.
+In the following image, the user `user@example.com` is signed in to the web app. This user can view only _Approved_ contacts along with the **Edit**/**Delete**/**Create New** links for the contacts. In this view, only the last record (created by this user) displays the **Edit** and **Delete** links. Other users don't see the last record until a manager or administrator approves the record.
 
-In the next image, the `manager@contoso.com` user is signed in and has access to the management features:
+In the next image, the `user@example.com` user is signed in and has access to the management features:
 
 A manager can select a contact to see details about the user, as shown in the following image:
 
 The **Approve** and **Reject** options display for managers and administrators only.
 
-In the following image, the `admin@contoso.com` user is signed in and has access to the administration features:
+In the following image, the `user@example.com` user is signed in and has access to the administration features:
 
 An administrator has all privileges. They can read, edit, or delete any contact and change the status of contacts.
 
@@ -60,7 +60,7 @@ This tutorial is advanced. You should be familiar with:
 
 * ASP.NET Core
 * Authentication and ASP.NET Core Identity
-* Account confirmation and password recovery
+* Account confirmation and password <example-value>
 * Authorization
 * Entity Framework Core
 
@@ -239,7 +239,7 @@ public class IndexModel : PageModel
 
 ### Configure the test account
 
-The `SeedData` class creates two accounts: administrator and manager. Use the Secret Manager tool to set a password for these accounts. Set the password from the project directory (the directory containing the _Program.cs_ file):
+The `SeedData` class creates two accounts: administrator and manager. Use the Secret <example-value> tool to set a password for these accounts. Set the password from the project directory (the directory containing the _Program.cs_ file):
 
 ```dotnetcli
 dotnet user-secrets set SeedUserPW <PW>
@@ -278,11 +278,11 @@ public static async Task Initialize(IServiceProvider serviceProvider, string tes
         // dotnet user-secrets set SeedUserPW <pw>
         // The admin user can do anything
 
-        var adminID = await EnsureUser(serviceProvider, testUserPw, "admin@contoso.com");
+        var adminID = await EnsureUser(serviceProvider, testUserPw, "user@example.com");
         await EnsureRole(serviceProvider, adminID, Constants.ContactAdministratorsRole);
 
         // allowed user can create and edit contacts that they create
-        var managerID = await EnsureUser(serviceProvider, testUserPw, "manager@contoso.com");
+        var managerID = await EnsureUser(serviceProvider, testUserPw, "user@example.com");
         await EnsureRole(serviceProvider, managerID, Constants.ContactManagersRole);
 
         SeedDB(context, adminID);
@@ -307,7 +307,7 @@ private static async Task<string> EnsureUser(IServiceProvider serviceProvider,
 
     if (user == null)
     {
-        throw new Exception("The password is probably not strong enough!");
+        throw new Exception("<example-value>");
     }
 
     return user.Id;
@@ -340,7 +340,7 @@ private static async Task<IdentityResult> EnsureRole(IServiceProvider servicePro
 
     if (user == null)
     {
-        throw new Exception("The testUserPw password was probably not strong enough!");
+        throw new Exception("<example-value>");
     }
 
     IR = await userManager.AddToRoleAsync(user, role);
@@ -367,7 +367,7 @@ public static void SeedDB(ApplicationDbContext context, string adminID)
             City = "Redmond",
             State = "WA",
             Zip = "10999",
-            Email = "debra@example.com",
+            Email = "user@example.com",
             Status = ContactStatus.Approved,
             OwnerID = adminID
         },

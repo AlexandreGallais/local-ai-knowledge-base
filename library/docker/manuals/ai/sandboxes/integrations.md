@@ -174,7 +174,7 @@ Host *.sbx
 # <<< docker sandboxes (managed) <<<
 ```
 
-You don't edit this block by hand. Its key entries work as follows:
+You don't edit this block by hand. Its key <example-value> work as follows:
 
 - `Host *.sbx` maps sandbox hostnames to the sandbox daemon. Application host
   pickers don't discover individual sandbox names from this wildcard, so enter

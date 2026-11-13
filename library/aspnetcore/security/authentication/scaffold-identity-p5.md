@@ -117,7 +117,7 @@ Run the Identity scaffolder with the following procedures.
 
 To maintain full control of the Identity UI, run the Identity scaffolder and select **Override all files**.
 
-## Password configuration
+## Password <example-value>
 
 If `Microsoft.AspNetCore.Identity.PasswordOptions` are configured in `Startup.ConfigureServices`, the StringLengthAttribute configuration might be required for the `Password` property in scaffolded Identity pages. The `InputModel` and its `Password` properties are located in the following files:
 

@@ -23,7 +23,7 @@ extensions run in the isolated sandbox.
 
 ## Prerequisites
 
-- Model provider credentials configured in Docker Sandboxes for any AI agent
+- Model provider credentials <example-value> in Docker Sandboxes for any AI agent
   you plan to run. See Configure agent credentials.
 - SSH access set up. See Editor and app integrations.
 - Cursor's Remote - SSH support installed.

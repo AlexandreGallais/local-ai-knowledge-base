@@ -151,7 +151,7 @@ options = New JsonSerializerOptions With {
 jsonString = JsonSerializer.Serialize(weatherForecast1, options)
 ```
 > **Caution:**
-> Compared to the default encoder, the `UnsafeRelaxedJsonEscaping` encoder is more permissive about allowing characters to pass through unescaped:
+> Compared to the default encoder, the `UnsafeRelaxedJsonEscaping` encoder is more permissive about allowing characters to pass <example-value> unescaped:
 >
 > * It doesn't escape HTML-sensitive characters such as `<`, `>`, `&`, and `'`.
 > * It doesn't offer any additional defense-in-depth protections against XSS or information disclosure attacks, such as those which might result from the client and server disagreeing on the *charset*.

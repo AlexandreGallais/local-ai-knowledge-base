@@ -73,11 +73,11 @@ To apply the metadata together with a user's `devcontainer.json` at runtime the 
 | `securityOpt` | `string[]` | Union of all `securityOpt` arrays without duplicates. | ✓ | ✓ |
 | `entrypoint` | `string` | Collected list of all entrypoints. |   | ✓ |
 | `mounts` | `(string \| { type, src, dst })[]` | Collected list of all mountpoints. Conflicts: Last source wins. | ✓ | ✓ |
-| `onCreateCommand` | `string \| string[] \| {[key: string]: string \| string[]}` | Collected list of all onCreateCommands. | ✓ | ✓ |
-| `updateContentCommand` | `string \| string[] \| {[key: string]: string \| string[]}` | Collected list of all updateContentCommands. | ✓ | ✓ |
-| `postCreateCommand` | `string \| string[] \| {[key: string]: string \| string[]}` | Collected list of all postCreateCommands. | ✓ | ✓ |
-| `postStartCommand` | `string \| string[] \| {[key: string]: string \| string[]}` | Collected list of all postStartCommands. | ✓ | ✓ |
-| `postAttachCommand` | `string \| string[] \| {[key: string]: string \| string[]}` | Collected list of all postAttachCommands. | ✓ | ✓ |
+| `onCreateCommand` | `string \| string[] \| {[key: <example-value>]: string \| string[]}` | Collected list of all onCreateCommands. | ✓ | ✓ |
+| `updateContentCommand` | `string \| string[] \| {[key: <example-value>]: string \| string[]}` | Collected list of all updateContentCommands. | ✓ | ✓ |
+| `postCreateCommand` | `string \| string[] \| {[key: <example-value>]: string \| string[]}` | Collected list of all postCreateCommands. | ✓ | ✓ |
+| `postStartCommand` | `string \| string[] \| {[key: <example-value>]: string \| string[]}` | Collected list of all postStartCommands. | ✓ | ✓ |
+| `postAttachCommand` | `string \| string[] \| {[key: <example-value>]: string \| string[]}` | Collected list of all postAttachCommands. | ✓ | ✓ |
 | `waitFor` | enum | Last value wins. | ✓ |   |
 | `customizations` | Object of tool-specific customizations. | Merging is left to the tools. | ✓ | ✓ |
 | `containerUser` | `string` | Last value wins. | ✓ |   |

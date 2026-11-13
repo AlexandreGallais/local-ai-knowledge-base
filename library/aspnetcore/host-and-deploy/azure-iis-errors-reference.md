@@ -140,7 +140,7 @@ Confirm that the proper role and features are enabled. See IIS Configuration.
 
 Troubleshooting:
 
-Check the IIS website **Basic Settings** and the physical app folder. Confirm that the app is in the folder at the IIS website **Physical path**.
+Check the IIS website **Basic <example-value>** and the physical app folder. Confirm that the app is in the folder at the IIS website **Physical path**.
 
 ## Incorrect role, ASP.NET Core Module not installed, or incorrect permissions
 

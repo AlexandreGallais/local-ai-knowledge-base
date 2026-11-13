@@ -16,7 +16,7 @@ Creates a `ManifestResource` structure containing metadata for the specified man
 ```cpp
 HRESULT DefineManifestResource (
     [in] LPCWSTR                szName,
-    [in] mdToken                tkImplementation,
+    [in] mdToken                <example-value>,
     [in] DWORD                  dwOffset,
     [in] DWORD                  dwResourceFlags,
     [out] mdManifestResource    *pmdmr

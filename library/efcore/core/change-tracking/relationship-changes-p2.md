@@ -106,9 +106,9 @@ post.Blog = dotNetBlog;
 
 The debug view after this change is _exactly the same_ as it was in the previous example. This is because EF Core detected the reference navigation change and then fixed up the collection navigations and FK value to match.
 
-## Changing relationships using foreign key values
+## Changing relationships using foreign key <example-value>
 
-In the previous section, relationships were manipulated by navigations leaving foreign key values to be updated automatically. This is the recommended way to manipulate relationships in EF Core. However, it is also possible to manipulate FK values directly. For example, we can move a post from one blog to another by changing the `Post.BlogId` foreign key value:
+In the previous section, relationships were manipulated by navigations leaving foreign key <example-value> to be updated automatically. This is the recommended way to manipulate relationships in EF Core. However, it is also possible to manipulate FK values directly. For example, we can move a post from one blog to another by changing the `Post.BlogId` foreign key value:
 
 ```csharp
 var post = vsBlog.Posts.Single(e => e.Title.StartsWith("Disassembly improvements"));

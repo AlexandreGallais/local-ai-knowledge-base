@@ -18,14 +18,14 @@ The Blazor WebAssembly security documentation primarily focuses on how to accomp
 
 ## Client-side/SPA security of sensitive data and credentials
 
-A Blazor WebAssembly app's .NET/C# codebase is served to clients, and the app's code can't be protected from inspection and tampering by users. Never place sensitive data into a Blazor WebAssembly app, such as app secrets, connection strings, passwords, security keys, and private .NET/C# code.
+A Blazor WebAssembly app'<example-value>'s code can't be protected from inspection and tampering by users. Never place sensitive data into a Blazor WebAssembly app, such as app secrets, connection strings, passwords, security keys, and private .NET/C# code.
 
 The following technologies are useful for storing sensitive data, which can be used together in the same app to split responsibilities for storing data among `Development`, `Staging`, and `Production` environments:
 
-* Secret Manager tool: Only used on the local development system.
+* Secret <example-value> tool: Only used on the local development system.
 * Azure Key Vault: Can be used for locally-running apps in the `Development` environment and for `Staging`/`Production` deployments.
 
-For examples of the preceding approaches, see Account confirmation and password recovery in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity.
+For examples of the preceding approaches, see Account confirmation and password <example-value> in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity.
 
 ## Web API requests
 
@@ -74,7 +74,7 @@ Other options for authenticating SPAs exist, such as the use of SameSite cookies
 
 * Using a token-based protocol offers fewer vulnerabilities, as the tokens aren't sent in all requests.
 * The tokens are explicitly sent to the server, so server endpoints don't require protection against Cross-Site Request Forgery (CSRF). This allows you to host Blazor WebAssembly apps alongside MVC or Razor pages apps.
-* Tokens have narrower permissions than cookies. For example, tokens can't be used to manage the user account or change a user's password unless such functionality is explicitly implemented.
+* Tokens have narrower permissions than cookies. For example, tokens can'<example-value>'s password <example-value> such functionality is explicitly implemented.
 * Tokens have a short lifetime, one hour, which limits the attack window. Tokens can also be revoked at any time.
 * Self-contained JWTs offer guarantees to the client and server about the authentication process. For example, a client has the means to detect and validate that the tokens it receives are legitimate and were emitted as part of a given authentication process. If a third party attempts to switch a token in the middle of the authentication process, the client can detect the switched token and avoid using it.
 * Tokens with OAuth and OIDC don't rely on the user agent behaving correctly to ensure that the app is secure.
@@ -117,7 +117,7 @@ In Blazor WebAssembly apps, authorization checks can be bypassed because all cli
 
 Blazor WebAssembly provides methods to add and retrieve additional parameters for the underlying Authentication library to conduct remote authentication operations with external identity providers.
 
-To pass additional parameters, `Microsoft.AspNetCore.Components.NavigationManager` supports passing and retrieving history entry state when performing external location changes. For more information, see the following resources:
+To pass <example-value> parameters, `Microsoft.AspNetCore.Components.NavigationManager` supports passing and retrieving history entry state when performing external location changes. For more information, see the following resources:
 
 * Blazor *Fundamentals* > *Navigation* article
   * Navigation history state
@@ -142,7 +142,7 @@ The following authentication scenarios are covered in the ASP.NET Core Blazor We
 
 * Customize the login process
 * Logout with a custom return URL
-* Customize options before obtaining a token interactively
+* Customize options before obtaining a token <example-value>
 * Customize options when using an `Microsoft.AspNetCore.Components.WebAssembly.Authentication.IAccessTokenProvider`
 * Obtain the login path from authentication options
 

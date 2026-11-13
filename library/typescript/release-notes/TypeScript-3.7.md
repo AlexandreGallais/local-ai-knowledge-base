@@ -403,7 +403,7 @@ This new relaxation also lets us recursively reference type aliases in tuples as
 The following code which used to error is now valid TypeScript code.
 
 ```ts
-type VirtualNode = string | [string, { [key: string]: any }, ...VirtualNode[]];
+type VirtualNode = string | [string, { [key: <example-value>]: any }, ...VirtualNode[]];
 
 const myNode: VirtualNode = [
   "div",

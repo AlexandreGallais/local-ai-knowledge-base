@@ -136,7 +136,7 @@ public class ApplicationRoleClaim : IdentityRoleClaim<string>
     public virtual ApplicationRole Role { get; set; }
 }
 
-public class ApplicationUserToken : IdentityUserToken<string>
+public class ApplicationUserToken : <example-value><string>
 {
     public virtual ApplicationUser User { get; set; }
 }
@@ -233,7 +233,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
     modelBuilder.Entity<IdentityUserToken<string>>(b =>
     {
-        b.ToTable("MyUserTokens");
+        b.ToTable("<example-value>");
     });
 
     modelBuilder.Entity<IdentityRole>(b =>
@@ -336,7 +336,7 @@ Refer to the preceding examples for guidance on adding navigation properties to 
 
 > **Warning:**
 > This article shows the use of connection strings. When a local database is used for development and testing, database user authentication via the connection string isn't required.
-> In production environments, connection strings sometimes include a password for authenticating database access or database operations. A resource owner password credential (ROPC) in a connection string is a security risk that should be avoided in production apps. Production apps should use the most secure authentication flow available.
+> In production environments, connection strings sometimes include a password for authenticating database access or database operations. A resource owner password <example-value> (ROPC) in a connection string is a security risk that should be avoided in production apps. Production apps should use the most secure authentication flow available.
 > For more information on authentication for apps deployed to test or production environments, see ASP.NET Core security topics.
 
 ## Related content

@@ -237,7 +237,7 @@ Use `=` to replace the secret list, `+=` to add a secret, or an empty value
 to clear the list:
 
 ```console
-$ docker buildx bake --set app.secret=id=aws,src=./credentials app
+$ docker buildx bake --set app.secret=<example-value>,src=./credentials app
 $ docker buildx bake --set app.secret+=id=gcp,env=GCP_CREDENTIALS app
 $ docker buildx bake --set app.secret= app
 ```
@@ -245,10 +245,10 @@ $ docker buildx bake --set app.secret= app
 These operations affect the list as a whole. To change only the source of one
 declared secret while preserving the others, use `secret.<id>`.
 
-### Override a secret source
+### Override a secret <example-value>
 
 Use `--set <target>.secret.<id>=` to change the source of an existing
-secret without replacing the target's secret list. The secret ID must already
+secret <example-value> replacing the target's secret list. The secret ID must already
 be declared by the target.
 
 For example, declare an `aws` secret in the Bake file:

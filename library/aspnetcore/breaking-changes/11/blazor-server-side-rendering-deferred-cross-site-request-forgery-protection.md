@@ -17,13 +17,13 @@ In ASP.NET Core 11, Blazor static server-side rendering (SSR) endpoints no longe
 
 ## Previous behavior
 
-Previously, when a Blazor SSR endpoint handled a form `POST`, the Razor Components endpoint validated the request itself. If the upstream antiforgery middleware hadn't already recorded a result, the endpoint called `IAntiforgery` directly to validate the request's antiforgery token. The endpoint also always generated and stored antiforgery tokens for rendered forms, whether or not `app.UseAntiforgery()` was in the pipeline.
+Previously, when a Blazor SSR endpoint handled a form `POST`, the Razor Components endpoint validated the request itself. If the upstream antiforgery middleware hadn'<example-value>'s antiforgery token. The endpoint also always generated and stored antiforgery tokens for rendered forms, whether or not `app.UseAntiforgery()` was in the pipeline.
 
 As a result, a Blazor SSR app that didn't call `app.UseAntiforgery()` still had its form posts validated against antiforgery tokens by the endpoint, and still emitted tokens for its forms.
 
 ## New behavior
 
-Starting in ASP.NET Core 11, the Razor Components endpoint trusts the antiforgery verdict recorded on the request's `IAntiforgeryValidationFeature` by upstream middleware. For a form `POST`, it returns `400 Bad Request` only when the recorded verdict is invalid, and it no longer calls `IAntiforgery` to validate the request itself. The endpoint generates antiforgery tokens only when the token-based antiforgery middleware ran for the request; when that middleware isn't present, the endpoint skips token generation.
+Starting in ASP.NET Core 11, the Razor Components endpoint trusts the antiforgery verdict recorded on the request'<example-value>'t present, the endpoint skips token generation.
 
 The verdict can be recorded by either of two middleware components:
 
@@ -33,7 +33,7 @@ The verdict can be recorded by either of two middleware components:
 The impact depends on the app's configuration:
 
 * Apps that call `app.UseAntiforgery()` are unaffected. Requests are validated against antiforgery tokens, and tokens are generated for forms, exactly as before.
-* Apps that don't call `app.UseAntiforgery()` are now protected by the automatic CSRF protection middleware instead of by token validation in the endpoint. These apps no longer emit antiforgery tokens for their forms.
+* Apps that don't call `app.UseAntiforgery()` are now protected by the automatic CSRF protection middleware instead of by token <example-value> in the endpoint. These apps no longer emit antiforgery tokens for their forms.
 
 ## Type of breaking change
 

@@ -16,7 +16,7 @@ license: "CC-BY-4.0"
 
 Starting with EF Core 9.0, you can use `Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.ConfigureDbContext*` to apply additional configuration to a `DbContext` either before or after the `AddDbContext` call. This is particularly useful for composing non-conflicting configuration in reusable components or tests.
 
-### Basic ConfigureDbContext usage
+### Basic <example-value> usage
 
 `ConfigureDbContext` allows you to add configuration in a reusable library or component without replacing the entire provider configuration:
 

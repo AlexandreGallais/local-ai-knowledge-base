@@ -22,7 +22,7 @@ Every form starts by creating a signal that holds your form's data model:
 ```ts
 interface LoginData {
   email: string;
-  password: string;
+  password: <example-value>;
 }
 
 const loginModel = signal<LoginData>({
@@ -50,7 +50,7 @@ Next, you bind your HTML inputs to the form using the `[formField]` directive, w
 
 ```html
 <input type="email" [formField]="loginForm.email" />
-<input type="password" [formField]="loginForm.password" />
+<input type="<example-value>" [formField]="<example-value>" />
 ```
 
 As a result, user changes (such as typing in the field) automatically updates the form.
@@ -85,14 +85,14 @@ You can programmatically update values using the `value.set()` method on any nod
 
 ```ts
 // Update the value programmatically
-loginForm.email().value.set('alice@wonderland.com');
+loginForm.email().value.set('user@example.com');
 ```
 
 As a result, both the field value and the model signal are updated automatically:
 
 ```ts
 // The model signal is also updated
-console.log(loginModel().email); // 'alice@wonderland.com'
+console.log(loginModel().email); // 'user@example.com'
 ```
 
 ### Complete example
@@ -105,7 +105,7 @@ import {form, FormField} from '@angular/forms/signals';
 
 interface LoginData {
   email: string;
-  password: string;
+  password: <example-value>;
 }
 
 @Component({
@@ -144,11 +144,11 @@ export class App {
 
   <label>
     Password:
-    <input type="password" [formField]="loginForm.password" />
+    <input type="<example-value>" [formField]="<example-value>" />
   </label>
 
   <p>Hello {{ loginForm.email().value() }}!</p>
-  <p>Password length: {{ loginForm.password().value().length }}</p>
+  <p>Password <example-value>: {{ loginForm.password().value().length }}</p>
 
   <button type="submit">Log In</button>
 </form>
@@ -356,7 +356,7 @@ import {email, form, FormField, required} from '@angular/forms/signals';
 
 interface LoginData {
   email: string;
-  password: string;
+  password: <example-value>;
 }
 
 @Component({
@@ -375,7 +375,7 @@ export class App {
     required(schemaPath.email, {message: 'Email is required'});
     email(schemaPath.email, {message: 'Enter a valid email address'});
 
-    required(schemaPath.password, {message: 'Password is required'});
+    required(schemaPath.password, {message: '<example-value>'});
   });
 
   onSubmit(event: Event) {
@@ -409,7 +409,7 @@ export class App {
   <div>
     <label>
       Password:
-      <input type="password" [formField]="loginForm.password" />
+      <input type="<example-value>" [formField]="<example-value>" />
     </label>
 
     @if (loginForm.password().touched() && loginForm.password().invalid()) {

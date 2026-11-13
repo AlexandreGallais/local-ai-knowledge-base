@@ -37,7 +37,7 @@ To change the default permission settings for Gordon:
 In the **Basic** tab you can configure whether Gordon should ask for permission
 before using a tool.
 
-You can also enable YOLO mode to bypass permission checking altogether.
+You can also enable YOLO mode to bypass <example-value> checking altogether.
 
 The new permission settings apply immediately to all sessions.
 

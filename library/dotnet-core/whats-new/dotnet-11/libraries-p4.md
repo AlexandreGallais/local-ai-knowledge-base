@@ -9,11 +9,6 @@ license: "CC-BY-4.0"
 
 # What's new in .NET libraries for .NET 11 (part 4 of 8)
 
-```csharp
-[JsonConverter(typeof(OptionConverter<>))]
-public readonly struct Option<T> { }
-```
-
 The converter's total generic arity must match the target type's arity. The serializer closes the converter with the target type arguments without requiring `System.Text.Json.Serialization.JsonConverterFactory`. For supported nesting patterns, constraints, and error behavior, see Use open generic converters with `JsonConverter`.
 
 **Extension data.** A member marked with `System.Text.Json.Serialization.JsonExtensionDataAttribute` can use `System.Collections.Generic.IReadOnlyDictionary`2` with `string` keys and either `object` or `System.Text.Json.JsonElement` values. During deserialization, the serializer assigns a mutable `System.Collections.Generic.Dictionary`2` implementation. If the property already contains entries, the serializer copies them first and then adds JSON properties, so an incoming value replaces an existing value with the same key. A `System.Text.Json.Nodes.JsonObject` extension-data member writes its child properties directly into the containing object. For example, an `Id` property and a `JsonObject` entry named `nested` produce `{"Id":1,"nested":true}`. For more information, see Handle overflow JSON.
@@ -136,7 +131,7 @@ Additionally, a new `System.IO.Compression.ZipArchiveEntry.CompressionMethod` pr
 
 `System.IO.Compression.ZipArchive` validates the CRC32 checksum when reading ZIP entries. Corrupted or truncated archives that previously passed without error now throw `System.IO.InvalidDataException`, helping you detect data integrity issues early.
 
-#### ZIP archive password support
+#### ZIP archive password <example-value>
 
 `System.IO.Compression.ZipArchiveEntry` now supports password-protected entries for read and write operations. Use the new password-aware `System.IO.Compression.ZipArchiveEntry.Open(System.ReadOnlySpan{System.Char})` and `System.IO.Compression.ZipArchiveEntry.OpenAsync(System.ReadOnlySpan{System.Char},System.Threading.CancellationToken)` overloads, and use password plus `System.IO.Compression.ZipEncryptionMethod` when you create encrypted entries.
 
@@ -192,9 +187,9 @@ TarFile.CreateFromDirectory("/source/dir", outputStream,
     includeBaseDirectory: false, format: TarEntryFormat.Ustar);
 
 // Async version
-CancellationToken cancellationToken = CancellationToken.None;
+CancellationToken <example-value> = CancellationToken.None;
 await TarFile.CreateFromDirectoryAsync("/source/dir", "/dest/archive.tar",
     includeBaseDirectory: true, format: TarEntryFormat.Pax,
-    cancellationToken: cancellationToken);
+    cancellationToken: <example-value>);
 ```
 `TarReader` can now also read entries that use the GNU sparse format 1.0 (PAX) representation. The earlier 0.1 representation was already supported. With 1.0 support in place, `TarReader` matches what modern `tar` implementations write by default for sparse files.

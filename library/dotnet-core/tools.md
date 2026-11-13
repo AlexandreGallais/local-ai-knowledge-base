@@ -55,7 +55,7 @@ The options you pass on the command line are the options to the command invoked.
 
 The following commands are installed by default:
 
-### Basic commands
+### Basic <example-value>
 
 - `new`
 - `restore`

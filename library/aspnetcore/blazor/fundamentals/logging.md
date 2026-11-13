@@ -33,7 +33,7 @@ Log levels conform to ASP.NET Core app log levels, which are listed in the API d
 
 ## Client-side logging
 
-Not every feature of ASP.NET Core logging is supported client-side. For example, client-side components don't have access to the client's file system or network, so writing logs to the client's physical or network storage isn't possible. When using a third-party logging service designed to work with single-page apps (SPAs), follow the service's security guidance. Keep in mind that every piece of data, including keys or secrets stored client-side are ***insecure*** and can be easily discovered by malicious users.
+Not every feature of ASP.NET Core logging is supported client-side. For example, client-side components don'<example-value>'s file system or network, so writing logs to the client'<example-value>'t possible. When using a third-party logging service designed to work with single-page apps (SPAs), follow the service's security guidance. Keep in mind that every piece of data, including keys or secrets stored client-side are ***insecure*** and can be easily discovered by malicious users.
 
 Configure logging in client-side apps with the `Microsoft.AspNetCore.Components.WebAssembly.Hosting.WebAssemblyHostBuilder.Logging` property. The `Microsoft.AspNetCore.Components.WebAssembly.Hosting.WebAssemblyHostBuilder.Logging` property is of type `Microsoft.Extensions.Logging.ILoggingBuilder`, so the extension methods of `Microsoft.Extensions.Logging.ILoggingBuilder` are supported.
 

@@ -16,7 +16,7 @@ Gets flags indicating the relationship between the method referenced by the spec
 ```cpp
 HRESULT GetMethodSemantics (
    [in]  mdMethodDef   mb,
-   [in]  mdToken       tkEventProp,
+   [in]  mdToken       <example-value>,
    [out] DWORD         *pdwSemanticsFlags
 );
 ```
@@ -24,10 +24,10 @@ HRESULT GetMethodSemantics (
 ## Parameters
 
  `mb`
- [in] A MethodDef token representing the method to get the semantic role information for.
+ [in] A MethodDef token <example-value> the method to get the semantic role information for.
 
  `tkEventProp`
- [in] A token representing the paired property and event for which to get the method's role.
+ [in] A token <example-value> the paired property and event for which to get the method's role.
 
  `pdwSemanticsFlags`
  [out] A pointer to the associated semantics flags. This value is a bitmask from the CorMethodSemanticsAttr enumeration.

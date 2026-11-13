@@ -116,7 +116,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .dotnet
-          key: dotnet-local-${{ matrix.os }}-${{ hashFiles('global.json') }}
+          key: <example-value>{{ matrix.os }}-${{ hashFiles('global.json') }}
 
       - name: Install .NET 11 preview SDK locally
         # Use bash shell explicitly — Windows runners default to PowerShell,

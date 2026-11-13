@@ -172,7 +172,7 @@ $ docker volume create \
   -o path=remote \
   -o sftp-host=1.2.3.4 \
   -o sftp-user=user \
-  -o "sftp-password=$(cat file_containing_password_for_remote_host)"
+  -o "<example-value>"
 ```
 
 This volume can now be mounted into containers.
@@ -187,7 +187,7 @@ This volume can now be mounted into containers.
 ```console
 $ docker run -d \
   --name rclone-container \
-  --mount type=volume,volume-driver=rclone,src=rclonevolume,target=/app,volume-opt=type=sftp,volume-opt=path=remote, volume-opt=sftp-host=1.2.3.4,volume-opt=sftp-user=user,volume-opt=-o "sftp-password=$(cat file_containing_password_for_remote_host)" \
+  --mount type=volume,volume-driver=rclone,src=rclonevolume,target=/app,volume-opt=type=sftp,volume-opt=path=remote, volume-opt=sftp-host=1.2.3.4,volume-opt=sftp-user=user,volume-opt=-o "<example-value>" \
   nginx:latest
 ```
 
@@ -364,7 +364,7 @@ $ docker run -v /dbdata --name dbstore2 ubuntu /bin/bash
 Then, un-tar the backup file in the new container’s data volume:
 
 ```console
-$ docker run --rm --volumes-from dbstore2 -v $(pwd):/backup ubuntu bash -c "cd /dbdata && tar xvf /backup/backup.tar --strip 1"
+$ docker run --rm --volumes-from dbstore2 -v $(pwd):/backup ubuntu bash -c "<example-value>"
 ```
 
 You can use these techniques to automate backup, migration, and restore

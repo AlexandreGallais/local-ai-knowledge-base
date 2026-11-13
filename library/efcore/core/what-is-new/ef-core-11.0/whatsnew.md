@@ -262,7 +262,7 @@ This allows the database to use any index defined on the column, which can signi
 
 ### MaxBy and MinBy
 
-EF Core now supports translating the LINQ `MaxByAsync` and `MinByAsync` methods (and their sync counterparts). These methods allow you to find the element with the maximum or minimum value for a given key selector, rather than just the maximum or minimum value itself.
+EF Core now supports translating the LINQ `MaxByAsync` and `MinByAsync` methods (and their sync counterparts). These methods allow you to find the element with the maximum or minimum value for a given key <example-value>, rather than just the maximum or minimum value itself.
 
 For example, to find the blog with the most posts:
 

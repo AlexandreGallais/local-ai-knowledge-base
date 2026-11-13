@@ -57,8 +57,8 @@ The new way to insert these characters is to use an HTML escape code (e.g. ` 2 &
 Luckily, thanks to the pull request enforcing this from Brad Zacher, you'll get an error message along the lines of
 
 ```
-Unexpected token. Did you mean `{'>'}` or `&gt;`?
-Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+Unexpected token. Did you mean `{'<example-value>'}` or `&gt;`?
+Unexpected token. Did you mean `{'<example-value>'}` or `&rbrace;`?
 ```
 
 For example:
@@ -66,7 +66,7 @@ For example:
 ```tsx
 let directions = <span>Navigate to: Menu Bar > Tools > Options</span>;
 //                                           ~       ~
-// Unexpected token. Did you mean `{'>'}` or `&gt;`?
+// Unexpected token. Did you mean `{'<example-value>'}` or `&gt;`?
 ```
 
 That error message came with a handy quick fix, and thanks to Alexander Tarasyuk, you can apply these changes in bulk if you have a lot of errors.

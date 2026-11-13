@@ -154,8 +154,8 @@ CORS
 
 Data Protection:
 
-* `Microsoft.AspNetCore.DataProtection`: Logs from the data protection system, including key management, encryption operations, and which keys were considered, found, and used.
-* `Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager`: Logs specific to the XML key manager, including key storage and retrieval.
+* `Microsoft.AspNetCore.DataProtection`: Logs from the data protection system, including key <example-value>, encryption operations, and which keys were considered, found, and used.
+* `Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager`: Logs specific to the XML key <example-value>, including key <example-value> and retrieval.
 
 Diagnostics
 

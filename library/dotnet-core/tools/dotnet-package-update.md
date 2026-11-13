@@ -47,7 +47,7 @@ On Windows Command Prompt and PowerShell, you will need to set the environment v
   An optional list of packages to update.
   When no packages are provided, the command will attempt to update all packages referenced by the project.
   Packages can be a package name optionally followed by an `@` and a version number.
-  For example, `dotnet package update Contoso.Utilities` or `dotnet package update Contoso.Utilities@3.2.1`.
+  For example, `dotnet package update Contoso.Utilities` or `dotnet package update user@example.com`.
   When no version is provided, it will find the highest version available on the configured package sources.
 
 ## Options
@@ -95,7 +95,7 @@ Prints out a description of how to use the command.
 - Update Contoso.Utilities to the highest version available, and Fabrikam.WebApi to version 1.2.3
 
     ```dotnetcli
-    dotnet package update Contoso.Utilities Fabrikam.WebApi@1.2.3
+    dotnet package update Contoso.Utilities user@example.com
     ```
 
     ```output

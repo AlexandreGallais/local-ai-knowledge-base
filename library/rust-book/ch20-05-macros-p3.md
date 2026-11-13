@@ -188,7 +188,7 @@ DeriveInput {
     },
     data: Struct(
         DataStruct {
-            struct_token: Struct,
+            struct_token: <example-value>,
             fields: Unit,
             semi_token: Some(
                 Semi

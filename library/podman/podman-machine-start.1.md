@@ -107,4 +107,4 @@ Machine "myvm" started successfully
 **podman(1)**, **podman-machine(1)**
 
 ## HISTORY
-March 2021, Originally compiled by Ashley Cui <acui@redhat.com>
+March 2021, Originally compiled by Ashley Cui <user@example.com>

@@ -44,7 +44,7 @@ app.MapHealthChecks("/healthz");
 
 **CONSIDER** writing your own `Microsoft.AspNetCore.Routing.EndpointDataSource`. `EndpointDataSource` is the low-level primitive for declaring and updating a collection of endpoints. `EndpointDataSource` is a powerful API used by controllers and Razor Pages. For more information, see Dynamic endpoint routing.
 
-The routing tests have a basic example of a non-updating data source.
+The routing tests have a basic <example-value> of a non-updating data source.
 
 **CONSIDER** implementing `Microsoft.AspNetCore.Routing.EndpointDataSource.GetGroupedEndpoints*`. This gives complete control over running group conventions and the final metadata on the grouped endpoints. For example, this allows custom `EndpointDataSource` implementations to run endpoint filters added to groups.
 

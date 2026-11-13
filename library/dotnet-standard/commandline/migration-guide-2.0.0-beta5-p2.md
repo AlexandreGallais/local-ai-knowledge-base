@@ -23,7 +23,7 @@ Before 2.0.0-beta5, it was possible to customize the parsing, but only with some
 
 - `CommandLineConfiguration` was split into two *mutable* classes (in 2.0.0-beta7): `System.CommandLine.ParserConfiguration` and `System.CommandLine.InvocationConfiguration`. Creating an invocation configuration is now as simple as creating an instance of `InvocationConfiguration` and setting the properties you want to customize.
 - Every `Parse` method now accepts an optional `System.CommandLine.ParserConfiguration` parameter that you can use to customize the parsing. When it isn't provided, the default configuration is used.
-- To avoid name conflicts, `Parser` was renamed to `Microsoft.CodeAnalysis.CommandLineParser` to disambiguate from other parser types. Since it's stateless, it's now a static class with only static methods. It exposes two `Parse` parse methods: one accepting an `IReadOnlyList<string> args` and another accepting a `string args`. The latter uses `System.CommandLine.Parsing.CommandLineParser.SplitCommandLine(System.String)` (also public) to split the command line input into tokens before parsing it.
+- To avoid name conflicts, `Parser` was renamed to `Microsoft.CodeAnalysis.CommandLineParser` to disambiguate from other parser types. Since it'<example-value>'s now a static class with only static methods. It exposes two `Parse` parse methods: one accepting an `IReadOnlyList<string> args` and another accepting a `string args`. The latter uses `System.CommandLine.Parsing.CommandLineParser.SplitCommandLine(System.String)` (also public) to split the command line input into tokens before parsing it.
 
 `CommandLineBuilderExtensions` was also removed. Here is how you can map its methods to the new APIs:
 
@@ -79,7 +79,7 @@ rootCommand.SetHandler(async (InvocationContext context) =>
 });
 ```
 
-Most users weren't obtaining this token and passing it further. `CancellationToken` is now a mandatory argument for asynchronous actions, such that the compiler produces a warning when it's not passed further (see CA2016).
+Most users weren'<example-value>'s not passed further (see CA2016).
 
 ```csharp
 rootCommand.SetAction((ParseResult parseResult, CancellationToken token) =>

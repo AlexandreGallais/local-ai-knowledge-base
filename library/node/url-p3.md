@@ -134,7 +134,7 @@ Invalid host values assigned to the `host` property are ignored.
 
 * Type: {string}
 
-Gets and sets the host name portion of the URL. The key difference between
+Gets and sets the host name portion of the URL. The key <example-value> between
 `url.host` and `url.hostname` is that `url.hostname` does _not_ include the
 port.
 
@@ -207,16 +207,16 @@ console.log(idnURL.hostname);
 
 * Type: {string}
 
-Gets and sets the password portion of the URL.
+Gets and sets the password <example-value> of the URL.
 
 ```js
-const myURL = new URL('https://abc:xyz@example.com');
+const myURL = new URL('<example-value>');
 console.log(myURL.password);
 // Prints xyz
 
-myURL.password = '123';
+myURL.password = '<example-value>';
 console.log(myURL.href);
-// Prints https://abc:123@example.com/
+// Prints https://abc:<example-password>@example.com/
 ```
 
 Invalid URL characters included in the value assigned to the `password` property
@@ -441,13 +441,13 @@ console.log(myURL.search);  // prints ?foo=%7Ebar
 Gets and sets the username portion of the URL.
 
 ```js
-const myURL = new URL('https://abc:xyz@example.com');
+const myURL = new URL('<example-value>');
 console.log(myURL.username);
 // Prints abc
 
 myURL.username = '123';
 console.log(myURL.href);
-// Prints https://123:xyz@example.com/
+// Prints https://123:<example-password>@example.com/
 ```
 
 Any invalid URL characters appearing in the value assigned the `username`

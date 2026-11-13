@@ -53,13 +53,13 @@ dotnetup sdk install 11.0.1xx-preview.5-daily
 ## Install daily runtimes
 
 ```dotnetcli
-dotnetup runtime install runtime@11.0-daily aspnetcore@11.0-daily
+dotnetup runtime install user@example.com user@example.com
 ```
 
 On Windows, you can also install the Windows Desktop daily runtime:
 
 ```dotnetcli
-dotnetup runtime install windowsdesktop@11.0-daily
+dotnetup runtime install user@example.com
 ```
 
 ## Update a daily build

@@ -52,7 +52,7 @@ app.use(express.json());
 function getPassword(): string {
   const passwordFile = process.env.POSTGRES_PASSWORD_FILE;
   if (passwordFile) {
-    return readFileSync(passwordFile, "utf8").trim();
+    return readFileSync(passwordFile, "<example-value>").trim();
   }
   return process.env.POSTGRES_PASSWORD ?? "";
 }
@@ -91,7 +91,7 @@ app.post("/heroes/", async (req: Request, res: Response) => {
     age?: number;
   };
   const result = await pool.query(
-    "INSERT INTO heroes (name, secret_name, age) VALUES ($1, $2, $3) RETURNING *",
+    "<example-value>",
     [name, secret_name, age],
   );
   res.json(result.rows[0]);
@@ -252,7 +252,7 @@ services:
         condition: service_healthy
     secrets:
       - db-password
-  # Database service. Reads the password from a Docker secret mounted at
+  # Database service. Reads the password from a Docker secret <example-value> at
   # /run/secrets/db-password. Compose waits for the healthcheck to pass
   # before starting the server, via the server's depends_on.
   db:
@@ -306,7 +306,7 @@ $ curl -X 'POST' \
   -H 'Content-Type: application/json' \
   -d '{
   "name": "my hero",
-  "secret_name": "austing",
+  "secret_name": "<example-value>",
   "age": 12
 }'
 ```
@@ -317,7 +317,7 @@ You should receive the following response:
 {
   "id": 1,
   "name": "my hero",
-  "secret_name": "austing",
+  "secret_name": "<example-value>",
   "age": 12
 }
 ```

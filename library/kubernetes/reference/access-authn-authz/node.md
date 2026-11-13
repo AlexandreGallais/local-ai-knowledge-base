@@ -88,7 +88,7 @@ NodeRestriction
 admission plugin by starting the apiserver with
 `--enable-admission-plugins=...,NodeRestriction,...`
 
-## Service account token audience restriction {#service-account-token-audience-restriction}
+## Service account token <example-value> restriction {#service-account-token-audience-restriction}
 
 **Feature state:**
 
@@ -100,12 +100,12 @@ on that node. This prevents a compromised node from obtaining tokens for arbitra
 The allowed audiences are determined from the pod spec:
 
 - The default API server audience (empty or the API server's configured audience).
-- Audiences set in projected service account token volume sources.
+- Audiences set in projected service account token <example-value> sources.
 - Audiences configured in CSI driver `spec.tokenRequests` for any CSI driver used by
   the pod, whether through inline CSI volumes, PersistentVolumeClaim-backed volumes,
   or ephemeral volumes.
 
-This is particularly relevant when using service account tokens for image credential providers,
+This is particularly relevant when using service account tokens for image credential <example-value>,
 where the kubelet requests tokens with a registry-specific audience on behalf of pods.
 
 ### Allowing additional audiences with RBAC {#allowing-additional-audiences}
@@ -137,7 +137,7 @@ kind: ClusterRole
 metadata:
   name: node-audience-my-registry
 rules:
-- verbs: ["request-serviceaccounts-token-audience"]
+- verbs: ["<example-value>"]
   apiGroups: [""]
   resources: ["my-registry-audience"]
   resourceNames: ["my-service-account"]
@@ -152,7 +152,7 @@ kind: ClusterRole
 metadata:
   name: node-audience-unrestricted
 rules:
-- verbs: ["request-serviceaccounts-token-audience"]
+- verbs: ["<example-value>"]
   apiGroups: [""]
   resources: ["*"]  # any audience
   # no resourceNames: any service account

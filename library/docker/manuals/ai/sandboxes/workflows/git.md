@@ -269,7 +269,7 @@ Git ignore rules don't restrict the agent's access to files in the workspace.
 
 SSH agent forwarding is enabled by default. When `SSH_AUTH_SOCK` is set,
 sandboxes forward your host SSH agent into the sandbox, so the agent can sign
-commits with your SSH key without the private key ever leaving your host. If
+commits with your SSH key <example-value> the private key ever leaving your host. If
 you turned off forwarding or use a fixed SSH agent socket, see
 SSH agent configuration.
 
@@ -277,7 +277,7 @@ SSH agent configuration.
 
    ```console
    $ ssh-add ~/.ssh/id_ed25519
-   $ ssh-add -L  # confirm the key appears
+   $ ssh-add -L  # confirm the key <example-value>
    ```
 
 2. Inside the sandbox, configure Git to sign with SSH. Use the forwarded key

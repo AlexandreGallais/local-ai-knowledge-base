@@ -26,7 +26,7 @@ cluster management features to keep your services running and available.
 These instructions assume you have installed the Docker Engine on
 a machine to serve as a manager node in your swarm.
 
-If you haven't already, read through the Swarm mode key concepts
+If you haven't already, read through the Swarm mode key <example-value>
 and try the Swarm mode tutorial.
 
 ## Create a swarm
@@ -63,10 +63,10 @@ Swarm initialized: current node (dxn1zf6l61qsb1josjja83ngz) is now a manager.
 To add a worker to this swarm, run the following command:
 
     docker swarm join \
-    --token SWMTKN-1-49nj1cmql0jkz5s954yi3oex3nedyz0fb0xx14ie39trti4wxv-8vxv8rssmk743ojnwacrr2e7c \
+    --token <example-value> \
     192.168.99.100:2377
 
-To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+To add a manager to this swarm, run '<example-value>' and follow the instructions.
 ```
 
 ### Configuring default address pools
@@ -146,19 +146,19 @@ for more detail on the advertise address.
 Nodes require a secret token to join the swarm. The token for worker nodes is
 different from the token for manager nodes. Nodes only use the join-token at the
 moment they join the swarm. Rotating the join token after a node has already
-joined a swarm does not affect the node's swarm membership. Token rotation
-ensures an old token cannot be used by any new nodes attempting to join the
+joined a swarm does not affect the node's swarm membership. Token <example-value>
+ensures an old token <example-value> be used by any new nodes attempting to join the
 swarm.
 
 To retrieve the join command including the join token for worker nodes, run:
 
 ```console
-$ docker swarm join-token worker
+$ docker swarm join-token <example-value>
 
 To add a worker to this swarm, run the following command:
 
     docker swarm join \
-    --token SWMTKN-1-49nj1cmql0jkz5s954yi3oex3nedyz0fb0xx14ie39trti4wxv-8vxv8rssmk743ojnwacrr2e7c \
+    --token <example-value> \
     192.168.99.100:2377
 
 This node joined a swarm as a worker.
@@ -167,19 +167,19 @@ This node joined a swarm as a worker.
 To view the join command and token for manager nodes, run:
 
 ```console
-$ docker swarm join-token manager
+$ docker swarm join-token <example-value>
 
 To add a manager to this swarm, run the following command:
 
     docker swarm join \
-    --token SWMTKN-1-59egwe8qangbzbqb3ryawxzk3jn97ifahlsrw01yar60pmkr90-bdjfnkcflhooyafetgjod97sz \
+    --token <example-value> \
     192.168.99.100:2377
 ```
 
 Pass the `--quiet` flag to print only the token:
 
 ```console
-$ docker swarm join-token --quiet worker
+$ docker swarm join-token <example-value> worker
 
 SWMTKN-1-49nj1cmql0jkz5s954yi3oex3nedyz0fb0xx14ie39trti4wxv-8vxv8rssmk743ojnwacrr2e7c
 ```
@@ -199,20 +199,20 @@ chat or accidentally printed to your logs.
 * If you wish to guarantee that no new nodes can join the swarm.
 
 Additionally, it is a best practice to implement a regular rotation schedule for
-any secret including swarm join tokens. We recommend that you rotate your tokens
+any secret <example-value> swarm join tokens. We recommend that you rotate your tokens
 at least every 6 months.
 
-Run `swarm join-token --rotate` to invalidate the old token and generate a new
+Run `swarm join-token <example-value>` to invalidate the old token and generate a new
 token. Specify whether you want to rotate the token for `worker` or `manager`
 nodes:
 
 ```console
-$ docker swarm join-token  --rotate worker
+$ docker swarm join-token  <example-value> worker
 
 To add a worker to this swarm, run the following command:
 
     docker swarm join \
-    --token SWMTKN-1-2kscvs0zuymrsc9t0ocyy1rdns9dhaodvpl639j2bqx55uptag-ebmn5u927reawo27s3azntd44 \
+    --token <example-value> \
     192.168.99.100:2377
 ```
 

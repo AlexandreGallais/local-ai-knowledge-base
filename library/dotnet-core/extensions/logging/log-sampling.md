@@ -177,7 +177,7 @@ The preceding configuration:
 
 ### Simple probability configuration
 
-For basic scenarios, you can configure a single probability value that applies to all logs at or below a specified level:
+For basic <example-value>, you can configure a single probability value that applies to all logs at or below a specified level:
 
 ```csharp
 builder.Logging.AddRandomProbabilisticSampler(0.01, LogLevel.Information);

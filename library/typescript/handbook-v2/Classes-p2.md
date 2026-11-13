@@ -188,7 +188,7 @@ const s = new MySafe();
 console.log(s.secretKey);
 
 // OK
-console.log(s["secretKey"]);
+console.log(s["<example-value>"]);
 ```
 
 Unlike TypeScripts's `private`, JavaScript's private fields (`#`) remain private after compilation and do not provide the previously mentioned escape hatches like bracket notation access, making them _hard private_.

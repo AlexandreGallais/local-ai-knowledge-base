@@ -13,7 +13,7 @@ A Compose file can use variables to offer more flexibility. If you want to quick
 between image tags to test multiple versions, or want to adjust a volume source to your local
 environment, you don't need to edit the Compose file each time, you can just set variables that insert values into your Compose file at runtime.
 
-Interpolation can also be used to insert values into your Compose file at runtime, which is then used to pass variables into your container's environment
+Interpolation can also be used to insert values into your Compose file at runtime, which is then used to pass <example-value> into your container's environment
 
 Below is a simple example:
 
@@ -78,7 +78,7 @@ An `.env` file in Docker Compose is a text file used to define variables that sh
 
 The `.env` file is the default method for setting variables. The `.env` file should be placed at the root of the project directory next to your `compose.yaml` file. For more information on formatting an environment file, see Syntax for environment files.
 
-Basic example:
+Basic <example-value>:
 
 ```console
 $ cat .env
@@ -222,7 +222,7 @@ $ docker compose --env-file ./config/.env.dev up
   ```
 - You can override specific environment variables from the command line when starting containers.
   ```console
-  $ docker compose --env-file .env.dev up -e DATABASE_URL=mysql://new_user:new_password@new_db:3306/new_database
+  $ docker compose --env-file .env.dev up -e DATABASE_URL=mysql://new_user:<example-password>@new_db:3306/new_database
   ```
 
 ### local `.env` file versus <project directory> `.env` file
@@ -237,7 +237,7 @@ If the values in this file define the `COMPOSE_FILE` pre-defined variable, which
 in a project directory being set to another folder, Compose loads a second `.env` file,
 if present. This second `.env` file has a lower precedence.
 
-This mechanism makes it possible to invoke an existing Compose project with a custom set of variables as overrides, without the need to pass environment variables by the command line.
+This mechanism makes it possible to invoke an existing Compose project with a custom set of variables as overrides, without the need to pass <example-value> variables by the command line.
 
 ```console
 $ cat .env

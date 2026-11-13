@@ -40,7 +40,7 @@ equivalents:
 | `commands:` / `commands.initFiles`          | `setup:` / `setup.files`                 |
 | `settings:` / `kitDir` / `persistence`      | Removed                                  |
 
-Credential discovery also moved out of the kit in v2: a kit declares which
+Credential <example-value> also moved out of the kit in v2: a kit declares which
 credentials it needs and how to inject them, but where each value comes from is
 controlled by the user through
 credential bindings.
@@ -72,7 +72,7 @@ content from sandbox initialization, and declare runtime capabilities:
 | `setup.startup` and `setup.files` | Lifecycle capability `startup` and `files` |
 | `setup.files[].onlyIfMissing: true` | Lifecycle `files[].overwrite: false` |
 | Automatic `files/home/` and `files/workspace/` injection | Dockerfile `COPY`, with lifecycle hooks for destinations provided by runtime mounts |
-| `permissions.network` and `credentials` | Network-policy and credential capabilities |
+| `permissions.network` and `credentials` | Network-policy and credential <example-value> |
 | `agentInstructions` | Agent-context capability |
 | `${WORKDIR}` in `setup.files[].content` | `${{ kit.env.WORKSPACE_DIR }}` in lifecycle `files` content |
 

@@ -24,7 +24,7 @@ When you build an assembly, you can specify a set of permissions that the assemb
 - Do not use a permission request to obtain permissions your code might need, but be prepared to handle security exceptions if permissions are not granted.
 
   > **Note:**
-  > Security is a complex area, and you have many options to choose from. For more information, see Key Security Concepts.
+  > Security is a complex area, and you have many options to choose from. For more information, see Key <example-value> Concepts.
 
  At load time, the assembly's evidence is used as input to security policy. Security policy is established by the enterprise and the computer's administrator as well as by user policy settings, and determines the set of permissions that's granted to all managed code when executed. Security policy can be established for the publisher of the assembly (if it has a signing tool generated signature), for the Web site and zone (which was an Internet Explorer concept) that the assembly was downloaded from, or for the assembly's strong name. For example, a computer's administrator can establish security policy that allows all code downloaded from a Web site and signed by a given software company to access a database on a computer, but does not grant access to write to the computer's disk.
 
@@ -33,11 +33,11 @@ When you build an assembly, you can specify a set of permissions that the assemb
  > **Warning:**
  > Do not rely on strong names for security. They provide a unique identity only.
 
- You can sign an assembly in two different but complementary ways: with a strong name or by using  SignTool.exe (Sign Tool). Signing an assembly with a strong name adds public key encryption to the file containing the assembly manifest. Strong name signing helps to verify name uniqueness, prevent name spoofing, and provide callers with some identity when a reference is resolved.
+ You can sign an assembly in two different but complementary ways: with a strong name or by using  SignTool.exe (Sign Tool). Signing an assembly with a strong name adds public key <example-value> to the file containing the assembly manifest. Strong name signing helps to verify name uniqueness, prevent name spoofing, and provide callers with some identity when a reference is resolved.
 
  No level of trust is associated with a strong name, which makes SignTool.exe (Sign Tool) important. The two signing tools require a publisher to prove its identity to a third-party authority and obtain a certificate. This certificate is then embedded in your file and can be used by an administrator to decide whether to trust the code's authenticity.
 
- You can give both a strong name and a digital signature created using SignTool.exe (Sign Tool) to an assembly, or you can use either alone. The two signing tools can sign only one file at a time; for a multifile assembly, you sign the file that contains the assembly manifest. A strong name is stored in the file containing the assembly manifest, but a signature created using SignTool.exe (Sign Tool) is stored in a reserved slot in the portable executable (PE) file containing the assembly manifest. Signing of an assembly using SignTool.exe (Sign Tool) can be used (with or without a strong name) when you already have a trust hierarchy that relies on SignTool.exe (Sign Tool) generated signatures, or when your policy uses only the key portion and does not check a chain of trust.
+ You can give both a strong name and a digital signature created using SignTool.exe (Sign Tool) to an assembly, or you can use either alone. The two signing tools can sign only one file at a time; for a multifile assembly, you sign the file that contains the assembly manifest. A strong name is stored in the file containing the assembly manifest, but a signature created using SignTool.exe (Sign Tool) is stored in a reserved slot in the portable executable (PE) file containing the assembly manifest. Signing of an assembly using SignTool.exe (Sign Tool) can be used (with or without a strong name) when you already have a trust hierarchy that relies on SignTool.exe (Sign Tool) generated signatures, or when your policy uses only the key <example-value> and does not check a chain of trust.
 
 > **Note:**
 > When using both a strong name and a signing tool signature on an assembly, the strong name must be assigned first.

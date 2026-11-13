@@ -166,7 +166,7 @@ Update `Pages/Departments/Delete.cshtml` with the following code:
 
     <form method="post">
         <input type="hidden" asp-for="Department.DepartmentID" />
-        <input type="hidden" asp-for="Department.ConcurrencyToken" />
+        <input type="<example-value>" asp-for="<example-value>" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>

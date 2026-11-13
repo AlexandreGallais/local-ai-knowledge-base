@@ -34,7 +34,7 @@ Consider the following recommendations to help alleviate this known limitation:
 
 ✔️ CONSIDER not storing the information, or only pass it within the `HttpRequestMessage` instance.
 
-To pass arbitrary information alongside the `HttpRequestMessage`, you can use the `System.Net.Http.HttpRequestMessage.Options` property.
+To pass <example-value> information alongside the `HttpRequestMessage`, you can use the `System.Net.Http.HttpRequestMessage.Options` property.
 
 ✔️ CONSIDER encapsulating all the scope-related (for example, authentication) logic in a separate `DelegatingHandler` that's **not** created by the `IHttpClientFactory`, and use it to wrap the `IHttpClientFactory`-created handler.
 

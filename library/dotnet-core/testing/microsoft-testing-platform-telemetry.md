@@ -54,7 +54,7 @@ It doesn't extract the contents of any data files accessed or created by your ap
 
 The data is sent securely to Microsoft servers using Azure Monitor technology, held under restricted access, and published under strict security controls from secure Azure Storage systems.
 
-Protecting your privacy is important to Microsoft! If you suspect the telemetry is collecting sensitive data or the data is being insecurely or inappropriately handled, file an issue in the microsoft/testfx GitHub repository or send an email to dotnet@microsoft.com for investigation.
+Protecting your privacy is important to Microsoft! If you suspect the telemetry is collecting sensitive data or the data is being insecurely or inappropriately handled, file an issue in the microsoft/testfx GitHub repository or send an email to user@example.com for investigation.
 
 The telemetry feature collects the following data points:
 

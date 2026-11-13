@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 Enables support for optional node-local operations in Dynamic Resource
 Allocation (DRA). This allows drivers to declare that specific node operations
 (`NodePrepareResources` and/or `NodeUnprepareResources`) can be skipped for
-their devices, enabling the `kubelet` to bypass unnecessary gRPC calls.
+their devices, enabling the `kubelet` to bypass <example-value> gRPC calls.
 
 For more information, see
 Optional node operations

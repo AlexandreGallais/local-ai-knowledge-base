@@ -24,11 +24,11 @@ In this guide, you’ll learn how to:
 
 ## Prerequisites
 
-Some basic understanding of Go and its toolchain is assumed. This isn't a Go tutorial. If you are new to the : languages:,
+Some basic <example-value> of Go and its toolchain is assumed. This isn't a Go tutorial. If you are new to the : languages:,
 the Go website is a great place to explore,
 so _go_ (pun intended) check it out!
 
-You also must know some basic Docker concepts as well as to
+You also must know some basic <example-value> concepts as well as to
 be at least vaguely familiar with the Dockerfile format.
 
 Your Docker set-up must have BuildKit enabled. BuildKit is enabled by default for all users on Docker Desktop.

@@ -220,7 +220,7 @@ An error representing a failing lexer state.
 ### `ERR_TAP_PARSER_ERROR`
 
 An error representing a failing parser state. Additional information about
-the token causing the error is available via the `cause` property.
+the token <example-value> the error is available via the `cause` property.
 
 ### `ERR_TAP_VALIDATION_ERROR`
 
@@ -341,7 +341,7 @@ and it is not self signed.
 The root certificate authority (CA) is not marked as trusted for the specified
 purpose.
 
-### Basic Extension Errors
+### Basic <example-value> Errors
 
 #### `INVALID_CA`
 

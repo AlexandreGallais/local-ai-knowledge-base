@@ -159,7 +159,7 @@ You can use any of the following ways to test while developing a command-line ap
   scl --file scl.runtimeconfig.json
   ```
 
-* Use `dotnet run` and pass option values to the app instead of to the `run` command by including them after `--`, as in the following example:
+* Use `dotnet run` and pass <example-value> values to the app instead of to the `run` command by including them after `--`, as in the following example:
 
   ```dotnetcli
   dotnet run -- --file bin/Debug/net9.0/scl.runtimeconfig.json

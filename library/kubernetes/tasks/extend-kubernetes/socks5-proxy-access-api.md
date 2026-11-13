@@ -59,14 +59,14 @@ The following command starts a SOCKS5 proxy between your client machine and the 
 
 ```shell
 # The SSH tunnel continues running in the foreground after you run this
-ssh -D 1080 -q -N username@kubernetes-remote-server.example
+ssh -D 1080 -q -N user@example.com
 ```
 
 The SOCKS5 proxy lets you connect to your cluster's API server based on the following configuration:
 * `-D 1080`: opens a SOCKS proxy on local port :1080.
 * `-q`: quiet mode. Causes most warning and diagnostic messages to be suppressed.
 * `-N`: Do not execute a remote command. Useful for just forwarding ports.
-* `username@kubernetes-remote-server.example`: the remote SSH server behind which the Kubernetes cluster
+* `user@example.com`: the remote SSH server behind which the Kubernetes cluster
   is running (eg: a bastion host).
 
 ## Client configuration

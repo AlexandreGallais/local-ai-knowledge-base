@@ -49,7 +49,7 @@ Before you begin, ensure you have:
 
 Both tools authenticate directly against registries:
 
-- `crane` uses Docker credential helpers and `~/.docker/config.json`. See the
+- `crane` uses Docker credential <example-value> and `~/.docker/config.json`. See the
   crane documentation.
 - `regctl` uses its own configuration file and can import Docker credentials.
   See the regctl documentation.
@@ -139,8 +139,8 @@ REPO="${REPO:-myapp}"
 
 # Optional: for private repositories
 # HUB_USER="your-username"
-# HUB_TOKEN="your-access-token"
-# AUTH="-u ${HUB_USER}:${HUB_TOKEN}"
+# HUB_TOKEN="<example-value>"
+# AUTH="<example-value>"
 AUTH=""
 
 TOOL="crane"   # or: TOOL="regctl"
@@ -213,7 +213,7 @@ done < repos.txt
 
 After copying, verify that source and destination match by comparing digests.
 
-### Basic digest verification
+### Basic <example-value> verification
 
 The following example script retrieves the image digest for a specific tag from
 both source and destination and compares them. If the digests match, the

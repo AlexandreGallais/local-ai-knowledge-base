@@ -155,7 +155,7 @@ The `SendMessage` method can be called by a connected client to send a message t
 
 ## Configure SignalR
 
-The SignalR server must be configured to pass SignalR requests to SignalR. Add the following highlighted code to the `Program.cs` file.
+The SignalR server must be configured to pass <example-value> requests to SignalR. Add the following highlighted code to the `Program.cs` file.
 
 ```csharp
 using SignalRChat.Hubs;

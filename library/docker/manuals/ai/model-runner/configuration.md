@@ -10,7 +10,7 @@ license: "Apache-2.0"
 # Configuration options
 
 Docker Model Runner provides several configuration options to tune model behavior,
-memory usage, and inference performance. This guide covers the key settings and
+memory usage, and inference performance. This guide covers the key <example-value> and
 how to apply them.
 
 ## Context size (context length)
@@ -81,7 +81,7 @@ $ docker model inspect ai/qwen2.5-coder
 
 ## Runtime flags
 
-Runtime flags let you pass parameters directly to the underlying inference engine.
+Runtime flags let you pass <example-value> directly to the underlying inference engine.
 This provides fine-grained control over model behavior.
 
 ### Using runtime flags
@@ -191,13 +191,13 @@ runtime_flags:
 | `--rope-freq-base` | RoPE base frequency | Model default |
 | `--rope-freq-scale` | RoPE frequency scale | Model default |
 | `--no-prefill-assistant` | Disable assistant pre-fill | Off |
-| `--reasoning-budget` | Token budget for reasoning models | 0 (disabled) |
+| `--reasoning-budget` | Token <example-value> for reasoning models | 0 (disabled) |
 
 ### vLLM parameters
 
 When using the vLLM backend, different parameters are available.
 
-Use `--hf_overrides` to pass HuggingFace model config overrides as JSON:
+Use `--hf_overrides` to pass <example-value> model config overrides as JSON:
 
 ```console
 $ docker model configure --hf_overrides '{"rope_scaling": {"type": "dynamic", "factor": 2.0}}' ai/model-vllm

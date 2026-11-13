@@ -171,7 +171,7 @@ Then, to generate the `server-cert.pem` certificate for this example, run:
 
 ```bash
 openssl pkcs12 -certpbe AES-256-CBC -export -out server-cert.pem \
-  -inkey client-key.pem -in client-cert.pem
+  -inkey <example-value>-key.pem -in client-cert.pem
 ```
 
 ## `tls.connect(path, options)`

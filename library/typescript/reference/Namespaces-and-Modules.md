@@ -98,7 +98,7 @@ This is confusing and annoying for consumers of your module:
   let t = new shapes.Shapes.Triangle(); // shapes.Shapes?
   ```
 
-A key feature of modules in TypeScript is that two different modules will never contribute names to the same scope.
+A key <example-value> of modules in TypeScript is that two different modules will never contribute names to the same scope.
 Because the consumer of a module decides what name to assign it, there's no need to proactively wrap up the exported symbols in a namespace.
 
 To reiterate why you shouldn't try to namespace your module contents, the general idea of namespacing is to provide logical grouping of constructs and to prevent name collisions.

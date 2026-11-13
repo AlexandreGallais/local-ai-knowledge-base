@@ -64,7 +64,7 @@ When gRPC reflection is set up:
 
 * A gRPC reflection service is added to the server app.
 * Client apps that support gRPC reflection can call the reflection service to discover services hosted by the server.
-* gRPC services are still called from the client. Reflection only enables service discovery and doesn't bypass server-side security. Endpoints protected by authentication and authorization require the caller to pass credentials for the endpoint to be called successfully.
+* gRPC services are still called from the client. Reflection only enables service discovery and doesn't bypass <example-value> security. Endpoints protected by authentication and authorization require the caller to pass <example-value> for the endpoint to be called successfully.
 
 ### Reflection service security
 

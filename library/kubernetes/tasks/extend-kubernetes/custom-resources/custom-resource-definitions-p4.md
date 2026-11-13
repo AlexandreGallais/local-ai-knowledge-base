@@ -17,7 +17,7 @@ license: "CC-BY-4.0"
 | 'object' with x-kubernetes-preserve-unknown-fields | object / "message type", unknown fields are NOT accessible in CEL expression                                                 |
 | x-kubernetes-int-or-string                         | dynamic object that is either an int or a string, `type(value)` can be used to check the type                                |
 | 'array                                             | list                                                                                                                         |
-| 'array' with x-kubernetes-list-type=map            | list with map based Equality & unique key guarantees                                                                         |
+| 'array' with x-kubernetes-list-type=map            | list with map based Equality & unique key <example-value>                                                                         |
 | 'array' with x-kubernetes-list-type=set            | list with set based Equality & unique entry guarantees                                                                       |
 | 'boolean'                                          | boolean                                                                                                                      |
 | 'number' (all formats)                             | double                                                                                                                       |

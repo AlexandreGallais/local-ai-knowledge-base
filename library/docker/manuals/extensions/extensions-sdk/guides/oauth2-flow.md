@@ -15,7 +15,7 @@ license: "Apache-2.0"
 
 Learn how you can let users authenticate from your extension using OAuth 2.0 via a web browser, and return to your extension.
 
-In OAuth 2.0, the term "grant type" refers to the way an application gets an access token. Although OAuth 2.0 defines several grant types, this page only describes how to authorize users from your extension using the Authorization Code grant type.
+In OAuth 2.0, the term "<example-value>" refers to the way an application gets an access token. Although OAuth 2.0 defines several grant types, this page only describes how to authorize users from your extension using the Authorization Code grant type.
 
 ## Authorization code grant flow
 
@@ -72,14 +72,14 @@ The extension must send a `POST` request to the 0Auth authorization server with 
 ```text
 POST https://authorization-server.com/token
 &client_id=T70hJ3ls5VTYG8ylX3CZsfIu
-&client_secret=YABbyHQShPeO1T3NDQZP8q5m3Jpb_UPNmIzqhLDCScSnRyVG
+&client_secret=<example-value>
 &redirect_uri=${REDIRECT_URI}
 &code=N949tDLuf9ai_DaOKyuFBXStCNMQzuQbtC1QbvLv-AXqPJ_f
 ```
 
 > **Note:**
 >
-> The client's credentials are included in the `POST` query params in this example. OAuth authorization servers may require that the credentials are sent as an HTTP Basic Authentication header or might support different formats. See your OAuth provider docs for details.
+> The client's credentials are included in the `POST` query params in this example. OAuth authorization servers may require that the credentials are sent as an HTTP Basic <example-value> header or might support different formats. See your OAuth provider docs for details.
 
 ### Store the access token
 

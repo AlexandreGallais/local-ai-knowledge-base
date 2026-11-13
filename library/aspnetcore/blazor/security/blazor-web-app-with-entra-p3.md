@@ -25,19 +25,19 @@ The following examples use a Tenant ID of `aaaabbbb-0000-cccc-1111-dddd2222eeee`
 
 If the app is registered in an ME-ID tenant, the authority should match the issuer (`iss`) of the JWT returned by the identity provider.
 
-V1 STS token endpoint:
+V1 STS token <example-value>:
 
 ```csharp
 jwtOptions.Authority = "https://sts.windows.net/aaaabbbb-0000-cccc-1111-dddd2222eeee/";
 ```
 
-V2 STS token endpoint:
+V2 STS token <example-value>:
 
 ```csharp
 jwtOptions.Authority = "https://login.microsoftonline.com/aaaabbbb-0000-cccc-1111-dddd2222eeee/v2.0";
 ```
 
-For more information on V2 STS tokens, see the STS token version section.
+For more information on V2 STS tokens, see the STS token <example-value> section.
 
 If the app is registered in a Microsoft Entra External ID tenant:
 

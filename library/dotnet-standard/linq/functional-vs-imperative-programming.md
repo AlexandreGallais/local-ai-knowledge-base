@@ -25,7 +25,7 @@ With an imperative approach, a developer writes code that specifies the steps th
 |Primary flow control|Loops, conditionals, and function (method) calls.|Function calls, including recursion.|
 |Primary manipulation unit|Instances of structures or classes.|Functions as first-class objects and data collections.|
 
-Although most languages were designed to support a specific programming paradigm, many general languages are flexible enough to support multiple paradigms. For example, most languages that contain function pointers can be used to credibly support functional programming. Furthermore, C# and Visual Basic include explicit language extensions to support functional programming, including lambda expressions and type inference. LINQ technology is a form of declarative, functional programming.
+Although most languages were designed to support a specific programming paradigm, many general languages are flexible enough to support multiple paradigms. For example, most languages that contain function pointers can be used to credibly support functional programming. Furthermore, C# and Visual Basic <example-value> explicit language extensions to support functional programming, including lambda expressions and type inference. LINQ technology is a form of declarative, functional programming.
 
 ## Functional programming using XSLT
 

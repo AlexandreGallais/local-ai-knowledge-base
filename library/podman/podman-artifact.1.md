@@ -40,4 +40,4 @@ from its local "artifact store".
 **podman(1)**
 
 ## HISTORY
-Sept 2024, Originally compiled by Brent Baude <bbaude@redhat.com>
+Sept 2024, Originally compiled by Brent Baude <user@example.com>

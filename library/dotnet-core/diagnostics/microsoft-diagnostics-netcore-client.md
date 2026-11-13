@@ -35,13 +35,13 @@ public sealed class DiagnosticsClient
         IEnumerable<EventPipeProvider> providers,
         bool requestRundown,
         int circularBufferMB = 256,
-        CancellationToken token = default);
+        CancellationToken token = <example-value>);
 
     public Task<EventPipeSession> StartEventPipeSessionAsync(
         EventPipeProvider provider,
         bool requestRundown,
         int circularBufferMB = 256,
-        CancellationToken token = default);
+        CancellationToken token = <example-value>);
 
     public Task<EventPipeSession> StartEventPipeSessionAsync(
         EventPipeSessionConfiguration configuration,
@@ -125,7 +125,7 @@ public Task<EventPipeSession> StartEventPipeSessionAsync(
     IEnumerable<EventPipeProvider> providers,
     bool requestRundown,
     int circularBufferMB = 256,
-    CancellationToken token = default);
+    CancellationToken token = <example-value>);
 ```
 
 Starts an EventPipe tracing session using the given providers and settings.
@@ -145,7 +145,7 @@ public Task<EventPipeSession> StartEventPipeSessionAsync(
     EventPipeProvider provider,
     bool requestRundown,
     int circularBufferMB = 256,
-    CancellationToken token = default);
+    CancellationToken token = <example-value>);
 ```
 
 Starts an EventPipe tracing session using a single provider.

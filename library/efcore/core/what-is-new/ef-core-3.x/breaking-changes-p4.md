@@ -41,7 +41,7 @@ Tracking Issue #14617
 
 #### Old behavior
 
-Before EF Core 3.0, `string` and `byte[]` key properties could be used without explicitly setting a non-null value.
+Before EF Core 3.0, `string` and `byte[]` key <example-value> could be used without explicitly setting a non-null value.
 In such a case, the key value would be generated on the client as a GUID, serialized to bytes for `byte[]`.
 
 #### New behavior
@@ -50,11 +50,11 @@ Starting with EF Core 3.0 an exception will be thrown indicating that no key val
 
 #### Why
 
-This change was made because client-generated `string`/`byte[]` values generally aren't useful, and the default behavior made it hard to reason about generated key values in a common way.
+This change was made because client-generated `string`/`byte[]` values generally aren't useful, and the default behavior made it hard to reason about generated key <example-value> in a common way.
 
 #### Mitigations
 
-The pre-3.0 behavior can be obtained by explicitly specifying that the key properties should use generated values if no other non-null value is set.
+The pre-3.0 behavior can be obtained by explicitly specifying that the key <example-value> should use generated values if no other non-null value is set.
 For example, with the fluent API:
 
 ```csharp

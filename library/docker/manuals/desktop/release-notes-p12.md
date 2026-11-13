@@ -193,7 +193,7 @@ license: "Apache-2.0"
 
 #### For all platforms
 
-- Includes a fix for AuthZ Plugin Bypass Regression in Docker Engine. For more information, see CVE-2024-41110.
+- Includes a fix for AuthZ Plugin Bypass <example-value> in Docker Engine. For more information, see CVE-2024-41110.
 
 #### For Windows
 

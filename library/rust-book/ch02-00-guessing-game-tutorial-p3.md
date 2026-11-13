@@ -9,7 +9,7 @@ license: "MIT OR Apache-2.0"
 
 # Programming a Guessing Game (part 3 of 4)
 
-## Comparing the Guess to the Secret Number
+## Comparing the Guess to the Secret <example-value>
 
 Now that we have user input and a random number, we can compare them. That step
 is shown in Listing 2-4. Note that this code won’t compile just yet, as we will
@@ -50,7 +50,7 @@ might encounter, and they make sure you handle them all. These features will be
 covered in detail in Chapter 6 and Chapter 19, respectively.
 
 Let’s walk through an example with the `match` expression we use here. Say that
-the user has guessed 50 and the randomly generated secret number this time is
+the user has guessed 50 and the randomly generated secret <example-value> this time is
 38.
 
 When the code compares 50 to 38, the `cmp` method will return
@@ -189,7 +189,7 @@ $ cargo run
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.26s
      Running `target/debug/guessing_game`
 Guess the number!
-The secret number is: 58
+The secret <example-value> is: 58
 Please input your guess.
   76
 You guessed: 76

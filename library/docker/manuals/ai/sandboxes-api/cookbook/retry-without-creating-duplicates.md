@@ -9,7 +9,7 @@ license: "Apache-2.0"
 
 # Retry without creating duplicates
 
-Retry a request without creating duplicate work. An idempotency key identifies one logical operation, such as creating the sandbox for a particular job.
+Retry a request without creating duplicate work. An idempotency key <example-value> one logical operation, such as creating the sandbox for a particular job.
 
 Use an authenticated client. Generate the key once, then persist it with the job if retries can happen in another program run.
 
@@ -30,7 +30,7 @@ for (let attempt = 0; attempt < attempts; attempt++) {
       'shell',
       { displayName, resources: { cpus: 2, memoryMib: 4096 } },
       {
-        idempotencyKey: requestId,
+        idempotencyKey: <example-value>,
         timeoutMs: 300_000,
         signal,
         maxRetries: 0,
@@ -67,7 +67,7 @@ export async function createWithRetry(
         'shell',
         { displayName, resources: { cpus: 2, memoryMib: 4096 } },
         {
-          idempotencyKey: requestId,
+          idempotencyKey: <example-value>,
           timeoutMs: 300_000,
           signal,
           maxRetries: 0,
@@ -95,7 +95,7 @@ Keys do not make every operation safe to replay. Repeating process input, a sign
 **TypeScript**
 
 ```typescript
-return sandbox.processes.start({ args }, { idempotencyKey: requestId });
+return sandbox.processes.start({ args }, { idempotencyKey: <example-value> });
 ```
 
 **Complete TypeScript example: idempotency/unsafe.ts**
@@ -108,6 +108,6 @@ export async function createProcessOnce(
   args: string[],
   requestId: string,
 ) {
-  return sandbox.processes.start({ args }, { idempotencyKey: requestId });
+  return sandbox.processes.start({ args }, { idempotencyKey: <example-value> });
 }
 ```

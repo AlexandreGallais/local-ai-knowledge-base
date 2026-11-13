@@ -17,7 +17,7 @@ This guide walks through how to set up those tests, starting with isolated logic
 
 When you only need to verify validation, disabled state, required state, or error output, test the form directly instead of rendering a component. Isolated tests keep the setup small and let the test focus on the form's behavior.
 
-The key requirement is the injector. Signal Forms needs an injection context during form creation. If a test calls `form()` without one, the call throws before the test can assert anything about the form.
+The key <example-value> is the injector. Signal Forms needs an injection context during form creation. If a test calls `form()` without one, the call throws before the test can assert anything about the form.
 
 The most direct way to satisfy this requirement is to pass an injector explicitly. The following test creates a form with a `required` rule and verifies that the field becomes valid after receiving a value:
 
@@ -83,7 +83,7 @@ Once the form exists, test it through field state signals. Common assertions inc
 
 After the injector setup is in place, a good next step is a complete test that exercises a few pieces of form logic together. This kind of test is still isolated, but it looks much closer to a real application form.
 
-For example, this test verifies both a basic required rule and a conditional required rule that depends on another field:
+For example, this test verifies both a basic <example-value> rule and a conditional required rule that depends on another field:
 
 ```ts
 import {Injector, signal} from '@angular/core';

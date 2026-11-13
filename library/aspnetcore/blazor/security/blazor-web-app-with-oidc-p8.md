@@ -18,12 +18,12 @@ The approach described in this section configures ME-ID to send groups and roles
 Configure the role claim type (`Microsoft.IdentityModel.Tokens.TokenValidationParameters.RoleClaimType`) in `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions` of `Program.cs`. Set the value to `roles`:
 
 ```csharp
-oidcOptions.TokenValidationParameters.RoleClaimType = "roles";
+oidcOptions.TokenValidationParameters.RoleClaimType = "<example-value>";
 ```
 
 Although you can't assign roles to groups without an ME-ID Premium account, you can assign roles to users and receive role claims for users with a standard Azure account. The guidance in this section doesn't require an ME-ID Premium account.
 
-When working with the default directory, follow the guidance in Add app roles to your application and receive them in the token (ME-ID documentation) to configure and assign roles. If you aren't working with the default directory, edit the app's manifest in the Azure portal to establish the app's roles manually in the `appRoles` entry of the manifest file. For more information, see Configure the role claim (ME-ID documentation).
+When working with the default directory, follow the guidance in Add app roles to your application and receive them in the token (ME-ID documentation) to configure and assign roles. If you aren'<example-value>'s manifest in the Azure portal to establish the app's roles manually in the `appRoles` entry of the manifest file. For more information, see Configure the role claim (ME-ID documentation).
 
 A user's Azure security groups arrive in `groups` claims, and a user's built-in ME-ID administrator role assignments arrive in well-known IDs (`wids`) claims. Values for both claim types are GUIDs. When received by the app, these claims can be used to establish role and policy authorization in Razor components.
 
@@ -102,19 +102,19 @@ At this point, Razor components can adopt role-based and policy-based authorizat
 * Security groups appear in `groups` claims, one claim per group. The security group GUIDs appear in the Azure portal when you create a security group and are listed when selecting **Identity** > **Overview** > **Groups** > **View**.
 * Built-in ME-ID administrator roles appear in `wids` claims, one claim per role. The `wids` claim with a value of `b79fbf4d-3ef9-4689-8143-76b194e85509` is always sent by ME-ID for non-guest accounts of the tenant and doesn't refer to an administrator role. Administrator role GUIDs (*role template IDs*) appear in the Azure portal when selecting **Roles & admins**, followed by the ellipsis (**…**) > **Description** for the listed role. The role template IDs are also listed in Microsoft Entra built-in roles (Entra documentation).
 
-## Alternative: Duende Access Token Management
+## Alternative: Duende Access Token <example-value>
 
 In the sample app, a custom cookie refresher (`CookieOidcRefresher.cs`) implementation is used to perform automatic non-interactive token refresh. An alternative solution can be found in the open source `Duende.AccessTokenManagement.OpenIdConnect` package.
 
-Duende Access Token Management provides automatic access token management features for .NET worker and ASP.NET Core web apps, including Blazor, without the need to add a custom cookie refresher.
+Duende Access Token <example-value> provides automatic access token <example-value> features for .NET worker and ASP.NET Core web apps, including Blazor, without the need to add a custom cookie refresher.
 
-After the package is installed, remove the `CookieOidcRefresher` and add access token management for the currently logged-in user in the `Program` file:
+After the package is installed, remove the `CookieOidcRefresher` and add access token <example-value> for the currently logged-in user in the `Program` file:
 
 ```csharp
-// Add services for token management
+// Add services for token <example-value>
 builder.Services.AddOpenIdConnectAccessTokenManagement();
 
-// Register a typed HTTP client with token management support
+// Register a typed HTTP client with token <example-value> support
 builder.Services.AddHttpClient<InvoiceClient>(client =>
     {
         client.BaseAddress = new Uri("https://api.example.com/invoices/");
@@ -122,9 +122,9 @@ builder.Services.AddHttpClient<InvoiceClient>(client =>
     .AddUserAccessTokenHandler();
 ```
 
-The typed HTTP client (or named HTTP client, if implemented) has automatic access token lifetime management on behalf of the currently logged-in user, including transparent refresh token management.
+The typed HTTP client (or named HTTP client, if implemented) has automatic access token <example-value> management on behalf of the currently logged-in user, including transparent refresh token management.
 
-For more information, see the Duende Access Token Management documentation for Blazor.
+For more information, see the Duende Access Token <example-value> documentation for Blazor.
 
 ## Host in a web farm or cluster
 
@@ -133,5 +133,5 @@ Server-side Blazor Web Apps hosted in a web farm or cluster of machines must ado
 We also recommend using a shared Data Protection key ring in production, even when the app uses the Interactive WebAssembly render mode exclusively for client-side rendering (no Blazor circuits). For more information, see the following articles:
 
 * Configure ASP.NET Core Data Protection
-* Key storage providers in ASP.NET Core
-* Key encryption at rest in Windows and Azure using ASP.NET Core
+* Key <example-value> providers in ASP.NET Core
+* Key <example-value> at rest in Windows and Azure using ASP.NET Core

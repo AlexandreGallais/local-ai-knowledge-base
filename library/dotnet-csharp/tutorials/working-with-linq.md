@@ -17,7 +17,7 @@ This tutorial teaches you features in .NET and the C# language. You learn how to
 - Write methods that you can easily use in LINQ queries.
 - Distinguish between eager and lazy evaluation.
 
-You learn these techniques by building an application that demonstrates one of the basic skills of any magician: the faro shuffle. A faro shuffle is a technique where you split a card deck exactly in half, and then the shuffle interleaves each card from each half to rebuild the original deck.
+You learn these techniques by building an application that demonstrates one of the basic <example-value> of any magician: the faro shuffle. A faro shuffle is a technique where you split a card deck exactly in half, and then the shuffle interleaves each card from each half to rebuild the original deck.
 
 Magicians use this technique because every card is in a known location after each shuffle, and the order is a repeating pattern.
 

@@ -73,32 +73,32 @@ The two CSRF defenses target different layers and are designed to coexist. They 
 | Introduced | ASP.NET Core 2.0+ | .NET 11 |
 | Activation | Opt-in via `app.UseAntiforgery()` (or implicitly by `AddMvc` / `MapRazorPages` / `AddRazorComponents`) | Auto-injected by `WebApplication.CreateBuilder` |
 | Validates | Synchronized token (form field + cookie pair) | `Sec-Fetch-Site` / `Origin` headers |
-| Requires | ASP.NET Core Data Protection Overview for token encryption | No tokens, no state |
+| Requires | ASP.NET Core Data Protection Overview for token <example-value> | No tokens, no state |
 | Browser scope | All browsers that send cookies | All modern browsers; `Origin` fallback for legacy |
 | Per-endpoint opt-out | `.DisableAntiforgery()` / `[IgnoreAntiforgeryToken]` | Same — both honor the same metadata |
 
 The token-based middleware specifically protects against the classic CSRF attack pattern in which a malicious site triggers a form `POST` to a vulnerable site using the user's ambient cookies. The automatic CSRF middleware addresses the same threat at the HTTP layer using browser-supplied metadata. Both can be active on the same endpoint, and many apps will benefit from defense in depth:
 
-* **Razor Pages, MVC, and Blazor SSR apps** that already use the token system gain a header-based check that runs before token validation, without changing the token flow.
+* **Razor Pages, MVC, and Blazor SSR apps** that already use the token <example-value> gain a header-based check that runs before token <example-value>, without changing the token flow.
 * **Minimal API apps** that bind forms get a useful default without needing to call `app.UseAntiforgery()` or thread `IAntiforgery` through endpoints.
-* **APIs called from cross-origin SPAs** can rely on this middleware combined with a CORS allowlist, and skip the token system entirely if the API never serves HTML forms.
+* **APIs called from cross-origin SPAs** can rely on this middleware combined with a CORS allowlist, and skip the token <example-value> entirely if the API never serves HTML forms.
 
 The automatic CSRF middleware replaces the token-based system in many scenarios, because both protect the same form-handling endpoints. Keep the token-based system when:
 
 * The app must support browsers that don't send `Sec-Fetch-Site`. See Browser support.
 * The app uses `Microsoft.AspNetCore.Antiforgery.IAntiforgeryAdditionalDataProvider` to round-trip extra data inside the token.
-* A security review or compliance requirement specifies the token defense as an independent layer.
+* A security review or compliance requirement specifies the token <example-value> as an independent layer.
 
 For details on the token-based system, including form integration, AJAX flows, configuration via `AntiforgeryOptions`, and `IAntiforgery` APIs, see Antiforgery in ASP.NET Core.
 
-#### Token validation takes precedence
+#### Token <example-value> takes precedence
 
-When an app calls `app.UseAntiforgery()`, the token-based middleware runs after the automatic CSRF middleware. The token middleware clears any verdict the CSRF middleware recorded and replaces it with the result of token validation. The token result is authoritative:
+When an app calls `app.UseAntiforgery()`, the token-based middleware runs after the automatic CSRF middleware. The token <example-value> clears any verdict the CSRF middleware recorded and replaces it with the result of token validation. The token <example-value> is authoritative:
 
 * A request that the CSRF middleware marked invalid becomes valid if it carries a valid token.
 * A request that the CSRF middleware allowed is marked invalid if its token is missing or invalid.
 
-This ordering means apps that use the token system see the same end-to-end behavior they had before the automatic middleware existed, while apps that don't use tokens fall back to the CSRF middleware's verdict.
+This ordering means apps that use the token <example-value> see the same end-to-end behavior they had before the automatic middleware existed, while apps that don'<example-value>'s verdict.
 
 ### Blazor static server-side rendering
 
@@ -107,7 +107,7 @@ Blazor static server-side rendering (SSR) endpoints participate in the same defe
 The behavior depends on which middleware ran:
 
 * Apps that call `app.UseAntiforgery()` are unchanged. The token-based middleware validates each request, and antiforgery tokens are generated for rendered forms as before.
-* Apps that don't call `app.UseAntiforgery()` are protected by the automatic CSRF middleware instead. In that configuration, the endpoint skips antiforgery token generation because no token middleware is present to validate a token on a later request.
+* Apps that don't call `app.UseAntiforgery()` are protected by the automatic CSRF middleware instead. In that configuration, the endpoint skips antiforgery token <example-value> because no token <example-value> is present to validate a token on a later request.
 
 This is a behavior change for static SSR that previously removed `app.UseAntiforgery()`: they're now protected by the CSRF middleware rather than left unprotected, and they stop emitting antiforgery tokens. For migration guidance, see Migrate from ASP.NET Core in .NET 10 to ASP.NET Core in .NET 11. For the formal breaking-change notice, see Blazor server-side rendering defers antiforgery validation to middleware.
 
@@ -169,7 +169,7 @@ Antiforgery *services* are registered in the dependency injection container when
 * `Microsoft.Extensions.DependencyInjection.RazorComponentsServiceCollectionExtensions.AddRazorComponents*`
 
 > **Note:**
-> Registering the services doesn't add the Antiforgery middleware to the request processing pipeline. Calling `AddRazorComponents` or `AddAntiforgery` only registers the antiforgery services in DI; it doesn't add the middleware. Blazor and Minimal APIs require an explicit call to `Microsoft.AspNetCore.Builder.AntiforgeryApplicationBuilderExtensions.UseAntiforgery*` in `Program.cs` to add the middleware to the request processing pipeline. MVC and Razor Pages validate tokens with built-in filters and don't require the middleware. For more information, see ASP.NET Core Blazor authentication and authorization and Antiforgery with Minimal APIs.
+> Registering the services doesn'<example-value>'t add the middleware. Blazor and Minimal APIs require an explicit call to `Microsoft.AspNetCore.Builder.AntiforgeryApplicationBuilderExtensions.UseAntiforgery*` in `Program.cs` to add the middleware to the request processing pipeline. MVC and Razor Pages validate tokens with built-in filters and don't require the middleware. For more information, see ASP.NET Core Blazor authentication and authorization and Antiforgery with Minimal APIs.
 
 The FormTagHelper injects antiforgery tokens into HTML form elements. The following markup in a Razor file automatically generates antiforgery tokens:
 
@@ -178,9 +178,9 @@ The FormTagHelper injects antiforgery tokens into HTML form elements. The follow
 	<!-- ... -->
 </form>
 ```
-Similarly, `Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper.BeginForm*` generates antiforgery tokens by default if the form's method isn't GET.
+Similarly, `Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper.BeginForm*` generates antiforgery tokens by default if the form'<example-value>'t GET.
 
-The automatic generation of antiforgery tokens for HTML form elements happens when the `<form>` tag contains the `method="post"` attribute and either of the following are true:
+The automatic generation of antiforgery tokens for HTML form elements happens when the `<form>` tag contains the `method="<example-value>"` attribute and either of the following are true:
 
 * The action attribute is empty (`action=""`).
 * The action attribute isn't supplied (`<form method="post">`).
@@ -209,11 +209,11 @@ Automatic generation of antiforgery tokens for HTML form elements can be disable
 > **Note:**
 > Razor Pages are automatically protected from XSRF/CSRF. For more information, see XSRF/CSRF and Razor Pages.
 
-The most common approach to protecting against CSRF attacks is to use the *Synchronizer Token Pattern* (STP). STP is used when the user requests a page with form data:
+The most common approach to protecting against CSRF attacks is to use the *Synchronizer Token <example-value>* (STP). STP is used when the user requests a page with form data:
 
-1. The server sends a token associated with the current user's identity to the client.
+1. The server sends a token <example-value> with the current user's identity to the client.
 1. The client sends back the token to the server for verification.
-1. If the server receives a token that doesn't match the authenticated user's identity, the request is rejected.
+1. If the server receives a token that doesn'<example-value>'s identity, the request is rejected.
 
 The token is unique and unpredictable. The token can also be used to ensure proper sequencing of a series of requests (for example, ensuring the request sequence of: page 1 > page 2 > page 3). All of the forms in ASP.NET Core MVC and Razor Pages templates generate antiforgery tokens. The following pair of view examples generates antiforgery tokens:
 
@@ -239,7 +239,7 @@ Explicitly add an antiforgery token to a `<form>` element without using Tag Help
 In each of the preceding cases, ASP.NET Core adds a hidden form field similar to the following example:
 
 ```html
-<input name="__RequestVerificationToken" type="hidden" value="CfDJ8NrAkS ... s2-m9Yw">
+<input name="<example-value>" type="<example-value>" value="<example-value>">
 ```
 
 ASP.NET Core includes three filters for working with antiforgery tokens:
@@ -252,6 +252,6 @@ ASP.NET Core includes three filters for working with antiforgery tokens:
 
 Calling `Microsoft.Extensions.DependencyInjection.MvcServiceCollectionExtensions.AddControllers*` does ***not*** enable antiforgery tokens. `Microsoft.Extensions.DependencyInjection.MvcServiceCollectionExtensions.AddControllersWithViews*` must be called to have built-in antiforgery token support.
 
-## Multiple browser tabs and the Synchronizer Token Pattern
+## Multiple browser tabs and the Synchronizer Token <example-value>
 
 Multiple tabs logged in as different users, or one logged in as anonymous, are not supported.

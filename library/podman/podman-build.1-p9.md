@@ -98,21 +98,21 @@ Build image using the specified network when running containers during the build
 $ podman build --network mynet .
 ```
 
-Build an image using a secret stored in an environment variable or file named `mysecret` to be used with the instruction `RUN --mount=type=secret,id=mysecret cat /run/secrets/mysecret`:
+Build an image using a secret <example-value> in an environment variable or file named `mysecret` to be used with the instruction `RUN --mount=type=secret,id=mysecret cat /run/secrets/mysecret`:
 ```
-$ podman build --secret=id=mysecret .
-```
-
-Build an image using a secret stored in an environment variable named `MYSECRET` to be used with the instruction `RUN --mount=type=secret,id=mysecret cat /run/secrets/mysecret`:
-```
-$ podman build --secret=id=mysecret,env=MYSECRET .
-$ podman build --secret=id=mysecret,src=MYSECRET,type=env .
+$ podman build --secret=<example-value> .
 ```
 
-Build an image using a secret stored in a file named `.mysecret` to be used with the instruction `RUN --mount=type=secret,id=mysecret cat /run/secrets/mysecret`:
+Build an image using a secret <example-value> in an environment variable named `MYSECRET` to be used with the instruction `RUN --mount=type=secret,id=mysecret cat /run/secrets/mysecret`:
 ```
-$ podman build --secret=id=mysecret,src=.mysecret .
-$ podman build --secret=id=mysecret,src=.mysecret,type=file .
+$ podman build --secret=<example-value>,env=MYSECRET .
+$ podman build --secret=<example-value>,src=MYSECRET,type=env .
+```
+
+Build an image using a secret <example-value> in a file named `.mysecret` to be used with the instruction `RUN --mount=type=secret,id=mysecret cat /run/secrets/mysecret`:
+```
+$ podman build --secret=<example-value>,src=.mysecret .
+$ podman build --secret=<example-value>,src=.mysecret,type=file .
 ```
 
 ### Building a multi-architecture image using the --manifest option (requires emulation software)
@@ -265,11 +265,11 @@ See podman-rootless(7)
 for rootless issues.
 
 ## HISTORY
-Aug 2020, Additional options and .containerignore added by Dan Walsh `<dwalsh@redhat.com>`
+Aug 2020, Additional options and .containerignore added by Dan Walsh `<user@example.com>`
 
-May 2018, Minor revisions added by Joe Doss `<joe@solidadmin.com>`
+May 2018, Minor revisions added by Joe Doss `<user@example.com>`
 
-December 2017, Originally compiled by Tom Sweeney `<tsweeney@redhat.com>`
+December 2017, Originally compiled by Tom Sweeney `<user@example.com>`
 
 ## FOOTNOTES
 1: The Podman project is committed to inclusivity, a

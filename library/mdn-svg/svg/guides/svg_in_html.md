@@ -11,7 +11,7 @@ license: "CC-BY-SA-2.5"
 
 This article and its associated example shows how to use inline SVG.
 
-## Basic example
+## Basic <example-value>
 
 To include an inline SVG in an HTML file, paste the entire SVG file into the HTML file.
 

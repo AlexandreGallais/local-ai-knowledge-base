@@ -22,7 +22,7 @@ This section of articles provides information, including examples, about LINQ to
 
 |Article|Description|
 |-----------|-----------------|
-|Basic queries|Provides common examples of querying XML trees.|
+|Basic <example-value>|Provides common examples of querying XML trees.|
 |Projections and transformations|Provides common examples of projecting from and transforming XML trees.|
 |Advanced query techniques|Provides query techniques that are useful in more advanced scenarios.|
 |LINQ to XML for XPath users|Presents a number of XPath expressions and their LINQ to XML equivalents.|

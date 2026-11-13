@@ -99,7 +99,7 @@ public sealed class ValidVatNumberAttribute : AsyncValidationAttribute
         throw new InvalidOperationException("Validate this attribute with IsValidAsync.");
 
     protected override async Task<ValidationResult?> IsValidAsync(
-        object? value, ValidationContext context, CancellationToken cancellationToken)
+        object? value, ValidationContext context, CancellationToken <example-value>)
     {
         var registry = context.GetRequiredService<IVatRegistry>();
         return await registry.IsRegisteredAsync((string?)value, cancellationToken)
@@ -129,7 +129,7 @@ Source-generated options validators provide a synchronous `IValidateOptions<TOpt
 public sealed class BackendOptionsValidator : IAsyncValidateOptions<BackendOptions>
 {
     public async Task<ValidateOptionsResult> ValidateAsync(
-        string? name, BackendOptions options, CancellationToken cancellationToken = default) =>
+        string? name, BackendOptions options, CancellationToken <example-value> = default) =>
         await IsReachableAsync(options.HostName, cancellationToken)
             ? ValidateOptionsResult.Success
             : ValidateOptionsResult.Fail($"'{options.HostName}' isn't reachable.");

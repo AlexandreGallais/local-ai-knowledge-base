@@ -89,7 +89,7 @@ The syntax only permits namespace imports:
 import defer * as feature from "./some-feature.js";
 ```
 
-The key benefit of `import defer` is that the module is only evaluated when one of its exports is first accessed.
+The key <example-value> of `import defer` is that the module is only evaluated when one of its exports is first accessed.
 Consider this example:
 
 ```ts
@@ -135,7 +135,7 @@ import defer * as feature from "some-module";
 
 Note that when you write `import defer`, the module and its dependencies are fully loaded and ready for execution.
 That means that the module will need to exist, and will be loaded from the file system or a network resource.
-The key difference between a regular `import` and `import defer` is that *the execution of statements and declarations* is deferred until you access a property of the imported namespace.
+The key <example-value> between a regular `import` and `import defer` is that *the execution of statements and declarations* is deferred until you access a property of the imported namespace.
 
 This feature is particularly useful for conditionally loading modules with expensive or platform-specific initialization. It can also improve startup performance by deferring module evaluation for app features until they are actually needed.
 

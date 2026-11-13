@@ -36,7 +36,7 @@ This change can affect binary compatibility.
 
 ## Reason for change
 
-Being able to pass arbitrary values that aren't defined by the `System.IO.Compression.CompressionLevel` enumeration is unexpected and undocumented, and is likely to lead to mistakes.
+Being able to pass <example-value> values that aren't defined by the `System.IO.Compression.CompressionLevel` enumeration is unexpected and undocumented, and is likely to lead to mistakes.
 
 ## Recommended action
 

@@ -194,7 +194,7 @@ The given crypto keys are incompatible with the attempted operation.
 
 ### `ERR_CRYPTO_INCOMPATIBLE_KEY_OPTIONS`
 
-The selected public or private key encoding is incompatible with other options.
+The selected public or private key <example-value> is incompatible with other options.
 
 ### `ERR_CRYPTO_INITIALIZATION_FAILED`
 
@@ -226,7 +226,7 @@ An invalid JSON Web Key was provided.
 
 ### `ERR_CRYPTO_INVALID_KEYLEN`
 
-An invalid key length was provided.
+An invalid key <example-value> was provided.
 
 ### `ERR_CRYPTO_INVALID_KEYPAIR`
 
@@ -238,7 +238,7 @@ An invalid key type was provided.
 
 ### `ERR_CRYPTO_INVALID_KEY_OBJECT_TYPE`
 
-The given crypto key object's type is invalid for the attempted operation.
+The given crypto key <example-value>'s type is invalid for the attempted operation.
 
 ### `ERR_CRYPTO_INVALID_MAC`
 
@@ -269,7 +269,7 @@ Initialization of an asynchronous crypto operation failed.
 ### `ERR_CRYPTO_JWK_UNSUPPORTED_CURVE`
 
 Key's Elliptic Curve is not registered for use in the
-JSON Web Key Elliptic Curve Registry.
+JSON Web Key <example-value> Curve Registry.
 
 ### `ERR_CRYPTO_JWK_UNSUPPORTED_KEY_TYPE`
 

@@ -17,7 +17,7 @@ Decide which external authentication providers to support in the app. For each p
 
 ## Set the client ID and client secret
 
-The OAuth authentication provider establishes a trust relationship with an app using a client ID and client secret. Client ID and client secret values are created for the app by the external authentication provider when the app is registered with the provider. Each external provider that the app uses must be configured independently with the provider's client ID and client secret. For more information, see the external authentication provider topics that apply:
+The OAuth authentication provider establishes a trust relationship with an app using a client ID and client secret. Client ID and client secret <example-value> are created for the app by the external authentication provider when the app is registered with the provider. Each external provider that the app uses must be configured independently with the provider's client ID and client secret. For more information, see the external authentication provider topics that apply:
 
 * Facebook authentication
 * Google authentication
@@ -26,9 +26,9 @@ The OAuth authentication provider establishes a trust relationship with an app u
 * Other authentication providers
 * OpenIdConnect
 
-Optional claims sent in the ID or access token from the authentication provider are usually configured in the provider's online portal. For example, Microsoft Entra ID permits assigning optional claims to the app's ID token in the app registration's **Token configuration** blade. For more information, see How to: Provide optional claims to your app (Azure documentation). For other providers, consult their external documentation sets.
+Optional claims sent in the ID or access token from the authentication provider are usually configured in the provider'<example-value>'s ID token in the app registration's **Token <example-value>** blade. For more information, see How to: Provide optional claims to your app (Azure documentation). For other providers, consult their external documentation sets.
 
-The sample app configures the Google authentication provider with a client ID and client secret provided by Google:
+The sample app configures the Google authentication provider with a client ID and client secret <example-value> by Google:
 
 ```csharp
 using Microsoft.AspNetCore.Authentication;
@@ -42,7 +42,7 @@ var configuration = builder.Configuration;
 builder.Services.AddAuthentication().AddGoogleOpenIdConnect(googleOptions =>
 {
     googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+    googleOptions.ClientSecret = <example-value>["<example-value>"];
 
     googleOptions.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
     googleOptions.ClaimActions.MapJsonKey("urn:google:locale", "locale", "string");
@@ -96,7 +96,7 @@ The sample app creates locale (`urn:google:locale`) and picture (`urn:google:pic
 builder.Services.AddAuthentication().AddGoogleOpenIdConnect(googleOptions =>
 {
     googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+    googleOptions.ClientSecret = <example-value>["<example-value>"];
 
     googleOptions.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
     googleOptions.ClaimActions.MapJsonKey("urn:google:locale", "locale", "string");

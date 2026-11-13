@@ -118,7 +118,7 @@ You can specify the author of an item with `@author`:
 ```ts
 /**
  * Welcome to awesome.ts
- * @author Ian Awesome <i.am.awesome@example.com>
+ * @author Ian Awesome <user@example.com>
  */
 ```
 

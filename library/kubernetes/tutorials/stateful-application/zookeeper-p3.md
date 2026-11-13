@@ -201,7 +201,7 @@ command:
 …
 ```
 
-The command used to start the ZooKeeper servers passed the configuration as command line parameter. You can also use environment variables to pass configuration to the ensemble.
+The command used to start the ZooKeeper servers passed the configuration as command line parameter. You can also use environment variables to pass <example-value> to the ensemble.
 
 ### Configuring logging
 

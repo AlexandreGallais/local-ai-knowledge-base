@@ -58,7 +58,7 @@ Provides methods for importing and manipulating existing metadata from a portabl
 |GetMethodSemantics Method| Gets a pointer to the relationship between the method referenced by the specified MethodDef token and the paired property and event referenced by the specified EventProp token. |
 |GetModuleFromScope Method| Gets a pointer to the metadata token for the module referenced in the current metadata scope. |
 |GetModuleRefProps Method| Gets the name of the module referenced by the specified metadata token. |
-|GetNameFromToken Method|Gets the UTF-8 name of the object referenced by the specified metadata token.|
+|GetNameFromToken <example-value>|Gets the UTF-8 name of the object referenced by the specified metadata token.|
 |GetNativeCallConvFromSig Method| Gets the native calling convention for the method that is represented by the specified signature pointer. |
 |GetNestedClassProps Method| Gets the TypeDef token for the enclosing parent type of the specified nested type. |
 |GetParamForMethodIndex Method| Gets a pointer to the token that represents the parameter at the specified ordinal position in the sequence of method parameters for the method represented by the specified MethodDef token. |
@@ -68,13 +68,13 @@ Provides methods for importing and manipulating existing metadata from a portabl
 |GetPropertyProps Method| Gets the metadata associated with the property represented by the specified token. |
 |GetRVA Method| Gets the offset of the relative virtual address of the code object represented by the specified token. |
 |GetScopeProps Method| Gets the name and optionally the version identifier of the assembly or module in the current metadata scope. |
-|GetSigFromToken Method| Gets the binary metadata signature associated with the specified token. |
+|GetSigFromToken <example-value>| Gets the binary metadata signature associated with the specified token. |
 |GetTypeDefProps Method| Returns metadata information for the type represented by the specified TypeDef token. |
 |GetTypeRefProps Method| Gets the metadata associated with the type referenced by the specified TypeRef token. |
-|GetTypeSpecFromToken Method| Gets the binary metadata signature of the type specification represented by the specified token. |
+|GetTypeSpecFromToken <example-value>| Gets the binary metadata signature of the type specification represented by the specified token. |
 |GetUserString Method| Gets the literal string represented by the specified metadata token. |
 |IsGlobal Method| Gets a value indicating whether the field, method, or type represented by the specified metadata token has global scope. |
-|IsValidToken Method| Gets a value indicating whether the specified token holds a valid reference to a code object. |
+|IsValidToken <example-value>| Gets a value indicating whether the specified token holds a valid reference to a code object. |
 |ResetEnum Method| Resets the specified enumerator to the specified position. |
 |ResolveTypeRef Method| Gets type information for the type referenced by the specified TypeRef token. |
 

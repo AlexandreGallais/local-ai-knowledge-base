@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # ICorDebugStepper::SetRangeIL Method
 
-Sets a value that specifies whether calls to ICorDebugStepper::StepRange pass argument values that are relative to the native code or relative to common intermediate language (CIL) code of the method that is being stepped through.
+Sets a value that specifies whether calls to ICorDebugStepper::StepRange pass <example-value> values that are relative to the native code or relative to common intermediate language (CIL) code of the method that is being stepped through.
 
 ## Syntax
 

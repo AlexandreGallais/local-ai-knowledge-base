@@ -111,8 +111,8 @@ $ podman image trust show
 TRANSPORT      NAME                        TYPE        ID                   STORE
 all            default                     reject
 repository     docker.io/library           accept
-repository     registry.access.redhat.com  signed      security@redhat.com  https://access.redhat.com/webassets/docker/content/sigstore
-repository     registry.redhat.io          signed      security@redhat.com  https://registry.redhat.io/containers/sigstore
+repository     registry.access.redhat.com  signed      user@example.com  https://access.redhat.com/webassets/docker/content/sigstore
+repository     registry.redhat.io          signed      user@example.com  https://registry.redhat.io/containers/sigstore
 repository     docker.io                   reject
 docker-daemon                              accept
 ```
@@ -192,7 +192,7 @@ $ podman image trust show --json
     "repo_name": "registry.access.redhat.com",
     "sigstore": "https://access.redhat.com/webassets/docker/content/sigstore",
     "type": "signed",
-    "gpg_id": "security@redhat.com"
+    "gpg_id": "user@example.com"
   },
   {
     "transport": "repository",
@@ -200,7 +200,7 @@ $ podman image trust show --json
     "repo_name": "registry.redhat.io",
     "sigstore": "https://registry.redhat.io/containers/sigstore",
     "type": "signed",
-    "gpg_id": "security@redhat.com"
+    "gpg_id": "user@example.com"
   },
   {
     "transport": "docker-daemon",

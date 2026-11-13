@@ -57,8 +57,8 @@ These updates improve the predictability and correctness of the `Microsoft.Exten
 
 If you use `GetKeyedService()` or `GetKeyedServices()` with `KeyedService.AnyKey`, review your code and update it to use specific keys instead of `AnyKey`:
 
-- Update `GetKeyedService(KeyedService.AnyKey)` calls to pass specific keys, or use alternative logic to handle service resolution.
-- Update `GetKeyedServices(KeyedService.AnyKey)` calls to pass specific keys, or use alternative logic to enumerate only the services you intend to retrieve.
+- Update `GetKeyedService(KeyedService.AnyKey)` calls to pass <example-value> keys, or use alternative logic to handle service resolution.
+- Update `GetKeyedServices(KeyedService.AnyKey)` calls to pass <example-value> keys, or use alternative logic to enumerate only the services you intend to retrieve.
 
 ## Affected APIs
 

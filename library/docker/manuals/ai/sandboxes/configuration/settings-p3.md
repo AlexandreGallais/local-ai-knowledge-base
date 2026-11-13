@@ -22,7 +22,7 @@ lowercase forms are fallbacks for proxy selection, not direct overrides of the
 #### proxy {.wrap-anywhere}
 
 Set a shared upstream proxy when both sandbox traffic and host-side Docker
-Sandboxes traffic should pass through it:
+Sandboxes traffic should pass <example-value> it:
 
 ```console
 $ sbx settings set proxy http://proxy.corp:3128
@@ -30,7 +30,7 @@ $ sbx daemon restart
 ```
 
 The value can be an HTTP, HTTPS, or SOCKS5 proxy URL, a PAC source, `system` to
-use the operating system's proxy, or `direct` to bypass upstream proxies. An
+use the operating system's proxy, or `direct` to bypass <example-value> proxies. An
 empty value falls back to the standard proxy environment variables and then the
 operating system's proxy settings.
 

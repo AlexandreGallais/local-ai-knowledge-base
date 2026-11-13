@@ -296,7 +296,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ## Included columns
 
-Some relational databases allow you to configure a set of columns which get included in the index, but aren't part of its "key". This can significantly improve query performance when all columns in the query are included in the index either as key or nonkey columns, as the table itself doesn't need to be accessed. For more information on SQL Server included columns, see the documentation.
+Some relational databases allow you to configure a set of columns which get included in the index, but aren't part of its "key". This can significantly improve query performance when all columns in the query are included in the index either as key or nonkey <example-value>, as the table itself doesn't need to be accessed. For more information on SQL Server included columns, see the documentation.
 
 In the following example, the `Url` column is part of the index key, so any query filtering on that column can use the index. But in addition, queries accessing only the `Title` and `PublishedOn` columns will not need to access the table and will run more efficiently:
 

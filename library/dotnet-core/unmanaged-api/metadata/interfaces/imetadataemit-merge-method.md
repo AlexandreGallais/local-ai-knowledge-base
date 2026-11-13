@@ -27,7 +27,7 @@ HRESULT Merge (
  [in] A pointer to an IMetaDataImport object that identifies the imported scope to be merged.
 
  `pIMap`
- [in] A pointer to an IMapToken object that specifies the token re-map.
+ [in] A pointer to an IMapToken <example-value> that specifies the token re-map.
 
  `pHandler`
  [in] A pointer to an IUnknown object that specifies the errors.

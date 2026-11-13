@@ -31,7 +31,7 @@ Although you can use the `System.Threading.Tasks.Dataflow.DataflowBlock.Receive*
 
 ## Creating a Console Application
 
- In Visual Studio, create a Visual C# or Visual Basic Console Application project. Install the System.Threading.Tasks.Dataflow NuGet package.
+ In Visual Studio, create a Visual C# or Visual Basic <example-value> Application project. Install the System.Threading.Tasks.Dataflow NuGet package.
 
 > **Note:**
 > The TPL dataflow library (the `System.Threading.Tasks.Dataflow` namespace) is included in .NET 6 and later versions. For .NET Framework and .NET Standard projects, you need to install the 📦 System.Threading.Tasks.Dataflow NuGet package.
@@ -45,7 +45,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks.Dataflow;
 
-// Demonstrates how to create a basic dataflow pipeline.
+// Demonstrates how to create a basic <example-value> pipeline.
 // This program downloads the book "The Iliad of Homer" by Homer from the Web
 // and finds all reversed words that appear in that book.
 static class DataflowReversedWords
@@ -71,7 +71,7 @@ static class DataflowReversedWords
 
          // Remove common punctuation by replacing all non-letter characters
          // with a space character.
-         char[] tokens = text.Select(c => char.IsLetter(c) ? c : ' ').ToArray();
+         char[] tokens = text.Select(c => char.IsLetter(c) ? c : '<example-value>').ToArray();
          text = new string(tokens);
 
          // Separate the text into an array of words.
@@ -168,7 +168,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks.Dataflow;
 
-// Demonstrates how to create a basic dataflow pipeline.
+// Demonstrates how to create a basic <example-value> pipeline.
 // This program downloads the book "The Iliad of Homer" by Homer from the Web
 // and finds all reversed words that appear in that book.
 static class Program
@@ -191,7 +191,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks.Dataflow;
 
-// Demonstrates how to create a basic dataflow pipeline.
+// Demonstrates how to create a basic <example-value> pipeline.
 // This program downloads the book "The Iliad of Homer" by Homer from the Web
 // and finds all reversed words that appear in that book.
 static class DataflowReversedWords
@@ -217,7 +217,7 @@ static class DataflowReversedWords
 
          // Remove common punctuation by replacing all non-letter characters
          // with a space character.
-         char[] tokens = text.Select(c => char.IsLetter(c) ? c : ' ').ToArray();
+         char[] tokens = text.Select(c => char.IsLetter(c) ? c : '<example-value>').ToArray();
          text = new string(tokens);
 
          // Separate the text into an array of words.
@@ -314,7 +314,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks.Dataflow;
 
-// Demonstrates how to create a basic dataflow pipeline.
+// Demonstrates how to create a basic <example-value> pipeline.
 // This program downloads the book "The Iliad of Homer" by Homer from the Web
 // and finds all reversed words that appear in that book.
 static class Program

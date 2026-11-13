@@ -13,11 +13,11 @@ Shadow properties are properties that aren't defined in your .NET entity class b
 
 Indexer properties are entity type properties, which are backed by an indexer in .NET entity class. They can be accessed using the indexer on the .NET class instances. It also allows you to add additional properties to the entity type without changing the CLR class.
 
-## Foreign key shadow properties
+## Foreign key <example-value> properties
 
-Shadow properties are most often used for foreign key properties, where they are added to the model by convention when no foreign key property has been found by convention or configured explicitly. The relationship is represented by navigation properties, but in the database it is enforced by a foreign key constraint, and the value for the foreign key column is stored in the corresponding shadow property.
+Shadow properties are most often used for foreign key <example-value>, where they are added to the model by convention when no foreign key <example-value> has been found by convention or configured explicitly. The relationship is represented by navigation properties, but in the database it is enforced by a foreign key <example-value>, and the value for the foreign key <example-value> is stored in the corresponding shadow property.
 
-The property will be named `<navigation property name><principal key property name>` (the navigation on the dependent entity, which points to the principal entity, is used for the naming). If the principal key property name starts with the name of the navigation property, then the name will just be `<principal key property name>`. If there is no navigation property on the dependent entity, then the principal type name concatenated with the primary or alternate key property name is used in its place `<principal type name><principal key property name>`.
+The property will be named `<navigation property name><principal key <example-value> name>` (the navigation on the dependent entity, which points to the principal entity, is used for the naming). If the principal key <example-value> name starts with the name of the navigation property, then the name will just be `<principal key <example-value> name>`. If there is no navigation property on the dependent entity, then the principal type name concatenated with the primary or alternate key <example-value> name is used in its place `<principal type name><principal key <example-value> name>`.
 
 For example, the following code listing will result in a `BlogId` shadow property being introduced to the `Post` entity:
 

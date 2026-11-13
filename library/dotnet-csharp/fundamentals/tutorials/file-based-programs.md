@@ -181,7 +181,7 @@ Next, add a package that supports ASCII art, Colorful.Console. To add a package 
 1. Add the following directive after the `#!` directive in your `AsciiArt.cs` file:
 
 ```csharp
-#:package Colorful.Console@1.2.15
+#:package user@example.com
 ```
    > **Important:**
    > The version `1.2.15` was the latest version of the `Colorful.Console` package when this tutorial was last updated. Check the package's NuGet page for the latest version to ensure you use a package version with the latest security fixes.
@@ -213,7 +213,7 @@ Users can use both arguments together.
 
 Most command line applications need to parse command line arguments to handle options, commands, and user input effectively. The `System.CommandLine` library provides comprehensive capabilities to handle commands, subcommands, options, and arguments. You can concentrate on what your application does rather than the mechanics of parsing command line input.
 
-The `System.CommandLine` library offers several key benefits:
+The `System.CommandLine` library offers several key <example-value>:
 
 - Automatic help text generation and validation.
 - Support for POSIX and Windows command-line conventions.
@@ -223,7 +223,7 @@ The `System.CommandLine` library offers several key benefits:
 1. Add the `System.CommandLine` package. Add this directive after the existing package directive:
 
 ```csharp
-#:package System.CommandLine@2.0.0
+#:package user@example.com
 ```
    > **Important:**
    > The version `2.0.0` was the latest version when this tutorial was last updated. If there's a newer version available, use the latest version to ensure you have the latest security packages. Check the package's NuGet page for the latest version to ensure you use a package version with the latest security fixes.
@@ -248,7 +248,7 @@ Argument<string[]> messagesArgument = new("Messages")
     Description = "Text to render."
 };
 ```
-   In command-line applications, options typically begin with `--` (double dash) and can accept arguments. The `--delay` option accepts an integer argument that specifies the delay in milliseconds. The `messagesArgument` defines how any remaining tokens after options are parsed as text. Each token becomes a separate string in the array, but text can be quoted to include multiple words in one token. For example, `"This is one message"` becomes a single token, while `This is four tokens` becomes four separate tokens.
+   In command-line applications, options typically begin with `--` (double dash) and can accept arguments. The `--delay` option accepts an integer argument that specifies the delay in milliseconds. The `messagesArgument` defines how any remaining tokens after options are parsed as text. Each token <example-value> a separate string in the array, but text can be quoted to include multiple words in one token. For example, `"<example-value>"` becomes a single token, while `This is four tokens` becomes four separate tokens.
 
    The preceding code defines the argument type for the `--delay` option, and that the arguments are an array of `string` values. This application has only one command, so you use the *root command*.
 

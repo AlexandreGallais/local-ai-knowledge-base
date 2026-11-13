@@ -43,7 +43,7 @@ This example produces the following output:
 0006
 ```
 
-Note that the Visual Basic version of the code uses the XML Child axis property, the XML Attribute axis property, and the XML Value property.
+Note that the Visual Basic <example-value> of the code uses the XML Child axis property, the XML Attribute axis property, and the XML Value property.
 
 ## Example: Find when the XML is in a namespace
 

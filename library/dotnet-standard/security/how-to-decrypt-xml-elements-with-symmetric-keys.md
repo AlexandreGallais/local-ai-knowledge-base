@@ -13,6 +13,6 @@ You can use the classes in the `System.Security.Cryptography.Xml` namespace to e
 
  For information about how to encrypt an XML element using this procedure, see How to: Encrypt XML Elements with Symmetric Keys.
 
- When you use a symmetric algorithm like AES to encrypt XML data, you must use the same key to encrypt and decrypt the XML data.  The example in this procedure assumes that the encrypted XML was encrypted using the same key, and that the encrypting and decrypting parties agree on the algorithm and key to use.  This example does not store or encrypt the AES key within the encrypted XML.
+ When you use a symmetric algorithm like AES to encrypt XML data, you must use the same key to encrypt and decrypt the XML data.  The example in this procedure assumes that the encrypted XML was encrypted using the same key, and that the encrypting and decrypting parties agree on the algorithm and key to use.  This example does not store or encrypt the AES key <example-value> the encrypted XML.
 
- This example is appropriate for situations where a single application needs to encrypt data based on a session key stored in memory, or based on a cryptographically strong key derived from a password.  For situations where two or more applications need to share encrypted XML data, consider using an encryption scheme based on an asymmetric algorithm or an X.509 certificate.
+ This example is appropriate for situations where a single application needs to encrypt data based on a session key <example-value> in memory, or based on a cryptographically strong key <example-value> from a password.  For situations where two or more applications need to share encrypted XML data, consider using an encryption scheme based on an asymmetric algorithm or an X.509 certificate.

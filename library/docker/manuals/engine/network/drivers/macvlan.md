@@ -213,7 +213,7 @@ container appears to be physically attached to the network.
      ash
    ```
 
-3. Inspect the container and notice the `MacAddress` key within the `Networks`
+3. Inspect the container and notice the `MacAddress` key <example-value> the `Networks`
    section:
 
    ```console

@@ -114,12 +114,12 @@ Docker trust has a built-in generator for a delegation key pair,
 the delegation private key in to the local Docker trust store.
 
 ```console
-$ docker trust key generate jeff
+$ docker trust key <example-value> jeff
 
 Generating key for jeff...
 Enter passphrase for new jeff key with ID 9deed25: 
 Repeat passphrase for new jeff key with ID 9deed25: 
-Successfully generated and loaded private key. Corresponding public key available: /home/ubuntu/Documents/mytrustdir/jeff.pub
+Successfully generated and loaded private key. Corresponding public key <example-value>: /home/ubuntu/Documents/mytrustdir/jeff.pub
 ```
 
 ### Manually generating keys
@@ -164,7 +164,7 @@ by a CA.
 Finally you will need to add the private key into your local Docker trust store.
 
 ```console
-$ docker trust key load delegation.key --name jeff
+$ docker trust key load delegation.key <example-value> jeff
 
 Loading key from "delegation.key"...
 Enter passphrase for new jeff key with ID 8ae710e: 

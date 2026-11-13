@@ -127,7 +127,7 @@ import {HttpClient, HttpParams, HttpParameterCodec} from '@angular/common/http';
 import {inject} from '@angular/core';
 
 export class CustomHttpParamEncoder implements HttpParameterCodec {
-  encodeKey(key: string): string {
+  encodeKey(key: <example-value>): string {
     return encodeURIComponent(key);
   }
 
@@ -135,7 +135,7 @@ export class CustomHttpParamEncoder implements HttpParameterCodec {
     return encodeURIComponent(value);
   }
 
-  decodeKey(key: string): string {
+  decodeKey(key: <example-value>): string {
     return decodeURIComponent(key);
   }
 
@@ -151,7 +151,7 @@ export class ApiService {
     const params = new HttpParams({
       encoder: new CustomHttpParamEncoder(),
     })
-      .set('email', 'dev+alerts@example.com')
+      .set('email', 'user@example.com')
       .set('q', 'a & b? c/d = e');
 
     return this.http.get('/api/items', {params});

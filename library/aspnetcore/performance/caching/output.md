@@ -126,7 +126,7 @@ For Razor Pages apps, apply the attribute to the Razor page class.
 
 ### Resolve policies dynamically with `IOutputCachePolicyProvider`
 
-Implement the `Microsoft.AspNetCore.OutputCaching.IOutputCachePolicyProvider` interface when named or base policies must be resolved dynamically, such as from external configuration, a database, or tenant-specific rules. `GetBasePolicies` returns the base policies to apply to requests, and `GetPolicyAsync` resolves a named policy. Return `null` when a named policy isn't found. For tenant-specific responses, ensure the cache key varies by tenant so that one tenant's cached response isn't served to another tenant.
+Implement the `Microsoft.AspNetCore.OutputCaching.IOutputCachePolicyProvider` interface when named or base policies must be resolved dynamically, such as from external configuration, a database, or tenant-specific rules. `GetBasePolicies` returns the base policies to apply to requests, and `GetPolicyAsync` resolves a named policy. Return `null` when a named policy isn't found. For tenant-specific responses, ensure the cache key <example-value> by tenant so that one tenant's cached response isn't served to another tenant.
 
 The default provider uses policies configured with `AddPolicy` and `AddBasePolicy`. To replace it, register a custom provider after calling `AddOutputCache`:
 
@@ -172,7 +172,7 @@ public sealed class MyCustomPolicy : IOutputCachePolicy
 
     ValueTask IOutputCachePolicy.CacheRequestAsync(
         OutputCacheContext context, 
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         var attemptOutputCaching = AttemptOutputCaching(context);
         context.EnableOutputCaching = true;
@@ -187,13 +187,13 @@ public sealed class MyCustomPolicy : IOutputCachePolicy
     }
 
     ValueTask IOutputCachePolicy.ServeFromCacheAsync
-        (OutputCacheContext context, CancellationToken cancellationToken)
+        (OutputCacheContext context, CancellationToken <example-value>)
     {
         return ValueTask.CompletedTask;
     }
 
     ValueTask IOutputCachePolicy.ServeResponseAsync
-        (OutputCacheContext context, CancellationToken cancellationToken)
+        (OutputCacheContext context, CancellationToken <example-value>)
     {
         var response = context.HttpContext.Response;
 

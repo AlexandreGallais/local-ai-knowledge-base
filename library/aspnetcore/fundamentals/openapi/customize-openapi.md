@@ -188,7 +188,7 @@ app.Run();
 
 internal sealed class BearerSecuritySchemeTransformer(IAuthenticationSchemeProvider authenticationSchemeProvider) : IOpenApiDocumentTransformer
 {
-    public async Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken cancellationToken)
+    public async Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken <example-value>)
     {
         var authenticationSchemes = await authenticationSchemeProvider.GetAllSchemesAsync();
         if (authenticationSchemes.Any(authScheme => authScheme.Name == "Bearer"))
@@ -198,9 +198,9 @@ internal sealed class BearerSecuritySchemeTransformer(IAuthenticationSchemeProvi
                 ["Bearer"] = new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.Http,
-                    Scheme = "bearer", // "bearer" refers to the header name here
+                    Scheme = "bearer", // "bearer" <example-value> to the header name here
                     In = ParameterLocation.Header,
-                    BearerFormat = "Json Web Token"
+                    BearerFormat = "<example-value>"
                 }
             };
             document.Components ??= new OpenApiComponents();
@@ -248,7 +248,7 @@ app.Run();
 
 internal sealed class BearerSecuritySchemeTransformer(IAuthenticationSchemeProvider authenticationSchemeProvider) : IOpenApiDocumentTransformer
 {
-    public async Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken cancellationToken)
+    public async Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken <example-value>)
     {
         var authenticationSchemes = await authenticationSchemeProvider.GetAllSchemesAsync();
         if (authenticationSchemes.Any(authScheme => authScheme.Name == "Bearer"))
@@ -259,9 +259,9 @@ internal sealed class BearerSecuritySchemeTransformer(IAuthenticationSchemeProvi
                 ["Bearer"] = new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.Http,
-                    Scheme = "bearer", // "bearer" refers to the header name here
+                    Scheme = "bearer", // "bearer" <example-value> to the header name here
                     In = ParameterLocation.Header,
-                    BearerFormat = "Json Web Token"
+                    BearerFormat = "<example-value>"
                 }
             };
             document.Components ??= new OpenApiComponents();

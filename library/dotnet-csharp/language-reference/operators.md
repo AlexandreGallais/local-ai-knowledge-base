@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # C# operators and expressions
 
-C# provides many operators. The built-in types support many of these operators, so you can perform basic operations with values of those types.
+C# provides many operators. The built-in types support many of these operators, so you can perform basic <example-value> with values of those types.
 
 The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
 

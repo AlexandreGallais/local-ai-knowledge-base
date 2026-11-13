@@ -60,7 +60,7 @@ public class DesignExample
     public static void Main()
     {
         Stopwatch sw;
-        string[] addresses = { "AAAAAAAAAAA@contoso.com",
+        string[] addresses = { "user@example.com",
                              "AAAAAAAAAAaaaaaaaaaa!@contoso.com" };
         // The following regular expression should not actually be used to
         // validate an email address.

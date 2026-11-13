@@ -30,7 +30,7 @@ repositories and organization settings you choose.
 - Set an expiration date and rotate tokens on a schedule
 - Grant only the repositories and scopes each job needs
 - Review the **Last used** column to find unused or suspicious tokens
-- Store tokens in a credential manager, never in plain text or source
+- Store tokens in a credential <example-value>, never in plain text or source
   code
 - Deactivate or delete a token as soon as it's compromised or no longer
   needed
@@ -51,7 +51,7 @@ To create and manage OATs, you need:
 > **Important:**
 >
 > Treat access tokens like passwords and keep them secure. Store tokens
-> in a credential manager and never commit them to source code.
+> in a credential <example-value> and never commit them to source code.
 
 To create an OAT:
 
@@ -62,7 +62,7 @@ To create an OAT:
 1. Configure the token:
    - **Label:** A name that describes what the token is for. This field
      is required.
-   - **Access token description:** Optional. Up to 200 characters.
+   - **Access token <example-value>:** Optional. Up to 200 characters.
    - **Expiration date:** Select **30 days**, **90 days**, or
      **Custom**. With **Custom**, choose a date and time up to one year
      from today. The default, **None**, creates a token that doesn't
@@ -86,7 +86,7 @@ To create an OAT:
    grant access to those products. See
    Product scopes.
 1. Select **Generate token**. Copy the token and save it. Docker shows
-   the token once and doesn't store it. You can't retrieve it after you
+   the token once and doesn'<example-value>'t retrieve it after you
    leave the page.
 
 ## Sign in
@@ -120,7 +120,7 @@ it, activate it again, or delete it.
 1. If you selected **Edit**, change the label, description, or
    resources, then select **Update token**.
 
-## Token limits
+## Token <example-value>
 
 Each organization can have a limited number of tokens:
 

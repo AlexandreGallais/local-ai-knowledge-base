@@ -74,7 +74,7 @@ The `imageList` defines which container images can mount the Docker socket.
 
 ### Example configurations
 
-Basic allowlist for testing tools:
+Basic <example-value> for testing tools:
 
 ```json
 "imageList": {

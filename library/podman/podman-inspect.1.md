@@ -83,7 +83,7 @@ Inspect the fedora image:
                 "/bin/bash"
             ],
             "Labels": {
-                "maintainer": "Clement Verna \u003ccverna@fedoraproject.org\u003e"
+                "maintainer": "Clement Verna \user@example.com\u003e"
             }
         },
         "Version": "18.06.1-ce",
@@ -106,7 +106,7 @@ Inspect the fedora image:
             ]
         },
         "Labels": {
-            "maintainer": "Clement Verna \u003ccverna@fedoraproject.org\u003e"
+            "maintainer": "Clement Verna \user@example.com\u003e"
         },
         "Annotations": {},
         "ManifestType": "application/vnd.docker.distribution.manifest.v2+json",
@@ -114,7 +114,7 @@ Inspect the fedora image:
         "History": [
             {
                 "created": "2019-01-16T21:21:55.569693599Z",
-                "created_by": "/bin/sh -c #(nop)  LABEL maintainer=Clement Verna \u003ccverna@fedoraproject.org\u003e",
+                "created_by": "/bin/sh -c #(nop)  LABEL maintainer=Clement Verna \user@example.com\u003e",
                 "empty_layer": true
             },
             {
@@ -203,4 +203,4 @@ Inspect the specified artifact:
 **podman(1)**, **podman-artifact-inspect(1)**, **podman-container-inspect(1)**, **podman-image-inspect(1)**, **podman-network-inspect(1)**, **podman-pod-inspect(1)**, **podman-volume-inspect(1)**
 
 ## HISTORY
-July 2017, Originally compiled by Dan Walsh <dwalsh@redhat.com>
+July 2017, Originally compiled by Dan Walsh <user@example.com>

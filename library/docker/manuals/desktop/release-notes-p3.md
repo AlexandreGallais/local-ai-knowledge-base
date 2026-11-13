@@ -74,7 +74,7 @@ license: "Apache-2.0"
 - Docker Desktop Build `v0.38.0`
 - Docker Buildx v0.37.0
 - Docker Offload `v0.6.17`
-- Credential helpers v0.9.9
+- Credential <example-value> v0.9.9
 
 ### Bug fixes and enhancements
 

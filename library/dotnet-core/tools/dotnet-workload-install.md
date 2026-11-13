@@ -142,5 +142,5 @@ A workload version to display, or one or more workloads and their versions joine
 - Install the workload version specified by the `@` character:
 
   ```dotnetcli
-  dotnet workload install maui@10.0.100
+  dotnet workload install user@example.com
   ```

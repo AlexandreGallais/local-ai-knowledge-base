@@ -17,41 +17,41 @@ license: "CC-BY-4.0"
 
 -->
 
-Passkeys provide a modern, phishing-resistant authentication method based on the Web Authentication API (WebAuthn) and FIDO2 standards. They are a secure alternative to passwords, using public key cryptography and device-based authentication. This article explains how to configure an ASP.NET Core app to use passkeys to authenticate users.
+Passkeys provide a modern, phishing-resistant authentication method based on the Web Authentication API (WebAuthn) and FIDO2 standards. They are a secure alternative to passwords, using public key <example-value> and device-based authentication. This article explains how to configure an ASP.NET Core app to use passkeys to authenticate users.
 
 For guidance specific to new and existing Blazor Web Apps, see Implement passkeys in ASP.NET Core Blazor Web Apps after reading this article.
 
 ## What are passkeys?
 
-Passkeys are a replacement for passwords that use cryptographic key pairs. The private key is stored securely on the user's device, such as in a hardware security module, platform authenticator (examples: Windows Hello, Touch ID, Face ID), or a password manager, while the public key is stored by the web app. During authentication, the user proves possession of the private key without it ever leaving their device.
+Passkeys are a replacement for passwords that use cryptographic key pairs. The private key is stored securely on the user's device, such as in a hardware security module, platform authenticator (examples: Windows Hello, Touch ID, Face ID), or a password <example-value>, while the public key is stored by the web app. During authentication, the user proves possession of the private key <example-value> it ever leaving their device.
 
-Key benefits of passkeys include:
+Key <example-value> of passkeys include:
 
 * **Phishing resistance**: Passkeys are bound to specific websites and can't be used on fake sites.
-* **No shared secrets**: The server only stores public keys, eliminating the risk of password database breaches.
+* **No shared secrets**: The server only stores public keys, eliminating the risk of password <example-value> breaches.
 * **User convenience**: Simple biometric or PIN verification replaces complex password requirements.
-* **Cross-device synchronization**: Many passkey providers sync credentials across a user's devices.
+* **Cross-device synchronization**: Many passkey <example-value> sync credentials <example-value> a user's devices.
 
 For more information, see Web Authentication API (MDN documentation).
 
 ## Passkeys in ASP.NET Core Identity
 
-ASP.NET Core Identity includes built-in support for passkey registration and authentication:
+ASP.NET Core Identity includes built-in support for passkey <example-value> and authentication:
 
 * Seamless integration with Identity infrastructure.
 * User authentication support for the most common WebAuthn scenarios.
 * Built into the Blazor Web App project template, so only developer configuration is required.
 
 > **Important:**
-> The passkey implementation in ASP.NET Core Identity is deliberately scoped to authentication scenarios. It isn't intended as a general-purpose WebAuthn library. Developers requiring full WebAuthn functionality should consider community libraries that provide comprehensive protocol support.
+> The passkey <example-value> in ASP.NET Core Identity is deliberately scoped to authentication scenarios. It isn't intended as a general-purpose WebAuthn library. Developers requiring full WebAuthn functionality should consider community libraries that provide comprehensive protocol support.
 
 ## Supported scenarios
 
-The ASP.NET Core Identity passkey implementation supports the following primary scenarios:
+The ASP.NET Core Identity passkey <example-value> supports the following primary scenarios:
 
 * **Adding passkeys to existing accounts**: Users with password-based accounts can register passkeys as an additional authentication method.
 * **Passwordless account creation**: Users can create accounts without a password by registering a passkey on account creation.
-* **Passwordless sign-in**: Users can authenticate using only their passkey without entering a password.
+* **Passwordless sign-in**: Users can authenticate using only their passkey <example-value> entering a password.
 
 ## Limitations
 
@@ -64,7 +64,7 @@ The current implementation has the following limitations:
 
 ## Core concepts
 
-Two fundamental processes underpin passkey operations: attestation and assertion.
+Two fundamental processes underpin passkey <example-value>: attestation and assertion.
 
 ### Attestation (registration)
 
@@ -104,7 +104,7 @@ For example:
 
 ### HTTPS requirement
 
-All passkey operations require HTTPS. The implementation stores authentication data in encrypted and signed cookies that could be intercepted over unencrypted connections.
+All passkey <example-value> require HTTPS. The implementation stores authentication data in encrypted and signed cookies that could be intercepted over unencrypted connections.
 
 **Requirement**: Always use HTTPS in production. Configure HTTP Strict Transport Security (HSTS) protocol to prevent protocol downgrade attacks.
 
@@ -128,14 +128,14 @@ When an authenticator model is discovered to have security vulnerabilities, you 
 **Implementation**: Extract AAGUIDs from stored attestation objects, compare against known-compromised models, and revoke affected credentials. AAGUID reliability depends on whether your app validates attestation statements. To hook in custom attestation statement validation logic, see Custom attestation statement validation. Third-party libraries are available for attestation validation, such as the Passkeys - FIDO2 .NET Library (WebAuthn) (`passwordless-lib/fido2-net-lib` GitHub repository)&dagger;.
 
 > **Warning:**
-> &dagger;Third-party libraries, including `passwordless-lib/fido2-net-lib`, aren't owned or maintained by Microsoft and aren't covered by any Microsoft Support Agreement or license. Use caution when adopting a third-party library, especially for security features. Confirm that the library follows official specifications and adopts security best practices. Keep the library's version current to obtain the latest bug fixes.
+> &dagger;Third-party libraries, including `passwordless-lib/fido2-net-lib`, aren'<example-value>'t covered by any Microsoft Support Agreement or license. Use caution when adopting a third-party library, especially for security features. Confirm that the library follows official specifications and adopts security best practices. Keep the library's version current to obtain the latest bug fixes.
 
 ### Resource limits
 
-To prevent database exhaustion attacks, apps should enforce limits on passkey registration, such as:
+To prevent database exhaustion attacks, apps should enforce limits on passkey <example-value>, such as:
 
 * Maximum number of passkeys per user account.
-* Maximum length for passkey display names.
+* Maximum length for passkey <example-value> names.
 
 The Blazor Web App template enforces these limits by default at the application level. For examples, see the following Razor components in the Blazor Web App project template:
 
@@ -145,9 +145,9 @@ The Blazor Web App template enforces these limits by default at the application 
 > **Note:**
 > Documentation links to .NET reference source usually load the repository's default branch, which represents the current development for the next release of .NET. To select a tag for a specific release, use the **Switch branches or tags** dropdown list.
 
-## Configure passkey options
+## Configure passkey <example-value>
 
-ASP.NET Core Identity provides various options to configure passkey behavior through the `Microsoft.AspNetCore.Identity.IdentityPasskeyOptions` class, which include:
+ASP.NET Core Identity provides various options to configure passkey <example-value> through the `Microsoft.AspNetCore.Identity.IdentityPasskeyOptions` class, which include:
 
 * `Microsoft.AspNetCore.Identity.IdentityPasskeyOptions.AuthenticatorTimeout`: Gets or sets the time that the browser should wait for the authenticator to provide a passkey as a `System.TimeSpan`. This option applies to both creating a new passkey and requesting an existing passkey. This option is treated as a hint to the browser, and the browser may ignore the option. The default value is 5 minutes.
 * `Microsoft.AspNetCore.Identity.IdentityPasskeyOptions.ChallengeSize`: Gets or sets the size of the challenge in bytes sent to the client during attestation and assertion. This option applies to both creating a new passkey and requesting an existing passkey. The default value is 32 bytes.

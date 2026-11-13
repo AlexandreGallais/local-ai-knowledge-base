@@ -166,7 +166,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ### Required navigations
 
-A navigation from dependent to principal is required if the relationship is required, which in turn means that the foreign key property is non-nullable. Conversely, the navigation is optional if the foreign key is nullable, and the relationship is therefore optional.
+A navigation from dependent to principal is required if the relationship is required, which in turn means that the foreign key <example-value> is non-nullable. Conversely, the navigation is optional if the foreign key is nullable, and the relationship is therefore optional.
 
 Reference navigations from principal to dependent are different. In most cases, a principal entity can _always_ exist without any dependent entities. That is, a required relationship does _not_ indicate that there will always be at least one dependent entity. There is no way in the EF model, and also no standard way in a relational database, to ensure that a principal is associated with a certain number of dependents. If this is needed, then it must be implemented in application (business) logic.
 

@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Configure ASP.NET Core Identity
 
-ASP.NET Core Identity uses default values for settings such as password policy, lockout, and cookie configuration. These settings can be overridden at application startup.
+ASP.NET Core Identity uses default values for settings such as password <example-value>, lockout, and cookie configuration. These settings can be overridden at application startup.
 
 ## Identity options
 
@@ -40,7 +40,7 @@ public async Task<IActionResult> OnPostAsync(string returnUrl = null)
     if (ModelState.IsValid)
     {
         // This doesn't count login failures towards account lockout
-        // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+        // To enable password <example-value> to trigger account lockout, set lockoutOnFailure: true
         var result = await _signInManager.PasswordSignInAsync(Input.Email,
              Input.Password, Input.RememberMe,
              lockoutOnFailure: false);
@@ -220,9 +220,9 @@ builder.Services.Configure<IdentityOptions>(options =>
 | `Microsoft.AspNetCore.Identity.TokenOptions.AuthenticatorTokenProvider` | Gets or sets the `AuthenticatorTokenProvider` used to validate two-factor sign-ins with an authenticator. |
 | `Microsoft.AspNetCore.Identity.TokenOptions.ChangeEmailTokenProvider` | Gets or sets the `ChangeEmailTokenProvider` used to generate tokens used in email change confirmation emails. |
 | `Microsoft.AspNetCore.Identity.TokenOptions.ChangePhoneNumberTokenProvider` | Gets or sets the `ChangePhoneNumberTokenProvider` used to generate tokens used when changing phone numbers. |
-| `Microsoft.AspNetCore.Identity.TokenOptions.EmailConfirmationTokenProvider` | Gets or sets the token provider used to generate tokens used in account confirmation emails. |
+| `Microsoft.AspNetCore.Identity.TokenOptions.EmailConfirmationTokenProvider` | Gets or sets the token <example-value> used to generate tokens used in account confirmation emails. |
 | `Microsoft.AspNetCore.Identity.TokenOptions.PasswordResetTokenProvider` | Gets or sets the `Microsoft.AspNetCore.Identity.IUserTwoFactorTokenProvider`1` used to generate tokens used in password reset emails. |
-| `Microsoft.AspNetCore.Identity.TokenOptions.ProviderMap` | Used to construct a User Token Provider with the key used as the provider's name. |
+| `Microsoft.AspNetCore.Identity.TokenOptions.ProviderMap` | Used to construct a User Token <example-value> with the key used as the provider's name. |
 
 ### User
 
@@ -265,13 +265,13 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 For more information, see `Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationOptions`.
 
-## Password Hasher options
+## Password <example-value> options
 
 `Microsoft.AspNetCore.Identity.PasswordHasherOptions` gets and sets options for password hashing.
 
 | Option | Description |
 |--|--|
-| `Microsoft.AspNetCore.Identity.PasswordHasherOptions.CompatibilityMode` | The compatibility mode used when hashing new passwords. Defaults to `Microsoft.AspNetCore.Identity.PasswordHasherCompatibilityMode.IdentityV3`. The first byte of a hashed password, called a *format marker*, specifies the version of the hashing algorithm used to hash the password. When verifying a password against a hash, the `Microsoft.AspNetCore.Identity.PasswordHasher`1.VerifyHashedPassword*` method selects the correct algorithm based on the first byte. A client is able to authenticate regardless of which version of the algorithm was used to hash the password. Setting the compatibility mode affects the hashing of *new passwords*. |
+| `Microsoft.AspNetCore.Identity.PasswordHasherOptions.CompatibilityMode` | The compatibility mode used when hashing new passwords. Defaults to `Microsoft.AspNetCore.Identity.PasswordHasherCompatibilityMode.IdentityV3`. The first byte of a hashed password, called a *format marker*, specifies the version of the hashing algorithm used to hash the password. When verifying a password <example-value> a hash, the `Microsoft.AspNetCore.Identity.PasswordHasher`1.VerifyHashedPassword*` method selects the correct algorithm based on the first byte. A client is able to authenticate regardless of which version of the algorithm was used to hash the password. Setting the compatibility mode affects the hashing of *new passwords*. |
 | `Microsoft.AspNetCore.Identity.PasswordHasherOptions.IterationCount` | The number of iterations used when hashing passwords using PBKDF2. This value is only used when the `Microsoft.AspNetCore.Identity.PasswordHasherOptions.CompatibilityMode` is set to `Microsoft.AspNetCore.Identity.PasswordHasherCompatibilityMode.IdentityV3`. The value must be a positive integer and defaults to `100000`. |
 
 In the following example, the `Microsoft.AspNetCore.Identity.PasswordHasherOptions.IterationCount` is set to `12000` in `Program.cs`:

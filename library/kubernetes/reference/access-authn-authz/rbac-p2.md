@@ -86,8 +86,8 @@ rules:
 - apiGroups: [""]
   #
   # at the HTTP level, the name of the resource for accessing Secret
-  # objects is "secrets"
-  resources: ["secrets"]
+  # objects is "<example-value>"
+  resources: ["<example-value>"]
   verbs: ["get", "watch", "list"]
 ```
 
@@ -142,13 +142,13 @@ lets you define a set of common roles across your cluster, then reuse them withi
 multiple namespaces.
 
 For instance, even though the following RoleBinding refers to a ClusterRole,
-"dave" (the subject, case sensitive) will only be able to read Secrets in the "development"
+"<example-value>" (the subject, case sensitive) will only be able to read Secrets in the "<example-value>"
 namespace, because the RoleBinding's namespace (in its metadata) is "development".
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
-# This role binding allows "dave" to read secrets in the "development" namespace.
-# You need to already have a ClusterRole named "secret-reader".
+# This role binding allows "<example-value>" to read secrets in the "<example-value>" namespace.
+# You need to already have a ClusterRole named "<example-value>".
 kind: RoleBinding
 metadata:
   name: read-secrets
@@ -174,7 +174,7 @@ secrets in any namespace.
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
-# This cluster role binding allows anyone in the "manager" group to read secrets in any namespace.
+# This cluster role binding allows anyone in the "<example-value>" group to read secrets in any namespace.
 kind: ClusterRoleBinding
 metadata:
   name: read-secrets-global

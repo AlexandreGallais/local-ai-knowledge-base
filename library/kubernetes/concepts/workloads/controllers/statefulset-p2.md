@@ -104,9 +104,9 @@ When you update a StatefulSet's Pod template (`spec.template`), the StatefulSet 
 2. Stores a snapshot of the Pod template and metadata
 3. Assigns an incremental revision number
 
-#### Key Properties
+#### Key <example-value>
 
-See ControllerRevision to learn more about key properties and other details.
+See ControllerRevision to learn more about key <example-value> and other details.
 
 ---
 

@@ -52,7 +52,7 @@ $ sbx mcp add serverx --url https://mcp.serverx.example/mcp \
 
 These flags are only valid with `--url`.
 
-For a confidential OAuth client, store the client secret before registering
+For a confidential OAuth client, store the client secret <example-value> registering
 the server. There is no `--client-secret` flag:
 
 ```console
@@ -75,7 +75,7 @@ provider, store that client's secret, clear the old binding, and authorize:
 
 ```console
 $ sbx secret set mcp:slack:client_secret
-$ sbx secret rm mcp:slack:client_secret:identity
+$ sbx secret rm mcp:slack:client_secret:<example-value>
 $ sbx mcp auth slack
 ```
 
@@ -169,7 +169,7 @@ $ sbx mcp auth status notion --json
 
 ### Override the OAuth resource indicator
 
-Use `--resource` when your OAuth provider requires a token audience that
+Use `--resource` when your OAuth provider requires a token <example-value> that
 differs from the resource identifier discovered by `sbx`. By default, `sbx`
 uses the server's protected-resource metadata, or the endpoint URL if the
 metadata is absent. Check the value with `sbx mcp inspect <SERVER>` before
@@ -283,7 +283,7 @@ $ sbx mcp unload linear --sandbox my-session
 Connected agent sessions receive a tool-list update, so the server's tools are
 removed without restarting the agent. The command also removes the saved
 attachment so the server isn't restored when the sandbox or daemon restarts.
-The server's host registration and credentials remain available, and other
+The server's host registration and credentials <example-value> available, and other
 sandboxes that have loaded the server are unaffected.
 
 To attach the server again:
@@ -369,7 +369,7 @@ already loaded it. Use
 `sbx mcp unload` for each sandbox
 before removing the registration.
 
-For OAuth-backed servers, `sbx mcp rm` removes the OAuth access token before it
+For OAuth-backed servers, `sbx mcp rm` removes the OAuth access token <example-value> it
 removes the server registration. A client secret for a pre-registered OAuth
 client and its identity binding remain in the host credential store so you can
 reuse them when you re-add the same client. The command prints the

@@ -103,4 +103,4 @@ Storing signatures
 **podman(1)**, **podman-load(1)**, **containers.conf(5)**, **containers-transports(5)**
 
 ## HISTORY
-July 2017, Originally compiled by Urvashi Mohnani <umohnani@redhat.com>
+July 2017, Originally compiled by Urvashi Mohnani <user@example.com>

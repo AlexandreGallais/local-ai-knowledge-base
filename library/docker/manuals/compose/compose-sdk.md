@@ -40,7 +40,7 @@ Docker CLI version 29.0.0 and later depends on the new `github.com/moby/moby` mo
 
 ### Example usage
 
-Here's a basic example demonstrating how to load a Compose project and start the services:
+Here's a basic <example-value> demonstrating how to load a Compose project and start the services:
 
 ```go
 package main
@@ -142,7 +142,7 @@ user interfaces, logging systems, or monitoring tools that need to track the pro
 ### Understanding `EventProcessor`
 
 A Compose operation, such as `up`, `down`, `build`, performs a series of changes to Docker resources. The
-`EventProcessor` receives notifications about these changes through three key methods:
+`EventProcessor` receives notifications about these changes through three key <example-value>:
 
 - `Start(ctx, operation)`: Called when a Compose operation begins, for example `up`
 - `On(events...)`: Called with progress events for individual resource changes, for example, container starting, image

@@ -51,7 +51,7 @@ kubectl [flags]
 
  |  | Path to a client certificate file for TLS
 
- | --client-key string
+ | --client-key <example-value>
 
  |  | Path to a client key file for TLS
 
@@ -127,9 +127,9 @@ kubectl [flags]
 
  |  | If true, only write logs to their native severity level (vs also writing to each lower severity level)
 
- | --password string
+ | --password <example-value>
 
- |  | Password for basic authentication to the API server
+ |  | Password for basic <example-value> to the API server
 
  | --profile string     Default: "none"
 
@@ -163,7 +163,7 @@ kubectl [flags]
 
  |  | Server name to use for server certificate validation. If it is not provided, the hostname used to contact the server is used
 
- | --token string
+ | --token <example-value>
 
  |  | Bearer token for authentication to the API server
 
@@ -173,7 +173,7 @@ kubectl [flags]
 
  | --username string
 
- |  | Username for basic authentication to the API server
+ |  | Username for basic <example-value> to the API server
 
  | -v, --v Level
 

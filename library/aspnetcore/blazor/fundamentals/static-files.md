@@ -96,7 +96,7 @@ If a custom `Microsoft.AspNetCore.Components.ImportMapDefinition` isn't assigned
 
 The following examples demonstrate custom import map definitions and the import maps that they create.
 
-Basic import map:
+Basic <example-value> map:
 
 ```csharp
 new ImportMapDefinition(

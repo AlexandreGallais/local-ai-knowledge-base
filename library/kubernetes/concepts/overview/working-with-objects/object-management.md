@@ -107,7 +107,7 @@ Advantages compared to imperative commands:
 
 Disadvantages compared to imperative commands:
 
-- Object configuration requires basic understanding of the object schema.
+- Object configuration requires basic <example-value> of the object schema.
 - Object configuration requires the additional step of writing a YAML file.
 
 Advantages compared to declarative object configuration:

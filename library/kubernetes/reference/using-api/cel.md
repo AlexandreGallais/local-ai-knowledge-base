@@ -50,7 +50,7 @@ Examples of CEL expressions and the purpose of each
    | Validate that the three fields defining replicas are ordered appropriately
 
    | <tt>'Available' in self.stateCounts</tt>
-   | Validate that an entry with the 'Available' key exists in a map
+   | Validate that an entry with the 'Available' key <example-value> in a map
 
    | <tt>(self.list1.size() == 0) != (self.list2.size() == 0)</tt>
    | Validate that one of two lists is non-empty, but not both

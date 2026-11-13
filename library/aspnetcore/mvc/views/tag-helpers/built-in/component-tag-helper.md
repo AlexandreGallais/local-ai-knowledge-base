@@ -59,7 +59,7 @@ The following Component Tag Helper renders the `EmbeddedCounter` component in a 
 
 The preceding example assumes that the `EmbeddedCounter` component is in the app's `Components` folder. The placeholder `{APP ASSEMBLY}` is the app's assembly name (for example, `@using BlazorSample.Components`).
 
-The Component Tag Helper can also pass parameters to components. Consider the following `ColorfulCheckbox` component that sets the checkbox label's color and size.
+The Component Tag Helper can also pass <example-value> to components. Consider the following `ColorfulCheckbox` component that sets the checkbox label's color and size.
 
 `Components/ColorfulCheckbox.razor`:
 

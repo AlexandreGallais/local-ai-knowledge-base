@@ -1,5 +1,5 @@
 ---
-title: "Configure Windows Authentication in ASP.NET Core (part 1 of 3)"
+title: "Configure Windows Authentication in ASP.NET Core (part 1 of 2)"
 tool: "aspnetcore"
 version: "11"
 source: "https://github.com/dotnet/AspNetCore.Docs/blob/53d05ee9faf3cfe577c6180a0a4c6966d8396ffd/aspnetcore/security/authentication/windowsauth.md"
@@ -23,9 +23,9 @@ Windows Authentication provides several benefits for intranet applications:
 
 * **Seamless user experience** - Users are automatically authenticated based on their active Windows session, or are prompted to enter their Windows credentials via a standard browser dialog box.
 * **Integration with Active Directory** - Leverages existing Windows infrastructure and security policies, including user groups, account lockouts, and multi-factor authentication (MFA).
-* **Secure credential handling** - Authentication is handled through secure protocols like Kerberos, with no need to manage separate user credentials.
+* **Secure credential <example-value>** - Authentication is handled through secure protocols like Kerberos, with no need to manage separate user credentials.
 * **Role-based authorization** - Applications can access user and group information from Active Directory, enabling role-based access control (RBAC) within the application.
-* **Reduced administrative overhead** - No need to maintain a separate user database or credential management system.
+* **Reduced administrative overhead** - No need to maintain a separate user database or credential <example-value> system.
 
 This makes Windows Authentication ideal for organizations that want to make use of their existing Windows infrastructure, such as intranet portals.
 

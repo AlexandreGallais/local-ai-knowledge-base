@@ -39,7 +39,7 @@ spec:
             fileKeyRef:
               path: config.env
               volumeName: config
-              key: DB_ADDRESS
+              key: <example-value>
               optional: false
   restartPolicy: Never
   volumes:

@@ -46,7 +46,7 @@ canonical JSON representation:
 ```json
 {
   "allowedOrgs": ["docker", "acme-corp"],
-  "adminEmail": "it-security@acme-corp.com",
+  "adminEmail": "user@example.com",
   "adminURL": "https://acme-corp.atlassian.net/servicedesk/it",
   "adminName": "ACME IT Security Team"
 }
@@ -77,7 +77,7 @@ Write the configuration to the user preferences domain:
 
 ```console
 $ defaults write com.docker.sbx allowedOrgs -array "acme-corp"
-$ defaults write com.docker.sbx adminEmail "it@acme.com"
+$ defaults write com.docker.sbx adminEmail "user@example.com"
 ```
 
 To remove the test configuration:
@@ -102,7 +102,7 @@ New-Item -Path "HKLM:\SOFTWARE\Policies\Docker\SBX" -Force
 New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Docker\SBX" `
   -Name "allowedOrgs" -Value @("acme-corp") -PropertyType MultiString -Force
 New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Docker\SBX" `
-  -Name "adminEmail" -Value "it@acme.com" -PropertyType String -Force
+  -Name "adminEmail" -Value "user@example.com" -PropertyType String -Force
 ```
 
 To remove the test configuration:
@@ -118,7 +118,7 @@ Write the configuration file and set its ownership:
 ```console
 $ sudo mkdir -p /etc/docker-sbx
 $ sudo tee /etc/docker-sbx/config.json <<'EOF'
-{"allowedOrgs": ["acme-corp"], "adminEmail": "it@acme.com"}
+{"allowedOrgs": ["acme-corp"], "adminEmail": "user@example.com"}
 EOF
 $ sudo chown root:root /etc/docker-sbx/config.json
 $ sudo chmod 644 /etc/docker-sbx/config.json
@@ -187,7 +187,7 @@ contact details:
                   <string>acme-corp</string>
                 </array>
                 <key>adminEmail</key>
-                <string>it-security@acme-corp.com</string>
+                <string>user@example.com</string>
                 <key>adminURL</key>
                 <string>https://acme-corp.atlassian.net/servicedesk/it</string>
                 <key>adminName</key>
@@ -227,7 +227,7 @@ Salt. The file must be owned by root with `644` permissions.
 ```json
 {
   "allowedOrgs": ["acme-corp"],
-  "adminEmail": "it-security@acme-corp.com",
+  "adminEmail": "user@example.com",
   "adminURL": "https://acme-corp.atlassian.net/servicedesk/it",
   "adminName": "ACME IT Security"
 }
@@ -266,7 +266,7 @@ that is a member of one of the following Docker organizations:
   - acme-corp
 
 For access, contact ACME IT Security:
-  Email: it-security@acme-corp.com
+  Email: user@example.com
   URL:   https://acme-corp.atlassian.net/servicedesk/it
 ```
 

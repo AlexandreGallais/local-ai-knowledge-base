@@ -106,7 +106,7 @@ public struct LogInterpolatedStringHandler
 }
 ```
 > **Note:**
-> When the interpolated string expression is a compile-time constant (that is, it has no placeholders), the compiler uses the target type `string` instead of invoking a custom interpolated string handler. This behavior means constant interpolated strings bypass custom handlers entirely.
+> When the interpolated string expression is a compile-time constant (that is, it has no placeholders), the compiler uses the target type `string` instead of invoking a custom interpolated string handler. This behavior means constant interpolated strings bypass <example-value> handlers entirely.
 
 You can now add an overload to `LogMessage` in the `Logger` class to try your new interpolated string handler:
 

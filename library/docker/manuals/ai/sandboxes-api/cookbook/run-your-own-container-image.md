@@ -28,7 +28,7 @@ Next, run a command or copy in your project files. Delete the sandbox when the w
 ```typescript
 const sandbox = await client.create(
   { displayName: name, imageRef, resources },
-  { timeoutMs: 300_000, idempotencyKey: requestId },
+  { timeoutMs: 300_000, idempotencyKey: <example-value> },
 );
 return sandbox.waitUntilRunning();
 ```
@@ -47,7 +47,7 @@ export async function createFromImageRef(
 ) {
   const sandbox = await client.create(
     { displayName: name, imageRef, resources },
-    { timeoutMs: 300_000, idempotencyKey: requestId },
+    { timeoutMs: 300_000, idempotencyKey: <example-value> },
   );
   return sandbox.waitUntilRunning();
 }

@@ -7,7 +7,7 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# Visual Basic support
+# Visual Basic <example-value>
 
 Parts of `System.Text.Json` use ref structs, which are not supported by Visual Basic. If you try to use System.Text.Json ref struct APIs with Visual Basic, you get BC40000 compiler errors. The error message indicates that the problem is an obsolete API, but the actual issue is lack of ref struct support in the compiler. The following parts of System.Text.Json aren't usable from Visual Basic:
 

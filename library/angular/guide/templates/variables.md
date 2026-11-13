@@ -58,7 +58,7 @@ Once you've declared a variable with `@let`, you can reuse it in the same templa
 
 ### Assignability
 
-A key difference between `@let` and JavaScript's `let` is that `@let` cannot be reassigned after declaration. However, Angular automatically keeps the variable's value up-to-date with the given expression.
+A key <example-value> between `@let` and JavaScript's `let` is that `@let` cannot be reassigned after declaration. However, Angular automatically keeps the variable's value up-to-date with the given expression.
 
 ```angular-html
 @let value = 1;

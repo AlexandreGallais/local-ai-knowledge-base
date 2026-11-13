@@ -82,7 +82,7 @@ For example, if the user is on `example.com/settings`, here is how different rel
 
 ## Programmatic navigation to routes
 
-While `RouterLink` handles declarative navigation in templates, Angular provides programmatic navigation for scenarios where you need to navigate based on logic, user actions, or application state. By injecting `Router`, you can dynamically navigate to routes, pass parameters, and control navigation behavior in your TypeScript code.
+While `RouterLink` handles declarative navigation in templates, Angular provides programmatic navigation for scenarios where you need to navigate based on logic, user actions, or application state. By injecting `Router`, you can dynamically navigate to routes, pass <example-value>, and control navigation behavior in your TypeScript code.
 
 ### `router.navigate()`
 

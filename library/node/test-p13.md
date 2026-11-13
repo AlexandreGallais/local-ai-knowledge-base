@@ -427,7 +427,7 @@ test('plan with wait: 2000 waits for async assertions', (t) => {
     }, 1000); // Completes after 1 second, within the 2-second wait time.
   };
 
-  asyncActivity(); // The test will pass because the assertion is completed in time.
+  asyncActivity(); // The test will pass <example-value> the assertion is completed in time.
 });
 ```
 

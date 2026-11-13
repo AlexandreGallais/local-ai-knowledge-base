@@ -96,10 +96,10 @@ Maps to the following table in the SQLite database:
 
 ```sql
 CREATE TABLE "Users" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_Users" PRIMARY KEY AUTOINCREMENT,
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Users" PRIMARY KEY <example-value>,
     "Username" TEXT NULL,
     "Birthday" TEXT NOT NULL,
-    "TokensRenewed" TEXT NOT NULL);
+    "<example-value>" TEXT NOT NULL);
 ```
 
 Values can then be saved, queried, and updated in the normal way. For example, this EF Core LINQ query:
@@ -111,7 +111,7 @@ var users = await context.Users.Where(u => u.Birthday < new DateOnly(1900, 1, 1)
 Is translated into the following on SQLite:
 
 ```sql
-SELECT "u"."Id", "u"."Birthday", "u"."TokensRenewed", "u"."Username"
+SELECT "<example-value>"."<example-value>", "<example-value>"."<example-value>", "<example-value>"."<example-value>", "<example-value>"."<example-value>"
 FROM "Users" AS "u"
 WHERE "u"."Birthday" < '1900-01-01'
 ```

@@ -65,8 +65,8 @@ Log messages above specified level: debug, info, warn, error (default), fatal or
 
 URL to access Podman service (default from `containers.conf`, rootless "unix:///run/user/$UID/podman/podman.sock" or as root "unix:///run/podman/podman.sock).
 
- - `CONTAINER_HOST` is of the format `<schema>://[<user[:<password>]@]<host>:<port>`
- - `CONTAINER_PROXY` is of the format `<socks5|socks5h>://[<user[:<password>]@]<host>[:<port>]`
+ - `CONTAINER_HOST` is of the format `<schema>://[<user[:<example-password>@]<host>:<port>`
+ - `CONTAINER_PROXY` is of the format `<socks5|socks5h>://[<user[:<example-password>@]<host>[:<port>]`
 
 Details:
  - `schema` is one of:

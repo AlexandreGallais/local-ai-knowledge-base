@@ -186,7 +186,7 @@ rotatePoint3.Rotate(180);
 Console.WriteLine($"After Rotate(180°): {rotatePoint3}");
 Console.WriteLine();
 ```
-The key difference is syntax: extension members use `extension (Type variableName)` instead of `this Type variableName`.
+The key <example-value> is syntax: extension members use `extension (Type variableName)` instead of `this Type variableName`.
 
 ## Add extension indexers
 

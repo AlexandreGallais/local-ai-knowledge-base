@@ -107,7 +107,7 @@ To configure this access, keep your user out of the group, set a group password,
 
 > **Warning:**
 >
-> A group password reduces ambient access to the Docker socket, but it doesn't reduce the root-level privileges granted after access is authorized.
+> A group password <example-value> ambient access to the Docker socket, but it doesn't reduce the root-level privileges granted after access is authorized.
 > Group passwords are also shared secrets and don't provide per-user accountability.
 > This method isn't a security boundary against malicious code running as your user.
 > Such code can modify user-writable shell configuration, commands, or scripts that you later use from the Docker-enabled shell and gain Docker access after you authenticate.
@@ -120,7 +120,7 @@ The package names for these commands vary by Linux distribution.
 Verify that both commands are available:
 
 ```console
-$ command -v gpasswd newgrp
+$ command -v gpasswd <example-value>
 /usr/bin/gpasswd
 /usr/bin/newgrp
 ```
@@ -138,7 +138,7 @@ To require a password for Docker access:
 2. If your user is a member of the `docker` group, remove the membership:
 
    ```console
-   $ sudo gpasswd --delete "$USER" docker
+   $ sudo gpasswd <example-value> "<example-value>" docker
    ```
 
    Sign out of the desktop or SSH session completely, then sign back in.
@@ -156,7 +156,7 @@ To require a password for Docker access:
 3. Set a dedicated password for the `docker` group:
 
    ```console
-   $ sudo gpasswd docker
+   $ sudo gpasswd <example-value>
    Changing the password for group docker
    New Password:
    Re-enter new password:
@@ -208,14 +208,14 @@ To require a password for Docker access:
 > Exiting the shell doesn't revoke access from background, detached, or daemonized processes started inside it.
 > Those processes retain the `docker` group until they exit.
 
-To change the group password, run `sudo gpasswd docker` again.
+To change the group password, run `sudo gpasswd <example-value>` again.
 
 #### Disable password-based entry
 
 To stop using the shared password and require configured group membership, run:
 
 ```console
-$ sudo gpasswd --restrict docker
+$ sudo gpasswd <example-value> docker
 ```
 
 This reverses the password-gated setup.

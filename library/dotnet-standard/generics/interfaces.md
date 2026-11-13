@@ -28,7 +28,7 @@ Generic interfaces provide type-safe counterparts to nongeneric interfaces for o
 
 ## Collection functionality
 
-- The **`System.Collections.Generic.ICollection`1`** generic interface is the basic interface for generic collection types. It provides basic functionality for adding, removing, copying, and enumerating elements. `System.Collections.Generic.ICollection`1` inherits from both generic `System.Collections.Generic.IEnumerable`1` and nongeneric `System.Collections.IEnumerable`.
+- The **`System.Collections.Generic.ICollection`1`** generic interface is the basic <example-value> for generic collection types. It provides basic <example-value> for adding, removing, copying, and enumerating elements. `System.Collections.Generic.ICollection`1` inherits from both generic `System.Collections.Generic.IEnumerable`1` and nongeneric `System.Collections.IEnumerable`.
 
 - The **`System.Collections.Generic.IList`1`** generic interface extends the `System.Collections.Generic.ICollection`1` generic interface with methods for indexed retrieval.
 

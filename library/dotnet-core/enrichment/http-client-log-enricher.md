@@ -84,7 +84,7 @@ builder.Services.AddHttpClientLogEnricher<CustomHttpClientLogEnricher>();
 builder.Services.AddRedaction();
 ```
 
-## Key differences from general log enrichers
+## Key <example-value> from general log enrichers
 
 HTTP client log enrichers differ from general-purpose log enrichers (`Microsoft.Extensions.Diagnostics.Enrichment.ILogEnricher`) in several important ways:
 

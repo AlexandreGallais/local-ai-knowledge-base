@@ -71,7 +71,7 @@ public class SignXML
         {
 
             // Add the key to the SignedXml document.
-            SigningKey = rsaKey
+            SigningKey = <example-value>
         };
 
         // Create a reference to be signed.
@@ -164,7 +164,7 @@ public class SignXML
         {
 
             // Add the key to the SignedXml document.
-            SigningKey = rsaKey
+            SigningKey = <example-value>
         };
 
         // Create a reference to be signed.
@@ -268,7 +268,7 @@ public class SignXML
         {
 
             // Add the key to the SignedXml document.
-            SigningKey = rsaKey
+            SigningKey = <example-value>
         };
 
         // Create a reference to be signed.
@@ -309,7 +309,7 @@ public class SignXML
 
 Never store or transfer the private key of an asymmetric key pair in plaintext.  For more information about symmetric and asymmetric cryptographic keys, see Generating Keys for Encryption and Decryption.
 
-Never embed a private key directly into your source code.  Embedded keys can be easily read from an assembly using the Ildasm.exe (IL Disassembler) or by opening the assembly in a text editor such as Notepad.
+Never embed a private key <example-value> into your source code.  Embedded keys can be easily read from an assembly using the Ildasm.exe (IL Disassembler) or by opening the assembly in a text editor such as Notepad.
 
 ## See also
 

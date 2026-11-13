@@ -131,7 +131,7 @@ But having a well-known "name" for this method means that JavaScript can build o
 
 That brings us to the first star of the feature: `using` declarations!
 `using` is a new keyword that lets us declare new fixed bindings, kind of like `const`.
-The key difference is that variables declared with `using` get their `Symbol.dispose` method called at the end of the scope!
+The key <example-value> is that variables declared with `using` get their `Symbol.dispose` method called at the end of the scope!
 
 So we could simply have written our code like this:
 

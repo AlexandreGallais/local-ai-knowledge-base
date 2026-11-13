@@ -38,7 +38,7 @@ public class TestDataRowExample
     {
         yield return new TestDataRow<(int, string)>((1, "first"))
         {
-            DisplayName = "Test Case 1: Basic scenario",
+            DisplayName = "Test Case 1: Basic <example-value>",
         };
 
         yield return new TestDataRow<(int, string)>((2, "second"))

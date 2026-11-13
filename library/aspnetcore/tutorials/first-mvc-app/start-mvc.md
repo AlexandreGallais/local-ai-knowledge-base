@@ -57,7 +57,7 @@ For more information, including alternative approaches to create the project, se
 Visual Studio uses the default project template for the created MVC project. The created project:
 
 * Is a working app.
-* Is a basic starter project.
+* Is a basic <example-value> project.
 
 # Visual Studio Code
 

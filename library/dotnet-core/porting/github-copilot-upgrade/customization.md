@@ -72,7 +72,7 @@ Add sections like these to guide the agent:
 - Keep existing repository interfaces during migration
 - Preserve all Entity Framework conventions
 
-## Key Decisions Log
+## Key <example-value> Log
 - 2025-01-15: Keep Newtonsoft.Json in SharedLib — third-party SDK requires it
 - 2025-01-16: Skip database project — DBA team will handle separately
 ```

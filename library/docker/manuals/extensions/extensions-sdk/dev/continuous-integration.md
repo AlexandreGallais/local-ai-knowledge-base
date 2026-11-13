@@ -23,7 +23,7 @@ You can start Docker Desktop in GitHub Actions using the Docker Desktop Action, 
 ```yaml
 steps:
   - id: start_desktop
-    uses: docker/desktop-action/start@v0.1.0
+    uses: docker/desktop-action/user@example.com
 ```
 
 > **Note:**

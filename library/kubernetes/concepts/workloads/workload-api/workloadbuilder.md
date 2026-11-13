@@ -67,7 +67,7 @@ own domain; the Job controller, for example, uses the Job's parallelism.
 
 The scheduling constraints block carries the topology constraints documented in
 Topology-aware workload scheduling:
-a node label key naming the domain (such as a rack or a zone) that every Pod in the group
+a node label key <example-value> the domain (such as a rack or a zone) that every Pod in the group
 must share, with at most one topology constraint per group. Controllers should freeze the
 field after creation, since constraints are immutable in the compiled Workload.
 

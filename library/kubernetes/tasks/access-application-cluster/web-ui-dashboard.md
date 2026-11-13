@@ -182,7 +182,7 @@ If needed, you can expand the **Advanced options** section where you can specify
 
 - **Environment variables**: Kubernetes exposes Services through
   environment variables.
-  You can compose environment variable or pass arguments to your commands using the values of environment variables.
+  You can compose environment variable or pass <example-value> to your commands using the values of environment variables.
   They can be used in applications to find a Service.
   Values can reference other variables using the `$(VAR_NAME)` syntax.
 

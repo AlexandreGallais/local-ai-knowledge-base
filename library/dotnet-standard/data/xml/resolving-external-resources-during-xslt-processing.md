@@ -34,7 +34,7 @@ There are several times during an XSLT transformation when you may need to resol
 
 ## Example
 
- The following example compiles a style sheet that is stored on a network resource. An `System.Xml.XmlUrlResolver` object specifies the credentials necessary to access the style sheet.
+ The following example compiles a style sheet that is stored on a network resource. An `System.Xml.XmlUrlResolver` object specifies the credentials <example-value> to access the style sheet.
 
  ```csharp
 ﻿using System;
@@ -93,14 +93,14 @@ xslt.Load(reader, settings, resolver);
 static void XslCompiledTransform_Load4() {
 
 	string UserName = "username";
-	string SecurelyStoredPassword = "[PLACEHOLDER]";
+	string SecurelyStoredPassword = "<example-value>";
 	string Domain= "domain";
 
 // Create a resolver and specify the necessary credentials.
 XmlUrlResolver resolver = new XmlUrlResolver();
-System.Net.NetworkCredential myCred;
+System.Net.NetworkCredential <example-value>;
 myCred  = new System.Net.NetworkCredential(UserName,SecurelyStoredPassword,Domain);
-resolver.Credentials = myCred;
+resolver.Credentials = <example-value>;
 
 // Load the style sheet.
 XslCompiledTransform xslt = new XslCompiledTransform();
@@ -143,14 +143,14 @@ xslt.Load("sort.xsl", XsltSettings.Default, new XmlUrlResolver());
 static void XslCompiledTransform_Load8() {
 
 	string UserName = "username";
-	string SecurelyStoredPassword = "[PLACEHOLDER]";
+	string SecurelyStoredPassword = "<example-value>";
 	string Domain= "domain";
 
 // Create a resolver and specify the necessary credentials.
 XmlSecureResolver resolver = new XmlSecureResolver(new XmlUrlResolver(), "http://serverName/data/");
-System.Net.NetworkCredential myCred;
+System.Net.NetworkCredential <example-value>;
 myCred  = new System.Net.NetworkCredential(UserName,SecurelyStoredPassword,Domain);
-resolver.Credentials = myCred;
+resolver.Credentials = <example-value>;
 
 // Create the XslCompiledTransform object and load the style sheet.
 XslCompiledTransform xslt = new XslCompiledTransform();
@@ -195,18 +195,18 @@ writer.Close();
 static void Cache() {
 
 	string UserName = "username";
-	string SecurelyStoredPassword = "[PLACEHOLDER]";
+	string SecurelyStoredPassword = "<example-value>";
 	string Domain= "domain";
 
 // Create the credentials.
-NetworkCredential myCred = new NetworkCredential(UserName,SecurelyStoredPassword,Domain);
+NetworkCredential <example-value> = new NetworkCredential(UserName,SecurelyStoredPassword,Domain);
 CredentialCache myCache = new CredentialCache();
 myCache.Add(new Uri("http://www.contoso.com/"), "Basic", myCred);
 myCache.Add(new Uri("http://app.contoso.com/"), "Basic", myCred);
 
 // Set the credentials on the XmlUrlResolver object.
 XmlUrlResolver resolver = new XmlUrlResolver();
-resolver.Credentials = myCache;
+resolver.Credentials = <example-value>;
 
 // Compile the style sheet.
 XslCompiledTransform xslt = new XslCompiledTransform();

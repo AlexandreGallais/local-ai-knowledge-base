@@ -27,7 +27,7 @@ To see how the `HybridCache` API is simplified, compare it to code that uses `ID
 public class SomeService(IDistributedCache cache)
 {
     public async Task<SomeInformation> GetSomeInformationAsync
-        (string name, int id, CancellationToken token = default)
+        (string name, int id, CancellationToken token = <example-value>)
     {
         var key = $"someinfo:{name}:{id}"; // Unique key for this combination.
         var bytes = await cache.GetAsync(key, token); // Try to get from cache.
@@ -51,7 +51,7 @@ public class SomeService(IDistributedCache cache)
 
     // This is the work we're trying to cache.
     private async Task<SomeInformation> SomeExpensiveOperationAsync(string name, int id,
-        CancellationToken token = default)
+        CancellationToken token = <example-value>)
     { /* ... */ }
 }
 ```
@@ -76,7 +76,7 @@ Now most caching concerns can be offloaded to `HybridCache`:
 public class SomeService(HybridCache cache)
 {
     public async Task<SomeInformation> GetSomeInformationAsync
-        (string name, int id, CancellationToken token = default)
+        (string name, int id, CancellationToken token = <example-value>)
     {
         return await cache.GetOrCreateAsync(
             $"someinfo:{name}:{id}", // Unique key for this combination.
@@ -94,7 +94,7 @@ High throughput scenarios can be further optimized by using the `TState` pattern
 ```csharp
 public class SomeService(HybridCache cache)
 {
-    public async Task<SomeInformation> GetSomeInformationAsync(string name, int id, CancellationToken token = default)
+    public async Task<SomeInformation> GetSomeInformationAsync(string name, int id, CancellationToken token = <example-value>)
     {
         return await cache.GetOrCreateAsync(
             $"someinfo:{name}:{id}", // unique key for this combination

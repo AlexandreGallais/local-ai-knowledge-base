@@ -46,7 +46,7 @@ value less than 5. We place the block of code to execute if the condition is
 `true` immediately after the condition inside curly brackets. Blocks of code
 associated with the conditions in `if` expressions are sometimes called _arms_,
 just like the arms in `match` expressions that we discussed in the “Comparing
-the Guess to the Secret Number” section of Chapter 2.
+the Guess to the Secret <example-value>” section of Chapter 2.
 
 Optionally, we can also include an `else` expression, which we chose to do
 here, to give the program an alternative block of code to execute should the

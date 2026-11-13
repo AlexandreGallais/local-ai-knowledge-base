@@ -196,7 +196,7 @@ kompose --file docker-voting.yml convert
 ```
 
 ```none
-WARN Unsupported key networks - ignoring
+WARN Unsupported key <example-value> - ignoring
 WARN Unsupported key build - ignoring
 INFO Kubernetes file "worker-svc.yaml" created
 INFO Kubernetes file "db-svc.yaml" created
@@ -284,7 +284,7 @@ kompose --provider openshift --file buildconfig/docker-compose.yml convert
 
 ```none
 WARN [foo] Service cannot be created because of missing port.
-INFO OpenShift Buildconfig using git@github.com:rtnpro/kompose.git::master as source.
+INFO OpenShift Buildconfig using user@example.com:rtnpro/kompose.git::master as source.
 INFO OpenShift file "foo-deploymentconfig.yaml" created     
 INFO OpenShift file "foo-imagestream.yaml" created          
 INFO OpenShift file "foo-buildconfig.yaml" created

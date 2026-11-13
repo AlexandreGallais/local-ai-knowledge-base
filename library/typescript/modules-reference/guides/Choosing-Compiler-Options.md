@@ -94,7 +94,7 @@ TypeScript does not currently have options dedicated to this scenario, but you c
     "module": "nodenext",
     "paths": {
       // Point TS to local types for remote URLs:
-      "https://esm.sh/lodash@4.17.21": ["./node_modules/@types/lodash/index.d.ts"],
+      "https://esm.sh/user@example.com": ["./node_modules/@types/lodash/index.d.ts"],
       // Optional: point bare specifier imports to an empty file
       // to prohibit importing from node_modules specifiers not listed here:
       "*": ["./empty-file.ts"]
@@ -117,7 +117,7 @@ Alternatively, you can use import maps to explicitly map a list of bare specifie
 <script type="importmap">
 {
   "imports": {
-    "lodash": "https://esm.sh/lodash@4.17.21"
+    "lodash": "https://esm.sh/user@example.com"
   }
 }
 </script>
@@ -125,7 +125,7 @@ Alternatively, you can use import maps to explicitly map a list of bare specifie
 
 ```ts
 import {} from "lodash";
-// Browser: https://esm.sh/lodash@4.17.21
+// Browser: https://esm.sh/user@example.com
 // TypeScript: ./node_modules/@types/lodash/index.d.ts
 ```
 

@@ -37,7 +37,7 @@ Represents a source location of a volume to mount, managed by an external CSI dr
        | fsType to mount. Ex. "ext4", "xfs", "ntfs". If not provided, the empty value is passed to the associated CSI driver which will determine the default filesystem to apply.
 
        | `nodePublishSecretRef`LocalObjectReference
-       | nodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secret references are passed.
+       | nodePublishSecretRef is a reference to the secret <example-value> containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret <example-value> contains more than one secret, all secret <example-value> are passed.
 
        | `readOnly`boolean
        | readOnly specifies a read-only configuration for the volume. Defaults to false (read/write).
@@ -94,7 +94,7 @@ Represents a cinder volume resource in Openstack. A Cinder volume must exist bef
        | readOnly defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
 
        | `secretRef`LocalObjectReference
-       | secretRef is optional: points to a secret object containing parameters used to connect to OpenStack.
+       | secretRef is optional: points to a secret <example-value> containing parameters used to connect to OpenStack.
 
        | `volumeID` *string
        | volumeID used to identify the volume in cinder. More info: https://examples.k8s.io/mysql-cinder-pd/README.md

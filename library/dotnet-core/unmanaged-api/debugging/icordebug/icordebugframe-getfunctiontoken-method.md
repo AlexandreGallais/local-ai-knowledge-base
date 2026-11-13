@@ -7,7 +7,7 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# ICorDebugFrame::GetFunctionToken Method
+# ICorDebugFrame::GetFunctionToken <example-value>
 
 Gets the metadata token for the function that contains the code associated with this stack frame.
 

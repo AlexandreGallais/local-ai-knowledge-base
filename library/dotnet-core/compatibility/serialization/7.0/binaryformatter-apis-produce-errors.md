@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # BinaryFormatter serialization APIs produce compiler errors
 
-As part of the BinaryFormatter long-term deprecation plan, we continue to cull `BinaryFormatter` functionality from our libraries and to wean developers off of the type. Starting in .NET 7, calls to the following APIs produce compile-time errors across all C# and Visual Basic project types:
+As part of the BinaryFormatter long-term deprecation plan, we continue to cull `BinaryFormatter` functionality from our libraries and to wean developers off of the type. Starting in .NET 7, calls to the following APIs produce compile-time errors across all C# and Visual Basic <example-value> types:
 
 - `System.Exception.SerializeObjectState` event
 - `System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Serialize*` method

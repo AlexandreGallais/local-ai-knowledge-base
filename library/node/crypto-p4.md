@@ -39,11 +39,11 @@ const {
 } = await import('node:crypto');
 
 const algorithm = 'aes-192-cbc';
-const password = 'Password used to generate key';
-// Key length is dependent on the algorithm. In this case for aes192, it is
+const password = '<example-value>';
+// Key <example-value> is dependent on the algorithm. In this case for aes192, it is
 // 24 bytes (192 bits).
 // Use the async `crypto.scrypt()` instead.
-const key = scryptSync(password, 'salt', 24);
+const key = scryptSync(password, '<example-value>', 24);
 // The IV is usually passed along with the ciphertext.
 const iv = Buffer.alloc(16, 0); // Initialization vector.
 
@@ -76,11 +76,11 @@ const {
 const { Buffer } = require('node:buffer');
 
 const algorithm = 'aes-192-cbc';
-const password = 'Password used to generate key';
-// Key length is dependent on the algorithm. In this case for aes192, it is
+const password = '<example-value>';
+// Key <example-value> is dependent on the algorithm. In this case for aes192, it is
 // 24 bytes (192 bits).
 // Use the async `crypto.scrypt()` instead.
-const key = scryptSync(password, 'salt', 24);
+const key = scryptSync(password, '<example-value>', 24);
 // The IV is usually passed along with the ciphertext.
 const iv = Buffer.alloc(16, 0); // Initialization vector.
 
@@ -119,9 +119,9 @@ const {
 } = await import('node:crypto');
 
 const algorithm = 'aes-192-cbc';
-const password = 'Password used to generate key';
+const password = '<example-value>';
 // Use the async `crypto.scrypt()` instead.
-const key = scryptSync(password, 'salt', 24);
+const key = scryptSync(password, '<example-value>', 24);
 // The IV is usually passed along with the ciphertext.
 const iv = Buffer.alloc(16, 0); // Initialization vector.
 
@@ -145,9 +145,9 @@ const {
 const { Buffer } = require('node:buffer');
 
 const algorithm = 'aes-192-cbc';
-const password = 'Password used to generate key';
+const password = '<example-value>';
 // Use the async `crypto.scrypt()` instead.
-const key = scryptSync(password, 'salt', 24);
+const key = scryptSync(password, '<example-value>', 24);
 // The IV is usually passed along with the ciphertext.
 const iv = Buffer.alloc(16, 0); // Initialization vector.
 
@@ -169,9 +169,9 @@ const {
 } = await import('node:crypto');
 
 const algorithm = 'aes-192-cbc';
-const password = 'Password used to generate key';
+const password = '<example-value>';
 // Use the async `crypto.scrypt()` instead.
-const key = scryptSync(password, 'salt', 24);
+const key = scryptSync(password, '<example-value>', 24);
 // The IV is usually passed along with the ciphertext.
 const iv = Buffer.alloc(16, 0); // Initialization vector.
 
@@ -194,9 +194,9 @@ const {
 const { Buffer } = require('node:buffer');
 
 const algorithm = 'aes-192-cbc';
-const password = 'Password used to generate key';
+const password = '<example-value>';
 // Use the async `crypto.scrypt()` instead.
-const key = scryptSync(password, 'salt', 24);
+const key = scryptSync(password, '<example-value>', 24);
 // The IV is usually passed along with the ciphertext.
 const iv = Buffer.alloc(16, 0); // Initialization vector.
 

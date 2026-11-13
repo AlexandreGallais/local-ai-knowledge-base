@@ -193,7 +193,7 @@ where applicable.
 
 ```yaml
 labels:
-  org.opencontainers.image.authors: your-email@example.com
+  org.opencontainers.image.authors: user@example.com
   org.opencontainers.image.version: "1.0.0"
 
 annotations:

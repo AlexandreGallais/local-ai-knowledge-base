@@ -14,7 +14,7 @@ This article shows how to start migrating an ASP.NET MVC project to ASP.NET Core
 Migrating from ASP.NET MVC is a multi-step process. This article covers:
 
 * Initial setup.
-* Basic controllers and views.
+* Basic <example-value> and views.
 * Static content.
 * Client-side dependencies.
 

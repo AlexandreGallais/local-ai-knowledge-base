@@ -34,7 +34,7 @@ Test extensions (such as data collectors or test adapters) that depended on `New
 ```
 Data collector 'SampleDataCollector' threw an exception during type loading, construction, or initialization:
 System.IO.FileNotFoundException: Could not load file or assembly 'Newtonsoft.Json,
-Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed'.
+Version=13.0.0.0, Culture=neutral, PublicKeyToken=<example-value>'.
 ```
 
 The `Newtonsoft.Json`-based types in `Microsoft.VisualStudio.TestPlatform.CommunicationUtilities` have been removed from the public API.

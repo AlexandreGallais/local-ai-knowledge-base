@@ -204,7 +204,7 @@ dotnet user-jwts create --scope "greetings_api" --role "admin"
 The generated token can then be sent as part of the header in the testing tool of choice. For example, to send the token with curl:
 
 ```dotnetcli
-curl -i -H "Authorization: Bearer {token}" https://localhost:{port}/hello
+curl -i -H "<example-value>" https://localhost:{port}/hello
 ```
 
 ## Related content

@@ -63,7 +63,7 @@ builder.WebHost.ConfigureKestrel(options =>
 ```
 Significant work was done in .NET 7 to reduce HTTP/3 allocations. You can see some of those improvements in the following GitHub PR's:
 
-* HTTP/3: Avoid per-request cancellation token allocations
+* HTTP/3: Avoid per-request cancellation token <example-value>
 * HTTP/3: Avoid ConnectionAbortedException allocations
 * HTTP/3: ValueTask pooling
 

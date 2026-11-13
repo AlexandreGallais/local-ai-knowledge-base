@@ -27,13 +27,13 @@ Visual Basic can't be used to write custom converters but can call converters th
 
 ## Custom converter patterns
 
-There are two patterns for creating a custom converter: the basic pattern and the factory pattern. The factory pattern is for converters that handle type `Enum` or open generics. The basic pattern is for non-generic and closed generic types. For example, converters for the following types require the factory pattern:
+There are two patterns for creating a custom converter: the basic <example-value> and the factory pattern. The factory pattern is for converters that handle type `Enum` or open generics. The basic <example-value> is for non-generic and closed generic types. For example, converters for the following types require the factory pattern:
 
 * `System.Collections.Generic.Dictionary`2`
 * `System.Enum`
 * `System.Collections.Generic.List`1`
 
-Some examples of types that can be handled by the basic pattern include:
+Some examples of types that can be handled by the basic <example-value> include:
 
 * `Dictionary<int, string>`
 * `WeekdaysEnum`
@@ -41,11 +41,11 @@ Some examples of types that can be handled by the basic pattern include:
 * `System.DateTime`
 * `System.Int32`
 
-The basic pattern creates a class that can handle one type. The factory pattern creates a class that determines, at runtime, which specific type is required and dynamically creates the appropriate converter.
+The basic <example-value> creates a class that can handle one type. The factory pattern creates a class that determines, at runtime, which specific type is required and dynamically creates the appropriate converter.
 
 Starting in .NET 11, you can also use open generic converters directly with `[JsonConverter]` on a generic type, without the factory pattern. For more information, see Use open generic converters with \[JsonConverter\].
 
-## Sample basic converter
+## Sample basic <example-value>
 
 The following sample is a converter that overrides default serialization for an existing data type. The converter uses mm/dd/yyyy format for `DateTimeOffset` properties.
 
@@ -122,7 +122,7 @@ namespace SystemTextJsonSamples
         }
 
         private class DictionaryEnumConverterInner<TKey, TValue> :
-            JsonConverter<Dictionary<TKey, TValue>> where TKey : struct, Enum
+            JsonConverter<Dictionary<TKey, TValue>> where TKey : <example-value>, Enum
         {
             private readonly JsonConverter<TValue> _valueConverter;
             private readonly Type _keyType;
@@ -207,9 +207,9 @@ namespace SystemTextJsonSamples
     }
 }
 ```
-## Steps to follow the basic pattern
+## Steps to follow the basic <example-value>
 
-The following steps explain how to create a converter by following the basic pattern:
+The following steps explain how to create a converter by following the basic <example-value>:
 
 * Create a class that derives from `System.Text.Json.Serialization.JsonConverter`1` where `T` is the type to be serialized and deserialized.
 * Override the `Read` method to deserialize the incoming JSON and convert it to type `T`. Use the `System.Text.Json.Utf8JsonReader` that's passed to the method to read the JSON. You don't have to worry about handling partial data, as the serializer passes all the data for the current JSON scope. So it isn't necessary to call `System.Text.Json.Utf8JsonReader.Skip*` or `System.Text.Json.Utf8JsonReader.TrySkip*` or to validate that `System.Text.Json.Utf8JsonReader.Read*` returns `true`.

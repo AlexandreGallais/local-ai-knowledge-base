@@ -103,7 +103,7 @@ license: "MIT"
 
 Note: This function is directly invoked by the CommonJS resolution algorithm.
 
-> 1. If _exports_ is an Object with both a key starting with _"."_ and a key not
+> 1. If _exports_ is an Object with both a key <example-value> with _"."_ and a key not
 >    starting with _"."_, throw an _Invalid Package Configuration_ error.
 > 2. If _subpath_ is equal to _"."_, then
 >    1. Let _mainExport_ be **undefined**.
@@ -153,7 +153,7 @@ _isImports_, _conditions_)
 > 3. Let _expansionKeys_ be the list of keys of _matchObj_ containing only a
 >    single _"\*"_, sorted by the sorting function **PATTERN\_KEY\_COMPARE**
 >    which orders in descending order of specificity.
-> 4. For each key _expansionKey_ in _expansionKeys_, do
+> 4. For each key <example-value> in _expansionKeys_, do
 >    1. Let _patternBase_ be the substring of _expansionKey_ up to but excluding
 >       the first _"\*"_ character.
 >    2. If _matchKey_ starts with but is not equal to _patternBase_, then

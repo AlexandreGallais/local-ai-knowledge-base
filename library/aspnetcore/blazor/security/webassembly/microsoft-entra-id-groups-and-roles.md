@@ -35,7 +35,7 @@ The examples in this article take advantage of new .NET/C# features. When using 
 
 Access the sample app, named `BlazorWebAssemblyEntraGroupsAndRoles`, through the latest version folder from the repository's root with the following link. The sample is provided for .NET 8 or later. See the sample app's `README` file for steps on how to run the app.
 
-The sample app includes a `UserClaims` component for displaying a user's claims. The `UserData` component displays the user's basic account properties.
+The sample app includes a `UserClaims` component for displaying a user's claims. The `UserData` component displays the user's basic <example-value> properties.
 
 View or download sample code (how to download)
 

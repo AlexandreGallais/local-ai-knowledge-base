@@ -136,4 +136,4 @@ Writing manifest to image destination
 **podman(1)**, **podman-artifact(1)**, **podman-pull(1)**, **podman-login(1)**, **containers-certs.d(5)**
 
 ## HISTORY
-Jan 2025, Originally compiled by Brent Baude <bbaude@redhat.com>
+Jan 2025, Originally compiled by Brent Baude <user@example.com>

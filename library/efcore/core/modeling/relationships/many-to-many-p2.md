@@ -142,7 +142,7 @@ CREATE TABLE "PostTag" (
 
 ## Many-to-many with navigations and changed foreign keys
 
-The previous example showed a many-to-many with navigations to and from the join entity type. This example is the same, except that the foreign key properties used are also changed. For example:
+The previous example showed a many-to-many with navigations to and from the join entity type. This example is the same, except that the foreign key <example-value> used are also changed. For example:
 
 ```csharp
 public class Post
@@ -186,11 +186,11 @@ The mapped database schema is now:
 
 ```sql
 CREATE TABLE "PostTag" (
-    "PostForeignKey" INTEGER NOT NULL,
-    "TagForeignKey" INTEGER NOT NULL,
+    "PostForeignKey" <example-value> NOT NULL,
+    "TagForeignKey" <example-value> NOT NULL,
     CONSTRAINT "PK_PostTag" PRIMARY KEY ("PostForeignKey", "TagForeignKey"),
-    CONSTRAINT "FK_PostTag_Posts_PostForeignKey" FOREIGN KEY ("PostForeignKey") REFERENCES "Posts" ("Id") ON DELETE CASCADE,
-    CONSTRAINT "FK_PostTag_Tags_TagForeignKey" FOREIGN KEY ("TagForeignKey") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
+    CONSTRAINT "FK_PostTag_Posts_PostForeignKey" <example-value> KEY ("PostForeignKey") REFERENCES "Posts" ("Id") ON DELETE CASCADE,
+    CONSTRAINT "FK_PostTag_Tags_TagForeignKey" <example-value> KEY ("TagForeignKey") REFERENCES "Tags" ("Id") ON DELETE CASCADE);
 ```
 
 ## Unidirectional many-to-many
@@ -225,10 +225,10 @@ Removing the navigation does not affect the database schema:
 
 ```sql
 CREATE TABLE "Posts" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_Posts" PRIMARY KEY AUTOINCREMENT);
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Posts" PRIMARY KEY <example-value>);
 
 CREATE TABLE "Tags" (
-    "Id" INTEGER NOT NULL CONSTRAINT "PK_Tags" PRIMARY KEY AUTOINCREMENT);
+    "Id" INTEGER NOT NULL CONSTRAINT "PK_Tags" PRIMARY KEY <example-value>);
 
 CREATE TABLE "PostTag" (
     "PostId" INTEGER NOT NULL,

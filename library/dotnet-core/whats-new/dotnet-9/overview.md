@@ -29,7 +29,7 @@ For more information, see What's new in the .NET 9 runtime.
 
 `System.Text.Json` adds support for nullable reference type annotations and exporting JSON schemas from types. It adds new options that let you customize the indentation of written JSON and read multiple root-level JSON values from a single stream.
 
-In LINQ, the new methods `System.Linq.Enumerable.CountBy*` and `System.Linq.Enumerable.AggregateBy*` make it possible to aggregate state by key without needing to allocate intermediate groupings via `System.Linq.Enumerable.GroupBy*`.
+In LINQ, the new methods `System.Linq.Enumerable.CountBy*` and `System.Linq.Enumerable.AggregateBy*` make it possible to aggregate state by key <example-value> needing to allocate intermediate groupings via `System.Linq.Enumerable.GroupBy*`.
 
 For collection types, the `System.Collections.Generic.PriorityQueue`2` type includes a new `System.Collections.Generic.PriorityQueue`2.Remove(`0,`0@,`1@,System.Collections.Generic.IEqualityComparer{`0})` method that you can use to _update_ the priority of an item in the queue.
 

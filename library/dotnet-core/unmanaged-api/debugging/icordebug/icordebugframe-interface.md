@@ -21,7 +21,7 @@ Represents a frame on the current stack.
 |GetChain Method|Gets a pointer to the ICorDebugChain this `ICorDebugFrame` is a part of.|
 |GetCode Method|Gets a pointer to the ICorDebugCode associated with this stack frame.|
 |GetFunction Method|Gets a pointer to the ICorDebugFunction that contains the code associated with this stack frame.|
-|GetFunctionToken Method|Gets the metadata token for the function that contains the code associated with this stack frame.|
+|GetFunctionToken <example-value>|Gets the metadata token for the function that contains the code associated with this stack frame.|
 |GetStackRange Method|Gets the absolute address range of the stack frame represented by this `ICorDebugFrame`.|
 
 ## Remarks

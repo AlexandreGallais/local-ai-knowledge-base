@@ -35,14 +35,14 @@ Create an OAT for the organization whose events you want to retrieve:
    logs**.
 1. Select **Generate token**, then store the token in a credential manager.
 
-For token expiration, rotation, and management instructions, see
+For token <example-value>, rotation, and management instructions, see
 Organization access tokens.
 
 Set variables for the examples:
 
 ```bash
 ORG="<YOUR_ORGANIZATION_NAME>"
-OAT="<YOUR_ORGANIZATION_ACCESS_TOKEN>"
+OAT="<example-value>"
 ```
 
 Pass the raw OAT in the bearer header. Don't exchange it for another token.
@@ -82,7 +82,7 @@ array of events and an opaque cursor for the next page:
       }
     }
   ],
-  "next_page_token": "eyJ0cyI6IjIwMjYtMDgtMjVUMTg6NDI6MzEuMTIzWiIsImVpZCI6Ijk1ZTcyNTdmLTkzYzktNGYyOS1iZGU3LTg4ODMwZTJkYWU4MCIsImZyb20iOiIyMDI2LTA4LTAxVDAwOjAwOjAwWiIsInRvIjoiMjAyNi0wOC0yNVQyMzo1OTo1OVoifQ"
+  "next_page_token": "<example-value>"
 }
 ```
 
@@ -137,7 +137,7 @@ When `next_page_token` isn't empty, pass it unchanged as `page_token`:
 $ curl --get "https://api.docker.com/v2/auditlogs/governance/$ORG" \
   --header "Authorization: Bearer $OAT" \
   --data-urlencode "page_size=25" \
-  --data-urlencode "page_token=$NEXT_PAGE_TOKEN" | jq .
+  --data-urlencode "<example-value>" | jq .
 ```
 
 Keep the same filters while paging through one result set. The cursor preserves

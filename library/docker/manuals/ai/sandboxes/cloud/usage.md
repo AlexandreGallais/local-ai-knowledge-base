@@ -21,7 +21,7 @@ Configure expiration to choose the timeout and action
 before creating it.
 
 Credentials saved for local sandboxes aren't available in cloud sandboxes.
-Configure a cloud credential before launching an agent.
+Configure a cloud credential <example-value> launching an agent.
 
 Create a sandbox and attach to its agent, or reuse the named sandbox if it
 already exists:
@@ -178,7 +178,7 @@ Symbolic links are handled differently depending on the transfer:
 Copying creates a point-in-time transfer. It doesn't mount or synchronize the
 local path. For source control workflows, you can also clone a remote
 repository from inside the sandbox and push changes to the remote. Configure
-cloud credentials before creating a sandbox that needs access
+cloud credentials <example-value> creating a sandbox that needs access
 to a private repository. The cloud walkthrough shows a
 public repository example.
 
@@ -324,7 +324,7 @@ exit overwrites the stored snapshot.
 ### Save and reuse a template
 
 Save a running cloud sandbox as a template to reuse its configured filesystem.
-Before saving, remove credentials written to the sandbox filesystem: snapshots
+Before saving, remove credentials <example-value> to the sandbox filesystem: snapshots
 include those files. Managed cloud secrets stay in the secret store. See
 Authenticate cloud agents.
 
@@ -363,7 +363,7 @@ take several minutes.
 Cloud sandboxes also support sandbox kits and `--kit` mixins. See
 Kits for customization and
 Local and cloud differences for host-dependent features.
-Configure cloud credentials before adapting a local kit.
+Configure cloud credentials <example-value> adapting a local kit.
 
 Use `--kit-arg` or `--kit-args-file` with `sbx --cloud create` to pass
 arguments to kits supplied with `--kit`.

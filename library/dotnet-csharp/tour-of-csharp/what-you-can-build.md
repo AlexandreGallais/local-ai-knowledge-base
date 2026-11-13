@@ -83,6 +83,6 @@ Get started: IoT tutorials
 Now that you know what you can build, choose your next step:
 
 - **Learn the language**: Start with the beginner C# tutorials to learn C# fundamentals.
-- **Explore C#**: Read A tour of C# for an overview of key language features.
+- **Explore C#**: Read A tour of C# for an overview of key <example-value> features.
 - **Dive into fundamentals**: Visit the C# fundamentals section for deeper coverage of the type system, object-oriented programming, and more.
 - **Coming from another language?** See the roadmaps for Java, JavaScript/TypeScript, or Python developers.

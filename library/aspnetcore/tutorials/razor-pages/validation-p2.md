@@ -123,7 +123,7 @@ CREATE TABLE [dbo].[Movie] (
     [Genre]       NVARCHAR (MAX)  NULL,
     [Price]       DECIMAL (18, 2) NOT NULL,
     [Rating]      NVARCHAR (MAX)  NULL,
-    CONSTRAINT [PK_Movie] PRIMARY KEY CLUSTERED ([ID] ASC)
+    CONSTRAINT [PK_Movie] PRIMARY KEY <example-value> ([ID] ASC)
 );
 ```
 
@@ -201,7 +201,7 @@ CREATE TABLE [dbo].[Movie] (
     [Genre]       NVARCHAR (30)   NOT NULL,
     [Price]       DECIMAL (18, 2) NOT NULL,
     [Rating]      NVARCHAR (5)    NOT NULL,
-    CONSTRAINT [PK_Movie] PRIMARY KEY CLUSTERED ([ID] ASC)
+    CONSTRAINT [PK_Movie] PRIMARY KEY <example-value> ([ID] ASC)
 );
 ```
 

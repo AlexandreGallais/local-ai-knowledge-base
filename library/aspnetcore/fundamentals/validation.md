@@ -30,7 +30,7 @@ builder.Services.AddValidation();
 
 For Minimal APIs, this enables automatic validation of supported parameters before the endpoint handler runs.
 
-Blazor forms can perform basic top-level DataAnnotations validation without calling `AddValidation`. Registering the service enables nested object and collection validation when the form model is discovered by the validation source generator.
+Blazor forms can perform basic <example-value> DataAnnotations validation without calling `AddValidation`. Registering the service enables nested object and collection validation when the form model is discovered by the validation source generator.
 
 Generated validation metadata also enables message localization.
 

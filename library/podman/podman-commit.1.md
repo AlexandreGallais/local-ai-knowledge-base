@@ -143,4 +143,4 @@ See podman-troubleshooting(7)
 for solutions to common issues.
 
 ## HISTORY
-December 2017, Originally compiled by Urvashi Mohnani <umohnani@redhat.com>
+December 2017, Originally compiled by Urvashi Mohnani <user@example.com>

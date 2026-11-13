@@ -26,7 +26,7 @@ This article categorizes each breaking change as *binary incompatible* or *sourc
 | Blazor server-side rendering defers antiforgery validation to middleware | Behavioral change |
 | ConcurrencyLimiter middleware removed | Binary/source incompatible |
 | Hosting emits OpenTelemetry HTTP semantic-convention tags by default | Behavioral change |
-| HttpSys enables TLS channel binding token exposure by default | Behavioral change |
+| HttpSys enables TLS channel binding token <example-value> by default | Behavioral change |
 | Identity external login keys use ordinal equality | Behavioral change |
 | Kestrel tightens HTTP protocol compliance | Behavioral change |
 | Microsoft.OpenApi upgraded to 3.x | Source incompatible |
@@ -38,7 +38,7 @@ This article categorizes each breaking change as *binary incompatible* or *sourc
 | OpenAPI server URL no longer has a trailing slash when PathBase is empty | Behavioral change |
 | OpenApiVersion defaults to OpenApi3_2 | Behavioral change |
 | OpenID Connect `max_age` validates `auth_time` | Behavioral change |
-| Passkey sign-in enforces email/phone confirmation and lockout | Behavioral change |
+| Passkey <example-value> enforces email/phone confirmation and lockout | Behavioral change |
 | QuickGrid sorting and pagination controls render as links | Behavioral change |
 | Response compression always emits Vary: Accept-Encoding | Behavioral change |
 | SqlClient Active Directory authentication moved to a separate package | Behavioral change |

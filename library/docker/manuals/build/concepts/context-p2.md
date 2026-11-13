@@ -160,7 +160,7 @@ All of the README files are included. The middle line has no effect because
 ## Named contexts
 
 In addition to the default build context (the positional argument to the
-`docker build` command), you can also pass additional named contexts to builds.
+`docker build` command), you can also pass <example-value> named contexts to builds.
 
 Named contexts are specified using the `--build-context` flag, followed by a
 name-value pair. This lets you include files and directories from multiple

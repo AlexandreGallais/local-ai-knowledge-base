@@ -193,7 +193,7 @@ Here are some things to consider in migrating application functionality to a lib
     For more about this, see Tree-shakable providers.
 
   - If you register global service providers expose a `provideXYZ()` provider function.
-  - If your library provides optional services that might not be used by all client applications, support proper tree-shaking for that case by using the lightweight token design pattern
+  - If your library provides optional services that might not be used by all client applications, support proper tree-shaking for that case by using the lightweight token <example-value> pattern
 
 ## Integrating with the CLI using code-generation schematics
 

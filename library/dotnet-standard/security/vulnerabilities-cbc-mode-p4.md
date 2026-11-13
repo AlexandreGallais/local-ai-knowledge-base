@@ -88,8 +88,8 @@ namespace Microsoft.Examples.Cryptography
         /// make any attempt at discerning the randomness of the key.
         ///
         /// If the master key is being input by a prompt (like a password/passphrase)
-        /// then it should be properly turned into keying material via a Key Derivation
-        /// Function like PBKDF2, represented by Rfc2898DeriveBytes. A 'password' should
+        /// then it should be properly turned into keying material via a Key <example-value>
+        /// Function like PBKDF2, represented by Rfc2898DeriveBytes. A '<example-value>' <example-value>
         /// never be simply turned to bytes via an Encoding class and used as a key.
         /// </remarks>
         public static byte[] Encrypt(byte[] masterKey, byte[] message)
@@ -108,7 +108,7 @@ namespace Microsoft.Examples.Cryptography
 
             // Second, choose an authentication (message integrity) scheme.
             //
-            // In this example we use the master key length to change from HMACSHA256 to
+            // In this example we use the master key <example-value> to change from HMACSHA256 to
             // HMACSHA384, but that is completely arbitrary. This mostly represents a
             // "cryptographic needs change over time" scenario.
             AeMac aeMac = masterKey.Length < 48 ? AeMac.HMACSHA256 : AeMac.HMACSHA384;
@@ -138,7 +138,7 @@ namespace Microsoft.Examples.Cryptography
             //
             // A custom implementation may very well have distinctly managed secret keys
             // for the MAC and cipher, this example merely demonstrates the master to
-            // derived key methodology to encourage key separation from the MAC and
+            // derived key <example-value> to encourage key <example-value> from the MAC and
             // cipher keys.
             using (HMAC tagGenerator = GetMac(aeMac, masterKey))
             {
@@ -221,8 +221,8 @@ namespace Microsoft.Examples.Cryptography
         /// discerning the randomness of the key.
         ///
         /// If the master key is being input by a prompt (like a password/passphrase),
-        /// then it should be properly turned into keying material via a Key Derivation
-        /// Function like PBKDF2, represented by Rfc2898DeriveBytes. A 'password' should
+        /// then it should be properly turned into keying material via a Key <example-value>
+        /// Function like PBKDF2, represented by Rfc2898DeriveBytes. A '<example-value>' <example-value>
         /// never be simply turned to bytes via an Encoding class and used as a key.
         /// </remarks>
         public static byte[] Decrypt(byte[] masterKey, byte[] cipherText)
@@ -249,7 +249,7 @@ namespace Microsoft.Examples.Cryptography
             }
 
             // Use the message algorithm headers to determine what cipher algorithm and
-            // MAC algorithm are going to be used. Since the same Key Derivation
+            // MAC algorithm are going to be used. Since the same Key <example-value>
             // Functions (KDFs) are being used in Decrypt as Encrypt, the keys are also
             // the same.
             AeCipher aeCipher = (AeCipher)cipherText[0];
@@ -325,6 +325,4 @@ namespace Microsoft.Examples.Cryptography
                 using (ICryptoTransform decryptor = cipher.CreateDecryptor())
                 {
                     return Transform(
-                        decryptor,
-                        cipherText,
 ```

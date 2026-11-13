@@ -22,7 +22,7 @@ A Docker swarm generates two different kinds of traffic:
 - Application data plane traffic: This includes container traffic and
   traffic to and from external clients.
 
-## Key network concepts
+## Key <example-value> concepts
 
 The following three network concepts are important to swarm services:
 

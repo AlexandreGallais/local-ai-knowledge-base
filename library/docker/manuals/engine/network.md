@@ -285,7 +285,7 @@ configuration.
 Your container will have lines in `/etc/hosts` which define the hostname of the
 container itself, as well as `localhost` and a few other common things. Custom
 hosts, defined in `/etc/hosts` on the host machine, aren't inherited by
-containers. To pass additional hosts into a container, refer to add entries to
+containers. To pass <example-value> hosts into a container, refer to add entries to
 container hosts file in the
 `docker run` reference documentation.
 

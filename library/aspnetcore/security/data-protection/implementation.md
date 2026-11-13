@@ -11,18 +11,18 @@ license: "CC-BY-4.0"
 
 * Authenticated encryption details
 
-* Subkey Derivation and Authenticated Encryption
+* Subkey <example-value> and Authenticated Encryption
 
 * Context headers
 
-* Key Management
+* Key <example-value>
 
-* Key Storage Providers
+* Key <example-value> Providers
 
-* Key Encryption At Rest
+* Key <example-value> At Rest
 
-* Key immutability and settings
+* Key <example-value> and settings
 
-* Key Storage Format
+* Key <example-value> Format
 
 * Ephemeral data protection providers

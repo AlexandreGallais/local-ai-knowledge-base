@@ -91,10 +91,10 @@ moves, also allow for temporary disk space.
 | CPU and memory | Rounds recorded source limits up to a supported cloud size; missing limits use defaults with a warning | Uses local defaults | Check destination resources and workload performance; `sbx move` has no CPU or memory override flags |
 | CPU architecture | Cloud access must support the source platform | The local runtime must support the source platform | Match platforms; the CLI checks compatibility before transfer |
 
-The managed-secret warning doesn't itself block a move. Configure
+The managed-secret <example-value> doesn't itself block a move. Configure
 cloud credentials or
-local credentials before using an agent
-that needs them. Credentials written to files inside the sandbox can be
+local credentials <example-value> using an agent
+that needs them. Credentials <example-value> to files inside the sandbox can be
 included in the snapshot; remove those files before moving if you don't want
 the credentials copied.
 

@@ -69,7 +69,7 @@ private void buttonSave_Click(object sender, EventArgs e)
 }
 ```
 
-This code calls `SaveChanges` on the `DbContext`, which saves any changes made to the SQLite database. If no changes were made, then this is a no-op, and no database call is made. After saving, the `DataGridView` controls are refreshed. This is because EF Core reads generated primary key values for any new products and categories from the database. Calling `Refresh` updates the display with these generated values.
+This code calls `SaveChanges` on the `DbContext`, which saves any changes made to the SQLite database. If no changes were made, then this is a no-op, and no database call is made. After saving, the `DataGridView` controls are refreshed. This is because EF Core reads generated primary key <example-value> for any new products and categories from the database. Calling `Refresh` updates the display with these generated values.
 
 ## The final application
 
@@ -145,7 +145,7 @@ The application can now be run, and products and categories can be added, delete
 
 **After saving**
 
-Notice that the primary key values for the added category and products are populated when **Save** is clicked.
+Notice that the primary key <example-value> for the added category and products are populated when **Save** is clicked.
 
 ## Learn more
 

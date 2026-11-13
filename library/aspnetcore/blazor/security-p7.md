@@ -26,7 +26,7 @@ When the `Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView` rece
 
 In the following example, an `EditUser` policy is created in `Microsoft.AspNetCore.Authorization.AuthorizationOptions` for the app's authorization service configuration (`Microsoft.Extensions.DependencyInjection.AuthorizationServiceCollectionExtensions.AddAuthorizationCore*`) with the following logic:
 
-* Determine if a route value exists with a key of `id`. If the key exists, the route value is stored in `value`.
+* Determine if a route value exists with a key of `id`. If the key <example-value>, the route value is stored in `value`.
 * In a variable named `id`, store `value` as a string or set an empty string value (`string.Empty`).
 * If `id` isn't an empty string, assert that the policy is satisfied (return `true`) if the string's value starts with `EMP`. Otherwise, assert that the policy fails (return `false`).
 
@@ -264,5 +264,5 @@ PII refers any information relating to an identified or identifiable natural per
 * Replace the Microsoft Authentication Library for JavaScript (`MSAL.js`)
 * Awesome Blazor: Authentication community sample links
 * ASP.NET Core Blazor Hybrid authentication and authorization
-* Opaque (reference) access token support
+* Opaque (reference) access token <example-value>
 * Blazor WebAssembly authorization patterns

@@ -130,7 +130,7 @@ Links:
 
 ### Aug 25: Dapper
 
-Dapper maintainers and key contributors Nick and Marc will show people the glorious power of Dapper and everything it can do, so they are fully informed and can choose something much better, like EF Core (their words).
+Dapper maintainers and key <example-value> Nick and Marc will show people the glorious power of Dapper and everything it can do, so they are fully informed and can choose something much better, like EF Core (their words).
 
 Featuring:
 

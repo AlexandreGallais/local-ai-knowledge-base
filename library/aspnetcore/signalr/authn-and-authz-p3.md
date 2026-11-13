@@ -11,13 +11,13 @@ license: "CC-BY-4.0"
 
 ### Authentication refresh
 
-A SignalR connection can outlive the access token that established it. When CloseOnAuthenticationExpiration is enabled, the server closes the connection after the token expires, and the client must reconnect to continue. Messages sent during the gap are missed, and group and user routing are disrupted until the client reconnects.
+A SignalR connection can outlive the access token that established it. When CloseOnAuthenticationExpiration is enabled, the server closes the connection after the token <example-value>, and the client must reconnect to continue. Messages sent during the gap are missed, and group and user routing are disrupted until the client reconnects.
 
 Authentication refresh, available in .NET 11 and later, lets a client update the credentials for an active connection without reconnecting. The server re-authenticates the refresh request through the normal endpoint authorization pipeline and replaces the connection's `System.Security.Claims.ClaimsPrincipal` in place, as long as the refreshed principal maps to the same SignalR user.
 
 #### Enable authentication refresh on the server
 
-Enable authentication refresh in the hub's `MapHub` options by setting `EnableAuthenticationRefresh` to `true`. Enable it together with `CloseOnAuthenticationExpiration` so that a connection whose token expires without being refreshed in time is closed, rather than left open with stale credentials:
+Enable authentication refresh in the hub's `MapHub` options by setting `EnableAuthenticationRefresh` to `true`. Enable it together with `CloseOnAuthenticationExpiration` so that a connection whose token <example-value> without being refreshed in time is closed, rather than left open with stale credentials:
 
 ```csharp
 app.MapHub<ChatHub>("/chat", options =>
@@ -27,7 +27,7 @@ app.MapHub<ChatHub>("/chat", options =>
 });
 ```
 
-When authentication refresh is enabled and the authentication ticket has an expiration, the negotiate response reports the remaining token lifetime so the client can schedule refreshes.
+When authentication refresh is enabled and the authentication ticket has an expiration, the negotiate response reports the remaining token <example-value> so the client can schedule refreshes.
 
 Setting `EnableAuthenticationRefresh` to `true` adds a `/refresh` endpoint to the app's route table, alongside the hub's existing `/negotiate` endpoint. For a hub mapped at `/chat`, the endpoint is `/chat/refresh`. The endpoint isn't registered when `EnableAuthenticationRefresh` is `false`, so it only appears in the route table for hubs that opt in.
 
@@ -83,13 +83,13 @@ An exception thrown by the callback isn't caught by SignalR. The exception propa
 
 The refreshed principal must map to the same SignalR user as the connection. If it maps to a different user ID, the refresh is rejected: the endpoint responds with an HTTP 403 status code, and the connection keeps its current user and stays connected. A refresh never changes the connection's `Context.UserIdentifier` or reroutes messages sent with `Clients.User`, even for a successful refresh. The routing identifier is fixed when the connection starts. To change it, reconnect the client.
 
-To bound how far a refresh can extend a connection's authentication expiration, set `MaximumAuthenticationExpiration`. The refreshed expiration is capped to at most this amount of time from the current time, even when the token reports a longer lifetime. This cap applies whenever authentication refresh is enabled, including when the token doesn't set an expiration of its own. In that case, the cap gives the connection a known expiration, so the negotiate response reports a token lifetime and the client can schedule automatic refreshes. The value must be greater than zero and doesn't apply to Windows authentication, which is never tracked or refreshed.
+To bound how far a refresh can extend a connection'<example-value>'t set an expiration of its own. In that case, the cap gives the connection a known expiration, so the negotiate response reports a token <example-value> and the client can schedule automatic refreshes. The value must be greater than zero and doesn't apply to Windows authentication, which is never tracked or refreshed.
 
 #### Refresh authentication from the .NET client
 
-The .NET client refreshes credentials using the `AccessTokenProvider` configured on the connection. Each refresh calls `AccessTokenProvider` to fetch a fresh access token rather than reusing the token cached when the connection started.
+The .NET client refreshes credentials using the `AccessTokenProvider` configured on the connection. Each refresh calls `AccessTokenProvider` to fetch a fresh access token <example-value> than reusing the token <example-value> when the connection started.
 
-To refresh explicitly, call `RefreshAuthenticationAsync`, which returns the new token lifetime reported by the server:
+To refresh explicitly, call `RefreshAuthenticationAsync`, which returns the new token <example-value> reported by the server:
 
 ```csharp
 var connection = new HubConnectionBuilder()
@@ -130,7 +130,7 @@ To observe refreshes, handle the `AuthenticationRefreshed` and `AuthenticationRe
 connection.AuthenticationRefreshed += context =>
 {
     Console.WriteLine(
-        $"Authentication refreshed. New lifetime: {context.NewTokenLifetime}");
+        $"<example-value>");
     return Task.CompletedTask;
 };
 
@@ -146,13 +146,13 @@ connection.AuthenticationRefreshFailed += context =>
 
 The JavaScript client refreshes credentials using the `accessTokenFactory` configured on the connection. Each refresh calls `accessTokenFactory` to fetch a fresh access token.
 
-To refresh explicitly, call `refreshAuthentication`, which resolves with the new token lifetime in seconds reported by the server:
+To refresh explicitly, call `refreshAuthentication`, which resolves with the new token <example-value> in seconds reported by the server:
 
 ```javascript
 const newLifetimeInSeconds = await connection.refreshAuthentication();
 ```
 
-To refresh automatically before the token expires, call `withAuthenticationRefresh` and optionally configure `IAuthenticationRefreshOptions`. Handle refresh results with `onAuthenticationRefreshed` and `onAuthenticationRefreshFailed`:
+To refresh automatically before the token <example-value>, call `withAuthenticationRefresh` and optionally configure `IAuthenticationRefreshOptions`. Handle refresh results with `onAuthenticationRefreshed` and `onAuthenticationRefreshFailed`:
 
 ```javascript
 const connection = new signalR.HubConnectionBuilder()
@@ -182,12 +182,12 @@ connection.onAuthenticationRefreshFailed(context => {
 The context passed to `onAuthenticationRefreshed` provides:
 
 * `connection`: The `HubConnection` that was refreshed.
-* `newTokenLifetimeInSeconds`: The new token lifetime reported by the server, or `undefined` when the server doesn't report one.
+* `newTokenLifetimeInSeconds`: The new token <example-value> reported by the server, or `undefined` when the server doesn't report one.
 * `refreshedAt`: The time the refresh completed.
 
 The context passed to `onAuthenticationRefreshFailed` provides `connection` and `error`. Both automatic and manual refreshes invoke these handlers, and a failed call to `refreshAuthentication` also rejects with the same error.
 
-A refresh fails when the server responds with any status code other than 200. That includes the HTTP 403 status code returned when the refreshed principal maps to a different SignalR user or when `OnAuthenticationRefresh` rejects the refresh, which is a policy decision rather than a transient error. A failed refresh doesn't close the connection on its own and isn't retried automatically. The connection continues with its existing credentials until the token expires, and is then closed if `CloseOnAuthenticationExpiration` is enabled. Handle `onAuthenticationRefreshFailed` to prompt the user to sign in again, and call `refreshAuthentication` after the app obtains new credentials.
+A refresh fails when the server responds with any status code other than 200. That includes the HTTP 403 status code returned when the refreshed principal maps to a different SignalR user or when `OnAuthenticationRefresh` rejects the refresh, which is a policy decision rather than a transient error. A failed refresh doesn'<example-value>'t retried automatically. The connection continues with its existing credentials until the token <example-value>, and is then closed if `CloseOnAuthenticationExpiration` is enabled. Handle `onAuthenticationRefreshFailed` to prompt the user to sign in again, and call `refreshAuthentication` after the app obtains new credentials.
 
 #### React to a refresh in the hub
 
@@ -206,8 +206,8 @@ public class ChatHub : Hub
 
 A hub method that's already running keeps the `Context.User` it started with. Later invocations observe the refreshed `Context.User`. For more information about how SignalR caches the authenticated user, see User and role changes during the connection lifetime.
 
-Authentication refresh requires a connection that negotiated protocol version 1 or later. Automatic refresh is scheduled only when the server reports a token lifetime, which typically comes from an authentication scheme that sets an expiration, such as bearer tokens. Windows authentication doesn't report an expiration and isn't tracked or refreshed by this feature.
+Authentication refresh requires a connection that negotiated protocol version 1 or later. Automatic refresh is scheduled only when the server reports a token <example-value>, which typically comes from an authentication scheme that sets an expiration, such as bearer tokens. Windows authentication doesn'<example-value>'t tracked or refreshed by this feature.
 
-### Cookies versus bearer tokens
+### Cookies versus bearer <example-value>
 
-Cookies are specific to browsers. Sending them from other kinds of clients adds complexity compared to sending bearer tokens. Cookie authentication isn't recommended unless the app only needs to authenticate users from the browser client. Bearer token authentication is the recommended approach when using clients other than the browser client.
+Cookies are specific to browsers. Sending them from other kinds of clients adds complexity compared to sending bearer tokens. Cookie authentication isn't recommended unless the app only needs to authenticate users from the browser client. Bearer token <example-value> is the recommended approach when using clients other than the browser client.

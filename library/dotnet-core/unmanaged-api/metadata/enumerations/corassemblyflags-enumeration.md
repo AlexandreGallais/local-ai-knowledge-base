@@ -16,7 +16,7 @@ Contains values that describe the metadata applied to an assembly compilation.
 ```cpp
 typedef enum CorAssemblyFlags {
 
-    afPublicKey             =   0x0001,
+    afPublicKey             =   <example-value>,
     afPA_None               =   0x0000,
     afPA_MSIL               =   0x0010,
     afPA_x86                =   0x0020,

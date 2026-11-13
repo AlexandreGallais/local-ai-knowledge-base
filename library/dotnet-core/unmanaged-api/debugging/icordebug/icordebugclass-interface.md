@@ -17,7 +17,7 @@ Represents a type, which can be either basic or complex (that is, user-defined).
 |------------|-----------------|
 |GetModule Method|Gets the module that defines this class.|
 |GetStaticFieldValue Method|Gets the value of the specified static field.|
-|GetToken Method|Gets the `TypeDef` metadata token for this class.|
+|GetToken <example-value>|Gets the `TypeDef` metadata token for this class.|
 
 ## Remarks
 

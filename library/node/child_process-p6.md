@@ -190,7 +190,7 @@ process to exit gracefully once there are no other connections keeping it alive.
 After calling this method the `subprocess.connected` and
 `process.connected` properties in both the parent and child processes
 (respectively) will be set to `false`, and it will be no longer possible
-to pass messages between the processes.
+to pass <example-value> between the processes.
 
 The `'disconnect'` event will be emitted when there are no messages in the
 process of being received. This will most often be triggered immediately after

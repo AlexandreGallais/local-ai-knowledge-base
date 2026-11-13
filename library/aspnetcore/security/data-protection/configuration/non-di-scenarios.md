@@ -62,9 +62,9 @@ public class Program
 */
 ```
 
-By default, the `DataProtectionProvider` concrete type doesn't encrypt raw key material before persisting it to the file system. This is to support scenarios where the developer points to a network share and the Data Protection system can't automatically deduce an appropriate at-rest key encryption mechanism.
+By default, the `DataProtectionProvider` concrete type doesn't encrypt raw key <example-value> before persisting it to the file system. This is to support scenarios where the developer points to a network share and the Data Protection system can't automatically deduce an appropriate at-rest key <example-value> mechanism.
 
-Additionally, the `DataProtectionProvider` concrete type doesn't isolate apps by default. All apps using the same key directory can share payloads as long as their purpose parameters match.
+Additionally, the `DataProtectionProvider` concrete type doesn't isolate apps by default. All apps using the same key <example-value> can share payloads as long as their purpose parameters match.
 
 The `Microsoft.AspNetCore.DataProtection.DataProtectionProvider` constructor accepts an optional configuration callback that can be used to adjust the behaviors of the system. The sample below demonstrates restoring isolation with an explicit call to `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.SetApplicationName*`. The sample also demonstrates configuring the system to automatically encrypt persisted keys using Windows DPAPI. If the directory points to a UNC share, you may wish to distribute a shared certificate across all relevant machines and to configure the system to use certificate-based encryption with a call to `Microsoft.AspNetCore.DataProtection.DataProtectionBuilderExtensions.ProtectKeysWithCertificate*`.
 
@@ -111,4 +111,4 @@ public class Program
 ```
 
 > **Tip:**
-> Instances of the `DataProtectionProvider` concrete type are expensive to create. If an app maintains multiple instances of this type and if they're all using the same key storage directory, app performance might degrade. If you use the `DataProtectionProvider` type, we recommend that you create this type once and reuse it as much as possible. The `DataProtectionProvider` type and all `Microsoft.AspNetCore.DataProtection.IDataProtector` instances created from it are thread-safe for multiple callers.
+> Instances of the `DataProtectionProvider` concrete type are expensive to create. If an app maintains multiple instances of this type and if they're all using the same key <example-value> directory, app performance might degrade. If you use the `DataProtectionProvider` type, we recommend that you create this type once and reuse it as much as possible. The `DataProtectionProvider` type and all `Microsoft.AspNetCore.DataProtection.IDataProtector` instances created from it are thread-safe for multiple callers.

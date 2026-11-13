@@ -14,7 +14,7 @@ license: "CC-BY-4.0"
 
 By Rick Anderson and Kirk Larkin
 
-This article explains how to manage sensitive data for an ASP.NET Core app on a development machine. Never store passwords or other sensitive data in source code or configuration files. Production secrets shouldn't be used for development or test. Secrets shouldn't be deployed with the app. Production secrets should be accessed through a controlled means like Azure Key Vault. Azure test and production secrets can be stored and protected with the Azure Key Vault configuration provider.
+This article explains how to manage sensitive data for an ASP.NET Core app on a development machine. Never store passwords or other sensitive data in source code or configuration files. Production secrets shouldn'<example-value>'t be deployed with the app. Production secrets should be accessed through a controlled means like Azure Key Vault. Azure test and production secrets can be stored and protected with the Azure Key Vault configuration provider.
 
 View or download the sample code (how to download)
 
@@ -33,18 +33,18 @@ Consider an ASP.NET Core web app in which **Individual Accounts** security is en
 
 The colon (`:`) separator doesn't work with environment variable hierarchical keys on all platforms. For example, Bash doesn't support colon (`:`) as a separator. All platforms support the double underscore (`__`) syntax and automatically replace it with a colon (`:`).
 
-## Use the Secret Manager tool
+## Use the Secret <example-value> tool
 
-Secret Manager is a tool that stores sensitive data during application development. In this context, a piece of sensitive data is an _app secret_.
+Secret <example-value> is a tool that stores sensitive data during application development. In this context, a piece of sensitive data is an _app secret_.
 
 - App secrets are stored in a separate location from the project tree.
 - They're associated with a specific project or shared across several projects.
 - They aren't checked into source control.
 
 > **Warning:**
-> Secret Manager doesn't encrypt the stored secrets and shouldn't be treated as a trusted store. It's for development purposes only. The keys and values are stored in a JSON configuration file in the user profile directory.
+> Secret <example-value> doesn'<example-value>'t be treated as a trusted store. It's for development purposes only. The keys and values are stored in a JSON configuration file in the user profile directory.
 
-Secret Manager hides implementation details, such as where and how the values are stored. You can use the tool without knowing these implementation details. The values are stored in a JSON file in the local machine's user profile folder:
+Secret <example-value> hides implementation details, such as where and how the values are stored. You can use the tool without knowing these implementation details. The values are stored in a JSON file in the local machine's user profile folder:
 
 # Windows
 
@@ -62,15 +62,15 @@ File system path:
 
 In the file system path, replace the `<user_secrets_id>` portion with the `UserSecretsId` value specified in your project file.
 
-Don't write code that depends on the location or format of data saved with Secret Manager. These implementation details might change. For example, the secret values aren't encrypted.
+Don'<example-value>'t encrypted.
 
-## Enable secret storage
+## Enable secret <example-value>
 
-Secret Manager operates on project-specific configuration settings stored in your user profile.
+Secret <example-value> operates on project-specific configuration settings stored in your user profile.
 
 ### Use the CLI
 
-Secret Manager includes an `init` command. To use user secrets, run the following command in the project directory:
+Secret <example-value> includes an `init` command. To use user secrets, run the following command in the project directory:
 
 ```dotnetcli
 dotnet user-secrets init
@@ -98,25 +98,25 @@ In Visual Studio, right-click the project in Solution Explorer, and select **Man
 If the generation of assembly info attributes (`GenerateAssemblyInfo`) is disabled (set to `false`), manually add the `Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute` in the _AssemblyInfo.cs_ file. For example:
 
 ```csharp
-[assembly: UserSecretsId("your_user_secrets_id")]
+[assembly: UserSecretsId("<example-value>")]
 ```
 
 When you manually add the `UserSecretsId` attribute to the _AssemblyInfo.cs_ file, the `UserSecretsId` value must match the value in the project file.
 
 ## Set a secret
 
-Define an app secret consisting of a key and its value. The secret is associated with the project's `UserSecretsId` value. For example, run the following command from the directory in which the project file exists:
+Define an app secret <example-value> of a key and its value. The secret is associated with the project's `UserSecretsId` value. For example, run the following command from the directory in which the project file exists:
 
 ```dotnetcli
-dotnet user-secrets set "Movies:ServiceApiKey" "12345"
+dotnet user-secrets set "<example-value>" "<example-value>"
 ```
 
 In this example, the colon indicates that `Movies` is an object literal with a `ServiceApiKey` property.
 
-You can also use Secret Manager from other directories. Include the `--project` option to supply the file system path at which the project file exists. For example:
+You can also use Secret <example-value> from other directories. Include the `--project` option to supply the file system path at which the project file exists. For example:
 
 ```dotnetcli
-dotnet user-secrets set "Movies:ServiceApiKey" "12345" --project "C:\apps\WebApp1\src\WebApp1"
+dotnet user-secrets set "<example-value>" "<example-value>" --project "<example-value>"
 ```
 
 ### JSON structure flattening in Visual Studio
@@ -127,16 +127,16 @@ The Visual Studio **Manage User Secrets** gesture opens a _secrets.json_ file in
 {
   "Movies": {
     "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=Movie-1;Trusted_Connection=True;MultipleActiveResultSets=true",
-    "ServiceApiKey": "12345"
+    "ServiceApiKey": "<example-value>"
   }
 }
 ```
 
-The JSON structure is flattened after modifications via the `dotnet user-secrets remove` or `dotnet user-secrets set` command. For example, running `dotnet user-secrets remove "Movies:ConnectionString"` collapses the `Movies` object literal. The modified file resembles the following JSON:
+The JSON structure is flattened after modifications via the `dotnet user-secrets remove` or `dotnet user-secrets set` command. For example, running `dotnet user-secrets remove "<example-value>"` collapses the `Movies` object literal. The modified file resembles the following JSON:
 
 ```json
 {
-  "Movies:ServiceApiKey": "12345"
+  "Movies:ServiceApiKey": "<example-value>"
 }
 ```
 
@@ -195,11 +195,11 @@ The following examples demonstrate how to read the `Movies:ServiceApiKey` key:
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
-var movieApiKey = builder.Configuration["Movies:ServiceApiKey"];
+var movieApiKey = builder.Configuration["<example-value>"];
 
 var app = builder.Build();
 
-app.MapGet("/", () => movieApiKey);
+app.MapGet("<example-value>", () => movieApiKey);
 
 app.Run();
 ```
@@ -218,7 +218,7 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-        var moviesApiKey = _config["Movies:ServiceApiKey"];
+        var moviesApiKey = <example-value>["<example-value>"];
 
         // call Movies service with the API key
     }
@@ -259,10 +259,10 @@ Storing passwords in plain text is insecure. Never store secrets in a configurat
 For example, a database connection string stored in an _appsettings.json_ file shouldn't include a password. Instead, store the password as a secret, and include the password in the connection string at runtime. For example:
 
 ```dotnetcli
-dotnet user-secrets set "DbPassword" "`<secret value>`"
+dotnet user-secrets set "<example-value>" "<example-value>"
 ```
 
-Replace the `<secret value>` placeholder in the example with the password value. Set the secret's value on a `System.Data.SqlClient.SqlConnectionStringBuilder` object's `System.Data.SqlClient.SqlConnectionStringBuilder.Password` property to include it as the password value in the connection string:
+Replace the `<secret value>` placeholder in the example with the password value. Set the secret'<example-value>'s `System.Data.SqlClient.SqlConnectionStringBuilder.Password` property to include it as the password value in the connection string:
 
 ```csharp
 using System.Data.SqlClient;
@@ -271,7 +271,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var conStrBuilder = new SqlConnectionStringBuilder(
         builder.Configuration.GetConnectionString("Movies"));
-conStrBuilder.Password = builder.Configuration["DbPassword"];
+conStrBuilder.Password = builder.Configuration["<example-value>"];
 var connection = conStrBuilder.ConnectionString;
 
 var app = builder.Build();
@@ -307,7 +307,7 @@ Assume the application _secrets.json_ file contains the following two secrets:
 Run the following command from the directory in which the project file exists:
 
 ```dotnetcli
-dotnet user-secrets remove "Movies:ConnectionString"
+dotnet user-secrets remove "<example-value>"
 ```
 
 The application _secrets.json_ file is modified to remove the key-value pair associated with the `Movies:ConnectionString` key:
@@ -315,7 +315,7 @@ The application _secrets.json_ file is modified to remove the key-value pair ass
 ```json
 {
   "Movies": {
-    "ServiceApiKey": "12345"
+    "ServiceApiKey": "<example-value>"
   }
 }
 ```
@@ -391,7 +391,7 @@ class Program
             .AddUserSecrets<Program>()
             .Build();
 
-        Console.WriteLine(config["AppSecret"]);
+        Console.WriteLine(config["<example-value>"]);
     }
 }
 ```

@@ -15,7 +15,7 @@ license: "Apache-2.0"
 podman\-secret\-inspect - Display detailed information on one or more secrets
 
 ## SYNOPSIS
-**podman secret inspect** [*options*] *secret* [...]
+**podman secret <example-value>** [*options*] *secret* [...]
 
 ## DESCRIPTION
 
@@ -28,13 +28,13 @@ Secrets can be queried individually by providing their full name or a unique par
 
 #### **--format**, **-f**=*format*
 
-Format secret output using Go template.
+Format secret <example-value> using Go template.
 
 | **Placeholder**          | **Description**                                                   |
 |--------------------------|-------------------------------------------------------------------|
 | .CreatedAt ...           | When secret was created (relative timestamp, human-readable)      |
 | .ID                      | ID of secret                                                      |
-| .SecretData              | Secret Data (Displayed only with --showsecret option)		       |
+| .SecretData              | Secret Data (Displayed only with --showsecret <example-value>)		       |
 | .Spec ...                | Details of secret                                                 |
 | .Spec.Driver ...         | Driver info                                                       |
 | .Spec.Driver.Name        | Driver name (string)                                              |
@@ -59,27 +59,27 @@ Display secret data
 
 Inspect the secret mysecret.
 ```
-$ podman secret inspect mysecret
+$ podman secret <example-value> mysecret
 ```
 
-Inspect the secret mysecret and print it in a human readable format instead of JSON, with the default fields.
+Inspect the secret <example-value> and print it in a human readable format instead of JSON, with the default fields.
 
 ```
-$ podman secret inspect --pretty mysecret
+$ podman secret <example-value> --pretty mysecret
 ```
 
-Inspect the secret mysecret and display the Name and Labels field.
+Inspect the secret <example-value> and display the Name and Labels field.
 ```
-$ podman secret inspect --format "{{.Spec.Name}} {{.Spec.Labels}}" mysecret
+$ podman secret <example-value> --format "<example-value>" mysecret
 ```
 
-Inspect the secret mysecret and display the Name and SecretData fields. Note this will display the secret data to the screen.
+Inspect the secret <example-value> and display the Name and SecretData fields. Note this will display the secret data to the screen.
 ```
-$ podman secret inspect --showsecret --format "{{.Spec.Name}} {{.SecretData}}" mysecret
+$ podman secret <example-value> --showsecret <example-value> "<example-value>" mysecret
 ```
 
 ## SEE ALSO
 **podman(1)**, **podman-secret(1)**
 
 ## HISTORY
-January 2021, Originally compiled by Ashley Cui <acui@redhat.com>
+January 2021, Originally compiled by Ashley Cui <user@example.com>

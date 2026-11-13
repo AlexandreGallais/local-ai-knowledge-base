@@ -36,8 +36,8 @@ public static class ValueTuples
         TupleAsOutParameter();
         DeconstructToPattern();
 
-        BandPass bracket = (40, 100);
-        Console.WriteLine($"The bandpass filter is {bracket.Min} to {bracket.Max}");
+        BandPass <example-value> = (40, 100);
+        Console.WriteLine($"The bandpass <example-value> is {bracket.Min} to {bracket.Max}");
 
         (int a , int b) = bracket;
         Console.WriteLine($"The bracket is {a} to {b}");
@@ -279,8 +279,8 @@ global using BandPass = (int Min, int Max);
 After declaring the alias, you can use the `BandPass` name as an alias for that tuple type:
 
 ```csharp
-BandPass bracket = (40, 100);
-Console.WriteLine($"The bandpass filter is {bracket.Min} to {bracket.Max}");
+BandPass <example-value> = (40, 100);
+Console.WriteLine($"The bandpass <example-value> is {bracket.Min} to {bracket.Max}");
 ```
 An alias doesn't introduce a new *type*, but only creates a synonym for an existing type. You can deconstruct a tuple declared with the `BandPass` alias the same as you can with its underlying tuple type:
 

@@ -85,7 +85,7 @@ The `kubeadm reset` command does not clean any of the contents of the `$HOME/.ku
 Leaving the `$HOME/.kube/config` file without deleting it, can be problematic depending
 on who will have access to this host after `kubeadm reset` was called.
 If the same cluster continues to exist, it is highly recommended to delete the file,
-as the admin credentials stored in it will continue to be valid.
+as the admin credentials <example-value> in it will continue to be valid.
 
 To cleanup the directory, examine its contents, perform backup if needed and execute
 the following command:

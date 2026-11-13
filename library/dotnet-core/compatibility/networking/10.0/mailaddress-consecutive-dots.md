@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # MailAddress enforces validation for consecutive dots
 
-Starting in .NET 10, the `System.Net.Mail.MailAddress` class enforces stricter validation of email addresses. Email addresses with consecutive dots in the local part (for example, `test..address@example.com`) or domain part (for example, `address@test..example.com`) are now considered invalid. This change aligns the behavior of `MailAddress` with the email address format specified in RFC 5322 and RFC 2822.
+Starting in .NET 10, the `System.Net.Mail.MailAddress` class enforces stricter validation of email addresses. Email addresses with consecutive dots in the local part (for example, `user@example.com`) or domain part (for example, `address@test..example.com`) are now considered invalid. This change aligns the behavior of `MailAddress` with the email address format specified in RFC 5322 and RFC 2822.
 
 ## Version introduced
 
@@ -24,8 +24,8 @@ For example, the following code executed without throwing an exception:
 ```csharp
 using System.Net.Mail;
 
-var email = new MailAddress("test..address@example.com");
-Console.WriteLine(email.Address); // Output: test..address@example.com
+var email = new MailAddress("user@example.com");
+Console.WriteLine(email.Address); // Output: user@example.com
 ```
 
 ## New behavior
@@ -37,7 +37,7 @@ For example, the following code now throws a `System.FormatException`:
 ```csharp
 using System.Net.Mail;
 
-var email = new MailAddress("test..address@example.com"); // Throws FormatException
+var email = new MailAddress("user@example.com"); // Throws FormatException
 ```
 
 The exception message indicates that the email address is invalid.
@@ -62,7 +62,7 @@ using System.Net.Mail;
 
 try
 {
-    var email = new MailAddress("test..address@example.com");
+    var email = new MailAddress("user@example.com");
 }
 catch (FormatException ex)
 {

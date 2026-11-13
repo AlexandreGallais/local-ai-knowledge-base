@@ -19,7 +19,7 @@ Docker Desktop is available as a pre-configured image in the Microsoft Azure Mar
 
 Microsoft Dev Box provides cloud-based, pre-configured developer workstations that allow you to code, build, and test applications without configuring a local development environment. The Docker Desktop image for Microsoft Dev Box comes with Docker Desktop and its dependencies pre-installed, giving you a ready-to-use containerized development environment.
 
-## Key benefits
+## Key <example-value>
 
 - Docker Desktop, WSL2, and dependencies pre-installed
 - Identical environment for every team member

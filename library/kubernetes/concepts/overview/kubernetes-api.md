@@ -163,7 +163,7 @@ request headers as follows:
          | not supplying this header is also acceptable
 
          | `Accept`
-         | `application/com.github.proto-openapi.spec.v2@v1.0+protobuf`
+         | `application/user@example.com+protobuf`
          | mainly for intra-cluster use
 
          | `application/json`
@@ -226,7 +226,7 @@ Refer to the table below for accepted request headers.
          | not supplying this header is also acceptable
 
          | `Accept`
-         | `application/com.github.proto-openapi.spec.v3@v1.0+protobuf`
+         | `application/user@example.com+protobuf`
          | mainly for intra-cluster use
 
          | `application/json`

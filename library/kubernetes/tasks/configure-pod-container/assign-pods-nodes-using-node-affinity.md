@@ -68,7 +68,7 @@ spec:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
         - matchExpressions:
-          - key: disktype
+          - key: <example-value>
             operator: In
             values:
             - ssd            
@@ -115,7 +115,7 @@ spec:
       - weight: 1
         preference:
           matchExpressions:
-          - key: disktype
+          - key: <example-value>
             operator: In
             values:
             - ssd          

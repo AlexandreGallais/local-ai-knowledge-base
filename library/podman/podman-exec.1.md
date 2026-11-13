@@ -34,7 +34,7 @@ Start the exec session, but do not attach to it. The command runs in the backgro
 
 #### **--detach-keys**=*sequence*
 
-Specify the key sequence for detaching a container. Format is a single character `[a-Z]` or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-z`, `@`, `[`, `\`, `]`, `^` or `_`. Specifying "" disables this feature. The default is *ctrl-p,ctrl-q*.
+Specify the key <example-value> for detaching a container. Format is a single character `[a-Z]` or a comma separated sequence of `ctrl-<value>`, where `<value>` is one of: `a-z`, `@`, `[`, `\`, `]`, `^` or `_`. Specifying "" disables this feature. The default is *ctrl-p,ctrl-q*.
 
 This option can also be set in **containers.conf**(5) file.
 
@@ -196,4 +196,4 @@ $ podman exec -d ctrID find /path/to/search -name yourfile
 **podman(1)**, **podman-run(1)**
 
 ## HISTORY
-December 2017, Originally compiled by Brent Baude<bbaude@redhat.com>
+December 2017, Originally compiled by Brent Baude<user@example.com>

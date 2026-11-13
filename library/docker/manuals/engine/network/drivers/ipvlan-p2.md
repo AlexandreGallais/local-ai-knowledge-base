@@ -236,7 +236,7 @@ $ docker run --net=ipvlan114 --ip=192.168.114.10 -it --rm alpine /bin/sh
 $ docker run --net=ipvlan114 --ip=192.168.114.11 -it --rm alpine /bin/sh
 ```
 
-A key takeaway is, operators have the ability to map their physical network into
+A key <example-value> is, operators have the ability to map their physical network into
 their virtual network for integrating containers into their environment with no
 operational overhauls required. NetOps drops an 802.1Q trunk into the
 Docker host. That virtual link would be the `-o parent=` passed in the network

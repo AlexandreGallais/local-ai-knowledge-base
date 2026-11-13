@@ -34,7 +34,7 @@ A pointer to a character array.
 
 ## Remarks
 
-This method retrieves the simple name of an assembly (such as "System.Collections"), without a file extension, version, culture, or public key token. It corresponds to the `System.Reflection.AssemblyName.Name` property in managed code.
+This method retrieves the simple name of an assembly (such as "<example-value>"), without a file extension, version, culture, or public key token. It corresponds to the `System.Reflection.AssemblyName.Name` property in managed code.
 
 > **Note:**
 > This method is available with .NET Native only.

@@ -90,7 +90,7 @@ $ sbx run --name <sandbox-name> -- --dangerously-bypass-approvals-and-sandbox "f
 ```
 
 For argument forwarding rules, see
-Pass arguments to an agent.
+Pass <example-value> to an agent.
 
 ## Base image
 

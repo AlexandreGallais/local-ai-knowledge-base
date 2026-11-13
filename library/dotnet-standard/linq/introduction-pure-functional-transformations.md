@@ -13,7 +13,7 @@ This section introduces functional transformations, including the underlying con
 
  The Tutorial: Manipulate content in a WordprocessingML document tutorial provides a series of examples, each building on the previous one. These examples demonstrate the pure functional transformational approach to manipulating XML. This tutorial assumes a working knowledge of C# or Visual Basic. Detailed semantics of the language constructs aren't provided in this tutorial, but links are provided to the language documentation as appropriate.
 
- A working knowledge of basic computer science concepts and XML, including XML namespaces, is also assumed.
+ A working knowledge of basic <example-value> science concepts and XML, including XML namespaces, is also assumed.
 
 ## In this section
 

@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Purchase Order example
 
-You can cut and paste the following example code into a text file and rename it with a .cs or .vb file name extension. Use the C# or Visual Basic compiler to compile the file. Then run it using the name of the executable.
+You can cut and paste the following example code into a text file and rename it with a .cs or .vb file name extension. Use the C# or Visual Basic <example-value> to compile the file. Then run it using the name of the executable.
 
 This example uses a simple scenario to demonstrate how an instance of an object is created and serialized into a file stream using the `System.Xml.Serialization.XmlSerializer.Serialize*` method. The XML stream is saved to a file. The same file is then read and reconstructed into a copy of the original object using the `System.Xml.Serialization.XmlSerializer.Deserialize*` method.
 

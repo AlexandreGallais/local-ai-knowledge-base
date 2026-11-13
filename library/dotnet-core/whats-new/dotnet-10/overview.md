@@ -39,13 +39,13 @@ For information about what's new in Aspire, see What's new in Aspire 13.1.
 
 ## ASP.NET Core
 
-The ASP.NET Core 10.0 release introduces several new features and enhancements, including Blazor improvements, OpenAPI enhancements, and minimal API updates. Features include Blazor WebAssembly preloading, automatic memory pool eviction, enhanced form validation, improved diagnostics, and passkey support for Identity.
+The ASP.NET Core 10.0 release introduces several new features and enhancements, including Blazor improvements, OpenAPI enhancements, and minimal API updates. Features include Blazor WebAssembly preloading, automatic memory pool eviction, enhanced form validation, improved diagnostics, and passkey <example-value> for Identity.
 
 For details, see What's new in ASP.NET Core for .NET 10.
 
 ## C# 14
 
-C# 14 introduces several new features and enhancements to improve developer productivity and code quality. Key updates include:
+C# 14 introduces several new features and enhancements to improve developer productivity and code quality. Key <example-value> include:
 
 - Field-backed properties provide a smoother path from auto-implemented properties to writing custom `get` and `set` accessors. You can access the compiler-generated backing field using the `field` contextual keyword.
 - The `nameof` expression now supports unbound generic types, such as `List<>`, where it returns the name of the type without requiring a type argument.
@@ -61,7 +61,7 @@ For more information, see What's new in C# 14.
 
 ## F\#
 
-The F# updates in .NET 10 include several new features and improvements across the language, standard library, and compiler service. Key updates include:
+The F# updates in .NET 10 include several new features and improvements across the language, standard library, and compiler service. Key <example-value> include:
 
 - **F# Language**:
 
@@ -79,7 +79,7 @@ For more information, see What's new in F# 10 or the F# release notes.
 
 ## Visual Basic
 
-The Visual Basic updates in .NET 10 include the following enhancements to the compiler:
+The Visual Basic <example-value> in .NET 10 include the following enhancements to the compiler:
 
 - The compiler now interprets and enforces the `unmanaged` generic constraint, which enables better compatibility with runtime APIs.
 - The compiler respects the `System.Runtime.CompilerServices.OverloadResolutionPriorityAttribute`. This enhancement ensures faster, Span-based overloads are preferred and helps to resolve overload ambiguities.

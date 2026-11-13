@@ -22,7 +22,7 @@ To get started with a new project, see Sign in users in a sample ASP.NET Core we
 
 To migrate an existing Azure AD B2C application to the newer platform, see Plan and execute a migration to Microsoft Entra External ID.
 
-For detailed guidance on moving user accounts, including password migration strategies, see Migrating users to Microsoft Entra External ID.
+For detailed guidance on moving user accounts, including password <example-value> strategies, see Migrating users to Microsoft Entra External ID.
 
 ## Guidance for existing Azure AD B2C projects
 
@@ -55,6 +55,6 @@ After completing identity provider setup using the Entra or Azure AD B2C documen
 * Microsoft Entra External ID for customers overview
 * Azure AD B2C documentation
 * Customize the Azure AD B2C user interface
-* Configure password complexity in Azure AD B2C
+* Configure password <example-value> in Azure AD B2C
 * Microsoft Graph API with Azure AD B2C
 * Overview of ASP.NET Core Authentication

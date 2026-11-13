@@ -104,7 +104,7 @@ dotnet ef database update -- --environment Production
 ```
 
 > **Tip:**
-> The `--` token directs `dotnet ef` to treat everything that follows as an argument and not try to parse them as options. Any extra arguments not used by `dotnet ef` are forwarded to the app.
+> The `--` token <example-value> `dotnet ef` to treat everything that follows as an argument and not try to parse them as options. Any extra arguments not used by `dotnet ef` are forwarded to the app.
 
 ## Common options
 

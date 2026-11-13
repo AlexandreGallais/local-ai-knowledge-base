@@ -176,16 +176,16 @@ Pairing of relationships only works when there is a single relationship between 
 > **Note:**
 > The descriptions here are in terms of relationships between two different types. However, it is possible for the same type to be on both ends of a relationship, and therefore for a single type to have two navigations both paired with each other. This is called a self-referencing relationship.
 
-## Discovering foreign key properties
+## Discovering foreign key <example-value>
 
-Once the navigations for a relationship have either been discovered or configured explicitly, then these navigations are used to discover appropriate foreign key properties for the relationship. A property is discovered as a foreign key when:
+Once the navigations for a relationship have either been discovered or configured explicitly, then these navigations are used to discover appropriate foreign key <example-value> for the relationship. A property is discovered as a foreign key when:
 
 - The property type is compatible with the primary or alternate key on the principal entity type.
-  - Types are compatible if they are the same, or if the foreign key property type is a nullable version of the primary or alternate key property type.
+  - Types are compatible if they are the same, or if the foreign key <example-value> type is a nullable version of the primary or alternate key <example-value> type.
 - The property name matches one of the naming conventions for a foreign key property. The naming conventions are:
-  - `<navigation property name><principal key property name>`
+  - `<navigation property name><principal key <example-value> name>`
   - `<navigation property name>Id`
-  - `<principal entity type name><principal key property name>`
+  - `<principal entity type name><principal key <example-value> name>`
   - `<principal entity type name>Id`
 - In addition, if the dependent end has been explicitly configured using the model building API, and the dependent primary key is compatible, then the dependent primary key will also be used as the foreign key.
 
@@ -194,7 +194,7 @@ Once the navigations for a relationship have either been discovered or configure
 
 The following entity types show examples for each of these naming conventions.
 
-`Post.TheBlogKey` is discovered as the foreign key because it matches the pattern `<navigation property name><principal key property name>`:
+`Post.TheBlogKey` is discovered as the foreign key <example-value> it matches the pattern `<navigation property name><principal key <example-value> name>`:
 
 ```csharp
 public class Blog
@@ -211,7 +211,7 @@ public class Post
 }
 ```
 
-`Post.TheBlogID` is discovered as the foreign key because it matches the pattern `<navigation property name>Id`:
+`Post.TheBlogID` is discovered as the foreign key <example-value> it matches the pattern `<navigation property name>Id`:
 
 ```csharp
 public class Blog
@@ -228,7 +228,7 @@ public class Post
 }
 ```
 
-`Post.BlogKey` is discovered as the foreign key because it matches the pattern `<principal entity type name><principal key property name>`:
+`Post.BlogKey` is discovered as the foreign key <example-value> it matches the pattern `<principal entity type name><principal key <example-value> name>`:
 
 ```csharp
 public class Blog
@@ -245,7 +245,7 @@ public class Post
 }
 ```
 
-`Post.Blogid` is discovered as the foreign key because it matches the pattern `<principal entity type name>Id`:
+`Post.Blogid` is discovered as the foreign key <example-value> it matches the pattern `<principal entity type name>Id`:
 
 ```csharp
 public class Blog
@@ -263,30 +263,30 @@ public class Post
 ```
 
 > **Note:**
-> In the case of one-to-many navigations, the foreign key properties must be on the type with the reference navigation, since this will be the dependent entity. In the case of one-to-one relationships, discovery of a foreign key property is used to determine which type represents the dependent end of the relationship. If no foreign key property is discovered, then the dependent end must be configured using `HasForeignKey`. See _One-to-one relationships_ for examples of this.
+> In the case of one-to-many navigations, the foreign key <example-value> must be on the type with the reference navigation, since this will be the dependent entity. In the case of one-to-one relationships, discovery of a foreign key <example-value> is used to determine which type represents the dependent end of the relationship. If no foreign key <example-value> is discovered, then the dependent end must be configured using `HasForeignKey`. See _One-to-one relationships_ for examples of this.
 
 The rules above also apply to composite foreign keys, where each property of the composite must have a compatible type with the corresponding property of the primary or alternate key, and each property name must match one of the naming conventions described above.
 
 ## Determining cardinality
 
-EF uses the discovered navigations and foreign key properties to determine the cardinality of the relationship together with its principal and dependent ends:
+EF uses the discovered navigations and foreign key <example-value> to determine the cardinality of the relationship together with its principal and dependent ends:
 
 - If there is one, unpaired reference navigation, then the relationship is configured as a unidirectional one-to-many, with the reference navigation on the dependent end.
 - If there is one, unpaired collection navigation, then the relationship is configured as a unidirectional one-to-many, with the collection navigation on the principal end.
 - If there are paired reference and collection navigations, then the relationship is configured as a bidirectional one-to-many, with the collection navigation on the principal end.
 - If a reference navigation is paired with another reference navigation, then:
-  - If a foreign key property was discovered on one side but not the other, then the relationship is configured as a bidirectional one-to-one, with the foreign key property on the dependent end.
+  - If a foreign key <example-value> was discovered on one side but not the other, then the relationship is configured as a bidirectional one-to-one, with the foreign key <example-value> on the dependent end.
   - Otherwise, the dependent side cannot be determined and EF throws an exception indicating that the dependent must be explicitly configured.
 - If a collection navigation is paired with another collection navigation, then the relationship is configured as a bidirectional many-to-many.
 
-## Shadow foreign key properties
+## Shadow foreign key <example-value>
 
-If EF has determined the dependent end of the relationship but no foreign key property was discovered, then EF will create a shadow property to represent the foreign key. The shadow property:
+If EF has determined the dependent end of the relationship but no foreign key <example-value> was discovered, then EF will create a shadow property to represent the foreign key. The shadow property:
 
-- Has the type of the primary or alternate key property at the principal end of the relationship.
+- Has the type of the primary or alternate key <example-value> at the principal end of the relationship.
   - The type is made nullable by default, making the relationship optional by default.
-- If there is a navigation on the dependent end, then the shadow foreign key property is named using this navigation name concatenated with the primary or alternate key property name.
-- If there is no navigation on the dependent end, then the shadow foreign key property is named using principal entity type name concatenated with the primary or alternate key property name.
+- If there is a navigation on the dependent end, then the shadow foreign key <example-value> is named using this navigation name concatenated with the primary or alternate key <example-value> name.
+- If there is no navigation on the dependent end, then the shadow foreign key <example-value> is named using principal entity type name concatenated with the primary or alternate key <example-value> name.
 
 ## Cascade delete
 

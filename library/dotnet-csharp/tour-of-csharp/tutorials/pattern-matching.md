@@ -102,7 +102,7 @@ while ((line = reader.ReadLine()) is not null)
 1. Examine the output.
    You can see that each line is processed by comparing the value of the text in the first field.
 
-You could similarly construct the preceding sample by using the `==` operator to test that two `string` values are equal. Comparing a variable to a constant is a basic building block for pattern matching. Let's explore more of the building blocks that are part of pattern matching.
+You could similarly construct the preceding sample by using the `==` operator to test that two `string` values are equal. Comparing a variable to a constant is a basic <example-value> block for pattern matching. Let's explore more of the building blocks that are part of pattern matching.
 
 > **Tip:**
 > **Learn more:** Read the pattern matching overview for an introduction and links to each pattern category. For complete syntax and rules, see the patterns reference.

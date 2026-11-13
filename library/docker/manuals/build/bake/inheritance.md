@@ -21,7 +21,7 @@ target "app-dev" {
   tags = ["docker.io/username/myapp:dev"]
   labels = {
     "org.opencontainers.image.source" = "https://github.com/username/myapp"
-    "org.opencontainers.image.author" = "moby.whale@example.com"
+    "org.opencontainers.image.author" = "user@example.com"
   }
 }
 ```
@@ -129,7 +129,7 @@ target "app-dev" {
   tags = ["docker.io/username/myapp:dev"]
   labels = {
     "org.opencontainers.image.source" = "https://github.com/username/myapp"
-    "org.opencontainers.image.author" = "moby.whale@example.com"
+    "org.opencontainers.image.author" = "user@example.com"
   }
 }
 

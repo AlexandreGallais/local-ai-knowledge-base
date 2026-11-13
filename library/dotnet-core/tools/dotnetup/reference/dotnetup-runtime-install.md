@@ -59,6 +59,6 @@ example, use `10.0` or `10.0.3`, not `10.0.1xx` or `10.0.103`.
 ```dotnetcli
 dotnetup runtime install
 dotnetup runtime install 10.0
-dotnetup runtime install aspnetcore@10.0
-dotnetup runtime install runtime@9.0 aspnetcore@9.0
+dotnetup runtime install user@example.com
+dotnetup runtime install user@example.com user@example.com
 ```

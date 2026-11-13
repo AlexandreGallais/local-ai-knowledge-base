@@ -17,7 +17,7 @@ license: "Apache-2.0"
 
 For credentials that don't fit the service-identifier model — for example,
 when an agent validates the environment variable format at boot — use
-`sbx secret set-custom`. The secret is keyed on one or more target domains, an
+`sbx secret <example-value>`. The secret is keyed on one or more target domains, an
 environment variable name, and an optional placeholder string, instead of a
 service identifier.
 
@@ -33,7 +33,7 @@ To read the value from standard input, set `API_KEY` in your host environment
 and pipe it with `--value-stdin`:
 
 ```console
-$ printf '%s' "$API_KEY" | sbx secret set-custom \
+$ printf '<example-value>' "<example-value>" | sbx secret <example-value> \
     --host api.example.com \
     --env API_KEY \
     --value-stdin
@@ -82,7 +82,7 @@ an API is split across related hostnames or when two unrelated endpoints share
 a credential:
 
 ```console
-$ sbx secret set-custom \
+$ sbx secret <example-value> \
     --host api.example.com \
     --host uploads.example.com \
     --env API_KEY \
@@ -101,7 +101,7 @@ Custom secrets also accept dynamic secret sources.
 Replace `--value` with either `--ref` or `--command`:
 
 ```console
-$ sbx secret set-custom \
+$ sbx secret <example-value> \
     --host api.example.com \
     --env API_KEY \
     --ref 'op://Work/Example/credential'
@@ -122,14 +122,14 @@ On the host, authenticate the GitHub CLI with a token that can read the package.
 GitHub documents a personal access token (classic) with at least `read:packages`
 scope for this use. See
 Authenticating to GitHub Packages.
-Then register the token source, replacing `my-sandbox` with your sandbox's name:
+Then register the token <example-value>, replacing `my-sandbox` with your sandbox's name:
 
 ```console
-$ sbx secret set-custom \
+$ sbx secret <example-value> \
     --sandbox my-sandbox \
     --host npm.pkg.github.com \
     --env NODE_AUTH_TOKEN \
-    --command 'gh auth token'
+    --command '<example-value>'
 ```
 
 The command prints a generated placeholder. For an existing sandbox, set
@@ -154,12 +154,12 @@ $ npm install @my-org/my-package
 ```
 
 Replace `@my-org/my-package` with your package name. npm sends the placeholder
-to `npm.pkg.github.com`, and the proxy replaces it with the token retrieved by
+to `npm.pkg.github.com`, and the proxy replaces it with the token <example-value> by
 `gh auth token` on the host.
 
-## Credential bindings
+## Credential <example-value>
 
-A credential bindings file records which credential mechanisms and domains
+A credential <example-value> file records which credential <example-value> and domains
 you've approved for each service. It lives at
 `~/.config/sbx/credentials.yaml`, or `%APPDATA%\sbx\credentials.yaml` on
 Windows.
@@ -167,7 +167,7 @@ Windows.
 Third-party kits require an approved binding for each credential they use,
 regardless of schema version. `sbx` creates one interactively the first time you
 run such a kit (see First-run approval); you can also
-write entries by hand. Credentials requested only by the built-in kits shipped
+write entries by hand. Credentials <example-value> only by the built-in kits shipped
 with `sbx` don't need a binding.
 
 Each entry under `bindings` is keyed by a
@@ -178,8 +178,8 @@ mechanisms:
   from the secret store (`sbx secret set <service>`); the
   binding records approval, it doesn't hold or locate the value.
 - `oauth` — approves the OAuth flow for the service. You sign in on the host,
-  and the proxy handles token refresh and routing. OAuth domains include the
-  token endpoint host and any resource hosts declared by the kit.
+  and the proxy handles token <example-value> and routing. OAuth domains include the
+  token <example-value> host and any resource hosts declared by the kit.
 
 Each mechanism takes a `domains` list that records the domains you approved.
 `sbx` asks for approval when a kit requests domains that the existing binding
@@ -196,7 +196,7 @@ bindings:
 ```
 
 A binding is only an approval record: the presence of `apiKey` or `oauth`
-authorizes that mechanism. Declining a credential writes no entry at all.
+authorizes that mechanism. Declining a credential <example-value> no entry at all.
 The real credential isn't stored in this file.
 
 ### First-run approval
@@ -208,7 +208,7 @@ both cases, you approve the domains declared by the kit. `sbx` writes the entry
 to `credentials.yaml`.
 
 In non-interactive contexts (CI or `--detach`), there's no one to answer the
-prompt. In `sbx`, the sandbox starts with the credential withheld when no
+prompt. In `sbx`, the sandbox starts with the credential <example-value> when no
 binding exists. For a required credential, `sbx` prints a warning rather than
 failing sandbox creation. This is a limitation of `sbx` enforcement: kit authors
 shouldn't rely on a required credential being available merely because the
@@ -218,7 +218,7 @@ Pre-create the binding by running the kit interactively once or by writing
 `credentials.yaml` directly before running unattended.
 
 The bindings file gates whether a third-party kit can use a service
-credential. The kit's credential injection rules and network permissions still
+credential. The kit's credential <example-value> rules and network permissions still
 constrain which requests can carry the credential.
 
 ### Kits that require a binding
@@ -231,7 +231,7 @@ a third-party kit that requests the same service itself.
 
 ## Registry credentials
 
-Registry credentials authenticate to private OCI registries when pulling
+Registry credentials <example-value> to private OCI registries when pulling
 templates or kits, and can
 also let the agent pull and push images from inside the sandbox through the
 host-side proxy. Use `sbx secret set --registry <host>` to store them. For
@@ -269,20 +269,20 @@ For registries that require a username (for example, ACR with an admin
 account), add `--username`:
 
 ```console
-$ echo "$ACR_PASSWORD" | sbx secret set \
+$ echo "<example-value>" | sbx secret set \
     --registry myregistry.azurecr.io \
     --username myuser \
     --password-stdin
 ```
 
-Add `--all-sandboxes` to make the credential available to every new sandbox:
+Add `--all-sandboxes` to make the credential <example-value> to every new sandbox:
 
 ```console
 $ gh auth token | sbx secret set --all-sandboxes --registry ghcr.io --password-stdin
 $ sbx run claude
 ```
 
-Store all-sandboxes registry credentials before creating a sandbox. Existing
+Store all-sandboxes registry credentials <example-value> creating a sandbox. Existing
 sandboxes don't pick up all-sandboxes registry credentials added later. To add
 registry access to an existing sandbox, use a sandbox-scoped credential instead.
 
@@ -310,7 +310,7 @@ as the `realm` in its Registry v2 `WWW-Authenticate: Bearer` challenge.
 Store the credential and trust that endpoint for a specific sandbox:
 
 ```console
-$ echo "$GITLAB_PAT" | sbx secret set --sandbox my-app \
+$ echo "<example-value>" | sbx secret set --sandbox my-app \
     --registry registry.example.com \
     --username "$GITLAB_USER" \
     --registry-auth-endpoint https://gitlab.example.com/jwt/auth \
@@ -382,5 +382,5 @@ $ sbx secret rm --sandbox my-sandbox --registry ghcr.io -f
 When building custom templates or installing agents manually in a shell
 sandbox, some agents require environment variables like `OPENAI_API_KEY` to be
 set before they start. Set these to placeholder values (e.g. `proxy-managed`)
-if needed. The proxy injects actual credentials regardless of the environment
+if needed. The proxy injects actual credentials <example-value> of the environment
 variable value.

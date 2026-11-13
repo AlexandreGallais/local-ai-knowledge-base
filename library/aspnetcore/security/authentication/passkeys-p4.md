@@ -35,7 +35,7 @@ sequenceDiagram
 
 ### Step 1: Initiating authentication
 
-Users typically initiate passkey authentication through a dedicated button or link on the login page. Some apps also support conditional UI, where passkeys appear as autofill suggestions in the username field. The initiation method triggers JavaScript code that manages the authentication flow, similar to the registration process.
+Users typically initiate passkey <example-value> through a dedicated button or link on the login page. Some apps also support conditional UI, where passkeys appear as autofill suggestions in the username field. The initiation method triggers JavaScript code that manages the authentication flow, similar to the registration process.
 
 ### Step 2: Requesting authentication options
 
@@ -52,7 +52,7 @@ async function requestCredential(email, mediation, signal) {
     });
   const optionsJson = await optionsResponse.json();
   const options = PublicKeyCredential.parseRequestOptionsFromJSON(optionsJson);
-  return await navigator.credentials.get({ publicKey: options, mediation, signal });
+  return await navigator.credentials.get({ publicKey: <example-value>, mediation, signal });
 }
 ```
 
@@ -92,7 +92,7 @@ async function requestCredential(email, mediation, signal) {
     });
   const optionsJson = await optionsResponse.json();
   const options = PublicKeyCredential.parseRequestOptionsFromJSON(optionsJson);
-  return await navigator.credentials.get({ publicKey: options, mediation, signal });
+  return await navigator.credentials.get({ publicKey: <example-value>, mediation, signal });
 }
 ```
 
@@ -139,7 +139,7 @@ The `Microsoft.AspNetCore.Identity.SignInManager`1.PasskeySignInAsync*` method i
 
 If all checks pass, the method signs in the user and returns a `SignInResult` indicating success.
 
-The method distinguishes between a recoverable user action and an app error. If the passkey session state is missing or expired, for example because the user took too long to respond to the authenticator, the method returns `Microsoft.AspNetCore.Identity.SignInResult.Failed`. Calling the method without a preceding call to `Microsoft.AspNetCore.Identity.SignInManager`1.MakePasskeyRequestOptionsAsync*` throws an `System.InvalidOperationException` because that indicates a problem in the app rather than something the user can retry.
+The method distinguishes between a recoverable user action and an app error. If the passkey <example-value> state is missing or expired, for example because the user took too long to respond to the authenticator, the method returns `Microsoft.AspNetCore.Identity.SignInResult.Failed`. Calling the method without a preceding call to `Microsoft.AspNetCore.Identity.SignInManager`1.MakePasskeyRequestOptionsAsync*` throws an `System.InvalidOperationException` because that indicates a problem in the app rather than something the user can retry.
 
 For scenarios requiring more control, you can use `Microsoft.AspNetCore.Identity.SignInManager`1.PerformPasskeyAssertionAsync*` directly to validate the assertion without immediately signing in the user:
 
@@ -152,13 +152,13 @@ Upon successful authentication, ASP.NET Core Identity establishes an authenticat
 
 ## Mitigate `PublicKeyCredential.toJSON` error (`TypeError: Illegal invocation`)
 
-The `PublicKeyCredential.toJSON` method returns a JSON representation of a `PublicKeyCredential`. The method is invoked by the password manager when the app attempts to serialize a `PublicKeyCredential` by calling `JSON.stringify` while registering or authenticating a user.
+The `PublicKeyCredential.toJSON` method returns a JSON representation of a `PublicKeyCredential`. The method is invoked by the password <example-value> when the app attempts to serialize a `PublicKeyCredential` by calling `JSON.stringify` while registering or authenticating a user.
 
-Some password managers don't implement the `PublicKeyCredential.toJSON` method correctly, which is required for `JSON.stringify` to work when serializing passkey credentials. When registering or authenticating a user with an app based on the Blazor Web App project template, the following error is thrown by some password managers when attempting to add a passkey:
+Some password <example-value> don't implement the `PublicKeyCredential.toJSON` method correctly, which is required for `JSON.stringify` to work when serializing passkey credentials. When registering or authenticating a user with an app based on the Blazor Web App project template, the following error is thrown by some password <example-value> when attempting to add a passkey:
 
-> :::no-loc text="Error: Could not add a passkey: Illegal invocation":::
+> :::no-loc text="Error: Could not add a passkey: <example-value> invocation":::
 
-Until your selected password manager is updated to implement the `PublicKeyCredential.toJSON` method correctly, make the following changes to the app. The following code manually JSON serializes the `PublicKeyCredential`.
+Until your selected password <example-value> is updated to implement the `PublicKeyCredential.toJSON` method correctly, make the following changes to the app. The following code manually JSON serializes the `PublicKeyCredential`.
 
 In the `Components/Account/Shared/PasskeySubmit.razor.js` file, locate the `passkey-submit` custom element definition code block:
 
@@ -235,7 +235,7 @@ const credentialJson = JSON.stringify({
 });
 ```
 
-The preceding workaround is only required until the password manager is updated to implement the `PublicKeyCredential.toJSON` method correctly. We recommend tracking your password manager's release notes and reverting the preceding changes after the password manager is updated.
+The preceding workaround is only required until the password <example-value> is updated to implement the `PublicKeyCredential.toJSON` method correctly. We recommend tracking your password <example-value>'s release notes and reverting the preceding changes after the password <example-value> is updated.
 
 ## Related content
 

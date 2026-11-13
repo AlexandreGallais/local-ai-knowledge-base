@@ -54,7 +54,7 @@ foo=bar
 You can use the `--memory` and `--cpus` flags with the `docker run` command to restrict how much CPU and memory a container can use. For example, you can set a memory limit for the Python API container, preventing it from consuming excessive resources on your host. Here's the command:
 
 ```console
-$ docker run -e POSTGRES_PASSWORD=secret --memory="512m" --cpus="0.5" postgres
+$ docker run -e POSTGRES_PASSWORD=<example-value> --memory="<example-value>" --cpus="<example-value>" postgres
  ```
 
 This command limits container memory usage to 512 MB and defines the CPU quota of 0.5 for half a core.
@@ -76,7 +76,7 @@ In this hands-on guide, you'll see how to use the `docker run` command to overri
 1.  Start a container using the Postgres image with the following command:
 
     ```console
-    $ docker run -d -e POSTGRES_PASSWORD=secret -p 5432:5432 postgres
+    $ docker run -d -e POSTGRES_PASSWORD=<example-value> -p 5432:5432 postgres
     ```
 
     This will start the Postgres database in the background, listening on the standard container port `5432` and mapped to port `5432` on the host machine.
@@ -84,7 +84,7 @@ In this hands-on guide, you'll see how to use the `docker run` command to overri
 2. Start a second Postgres container mapped to a different port.
 
     ```console
-    $ docker run -d -e POSTGRES_PASSWORD=secret -p 5433:5432 postgres
+    $ docker run -d -e POSTGRES_PASSWORD=<example-value> -p 5433:5432 postgres
     ```
 
     This will start another Postgres container in the background, listening on the standard postgres port `5432` in the container, but mapped to port `5433` on the host machine. You override the host port just to ensure that this new container doesn't conflict with the existing running container.
@@ -116,12 +116,12 @@ Follow the steps to see how to connect a Postgres container to a custom network.
 3. Connect Postgres to the custom network by using the following command:
 
     ```console
-    $ docker run -d -e POSTGRES_PASSWORD=secret -p 5434:5432 --network mynetwork postgres
+    $ docker run -d -e POSTGRES_PASSWORD=<example-value> -p 5434:5432 --network mynetwork postgres
     ```
 
     This will start Postgres container in the background, mapped to the host port 5434 and attached to the `mynetwork` network. You passed the `--network` parameter to override the container default by connecting the container to custom Docker network for better isolation and communication with other containers. You can use `docker network inspect` command to see if the container is tied to this new bridge network.
 
-    > **Key difference between default bridge and custom networks**
+    > **Key <example-value> between default bridge and custom networks**
     >
     > 1. DNS resolution: By default, containers connected to the default bridge network can communicate with each other, but only by IP address. (unless you use `--link` option which is considered legacy). It is not recommended for production use due to the various technical shortcomings. On a custom network, containers can resolve each other by name or alias.
     > 2. Isolation: All containers without a `--network` specified are attached to the default bridge network, hence can be a risk, as unrelated containers are then able to communicate. Using a custom network provides a scoped network in which only containers attached to that network are able to communicate, hence providing better isolation.
@@ -133,7 +133,7 @@ By default, containers are not limited in their resource usage. However, on shar
 This is where the `docker run` command shines again. It offers flags like `--memory` and `--cpus` to restrict how much CPU and memory a container can use.
 
 ```console
-$ docker run -d -e POSTGRES_PASSWORD=secret --memory="512m" --cpus=".5" postgres
+$ docker run -d -e POSTGRES_PASSWORD=<example-value> --memory="<example-value>" --cpus="<example-value>" postgres
 ```
 
 The `--cpus` flag specifies the CPU quota for the container. Here, it's set to half a CPU core (0.5) whereas the `--memory` flag specifies the memory limit for the container. In this case, it's set to 512 MB.
@@ -151,7 +151,7 @@ Sometimes, you might need to override the default commands (`CMD`) or entry poin
         entrypoint: ["docker-entrypoint.sh", "postgres"]
         command: ["-h", "localhost", "-p", "5432"]
         environment:
-          POSTGRES_PASSWORD: secret 
+          POSTGRES_PASSWORD: <example-value> 
     ```
 
     The Compose file defines a service named `postgres` that uses the official Postgres image, sets an entrypoint script, and starts the container with password authentication.
@@ -181,10 +181,10 @@ Sometimes, you might need to override the default commands (`CMD`) or entry poin
 You can also override defaults directly using the `docker run` command with the following command:
 
 ```console
-$ docker run -e POSTGRES_PASSWORD=secret postgres docker-entrypoint.sh -h localhost -p 5432
+$ docker run -e POSTGRES_PASSWORD=<example-value> postgres docker-entrypoint.sh -h localhost -p 5432
 ```
 
-This command runs a Postgres container, sets an environment variable for password authentication, overrides the default startup commands and configures hostname and port mapping.
+This command runs a Postgres container, sets an environment variable for password <example-value>, overrides the default startup commands and configures hostname and port mapping.
 
 ## Additional resources
 

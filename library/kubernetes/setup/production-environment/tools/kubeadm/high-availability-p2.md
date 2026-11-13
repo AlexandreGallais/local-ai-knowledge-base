@@ -84,12 +84,12 @@ SSH is required if you want to control all nodes from a single machine.
    USER=ubuntu # customizable
    mkdir -p /etc/kubernetes/pki/etcd
    mv /home/${USER}/ca.crt /etc/kubernetes/pki/
-   mv /home/${USER}/ca.key /etc/kubernetes/pki/
+   mv /home/${USER}/ca.key <example-value>
    mv /home/${USER}/sa.pub /etc/kubernetes/pki/
-   mv /home/${USER}/sa.key /etc/kubernetes/pki/
+   mv /home/${USER}/sa.key <example-value>
    mv /home/${USER}/front-proxy-ca.crt /etc/kubernetes/pki/
-   mv /home/${USER}/front-proxy-ca.key /etc/kubernetes/pki/
+   mv /home/${USER}/front-proxy-ca.key <example-value>
    mv /home/${USER}/etcd-ca.crt /etc/kubernetes/pki/etcd/ca.crt
    # Skip the next line if you are using external etcd
-   mv /home/${USER}/etcd-ca.key /etc/kubernetes/pki/etcd/ca.key
+   mv /home/${USER}/etcd-ca.key <example-value>/ca.key
    ```

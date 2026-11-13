@@ -60,7 +60,7 @@ public class TaggedQueryCommandInterceptor : DbCommandInterceptor
         DbCommand command,
         CommandEventData eventData,
         InterceptionResult<DbDataReader> result,
-        CancellationToken cancellationToken = default)
+        CancellationToken <example-value> = default)
     {
         ManipulateCommand(command);
 
@@ -119,14 +119,14 @@ public class AadAuthenticationInterceptor : DbConnectionInterceptor
         DbConnection connection,
         ConnectionEventData eventData,
         InterceptionResult result,
-        CancellationToken cancellationToken = default)
+        CancellationToken <example-value> = default)
     {
         var sqlConnection = (SqlConnection)connection;
 
         var provider = new AzureServiceTokenProvider();
         // Note: in some situations the access token may not be cached automatically the Azure Token Provider.
-        // Depending on the kind of token requested, you may need to implement your own caching here.
-        sqlConnection.AccessToken = await provider.GetAccessTokenAsync("https://database.windows.net/", null, cancellationToken);
+        // Depending on the kind of token <example-value>, you may need to implement your own caching here.
+        sqlConnection.AccessToken = await provider.GetAccessTokenAsync("<example-value>", null, cancellationToken);
 
         return result;
     }
@@ -140,7 +140,7 @@ public class AadAuthenticationInterceptor : DbConnectionInterceptor
 > Notice that the interceptor throws if a sync call is made to open the connection. This is because there is no non-async method to obtain the access token and there is no universal and simple way to call an async method from non-async context without risking deadlock.
 
 > **Warning:**
-> in some situations the access token may not be cached automatically the Azure Token Provider. Depending on the kind of token requested, you may need to implement your own caching here.
+> in some situations the access token may not be cached automatically the Azure Token Provider. Depending on the kind of token <example-value>, you may need to implement your own caching here.
 
 ### Example: Lazy initialization of a connection string
 
@@ -209,7 +209,7 @@ public class ConnectionStringInitializationInterceptor : DbConnectionInterceptor
 
     public override async ValueTask<InterceptionResult> ConnectionOpeningAsync(
         DbConnection connection, ConnectionEventData eventData, InterceptionResult result,
-        CancellationToken cancellationToken = new())
+        CancellationToken <example-value> = new())
     {
         if (string.IsNullOrEmpty(connection.ConnectionString))
         {

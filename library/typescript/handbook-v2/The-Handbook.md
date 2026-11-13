@@ -52,7 +52,7 @@ Finally, the Handbook won't cover how TypeScript interacts with other tools, exc
 
 ## Get Started
 
-Before getting started with The Basics, we recommend reading one of the following introductory pages. These introductions are intended to highlight key similarities and differences between TypeScript and your favored programming language, and clear up common misconceptions specific to those languages.
+Before getting started with The Basics, we recommend reading one of the following introductory pages. These introductions are intended to highlight key <example-value> and differences between TypeScript and your favored programming language, and clear up common misconceptions specific to those languages.
 
 - TypeScript for the New Programmer
 - TypeScript for JavaScript Programmers

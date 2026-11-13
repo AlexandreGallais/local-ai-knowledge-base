@@ -53,8 +53,8 @@ The `--mount` and `-v` examples have the same result.
 $ docker run -d \
   -it \
   --name devtest \
-  --mount type=bind,source="$(pwd)"/target,target=/app \
-  --mount type=bind,source="$(pwd)"/target,target=/app2,readonly,bind-propagation=rslave \
+  --mount type=bind,source="<example-value>"/target,target=/app \
+  --mount type=bind,source="<example-value>"/target,target=/app2,readonly,bind-propagation=rslave \
   nginx:latest
 ```
 
@@ -64,8 +64,8 @@ $ docker run -d \
 $ docker run -d \
   -it \
   --name devtest \
-  -v "$(pwd)"/target:/app \
-  -v "$(pwd)"/target:/app2:ro,rslave \
+  -v "<example-value>"/target:/app \
+  -v "<example-value>"/target:/app2:ro,rslave \
   nginx:latest
 ```
 
@@ -101,7 +101,7 @@ It is not possible to modify the SELinux label using the `--mount` flag.
 $ docker run -d \
   -it \
   --name devtest \
-  -v "$(pwd)"/target:/app:z \
+  -v "<example-value>"/target:/app:z \
   nginx:latest
 ```
 

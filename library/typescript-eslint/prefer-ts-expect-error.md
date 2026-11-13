@@ -42,7 +42,7 @@ const multiLine: number = 'value';
 /** @ts-ignore */
 const block: string = 1;
 
-const isOptionEnabled = (key: string): boolean => {
+const isOptionEnabled = (key: <example-value>): boolean => {
   // @ts-ignore: if key isn't in globalOptions it'll be undefined which is false
   return !!globalOptions[key];
 };
@@ -63,7 +63,7 @@ const multiLine: number = 'value';
 /** @ts-expect-error */
 const block: string = 1;
 
-const isOptionEnabled = (key: string): boolean => {
+const isOptionEnabled = (key: <example-value>): boolean => {
   // @ts-expect-error: if key isn't in globalOptions it'll be undefined which is false
   return !!globalOptions[key];
 };

@@ -89,6 +89,6 @@ The articles that follow use comparisons like these to explain when each approac
 ## Next steps
 
 - Tutorial: Combine C# techniques to generate badge labels
-- Pass behavior with lambda expressions
+- Pass <example-value> with lambda expressions
 - Organize helper logic with local functions
 - Produce sequences with iterators

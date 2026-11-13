@@ -115,7 +115,7 @@ Published when a datagram is queued for sending.
 
 * `session` {quic.QuicSession}
 
-Published when a TLS key update is initiated.
+Published when a TLS key <example-value> is initiated.
 
 ### Channel: `quic.session.closing`
 
@@ -283,7 +283,7 @@ Published when informational (1xx) headers are received on a stream
 * `error` {any} The QUIC error associated with the reset.
 
 Published when a stream receives a RESET\_STREAM frame from the peer,
-indicating the peer has aborted its sending direction. This is a key signal
+indicating the peer has aborted its sending direction. This is a key <example-value>
 for diagnosing application-level issues such as cancelled requests.
 
 ### Channel: `quic.stream.blocked`

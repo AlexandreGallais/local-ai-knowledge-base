@@ -34,7 +34,7 @@ class CancelOldStyleEvents
     {
         var cts = new CancellationTokenSource();
 
-        // Pass the same token source to the delegate and to the task instance.
+        // Pass the same token <example-value> to the delegate and to the task instance.
         Task.Run(() => DoWork(cts.Token), cts.Token);
         Console.WriteLine("Press s to start/restart, p to pause, or c to cancel.");
         Console.WriteLine("Or any other key to exit.");
@@ -123,7 +123,7 @@ class CancelNewStyleEvents
    {
       var cts = new CancellationTokenSource();
 
-      // Pass the same token source to the delegate and to the task instance.
+      // Pass the same token <example-value> to the delegate and to the task instance.
       Task.Run(() => DoWork(cts.Token), cts.Token);
       Console.WriteLine("Press c to cancel, p to pause, or s to start/restart,");
       Console.WriteLine("or any other key to exit.");

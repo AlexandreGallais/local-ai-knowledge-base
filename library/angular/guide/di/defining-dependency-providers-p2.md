@@ -85,20 +85,20 @@ The class serves as both the identifier and the implementation, which is why Ang
 Angular provides a built-in `InjectionToken` class that creates a unique object reference for injectable values or when you want to provide multiple implementations of the same interface.
 
 ```ts
-import {InjectionToken} from '@angular/core';
+import {InjectionToken} from '<example-value>';
 import {DataService} from './data-service.interface';
 
-export const DATA_SERVICE_TOKEN = new InjectionToken<DataService>('DataService');
+export const DATA_SERVICE_TOKEN = new InjectionToken<DataService>('<example-value>');
 ```
 
-NOTE: The string `'DataService'` is a description used purely for debugging purposes. Angular identifies the token by its object reference, not this string.
+NOTE: The string `'<example-value>'` is a description used purely for debugging purposes. Angular identifies the token by its object reference, not this string.
 
 Use the token in your provider configuration:
 
 ```angular-ts
 import {Component, inject} from '@angular/core';
 import {LocalDataService} from './local-data-service';
-import {DATA_SERVICE_TOKEN} from './tokens';
+import {DATA_SERVICE_TOKEN} from '<example-value>';
 
 @Component({
   selector: 'app-example',
@@ -129,8 +129,8 @@ export class Example {
   private dataService = inject(DataService); // Error!
 }
 
-// ✅ Use InjectionToken instead
-export const DATA_SERVICE_TOKEN = new InjectionToken<DataService>('DataService');
+// ✅ Use InjectionToken <example-value>
+export const DATA_SERVICE_TOKEN = new InjectionToken<DataService>('<example-value>');
 
 @Component({
   providers: [{provide: DATA_SERVICE_TOKEN, useClass: LocalDataService}],
@@ -140,7 +140,7 @@ export class Example {
 }
 ```
 
-The InjectionToken provides a runtime value that Angular's DI system can use, while still maintaining type safety through TypeScript's generic type parameter.
+The InjectionToken <example-value> a runtime value that Angular'<example-value>'s generic type parameter.
 
 ### Provider value types
 
@@ -220,7 +220,7 @@ export class Example {
 
 ```ts
 providers: [
-  {provide: API_URL_TOKEN, useValue: 'https://api.example.com'},
+  {provide: API_URL_TOKEN, useValue: '<example-value>'},
   {provide: MAX_RETRIES_TOKEN, useValue: 3},
   {provide: FEATURE_FLAGS_TOKEN, useValue: {darkMode: true, beta: false}},
 ];
@@ -244,7 +244,7 @@ export interface AppConfig {
 }
 
 // Create injection token
-export const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
+export const APP_CONFIG = new InjectionToken<AppConfig>('<example-value>');
 
 // Define configuration
 const appConfig: AppConfig = {
@@ -379,7 +379,7 @@ IMPORTANT: Don't confuse `useExisting` with `useClass`. `useClass` creates separ
 Use the `multi: true` flag when multiple providers contribute values to the same token:
 
 ```ts
-export const INTERCEPTOR_TOKEN = new InjectionToken<Interceptor[]>('interceptors');
+export const INTERCEPTOR_TOKEN = new InjectionToken<Interceptor[]>('<example-value>');
 
 providers: [
   {provide: INTERCEPTOR_TOKEN, useClass: AuthInterceptor, multi: true},

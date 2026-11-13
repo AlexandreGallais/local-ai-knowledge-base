@@ -25,8 +25,8 @@ The following illustration shows a conceptual view of two sets and the elements 
 
 |Method Name|Description|C# Query Expression Syntax|More Information|
 |-----------------|-----------------|---------------------------------|----------------------|
-|Join|Joins two sequences based on key selector functions and extracts pairs of values.|`join … in … on … equals …`|`System.Linq.Enumerable.Join*` `System.Linq.Queryable.Join*`|
-|GroupJoin|Joins two sequences based on key selector functions and groups the resulting matches for each element.|`join … in … on … equals … into …`|`System.Linq.Enumerable.GroupJoin*` `System.Linq.Queryable.GroupJoin*`|
+|Join|Joins two sequences based on key <example-value> functions and extracts pairs of values.|`join … in … on … equals …`|`System.Linq.Enumerable.Join*` `System.Linq.Queryable.Join*`|
+|GroupJoin|Joins two sequences based on key <example-value> functions and groups the resulting matches for each element.|`join … in … on … equals … into …`|`System.Linq.Enumerable.GroupJoin*` `System.Linq.Queryable.GroupJoin*`|
 |LeftJoin|Correlates the elements of two sequences based on matching keys.| N/A | `System.Linq.Enumerable.LeftJoin*` `System.Linq.Queryable.LeftJoin*`|
 |RightJoin|Correlates the elements of two sequences based on matching keys.| N/A | `System.Linq.Enumerable.RightJoin*` `System.Linq.Queryable.RightJoin*`|
 

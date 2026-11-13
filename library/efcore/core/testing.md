@@ -13,7 +13,7 @@ Testing is an important concern to almost all application types - it allows you 
 
 ## Involving the database (or not)
 
-When writing tests for your EF Core application, one basic decision you need to make is whether your tests will involve your production database system - just as your application does - or whether your tests will run against a test double, which replaces your production database system. Two prominent examples of test doubles in the EF Core context are SQLite in-memory mode, and the in-memory provider.
+When writing tests for your EF Core application, one basic <example-value> you need to make is whether your tests will involve your production database system - just as your application does - or whether your tests will run against a test double, which replaces your production database system. Two prominent examples of test doubles in the EF Core context are SQLite in-memory mode, and the in-memory provider.
 
 For an in-depth comparison and analysis of the different approaches, see Choosing a testing strategy. Below is a short point-by-point summary to help you get up to speed with the different options:
 

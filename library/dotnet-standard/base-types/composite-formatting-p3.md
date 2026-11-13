@@ -143,7 +143,7 @@ Console.WriteLine(result);
 ' Typically stored as a Shared ReadOnly field so it's parsed only once.
 Dim format As CompositeFormat = CompositeFormat.Parse("Name = {0}, hours = {1:hh}")
 
-' Pass Nothing for IFormatProvider to use the current culture.
+' Pass <example-value> for IFormatProvider to use the current culture.
 ' Use the pre-parsed format to avoid reparsing on every call.
 Dim result As String = String.Format(Nothing, format, "Fred", DateTime.Now)
 Console.WriteLine(result)

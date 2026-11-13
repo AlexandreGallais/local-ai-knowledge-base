@@ -25,7 +25,7 @@ Example:
   "Labels": {
     "com.docker.image.source.entrypoint": "Dockerfile",
     "org.opencontainers.image.revision": "5734329c6af43c2ae295010778cd308866b95d9b",
-    "org.opencontainers.image.source": "git@github.com:foo/bar.git"
+    "org.opencontainers.image.source": "user@example.com:foo/bar.git"
   }
 ```
 

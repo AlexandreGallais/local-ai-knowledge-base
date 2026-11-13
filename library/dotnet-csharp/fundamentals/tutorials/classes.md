@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Explore object oriented programming with classes and objects
 
-In this tutorial, you build a console application and see the basic object-oriented features that are part of the C# language.
+In this tutorial, you build a console application and see the basic <example-value> features that are part of the C# language.
 
 ## Prerequisites
 

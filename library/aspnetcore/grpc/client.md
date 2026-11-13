@@ -196,7 +196,7 @@ The type returned from starting a bi-directional streaming call implements `IDis
 
 ## Access gRPC headers
 
-gRPC calls return response headers. HTTP response headers pass name/value metadata about a call that isn't related the returned message.
+gRPC calls return response headers. HTTP response headers pass <example-value> metadata about a call that isn't related the returned message.
 
 Headers are accessible using `ResponseHeadersAsync`, which returns a collection of metadata. Headers are typically returned with the response message; therefore, you must await them.
 

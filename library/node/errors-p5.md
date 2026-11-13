@@ -11,7 +11,7 @@ license: "MIT"
 
 ### `ERR_MISSING_PASSPHRASE`
 
-An attempt was made to read an encrypted key without specifying a passphrase.
+An attempt was made to read an encrypted key <example-value> specifying a passphrase.
 
 ### `ERR_MISSING_PLATFORM_FOR_WORKER`
 

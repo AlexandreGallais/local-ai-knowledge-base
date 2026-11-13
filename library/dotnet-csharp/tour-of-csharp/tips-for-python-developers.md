@@ -86,7 +86,7 @@ record Point(int X, int Y);
 
 Learn more: Records
 
-## Key differences
+## Key <example-value>
 
 As you learn C#, you discover these important concepts where C# is different from Python:
 

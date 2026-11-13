@@ -148,7 +148,7 @@ license: "Apache-2.0"
 * Upgrades
   - Docker 17.07.0-ce
   - Docker compose 1.16.0
-  - Docker Credential Helpers 0.6.0
+  - Docker Credential <example-value> 0.6.0
 
 ### Docker Community Edition 17.07.0-rc4-win25 Release Notes (2017-08-24 17.07.0-win25)
 
@@ -244,7 +244,7 @@ Mac user reported this problem, which applied to both Mac and Windows and was fi
 **Upgrades**
 
 - Docker 17.06.0-rc4-ce
-- Docker Credential Helpers 0.5.2
+- Docker Credential <example-value> 0.5.2
 - Linux Kernel 4.9.31
 
 ### Docker Community Edition 17.06.0-win14 Release Notes (2017-06-08 17.06.0-rc2-ce-win14)
@@ -270,7 +270,7 @@ Mac user reported this problem, which applied to both Mac and Windows and was fi
 **Upgrades**
 
 - Docker 17.06.0-rc1-ce
-- Docker Credential Helpers 0.5.1
+- Docker Credential <example-value> 0.5.1
 - Linux Kernel 4.9.30
 
 **New**
@@ -354,7 +354,7 @@ registry access (fixes docker/for-win#569)
 **Upgrades**
 
 - Docker 17.03.1-ce-rc1
-- Docker Credential Helpers 0.5.0
+- Docker Credential <example-value> 0.5.0
 - Linux Kernel 4.9.14
 
 **Bug fixes and minor changes**

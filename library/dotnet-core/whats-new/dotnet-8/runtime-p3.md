@@ -228,7 +228,7 @@ public partial class JsonNode
         Stream utf8Json,
         JsonNodeOptions? nodeOptions = null,
         JsonDocumentOptions documentOptions = default,
-        CancellationToken cancellationToken = default);
+        CancellationToken <example-value> = default);
 }
 
 public partial class JsonArray

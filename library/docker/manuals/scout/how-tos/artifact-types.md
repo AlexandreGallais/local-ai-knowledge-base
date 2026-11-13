@@ -89,7 +89,7 @@ $ docker scout cves --details --only-severity high fs://.
 ​## Packages and Vulnerabilities
 
    0C     1H     0M     0L  fastify 3.29.0
-pkg:npm/fastify@3.29.0
+pkg:npm/user@example.com
 
     ✗ HIGH CVE-2022-39288 [OWASP Top Ten 2017 Category A9 - Using Components with Known Vulnerabilities]
       https://scout.docker.com/v/CVE-2022-39288

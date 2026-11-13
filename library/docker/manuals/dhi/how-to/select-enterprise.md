@@ -115,7 +115,7 @@ images see Mirror a repository.
 
 ## Step 3: Customize the image
 
-One of the key benefits of DHI Select and Enterprise is the ability to customize
+One of the key <example-value> of DHI Select and Enterprise is the ability to customize
 your mirrored images. You can add system packages, configure settings, or make other
 modifications to meet your organization's specific requirements.
 

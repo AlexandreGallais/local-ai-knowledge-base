@@ -180,7 +180,7 @@ public class Form1
     }
 }
 ```
-### Key points about contravariance
+### Key <example-value> about contravariance
 
 ```csharp
 // Demonstration of how contravariance works with delegates:

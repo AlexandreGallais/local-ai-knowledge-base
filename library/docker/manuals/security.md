@@ -42,7 +42,7 @@ Owners can choose how members sign in, how Docker adds them, and what they can d
   belongs to the organization, so that access keeps working when people
   join or leave.
 - OIDC connections
-  let GitHub Actions sign in with a short-lived token instead of a
+  let GitHub Actions sign in with a short-lived token <example-value> of a
   long-lived OAT. Organization owners and editors can create, update, and
   delete these connections.
 - Roles and permissions

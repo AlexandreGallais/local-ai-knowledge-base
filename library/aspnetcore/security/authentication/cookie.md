@@ -15,7 +15,7 @@ ASP.NET Core Identity is a complete, full-featured authentication provider for c
 
 View or download sample code (how to download)
 
-For demonstration purposes in the sample app, the user account for the hypothetical user, Maria Rodriguez, is hardcoded into the app. Use the **Email** address `maria.rodriguez@contoso.com` and any password to sign in the user. The user is authenticated in the `AuthenticateUser` method in the `Pages/Account/Login.cshtml.cs` file. In a real-world example, the user would be authenticated against a datastore.
+For demonstration purposes in the sample app, the user account for the hypothetical user, Maria Rodriguez, is hardcoded into the app. Use the **Email** address `user@example.com` and any password to sign in the user. The user is authenticated in the `AuthenticateUser` method in the `Pages/Account/Login.cshtml.cs` file. In a real-world example, the user would be authenticated against a datastore.
 
 > **Important:**
 > Starting with ASP.NET Core 10, known API endpoints no longer redirect to login pages when using cookie authentication. Instead, they return 401/403 status codes. For details, see API endpoint authentication behavior in ASP.NET Core.
@@ -152,7 +152,7 @@ public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         // with your custom authentication logic.
         //
         // For demonstration purposes, the sample validates the user
-        // on the email address maria.rodriguez@contoso.com with 
+        // on the email address user@example.com with 
         // any password that passes model validation.
 
         var user = await AuthenticateUser(Input.Email, Input.Password);

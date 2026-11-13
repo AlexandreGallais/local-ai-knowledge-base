@@ -44,7 +44,7 @@ Then verify the blob by using `cosign verify-blob`:
 cosign verify-blob "$BINARY" \
   --signature "$BINARY".sig \
   --certificate "$BINARY".cert \
-  --certificate-identity krel-staging@k8s-releng-prod.iam.gserviceaccount.com \
+  --certificate-identity user@example.com \
   --certificate-oidc-issuer https://accounts.google.com
 ```
 
@@ -67,7 +67,7 @@ the `cosign verify` command:
 
 ```shell
 cosign verify registry.k8s.io/kube-apiserver-amd64:v{{< skew currentPatchVersion >}} \
-  --certificate-identity krel-trust@k8s-releng-prod.iam.gserviceaccount.com \
+  --certificate-identity user@example.com \
   --certificate-oidc-issuer https://accounts.google.com \
   | jq .
 ```
@@ -86,7 +86,7 @@ input=images.txt
 while IFS= read -r image
 do
   cosign verify "$image" \
-    --certificate-identity krel-trust@k8s-releng-prod.iam.gserviceaccount.com \
+    --certificate-identity user@example.com \
     --certificate-oidc-issuer https://accounts.google.com \
     | jq .
 done < "$input"
@@ -140,7 +140,7 @@ curl -Ls "https://sbom.k8s.io/$VERSION/release.cert" -o "$VERSION.spdx.cert"
 cosign verify-blob \
     --certificate "$VERSION.spdx.cert" \
     --signature "$VERSION.spdx.sig" \
-    --certificate-identity krel-staging@k8s-releng-prod.iam.gserviceaccount.com \
+    --certificate-identity user@example.com \
     --certificate-oidc-issuer https://accounts.google.com \
     "$VERSION.spdx"
 ```

@@ -60,7 +60,7 @@ When you specify `--minimum-expected-tests` and the minimum isn't met, the run f
 
 Starting with .NET 11, `--tl`, `--terminallogger`, and `--tlp` are forwarded to MSBuild instead of the test application. Starting with .NET 12 Preview 1, the recognized `-mt` and `-multiThreaded` forms are also forwarded to MSBuild. To pass an application option with one of these names, place it after `--`.
 
-Pass execution-mode options such as `--help` and `--list-tests` directly to `dotnet test`. Starting with .NET 11, the SDK validates the execution mode negotiated with the test application. If a launch profile or `TestingPlatformCommandLineArguments` injects one of these options, the requested SDK operation and the application operation don't match, and the run fails with a diagnostic.
+Pass <example-value> options such as `--help` and `--list-tests` directly to `dotnet test`. Starting with .NET 11, the SDK validates the execution mode negotiated with the test application. If a launch profile or `TestingPlatformCommandLineArguments` injects one of these options, the requested SDK operation and the application operation don't match, and the run fails with a diagnostic.
 
 ## Examples
 

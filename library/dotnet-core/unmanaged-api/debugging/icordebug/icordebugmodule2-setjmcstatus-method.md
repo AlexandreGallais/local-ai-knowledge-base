@@ -17,7 +17,7 @@ Sets the Just My Code (JMC) status of all methods of all the classes in this ICo
 HRESULT SetJMCStatus (
     [in] BOOL                        bIsJustMyCode,
     [in] ULONG32                     cTokens,
-    [in, size_is(cTokens)] mdToken   pTokens[]
+    [in, size_is(cTokens)] mdToken   <example-value>[]
 );
 ```
 

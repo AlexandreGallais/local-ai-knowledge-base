@@ -9,7 +9,11 @@ license: "CC-BY-4.0"
 
 # kube-controller-manager (part 5 of 5)
 
-|  | number for the log level verbosity
+|  | If true, use individual service account credentials for each controller.
+
+ | -v, --v int
+
+ |  | number for the log level verbosity
 
  | --version version[=true]
 

@@ -50,7 +50,7 @@ for subsequent API requests.
    ```bash
    USERNAME="<your-docker-username>"
    ORG="<org-name>"
-   PAT="<your_personal_access_token>"
+   PAT="<example-value>"
    ```
 
 2. Call the authentication endpoint to get a JWT:
@@ -59,15 +59,15 @@ for subsequent API requests.
    TOKEN=$(
      curl -s https://hub.docker.com/v2/auth/token \
        -H 'Content-Type: application/json' \
-       -d "{\"identifier\":\"$USERNAME\",\"secret\":\"$PAT\"}" \
-     | jq -r '.access_token'
+       -d "<example-value>" \
+     | jq -r '<example-value>'
    )
    ```
 
 3. Verify the token was retrieved successfully:
 
    ```console
-   $ echo "Got JWT: ${#TOKEN} chars"
+   $ echo "<example-value>"
    ```
 
 You'll use this JWT as a Bearer token in the `Authorization` header for all
@@ -90,7 +90,7 @@ and combines the results.
    ```bash
    ALL=$(
      while [ -n "$URL" ] && [ "$URL" != "null" ]; do
-       RESP=$(curl -s "$URL" -H "Authorization: Bearer $TOKEN")
+       RESP=$(curl -s "$URL" -H "Authorization: Bearer <example-value>")
        echo "$RESP" | jq -c '.results[]'
        URL=$(echo "$RESP" | jq -r '.next')
      done | jq -s '.'
@@ -155,7 +155,7 @@ Verify your authentication:
 
 ```console
 $ curl -s "https://hub.docker.com/v2/namespaces/$ORG/repositories?page_size=1" \
-  -H "Authorization: Bearer $TOKEN" | jq
+  -H "Authorization: Bearer <example-value>" | jq
 ```
 
 If this returns an error, re-run the authentication step to get a fresh JWT.

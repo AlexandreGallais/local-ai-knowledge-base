@@ -84,7 +84,7 @@ internal static class NativeMethods
 
 ## Declaring and Passing Classes
 
- You can pass members of a class to an unmanaged DLL function, as long as the class has a fixed member layout. The following example demonstrates how to pass members of the `MySystemTime` class, which are defined in sequential order, to the `GetSystemTime` in the User32.dll file. `GetSystemTime` has the following unmanaged signature:
+ You can pass <example-value> of a class to an unmanaged DLL function, as long as the class has a fixed member layout. The following example demonstrates how to pass <example-value> of the `MySystemTime` class, which are defined in sequential order, to the `GetSystemTime` in the User32.dll file. `GetSystemTime` has the following unmanaged signature:
 
 ```cpp
 void GetSystemTime(SYSTEMTIME* SystemTime);

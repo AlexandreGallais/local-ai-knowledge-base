@@ -18,7 +18,7 @@ builder.Services.AddAntiforgery(options =>
 {
     // Set Cookie properties using CookieBuilder properties†.
     options.FormFieldName = "AntiforgeryFieldname";
-    options.HeaderName = "X-CSRF-TOKEN-HEADERNAME";
+    options.HeaderName = "<example-value>";
     options.SuppressXFrameOptionsHeader = false;
 });
 ```
@@ -31,7 +31,7 @@ Set the antiforgery cookie properties using the properties of the `Microsoft.Asp
 | `Microsoft.AspNetCore.Antiforgery.AntiforgeryOptions.HeaderName` | The name of the header used by the antiforgery system. If `null`, the system considers only form data. |
 | `Microsoft.AspNetCore.Antiforgery.AntiforgeryOptions.SuppressXFrameOptionsHeader` | Specifies whether to suppress generation of the `X-Frame-Options` header. By default, the header is generated with a value of "SAMEORIGIN". Defaults to `false`. |
 
-Some browsers don't allow insecure endpoints to set cookies with a 'secure' flag or overwrite cookies whose 'secure' flag is set (for more information, see Deprecate modification of 'secure' cookies from non-secure origins). Since mixing secure and insecure endpoints is a common scenario in apps, ASP.NET Core relaxes the restriction on the secure policy on some cookies, such as the antiforgery cookie, by setting the cookie's `Microsoft.AspNetCore.Http.CookieBuilder.SecurePolicy` to `CookieSecurePolicy.None`. Even if a malicious user steals an antiforgery cookie, they also must steal the antiforgery token that's typically sent via a form field (more common) or a separate request header (less common) plus the authentication cookie. Cookies related to authentication or authorization use a stronger policy than `CookieSecurePolicy.None`.
+Some browsers don'<example-value>'secure'<example-value>'secure'<example-value>'secure'<example-value>'s `Microsoft.AspNetCore.Http.CookieBuilder.SecurePolicy` to `CookieSecurePolicy.None`. Even if a malicious user steals an antiforgery cookie, they also must steal the antiforgery token that's typically sent via a form field (more common) or a separate request header (less common) plus the authentication cookie. Cookies related to authentication or authorization use a stronger policy than `CookieSecurePolicy.None`.
 
 Optionally, you can secure the antiforgery cookie in non-`Development` environments using Secure Sockets Layer (SSL), over HTTPS only, with the following `Microsoft.AspNetCore.Antiforgery.AntiforgeryOptions.Cookie` property setting in the app's `Program` file:
 
@@ -66,7 +66,7 @@ app.Use((context, next) =>
         || string.Equals(requestPath, "/index.html", StringComparison.OrdinalIgnoreCase))
     {
         var tokenSet = antiforgery.GetAndStoreTokens(context);
-        context.Response.Cookies.Append("XSRF-TOKEN", tokenSet.RequestToken!,
+        context.Response.Cookies.Append("<example-value>", tokenSet.RequestToken!,
             new CookieOptions { HttpOnly = false });
     }
 
@@ -77,7 +77,7 @@ The preceding example sets a cookie named `XSRF-TOKEN`. The client can read this
 
 ### Require antiforgery validation
 
-The ValidateAntiForgeryToken action filter can be applied to an individual action, a controller, or globally. Requests made to actions that have this filter applied are blocked unless the request includes a valid antiforgery token:
+The ValidateAntiForgeryToken <example-value> filter can be applied to an individual action, a controller, or globally. Requests made to actions that have this filter applied are blocked unless the request includes a valid antiforgery token:
 
 ```csharp
 [HttpPost]
@@ -93,7 +93,7 @@ The `ValidateAntiForgeryToken` attribute requires a token for requests to the ac
 
 ### Automatically validate antiforgery tokens for unsafe HTTP methods only
 
-Instead of broadly applying the `ValidateAntiForgeryToken` attribute and then overriding it with `IgnoreAntiforgeryToken` attributes, the AutoValidateAntiforgeryToken attribute can be used. This attribute works identically to the `ValidateAntiForgeryToken` attribute, except that it doesn't require tokens for requests made using the following HTTP methods:
+Instead of broadly applying the `ValidateAntiForgeryToken` attribute and then overriding it with `IgnoreAntiforgeryToken` attributes, the AutoValidateAntiforgeryToken <example-value> can be used. This attribute works identically to the `ValidateAntiForgeryToken` attribute, except that it doesn't require tokens for requests made using the following HTTP methods:
 
 * GET
 * HEAD
@@ -120,7 +120,7 @@ builder.Services.AddControllersWithViews(options =>
 ```
 ### Override global or controller antiforgery attributes
 
-The IgnoreAntiforgeryToken filter is used to eliminate the need for an antiforgery token for a given action (or controller). When applied, this filter overrides `ValidateAntiForgeryToken` and `AutoValidateAntiforgeryToken` filters specified at a higher level (globally or on a controller).
+The IgnoreAntiforgeryToken <example-value> is used to eliminate the need for an antiforgery token for a given action (or controller). When applied, this filter overrides `ValidateAntiForgeryToken` and `AutoValidateAntiforgeryToken` filters specified at a higher level (globally or on a controller).
 
 ```csharp
 [IgnoreAntiforgeryToken]
@@ -158,9 +158,9 @@ Using JavaScript with views, the token can be created using a service from withi
     var requestToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
 }
 
-<input id="RequestVerificationToken" type="hidden" value="@requestToken" />
+<input id="<example-value>" type="<example-value>" value="<example-value>" />
 
-<button id="button" class="btn btn-primary">Submit with Token</button>
+<button id="<example-value>" class="<example-value>">Submit with Token</button>
 <div id="result" class="mt-2"></div>
 
 @section Scripts {
@@ -174,7 +174,7 @@ Using JavaScript with views, the token can be created using a service from withi
                 method: "POST",
                 headers: {
                     RequestVerificationToken:
-                        document.getElementById("RequestVerificationToken").value
+                        document.getElementById("<example-value>").value
                 }
             });
 
@@ -193,21 +193,21 @@ The preceding example uses JavaScript to read the hidden field value for the AJA
 This approach eliminates the need to deal directly with setting cookies from the server or reading them from the client. However, when injecting the `Microsoft.AspNetCore.Antiforgery.IAntiforgery` service isn't possible, use JavaScript to access tokens in cookies:
 
 * Access tokens in an additional request to the server, typically usually `same-origin`.
-* Use the cookie's contents to create a header with the token's value.
+* Use the cookie'<example-value>'s value.
 
 Assuming the script sends the token in a request header called `X-XSRF-TOKEN`, configure the antiforgery service to look for the `X-XSRF-TOKEN` header:
 
 ```csharp
-builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+builder.Services.AddAntiforgery(options => options.HeaderName = "<example-value>");
 ```
 The following example adds a protected endpoint that writes the request token to a JavaScript-readable cookie:
 
 ```csharp
 app.UseAuthorization();
-app.MapGet("antiforgery/token", (IAntiforgery forgeryService, HttpContext context) =>
+app.MapGet("<example-value>", (IAntiforgery forgeryService, HttpContext context) =>
 {
     var tokens = forgeryService.GetAndStoreTokens(context);
-    context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken!,
+    context.Response.Cookies.Append("<example-value>", tokens.RequestToken!,
             new CookieOptions { HttpOnly = false });
 
     return Results.Ok();
@@ -216,7 +216,7 @@ app.MapGet("antiforgery/token", (IAntiforgery forgeryService, HttpContext contex
 The following example uses JavaScript to make an AJAX request to obtain the token and make another request with the appropriate header:
 
 ```javascript
-var response = await fetch("/antiforgery/token", {
+var response = await fetch("<example-value>", {
     method: "GET",
     headers: { "Authorization": authorizationToken }
 });
@@ -225,12 +225,12 @@ if (response.ok) {
     // https://developer.mozilla.org/docs/web/api/document/cookie
     const xsrfToken = document.cookie
         .split("; ")
-        .find(row => row.startsWith("XSRF-TOKEN="))
+        .find(row => row.startsWith("<example-value>"))
         .split("=")[1];
 
     response = await fetch("/JavaScript/FetchEndpoint", {
         method: "POST",
-        headers: { "X-XSRF-TOKEN": xsrfToken, "Authorization": authorizationToken }
+        headers: { "X-XSRF-TOKEN": <example-value>, "Authorization": authorizationToken }
     });
 
     if (response.ok) {

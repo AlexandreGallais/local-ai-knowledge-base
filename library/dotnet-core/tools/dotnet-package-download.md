@@ -42,7 +42,7 @@ By default, the command downloads only the packages you specify (no transitive d
   One or more package IDs to download.
   Each package can optionally include a version with `@`.
   If a package version isn't specified, the latest version of the package is downloaded.
-  For example, `dotnet package download Contoso.Utilities` or `dotnet package download Contoso.Utilities@3.2.1`.
+  For example, `dotnet package download Contoso.Utilities` or `dotnet package download user@example.com`.
 
 ## Options
 
@@ -83,11 +83,11 @@ Prints out a description of how to use the command.
 ### Download a single package at a specific version
 
 ```ps1
-dotnet package download Contoso@13.0.3 --output My/Destination/For/packages
+dotnet package download user@example.com --output My/Destination/For/packages
 ```
 
 ### Download multiple packages to a custom folder
 
 ```ps1
-dotnet package download Contoso@3.1.2 Contoso.Utility@6.12.0 --output My/Destination/For/packages
+dotnet package download user@example.com user@example.com --output My/Destination/For/packages
 ```

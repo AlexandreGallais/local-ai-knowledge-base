@@ -196,7 +196,7 @@ builder.WebHost.ConfigureKestrel((context, serverOptions) =>
     serverOptions.Listen(IPAddress.Loopback, 5000);
     serverOptions.Listen(IPAddress.Loopback, 5001, listenOptions =>
     {
-        listenOptions.UseHttps("testCert.pfx", "testPassword");
+        listenOptions.UseHttps("<example-value>", "<example-value>");
     });
 });
 ```

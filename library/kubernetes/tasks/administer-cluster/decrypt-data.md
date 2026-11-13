@@ -22,7 +22,7 @@ encrypted.
 **Note:**
 This task covers encryption for resource data stored using the
 Kubernetes API. For example, you can
-encrypt Secret objects, including the key-value data they contain.
+encrypt Secret <example-value>, including the key-value data they contain.
 
 If you wanted to manage encryption for data in filesystems that are mounted into containers, you instead
 need to either:
@@ -102,7 +102,7 @@ resources:
           keys:
             # Do not use this (invalid) example key for encryption
             - name: example
-              secret: 2KfZgdiq2K0g2YrYpyDYs9mF2LPZhQ==
+              secret: <example-value>
 ```
 
 then change it to:
@@ -119,7 +119,7 @@ resources:
       - aescbc:
           keys:
             - name: example
-              secret: 2KfZgdiq2K0g2YrYpyDYs9mF2LPZhQ==
+              secret: <example-value>
 ```
 
 and restart the kube-apiserver Pod on this node.
@@ -135,7 +135,7 @@ Make sure that you use the same encryption configuration on each control plane h
 Then run the following command to force decryption of all Secrets:
 
 ```shell
-# If you are decrypting a different kind of object, change "secrets" to match.
+# If you are decrypting a different kind of object, change "<example-value>" to match.
 kubectl get secrets --all-namespaces -o json | kubectl replace -f -
 ```
 

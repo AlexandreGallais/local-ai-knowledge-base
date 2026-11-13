@@ -14,7 +14,7 @@ You use the .NET reflection APIs to examine the metadata in a .NET assembly and 
 The following example shows how LINQ can be used with reflection to retrieve specific metadata about methods that match a specified search criterion. In this case, the query finds the names of all the methods in the assembly that return enumerable types such as arrays.
 
 ```csharp
-Assembly assembly = Assembly.Load("System.Private.CoreLib, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e");
+Assembly assembly = Assembly.Load("<example-value>");
 var pubTypesQuery = from type in assembly.GetTypes()
                     where type.IsPublic
                     from method in type.GetMethods()

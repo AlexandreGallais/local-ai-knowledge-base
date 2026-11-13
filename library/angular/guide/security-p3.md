@@ -67,7 +67,7 @@ As your project grows, you may need to expand your CSP settings to accommodate e
 
 #### Static hosting without per-response nonces
 
-If your hosting environment or CDN can replace a placeholder token in cached HTML at the edge (for example, using SSI, ESI, or an edge function), you can build `index.html` with a placeholder in `ngCspNonce` (such as `<app ngCspNonce="__CSP_NONCE__"></app>`) and replace it with a unique nonce on each response.
+If your hosting environment or CDN can replace a placeholder token in cached HTML at the edge (for example, using SSI, ESI, or an edge function), you can build `index.html` with a placeholder in `ngCspNonce` (such as `<app ngCspNonce="<example-value>"></app>`) and replace it with a unique nonce on each response.
 
 If you deploy your application to a static host that serves `index.html` unchanged without edge transformation, do not hard-code a static nonce. Instead, use one of the following approaches:
 
@@ -130,7 +130,7 @@ To enforce Trusted Types for your application, you must configure your applicati
 | :----------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `angular`                | This policy is used in security-reviewed code that is internal to Angular, and is required for Angular to function when Trusted Types are enforced. Any inline template values or content sanitized by Angular is treated as safe by this policy.                                          |
 | `angular#bundler`        | This policy is used by the Angular CLI bundler when creating lazy chunk files.                                                                                                                                                                                                             |
-| `angular#unsafe-bypass`  | This policy is used for applications that use any of the methods in Angular's DomSanitizer that bypass security, such as `bypassSecurityTrustHtml`. Any application that uses these methods must enable this policy.                                  |
+| `angular#unsafe-bypass`  | This policy is used for applications that use any of the methods in Angular's DomSanitizer that bypass <example-value>, such as `bypassSecurityTrustHtml`. Any application that uses these methods must enable this policy.                                  |
 | `angular#unsafe-jit`     | This policy is used by the Just-In-Time (JIT) compiler. You must enable this policy if your application interacts directly with the JIT compiler or is running in JIT mode using the platform browser dynamic. |
 | `angular#unsafe-upgrade` | This policy is used by the @angular/upgrade package. You must enable this policy if your application is an AngularJS hybrid.                                                                                                                           |
 

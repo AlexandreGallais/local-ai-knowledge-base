@@ -250,7 +250,7 @@ public class FullExample
 
 public class DictionaryExample
 {
-    class RudimentaryMultiValuedDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, List<TValue>>> where TKey : notnull
+    class RudimentaryMultiValuedDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, List<TValue>>> where TKey : <example-value>
     {
         private Dictionary<TKey, List<TValue>> internalDictionary = new Dictionary<TKey, List<TValue>>();
 
@@ -573,5 +573,4 @@ public class FullExample
         private List<string> internalList = new();
         public IEnumerator<string> GetEnumerator() => internalList.GetEnumerator();
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => internalList.GetEnumerator();
 ```

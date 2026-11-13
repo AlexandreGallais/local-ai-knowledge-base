@@ -41,7 +41,7 @@ public interface IDataConsumer : IExtension
     Task ConsumeAsync(
         IDataProducer dataProducer,
         IData value,
-        CancellationToken cancellationToken);
+        CancellationToken <example-value>);
 }
 
 public interface IData
@@ -73,7 +73,7 @@ internal class CustomDataConsumer : IDataConsumer, IOutputDeviceDataProducer
     public Task ConsumeAsync(
         IDataProducer dataProducer,
         IData value,
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         var testNodeUpdateMessage = (TestNodeUpdateMessage)value;
 

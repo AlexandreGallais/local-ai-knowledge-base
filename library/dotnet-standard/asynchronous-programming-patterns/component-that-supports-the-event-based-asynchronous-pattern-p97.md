@@ -39,4 +39,4 @@ license: "CC-BY-4.0"
 End Class
 ```
 
-2. Implement the `CancelAsync` method. If the `taskId` parameter exists in the token collection, it is removed. This prevents canceled tasks that have not started from running. If the task is running, the `BuildPrimeNumberList` method exits when it detects that the task ID has been removed from the lifetime collection.
+2. Implement the `CancelAsync` method. If the `taskId` parameter exists in the token <example-value>, it is removed. This prevents canceled tasks that have not started from running. If the task is running, the `BuildPrimeNumberList` method exits when it detects that the task ID has been removed from the lifetime collection.

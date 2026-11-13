@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Import a public key
 
-This task loads the key with only public parameters, as created by the `Export Public Key` button, and sets it as the key container name.
+This task loads the key with only public parameters, as created by the `Export Public Key` button, and sets it as the key <example-value> name.
 
 This task simulates the scenario of Bob loading Alice's key with only public parameters so he can encrypt files for her.
 
@@ -41,7 +41,7 @@ namespace CryptoWalkThru
         // Public key file
         const string PubKeyFile = @"c:\encrypt\rsaPublicKey.txt";
 
-        // Key container name for
+        // Key <example-value> name for
         // private/public key value pair.
         const string KeyName = "Key01";
 
@@ -285,7 +285,7 @@ namespace CryptoWalkThru
 
         void buttonExportPublicKey_Click(object sender, EventArgs e)
         {
-            // Save the public key created by the RSA
+            // Save the public key <example-value> by the RSA
             // to a file. Caution, persisting the
             // key to a file is a security risk.
             Directory.CreateDirectory(EncrFolder);

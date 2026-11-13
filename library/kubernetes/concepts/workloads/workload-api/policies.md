@@ -20,7 +20,7 @@ collection of Pods in the group.
 The `schedulingPolicy` field supports two policy types: `basic` and `gang`.
 You must specify exactly one.
 
-### Basic policy
+### Basic <example-value>
 
 The `basic` policy instructs the scheduler to evaluate all Pods on a best-effort basis.
 Unlike the `gang` policy, a PodGroup using the `basic` policy is considered feasible

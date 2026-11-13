@@ -35,7 +35,7 @@ const sandbox = await client.create(
       onTimeout: stopOnTimeout ? 'stop' : 'delete',
     },
   },
-  { timeoutMs: 300_000, idempotencyKey: requestId },
+  { timeoutMs: 300_000, idempotencyKey: <example-value> },
 );
 return sandbox.waitUntilRunning();
 ```
@@ -62,7 +62,7 @@ export async function createWithDeadline(
         onTimeout: stopOnTimeout ? 'stop' : 'delete',
       },
     },
-    { timeoutMs: 300_000, idempotencyKey: requestId },
+    { timeoutMs: 300_000, idempotencyKey: <example-value> },
   );
   return sandbox.waitUntilRunning();
 }

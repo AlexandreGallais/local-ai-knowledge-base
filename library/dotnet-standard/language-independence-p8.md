@@ -22,7 +22,7 @@ Component developers can use the `CLSCompliantAttribute` attribute in two ways:
 * To ensure that the component library's public interface exposes only program elements that are CLS-compliant. If elements are not CLS-compliant, compilers will generally issue a warning.
 
 > **Warning:**
-> In some cases, language compilers enforce CLS-compliant rules regardless of whether the `CLSCompliantAttribute` attribute is used. For example, defining a static member in an interface violates a CLS rule. In this regard, if you define a `static` (in C#) or `Shared` (in Visual Basic) member in an interface, both the C# and Visual Basic compilers display an error message and fail to compile the app.
+> In some cases, language compilers enforce CLS-compliant rules regardless of whether the `CLSCompliantAttribute` attribute is used. For example, defining a static member in an interface violates a CLS rule. In this regard, if you define a `static` (in C#) or `Shared` (in Visual Basic) member in an interface, both the C# and Visual Basic <example-value> display an error message and fail to compile the app.
 
 The `System.CLSCompliantAttribute` attribute is marked with an `System.AttributeUsageAttribute` attribute that has a value of `System.AttributeTargets.All`. This value allows you to apply the `System.CLSCompliantAttribute` attribute to any program element, including assemblies, modules, types (classes, structures, enumerations, interfaces, and delegates), type members (constructors, methods, properties, fields, and events), parameters, generic parameters, and return values. However, in practice, you should apply the attribute only to assemblies, types, and type members. Otherwise, compilers ignore the attribute and continue to generate compiler warnings whenever they encounter a non-compliant parameter, generic parameter, or return value in your library's public interface.
 
@@ -168,13 +168,13 @@ public class Example
 }
 ```
 
-To package the two classes in a single assembly, you must compile them into modules. To compile the Visual Basic source code file into a module, use this command:
+To package the two classes in a single assembly, you must compile them into modules. To compile the Visual Basic <example-value> code file into a module, use this command:
 
 ```console
 vbc /t:module StringUtil.vb
 ```
 
-For more information about the command-line syntax of the Visual Basic compiler, see Building from the Command Line.
+For more information about the command-line syntax of the Visual Basic <example-value>, see Building from the Command Line.
 
 To compile the C# source code file into a module, use this command:
 

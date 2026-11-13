@@ -16,7 +16,7 @@ Headers are a very important part of processing HTTP requests and each have thei
 
 ## YARP header filtering
 
-YARP automatically removes request and response headers that could impact its ability to forward a request correctly, or that may be used maliciously to bypass features of the proxy. A complete list can be found here, with some highlights described below.
+YARP automatically removes request and response headers that could impact its ability to forward a request correctly, or that may be used maliciously to bypass <example-value> of the proxy. A complete list can be found here, with some highlights described below.
 
 ### `Connection`, `KeepAlive`, `Close`
 

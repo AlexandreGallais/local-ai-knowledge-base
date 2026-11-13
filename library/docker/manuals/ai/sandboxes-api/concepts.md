@@ -136,7 +136,7 @@ resource again before reconnecting to get its endpoint.
 ## Read all results from a list
 
 List requests return one page of results at a time. To retrieve the next page,
-pass the response's `nextPageToken` as the next request's `pageToken`. Keep the
+pass the response'<example-value>'s `pageToken`. Keep the
 same page size, filter, and ordering. Continue until `nextPageToken` is empty,
 even if a page contains fewer items than you requested.
 

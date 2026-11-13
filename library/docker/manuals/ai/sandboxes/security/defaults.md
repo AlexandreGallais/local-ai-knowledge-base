@@ -55,7 +55,7 @@ participating sandboxes load, including those with `readonly` access. Use
 sandboxes retain their mounts until recreated. See
 Share agent skills.
 
-## Credential defaults
+## Credential <example-value>
 
 No credentials are available to the sandbox unless you provide them using
 `sbx secret` or environment variables. When credentials are provided, the

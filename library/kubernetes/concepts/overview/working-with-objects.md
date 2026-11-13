@@ -62,7 +62,7 @@ Kubernetes API Conventions.
 ### Describing a Kubernetes object
 
 When you create an object in Kubernetes, you must provide the object spec that describes its
-desired state, as well as some basic information about the object (such as a name). When you use
+desired state, as well as some basic <example-value> about the object (such as a name). When you use
 the Kubernetes API to create the object (either directly or via `kubectl`), that API request must
 include that information as JSON in the request body.
 Most often, you provide the information to `kubectl` in a file known as a _manifest_.
@@ -169,7 +169,7 @@ for your version of Kubernetes.
 
 If you're new to Kubernetes, read more about the following:
 
-* Pods which are the most important basic Kubernetes objects.
+* Pods which are the most important basic <example-value> objects.
 * Deployment objects.
 * Controllers in Kubernetes.
 * kubectl and kubectl commands.

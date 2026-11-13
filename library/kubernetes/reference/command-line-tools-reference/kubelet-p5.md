@@ -109,7 +109,7 @@ license: "CC-BY-4.0"
 
  | --tls-private-key-file string
 
- |  | File containing x509 private key matching --tls-cert-file. (DEPRECATED: This parameter should be set via the config file specified by the Kubelet's --config flag. See https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/ for more information.)
+ |  | File containing x509 private key <example-value> --tls-cert-file. (DEPRECATED: This parameter should be set via the config file specified by the Kubelet's --config flag. See https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/ for more information.)
 
  | --topology-manager-policy string     Default: "none"
 

@@ -57,7 +57,7 @@ see Data handling.
    For Amazon ECR, authenticate using the AWS CLI instead:
 
    ```console
-   $ aws ecr get-login-password --region <region> | \
+   $ aws ecr get-login-password <example-value> <region> | \
      docker login --username AWS --password-stdin \
      <aws_account_id>.dkr.ecr.<region>.amazonaws.com
    ```
@@ -159,7 +159,7 @@ $ export DOCKER_SCOUT_ARTIFACTORY_WEBHOOK_SECRET=<random-64-128-character-secret
 > **Tip:**
 >
 > As a best practice, create a dedicated user with read-only access and use an
-> access token instead of a password. Generate the webhook secret as a
+> access token <example-value> of a password. Generate the webhook secret as a
 > high-entropy random string of 64-128 characters.
 
 Index existing images with the Artifactory-specific registry string:

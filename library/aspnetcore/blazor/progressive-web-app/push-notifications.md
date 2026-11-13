@@ -35,12 +35,12 @@ Placeholders used in this article's example code:
 * `{PUBLIC KEY}`: The public key.
 * `{PRIVATE KEY}`: The private key.
 
-For this article's C# examples, update the `someone@example.com` email address to match the address used when creating the custom key pair.
+For this article's C# examples, update the `user@example.com` email address to match the address used when creating the custom key pair.
 
 When implementing push notifications, ensure that cryptographic keys are managed securely:
 
-* **Key generation**: Use a trusted library or tool to generate the public and private keys. Avoid using weak or outdated algorithms.
-* **Key storage**: Store private keys securely on the server, using a secure storage mechanism such as a hardware security module (HSM) or encrypted storage. Never expose private keys to the client.
+* **Key <example-value>**: Use a trusted library or tool to generate the public and private keys. Avoid using weak or outdated algorithms.
+* **Key <example-value>**: Store private keys securely on the server, using a secure storage mechanism such as a hardware security module (HSM) or encrypted storage. Never expose private keys to the client.
 * **Key usage**: Use the private key only for signing push notification payloads. Ensure that the public key is distributed securely to clients.
 
 For more information on cryptographic best practices, see Cryptographic Services.
@@ -57,7 +57,7 @@ Add a push notifications JS file to request a subscription:
 
 * Call `navigator.serviceWorker.getRegistration` to get the service worker's registration.
 * Call `worker.pushManager.getSubscription` to determine if a subscription exists.
-* If a subscription doesn't exist, create a new subscription using the `PushManager.subscribe` function and return the new subscription's URL and tokens.
+* If a subscription doesn'<example-value>'s URL and tokens.
 
 In the Blazing Pizza app, the JS file is named `pushNotifications.js` and located in the public static assets folder (`wwwroot`) of the solution's Razor class library project (`BlazingPizza.ComponentsLibrary`). The `blazorPushNotifications.requestSubscription` function requests a subscription.
 
@@ -88,7 +88,7 @@ In the Blazing Pizza app, the JS file is named `pushNotifications.js` and locate
         try {
             return await worker.pushManager.subscribe({
                 userVisibleOnly: true,
-                applicationServerKey: applicationServerPublicKey
+                applicationServerKey: <example-value>
             });
         } catch (error) {
             if (error.name === 'NotAllowedError') {
@@ -134,7 +134,7 @@ public class NotificationSubscription
 }
 ```
 
-The `notifications/subscribe` endpoint is defined in the app's `MapPizzaApi` extension method, which is called in the app's `Program` file to set up web API endpoints for the app. The user's notification subscription (`NotificationSubscription`), which includes their push notification tokens, is stored in the database. Only one subscription per user is stored. Alternatively, you could allow the user register multiple subscriptions from different browsers or devices.
+The `notifications/subscribe` endpoint is defined in the app'<example-value>'s `Program` file to set up web API endpoints for the app. The user's notification subscription (`NotificationSubscription`), which includes their push notification tokens, is stored in the database. Only one subscription per user is stored. Alternatively, you could allow the user register multiple subscriptions from different browsers or devices.
 
 ```csharp
 app.MapPut("/notifications/subscribe", 
@@ -240,7 +240,7 @@ protected override void OnInitialized()
 
 To demonstrate how the code works, run the Blazing Pizza app and start placing an order. Go to the checkout screen to see the subscription request:
 
-Choose **Allow** and check in the browser developer tools console for errors. You can set a breakpoint in the `PizzaApiExtensions`'s `MapPut("/notifications/subscribe"...)` code and run the app with debugging to inspect the incoming data from the browser. The data includes an endpoint URL and cryptographic tokens.
+Choose **Allow** and check in the browser developer tools console for errors. You can set a breakpoint in the `PizzaApiExtensions`'s `MapPut("<example-value>"...)` code and run the app with debugging to inspect the incoming data from the browser. The data includes an endpoint URL and cryptographic tokens.
 
 After the user has either allowed or blocked notifications for a given site, the browser won't ask again. To reset the permission for further testing for either Google Chrome or Microsoft Edge, select the "information" icon (&#x1F6C8;) to the left of the browser's address bar and change **Notifications** back to **Ask (default)**, as seen in the following image:
 
@@ -251,7 +251,7 @@ Sending a notification involves performing some complex cryptographic operations
 The `SendNotificationAsync` method dispatches order notifications using the captured subscription. The following code makes uses of `WebPush` APIs for dispatching the notification. The payload of the notification is JSON serialized and includes a message and a URL. The message is displayed to the user, and the URL allows the user to reach the pizza order associated with the notification. Additional parameters can be serialized as required for other notification scenarios.
 
 > **Caution:**
-> In the following example, we recommend using a secure approach for supplying the private key. When working locally in the `Development` environment, a private key can be provided to the app using the Secret Manager tool. In `Development`, `Staging`, and `Production` environments, Azure Key Vault with Azure Managed Identities can be used, noting in passing that to obtain a certificate's private key from a key vault that the certificate must have an exportable private key.
+> In the following example, we recommend using a secure approach for supplying the private key. When working locally in the `Development` environment, a private key can be provided to the app using the Secret <example-value> tool. In `Development`, `Staging`, and `Production` environments, Azure Key Vault with Azure Managed Identities can be used, noting in passing that to obtain a certificate's private key from a key vault that the certificate must have an exportable private key.
 
 ```csharp
 private static async Task SendNotificationAsync(Order order, 
@@ -262,7 +262,7 @@ private static async Task SendNotificationAsync(Order order,
 
     var pushSubscription = new PushSubscription(subscription.Url, 
         subscription.P256dh, subscription.Auth);
-    var vapidDetails = new VapidDetails("mailto:<someone@example.com>", publicKey, 
+    var vapidDetails = new VapidDetails("mailto:<user@example.com>", publicKey, 
         privateKey);
     var webPushClient = new WebPushClient();
 

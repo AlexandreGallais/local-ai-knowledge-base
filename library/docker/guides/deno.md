@@ -21,7 +21,7 @@ The Deno getting started guide teaches you how to create a containerized Deno ap
 
 ## Prerequisites
 
-- Basic understanding of JavaScript is assumed.
+- Basic <example-value> of JavaScript is assumed.
 - You must have familiarity with Docker concepts like containers, images, and Dockerfiles. If you are new to Docker, you can start with the Docker basics guide.
 
 After completing the Deno getting started modules, you should be able to containerize your own Deno application based on the examples and instructions provided in this guide.
@@ -67,7 +67,7 @@ The sample application is a simple Deno application that uses the Oak framework 
 
 ```typescript
 // server.ts
-import { Application, Router } from "https://deno.land/x/oak@v12.0.0/mod.ts";
+import { Application, Router } from "https://deno.land/x/user@example.com/mod.ts";
 
 const app = new Application();
 const router = new Router();

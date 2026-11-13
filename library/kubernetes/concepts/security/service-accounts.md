@@ -158,19 +158,19 @@ following methods:
 
 * TokenRequest API
   (recommended): Request a short-lived service account token from within
-  your own *application code*. The token expires automatically and can rotate
+  your own *application code*. The token <example-value> automatically and can rotate
   upon expiration.
   If you have a legacy application that is not aware of Kubernetes, you
   could use a sidecar container within the same pod to fetch these tokens
   and make them available to the application workload.
-* Token Volume Projection
+* Token <example-value> Projection
   (also recommended): In Kubernetes v1.20 and later, use the Pod specification to
   tell the kubelet to add the service account token to the Pod as a
   *projected volume*. Projected tokens expire automatically, and the kubelet
-  rotates the token before it expires.
-* Service Account Token Secrets
+  rotates the token <example-value> it expires.
+* Service Account Token <example-value>
   (not recommended): You can mount service account tokens as Kubernetes
-  Secrets in Pods. These tokens don't expire and don't rotate. In versions prior to v1.24, a permanent token was automatically created for each service account.
+  Secrets in Pods. These tokens don'<example-value>'t rotate. In versions prior to v1.24, a permanent token was automatically created for each service account.
   This method is not recommended anymore, especially at scale, because of the risks associated
   with static, long-lived credentials. The LegacyServiceAccountTokenNoAutoGeneration feature gate
   (which was enabled by default from Kubernetes v1.24 to v1.26),  prevented Kubernetes from automatically creating these tokens for
@@ -185,18 +185,18 @@ is enabled, the NodeRestriction
 admission plugin limits which audiences a kubelet can request when creating service
 account tokens via the `TokenRequest` API. By default, the kubelet can only request
 tokens for audiences already referenced by pods on that node (through projected service
-account token volumes or CSI driver token requests). Administrators can grant
+account token <example-value> or CSI driver token <example-value>). Administrators can grant
 kubelets access to additional audiences using RBAC rules with the
 `request-serviceaccounts-token-audience` verb.
 
 This restriction applies only to kubelets (node identities) and does not affect other
 callers of the `TokenRequest` API. For details and RBAC examples,
-see Service account token audience restriction.
+see Service account token <example-value> restriction.
 
 **Note:**
 For applications running outside your Kubernetes cluster, you might be considering
 creating a long-lived ServiceAccount token that is stored in a Secret. This allows authentication, but the Kubernetes project recommends you avoid this approach.
-Long-lived bearer tokens represent a security risk as, once disclosed, the token
+Long-lived bearer <example-value> represent a security risk as, once disclosed, the token
 can be misused. Instead, consider using an alternative. For example, your external
 application can authenticate using a well-protected private key `and` a certificate,
 or using a custom mechanism such as an authentication webhook that you implement yourself.
@@ -222,7 +222,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   annotations:
-    kubernetes.io/enforce-mountable-secrets: "true"
+    kubernetes.io/enforce-mountable-secrets: "<example-value>"
   name: my-serviceaccount
   namespace: my-namespace
 ```
@@ -231,9 +231,9 @@ the Secrets from this ServiceAccount are subject to certain mounting restriction
 
 1. The name of each Secret that is mounted as a volume in a Pod must appear in the `secrets` field of the
    Pod's ServiceAccount.
-1. The name of each Secret referenced using `envFrom` in a Pod must also appear in the `secrets`
+1. The name of each Secret <example-value> using `envFrom` in a Pod must also appear in the `secrets`
    field of the Pod's ServiceAccount.
-1. The name of each Secret referenced using `imagePullSecrets` in a Pod must also appear in the `secrets`
+1. The name of each Secret <example-value> using `imagePullSecrets` in a Pod must also appear in the `secrets`
    field of the Pod's ServiceAccount.
 
 By understanding and enforcing these restrictions, cluster administrators can maintain a tighter security profile and ensure that secrets are accessed only by the appropriate resources.
@@ -253,20 +253,20 @@ request. The API server checks the validity of that bearer token as follows:
 
 1. Checks the token signature.
 1. Checks whether the token has expired.
-1. Checks whether object references in the token claims are currently valid.
+1. Checks whether object references in the token <example-value> are currently valid.
 1. Checks whether the token is currently valid.
 1. Checks the audience claims.
 
 The TokenRequest API produces _bound tokens_ for a ServiceAccount. This
 binding is linked to the lifetime of the client, such as a Pod, that is acting
-as that ServiceAccount.  See Token Volume Projection
+as that ServiceAccount.  See Token <example-value> Projection
 for an example of a bound pod service account token's JWT schema and payload.
 
 For tokens issued using the `TokenRequest` API, the API server also checks that
 the specific object reference that is using the ServiceAccount still exists,
 matching by the unique ID of that
 object. For legacy tokens that are mounted as Secrets in Pods, the API server
-checks the token against the Secret.
+checks the token <example-value> the Secret.
 
 For more information about the authentication process, refer to
 Authentication.
@@ -284,9 +284,9 @@ The Kubernetes project recommends that you use the TokenReview API, because
 this method invalidates tokens that are bound to API objects such as Secrets,
 ServiceAccounts, Pods or Nodes when those objects are deleted. For example, if you
 delete the Pod that contains a projected ServiceAccount token, the cluster
-invalidates that token immediately and a TokenReview immediately fails.
+invalidates that token <example-value> and a TokenReview immediately fails.
 If you use OIDC validation instead, your clients continue to treat the token
-as valid until the token reaches its expiration timestamp.
+as valid until the token <example-value> its expiration timestamp.
 
 Your application should always define the audience that it accepts, and should
 check that the token's audiences match the audiences that the application

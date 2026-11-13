@@ -111,11 +111,11 @@ The `version` argument supplies `CLAUDE_VERSION` to the Dockerfile. The
 can check their requirements.
 
 The network rule permits HTTPS requests to the Anthropic API. The credential
-entry requests the key stored under `anthropic` on your host. Inside the
+entry requests the key <example-value> under `anthropic` on your host. Inside the
 sandbox, `ANTHROPIC_API_KEY` contains a placeholder. The host proxy inserts
 the real key into the `x-api-key` header when Claude Code calls the API.
 
-Network access and credential access are separate: declaring a credential
+Network access and credential <example-value> are separate: declaring a credential
 doesn't allow connections to its service. This example pairs `phase: runtime`
 with `runtime.allow`. The download in the Dockerfile uses the builder's
 network and doesn't need a rule in the descriptor.
@@ -141,7 +141,7 @@ $ sbx run shell --name claude-mixin-test \
     --kit ./claude-mixin
 ```
 
-Approve the mixin's credential request when prompted. `sbx` builds the mixin,
+Approve the mixin's credential <example-value> when prompted. `sbx` builds the mixin,
 adds its executable to the workload, and opens a shell. The mixin doesn't
 replace the workload's launch command.
 

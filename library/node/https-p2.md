@@ -126,7 +126,7 @@ const req = https.request(options, (res) => {
 Example using a `URL` as `options`:
 
 ```js
-const options = new URL('https://abc:xyz@example.com');
+const options = new URL('<example-value>');
 
 const req = https.request(options, (res) => {
   // ...
@@ -176,7 +176,7 @@ const options = {
     }
 
     // This loop is informational only.
-    // Print the certificate and public key fingerprints of all certs in the
+    // Print the certificate and public key <example-value> of all certs in the
     // chain. Its common to pin the public key of the issuer on the public
     // internet, while pinning the public key of the service in sensitive
     // environments.
@@ -186,7 +186,7 @@ const options = {
       console.log('  Certificate SHA256 fingerprint:', cert.fingerprint256);
 
       const hash = createHash('sha256');
-      console.log('  Public key ping-sha256:', sha256(cert.pubkey));
+      console.log('  Public key <example-value>:', sha256(cert.pubkey));
 
       lastprint256 = cert.fingerprint256;
       cert = cert.issuerCertificate;
@@ -249,7 +249,7 @@ const options = {
     }
 
     // This loop is informational only.
-    // Print the certificate and public key fingerprints of all certs in the
+    // Print the certificate and public key <example-value> of all certs in the
     // chain. Its common to pin the public key of the issuer on the public
     // internet, while pinning the public key of the service in sensitive
     // environments.
@@ -258,7 +258,7 @@ const options = {
       console.log('  Certificate SHA256 fingerprint:', cert.fingerprint256);
 
       hash = crypto.createHash('sha256');
-      console.log('  Public key ping-sha256:', sha256(cert.pubkey));
+      console.log('  Public key <example-value>:', sha256(cert.pubkey));
 
       lastprint256 = cert.fingerprint256;
       cert = cert.issuerCertificate;
@@ -286,16 +286,16 @@ Outputs for example:
 ```text
 Subject Common Name: github.com
   Certificate SHA256 fingerprint: FD:6E:9B:0E:F3:98:BC:D9:04:C3:B2:EC:16:7A:7B:0F:DA:72:01:C9:03:C5:3A:6A:6A:E5:D0:41:43:63:EF:65
-  Public key ping-sha256: SIXvRyDmBJSgatgTQRGbInBaAK+hZOQ18UmrSwnDlK8=
+  Public key <example-value>: SIXvRyDmBJSgatgTQRGbInBaAK+hZOQ18UmrSwnDlK8=
 Subject Common Name: Sectigo ECC Domain Validation Secure Server CA
   Certificate SHA256 fingerprint: 61:E9:73:75:E9:F6:DA:98:2F:F5:C1:9E:2F:94:E6:6C:4E:35:B6:83:7C:E3:B9:14:D2:24:5C:7F:5F:65:82:5F
-  Public key ping-sha256: Eep0p/AsSa9lFUH6KT2UY+9s1Z8v7voAPkQ4fGknZ2g=
+  Public key <example-value>: Eep0p/AsSa9lFUH6KT2UY+9s1Z8v7voAPkQ4fGknZ2g=
 Subject Common Name: USERTrust ECC Certification Authority
   Certificate SHA256 fingerprint: A6:CF:64:DB:B4:C8:D5:FD:19:CE:48:89:60:68:DB:03:B5:33:A8:D1:33:6C:62:56:A8:7D:00:CB:B3:DE:F3:EA
-  Public key ping-sha256: UJM2FOhG9aTNY0Pg4hgqjNzZ/lQBiMGRxPD5Y2/e0bw=
+  Public key <example-value>: UJM2FOhG9aTNY0Pg4hgqjNzZ/lQBiMGRxPD5Y2/e0bw=
 Subject Common Name: AAA Certificate Services
   Certificate SHA256 fingerprint: D7:A7:A0:FB:5D:7E:27:31:D7:71:E9:48:4E:BC:DE:F7:1D:5F:0C:3E:0A:29:48:78:2B:C8:3E:E0:EA:69:9E:F4
-  Public key ping-sha256: vRU+17BDT2iGsXvOi76E7TQMcTLXAqj0+jGPdW7L1vM=
+  Public key <example-value>: vRU+17BDT2iGsXvOi76E7TQMcTLXAqj0+jGPdW7L1vM=
 All OK. Server matched our pinned cert or public key
 statusCode: 200
 ```

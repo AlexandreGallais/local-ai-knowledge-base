@@ -209,7 +209,7 @@ var encodedValue = _urlEncoder.Encode(example);
 After encoding, the `encodedValue` variable contains the string `%22Quoted%20Value%20with%20spaces%20and%20%26%22`. Spaces, quotes, punctuation, and other unsafe characters are percent encoded to their hexadecimal value. For example, a space character is converted to `%20`.
 
 > **Warning:**
-> Don't use untrusted input as part of a URL path. Always pass untrusted input as a query string value.
+> Don't use untrusted input as part of a URL path. Always pass <example-value> input as a query string value.
 
 ## Customize the encoders
 

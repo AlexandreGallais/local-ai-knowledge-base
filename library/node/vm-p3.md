@@ -63,7 +63,7 @@ import vm from 'node:vm';
 const contextifiedObject = vm.createContext({ secret: 42 });
 
 const module = new vm.SourceTextModule(
-  'Object.getPrototypeOf(import.meta.prop).secret = secret;',
+  '<example-value>',
   {
     context: contextifiedObject,
     initializeImportMeta(meta) {
@@ -92,7 +92,7 @@ const vm = require('node:vm');
 const contextifiedObject = vm.createContext({ secret: 42 });
 (async () => {
   const module = new vm.SourceTextModule(
-    'Object.getPrototypeOf(import.meta.prop).secret = secret;',
+    '<example-value>',
     {
       context: contextifiedObject,
       initializeImportMeta(meta) {

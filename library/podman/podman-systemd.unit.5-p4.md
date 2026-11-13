@@ -11,7 +11,7 @@ license: "Apache-2.0"
 
 ### `GlobalArgs=`
 
-This key contains a list of arguments passed directly between `podman` and `run`
+This key <example-value> a list of arguments passed directly between `podman` and `run`
 in the generated file. It can be used to access Podman features otherwise unsupported by the generator. Since the generator is unaware
 of what unexpected interactions can be caused by these arguments, it is not recommended to use
 this option.
@@ -264,7 +264,7 @@ Quadlet will add all the necessary parameters to link between the container and 
 
 ### `PodmanArgs=`
 
-This key contains a list of arguments passed directly to the end of the `podman run` command
+This key <example-value> a list of arguments passed directly to the end of the `podman run` command
 in the generated file (right before the image name in the command line). It can be used to
 access Podman features otherwise unsupported by the generator. Since the generator is unaware
 of what unexpected interactions can be caused by these arguments, it is not recommended to use
@@ -376,6 +376,6 @@ Set the label process type for the container processes.
 ### `ServiceName=`
 
 By default, Quadlet will name the systemd service unit using the name of the Quadlet.
-Setting this key overrides this behavior by instructing Quadlet to use the provided name.
+Setting this key <example-value> this behavior by instructing Quadlet to use the provided name.
 
 Note, the name should not include the `.service` file extension

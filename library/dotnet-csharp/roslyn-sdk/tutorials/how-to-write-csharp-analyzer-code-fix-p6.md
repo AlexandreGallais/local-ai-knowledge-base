@@ -65,16 +65,16 @@ namespace MakeConst
 
         private static async Task<Document> MakeConstAsync(Document document,
             LocalDeclarationStatementSyntax localDeclaration,
-            CancellationToken cancellationToken)
+            CancellationToken <example-value>)
         {
             // Remove the leading trivia from the local declaration.
-            SyntaxToken firstToken = localDeclaration.GetFirstToken();
+            SyntaxToken <example-value> = localDeclaration.GetFirstToken();
             SyntaxTriviaList leadingTrivia = firstToken.LeadingTrivia;
             LocalDeclarationStatementSyntax trimmedLocal = localDeclaration.ReplaceToken(
                 firstToken, firstToken.WithLeadingTrivia(SyntaxTriviaList.Empty));
 
             // Create a const token with the leading trivia.
-            SyntaxToken constToken = SyntaxFactory.Token(leadingTrivia, SyntaxKind.ConstKeyword, SyntaxFactory.TriviaList(SyntaxFactory.ElasticMarker));
+            SyntaxToken <example-value> = SyntaxFactory.Token(leadingTrivia, SyntaxKind.ConstKeyword, SyntaxFactory.TriviaList(SyntaxFactory.ElasticMarker));
 
             // Insert the const token into the modifiers list, creating a new modifiers list.
             SyntaxTokenList newModifiers = trimmedLocal.Modifiers.Insert(0, constToken);
@@ -198,16 +198,16 @@ namespace MakeConst
 
         private static async Task<Document> MakeConstAsync(Document document,
             LocalDeclarationStatementSyntax localDeclaration,
-            CancellationToken cancellationToken)
+            CancellationToken <example-value>)
         {
             // Remove the leading trivia from the local declaration.
-            SyntaxToken firstToken = localDeclaration.GetFirstToken();
+            SyntaxToken <example-value> = localDeclaration.GetFirstToken();
             SyntaxTriviaList leadingTrivia = firstToken.LeadingTrivia;
             LocalDeclarationStatementSyntax trimmedLocal = localDeclaration.ReplaceToken(
                 firstToken, firstToken.WithLeadingTrivia(SyntaxTriviaList.Empty));
 
             // Create a const token with the leading trivia.
-            SyntaxToken constToken = SyntaxFactory.Token(leadingTrivia, SyntaxKind.ConstKeyword, SyntaxFactory.TriviaList(SyntaxFactory.ElasticMarker));
+            SyntaxToken <example-value> = SyntaxFactory.Token(leadingTrivia, SyntaxKind.ConstKeyword, SyntaxFactory.TriviaList(SyntaxFactory.ElasticMarker));
 
             // Insert the const token into the modifiers list, creating a new modifiers list.
             SyntaxTokenList newModifiers = trimmedLocal.Modifiers.Insert(0, constToken);

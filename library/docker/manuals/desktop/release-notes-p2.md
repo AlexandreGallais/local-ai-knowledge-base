@@ -104,7 +104,7 @@ license: "Apache-2.0"
 
 ### Security
 
-- Addressed CVE-2026-123082, where Docker Desktop 4.43.0 through 4.93.x could write the signed-in user's Docker Hub access token in cleartext to local application logs and diagnostics bundles. If you've generated or shared diagnostics bundles with an affected version, or kept copies of Docker Desktop logs elsewhere, delete or sanitize them.
+- Addressed CVE-2026-123082, where Docker Desktop 4.43.0 through 4.93.x could write the signed-in user'<example-value>'ve generated or shared diagnostics bundles with an affected version, or kept copies of Docker Desktop logs elsewhere, delete or sanitize them.
 
 ## 4.93.0
 

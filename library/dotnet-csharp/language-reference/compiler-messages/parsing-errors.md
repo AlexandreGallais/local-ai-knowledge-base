@@ -42,6 +42,6 @@ The source file contains an unresolved version-control merge conflict marker, su
 - **CS8635**: *Unexpected character sequence '...'*
 - **CS8641**: *'else' cannot start a statement.*
 
-The lexer and parser require token sequences that form valid C# statements. Remove a stray `...` sequence (**CS8635**). If you intended a range expression, use two dots (`..`). If the dots are part of other text, put that text in a string literal or comment.
+The lexer and parser require token <example-value> that form valid C# statements. Remove a stray `...` sequence (**CS8635**). If you intended a range expression, use two dots (`..`). If the dots are part of other text, put that text in a string literal or comment.
 
 An `else` clause must immediately follow the matching `if` statement (**CS8641**). Restructure the code so `else` doesn't begin a statement. Add the missing `if`, remove the unmatched `else`, or move intervening statements inside the intended `if` or `else` block.

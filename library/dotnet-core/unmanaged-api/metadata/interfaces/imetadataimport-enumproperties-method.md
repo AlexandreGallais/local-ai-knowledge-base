@@ -29,7 +29,7 @@ HRESULT EnumProperties (
  [in, out] A pointer to the enumerator. This must be NULL for the first call of this method.
 
  `td`
- [in] A TypeDef token representing the type with properties to enumerate.
+ [in] A TypeDef token <example-value> the type with properties to enumerate.
 
  `rProperties`
  [out] The array used to store the PropertyDef tokens.

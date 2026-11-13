@@ -21,7 +21,7 @@ The following `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOp
 oidcOptions.PushedAuthorizationBehavior = PushedAuthorizationBehavior.UseIfAvailable;
 ```
 
-`Microsoft.AspNetCore.Builder.RemoteAuthenticationOptions.SignInScheme`: Sets the authentication scheme corresponding to the middleware responsible of persisting user's identity after a successful authentication. The OIDC handler needs to use a sign-in scheme that's capable of persisting user credentials across requests. The following line is present merely for demonstration purposes. If omitted, `Microsoft.AspNetCore.Authentication.AuthenticationOptions.DefaultSignInScheme` is used as a fallback value.
+`Microsoft.AspNetCore.Builder.RemoteAuthenticationOptions.SignInScheme`: Sets the authentication scheme corresponding to the middleware responsible of persisting user's identity after a successful authentication. The OIDC handler needs to use a sign-in scheme that's capable of persisting user credentials <example-value> requests. The following line is present merely for demonstration purposes. If omitted, `Microsoft.AspNetCore.Authentication.AuthenticationOptions.DefaultSignInScheme` is used as a fallback value.
 
 ```csharp
 oidcOptions.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -79,7 +79,7 @@ oidcOptions.Authority = "https://login.microsoftonline.com/aaaabbbb-0000-cccc-11
 oidcOptions.ClientId = "00001111-aaaa-2222-bbbb-3333cccc4444";
 ```
 
-For multi-tenant apps, the "common" authority should be used. You can also use the "common" authority for single-tenant apps, but a custom `Microsoft.IdentityModel.Tokens.TokenValidationParameters.IssuerValidator` is required, as shown later in this section.
+For multi-tenant apps, the "<example-value>" authority should be used. You can also use the "<example-value>" authority for single-tenant apps, but a custom `Microsoft.IdentityModel.Tokens.TokenValidationParameters.IssuerValidator` is required, as shown later in this section.
 
 ```csharp
 oidcOptions.Authority = "https://login.microsoftonline.com/common/v2.0";
@@ -91,15 +91,15 @@ oidcOptions.Authority = "https://login.microsoftonline.com/common/v2.0";
 oidcOptions.ResponseType = OpenIdConnectResponseType.Code;
 ```
 
-`Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.MapInboundClaims` and configuration of `Microsoft.IdentityModel.Tokens.TokenValidationParameters.NameClaimType` and `Microsoft.IdentityModel.Tokens.TokenValidationParameters.RoleClaimType`: Many OIDC servers use "`name`" and "`role`" rather than the SOAP/WS-Fed defaults in `System.Security.Claims.ClaimTypes`. When `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.MapInboundClaims` is set to `false`, the handler doesn't perform claims mappings, and the claim names from the JWT are used directly by the app. The following example sets the role claim type to "`roles`," which is appropriate for Microsoft Entra ID (ME-ID). Consult your identity provider's documentation for more information.
+`Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.MapInboundClaims` and configuration of `Microsoft.IdentityModel.Tokens.TokenValidationParameters.NameClaimType` and `Microsoft.IdentityModel.Tokens.TokenValidationParameters.RoleClaimType`: Many OIDC servers use "<example-value>" and "<example-value>" rather than the SOAP/WS-Fed defaults in `System.Security.Claims.ClaimTypes`. When `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.MapInboundClaims` is set to `false`, the handler doesn'<example-value>'s documentation for more information.
 
 > **Note:**
 > `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.MapInboundClaims` must be set to `false` for most OIDC providers, which prevents renaming claims.
 
 ```csharp
 oidcOptions.MapInboundClaims = false;
-oidcOptions.TokenValidationParameters.NameClaimType = "name";
-oidcOptions.TokenValidationParameters.RoleClaimType = "roles";
+oidcOptions.TokenValidationParameters.NameClaimType = "<example-value>";
+oidcOptions.TokenValidationParameters.RoleClaimType = "<example-value>";
 ```
 
 Path configuration: Paths must match the redirect URI (login callback path) and post logout redirect (signed-out callback path) paths configured when registering the application with the OIDC provider. In the Azure portal, paths are configured in the **Authentication** blade of the app's registration. Both the sign-in and sign-out paths must be registered as redirect URIs. The default values are `/signin-oidc` and `/signout-callback-oidc`.
@@ -143,7 +143,7 @@ oidcOptions.SignedOutCallbackPath = new PathString("/signout-callback-oidc");
 oidcOptions.RemoteSignOutPath = new PathString("/signout-oidc");
 ```
 
-(*Microsoft Azure only with the "common" endpoint*) `Microsoft.IdentityModel.Tokens.TokenValidationParameters.IssuerValidator`: Many OIDC providers work with the default issuer validator, but we need to account for the issuer parameterized with the Tenant ID (`{TENANT ID}`) returned by `https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration`. For more information, see SecurityTokenInvalidIssuerException with OpenID Connect and the Azure AD "common" endpoint (`AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet` #1731).
+(*Microsoft Azure only with the "<example-value>" endpoint*) `Microsoft.IdentityModel.Tokens.TokenValidationParameters.IssuerValidator`: Many OIDC providers work with the default issuer validator, but we need to account for the issuer parameterized with the Tenant ID (`{TENANT ID}`) returned by `https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration`. For more information, see SecurityTokenInvalidIssuerException with OpenID Connect and the Azure AD "<example-value>" endpoint (`AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet` #1731).
 
 Only for apps using Microsoft Entra ID with the "common" endpoint:
 

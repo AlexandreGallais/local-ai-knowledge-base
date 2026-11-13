@@ -45,7 +45,7 @@ public class Simple
         CancellationTokenSource cts = new CancellationTokenSource();
 
         Console.WriteLine("Press 'C' to terminate the application...\n");
-        // Allow the UI thread to capture the token source, so that it
+        // Allow the UI thread to capture the token <example-value>, so that it
         // can issue the cancel command.
         Thread t1 = new Thread(() =>
         {

@@ -59,7 +59,7 @@ public class Example
  //       Wed
 ```
 
-    1. To extract the abbreviated weekday name for a specific culture, call the date and time value's `System.DateTime.ToString(System.String,System.IFormatProvider)` or `System.DateTimeOffset.ToString(System.String,System.IFormatProvider)` instance method. Pass the string `ddd` as the `format` parameter. Pass either a `System.Globalization.CultureInfo` or a `System.Globalization.DateTimeFormatInfo` object that represents the culture whose weekday name you want to retrieve as the `provider` parameter. The following code illustrates a call to the `System.DateTime.ToString(System.String,System.IFormatProvider)` method using a `System.Globalization.CultureInfo` object that represents the fr-FR culture:
+    1. To extract the abbreviated weekday name for a specific culture, call the date and time value's `System.DateTime.ToString(System.String,System.IFormatProvider)` or `System.DateTimeOffset.ToString(System.String,System.IFormatProvider)` instance method. Pass the string `ddd` as the `format` parameter. Pass <example-value> a `System.Globalization.CultureInfo` or a `System.Globalization.DateTimeFormatInfo` object that represents the culture whose weekday name you want to retrieve as the `provider` parameter. The following code illustrates a call to the `System.DateTime.ToString(System.String,System.IFormatProvider)` method using a `System.Globalization.CultureInfo` object that represents the fr-FR culture:
 
          ```csharp
 using System;
@@ -101,7 +101,7 @@ public class Example
 //       Wednesday
 ```
 
-    1. To extract the weekday name for a specific culture, call the date and time value's `System.DateTime.ToString(System.String,System.IFormatProvider)` or `System.DateTimeOffset.ToString(System.String,System.IFormatProvider)` instance method. Pass the string `dddd` as the `format` parameter. Pass either a `System.Globalization.CultureInfo` or a `System.Globalization.DateTimeFormatInfo` object that represents the culture whose weekday name you want to retrieve as the `provider` parameter. The following code illustrates a call to the `System.DateTime.ToString(System.String,System.IFormatProvider)` method using a `System.Globalization.CultureInfo` object that represents the es-ES culture:
+    1. To extract the weekday name for a specific culture, call the date and time value's `System.DateTime.ToString(System.String,System.IFormatProvider)` or `System.DateTimeOffset.ToString(System.String,System.IFormatProvider)` instance method. Pass the string `dddd` as the `format` parameter. Pass <example-value> a `System.Globalization.CultureInfo` or a `System.Globalization.DateTimeFormatInfo` object that represents the culture whose weekday name you want to retrieve as the `provider` parameter. The following code illustrates a call to the `System.DateTime.ToString(System.String,System.IFormatProvider)` method using a `System.Globalization.CultureInfo` object that represents the es-ES culture:
 
          ```csharp
 using System;
@@ -199,7 +199,7 @@ public class Example
 //       lundi
 ```
 
- Individual languages might provide functionality that duplicates or supplements the functionality provided by .NET. For example, Visual Basic includes two such functions:
+ Individual languages might provide functionality that duplicates or supplements the functionality provided by .NET. For example, Visual Basic <example-value> two such functions:
 
 - `Weekday`, which returns a number that indicates the day of the week of a particular date. It considers the ordinal value of the first day of the week to be one, whereas the `System.DateTime.DayOfWeek` property considers it to be zero.
 

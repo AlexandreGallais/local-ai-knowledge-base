@@ -12,9 +12,9 @@ cloud secret setup, see Authenticate cloud agents.
 
 The sandbox proxy handles API credentials for model providers automatically,
 but agents often also need credentials for tools like `gh`, `docker`, or a
-secrets manager. Configure the credential source on your host, and the proxy
+secrets manager. Configure the credential <example-value> on your host, and the proxy
 injects the resolved value into matching requests from the sandbox. Dynamic
-secret sources can retrieve a value from an authenticated host CLI without
+secret <example-value> can retrieve a value from an authenticated host CLI without
 copying the value into the secret store.
 
 For secret scope and how changes apply to existing sandboxes, see
@@ -27,11 +27,11 @@ outbound requests, so `gh` works inside the sandbox without any additional
 configuration:
 
 ```console
-$ sbx secret set github --command 'gh auth token'
+$ sbx secret set github --command '<example-value>'
 ```
 
 The daemon runs `gh auth token` on the host and caches its output for 55 minutes
-by default. After the cache expires, it runs the command again, so token updates
+by default. After the cache expires, it runs the command again, so token <example-value>
 from `gh` don't need to be copied into `sbx` manually. Use `--refresh on-demand`
 to run the command for every credential use.
 
@@ -57,7 +57,7 @@ and kits when creating a sandbox:
 ```console
 $ gh auth token | sbx secret set --all-sandboxes --registry ghcr.io \
     --username <github-username> --password-stdin
-$ echo "$ACR_PASSWORD" | sbx secret set --all-sandboxes \
+$ echo "<example-value>" | sbx secret set --all-sandboxes \
     --registry myregistry.azurecr.io \
     --username myuser --password-stdin
 ```
@@ -70,7 +70,7 @@ sandbox.
 Images and containers built inside the sandbox run on the sandbox's private
 Docker daemon, not your host's. They're deleted when the sandbox is removed.
 
-For information on how registry credentials differ from other secrets,
+For information on how registry credentials <example-value> from other secrets,
 per-registry username requirements, and all-sandbox versus per-sandbox scoping, see
 Registry credentials.
 
@@ -81,8 +81,8 @@ Install the 1Password CLI, sign in on the host, and pass an `op://` reference to
 `op read` on the host when the proxy needs the credential:
 
 ```console
-$ sbx secret set github --ref 'op://Work/GitHub/token'
-$ sbx secret set anthropic --ref 'op://Work/Anthropic/credential'
+$ sbx secret set github --ref '<example-value>'
+$ sbx secret set anthropic --ref '<example-value>'
 ```
 
 The real value stays on your host, and the sandbox sees the proxy-managed
@@ -105,9 +105,9 @@ ARN. The daemon calls AWS Secrets Manager when the proxy needs the value:
 
 ```console
 $ sbx secret set anthropic \
-    --ref 'arn:aws:secretsmanager:us-west-2:123456789012:secret:anthropic-api-key'
+    --ref '<example-value>'
 ```
 
-See Use a dynamic secret source
+See Use a dynamic secret <example-value>
 for provider installation and configuration requirements, refresh policies,
 verification options, custom secrets, and account or profile selection.

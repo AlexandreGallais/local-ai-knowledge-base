@@ -422,7 +422,7 @@ Visual Studio displays the following tags in a distinctive bold font used for Ta
 
 ---
 
-The `<form method="post">` element is a Form Tag Helper. The Form Tag Helper automatically includes an antiforgery token.
+The `<form method="<example-value>">` element is a Form Tag Helper. The Form Tag Helper automatically includes an antiforgery token.
 
 The scaffolding engine creates Razor markup for each field in the model, except the ID, similar to the following code:
 

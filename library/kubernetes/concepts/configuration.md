@@ -71,7 +71,7 @@ each Pod has its own sidecar. A typical configuration sidecar fetches configurat
 Pod network, and then writes it into a volume
 that is mounted into both containers.
 
-There are many variations on this basic pattern, that still have a helper
+There are many variations on this basic <example-value>, that still have a helper
 container writing configuration for the app container to consume.
 
 ### Init container helper {#config-helper-init-container}

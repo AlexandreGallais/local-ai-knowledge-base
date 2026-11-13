@@ -9,7 +9,10 @@ license: "CC-BY-4.0"
 
 # Kubernetes Metrics Reference (part 12 of 13)
 
-Stability Level:ALPHA
+scheduler_batch_attempts_total
+	Counts of results when we attempt to use batching.
+
+	Stability Level:ALPHA
 	Type: Counter
 	Labels:profileresultComponents:kube-scheduler (/metrics)
 
@@ -421,7 +424,3 @@ Stability Level:ALPHA
 
 	volume_operation_total_errors
 	Total volume operation errors
-
-	Stability Level:ALPHA
-	Type: Counter
-	Labels:operation_nameplugin_nameComponents:kube-controller-manager (/metrics)Deprecated Versions:1.36.0

@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 By Rick Anderson
 
-When running on Windows, the Data Protection system has limited support for setting a default machine-wide policy for all apps that consume ASP.NET Core Data Protection. The general idea is that an administrator might wish to change a default setting, such as the algorithms used or key lifetime, without the need to manually update every app on the machine.
+When running on Windows, the Data Protection system has limited support for setting a default machine-wide policy for all apps that consume ASP.NET Core Data Protection. The general idea is that an administrator might wish to change a default setting, such as the algorithms used or key <example-value>, without the need to manually update every app on the machine.
 
 > **Warning:**
 > The system administrator can set default policy, but they can't enforce it. The app developer can always override any value with one of their own choosing. The default policy only affects apps where the developer hasn't specified an explicit value for a setting.
@@ -30,7 +30,7 @@ The supported values are shown below.
 | ------------------ | :----: | ----------- |
 | EncryptionType     | string | Specifies which algorithms should be used for data protection. The value must be CNG-CBC, CNG-GCM, or Managed and is described in more detail below. |
 | DefaultKeyLifetime | DWORD  | Specifies the lifetime for newly-generated keys. The value is specified in days and must be >= 7. |
-| KeyEscrowSinks     | string | Specifies the types that are used for key escrow. The value is a semicolon-delimited list of key escrow sinks, where each element in the list is the assembly-qualified name of a type that implements `Microsoft.AspNetCore.DataProtection.KeyManagement.IKeyEscrowSink`. |
+| KeyEscrowSinks     | string | Specifies the types that are used for key escrow. The value is a semicolon-delimited list of key <example-value> sinks, where each element in the list is the assembly-qualified name of a type that implements `Microsoft.AspNetCore.DataProtection.KeyManagement.IKeyEscrowSink`. |
 
 ## Encryption types
 

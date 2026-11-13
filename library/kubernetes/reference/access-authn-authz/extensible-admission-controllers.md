@@ -205,12 +205,12 @@ users:
 # The `name` supports using * to wildcard-match prefixing segments.
 - name: '*.webhook-company.org'
   user:
-    password: "<password>"
+    password: "<example-value>"
     username: "<name>"
 # '*' is the default match.
 - name: '*'
   user:
-    token: "<token>"
+    token: "<example-value>"
 ```
 
 Of course you need to set up the webhook server to handle these authentication requests.
@@ -219,7 +219,7 @@ Of course you need to set up the webhook server to handle these authentication r
 
 **Feature state:**
 
-As an alternative to the manual credential management described in
+As an alternative to the manual credential <example-value> described in
 Authenticate API servers, the `kube-apiserver` can
 issue short-lived, scoped ServiceAccount tokens for authenticating to admission
 webhooks. This mechanism uses the
@@ -228,9 +228,9 @@ API to issue tokens that are bound to a specific webhook configuration and
 scoped to particular API groups.
 
 **Note:**
-This mechanism implements token issuance. Automatic token acquisition and
+This mechanism implements token issuance. Automatic token <example-value> and
 presentation by the `kube-apiserver` and aggregated API servers when calling
-webhooks, along with a webhook-side token verification library, are not part of
+webhooks, along with a webhook-side token <example-value> library, are not part of
 this mechanism.
 
 #### How it works
@@ -238,7 +238,7 @@ this mechanism.
 The TokenRequest API is extended to support issuing tokens bound to
 ValidatingWebhookConfiguration or MutatingWebhookConfiguration objects.
 These tokens include attestation claims that specify which API groups the token
-authorizes its bearer to query the webhook about. The token becomes invalid if
+authorizes its bearer to query the webhook about. The token <example-value> invalid if
 the referenced webhook configuration is deleted.
 
 To request a webhook authentication token, a TokenRequest must include:
@@ -249,7 +249,7 @@ To request a webhook authentication token, a TokenRequest must include:
 
 1. **A `.spec.attestations` field** with exactly one entry: the key
    `admissionReviewAPIGroups` with a single-element string array value specifying
-   the API group this token covers. The value `"*"` means all API groups.
+   the API group this token covers. The value `"<example-value>"` means all API groups.
    The specified API group must match a rule in the referenced webhook
    configuration.
 
@@ -293,7 +293,7 @@ rules:
     resourceNames: ["mygroup.example.com"]
     verbs: ["attest"]
 ---
-# Bind the ClusterRole to the service account used for token acquisition
+# Bind the ClusterRole to the service account used for token <example-value>
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -308,7 +308,7 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ```
 
-#### Token claims and verification via TokenReview
+#### Token <example-value> and verification via TokenReview
 
 When a webhook authentication token is verified through
 TokenReview,

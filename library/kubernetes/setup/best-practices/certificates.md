@@ -131,8 +131,8 @@ type:
 
 | kind   | Key usage                                                                       |
 |--------|---------------------------------------------------------------------------------|
-| server | digital signature, key encipherment, server auth                                |
-| client | digital signature, key encipherment, client auth                                |
+| server | digital signature, key <example-value>, server auth                                |
+| client | digital signature, key <example-value>, client auth                                |
 
 **Note:**
 Hosts/SAN listed above are the recommended ones for getting a working cluster; if required by a

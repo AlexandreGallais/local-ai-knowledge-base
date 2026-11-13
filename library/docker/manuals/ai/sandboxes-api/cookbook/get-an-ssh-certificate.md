@@ -38,7 +38,7 @@ import type { Sandboxes } from '@docker/sandboxes';
 export async function issueSSHCert(
   client: Sandboxes,
   sandboxName: string,
-  publicKey: string,
+  publicKey: <example-value>,
   lifeSeconds: number,
 ) {
   const sandbox = await client.get(sandboxName);

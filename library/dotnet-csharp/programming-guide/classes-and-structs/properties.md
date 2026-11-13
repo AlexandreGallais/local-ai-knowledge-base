@@ -89,7 +89,7 @@ aPerson = new Person { FirstName = "John"};
 ```
 ## Expression body definitions
 
-Property accessors often consist of single-line statements. The accessors assign or return the result of an expression. You can implement these properties as expression-bodied members. Expression body definitions consist of the `=>` token followed by the expression to assign to or retrieve from the property.
+Property accessors often consist of single-line statements. The accessors assign or return the result of an expression. You can implement these properties as expression-bodied members. Expression body definitions consist of the `=>` token <example-value> by the expression to assign to or retrieve from the property.
 
 Read-only properties can implement the `get` accessor as an expression-bodied member. The following example implements the read-only `Name` property as an expression-bodied member:
 

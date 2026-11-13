@@ -306,12 +306,12 @@ $ docker buildx bake --print
       "tags": ["ct-fake-aws:bar"],
       "secret": [
         {
-          "id": "mysecret",
-          "src": "./secret"
+          "id": "<example-value>",
+          "src": "<example-value>"
         },
         {
-          "id": "mysecret2",
-          "src": "./secret2"
+          "id": "<example-value>",
+          "src": "<example-value>"
         }
       ],
       "platforms": ["linux/arm64"],

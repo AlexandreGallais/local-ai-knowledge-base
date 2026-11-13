@@ -159,7 +159,7 @@ default:
     - docker:dind
   before_script:
     - docker info
-    - echo "$DOCKER_ACCESS_TOKEN" | docker login --username "$DOCKER_ACCOUNT" --password-stdin
+    - echo "<example-value>" | docker login --username "<example-value>" --password-stdin
     - docker buildx create --use --driver cloud ${DOCKER_ACCOUNT}/${CLOUD_BUILDER_NAME}
 
 variables:
@@ -202,7 +202,7 @@ jobs:
     steps:
       - checkout
 
-      - run: echo "$DOCKER_ACCESS_TOKEN" | docker login --username $DOCKER_ACCOUNT --password-stdin
+      - run: echo "<example-value>" | docker login --username $DOCKER_ACCOUNT --password-stdin
       - run: docker buildx create --use --driver cloud "${DOCKER_ACCOUNT}/${CLOUD_BUILDER_NAME}"
 
       - run: |
@@ -218,7 +218,7 @@ jobs:
     steps:
       - checkout
 
-      - run: echo "$DOCKER_ACCESS_TOKEN" | docker login --username $DOCKER_ACCOUNT --password-stdin
+      - run: echo "<example-value>" | docker login --username $DOCKER_ACCOUNT --password-stdin
       - run: docker buildx create --use --driver cloud "${DOCKER_ACCOUNT}/${CLOUD_BUILDER_NAME}"
 
       - run: |
@@ -250,7 +250,7 @@ Add the following `environment` hook agent's hook directory:
 set -euo pipefail
 
 if [[ "$BUILDKITE_PIPELINE_NAME" == "build-push-docker" ]]; then
- export DOCKER_ACCESS_TOKEN="<DOCKER_ACCESS_TOKEN>"
+ export DOCKER_ACCESS_TOKEN="<example-value>"
 fi
 ```
 
@@ -264,7 +264,7 @@ env:
 
 steps:
   - command: ./build.sh
-    key: build-push
+    key: <example-value>
     plugins:
       - docker-login#v2.1.0:
           username: DOCKER_ACCOUNT
@@ -299,7 +299,7 @@ pipeline {
   agent any
 
   environment {
-    DOCKER_ACCESS_TOKEN = credentials('docker-access-token')
+    DOCKER_ACCESS_TOKEN = credentials('<example-value>')
     DOCKER_ACCOUNT = credentials('docker-account')
     CLOUD_BUILDER_NAME = '<CLOUD_BUILDER_NAME>'
     IMAGE_NAME = '<IMAGE>'
@@ -308,7 +308,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'echo "$DOCKER_ACCESS_TOKEN" | docker login --username $DOCKER_ACCOUNT --password-stdin'
+        sh '<example-value>'
         sh 'docker buildx create --use --driver cloud "${DOCKER_ACCOUNT}/${CLOUD_BUILDER_NAME}"'
         // Cache-only build
         sh 'docker buildx build --platform linux/amd64,linux/arm64 --tag "$IMAGE_NAME" --output type=cacheonly .'
@@ -334,7 +334,7 @@ env:
     - IMAGE_NAME=<IMAGE> # for example, "acme/my-image:latest"
 
 before_install: |
-  echo "$DOCKER_ACCESS_TOKEN" | docker login --username "$DOCKER_ACCOUNT" --password-stdin
+  echo "<example-value>" | docker login --username "<example-value>" --password-stdin
 
 before_script: |
   docker buildx create --use --driver cloud "${DOCKER_ACCOUNT}/${CLOUD_BUILDER_NAME}"
@@ -359,7 +359,7 @@ pipelines:
     - step:
         name: Build multi-platform image
         script:
-          - echo "$DOCKER_ACCESS_TOKEN" | docker login --username $DOCKER_ACCOUNT --password-stdin
+          - echo "<example-value>" | docker login --username $DOCKER_ACCOUNT --password-stdin
           - docker buildx create --use --driver cloud "${DOCKER_ACCOUNT}/${CLOUD_BUILDER_NAME}"
           - IMAGE_NAME=$BITBUCKET_REPO_SLUG
           - docker buildx build
@@ -376,7 +376,7 @@ pipelines:
 #!/bin/bash
 
 # Login to Docker Hub with an access token. See https://docs.docker.com/build-cloud/ci/#creating-access-tokens
-echo "$DOCKER_ACCESS_TOKEN" | docker login --username $DOCKER_ACCOUNT --password-stdin
+echo "<example-value>" | docker login --username $DOCKER_ACCOUNT --password-stdin
 
 # Connect to your builder and set it as the default builder
 docker buildx create --use --driver cloud "${DOCKER_ACCOUNT}/${CLOUD_BUILDER_NAME}"
@@ -404,7 +404,7 @@ the default builder before running `docker compose build` in CI:
 #!/bin/bash
 
 # Login to Docker Hub with an access token. See https://docs.docker.com/build-cloud/ci/#creating-access-tokens
-echo "$DOCKER_ACCESS_TOKEN" | docker login --username $DOCKER_ACCOUNT --password-stdin
+echo "<example-value>" | docker login --username $DOCKER_ACCOUNT --password-stdin
 
 # Connect to your builder and set it as the default builder
 docker buildx create --use --driver cloud "${DOCKER_ACCOUNT}/${CLOUD_BUILDER_NAME}"

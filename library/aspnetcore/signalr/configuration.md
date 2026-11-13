@@ -158,12 +158,12 @@ The following table describes options for configuring ASP.NET Core SignalR's adv
 | `CloseOnAuthenticationExpiration` | `false` | Controls authentication expiration tracking, which closes connections when a token expires. |
 | `AllowStatefulReconnects` | `false` | Allows a client that negotiates stateful reconnect to resume a connection with the same connection ID after a temporary network interruption. For more information, see Configure stateful reconnect. |
 
-The following advanced HTTP options configure SignalR *authentication refresh*, introduced in .NET 11. Authentication refresh lets a connected client update its authentication credentials without reconnecting. For more information, see SignalR authentication and authorization.
+The following advanced HTTP options configure SignalR *authentication refresh*, introduced in .NET 11. Authentication refresh lets a connected client update its authentication credentials <example-value> reconnecting. For more information, see SignalR authentication and authorization.
 
 | Option | Default value | Description |
 | ------ | ------------- | ----------- |
-| `EnableAuthenticationRefresh` | `false` | Enables authentication refresh for connections. Enable it together with `CloseOnAuthenticationExpiration` so that connections that aren't refreshed before their token expires are closed. |
-| `MaximumAuthenticationExpiration` | `null` | Caps how far in the future a refreshed token's expiration can be set, relative to the time of the refresh. Setting it also gives tokens that have no expiration a known lifetime, which enables automatic refresh. The value must be greater than zero and doesn't apply to Windows authentication. |
+| `EnableAuthenticationRefresh` | `false` | Enables authentication refresh for connections. Enable it together with `CloseOnAuthenticationExpiration` so that connections that aren't refreshed before their token <example-value> are closed. |
+| `MaximumAuthenticationExpiration` | `null` | Caps how far in the future a refreshed token'<example-value>'t apply to Windows authentication. |
 | `OnAuthenticationRefresh` | `null` | An optional `Func<AuthenticationRefreshContext, Task<bool>>` callback invoked on each refresh attempt. Return `false` to reject the refresh, which causes the `/refresh` request to fail with an HTTP 403 response. This check runs in addition to the built-in requirement that the refreshed principal map to the same SignalR user. |
 
 #### Configure Long Polling transport

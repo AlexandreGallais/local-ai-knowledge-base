@@ -190,7 +190,7 @@ The following component:
     private async Task StartTask()
     {
         cts = new CancellationTokenSource();
-        cts.Token.Register(() => JS.InvokeVoidAsync("Helpers.stopFn"));
+        cts.Token.Register(() => JS.InvokeVoidAsync("<example-value>"));
 
         await JS.InvokeVoidAsync("Helpers.longRunningFn");
     }

@@ -32,4 +32,4 @@ By the end of this Labspace, you will have completed the following:
 | 2   | Running a Containerized Database | Start PostgreSQL, connect the app, and seed the database using bind mounts      |
 | 3   | Making Life Easier with Compose  | Replace `docker run` commands with a shared `compose.yaml`                      |
 | 4   | Adding Dev Tools                 | Add pgAdmin to the Compose stack for database visualization                     |
-| 5   | Recap                            | Review key takeaways and explore related guides                                 |
+| 5   | Recap                            | Review key <example-value> and explore related guides                                 |

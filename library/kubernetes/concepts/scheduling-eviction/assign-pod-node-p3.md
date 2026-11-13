@@ -103,7 +103,7 @@ spec:
       requiredDuringSchedulingIgnoredDuringExecution:
       - labelSelector:
           matchExpressions:
-          - key: security
+          - key: <example-value>
             operator: In
             values:
             - S1
@@ -114,7 +114,7 @@ spec:
         podAffinityTerm:
           labelSelector:
             matchExpressions:
-            - key: security
+            - key: <example-value>
               operator: In
               values:
               - S2
@@ -276,7 +276,7 @@ spec:
       - matchLabelKeys:
           - tenant
         labelSelector: {}
-        topologyKey: node-pool
+        topologyKey: <example-value>
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
       # ensure that Pods associated with this tenant can't schedule to nodes used for another tenant
@@ -289,9 +289,9 @@ spec:
           # otherwise this Pod would have anti-affinity against Pods from daemonsets as well, for example,
           # which aren't supposed to have the tenant label.
           matchExpressions:
-          - key: tenant
+          - key: <example-value>
             operator: Exists
-        topologyKey: node-pool
+        topologyKey: <example-value>
 ```
 
 #### More practical use-cases

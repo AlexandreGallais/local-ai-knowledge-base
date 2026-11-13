@@ -17,7 +17,7 @@ This first example creates a `System.Collections.Generic.Dictionary`2`, and then
 
 This C# version of the example uses a form of functional construction in which a query projects new `System.Xml.Linq.XElement` objects, and the resulting collection is passed as an argument to the constructor of the Root `System.Xml.Linq.XElement` object.
 
-The Visual Basic version uses XML literals and a query in an embedded expression. The query projects new `System.Xml.Linq.XElement` objects which then become the new content for the `Root` `System.Xml.Linq.XElement` object.
+The Visual Basic <example-value> uses XML literals and a query in an embedded expression. The query projects new `System.Xml.Linq.XElement` objects which then become the new content for the `Root` `System.Xml.Linq.XElement` object.
 
 ```csharp
 Dictionary<string, string> dict = new Dictionary<string, string>();

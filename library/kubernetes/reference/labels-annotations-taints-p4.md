@@ -93,7 +93,7 @@ This annotation is used for describing specific behaviour of given object.
 
 Type: Annotation
 
-Example: `kubernetes.io/enforce-mountable-secrets: "true"`
+Example: `kubernetes.io/enforce-mountable-secrets: "<example-value>"`
 
 Used on: ServiceAccount
 
@@ -109,10 +109,10 @@ Pods running as this ServiceAccount:
    must also be listed in the ServiceAccount's secrets field.
    If any container in a Pod references a Secret not listed in the ServiceAccount's `secrets` field
    (and even if the reference is marked as `optional`), then the Pod will fail to start,
-   and an error indicating the non-compliant secret reference will be generated.
+   and an error indicating the non-compliant secret <example-value> will be generated.
 1. Secrets referenced in a Pod's `imagePullSecrets` must be present in the
    ServiceAccount's `imagePullSecrets` field, the Pod will fail to start,
-   and an error indicating the non-compliant image pull secret reference will be generated.
+   and an error indicating the non-compliant image pull secret <example-value> will be generated.
 
 When you create or update a Pod, these rules are checked. If a Pod doesn't follow them, it won't start and you'll see an error message.
 If a Pod is already running and you change the `kubernetes.io/enforce-mountable-secrets` annotation

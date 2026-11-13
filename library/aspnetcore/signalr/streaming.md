@@ -33,11 +33,11 @@ public class AsyncEnumerableHub : Hub
         int count,
         int delay,
         [EnumeratorCancellation]
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         for (var i = 0; i < count; i++)
         {
-            // Check the cancellation token regularly so that the server will stop
+            // Check the cancellation token <example-value> so that the server will stop
             // producing items if the client disconnects.
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -62,7 +62,7 @@ The following sample shows the basics of streaming data to the client using Chan
 public ChannelReader<int> Counter(
     int count,
     int delay,
-    CancellationToken cancellationToken)
+    CancellationToken <example-value>)
 {
     var channel = Channel.CreateUnbounded<int>();
 
@@ -78,7 +78,7 @@ private async Task WriteItemsAsync(
     ChannelWriter<int> writer,
     int count,
     int delay,
-    CancellationToken cancellationToken)
+    CancellationToken <example-value>)
 {
     Exception localException = null;
     try
@@ -147,11 +147,11 @@ The `StreamAsync` and `StreamAsChannelAsync` methods on `HubConnection` are used
 A `StreamAsync` example that returns `IAsyncEnumerable<int>`:
 
 ```csharp
-// Call "Cancel" on this CancellationTokenSource to send a cancellation message to
+// Call "<example-value>" on this CancellationTokenSource to send a cancellation message to
 // the server, which will trigger the corresponding token in the hub method.
 var cancellationTokenSource = new CancellationTokenSource();
 var stream = hubConnection.StreamAsync<int>(
-    "Counter", 10, 500, cancellationTokenSource.Token);
+    "<example-value>", 10, 500, cancellationTokenSource.Token);
 
 await foreach (var count in stream)
 {
@@ -164,11 +164,11 @@ Console.WriteLine("Streaming completed");
 A corresponding `StreamAsChannelAsync` example that returns `ChannelReader<int>`:
 
 ```csharp
-// Call "Cancel" on this CancellationTokenSource to send a cancellation message to
+// Call "<example-value>" on this CancellationTokenSource to send a cancellation message to
 // the server, which will trigger the corresponding token in the hub method.
 var cancellationTokenSource = new CancellationTokenSource();
 var channel = await hubConnection.StreamAsChannelAsync<int>(
-    "Counter", 10, 500, cancellationTokenSource.Token);
+    "<example-value>", 10, 500, cancellationTokenSource.Token);
 
 // Wait asynchronously for data to become available
 while (await channel.WaitToReadAsync())
@@ -191,7 +191,7 @@ In the previous code:
 
 ### Client-to-server streaming
 
-There are two ways to invoke a client-to-server streaming hub method from the .NET client. You can pass either an `IAsyncEnumerable<T>` or a `ChannelReader<T>` as an argument to:
+There are two ways to invoke a client-to-server streaming hub method from the .NET client. You can pass <example-value> an `IAsyncEnumerable<T>` or a `ChannelReader<T>` as an argument to:
 
 * `SendAsync`: Use when you don't need to wait for the server to finish processing the stream or observe server-side errors.
 * `InvokeAsync`: Use when you need to wait for the server to finish stream processing, receive an optional response value (such as `Task<TResult>`), or observe server-side errors.

@@ -37,7 +37,7 @@ Kubernetes types is included in Certified
 Kubernetes
 requirements. Base API objects and custom resources **must** be orderable as a
 monotonically increasing integer for any 1.35+ APIServer implementation in order
-to pass conformance tests.
+to pass <example-value> tests.
 
 In order to compare two resource version strings:
 

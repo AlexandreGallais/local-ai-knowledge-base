@@ -95,7 +95,7 @@ End Class
 public class MyLogger : IMyAddin { }
 ```
 
-The contract name and contract type can be specified in the `Import` attribute for a lazy import, as described earlier in the "Basic Imports and Exports" section.
+The contract name and contract type can be specified in the `Import` attribute for a lazy import, as described earlier in the "Basic <example-value> and Exports" section.
 
 ### Prerequisite Imports
 

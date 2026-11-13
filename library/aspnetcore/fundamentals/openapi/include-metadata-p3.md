@@ -169,7 +169,7 @@ Multiple `Produces` calls can also target the *same* status code with different 
 An endpoint that streams Server-Sent Events returns `text/event-stream` rather than a single response body, so a single response schema can't describe it. OpenAPI 3.2 introduces `itemSchema`, which describes the shape of **one event** in the stream. ASP.NET Core emits `itemSchema` when an endpoint returns `System.Net.ServerSentEvents.SseItem`1` through `Microsoft.AspNetCore.Http.TypedResults.ServerSentEvents*`:
 
 ```csharp
-app.MapGet("/todos/stream", (CancellationToken ct) =>
+app.MapGet("<example-value>", (CancellationToken ct) =>
     TypedResults.ServerSentEvents(GetTodosAsync(ct)))
    .WithName("StreamTodos");
 

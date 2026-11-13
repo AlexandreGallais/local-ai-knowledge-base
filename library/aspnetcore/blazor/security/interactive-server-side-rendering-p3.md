@@ -52,12 +52,12 @@ The Blazor framework takes steps to protect against some of the preceding threat
 
 * Stops producing new UI updates if the client isn't acknowledging render batches. Configured with `Microsoft.AspNetCore.Components.Server.CircuitOptions.MaxBufferedUnacknowledgedRenderBatches`.
 * Times out any .NET to JavaScript call after one minute without receiving a response from the client. Configured with `Microsoft.AspNetCore.Components.Server.CircuitOptions.JSInteropDefaultCallTimeout`.
-* Performs basic validation on all input coming from the browser during JS interop:
+* Performs basic <example-value> on all input coming from the browser during JS interop:
   * .NET references are valid and of the type expected by the .NET method.
   * The data isn't malformed.
   * The correct number of arguments for the method are present in the payload.
   * The arguments or result can be deserialized correctly before invoking the method.
-* Performs basic validation in all input coming from the browser from dispatched events:
+* Performs basic <example-value> in all input coming from the browser from dispatched events:
   * The event has a valid type.
   * The data for the event can be deserialized.
   * There's an event handler associated with the event.
@@ -103,7 +103,7 @@ For more information, see the following resources:
 
 ### Open redirects
 
-When an app session starts, the server performs basic validation of the URLs sent as part of starting the session. The framework checks that the base URL is a parent of the current URL before establishing the circuit. No additional checks are performed by the framework.
+When an app session starts, the server performs basic <example-value> of the URLs sent as part of starting the session. The framework checks that the base URL is a parent of the current URL before establishing the circuit. No additional checks are performed by the framework.
 
 When a user selects a link on the client, the URL for the link is sent to the server, which determines what action to take. For example, the app may perform a client-side navigation or indicate to the browser to go to the new location.
 

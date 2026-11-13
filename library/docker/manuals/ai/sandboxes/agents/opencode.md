@@ -73,7 +73,7 @@ custom secret:
 Set the `OPENCODE_API_KEY` environment variable on the host, then store it:
 
 ```console
-$ printf '%s' "$OPENCODE_API_KEY" | sbx secret set-custom \
+$ printf '<example-value>' "<example-value>" | sbx secret <example-value> \
     --host opencode.ai \
     --env OPENCODE_API_KEY \
     --value-stdin
@@ -136,7 +136,7 @@ Use keyboard shortcuts to navigate the interface and interact with the agent.
 
 Template: `docker/sandbox-templates:opencode`
 
-OpenCode supports multiple LLM providers with automatic credential injection
+OpenCode supports multiple LLM providers with automatic credential <example-value>
 through the sandbox proxy.
 
 See Customize to pre-install tools or customize this

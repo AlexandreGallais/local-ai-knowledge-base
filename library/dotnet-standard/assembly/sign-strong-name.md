@@ -58,7 +58,7 @@ For more information about this tool, see Assembly Linker.
 2. Compile the source code file normally.
 
     > **Note:**
-    > The C# and Visual Basic compilers issue compiler warnings (CS1699 and BC41008, respectively) when they encounter the `System.Reflection.AssemblyKeyFileAttribute` or `System.Reflection.AssemblyKeyNameAttribute` attribute in source code. You can ignore the warnings.
+    > The C# and Visual Basic <example-value> issue compiler warnings (CS1699 and BC41008, respectively) when they encounter the `System.Reflection.AssemblyKeyFileAttribute` or `System.Reflection.AssemblyKeyNameAttribute` attribute in source code. You can ignore the warnings.
 
 The following example uses the `System.Reflection.AssemblyKeyFileAttribute` attribute with a key file called _keyfile.snk_, which is located in the directory where the assembly is compiled.
 

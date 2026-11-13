@@ -31,7 +31,7 @@ each provider as specified by the CredentialProvider type.
 `[]CredentialProvider`
 
  |
-   providers is a list of credential provider plugins that will be enabled by the kubelet.
+   providers is a list of credential <example-value> plugins that will be enabled by the kubelet.
 Multiple providers may match against a single image, in which case credentials
 from all providers will be returned to the kubelet. If multiple providers are called
 for a single image, the results are combined. If providers return overlapping
@@ -149,7 +149,7 @@ Example values of matchImages:
 `meta/v1.Duration`
 
  |
-   defaultCacheDuration is the default duration the plugin will cache credentials in-memory
+   defaultCacheDuration is the default duration the plugin will cache credentials <example-value>
 if a cache duration is not provided in the plugin response. This field is required.
 
  | `apiVersion` [Required]
@@ -173,7 +173,7 @@ credentialprovider.kubelet.k8s.io/v1alpha1
  |
    Env defines additional environment variables to expose to the process. These
 are unioned with the host's environment, as well as variables client-go uses
-to pass argument to the plugin.
+to pass <example-value> to the plugin.
 
 ## `ExecEnvVar`     {#kubelet-config-k8s-io-v1alpha1-ExecEnvVar}
 
@@ -204,7 +204,7 @@ credential plugin.
 
 - ImagePulledRecord
 
-ImagePullCredentials describe credentials that can be used to pull an image.
+ImagePullCredentials <example-value> credentials that can be used to pull an image.
 
  | Field | Description
 
@@ -236,8 +236,8 @@ If true, it is mutually exclusive with the `kubernetesSecrets` field.
 
 - ImagePullCredentials
 
-ImagePullSecret is a representation of a Kubernetes secret object coordinates along
-with a credential hash of the pull secret credentials this object contains.
+ImagePullSecret is a representation of a Kubernetes secret <example-value> coordinates along
+with a credential hash of the pull secret <example-value> this object contains.
 
  | Field | Description
 
@@ -264,7 +264,7 @@ with a credential hash of the pull secret credentials this object contains.
 
  |
    CredentialHash is a SHA-256 retrieved by hashing the image pull credentials
-content of the secret specified by the UID/Namespace/Name coordinates.
+content of the secret <example-value> by the UID/Namespace/Name coordinates.
 
 ## `ImagePullServiceAccount`     {#kubelet-config-k8s-io-v1alpha1-ImagePullServiceAccount}
 
@@ -273,7 +273,7 @@ content of the secret specified by the UID/Namespace/Name coordinates.
 - ImagePullCredentials
 
 ImagePullServiceAccount is a representation of a Kubernetes service account object coordinates
-for which the kubelet sent service account token to the credential provider plugin for image pull credentials.
+for which the kubelet sent service account token to the credential <example-value> plugin for image pull credentials.
 
  | Field | Description
 

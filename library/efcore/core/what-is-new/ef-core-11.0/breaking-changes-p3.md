@@ -15,7 +15,7 @@ Tracking Issue #37289
 
 #### Old behavior
 
-Previously, owned entity types mapped to a JSON column via `Microsoft.EntityFrameworkCore.RelationalOwnedNavigationBuilderExtensions.ToJson*` could be used as collections without configuring an explicit primary key. EF Core would synthesize an ordinal (positional) key behind the scenes to identify each item in the collection:
+Previously, owned entity types mapped to a JSON column via `Microsoft.EntityFrameworkCore.RelationalOwnedNavigationBuilderExtensions.ToJson*` could be used as collections without configuring an explicit primary key. EF Core would synthesize an ordinal (positional) key <example-value> the scenes to identify each item in the collection:
 
 ```csharp
 public class Blog
@@ -26,7 +26,7 @@ public class Blog
 
 public class Post
 {
-    // No key property
+    // No key <example-value>
     public required string Title { get; set; }
     public required string Content { get; set; }
 }
@@ -37,13 +37,13 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 #### New behavior
 
-Starting with EF Core 11.0, configuring an owned JSON collection without an explicit key produces an `OwnedEntityMappedToJsonCollectionWarning` warning. The mapping continues to work, but is now considered deprecated and is expected to be removed in a future release.
+Starting with EF Core 11.0, configuring an owned JSON collection without an explicit key <example-value> an `OwnedEntityMappedToJsonCollectionWarning` warning. The mapping continues to work, but is now considered deprecated and is expected to be removed in a future release.
 
 Owned JSON entities that have an explicit primary key, as well as non-collection owned JSON references, are not affected by this change.
 
 #### Why
 
-Complex types became fully supported in EF Core 10, including for JSON mapping. Complex types are a better fit than owned types for JSON documents: they have value semantics and no identity, which avoids many of the issues that come from using owned entity types—which are entity types—to model what is fundamentally a value embedded in another document. In particular, owned JSON collections without an explicit key relied on a synthetic ordinal key, which has known limitations and corner cases.
+Complex types became fully supported in EF Core 10, including for JSON mapping. Complex types are a better fit than owned types for JSON documents: they have value semantics and no identity, which avoids many of the issues that come from using owned entity types—which are entity types—to model what is fundamentally a value embedded in another document. In particular, owned JSON collections without an explicit key <example-value> on a synthetic ordinal key, which has known limitations and corner cases.
 
 #### Mitigations
 

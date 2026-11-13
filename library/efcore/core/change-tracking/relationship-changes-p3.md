@@ -18,7 +18,7 @@ EF Core performs the following actions when it detects that a new dependent/chil
 - If the entity is not tracked, then it is tracked. (The entity will usually be in the `Added` state. However, if the entity type is configured to use generated keys and the primary key value is set, then the entity is tracked in the `Unchanged` state.)
 - If the entity is associated with a different principal/parent, then that relationship is severed.
 - The entity becomes associated with the principal/parent that owns the collection navigation.
-- Navigations and foreign key values are fixed up for all entities involved.
+- Navigations and foreign key <example-value> are fixed up for all entities involved.
 
 Based on this we can see that to move a post from one blog to another we don't actually need to remove it from the old collection navigation before adding it to the new one. So the code from the example above can be changed from:
 

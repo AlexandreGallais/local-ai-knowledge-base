@@ -32,7 +32,7 @@ import { Buffer } from 'node:buffer';
 const buf = Buffer.alloc(5);
 
 console.log(buf);
-// Prints: <Buffer 00 00 00 00 00>
+// Prints: <Buffer .. .. .. .. ..>
 ```
 
 ```cjs
@@ -41,7 +41,7 @@ const { Buffer } = require('node:buffer');
 const buf = Buffer.alloc(5);
 
 console.log(buf);
-// Prints: <Buffer 00 00 00 00 00>
+// Prints: <Buffer .. .. .. .. ..>
 ```
 
 If `size` is larger than
@@ -57,7 +57,7 @@ import { Buffer } from 'node:buffer';
 const buf = Buffer.alloc(5, 'a');
 
 console.log(buf);
-// Prints: <Buffer 61 61 61 61 61>
+// Prints: <Buffer .. .. .. .. ..>
 ```
 
 ```cjs
@@ -66,7 +66,7 @@ const { Buffer } = require('node:buffer');
 const buf = Buffer.alloc(5, 'a');
 
 console.log(buf);
-// Prints: <Buffer 61 61 61 61 61>
+// Prints: <Buffer .. .. .. .. ..>
 ```
 
 If both `fill` and `encoding` are specified, the allocated `Buffer` will be
@@ -78,7 +78,7 @@ import { Buffer } from 'node:buffer';
 const buf = Buffer.alloc(11, 'aGVsbG8gd29ybGQ=', 'base64');
 
 console.log(buf);
-// Prints: <Buffer 68 65 6c 6c 6f 20 77 6f 72 6c 64>
+// Prints: <Buffer .. .. .. .. .. .. .. .. .. .. ..>
 ```
 
 ```cjs
@@ -87,7 +87,7 @@ const { Buffer } = require('node:buffer');
 const buf = Buffer.alloc(11, 'aGVsbG8gd29ybGQ=', 'base64');
 
 console.log(buf);
-// Prints: <Buffer 68 65 6c 6c 6f 20 77 6f 72 6c 64>
+// Prints: <Buffer .. .. .. .. .. .. .. .. .. .. ..>
 ```
 
 Calling `Buffer.alloc()` can be measurably slower than the alternative
@@ -120,12 +120,12 @@ import { Buffer } from 'node:buffer';
 const buf = Buffer.allocUnsafe(10);
 
 console.log(buf);
-// Prints (contents may vary): <Buffer a0 8b 28 3f 01 00 00 00 50 32>
+// Prints (contents may vary): <Buffer .. .. .. .. .. .. .. .. .. ..>
 
 buf.fill(0);
 
 console.log(buf);
-// Prints: <Buffer 00 00 00 00 00 00 00 00 00 00>
+// Prints: <Buffer .. .. .. .. .. .. .. .. .. ..>
 ```
 
 ```cjs
@@ -134,12 +134,12 @@ const { Buffer } = require('node:buffer');
 const buf = Buffer.allocUnsafe(10);
 
 console.log(buf);
-// Prints (contents may vary): <Buffer a0 8b 28 3f 01 00 00 00 50 32>
+// Prints (contents may vary): <Buffer .. .. .. .. .. .. .. .. .. ..>
 
 buf.fill(0);
 
 console.log(buf);
-// Prints: <Buffer 00 00 00 00 00 00 00 00 00 00>
+// Prints: <Buffer .. .. .. .. .. .. .. .. .. ..>
 ```
 
 A `TypeError` will be thrown if `size` is not a number.
@@ -150,7 +150,7 @@ size `Buffer.poolSize` that is used as a pool for the fast allocation of new
 `Buffer.from(string)`, and `Buffer.concat()` only when `size` is less than
 `Buffer.poolSize >>> 1` (floor of `Buffer.poolSize` divided by two).
 
-Use of this pre-allocated internal memory pool is a key difference between
+Use of this pre-allocated internal memory pool is a key <example-value> between
 calling `Buffer.alloc(size, fill)` vs. `Buffer.allocUnsafe(size).fill(fill)`.
 Specifically, `Buffer.alloc(size, fill)` will _never_ use the internal `Buffer`
 pool, while `Buffer.allocUnsafe(size).fill(fill)` _will_ use the internal
@@ -337,7 +337,7 @@ const buf2 = Buffer.from('0123');
 const arr = [buf1, buf2];
 
 console.log(arr.sort(Buffer.compare));
-// Prints: [ <Buffer 30 31 32 33>, <Buffer 31 32 33 34> ]
+// Prints: [ <Buffer .. .. .. ..>, <Buffer .. .. .. ..> ]
 // (This result is equal to: [buf2, buf1].)
 ```
 
@@ -349,7 +349,7 @@ const buf2 = Buffer.from('0123');
 const arr = [buf1, buf2];
 
 console.log(arr.sort(Buffer.compare));
-// Prints: [ <Buffer 30 31 32 33>, <Buffer 31 32 33 34> ]
+// Prints: [ <Buffer .. .. .. ..>, <Buffer .. .. .. ..> ]
 // (This result is equal to: [buf2, buf1].)
 ```
 
@@ -391,7 +391,7 @@ console.log(totalLength);
 const bufA = Buffer.concat([buf1, buf2, buf3], totalLength);
 
 console.log(bufA);
-// Prints: <Buffer 00 00 00 00 ...>
+// Prints: <Buffer .. .. .. .. ...>
 console.log(bufA.length);
 // Prints: 42
 ```
@@ -412,7 +412,7 @@ console.log(totalLength);
 const bufA = Buffer.concat([buf1, buf2, buf3], totalLength);
 
 console.log(bufA);
-// Prints: <Buffer 00 00 00 00 ...>
+// Prints: <Buffer .. .. .. .. ...>
 console.log(bufA.length);
 // Prints: 42
 ```

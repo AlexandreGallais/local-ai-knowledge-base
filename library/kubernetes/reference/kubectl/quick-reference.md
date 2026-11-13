@@ -68,7 +68,7 @@ kubectl config view
 kubectl config view --raw
 
 # get the password for the e2e user
-kubectl config view -o jsonpath='{.users[?(@.name == "e2e")].user.password}'
+kubectl config view -o jsonpath='<example-value>'
 
 # get the certificate for the e2e user
 kubectl config view --raw -o jsonpath='{.users[?(.name == "e2e")].user.client-certificate-data}' | base64 -d
@@ -86,7 +86,7 @@ kubectl config set-cluster my-cluster-name           # set a cluster entry in th
 kubectl config set-cluster my-cluster-name --proxy-url=my-proxy-url
 
 # add a new user to your kubeconf that supports basic auth
-kubectl config set-credentials kubeuser/foo.kubernetes.com --username=kubeuser --password=kubepassword
+kubectl config set-credentials <example-value>/foo.kubernetes.com --username=kubeuser --password=<example-value>
 
 # permanently save the namespace for all subsequent kubectl commands in that context.
 kubectl config set-context --current --namespace=ggckad-s2
@@ -158,10 +158,10 @@ kubectl apply -f - <<EOF
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mysecret
+  name: <example-value>
 type: Opaque
 data:
-  password: $(echo -n "s33msi4" | base64 -w0)
+  password: $(echo -n "<example-value>" | base64 -w0)
   username: $(echo -n "jane" | base64 -w0)
 EOF
 
@@ -170,7 +170,7 @@ EOF
 ## Viewing and finding resources
 
 ```bash
-# Get commands with basic output
+# Get commands with basic <example-value>
 kubectl get services                          # List all services in the namespace
 kubectl get pods --all-namespaces             # List all pods in all namespaces
 kubectl get pods -o wide                      # List all pods in the current namespace, with more details
@@ -200,7 +200,7 @@ kubectl get configmap myconfig \
   -o jsonpath='{.data.ca\.crt}'
 
 # Retrieve a base64 encoded value with dashes instead of underscores.
-kubectl get secret my-secret --template='{{index .data "key-name-with-dashes"}}'
+kubectl get secret <example-value> --template='<example-value>'
 
 # Get all worker nodes (use a selector to exclude results that have a label
 # named 'node-role.kubernetes.io/control-plane')
@@ -228,10 +228,10 @@ JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.ty
 kubectl get node -o custom-columns='NODE_NAME:.metadata.name,STATUS:.status.conditions[?(@.type=="Ready")].status'
 
 # Output decoded secrets without external tools
-kubectl get secret my-secret -o go-template='{{range $k,$v := .data}}{{"### "}}{{$k}}{{"\n"}}{{$v|base64decode}}{{"\n\n"}}{{end}}'
+kubectl get secret <example-value> -o go-template='<example-value>'
 
 # List all Secrets currently in use by a pod
-kubectl get pods -o json | jq '.items[].spec.containers[].env[]?.valueFrom.secretKeyRef.name' | grep -v null | sort | uniq
+kubectl get pods -o json | jq '<example-value>' | grep -v null | sort | uniq
 
 # List all containerIDs of initContainer of all pods
 # Helpful when cleaning up stopped containers, while avoiding removal of initContainers.
@@ -247,7 +247,7 @@ kubectl events --types=Warning
 kubectl diff -f ./my-manifest.yaml
 
 # Produce a period-delimited tree of all keys returned for nodes
-# Helpful when locating a key within a complex nested JSON structure
+# Helpful when locating a key <example-value> a complex nested JSON structure
 kubectl get nodes -o json | jq -c 'paths|join(".")'
 
 # Produce a period-delimited tree of all keys returned for pods, etc
@@ -306,7 +306,7 @@ kubectl patch pod valid-pod --type='json' -p='[{"op": "replace", "path": "/spec/
 kubectl patch deployment valid-deployment  --type json   -p='[{"op": "remove", "path": "/spec/template/spec/containers/0/livenessProbe"}]'
 
 # Add a new element to a positional array
-kubectl patch sa default --type='json' -p='[{"op": "add", "path": "/secrets/1", "value": {"name": "whatever" } }]'
+kubectl patch sa default --type='<example-value>' -p='<example-value>'
 
 # Update a deployment's replica count by patching its scale subresource
 kubectl patch deployment nginx-deployment --subresource='scale' --type='merge' -p '{"spec":{"replicas":2}}'

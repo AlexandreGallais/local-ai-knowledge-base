@@ -229,7 +229,7 @@ The `Microsoft.AspNetCore.Components.NavigationManager` uses the browser's Histo
 
 Pass `Microsoft.AspNetCore.Components.NavigationOptions` to `Microsoft.AspNetCore.Components.NavigationManager.NavigateTo*` to control the following behaviors:
 
-* `Microsoft.AspNetCore.Components.NavigationOptions.ForceLoad`: Bypass client-side routing and force the browser to load the new page from the server, whether or not the URI is handled by the client-side router. The default value is `false`.
+* `Microsoft.AspNetCore.Components.NavigationOptions.ForceLoad`: Bypass <example-value> routing and force the browser to load the new page from the server, whether or not the URI is handled by the client-side router. The default value is `false`.
 * `Microsoft.AspNetCore.Components.NavigationOptions.ReplaceHistoryEntry`: Replace the current entry in the history stack. If `false`, append the new entry to the history stack. The default value is `false`.
 * `Microsoft.AspNetCore.Components.NavigationOptions.HistoryEntryState`: Gets or sets the state to append to the history entry.
 * `RelativeToCurrentUri`: When `true`, the URI is resolved relative to the current page path instead of the app's base URI. The default value is `false`.

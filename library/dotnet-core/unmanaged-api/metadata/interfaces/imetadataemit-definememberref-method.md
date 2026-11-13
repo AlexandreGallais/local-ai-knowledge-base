@@ -15,7 +15,7 @@ Defines a reference to a member of a module outside the current scope, and gets 
 
 ```cpp
 HRESULT DefineMemberRef (
-    [in]  mdToken           tkImport,
+    [in]  mdToken           <example-value>,
     [in]  LPCWSTR           szName,
     [in]  PCCOR_SIGNATURE   pvSigBlob,
     [in]  ULONG             cbSigBlob,

@@ -52,7 +52,7 @@ PetUnion? pet = JsonSerializer.Deserialize<PetUnion>(
 
 Console.WriteLine(pet?.Value is Cat); // True
 ```
-The payload's `Lives` property selects `Cat`. The structural classifier narrows the candidate cases by root-level property names and required properties; it doesn't inspect property values or nested content. If the payload matches zero or multiple cases, deserialization throws `System.Text.Json.JsonException`. The classifier doesn't support multiple non-object cases with the same JSON token kind, nested unions, polymorphic cases, or `System.Text.Json.Serialization.ReferenceHandler.Preserve`.
+The payload'<example-value>'t inspect property values or nested content. If the payload matches zero or multiple cases, deserialization throws `System.Text.Json.JsonException`. The classifier doesn't support multiple non-object cases with the same JSON token kind, nested unions, polymorphic cases, or `System.Text.Json.Serialization.ReferenceHandler.Preserve`.
 
 For other case-selection rules, derive from `System.Text.Json.Serialization.JsonTypeClassifierFactory`. The factory receives a `System.Text.Json.Serialization.JsonTypeClassifierContext` describing the union cases and creates a `System.Text.Json.Serialization.JsonTypeClassifier` delegate that reads JSON and selects a case type. Register the factory on one union through `System.Text.Json.Serialization.JsonUnionAttribute.TypeClassifier`, on an options instance through `System.Text.Json.JsonSerializerOptions.TypeClassifiers`, or on a source-generated context through `System.Text.Json.Serialization.JsonSourceGenerationOptionsAttribute.TypeClassifiers`.
 
@@ -218,3 +218,8 @@ For more information, see Apply a naming policy to a type or member and Ignore p
 **Numeric converters.** The serializer includes built-in converters for `System.Numerics.BFloat16`, `System.Numerics.Decimal32`, `System.Numerics.Decimal64`, and `System.Numerics.Decimal128`. The converters support number-handling options, dictionary keys, and JSON Schema export. For generated metadata, `System.Text.Json.Serialization.Metadata.JsonMetadataServices` exposes `System.Text.Json.Serialization.Metadata.JsonMetadataServices.BFloat16Converter`, `System.Text.Json.Serialization.Metadata.JsonMetadataServices.Decimal32Converter`, `System.Text.Json.Serialization.Metadata.JsonMetadataServices.Decimal64Converter`, and `System.Text.Json.Serialization.Metadata.JsonMetadataServices.Decimal128Converter`.
 
 **Open generic converters.** `System.Text.Json.Serialization.JsonConverterAttribute` can reference an open generic converter on a generic type or member:
+
+```csharp
+[JsonConverter(typeof(OptionConverter<>))]
+public readonly struct Option<T> { }
+```

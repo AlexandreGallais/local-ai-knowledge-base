@@ -25,7 +25,7 @@ A single application container that you want to run within a pod.
        | List of environment variables to set in the container. Cannot be updated.
 
        | `envFrom`EnvFromSource array
-       | List of sources to populate environment variables in the container. The keys defined within a source may consist of any printable ASCII characters except '='. When a key exists in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.
+       | List of sources to populate environment variables in the container. The keys defined within a source may consist of any printable ASCII characters except '='. When a key <example-value> in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.
 
        | `image`string
        | Container image name. More info: https://kubernetes.io/docs/concepts/containers/images This field is optional to allow higher level config management to default or override container images in workload controllers like Deployments and StatefulSets.

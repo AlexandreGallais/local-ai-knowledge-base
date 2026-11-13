@@ -311,7 +311,7 @@ class Person {
 ```
 
 One interesting aspect of this feature is that the check `#name in other` implies that `other` must have been constructed as a `Person`, since there's no other way that field could be present.
-This is actually one of the key features of the proposal, and it's why the proposal is named "ergonomic brand checks" - because private fields often act as a "brand" to guard against objects that aren't instances of their class.
+This is actually one of the key <example-value> of the proposal, and it's why the proposal is named "ergonomic brand checks" - because private fields often act as a "brand" to guard against objects that aren't instances of their class.
 As such, TypeScript is able to appropriately narrow the type of `other` on each check, until it ends up with the type `Person`.
 
 We'd like to extend a big thanks to our friends at Bloomberg who contributed this pull request: Ashley Claymore, Titian Cernicova-Dragomir, Kubilay Kahveci, and Rob Palmer!

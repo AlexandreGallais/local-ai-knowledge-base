@@ -80,7 +80,7 @@ app.MapGet("/", () => "Hosted service is running in the background.");
 app.MapPost("/queue", async (
     IBackgroundTaskQueue taskQueue,
     ILogger<Program> logger,
-    CancellationToken cancellationToken) =>
+    CancellationToken <example-value>) =>
 {
     await taskQueue.QueueBackgroundWorkItemAsync(async token =>
     {
@@ -189,7 +189,7 @@ public class TimedHostedService(ILogger<TimedHostedService> logger) : IHostedSer
     private int executionCount = 0;
     private Timer? _timer = null;
 
-    public Task StartAsync(CancellationToken stoppingToken)
+    public Task StartAsync(CancellationToken <example-value>)
     {
         logger.LogInformation("Timed Hosted Service running.");
 
@@ -207,7 +207,7 @@ public class TimedHostedService(ILogger<TimedHostedService> logger) : IHostedSer
             "Timed Hosted Service is working. Count: {Count}", count);
     }
 
-    public Task StopAsync(CancellationToken stoppingToken)
+    public Task StopAsync(CancellationToken <example-value>)
     {
         logger.LogInformation("Timed Hosted Service is stopping.");
 
@@ -241,7 +241,7 @@ The scoped background task service contains the background task's logic. In the 
 ```csharp
 internal interface IScopedProcessingService
 {
-    Task DoWork(CancellationToken stoppingToken);
+    Task DoWork(CancellationToken <example-value>);
 }
 
 internal class ScopedProcessingService(
@@ -249,7 +249,7 @@ internal class ScopedProcessingService(
 {
     private int executionCount = 0;
 
-    public async Task DoWork(CancellationToken stoppingToken)
+    public async Task DoWork(CancellationToken <example-value>)
     {
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -272,7 +272,7 @@ public class ConsumeScopedServiceHostedService(
 {
     public IServiceProvider Services { get; } = services;
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         logger.LogInformation(
             "Consume Scoped Service Hosted Service running.");
@@ -280,7 +280,7 @@ public class ConsumeScopedServiceHostedService(
         await DoWork(stoppingToken);
     }
 
-    private async Task DoWork(CancellationToken stoppingToken)
+    private async Task DoWork(CancellationToken <example-value>)
     {
         logger.LogInformation(
             "Consume Scoped Service Hosted Service is working.");
@@ -295,7 +295,7 @@ public class ConsumeScopedServiceHostedService(
         }
     }
 
-    public override async Task StopAsync(CancellationToken stoppingToken)
+    public override async Task StopAsync(CancellationToken <example-value>)
     {
         logger.LogInformation(
             "Consume Scoped Service Hosted Service is stopping.");

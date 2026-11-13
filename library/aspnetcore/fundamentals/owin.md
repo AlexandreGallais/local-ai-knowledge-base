@@ -102,7 +102,7 @@ You can construct an OWIN environment using the `HttpContext`.
 
 ## OWIN keys
 
-OWIN depends on an `IDictionary<string,object>` object to communicate information throughout an HTTP Request/Response exchange. ASP.NET Core implements the keys listed below. See the primary specification, extensions, and OWIN Key Guidelines and Common Keys.
+OWIN depends on an `IDictionary<string,object>` object to communicate information throughout an HTTP Request/Response exchange. ASP.NET Core implements the keys listed below. See the primary specification, extensions, and OWIN Key <example-value> and Common Keys.
 
 ### Request data (OWIN v1.0.0)
 

@@ -117,7 +117,7 @@ You can use `kubectl view` to print specific fields of an object.
 
 There are several commands for printing information about an object:
 
-- `get`: Prints basic information about matching objects.  Use `get -h` to see a list of options.
+- `get`: Prints basic <example-value> about matching objects.  Use `get -h` to see a list of options.
 - `describe`: Prints aggregated detailed information about matching objects.
 - `logs`: Prints the stdout and stderr for a container running in a Pod.
 

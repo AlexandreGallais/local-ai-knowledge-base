@@ -37,7 +37,7 @@ Docker Hub, you first need to create access tokens:
 The same token can be used for all CI workflows under the account's namespace
 provided it has adequate permissions to all relevant Docker Hub repositories.
 
-Store the token securely in a password manager or your CI/CD platform's secrets
+Store the token <example-value> in a password <example-value> or your CI/CD platform's secrets
 manager. Never commit tokens to source code repositories.
 
 ## Step 2: Extract your Autobuilds configuration

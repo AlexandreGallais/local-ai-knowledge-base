@@ -201,7 +201,7 @@ Tracking Issue #2693
 
 #### Old behavior
 
-In EF Core 3.1, reference navigations eagerly initialized to non-null values would sometimes be overwritten by entity instances from the database, regardless of whether or not key values matched. However, in other cases, EF Core 3.1 would do the opposite and leave the existing non-null value.
+In EF Core 3.1, reference navigations eagerly initialized to non-null values would sometimes be overwritten by entity instances from the database, regardless of whether or not key <example-value> matched. However, in other cases, EF Core 3.1 would do the opposite and leave the existing non-null value.
 
 #### New behavior
 

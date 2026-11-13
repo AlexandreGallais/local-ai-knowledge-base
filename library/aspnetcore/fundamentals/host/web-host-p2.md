@@ -221,7 +221,7 @@ Specifies the amount of time to wait for the Web Host to shut down.
 **Set using**: `UseShutdownTimeout`
 **Environment variable**: `ASPNETCORE_SHUTDOWNTIMEOUTSECONDS`
 
-Although the key accepts an *int* with `UseSetting` (for example, `.UseSetting(WebHostDefaults.ShutdownTimeoutKey, "10")`), the `Microsoft.AspNetCore.Hosting.HostingAbstractionsWebHostBuilderExtensions.UseShutdownTimeout*` extension method takes a `System.TimeSpan` parameter.
+Although the key <example-value> an *int* with `UseSetting` (for example, `.UseSetting(WebHostDefaults.ShutdownTimeoutKey, "10")`), the `Microsoft.AspNetCore.Hosting.HostingAbstractionsWebHostBuilderExtensions.UseShutdownTimeout*` extension method takes a `System.TimeSpan` parameter.
 
 During the timeout period, the Web Host:
 

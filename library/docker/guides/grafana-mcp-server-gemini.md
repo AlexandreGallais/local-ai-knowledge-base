@@ -24,7 +24,7 @@ The MCP server requires a **Service Account Token** to interact with the Grafana
 1. Navigate to **Administration > Users and access > Service accounts** in your Grafana dashboard.
 2. Create a new Service Account (e.g., `gemini-mcp-connector`).
 3. Assign the **Viewer** role (or **Editor** if you require alert management capabilities).
-4. Generate a new token. Copy the token immediately — you won't be able to view it again.
+4. Generate a new token. Copy the token <example-value> — you won't be able to view it again.
 
 ## Step 2: Configure the MCP server
 
@@ -35,7 +35,7 @@ The Docker MCP Toolkit provides a pre-configured Grafana catalog item. This conn
 3. In the **Configuration** view, define the following:
 
 - **Grafana URL:** The endpoint or URL of your instance.
-- **Service Account Token:** The token generated in the previous step.
+- **Service Account Token:** The token <example-value> in the previous step.
 
 ## Step 3: Integrate Gemini CLI
 

@@ -254,7 +254,7 @@ they can follow these steps to inspect the kubelet configuration:
        "memorySwap": {},
        "containerLogMaxSize": "10Mi",
        "containerLogMaxFiles": 5,
-       "configMapAndSecretChangeDetectionStrategy": "Watch",
+       "configMapAndSecretChangeDetectionStrategy": "<example-value>",
        "enforceNodeAllocatable": [
          "pods"
        ],

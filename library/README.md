@@ -29,10 +29,10 @@ node scripts/check-library.ts                 # headers, index, 16 KB at most, n
 | [node](node/index.md) | Node.js API reference | 26.13 | MIT | no | 374 files, 4.0 MB |
 | [dotnet-csharp](dotnet-csharp/index.md) | C# guide and language reference | 11 | CC-BY-4.0 | no | 1527 files, 9.8 MB |
 | [dotnet-core](dotnet-core/index.md) | .NET fundamentals, SDK, deployment and breaking changes | 11 | CC-BY-4.0 | no | 2591 files, 9.6 MB |
-| [dotnet-standard](dotnet-standard/index.md) | .NET standard library guides | 11 | CC-BY-4.0 | no | 1643 files, 12.7 MB |
-| [aspnetcore](aspnetcore/index.md) | ASP.NET Core documentation | 11 | CC-BY-4.0 | no | 2144 files, 12.6 MB |
+| [dotnet-standard](dotnet-standard/index.md) | .NET standard library guides | 11 | CC-BY-4.0 | no | 1642 files, 12.7 MB |
+| [aspnetcore](aspnetcore/index.md) | ASP.NET Core documentation | 11 | CC-BY-4.0 | no | 2142 files, 12.5 MB |
 | [efcore](efcore/index.md) | Entity Framework Core documentation | 11 | CC-BY-4.0 | no | 326 files, 2.9 MB |
-| [kubernetes](kubernetes/index.md) | Kubernetes documentation | 1.37 | CC-BY-4.0 | no | 2442 files, 13.4 MB |
-| [docker](docker/index.md) | Docker documentation | 2026-11 | Apache-2.0 | no | 1298 files, 7.8 MB |
+| [kubernetes](kubernetes/index.md) | Kubernetes documentation | 1.37 | CC-BY-4.0 | no | 2439 files, 13.3 MB |
+| [docker](docker/index.md) | Docker documentation | 2026-11 | Apache-2.0 | no | 1297 files, 7.8 MB |
 | [podman](podman/index.md) | Podman command reference | 6.2 | Apache-2.0 | no | 273 files, 1.7 MB |
 | [rust-book](rust-book/index.md) | The Rust Programming Language | 2026-11 | MIT OR Apache-2.0 | no | 183 files, 1.3 MB |

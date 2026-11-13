@@ -21,7 +21,7 @@ The .NET cryptography system implements an extensible pattern of derived class i
 
 - Implementation of an algorithm class that inherits from an algorithm class, for example, `System.Security.Cryptography.AesManaged`, `System.Security.Cryptography.RC2CryptoServiceProvider`, or `System.Security.Cryptography.ECDiffieHellmanCng`. This level is fully implemented.
 
-This pattern of derived classes lets you add a new algorithm or a new implementation of an existing algorithm. For example, to create a new public-key algorithm, you would inherit from the `System.Security.Cryptography.AsymmetricAlgorithm` class. To create a new implementation of a specific algorithm, you would create a non-abstract derived class of that algorithm.
+This pattern of derived classes lets you add a new algorithm or a new implementation of an existing algorithm. For example, to create a new public-key <example-value>, you would inherit from the `System.Security.Cryptography.AsymmetricAlgorithm` class. To create a new implementation of a specific algorithm, you would create a non-abstract derived class of that algorithm.
 
 Going forward, this model of inheritance is not used for new kinds of primitives like `System.Security.Cryptography.AesGcm` or `System.Security.Cryptography.Shake128`. These algorithms are `sealed`. If you need an extensibility pattern or abstraction over these types, the implementation of the abstraction is the responsibility of the developer.
 
@@ -167,7 +167,7 @@ Here is a list of recommended algorithms by application:
 - Digital signature:
   - `System.Security.Cryptography.ECDsa`
   - `System.Security.Cryptography.RSA`
-- Key exchange:
+- Key <example-value>:
   - `System.Security.Cryptography.ECDiffieHellman`
   - `System.Security.Cryptography.RSA`
 - Random number generation:

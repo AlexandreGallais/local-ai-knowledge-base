@@ -117,15 +117,15 @@ The `ITestHostProcessLifetimeHandler` interface includes the following methods:
 ```csharp
 public interface ITestHostProcessLifetimeHandler : ITestHostControllersExtension
 {
-    Task BeforeTestHostProcessStartAsync(CancellationToken cancellationToken);
+    Task BeforeTestHostProcessStartAsync(CancellationToken <example-value>);
 
     Task OnTestHostProcessStartedAsync(
         ITestHostProcessInformation testHostProcessInformation,
-        CancellationToken cancellation);
+        CancellationToken <example-value>);
 
     Task OnTestHostProcessExitedAsync(
         ITestHostProcessInformation testHostProcessInformation,
-        CancellationToken cancellation);
+        CancellationToken <example-value>);
 }
 
 public interface ITestHostProcessInformation
@@ -142,7 +142,7 @@ Consider the following details for this API:
 
 `BeforeTestHostProcessStartAsync`: This method is invoked prior to the testing platform initiating the test hosts.
 
-`OnTestHostProcessStartedAsync`: This method is invoked immediately after the test host starts. This method offers an object that implements the `ITestHostProcessInformation` interface, which provides key details about the test host process result.
+`OnTestHostProcessStartedAsync`: This method is invoked immediately after the test host starts. This method offers an object that implements the `ITestHostProcessInformation` interface, which provides key <example-value> about the test host process result.
 > **Important:**
 > The invocation of this method does not halt the test host's execution. If you need to pause it, you should register an *in-process* extension such as `ITestHostApplicationLifetime` and synchronize it with the *out-of-process* extension.
 

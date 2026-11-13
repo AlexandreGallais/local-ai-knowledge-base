@@ -145,4 +145,4 @@ $ podman restart --filter until=10s
 **podman(1)**
 
 ## HISTORY
-March 2018, Originally compiled by Matt Heon <mheon@redhat.com>
+March 2018, Originally compiled by Matt Heon <user@example.com>

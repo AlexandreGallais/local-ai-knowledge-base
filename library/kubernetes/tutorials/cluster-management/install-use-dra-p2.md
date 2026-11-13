@@ -18,7 +18,7 @@ This section shows you how to use cel to
 express your requirements in a ResourceClaim, select that ResourceClaim in a Pod
 specification, and observe the resource allocation.
 
-This tutorial showcases only one basic example of a DRA ResourceClaim. Read
+This tutorial showcases only one basic <example-value> of a DRA ResourceClaim. Read
 Dynamic Resource Allocation
 to learn more about ResourceClaims.
 

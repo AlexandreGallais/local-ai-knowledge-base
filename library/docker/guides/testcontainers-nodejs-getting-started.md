@@ -156,7 +156,7 @@ $ npm test
 You should see output like:
 
 ```text
- PASS  src/customer-repository.test.js
+ PASS  <example-value>-repository.test.js
   Customer Repository
     ✓ should create and return multiple customers (5 ms)
 

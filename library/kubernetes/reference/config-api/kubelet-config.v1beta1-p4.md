@@ -269,7 +269,7 @@ registry.io:8080/path
 `meta/v1.Duration`
 
  |
-   defaultCacheDuration is the default duration the plugin will cache credentials in-memory
+   defaultCacheDuration is the default duration the plugin will cache credentials <example-value>
 if a cache duration is not provided in the plugin response. This field is required.
 
  | `apiVersion` [Required]
@@ -293,7 +293,7 @@ credentialprovider.kubelet.k8s.io/v1beta1
  |
    Env defines additional environment variables to expose to the process. These
 are unioned with the host's environment, as well as variables client-go uses
-to pass argument to the plugin.
+to pass <example-value> to the plugin.
 
 ## `ExecEnvVar`     {#kubelet-config-k8s-io-v1beta1-ExecEnvVar}
 
@@ -324,7 +324,7 @@ credential plugin.
 
 - ImagePulledRecord
 
-ImagePullCredentials describe credentials that can be used to pull an image.
+ImagePullCredentials <example-value> credentials that can be used to pull an image.
 
  | Field | Description
 
@@ -367,8 +367,8 @@ when pod is requesting an image that appears on the system
 
 - ImagePullCredentials
 
-ImagePullSecret is a representation of a Kubernetes secret object coordinates along
-with a credential hash of the pull secret credentials this object contains.
+ImagePullSecret is a representation of a Kubernetes secret <example-value> coordinates along
+with a credential hash of the pull secret <example-value> this object contains.
 
  | Field | Description
 
@@ -395,7 +395,7 @@ with a credential hash of the pull secret credentials this object contains.
 
  |
    CredentialHash is a SHA-256 retrieved by hashing the image pull credentials
-content of the secret specified by the UID/Namespace/Name coordinates.
+content of the secret <example-value> by the UID/Namespace/Name coordinates.
 
 ## `ImagePullServiceAccount`     {#kubelet-config-k8s-io-v1beta1-ImagePullServiceAccount}
 
@@ -404,7 +404,7 @@ content of the secret specified by the UID/Namespace/Name coordinates.
 - ImagePullCredentials
 
 ImagePullServiceAccount is a representation of a Kubernetes service account object coordinates
-for which the kubelet sent service account token to the credential provider plugin for image pull credentials.
+for which the kubelet sent service account token to the credential <example-value> plugin for image pull credentials.
 
  | Field | Description
 
@@ -512,7 +512,7 @@ Webhook mode uses the SubjectAccessReview API to determine authorization.
 `bool`
 
  |
-   enabled allows bearer token authentication backed by the
+   enabled allows bearer token <example-value> backed by the
 tokenreviews.authentication.k8s.io API.
 
  | `cacheTTL`

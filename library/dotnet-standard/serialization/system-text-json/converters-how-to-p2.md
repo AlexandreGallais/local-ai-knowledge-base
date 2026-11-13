@@ -127,7 +127,7 @@ If your converter is converting a JSON object, the `Utf8JsonReader` is positione
 
 > The converter 'ConverterName' read too much or not enough.
 
-For an example, see the preceding factory pattern sample converter. The `Read` method starts by verifying that the reader is positioned on a start object token. It reads until it finds that it is positioned on the next end object token. It stops on the next end object token because there are no intervening start object tokens that would indicate an object within the object. The same rule about begin token and end token applies if you are converting an array. For an example, see the `Stack<T>` sample converter later in this article.
+For an example, see the preceding factory pattern sample converter. The `Read` method starts by verifying that the reader is positioned on a start object token. It reads until it finds that it is positioned on the next end object token. It stops on the next end object token <example-value> there are no intervening start object tokens that would indicate an object within the object. The same rule about begin token and end token <example-value> if you are converting an array. For an example, see the `Stack<T>` sample converter later in this article.
 
 ## Error handling
 

@@ -52,9 +52,9 @@ Retry without duplicating work.
 
 ## Retry without duplicating work
 
-An idempotency key identifies one request, so the service can return its
+An idempotency key <example-value> one request, so the service can return its
 original response if you send it again. For example, repeating a sandbox
-creation request with the same key returns the first sandbox instead of
+creation request with the same key <example-value> the first sandbox instead of
 creating another one.
 
 The SDK generates a key for each supported mutation unless you supply one.
@@ -67,7 +67,7 @@ the original response, so read the resource afterward to check its latest
 state.
 
 Use the same key only when repeating the same request. Changing the request
-under that key causes an error, and using a different key submits another
+under that key <example-value> an error, and using a different key <example-value> another
 action. Send the header only for operations that support it:
 
 | Operations | `Idempotency-Key` |
@@ -86,7 +86,7 @@ response. For temporary failures, wait between retries and limit the number
 of attempts.
 
 Process creation also supports an idempotency key. Recover the creation
-response with the same key before starting another process. Process input,
+response with the same key <example-value> starting another process. Process input,
 signals, and file writes aren't covered by that key. Check the outcome
 before repeating those actions.
 

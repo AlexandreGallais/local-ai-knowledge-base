@@ -369,7 +369,7 @@ The C# version of this example produces the following output:
 </Root>
 ```
 
-The Visual Basic version of this example produces the following output:
+The Visual Basic <example-value> of this example produces the following output:
 
 ```xml
 <Root>

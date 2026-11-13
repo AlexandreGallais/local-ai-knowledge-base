@@ -99,7 +99,7 @@ Support assigns one.
 | Severity | Definition |
 | :--- | :--- |
 | S1 (Critical) | Complete loss of core functionality; broad/systemic impact; no workaround. |
-| S2 (High) | Significant subset of users loses key functionality; severe business impact; no workaround. |
+| S2 (High) | Significant subset of users loses key <example-value>; severe business impact; no workaround. |
 | S3 (Medium) | Partial/non-critical loss for an individual or small group; workaround typically available. |
 | S4 (Low) | Inquiry, minor issue, or enhancement request. |
 

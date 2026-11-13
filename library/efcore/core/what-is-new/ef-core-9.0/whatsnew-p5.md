@@ -209,7 +209,7 @@ This enhancement was contributed by @ranma42. Many thanks!
 
 ### Translation of `Order` and `OrderDescending` LINQ operators
 
-EF9 enables the translation of LINQ simplified ordering operations (`Order` and `OrderDescending`). These work similar to `OrderBy`/`OrderByDescending` but don't require an argument. Instead, they apply default ordering - for entities this means ordering based on primary key values and for other types, ordering based on the values themselves.
+EF9 enables the translation of LINQ simplified ordering operations (`Order` and `OrderDescending`). These work similar to `OrderBy`/`OrderByDescending` but don't require an argument. Instead, they apply default ordering - for entities this means ordering based on primary key <example-value> and for other types, ordering based on the values themselves.
 
 Below is an example query which takes advantage of the simplified ordering operators:
 

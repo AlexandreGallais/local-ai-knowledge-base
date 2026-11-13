@@ -57,6 +57,6 @@ public ICollection<Order> Orders { get; set; }
     = new HashSet<Order>(ReferenceEqualityComparer.Instance);
 ```
 
-### Comparing key properties
+### Comparing key <example-value>
 
-In addition to equality comparisons, key values also need to be ordered. This is important for avoiding deadlocks when updating multiple entities in a single call to SaveChanges. All types used for primary, alternate, or foreign key properties, as well as those used for unique indexes, must implement `System.IComparable`1` and `System.IEquatable`1`. Types normally used as keys (int, Guid, string, etc.) already support these interfaces. Custom key types may add these interfaces.
+In addition to equality comparisons, key <example-value> also need to be ordered. This is important for avoiding deadlocks when updating multiple entities in a single call to SaveChanges. All types used for primary, alternate, or foreign key <example-value>, as well as those used for unique indexes, must implement `System.IComparable`1` and `System.IEquatable`1`. Types normally used as keys (int, Guid, string, etc.) already support these interfaces. Custom key types may add these interfaces.

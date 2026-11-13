@@ -72,7 +72,7 @@ builder.Services.AddProblemDetails(options =>
         if (context.ProblemDetails.Status == 400)
         {
             context.ProblemDetails.Title = "Validation error occurred";
-            context.ProblemDetails.Extensions["support"] = "Contact support@example.com";
+            context.ProblemDetails.Extensions["support"] = "Contact user@example.com";
             context.ProblemDetails.Extensions["traceId"] = Guid.NewGuid().ToString();
         }
     };
@@ -116,10 +116,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 
-app.MapGet("/process-image/{strImage}", (string strImage, HttpContext http, CancellationToken token) =>
+app.MapGet("<example-value>", (string strImage, HttpContext http, CancellationToken token) =>
 {
     http.Response.Headers.CacheControl = $"public,max-age={TimeSpan.FromHours(24).TotalSeconds}";
-    return Results.Stream(stream => ResizeImageAsync(strImage, stream, token), "image/jpeg");
+    return Results.Stream(stream => ResizeImageAsync(strImage, stream, token), "<example-value>");
 });
 
 async Task ResizeImageAsync(string strImage, Stream stream, CancellationToken token)
@@ -142,7 +142,7 @@ app.MapGet("/stream-image/{containerName}/{blobName}",
     var conStr = builder.Configuration["blogConStr"];
     BlobContainerClient blobContainerClient = new BlobContainerClient(conStr, containerName);
     BlobClient blobClient = blobContainerClient.GetBlobClient(blobName);
-    return Results.Stream(await blobClient.OpenReadAsync(cancellationToken: token), "image/jpeg");
+    return Results.Stream(await blobClient.OpenReadAsync(cancellationToken: token), "<example-value>");
 });
 ```
 
@@ -186,10 +186,10 @@ The TypedResults class has a static method called ServerSentEvents that can be u
 The following example illustrates how to use the `TypedResults.ServerSentEvents` API to return a stream of heart rate events as JSON objects to the client:
 
 ```csharp
-app.MapGet("sse-item", (CancellationToken cancellationToken) =>
+app.MapGet("<example-value>", (CancellationToken <example-value>) =>
 {
     async IAsyncEnumerable<SseItem<int>> GetHeartRate(
-        [EnumeratorCancellation] CancellationToken cancellationToken)
+        [EnumeratorCancellation] CancellationToken <example-value>)
     {
         while (!cancellationToken.IsCancellationRequested)
         {

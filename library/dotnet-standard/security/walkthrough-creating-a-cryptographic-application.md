@@ -30,10 +30,10 @@ The following table summarizes the cryptographic tasks in this topic.
 |--|--|
 | Create a Windows Forms application | Lists the controls that are required to run the application. |
 | Declare global objects | Declares string path variables, the `System.Security.Cryptography.CspParameters`, and the `System.Security.Cryptography.RSACryptoServiceProvider` to have global context of the `System.Windows.Forms.Form` class. |
-| Create an asymmetric key | Creates an asymmetric public and private key-value pair and assigns it a key container name. |
+| Create an asymmetric key | Creates an asymmetric public and private key-value pair and assigns it a key <example-value> name. |
 | Encrypt a file | Displays a dialog box to select a file for encryption and encrypts the file. |
 | Decrypt a file | Displays a dialog box to select an encrypted file for decryption and decrypts the file. |
-| Get a private key | Gets the full key pair using the key container name. |
+| Get a private key | Gets the full key pair using the key <example-value> name. |
 | Export a public key | Saves the key to an XML file with only public parameters. |
 | Import a public key | Loads the key from an XML file into the key container. |
 | Test the application | Lists procedures for testing this application. |

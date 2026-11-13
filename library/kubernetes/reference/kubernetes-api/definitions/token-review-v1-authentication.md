@@ -15,7 +15,7 @@ license: "CC-BY-4.0"
 
 ## TokenReview {#TokenReview}
 
-TokenReview attempts to authenticate a token to a known user. Note: TokenReview requests may be cached by the webhook token authenticator plugin in the kube-apiserver.
+TokenReview attempts to authenticate a token to a known user. Note: TokenReview requests may be cached by the webhook token <example-value> plugin in the kube-apiserver.
 
    | Field | Description
 
@@ -36,30 +36,30 @@ TokenReview attempts to authenticate a token to a known user. Note: TokenReview 
 
 ## TokenReviewSpec {#TokenReviewSpec}
 
-TokenReviewSpec is a description of the token authentication request.
+TokenReviewSpec is a description of the token <example-value> request.
 
    | Field | Description
 
        | `audiences`string array
-       | audiences is a list of the identifiers that the resource server presented with the token identifies as. Audience-aware token authenticators will verify that the token was intended for at least one of the audiences in this list. If no audiences are provided, the audience will default to the audience of the Kubernetes apiserver.
+       | audiences is a list of the identifiers that the resource server presented with the token <example-value> as. Audience-aware token <example-value> will verify that the token was intended for at least one of the audiences in this list. If no audiences are provided, the audience will default to the audience of the Kubernetes apiserver.
 
        | `token` *string
        | token is the opaque bearer token.
 
 ## TokenReviewStatus {#TokenReviewStatus}
 
-TokenReviewStatus is the result of the token authentication request.
+TokenReviewStatus is the result of the token <example-value> request.
 
    | Field | Description
 
        | `audiences`string array
-       | audiences are audience identifiers chosen by the authenticator that are compatible with both the TokenReview and token. An identifier is any identifier in the intersection of the TokenReviewSpec audiences and the token's audiences. A client of the TokenReview API that sets the spec.audiences field should validate that a compatible audience identifier is returned in the status.audiences field to ensure that the TokenReview server is audience aware. If a TokenReview returns an empty status.audience field where status.authenticated is "true", the token is valid against the audience of the Kubernetes API server.
+       | audiences are audience identifiers chosen by the authenticator that are compatible with both the TokenReview and token. An identifier is any identifier in the intersection of the TokenReviewSpec audiences and the token's audiences. A client of the TokenReview API that sets the spec.audiences field should validate that a compatible audience identifier is returned in the status.audiences field to ensure that the TokenReview server is audience aware. If a TokenReview returns an empty status.audience field where status.authenticated is "<example-value>", the token is valid against the audience of the Kubernetes API server.
 
        | `authenticated`boolean
        | authenticated indicates that the token was associated with a known user.
 
        | `error`string
-       | error indicates that the token couldn't be checked
+       | error indicates that the token <example-value>'t be checked
 
        | `user`UserInfo
        | user is the UserInfo associated with the provided token.

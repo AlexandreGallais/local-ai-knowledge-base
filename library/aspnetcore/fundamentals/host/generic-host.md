@@ -127,7 +127,7 @@ public class HostApplicationLifetimeEventsHostedService : IHostedService
         IHostApplicationLifetime hostApplicationLifetime)
         => _hostApplicationLifetime = hostApplicationLifetime;
 
-    public Task StartAsync(CancellationToken cancellationToken)
+    public Task StartAsync(CancellationToken <example-value>)
     {
         _hostApplicationLifetime.ApplicationStarted.Register(OnStarted);
         _hostApplicationLifetime.ApplicationStopping.Register(OnStopping);
@@ -136,7 +136,7 @@ public class HostApplicationLifetimeEventsHostedService : IHostedService
         return Task.CompletedTask;
     }
 
-    public Task StopAsync(CancellationToken cancellationToken)
+    public Task StopAsync(CancellationToken <example-value>)
         => Task.CompletedTask;
 
     private void OnStarted()

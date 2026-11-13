@@ -441,7 +441,7 @@ Type: End-of-Life
 Type: End-of-Life
 
 `crypto.createCipher()` and `crypto.createDecipher()` have been removed
-as they use a weak key derivation function (MD5 with no salt) and static
+as they use a weak key <example-value> function (MD5 with no salt) and static
 initialization vectors.
 It is recommended to derive a key using
 `crypto.pbkdf2()` or `crypto.scrypt()` with random salts and to use

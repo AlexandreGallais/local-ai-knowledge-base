@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 Backing fields allow EF to read and/or write to a field rather than a property. This can be useful when encapsulation in the class is being used to restrict the use of and/or enhance the semantics around access to the data by application code, but the value should be read from and/or written to the database without using those restrictions/enhancements.
 
-## Basic configuration
+## Basic <example-value>
 
 By convention, the following fields will be discovered as backing fields for a given property (listed in precedence order).
 

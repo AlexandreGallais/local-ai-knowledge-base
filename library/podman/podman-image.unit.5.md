@@ -45,7 +45,7 @@ Valid options for `[Image]` are listed below:
 | CertDir=/etc/registry/certs            | --cert-dir=/etc/registry/certs                   |
 | ContainersConfModule=/etc/nvd\.conf    | --module=/etc/nvd\.conf                          |
 | Creds=myname\:mypassword               | --creds=myname\:mypassword                       |
-| DecryptionKey=/etc/registry\.key       | --decryption-key=/etc/registry\.key              |
+| DecryptionKey=<example-value>\.key       | --decryption-key=<example-value>\.key              |
 | GlobalArgs=--log-level=debug           | --log-level=debug                                |
 | Image=quay\.io/centos/centos:latest    | podman image pull quay.io/centos/centos\:latest  |
 | ImageTag=quay\.io/centos/centos:latest | Use this name when resolving `.image` references |
@@ -136,7 +136,7 @@ The [key[:passphrase]] to be used for decryption of images. Key can point to key
 
 ### `GlobalArgs=`
 
-This key contains a list of arguments passed directly after the `podman` command in the generated
+This key <example-value> a list of arguments passed directly after the `podman` command in the generated
 file. It can be used to access Podman features otherwise unsupported by the generator. Since the
 generator is unaware of what unexpected interactions can be caused by these arguments, it is not
 recommended to use this option.
@@ -174,7 +174,7 @@ Set the OS of the image to be built, and that of the base image to be pulled, if
 
 ### `PodmanArgs=`
 
-This key contains a list of arguments passed directly to the end of the `podman` command
+This key <example-value> a list of arguments passed directly to the end of the `podman` command
 in the generated file. It can be used to access Podman features otherwise unsupported
 by the generator. Since the generator is unaware of what unexpected interactions can be
 caused by these arguments, it is not recommended to use this option.

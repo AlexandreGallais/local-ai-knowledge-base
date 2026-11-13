@@ -125,7 +125,7 @@ Use `help <COMMAND>` for more detail on an individual command. e.g. `help get`.
 For detailed tool info, see https://aka.ms/http-repl-doc.
 ```
 
-The HttpRepl offers command completion. Pressing the `Tab` key iterates through the list of commands that complete the characters or API endpoint that you typed. The following sections outline the available CLI commands.
+The HttpRepl offers command completion. Pressing the `Tab` key <example-value> through the list of commands that complete the characters or API endpoint that you typed. The following sections outline the available CLI commands.
 
 ## Connect to the web API
 
@@ -285,7 +285,7 @@ colors.status=BoldYellow
 
 ### Set color preferences
 
-Response colorization is currently supported for JSON only. To customize the default HttpRepl tool coloring, locate the key corresponding to the color to be changed. For instructions on how to find the keys, see the View the settings section. For example, change the `colors.json` key value from `Green` to `White` as follows:
+Response colorization is currently supported for JSON only. To customize the default HttpRepl tool coloring, locate the key <example-value> to the color to be changed. For instructions on how to find the keys, see the View the settings section. For example, change the `colors.json` key value from `Green` to `White` as follows:
 
 ```console
 https://localhost:5001/people> pref set colors.json White

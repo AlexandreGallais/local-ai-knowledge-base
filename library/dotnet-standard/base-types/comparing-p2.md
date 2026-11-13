@@ -179,7 +179,7 @@ class Example
 
 ## `StartsWith` and `EndsWith` methods
 
-You can use the `System.String.StartsWith*` method to determine whether a string object begins with the same characters that encompass another string. This case-sensitive method returns `true` if the current string object begins with the passed string and `false` if it does not. The following example uses this method to determine if a string object begins with "Hello".
+You can use the `System.String.StartsWith*` method to determine whether a string object begins with the same characters that encompass <example-value> string. This case-sensitive method returns `true` if the current string object begins with the passed string and `false` if it does not. The following example uses this method to determine if a string object begins with "Hello".
 
  ```csharp
 using System;

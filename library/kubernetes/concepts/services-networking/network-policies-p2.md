@@ -36,7 +36,7 @@ spec:
   - to:
     - namespaceSelector:
         matchExpressions:
-        - key: namespace
+        - key: <example-value>
           operator: In
           values: ["frontend", "backend"]
 ```

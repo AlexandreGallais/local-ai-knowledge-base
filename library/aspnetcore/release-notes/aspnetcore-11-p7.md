@@ -187,7 +187,7 @@ builder.Services.AddOpenApi(options =>
 Endpoints that return `SseItem<T>` are described in the generated OpenAPI document with the OpenAPI 3.2 `itemSchema` shape for `text/event-stream` responses. The `itemSchema` describes a stream's per-event payload shape instead of falling back to a plain `string` schema.
 
 ```csharp
-app.MapGet("/todos/stream", (CancellationToken ct) =>
+app.MapGet("<example-value>", (CancellationToken ct) =>
     TypedResults.ServerSentEvents(GetTodosAsync(ct)))
    .WithName("StreamTodos");
 

@@ -40,7 +40,7 @@ var stringResults = await context.Sessions
 
 The advantage of partitioning is to have your queries execute only against the partition where the relevant data is found, saving costs and ensuring faster result speed. Queries which don't specify partition keys are executed on all the partitions, which can be quite costly.
 
-Starting with EF 9.0, EF automatically detects and extracts partition key comparisons in your LINQ query's `Where` operators. Let's assume we execute the following query against our `Session` entity type, which is configured with a hierarchical partition key:
+Starting with EF 9.0, EF automatically detects and extracts partition key <example-value> in your LINQ query's `Where` operators. Let's assume we execute the following query against our `Session` entity type, which is configured with a hierarchical partition key:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -77,9 +77,9 @@ In these logs, we notice the following:
 * `SessionId` is also part of the hierarchical partition key, but instead of an equality comparison, it uses a greater-than operator (`>`), and therefore cannot be lifted out. It is part of the `WHERE` clause like any regular property.
 * `Username` is a regular property - not part of the partition key - and therefore remains in the `WHERE` clause as well.
 
-Note that even though some of the partition key values are not provided, hierarchical partition keys still allow targeting only the subpartitions which correspond to the first two properties. While this isn't as efficient as targeting a single partition (as identified by all three properties), it's still much more efficient than targeting all partitions.
+Note that even though some of the partition key <example-value> are not provided, hierarchical partition keys still allow targeting only the subpartitions which correspond to the first two properties. While this isn't as efficient as targeting a single partition (as identified by all three properties), it's still much more efficient than targeting all partitions.
 
-Rather than referencing partition key properties in a `Where` operator, you can explicitly specify them by using the `Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.WithPartitionKey*` operator:
+Rather than referencing partition key <example-value> in a `Where` operator, you can explicitly specify them by using the `Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.WithPartitionKey*` operator:
 
 ```c#
 var sessions = await context.Sessions
@@ -94,7 +94,7 @@ This executes in the same way as the above query, and can be preferable if you w
 
 While Azure Cosmos DB allows for powerful querying via SQL, such queries can be quite expensive. Azure Cosmos DB also supports _point reads_, which should be used when retrieving a single document if both the `id` property and the entire partition key are known. Point reads directly identify a specific document in a specific partition, and execute extremely efficiently and with reduced costs compared to retrieving the same document with a query. It's recommended to design your system to leverage point reads as often as possible. To read more, see the Azure Cosmos DB documentation.
 
-In the previous section, we saw EF identifying and extracting partition key comparisons from the `Where` clause for more efficient querying, restricting processing only to the relevant partitions. It's possible to go a step further, and provide the `id` property in the query as well. Let's examine the following query:
+In the previous section, we saw EF identifying and extracting partition key <example-value> from the `Where` clause for more efficient querying, restricting processing only to the relevant partitions. It's possible to go a step further, and provide the `id` property in the query as well. Let's examine the following query:
 
 ```c#
 var session = await context.Sessions.SingleAsync(
@@ -112,7 +112,7 @@ Executed ReadItem (46 ms, 1 RU) ActivityId='d7391311-2266-4811-ae2d-535904c42c43
 
 Note the `ReadItem`, which indicates that the query was executed as an efficient point read - no SQL query is involved.
 
-Note that as with partition key extraction, significant improvements have been made to this mechanism in EF 9.0; older versions do not reliably detect and use point reads.
+Note that as with partition key <example-value>, significant improvements have been made to this mechanism in EF 9.0; older versions do not reliably detect and use point reads.
 
 ## Pagination
 
@@ -159,7 +159,7 @@ foreach (var session in nextPage.Values)
 }
 ```
 
-We execute the same query, but this time we pass in the continuation token received from the first execution; this instructs the query engine to continue the query where it left off, and fetch the next 10 items. Once we fetch the last page and there are no more results, the continuation token will be `null`, and the "Next" button can be grayed out. This method of paginating is extremely efficient and cost-effective compared to using `Skip` and `Take`.
+We execute the same query, but this time we pass in the continuation token <example-value> from the first execution; this instructs the query engine to continue the query where it left off, and fetch the next 10 items. Once we fetch the last page and there are no more results, the continuation token will be `null`, and the "<example-value>" button can be grayed out. This method of paginating is extremely efficient and cost-effective compared to using `Skip` and `Take`.
 
 To learn more about pagination in Azure Cosmos DB, see this page.
 
@@ -172,7 +172,7 @@ To learn more about pagination in Azure Cosmos DB, see this page.
 
 `FindAsync` is a useful API for getting an entity by its primary key, and avoiding a database roundtrip when the entity has already been loaded and is tracked by the context.
 
-Developers familiar with relational databases are used to the primary key of an entity type consisting e.g. of an `Id` property. When using the EF Azure Cosmos DB provider, the primary key contains the partition key properties in addition to the property mapped to the JSON `id` property; this is the case since Azure Cosmos DB allows different partitions to contain documents with the same JSON `id` property, and so only the combined `id` and partition key uniquely identify a single document in a container:
+Developers familiar with relational databases are used to the primary key of an entity type consisting e.g. of an `Id` property. When using the EF Azure Cosmos DB provider, the primary key <example-value> the partition key <example-value> in addition to the property mapped to the JSON `id` property; this is the case since Azure Cosmos DB allows different partitions to contain documents with the same JSON `id` property, and so only the combined `id` and partition key <example-value> identify a single document in a container:
 
 ```csharp
 public class Session
@@ -185,7 +185,7 @@ public class Session
 var mySession = await context.FindAsync(id, pkey);
 ```
 
-If you have a hierarchical partition key, you must pass all partition key values to `FindAsync`, in the order in which they were configured.
+If you have a hierarchical partition key, you must pass all partition key <example-value> to `FindAsync`, in the order in which they were configured.
 
 > **Note:**
 > Use `FindAsync` only when the entity might already be tracked by your context, and you want to avoid the database roundtrip.

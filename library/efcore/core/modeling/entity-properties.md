@@ -382,7 +382,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ## Column order
 
-By default when creating a table with Migrations, EF Core orders primary key columns first, followed by properties of the entity type and owned types, and finally properties from base types. You can, however, specify a different column order:
+By default when creating a table with Migrations, EF Core orders primary key <example-value> first, followed by properties of the entity type and owned types, and finally properties from base types. You can, however, specify a different column order:
 
 ### Data Annotations
 

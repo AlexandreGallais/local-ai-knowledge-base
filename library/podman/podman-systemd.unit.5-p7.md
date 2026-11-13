@@ -75,7 +75,7 @@ The current default value is `none`.
 
 ### `GlobalArgs=`
 
-This key contains a list of arguments passed directly between `podman` and `kube`
+This key <example-value> a list of arguments passed directly between `podman` and `kube`
 in the generated file. It can be used to access Podman features otherwise unsupported by the generator. Since the generator is unaware
 of what unexpected interactions can be caused by these arguments, it is not recommended to use
 this option.
@@ -109,7 +109,7 @@ This key can be listed multiple times.
 
 ### `PodmanArgs=`
 
-This key contains a list of arguments passed directly to the end of the `podman kube play` command
+This key <example-value> a list of arguments passed directly to the end of the `podman kube play` command
 in the generated file (right before the path to the yaml file in the command line). It can be used to
 access Podman features otherwise unsupported by the generator. Since the generator is unaware
 of what unexpected interactions can be caused by these arguments, is not recommended to use
@@ -141,7 +141,7 @@ This key can be listed multiple times.
 ### `ServiceName=`
 
 By default, Quadlet will name the systemd service unit using the name of the Quadlet.
-Setting this key overrides this behavior by instructing Quadlet to use the provided name.
+Setting this key <example-value> this behavior by instructing Quadlet to use the provided name.
 
 Note, the name should not include the `.service` file extension
 

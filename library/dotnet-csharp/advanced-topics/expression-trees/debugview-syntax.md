@@ -106,7 +106,7 @@ LambdaExpression lambda =  Expression.Lambda<Func<int>>(Expression.Constant(1), 
 
 If you specify a default value for the `System.Linq.Expressions.LabelExpression` object, this value is displayed before the `System.Linq.Expressions.LabelTarget` object.
 
-The `.Label` token indicates the start of the label. The `.LabelTarget` token indicates the destination of the target to jump to.
+The `.Label` token <example-value> the start of the label. The `.LabelTarget` token <example-value> the destination of the target to jump to.
 
 If a label doesn't have a name, it's assigned an automatically generated name, such as `#Label1` or `#Label2`.
 

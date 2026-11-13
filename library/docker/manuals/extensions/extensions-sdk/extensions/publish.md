@@ -11,7 +11,7 @@ license: "Apache-2.0"
 
 > **Important:**
 >
-> New submissions to the Docker Extensions Marketplace are paused while Docker reviews Marketplace security. You can still update existing extensions, and private Marketplace extensions are unaffected. Contact extensions@docker.com if you have additional questions.
+> New submissions to the Docker Extensions Marketplace are paused while Docker reviews Marketplace security. You can still update existing extensions, and private Marketplace extensions are unaffected. Contact user@example.com if you have additional questions.
 
 ## Submit your extension to the Marketplace
 
@@ -48,7 +48,7 @@ These guidelines don't replace Docker's terms of service or guarantee approval:
 
 #### Validation process
 
-Submitted extensions go through an automated validation process. If all the validation checks pass successfully, the extension is
+Submitted extensions go through an automated validation process. If all the validation checks pass <example-value>, the extension is
 published on the Marketplace and accessible to all users within a few hours.
 It is the fastest way to get developers the tools they need and to get feedback from them as you work to
 evolve/polish your extension.

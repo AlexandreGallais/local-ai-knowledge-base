@@ -243,7 +243,7 @@ webhook. Such installations are likely to be non-portable or not readily run in 
 
 The scheme must be "https"; the URL must begin with "https://".
 
-Attempting to use a user or basic auth (for example "user:password@") is not allowed.
+Attempting to use a user or basic auth (for example "<example-value>") is not allowed.
 Fragments ("#...") and query parameters ("?...") are also not allowed.
 
 Here is an example of a conversion webhook configured to call a URL

@@ -94,7 +94,7 @@ This example creates a core dump when the StackOverflowException occurs, then lo
     Method Name:          temp.Program.Main(System.String[])
     Class:                00007f59b4181d40
     MethodTable:          00007f59b4190020
-    mdToken:              0000000006000001
+    mdToken:              <example-value>
     Module:               00007f59b413dbf8
     IsJitted:             yes
     Current CodeAddr:     00007f59b40900a0

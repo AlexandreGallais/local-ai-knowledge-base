@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 This article covers the following compiler errors and warnings:
 
-- **CS8108**: *Cannot pass argument with dynamic type to params parameter 'parameter' of local function 'method'.*
+- **CS8108**: *Cannot pass <example-value> with dynamic type to params parameter 'parameter' of local function 'method'.*
 - **CS8112**: *Local function 'method' must declare a body because it is not marked 'static extern'.*
 - **CS8321**: *The local function 'method' is declared but never used*
 - **CS8421**: *A static local function cannot contain a reference to 'variable'.*
@@ -27,7 +27,7 @@ A local function declaration must include a body unless the local function is de
 
 ## Params parameters and dynamic arguments
 
-- **CS8108**: *Cannot pass argument with dynamic type to params parameter 'parameter' of local function 'method'.*
+- **CS8108**: *Cannot pass <example-value> with dynamic type to params parameter 'parameter' of local function 'method'.*
 
 A local function call can't pass a `dynamic` argument to a `params` parameter. Convert the value to the element type or array type expected by the `params` parameter before the call. You can also store the values in an explicitly typed array and pass that array to the local function.
 

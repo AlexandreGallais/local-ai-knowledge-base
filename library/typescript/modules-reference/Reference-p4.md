@@ -84,7 +84,7 @@ TypeScript offers a way to override the compiler’s module resolution for bare 
   "compilerOptions": {
     "module": "nodenext",
     "paths": {
-      "https://esm.sh/lodash@4.17.21": ["./node_modules/@types/lodash/index.d.ts"]
+      "https://esm.sh/user@example.com": ["./node_modules/@types/lodash/index.d.ts"]
     }
   }
 }
@@ -92,7 +92,7 @@ TypeScript offers a way to override the compiler’s module resolution for bare 
 
 ```ts
 // Typed by ./node_modules/@types/lodash/index.d.ts due to `paths` entry
-import { add } from "https://esm.sh/lodash@4.17.21";
+import { add } from "https://esm.sh/user@example.com";
 ```
 
 It’s also common for apps built with bundlers to define convenience path aliases in their bundler configuration, and then inform TypeScript of those aliases with `paths`:

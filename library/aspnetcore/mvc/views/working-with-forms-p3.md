@@ -141,8 +141,8 @@ namespace FormsTagHelper.ViewModels
     <div asp-validation-summary="ModelOnly"></div>
     <label>Email: <input asp-for="Email" /></label> <br />
     <span asp-validation-for="Email"></span><br />
-    <label>Password: <input asp-for="Password" /></label><br />
-    <span asp-validation-for="Password"></span><br />
+    <label>Password: <input asp-for="<example-value>" /></label><br />
+    <span asp-validation-for="<example-value>"></span><br />
     <button type="submit">Register</button>
 </form>
 ```
@@ -157,11 +157,11 @@ The generated HTML (when the model is valid):
    data-val="true"></label><br>
   <span class="field-validation-valid" data-valmsg-replace="true"
    data-valmsg-for="Email"></span><br>
-  <label>Password: <input name="Password" id="Password" type="password"
-   data-val-required="The Password field is required." data-val="true"></label><br>
+  <label>Password: <input name="<example-value>" id="<example-value>" type="<example-value>"
+   data-val-required="<example-value>" data-val="<example-value>"></label><br>
   <span class="field-validation-valid" data-valmsg-replace="true"
-   data-valmsg-for="Password"></span><br>
+   data-valmsg-for="<example-value>"></span><br>
   <button type="submit">Register</button>
-  <input name="__RequestVerificationToken" type="hidden" value="<removed for brevity>">
+  <input name="<example-value>" type="<example-value>" value="<example-value>">
 </form>
 ```

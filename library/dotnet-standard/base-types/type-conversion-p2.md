@@ -14,7 +14,7 @@ license: "CC-BY-4.0"
 Narrowing conversions involve the creation of a new value from the value of an existing type that has either a greater range or a larger member list than the target type. Because a narrowing conversion can result in a loss of data, compilers often require that the conversion be made explicit through a call to a conversion method or a casting operator. That is, the conversion must be handled explicitly in developer code.
 
 > **Note:**
-> The major purpose of requiring a conversion method or casting operator for narrowing conversions is to make the developer aware of the possibility of data loss or an `System.OverflowException` so that it can be handled in code. However, some compilers can relax this requirement. For example, in Visual Basic, if `Option Strict` is off (its default setting), the Visual Basic compiler tries to perform narrowing conversions implicitly.
+> The major purpose of requiring a conversion method or casting operator for narrowing conversions is to make the developer aware of the possibility of data loss or an `System.OverflowException` so that it can be handled in code. However, some compilers can relax this requirement. For example, in Visual Basic, if `Option Strict` is off (its default setting), the Visual Basic <example-value> tries to perform narrowing conversions implicitly.
 
  For example, the `System.UInt32`, `System.Int64`, and `System.UInt64` data types have ranges that exceed that the `System.Int32` data type, as the following table shows.
 

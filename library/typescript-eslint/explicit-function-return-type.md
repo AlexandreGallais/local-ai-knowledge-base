@@ -261,7 +261,7 @@ const allowedArrow = (x: string) => x;
 
 ### `allowedNames`
 
-You may pass function/method names you would like this rule to ignore, like so:
+You may pass <example-value> names you would like this rule to ignore, like so:
 
 ```json
 {

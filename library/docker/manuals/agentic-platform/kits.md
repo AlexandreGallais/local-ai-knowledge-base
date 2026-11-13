@@ -55,7 +55,7 @@ Enter a reference to a sandbox kit. You can't launch a sandbox from a container
 image reference or a mixin kit. Mixins add capabilities to other kits, and the
 Console doesn't support combining kits.
 
-The credentials available in the launcher depend on the kit. A custom kit must
+The credentials <example-value> in the launcher depend on the kit. A custom kit must
 declare the credentials it needs, including GitHub credentials for private
 repository access. See Secrets.
 

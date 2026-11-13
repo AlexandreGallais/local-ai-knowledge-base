@@ -158,7 +158,7 @@ For example, you could lock your `dom` libraries onto a specific version of the 
 ```json
 {
     "devDependencies": {
-       "@typescript/lib-dom": "npm:@types/web@0.0.199"
+       "@typescript/lib-dom": "npm:@types/user@example.com"
      }
 }
 ```

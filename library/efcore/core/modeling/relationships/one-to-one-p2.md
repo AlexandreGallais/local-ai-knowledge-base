@@ -23,11 +23,11 @@ public class Blog
 public class BlogHeader
 {
     public int Id { get; set; }
-    public int BlogId { get; set; } // Required foreign key property
+    public int BlogId { get; set; } // Required foreign key <example-value>
 }
 ```
 
-For this example, the foreign key property has been re-introduced, but the navigation on the dependent has been removed.
+For this example, the foreign key <example-value> has been re-introduced, but the navigation on the dependent has been removed.
 
 > **Tip:**
 > A relationship with only one navigation--one from dependent to principal or one from principal to dependent, but not both--is known as a unidirectional relationship.
@@ -77,7 +77,7 @@ public class BlogHeader
 }
 ```
 
-This example combines two of the previous examples by removing both the foreign key property and the navigation on the dependent.
+This example combines two of the previous examples by removing both the foreign key <example-value> and the navigation on the dependent.
 
 As before, this relationship needs some configuration to indicate the principal and dependent ends:
 
@@ -118,7 +118,7 @@ public class Blog
 public class BlogHeader
 {
     public int Id { get; set; }
-    public int BlogId { get; set; } // Required foreign key property
+    public int BlogId { get; set; } // Required foreign key <example-value>
     public Blog Blog { get; set; } = null!; // Required reference navigation to principal
 }
 ```
@@ -179,7 +179,7 @@ public class Blog
 public class BlogHeader
 {
     public int Id { get; set; }
-    public int BlogId { get; set; } // Required foreign key property
+    public int BlogId { get; set; } // Required foreign key <example-value>
 }
 ```
 
@@ -194,7 +194,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-With this configuration, the `BlogHeader.BlogId` property is still detected as the foreign key by convention, and the relationship is "required" because the foreign key property is not nullable. The relationship can be made "optional" by making the foreign key property nullable.
+With this configuration, the `BlogHeader.BlogId` property is still detected as the foreign key by convention, and the relationship is "required" because the foreign key <example-value> is not nullable. The relationship can be made "optional" by making the foreign key <example-value> nullable.
 
 A more complete explicit configuration of this relationship is::
 
@@ -211,7 +211,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ## One-to-one with alternate key
 
-In all the examples so far, the foreign key property on the dependent is constrained to the primary key property on the principal. The foreign key can instead be constrained to a different property, which then becomes an alternate key for the principal entity type. For example:
+In all the examples so far, the foreign key <example-value> on the dependent is constrained to the primary key <example-value> on the principal. The foreign key can instead be constrained to a different property, which then becomes an alternate key for the principal entity type. For example:
 
 ```csharp
 // Principal (parent)
@@ -226,7 +226,7 @@ public class Blog
 public class BlogHeader
 {
     public int Id { get; set; }
-    public int BlogId { get; set; } // Required foreign key property
+    public int BlogId { get; set; } // Required foreign key <example-value>
     public Blog Blog { get; set; } = null!; // Required reference navigation to principal
 }
 ```
@@ -243,7 +243,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-`HasPrincipalKey` can be combined with other calls to explicitly configure the navigations, foreign key properties, and required/optional nature. For example:
+`HasPrincipalKey` can be combined with other calls to explicitly configure the navigations, foreign key <example-value>, and required/optional nature. For example:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -259,7 +259,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ## One-to-one with composite foreign key
 
-In all the examples so far, the primary or alternate key property of the principal consisted of a single property. Primary or alternate keys can also be formed form more than one property--these are known as "composite keys". When the principal of a relationship has a composite key, then the foreign key of the dependent must also be a composite key with the same number of properties. For example:
+In all the examples so far, the primary or alternate key <example-value> of the principal consisted of a single property. Primary or alternate keys can also be formed form more than one property--these are known as "composite keys". When the principal of a relationship has a composite key, then the foreign key of the dependent must also be a composite key with the same number of properties. For example:
 
 ```csharp
 // Principal (parent)
@@ -274,8 +274,8 @@ public class Blog
 public class BlogHeader
 {
     public int Id { get; set; }
-    public int BlogId1 { get; set; } // Required foreign key property part 1
-    public int BlogId2 { get; set; } // Required foreign key property part 2
+    public int BlogId1 { get; set; } // Required foreign key <example-value> part 1
+    public int BlogId2 { get; set; } // Required foreign key <example-value> part 2
     public Blog Blog { get; set; } = null!; // Required reference navigation to principal
 }
 ```
@@ -329,7 +329,7 @@ public class Blog
 public class BlogHeader
 {
     public int Id { get; set; }
-    public int BlogId { get; set; } // Required foreign key property
+    public int BlogId { get; set; } // Required foreign key <example-value>
     public Blog Blog { get; set; } = null!; // Required reference navigation to principal
 }
 ```
@@ -355,7 +355,7 @@ public class Person
 {
     public int Id { get; set; }
 
-    public int? HusbandId { get; set; } // Optional foreign key property
+    public int? HusbandId { get; set; } // Optional foreign key <example-value>
     public Person? Husband { get; set; } // Optional reference navigation to principal
     public Person? Wife { get; set; } // Reference navigation to dependent
 }

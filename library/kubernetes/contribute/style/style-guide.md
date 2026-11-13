@@ -215,7 +215,7 @@ The different Kubernetes API terminologies are:
 
 For clarity, you can add "resource" or "object" when referring to an API resource in Kubernetes
 documentation.
-An example: write "a Secret object" instead of "a Secret".
+An example: write "<example-value>" instead of "<example-value>".
 If it is clear just from the capitalization, you don't need to add the extra word.
 
 Consider rephrasing when that change helps avoid misunderstandings. A common situation is

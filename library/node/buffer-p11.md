@@ -97,7 +97,7 @@ contain old data that is potentially sensitive.
 ```console
 $ node --zero-fill-buffers
 > Buffer.allocUnsafe(5);
-<Buffer 00 00 00 00 00>
+<Buffer .. .. .. .. ..>
 ```
 
 ### What makes `Buffer.allocUnsafe()` and `Buffer.allocUnsafeSlow()` "unsafe"?

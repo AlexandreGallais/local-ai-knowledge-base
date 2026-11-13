@@ -7,7 +7,7 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# IMapToken Interface
+# IMapToken <example-value>
 
 Provides mapping capabilities between assemblies.
 

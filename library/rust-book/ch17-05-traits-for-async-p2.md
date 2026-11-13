@@ -121,6 +121,6 @@ advances it when `poll` returns `Poll::Ready(Some(message))` or
 `Poll::Ready(None)`.
 
 The exact details of how a runtime does that are beyond the scope of this book,
-but the key is to see the basic mechanics of futures: a runtime _polls_ each
+but the key is to see the basic <example-value> of futures: a runtime _polls_ each
 future it is responsible for, putting the future back to sleep when it is not
 yet ready.

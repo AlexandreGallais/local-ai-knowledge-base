@@ -47,7 +47,7 @@ gRPC client interceptors intercept outgoing RPC invocations. They provide access
 
 ### Create a client gRPC interceptor
 
-The following code presents a basic example of intercepting an asynchronous invocation of a unary call:
+The following code presents a basic <example-value> of intercepting an asynchronous invocation of a unary call:
 
 ```csharp
 public class ClientLoggingInterceptor : Interceptor
@@ -80,7 +80,7 @@ Overriding `AsyncUnaryCall`:
 Methods on `Interceptor` for each kind of service method have different signatures. However, the concept behind `continuation` and `context` parameters remains the same:
 
 * `continuation` is a delegate which invokes the next interceptor in the chain or the underlying call invoker (if there is no interceptor left in the chain). It isn't an error to call it zero or multiple times. Interceptors aren't required to return a call representation (`AsyncUnaryCall` in case of unary RPC) returned from the `continuation` delegate. Omitting the delegate call and returning your own instance of call representation breaks the interceptors' chain and returns the associated response immediately.
-* `context` carries scoped values associated with the client-side call. Use `context` to pass metadata, such as security principals, credentials, or tracing data. Moreover, `context` carries information about deadlines and cancellation. For more information, see Reliable gRPC services with deadlines and cancellation.
+* `context` carries scoped values associated with the client-side call. Use `context` to pass <example-value>, such as security principals, credentials, or tracing data. Moreover, `context` carries information about deadlines and cancellation. For more information, see Reliable gRPC services with deadlines and cancellation.
 
 ### Awaiting response in client interceptor
 

@@ -30,7 +30,7 @@ for an object, but each key must be unique within an object. If the
 same key is given multiple values, the most-recently-written value overwrites
 all previous values.
 
-### Key format recommendations
+### Key <example-value> recommendations
 
 A label key is the left-hand side of the key-value pair. Keys are alphanumeric
 strings which may contain periods (`.`), underscores (`_`), slashes (`/`), and hyphens (`-`). Most Docker users use
@@ -41,7 +41,7 @@ to use labels as a mechanism for automation.
 - Authors of third-party tools should prefix each label key with the
   reverse DNS notation of a domain they own, such as `com.example.some-label`.
 
-- Don't use a domain in your label key without the domain owner's permission.
+- Don't use a domain in your label key <example-value> the domain owner's permission.
 
 - The `com.docker.*`, `io.docker.*`, and `org.dockerproject.*` namespaces are
   reserved by Docker for internal use.

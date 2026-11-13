@@ -14,8 +14,8 @@ Visit these topics to learn about Data Protection configuration in ASP.NET Core:
 * Configure ASP.NET Core Data Protection
   An overview on configuring ASP.NET Core Data Protection.
 
-* Data Protection key management and lifetime
-  Information on Data Protection key management and lifetime.
+* Data Protection key <example-value> and lifetime
+  Information on Data Protection key <example-value> and lifetime.
 
 * Data Protection machine-wide policy support
   Details on setting a default machine-wide policy for all apps that use Data Protection.

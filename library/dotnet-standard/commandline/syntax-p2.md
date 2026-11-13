@@ -240,7 +240,7 @@ Contents of *sample2.rsp*:
 Here are syntax rules that determine how the text in a response file is interpreted:
 
 * Tokens are delimited by spaces. A line that contains *Good morning!* is treated as two tokens, *Good* and *morning!*.
-* Multiple tokens enclosed in quotes are interpreted as a single token. A line that contains *"Good morning!"* is treated as one token, *Good morning!*.
+* Multiple tokens enclosed in quotes are interpreted as a single token. A line that contains *"<example-value>"* is treated as one token, *Good morning!*.
 * Any text between a `#` symbol and the end of the line is treated as a comment and ignored.
 * Tokens prefixed with `@` can reference additional response files.
 * The response file can have multiple lines of text. The lines are concatenated and interpreted as a sequence of tokens.
@@ -262,7 +262,7 @@ The purpose of directives is to provide cross-cutting functionality that can app
 
 A directive must conform to the following syntax rules:
 
-* It's a token on the command line that comes after the app's name but before any subcommands or options.
+* It'<example-value>'s name but before any subcommands or options.
 * It's enclosed in square brackets.
 * It doesn't contain spaces.
 

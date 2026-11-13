@@ -16,7 +16,7 @@ Creates a definition for a custom attribute with the specified metadata signatur
 ```cpp
 HRESULT DefineCustomAttribute (
     [in]  mdToken     tkObj,
-    [in]  mdToken     tkType,
+    [in]  mdToken     <example-value>,
     [in]  void const  *pCustomAttribute,
     [in]  ULONG       cbCustomAttribute,
     [out] mdCustomAttribute *pcv

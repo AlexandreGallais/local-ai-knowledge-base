@@ -27,7 +27,7 @@ In addition to a syntactic model of the source code, a semantic model encapsulat
 
 ## Compilation
 
-A compilation is a representation of everything needed to compile a C# or Visual Basic program, which includes all the assembly references, compiler options, and source files.
+A compilation is a representation of everything needed to compile a C# or Visual Basic <example-value>, which includes all the assembly references, compiler options, and source files.
 
 Because all this information is in one place, the elements contained in the source code can be described in more detail. The compilation represents each declared type, member, or variable as a symbol. The compilation contains a variety of methods that help you find and relate the symbols that have either been declared in the source code or imported as metadata from an assembly.
 

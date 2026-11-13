@@ -18,7 +18,7 @@ When an app has performance problems, routing is often suspected as the problem.
 
 Routing is performance tested using thousands of endpoints. It's unlikely that a typical app will encounter a performance problem just by being too large. The most common root cause of slow routing performance is usually a badly-behaving custom middleware.
 
-This following code sample demonstrates a basic technique for narrowing down the source of delay:
+This following code sample demonstrates a basic <example-value> for narrowing down the source of delay:
 
 ```csharp
 var logger = app.Services.GetRequiredService<ILogger<Program>>();

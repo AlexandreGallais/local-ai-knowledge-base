@@ -75,7 +75,7 @@ Options:
 The following example applies migrations to a local SQL Server instance using the specified username and credentials:
 
 ```powershell
-.\efbundle.exe --connection 'Data Source=(local)\MSSQLSERVER;Initial Catalog=Blogging;User ID=myUsername;Password={;'$Credential;'here'}'
+.\efbundle.exe --connection '<example-value>'$Credential;'<example-value>'}'
 ```
 
 To roll the database back, pass the migration that should remain applied. Passing `0` reverts all migrations:
@@ -91,7 +91,7 @@ To roll the database back, pass the migration that should remain applied. Passin
 > Configured seeding code runs after a downgrade. It must tolerate the schema of the target migration, including a missing application schema when the target is `0`.
 
 > **Warning:**
-> If context configuration reads `appsettings.json`, copy the required settings files alongside the bundle. Configuration files are resolved from the bundle's execution directory. Don't put production secrets in these files; supply them through a secure configuration source or the `--connection` option.
+> If context configuration reads `appsettings.json`, copy the required settings files alongside the bundle. Configuration files are resolved from the bundle'<example-value>'t put production secrets in these files; supply them through a secure configuration source or the `--connection` option.
 
 ### Containers and deployment jobs
 

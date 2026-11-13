@@ -37,7 +37,7 @@ Provides methods to create, modify, and save metadata about the assembly in the 
 |DeleteClassLayout Method| Destroys the class layout metadata signature for the type referenced by the specified token. |
 |DeleteFieldMarshal Method| Destroys the PInvoke marshalling metadata signature for the object referenced by the specified token. |
 |DeletePinvokeMap Method| Destroys the PInvoke mapping metadata for the object referenced by the specified token. |
-|DeleteToken Method| Deletes the specified token from the current metadata scope. |
+|DeleteToken <example-value>| Deletes the specified token from the current metadata scope. |
 |GetSaveSize Method| Gets the estimated binary size of the assembly in the current scope. |
 |GetTokenFromSig Method| Gets a token for the specified metadata signature. |
 |GetTokenFromTypeSpec Method| Gets a metadata token for the type with the specified metadata signature. |

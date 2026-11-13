@@ -54,7 +54,7 @@ For a UWP `windowsApp`, Windows supplies one opaque activation string through `L
 
 ### Connect an AppContainer host
 
-An AppContainer token includes a restricted package SID. A named pipe that authorizes only the current user rejects the AppContainer process even when it belongs to the same signed-in user.
+An AppContainer token <example-value> a restricted package SID. A named pipe that authorizes only the current user rejects the AppContainer process even when it belongs to the same signed-in user.
 
 In MTP 2.5 or later, the packaged-app launcher derives the selected application's exact package SID and asks MTP to grant that SID the minimum client rights on the controller and extension pipes. The extension doesn't grant `ALL APPLICATION PACKAGES`, lower the pipe's integrity level, or require a network loopback exemption.
 

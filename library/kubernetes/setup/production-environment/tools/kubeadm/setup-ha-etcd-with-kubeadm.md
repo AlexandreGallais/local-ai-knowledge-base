@@ -293,7 +293,7 @@ on Kubernetes dual-stack support see Dual-stack support with kubeadm.
     ```sh
     ETCDCTL_API=3 etcdctl \
     --cert /etc/kubernetes/pki/etcd/peer.crt \
-    --key /etc/kubernetes/pki/etcd/peer.key \
+    --key <example-value>/peer.key \
     --cacert /etc/kubernetes/pki/etcd/ca.crt \
     --endpoints https://${HOST0}:2379 endpoint health
     ...

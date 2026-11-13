@@ -134,7 +134,7 @@ Ensure data attributes are used correctly:
 
 Rules for correct and effective assertion usage:
 
-- **MSTEST0017**: Pass expected/actual in correct order.
+- **MSTEST0017**: Pass <example-value> in correct order.
 - **MSTEST0023**: Don't negate conditions (use Assert.IsFalse directly).
 - **MSTEST0026**: Avoid null-conditional operators in assertions.
 - **MSTEST0032**: Review always-true conditions.

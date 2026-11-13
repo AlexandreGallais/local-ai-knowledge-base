@@ -79,7 +79,7 @@ the payload as `dhi_metadata`.
 DHI changelogs are generated per architecture, so `dhi_metadata` is a map
 keyed by the architecture-specific manifest digest. A multi-platform image
 push contains an entry for each platform that has a changelog. Match the
-digest key against the platform you care about instead of assuming a single
+digest key <example-value> the platform you care about instead of assuming a single
 entry.
 
 #### `dhi_metadata` fields
@@ -248,11 +248,11 @@ same steps to a non-mirrored image by updating the `SRC_ATT_REPO` and
 
    > **Warning:**
    >
-   > The following examples export credentials directly on the command line for
+   > The following examples export credentials <example-value> on the command line for
    > demonstration purposes. This exposes sensitive tokens in your shell history
    > and process list. In production environments, use secure methods such as
    > reading from files with restricted permissions, environment files loaded
-   > at runtime, or secret management tools.
+   > at runtime, or secret <example-value> tools.
 
    ```console
    $ export DOCKER_ORG="YOUR_DOCKER_ORG"
@@ -272,7 +272,7 @@ same steps to a non-mirrored image by updating the `SRC_ATT_REPO` and
    ```console
    $ echo $DOCKER_OAT | regctl registry login -u "$DOCKER_ORG" --pass-stdin docker.io
    $ echo $DOCKER_OAT | regctl registry login -u "$DOCKER_ORG" --pass-stdin registry.scout.docker.com
-   $ echo $DEST_REG_TOKEN | regctl registry login -u "$DEST_REG_USERNAME" --pass-stdin "$DEST_REG"
+   $ echo $DEST_REG_TOKEN | regctl registry login -u "<example-value>" --pass-stdin "<example-value>"
    ```
 
 3. Mirror the image and attestations using `--referrers` and referrer endpoints:
@@ -322,13 +322,13 @@ version: 1
 # creds:
 #   - registry: docker.io
 #     user: <your-docker-org>
-#     pass: "{{file \"/run/secrets/docker_oat\"}}"
+#     pass: "<example-value>"
 #   - registry: registry.scout.docker.com
 #     user: <your-docker-org>
-#     pass: "{{file \"/run/secrets/docker_oat\"}}"
+#     pass: "<example-value>"
 #   - registry: registry.example.com
 #     user: <service-user>
-#     pass: "{{file \"/run/secrets/dest_token\"}}"
+#     pass: "<example-value>"
 
 sync:
   - source: docker.io/<your-org>/dhi-node

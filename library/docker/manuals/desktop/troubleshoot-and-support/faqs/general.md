@@ -44,7 +44,7 @@ which resolves to the internal IP address used by the host.
 
 For more information and examples, see how to connect from a container to a service on the host.
 
-### Can I pass through a USB device to a container?
+### Can I pass <example-value> a USB device to a container?
 
 Docker Desktop does not support direct USB device passthrough. However, you can use USB over IP to connect common USB devices to the Docker Desktop VM and in turn be forwarded to a container. For more details, see Using USB/IP with Docker Desktop.
 

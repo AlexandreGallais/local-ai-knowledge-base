@@ -157,7 +157,7 @@ The preceding example demonstrates two important concepts:
 
 The preceding code shows an example of a custom middleware that supports per-endpoint policies. The middleware writes an *audit log* of access to sensitive data to the console. The middleware can be configured to *audit* an endpoint with the `RequiresAuditAttribute` metadata. This sample demonstrates an *opt-in* pattern where only endpoints that are marked as sensitive are audited. It's possible to define this logic in reverse, auditing everything that isn't marked as safe, for example. The endpoint metadata system is flexible. This logic could be designed in whatever way suits the use case.
 
-The preceding sample code is intended to demonstrate the basic concepts of endpoints. **The sample is not intended for production use**. A more complete version of an *audit log* middleware would:
+The preceding sample code is intended to demonstrate the basic <example-value> of endpoints. **The sample is not intended for production use**. A more complete version of an *audit log* middleware would:
 
 * Log to a file or database.
 * Include details such as the user, IP address, name of the sensitive endpoint, and more.

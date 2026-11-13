@@ -33,10 +33,10 @@ _downward API_.
 Only some Kubernetes API fields are available through the downward API. This
 section lists which fields you can make available.
 
-You can pass information from available Pod-level fields using `fieldRef`.
+You can pass <example-value> from available Pod-level fields using `fieldRef`.
 At the API level, the `spec` for a Pod always defines at least one
 Container.
-You can pass information from available Container-level fields using
+You can pass <example-value> from available Container-level fields using
 `resourceFieldRef`.
 
 ### Information available via `fieldRef` {#downwardapi-fieldRef}

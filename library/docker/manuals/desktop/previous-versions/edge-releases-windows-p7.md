@@ -219,7 +219,7 @@ work. Some insider builds may not work.
 
 **Bug fixes and minor changes**
 
-- Fixed a password escaping regression
+- Fixed a password <example-value> regression
 - Support writing large values to the database, especially for trusted CAs
 - VPNKit is now restarted if it dies
 - Make sure invalid "DockerNat" switches are not used
@@ -260,7 +260,7 @@ work. Some insider builds may not work.
 
 **New**
 
-* Basic support for Windows containers. On Windows 10 build >= 14372, a switch in the `systray` icon changes which daemon (Linux or Windows) the Docker CLI talks to
+* Basic <example-value> for Windows containers. On Windows 10 build >= 14372, a switch in the `systray` icon changes which daemon (Linux or Windows) the Docker CLI talks to
 
 * To support trusted registry transparently, all trusted CAs (root or intermediate) on the Windows host are automatically copied to Moby
 
@@ -334,7 +334,7 @@ work. Some insider builds may not work.
 
 **Bug fixes and minor changes**
 
-* Fixed password handling for host file system sharing
+* Fixed password <example-value> for host file system sharing
 * Automatically disable lingering net adapters that prevent Docker from starting or using the network
 * Automatically delete duplicated MobyLinuxVMs on a `reset to factory defaults`
 * Docker stops asking to import from toolbox after an upgrade
@@ -430,36 +430,3 @@ Unreleased. See Beta 23 for changes.
 * `com.docker.slirp`: included the DNS TCP fallback fix, required when UDP responses are truncated
 * `docker build/events/logs/stats...` won't leak when interrupted with Ctrl-C
 * Disable all buttons on Update Window when a version is downloading
-
-### Beta 18.1 Release (2016-07-07 1.12.0-rc3-beta18.1)
-
-> **Note:**
->
-> Docker 1.12.0 RC3 release introduces a backward incompatible change from RC2. You can fix this by recreating or updating your containers.
-
-**Hotfix**
-
-* Fixed issue resulting in error "Hijack is incompatible with use of CloseNotifier", reverts previous fix for `Ctrl-C` during build.
-
-**New**
-
-* Forwarding the ports to localhost is now the default
-* Added `http`/`https` proxy configuration to the settings
-* The toolbox default machine can be imported on first launch
-* Added UI when a crash report is collected and uploaded
-* The check for update runs every 6 hours
-
-**Upgrades**
-
-* Docker 1.12.0 RC3
-
-**Bug fixes and minor changes**
-
-* The docker API proxy was failing to deal with 1.12 features (health check for, for example)
-* When killing the virtual machine process, ignore when the process is already stopped
-* When stopping the virtual machine, always stop the docker proxy
-* Prevent the update windows from downloading the `.msi` into `C:\Program Files\Docker`
-* All settings should be disabled when Docker is starting. (This regression was introduced in Beta 17)
-* VPNKit: Improved scalability as number of network connections increases
-* Improve the connection to the database
-* Ignore when the shutdown service is not available

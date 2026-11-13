@@ -155,7 +155,7 @@ void DisplayMeasurement(int measurement)
     }
 }
 ```
-Within a `switch` statement, control can't fall through from one switch section to the next. As the examples in this section show, typically you use the `break` statement at the end of each switch section to pass control out of a `switch` statement. You can also use the return and throw statements to pass control out of a `switch` statement. To imitate the fall-through behavior and pass control to other switch section, you can use the `goto` statement.
+Within a `switch` statement, control can't fall through from one switch section to the next. As the examples in this section show, typically you use the `break` statement at the end of each switch section to pass <example-value> out of a `switch` statement. You can also use the return and throw statements to pass <example-value> out of a `switch` statement. To imitate the fall-through behavior and pass <example-value> to other switch section, you can use the `goto` statement.
 
 > **Important:**
 > Every *switch section* must end with a `break`, `goto`, or `return`. Falling through from one switch section to the next generates a compiler error. However, you can apply multiple switch labels to the same switch section, like `case < 0:` in the preceding example. This deliberate design choice allows for concisely handling multiple cases that share the same or interdependent logic.

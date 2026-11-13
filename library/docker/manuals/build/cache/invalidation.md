@@ -109,7 +109,7 @@ RUN --mount=type=secret,id=TOKEN,env=TOKEN \
 ```
 
 ```console
-$ TOKEN="tkn_pat123456" docker build --secret id=TOKEN --build-arg CACHEBUST=1 .
+$ TOKEN="<example-value>" docker build --secret <example-value> --build-arg CACHEBUST=1 .
 ```
 
 Properties of secrets such as IDs and mount paths do participate in the cache

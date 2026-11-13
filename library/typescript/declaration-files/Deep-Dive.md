@@ -19,10 +19,10 @@ and has some properties on the module object as well.
 By reading this guide, you'll have the tools to write complex declaration files that expose a friendly API surface.
 This guide focuses on module (or UMD) libraries because the options here are more varied.
 
-## Key Concepts
+## Key <example-value>
 
 You can fully understand how to make any shape of declaration
-by understanding some key concepts of how TypeScript works.
+by understanding some key <example-value> of how TypeScript works.
 
 ### Types
 

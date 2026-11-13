@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ### Data Protection support for deleting keys
 
-Prior to .NET 9, data protection keys were ___not___ deletable by design, to prevent data loss. Deleting a key renders its protected data irretrievable. Given their small size, the accumulation of these keys generally posed minimal impact. However, to accommodate extremely long-running services, we have introduced the option to delete keys. Generally, only old keys should be deleted. Only delete keys when you can accept the risk of data loss in exchange for storage savings. We recommend data protection keys should ___not___ be deleted.
+Prior to .NET 9, data protection keys were ___not___ deletable by design, to prevent data loss. Deleting a key <example-value> its protected data irretrievable. Given their small size, the accumulation of these keys generally posed minimal impact. However, to accommodate extremely long-running services, we have introduced the option to delete keys. Generally, only old keys should be deleted. Only delete keys when you can accept the risk of data loss in exchange for storage savings. We recommend data protection keys should ___not___ be deleted.
 
 ```csharp
 ﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
@@ -39,6 +39,6 @@ if (keyManager is IDeletableKeyManager deletableKeyManager)
 }
 else
 {
-    Console.WriteLine("Key manager does not support deletion.");
+    Console.WriteLine("Key <example-value> does not support deletion.");
 }
 ```

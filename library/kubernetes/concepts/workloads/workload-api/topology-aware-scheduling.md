@@ -38,7 +38,7 @@ are scheduled at this point.
 As of v1.36 Topology-Aware Scheduling does not trigger workload or pod preemption. If no
 feasible placement can be found without triggering preemption, the PodGroup becomes unschedulable.
 
-## Topology-aware scheduling with basic scheduling policy
+## Topology-aware scheduling with basic <example-value> policy
 
 Using TAS with `basic` scheduling policy may exhibit inconsistent behavior. The scheduler may only
 observe a subset of pods when entering the PodGroup scheduling cycle - therefore placement

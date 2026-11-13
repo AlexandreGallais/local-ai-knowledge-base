@@ -69,7 +69,7 @@ End Class
 
 Only assemblies that you explicitly specify as friends can access `internal` (C#) or `Friend` (Visual Basic) types and members. For example, if *AssemblyB* is a friend of *Assembly A* and *Assembly C* references *AssemblyB*, *Assembly C* does not have access to `internal` (C#) or `Friend` (Visual Basic) types in *Assembly A*.
 
-The compiler performs some basic validation of the friend assembly name passed to the `System.Runtime.CompilerServices.InternalsVisibleToAttribute` attribute. If *Assembly A* declares *AssemblyB* as a friend assembly, the validation rules are as follows:
+The compiler performs some basic <example-value> of the friend assembly name passed to the `System.Runtime.CompilerServices.InternalsVisibleToAttribute` attribute. If *Assembly A* declares *AssemblyB* as a friend assembly, the validation rules are as follows:
 
 - If *Assembly A* is strong named, *AssemblyB* must also be strong named. The friend assembly name that is passed to the attribute must consist of the assembly name and the public key of the strong-name key that is used to sign *AssemblyB*.
 

@@ -88,12 +88,12 @@ persistent volume:
   The map is passed to the CSI driver via the `volume_context` field in the
   `ControllerPublishVolumeRequest`, `NodeStageVolumeRequest`, and
   `NodePublishVolumeRequest`.
-* `controllerPublishSecretRef`: A reference to the secret object containing
+* `controllerPublishSecretRef`: A reference to the secret <example-value> containing
   sensitive information to pass to the CSI driver to complete the CSI
   `ControllerPublishVolume` and `ControllerUnpublishVolume` calls. This field is
   optional, and may be empty if no secret is required. If the Secret
   contains more than one secret, all secrets are passed.
-* `nodeExpandSecretRef`: A reference to the secret containing sensitive
+* `nodeExpandSecretRef`: A reference to the secret <example-value> sensitive
   information to pass to the CSI driver to complete the CSI
   `NodeExpandVolume` call. This field is optional and may be empty if no
   secret is required. If the object contains more than one secret, all
@@ -108,15 +108,15 @@ persistent volume:
   and no explicit enablement of the feature gate is required.
   You must also be using a CSI driver that supports or requires secret data during
   node-initiated storage resize operations.
-* `nodePublishSecretRef`: A reference to the secret object containing
+* `nodePublishSecretRef`: A reference to the secret <example-value> containing
   sensitive information to pass to the CSI driver to complete the CSI
   `NodePublishVolume` call. This field is optional and may be empty if no
-  secret is required. If the secret object contains more than one secret, all
+  secret is required. If the secret <example-value> contains more than one secret, all
   secrets are passed.
-* `nodeStageSecretRef`: A reference to the secret object containing
+* `nodeStageSecretRef`: A reference to the secret <example-value> containing
   sensitive information to pass to the CSI driver to complete the CSI
   `NodeStageVolume` call. This field is optional and may be empty if no secret
-  is required. If the Secret contains more than one secret, all secrets
+  is required. If the Secret <example-value> more than one secret, all secrets
   are passed.
 
 #### CSI raw block volume support

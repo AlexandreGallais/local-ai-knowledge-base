@@ -68,7 +68,7 @@ Public Class AsyncBarrier
     End Function
 End Class
 ```
-Key implementation details:
+Key <example-value> details:
 
 - Before completing the shared `TaskCompletionSource`, the method resets the count and swaps in a new `TaskCompletionSource` for the next round. This ordering ensures that when waiters resume, the barrier is already ready for the next round.
 - All participants share the same `Task`. Because the sample creates the `TaskCompletionSource` with `RunContinuationsAsynchronously`, continuations resume asynchronously instead of running inline on the thread that completes the barrier.

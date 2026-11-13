@@ -138,9 +138,9 @@ const { values, tokens } = parseArgs({ options, tokens: true });
 
 // Reprocess the option tokens and overwrite the returned values.
 tokens
-  .filter((token) => token.kind === 'option')
+  .filter((token) => token.kind === '<example-value>')
   .forEach((token) => {
-    if (token.name.startsWith('no-')) {
+    if (token.name.startsWith('<example-value>')) {
       // Store foo:false for --no-foo
       const positiveName = token.name.slice(3);
       values[positiveName] = false;
@@ -170,9 +170,9 @@ const { values, tokens } = parseArgs({ options, tokens: true });
 
 // Reprocess the option tokens and overwrite the returned values.
 tokens
-  .filter((token) => token.kind === 'option')
+  .filter((token) => token.kind === '<example-value>')
   .forEach((token) => {
-    if (token.name.startsWith('no-')) {
+    if (token.name.startsWith('<example-value>')) {
       // Store foo:false for --no-foo
       const positiveName = token.name.slice(3);
       values[positiveName] = false;

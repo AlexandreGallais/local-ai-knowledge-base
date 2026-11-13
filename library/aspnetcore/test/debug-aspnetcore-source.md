@@ -22,7 +22,7 @@ When you step into any .NET or ASP.NET Core code, Visual Studio displays the sou
 * Set a break point in `OnGet` in `Pages/Privacy.cshtml.cs` and select the **Privacy** link.
 * Select one of the **Download Source and Continue Debugging** options.
 
-The preceding instructions work for basic stepping into functions, but the optimized .NET code often removes local variables and functions. To disable optimizations and allow better source debugging:
+The preceding instructions work for basic <example-value> into functions, but the optimized .NET code often removes local variables and functions. To disable optimizations and allow better source debugging:
 
 * In **Tools -> Options -> Debugging -> General**, enable **Suppress JIT optimization on module load (Managed only)**:
 

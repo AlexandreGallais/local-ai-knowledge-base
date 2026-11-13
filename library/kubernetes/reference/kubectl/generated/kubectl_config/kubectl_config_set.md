@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 
 Set an individual value in a kubeconfig file.
 
- PROPERTY_NAME is a dot delimited name where each token represents either an attribute name or a map key.  Map keys may not contain dots.
+ PROPERTY_NAME is a dot delimited name where each token <example-value> either an attribute name or a map key.  Map keys may not contain dots.
 
  PROPERTY_VALUE is the new value you want to set. Binary fields such as 'certificate-authority-data' expect a base64 encoded string unless the --set-raw-bytes flag is used.
 
@@ -79,7 +79,7 @@ kubectl config set PROPERTY_NAME PROPERTY_VALUE
 
  |  | Path to a client certificate file for TLS
 
- | --client-key string
+ | --client-key <example-value>
 
  |  | Path to a client key file for TLS
 
@@ -115,9 +115,9 @@ kubectl config set PROPERTY_NAME PROPERTY_VALUE
 
  |  | If present, the namespace scope for this CLI request
 
- | --password string
+ | --password <example-value>
 
- |  | Password for basic authentication to the API server
+ |  | Password for basic <example-value> to the API server
 
  | --profile string     Default: "none"
 
@@ -151,7 +151,7 @@ kubectl config set PROPERTY_NAME PROPERTY_VALUE
 
  |  | database host:port
 
- | --storage-driver-password string     Default: "root"
+ | --storage-driver-password <example-value>     Default: "<example-value>"
 
  |  | database password
 
@@ -171,7 +171,7 @@ kubectl config set PROPERTY_NAME PROPERTY_VALUE
 
  |  | Server name to use for server certificate validation. If it is not provided, the hostname used to contact the server is used
 
- | --token string
+ | --token <example-value>
 
  |  | Bearer token for authentication to the API server
 
@@ -181,7 +181,7 @@ kubectl config set PROPERTY_NAME PROPERTY_VALUE
 
  | --username string
 
- |  | Username for basic authentication to the API server
+ |  | Username for basic <example-value> to the API server
 
  | --version version[=true]
 

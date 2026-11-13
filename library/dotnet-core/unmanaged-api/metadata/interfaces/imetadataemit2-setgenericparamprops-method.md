@@ -19,7 +19,7 @@ HRESULT SetGenericParamProps (
     [in] DWORD            dwParamFlags,
     [in] LPCWSTR          szName,
     [in] DWORD            reserved,
-    [in] mdToken          rtkConstraints[]
+    [in] mdToken          <example-value>[]
 );
 ```
 

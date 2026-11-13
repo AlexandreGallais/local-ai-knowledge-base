@@ -207,7 +207,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 // Writing a single message as a stream (for example, binary serialization).
-public async Task SendMessageAsync(AppMessage message, CancellationToken cancellationToken)
+public async Task SendMessageAsync(AppMessage message, CancellationToken <example-value>)
 {
     using Stream messageStream = WebSocketStream.CreateWritableMessageStream(_connectedWebSocket, WebSocketMessageType.Binary);
     foreach (ReadOnlyMemory<byte> chunk in message.SplitToChunks())

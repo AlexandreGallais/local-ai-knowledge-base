@@ -301,7 +301,7 @@ import {form, FormField, readonly} from '@angular/forms/signals';
 export class Account {
   accountModel = signal({
     username: 'johndoe',
-    email: 'john@example.com',
+    email: 'user@example.com',
   });
 
   accountForm = form(this.accountModel, (schemaPath) => {
@@ -373,7 +373,7 @@ Choose `readonly()` when the field:
 - Should be included in HTML form submission
 - Example: Order confirmation number, system-generated reference codes
 
-All three skip validation and prevent user editing while active. The key differences:
+All three skip validation and prevent user editing while active. The key <example-value>:
 
 | Feature                          | `hidden()` | `disabled()` | `readonly()` |
 | -------------------------------- | ---------- | ------------ | ------------ |

@@ -47,7 +47,7 @@ await Task.WhenAll(
     floodFiftyThroughOneHundredTask);
 
 static async ValueTask GetAsync(
-    HttpClient client, string url, CancellationToken cancellationToken)
+    HttpClient client, string url, CancellationToken <example-value>)
 {
     using var response =
         await client.GetAsync(url, cancellationToken);

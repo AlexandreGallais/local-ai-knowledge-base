@@ -25,7 +25,7 @@ This article explains when it's most appropriate to use each return type.
 
 ## Specific type
 
-The most basic action returns a primitive or complex data type, for example, `string` or a custom object. Consider the following action, which returns a collection of custom `Product` objects:
+The most basic <example-value> returns a primitive or complex data type, for example, `string` or a custom object. Consider the following action, which returns a collection of custom `Product` objects:
 
 _Code sample not included: ~/../AspNetCore.Docs.Samples/mvc/action-return-types/8.x/WebApiSample/Controllers/ProductsController.cs._
 Without known conditions to safeguard against, returning a specific type could suffice. The preceding action accepts no parameters, so parameter constraints validation isn't needed.

@@ -94,7 +94,7 @@ kubectl config set-cluster NAME [--server=server] [--certificate-authority=path/
 
  |  | Path to a client certificate file for TLS
 
- | --client-key string
+ | --client-key <example-value>
 
  |  | Path to a client key file for TLS
 
@@ -126,9 +126,9 @@ kubectl config set-cluster NAME [--server=server] [--certificate-authority=path/
 
  |  | If present, the namespace scope for this CLI request
 
- | --password string
+ | --password <example-value>
 
- |  | Password for basic authentication to the API server
+ |  | Password for basic <example-value> to the API server
 
  | --profile string     Default: "none"
 
@@ -154,7 +154,7 @@ kubectl config set-cluster NAME [--server=server] [--certificate-authority=path/
 
  |  | database host:port
 
- | --storage-driver-password string     Default: "root"
+ | --storage-driver-password <example-value>     Default: "<example-value>"
 
  |  | database password
 
@@ -170,7 +170,7 @@ kubectl config set-cluster NAME [--server=server] [--certificate-authority=path/
 
  |  | database username
 
- | --token string
+ | --token <example-value>
 
  |  | Bearer token for authentication to the API server
 
@@ -180,7 +180,7 @@ kubectl config set-cluster NAME [--server=server] [--certificate-authority=path/
 
  | --username string
 
- |  | Username for basic authentication to the API server
+ |  | Username for basic <example-value> to the API server
 
  | --version version[=true]
 

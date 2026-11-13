@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # IMetaDataTables::GetTableInfo Method
 
-Gets the name, row size, number of rows, number of columns, and key column index of the specified table.
+Gets the name, row size, number of rows, number of columns, and key <example-value> index of the specified table.
 
 ## Syntax
 
@@ -39,7 +39,7 @@ HRESULT GetTableInfo (
  [out] A pointer to the number of columns in the table.
 
  `piKey`
- [out] A pointer to the index of the key column, or -1 if the table has no key column.
+ [out] A pointer to the index of the key <example-value>, or -1 if the table has no key column.
 
  `ppName`
  [out] A pointer to a pointer to the table name.

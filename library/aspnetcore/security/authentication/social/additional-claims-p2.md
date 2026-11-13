@@ -19,7 +19,7 @@ The sample app sets the value of `SaveTokens` to `true` in `Microsoft.AspNetCore
 builder.Services.AddAuthentication().AddGoogleOpenIdConnect(googleOptions =>
 {
     googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+    googleOptions.ClientSecret = <example-value>["<example-value>"];
 
     googleOptions.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
     googleOptions.ClaimActions.MapJsonKey("urn:google:locale", "locale", "string");
@@ -150,7 +150,7 @@ To demonstrate how to add a custom token, which is stored as part of `SaveTokens
 builder.Services.AddAuthentication().AddGoogleOpenIdConnect(googleOptions =>
 {
     googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+    googleOptions.ClientSecret = <example-value>["<example-value>"];
 
     googleOptions.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
     googleOptions.ClaimActions.MapJsonKey("urn:google:locale", "locale", "string");
@@ -230,7 +230,7 @@ User Claims
 http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier
     9b342344f-7aab-43c2-1ac1-ba75912ca999
 http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name
-    someone@gmail.com
+    user@example.com
 AspNet.Identity.SecurityStamp
     7D4312MOWRYYBFI1KXRPHGOSTBVWSFDE
 http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname

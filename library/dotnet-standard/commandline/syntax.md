@@ -32,13 +32,13 @@ Tokens are interpreted as commands, options, or arguments. The command-line app 
 | `--verbosity`    | Option for install command        |
 | `quiet`          | Argument for `--verbosity` option |
 
-A token can contain spaces if it's enclosed in quotation marks (`"`). Here's an example:
+A token can contain spaces if it'<example-value>'s an example:
 
 ```console
 dotnet tool search "ef migrations add"
 ```
 
-The symbol hierarchy (commands, options, arguments) is considered to be trusted input; the token values are not.
+The symbol hierarchy (commands, options, arguments) is considered to be trusted input; the token <example-value> are not.
 
 ## Commands
 

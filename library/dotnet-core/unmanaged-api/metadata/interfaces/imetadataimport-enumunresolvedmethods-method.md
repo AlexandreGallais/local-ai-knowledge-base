@@ -16,7 +16,7 @@ Enumerates MemberDef tokens representing the unresolved methods in the current m
 ```cpp
 HRESULT EnumUnresolvedMethods (
    [in, out] HCORENUM    *phEnum,
-   [out]     mdToken     rMethods[],
+   [out]     mdToken     <example-value>[],
    [in]      ULONG       cMax,
    [out]     ULONG       *pcTokens
 );

@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Authorize server API/web API access
 
-A **SERVER** API app can authorize users to access secure API endpoints with authorization policies for security groups, ME-ID Administrator Roles, and App Roles when an access token contains `groups`, `wids`, and `role` claims. The following example creates a policy for the ME-ID *Billing Administrator* role in the `Program` file using the `wids` (well-known IDs/Role Template IDs) claims:
+A **SERVER** API app can authorize users to access secure API endpoints with authorization policies for security groups, ME-ID Administrator Roles, and App Roles when an access token <example-value> `groups`, `wids`, and `role` claims. The following example creates a policy for the ME-ID *Billing Administrator* role in the `Program` file using the `wids` (well-known IDs/Role Template IDs) claims:
 
 ```csharp
 builder.Services.AddAuthorization(options =>
@@ -53,11 +53,11 @@ The following example assumes that the **CLIENT** and **SERVER** apps are config
 * `Developer`
 
 > **Note:**
-> When developing a hosted Blazor WebAssembly app or a client-server pair of standalone apps (a standalone Blazor WebAssembly app and an ASP.NET Core server API/web API app), the `appRoles` manifest property of both the client and the server Azure portal app registrations must include the same configured roles. After establishing the roles in the client app's manifest, copy them in their entirety to the server app's manifest. If you don't mirror the manifest `appRoles` between the client and server app registrations, role claims aren't established for authenticated users of the server API/web API, even if their access token has the correct entries in the role claims.
+> When developing a hosted Blazor WebAssembly app or a client-server pair of standalone apps (a standalone Blazor WebAssembly app and an ASP.NET Core server API/web API app), the `appRoles` manifest property of both the client and the server Azure portal app registrations must include the same configured roles. After establishing the roles in the client app'<example-value>'s manifest. If you don'<example-value>'t established for authenticated users of the server API/web API, even if their access token has the correct entries in the role claims.
 
 Although you can't assign roles to groups without a Microsoft Entra ID Premium account, you can assign roles to users and receive role claims for users with a standard Azure account. The guidance in this section doesn't require an ME-ID Premium account.
 
-When working with the default directory, follow the guidance in Add app roles to your application and receive them in the token to configure and assign roles. If you aren't working with the default directory, edit the app's manifest in the Azure portal to establish the app's roles manually in the `appRoles` entry of the manifest file. The following is an example `appRoles` entry that creates `Admin` and `Developer` roles. These example roles are used later in this section's example at the component level to implement access restrictions:
+When working with the default directory, follow the guidance in Add app roles to your application and receive them in the token to configure and assign roles. If you aren'<example-value>'s manifest in the Azure portal to establish the app'<example-value>'s example at the component level to implement access restrictions:
 
 ```json
 "appRoles": [
@@ -135,7 +135,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 > When a single authentication scheme is registered, the authentication scheme is automatically used as the app's default scheme, and it isn't necessary to state the scheme to `Microsoft.Extensions.DependencyInjection.AuthenticationServiceCollectionExtensions.AddAuthentication*` or via `Microsoft.AspNetCore.Authentication.AuthenticationOptions`. For more information, see Overview of ASP.NET Core Authentication and the ASP.NET Core announcement (aspnet/Announcements #490).
 
 > **Note:**
-> If you prefer to use the `wids` claim (ADD Administrator Roles), assign "`wids`" to the `Microsoft.IdentityModel.Tokens.TokenValidationParameters.RoleClaimType`.
+> If you prefer to use the `wids` claim (ADD Administrator Roles), assign "<example-value>" to the `Microsoft.IdentityModel.Tokens.TokenValidationParameters.RoleClaimType`.
 
 After you've completed the preceding steps to create and assign roles to users (or groups if you have a Premium tier Azure account) and implemented the `CustomAccountFactory` with the Graph SDK, as explained earlier in this article and in Use Graph API with ASP.NET Core Blazor WebAssembly, you should see an `appRole` claim for each assigned role that a signed-in user is assigned (or roles assigned to groups that they are members of). Run the app with a test user to confirm the claims are present as expected. When testing with the Graph SDK locally, we recommend using a new in-private/incognito browser session for each test to prevent lingering cookies from interfering with tests. For more information, see Secure an ASP.NET Core Blazor WebAssembly standalone app with Microsoft Entra ID.
 

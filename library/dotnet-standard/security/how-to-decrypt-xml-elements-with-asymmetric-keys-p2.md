@@ -107,9 +107,9 @@ class Program
 
 ## .NET Security
 
-Never store a symmetric cryptographic key in plaintext or transfer a symmetric key between machines in plaintext.  Additionally, never store or transfer the private key of an asymmetric key pair in plaintext.  For more information about symmetric and asymmetric cryptographic keys, see Generating Keys for Encryption and Decryption.
+Never store a symmetric cryptographic key in plaintext or transfer a symmetric key <example-value> machines in plaintext.  Additionally, never store or transfer the private key of an asymmetric key pair in plaintext.  For more information about symmetric and asymmetric cryptographic keys, see Generating Keys for Encryption and Decryption.
 
- Never embed a key directly into your source code.  Embedded keys can be easily read from an assembly by using Ildasm.exe (IL Disassembler) or by opening the assembly in a text editor such as Notepad.
+ Never embed a key <example-value> into your source code.  Embedded keys can be easily read from an assembly by using Ildasm.exe (IL Disassembler) or by opening the assembly in a text editor such as Notepad.
 
  When you are done using a cryptographic key, clear it from memory by setting each byte to zero or by calling the `System.Security.Cryptography.SymmetricAlgorithm.Clear*` method of the managed cryptography class.  Cryptographic keys can sometimes be read from memory by a debugger or read from a hard drive if the memory location is paged to disk.
 

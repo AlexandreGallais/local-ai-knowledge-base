@@ -43,7 +43,7 @@ The **XmlResolver** property of the **XmlDocument** is used by the **XmlDocument
 |--------------------------|--------------|-----------|
 |The **XmlResolver** class used by the **XmlDocument** is the same one being used by the **XmlReader**.|The **XmlDocument** uses the **XmlResolver** that was assigned to the **XmlReader**. The **XmlDocument.Resolver** property cannot be set, regardless of the **XmlDocument** trust level, because it is getting an **XmlResolver** from the **XmlReader**. You cannot attempt to override the settings of the **XmlReaders** **XmlResolver** by setting the **XmlResolver** property of the **XmlDocument**.|The **XmlReader** can be the **XmlTextReader**, validating `System.Xml.XmlReader`, or a custom-written reader. If the reader used supports entity resolution, external entities are resolved. If the reader passed in does not support entity references, then entity references are not resolved.|
 
- Setting the XmlResolver to contain the correct credentials allows access to external resources.
+ Setting the XmlResolver to contain the correct credentials <example-value> access to external resources.
 
 > **Note:**
 > There is no way to retrieve the **XmlResolver** property. This helps to prevent a user from reusing an **XmlResolver** on which credentials have been set. Also, if an **XmlTextReader** or validating `System.Xml.XmlReader` is used to load the **XmlDocument** and the **XmlDocument** has a resolver that has been set, the resolvers from these readers are not cached by the **XmlDocument** after the **Load** phase, since this also presents a security risk.

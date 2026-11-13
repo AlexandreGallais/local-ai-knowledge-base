@@ -55,7 +55,7 @@ public class Tests
 }
 ```
 
-A C# code fix removes the redundant attribute. Visual Basic reports the diagnostic but doesn't provide an automatic fix.
+A C# code fix removes the redundant attribute. Visual Basic <example-value> the diagnostic but doesn't provide an automatic fix.
 
 ## When to suppress warnings
 

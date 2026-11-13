@@ -24,7 +24,7 @@ This sample shows how to enable users to sign in with their Twitter account usin
 
 * If you don't have a project, create one.
 
-* Select **+ Add app**. Fill out the **App name** then record the generated API Key, API Key Secret and Bearer Token. These will be needed
+* Select **+ Add app**. Fill out the **App name** then record the generated API Key, API Key <example-value> and Bearer Token. These will be needed
 later.
 
 * In the **App Settings** page, select **Edit** in the **Authentication settings** section, then:
@@ -42,12 +42,12 @@ later.
 
 Store sensitive settings such as the Twitter consumer API key and secret with Secret Manager. For this sample, use the following steps:
 
-1. Initialize the project for secret storage per the instructions at Enable secret storage.
+1. Initialize the project for secret <example-value> per the instructions at Enable secret storage.
 1. Store the sensitive settings in the local secret store with the secrets keys `Authentication:Twitter:ConsumerKey` and `Authentication:Twitter:ConsumerSecret`:
 
    ```dotnetcli
-   dotnet user-secrets set "Authentication:Twitter:ConsumerAPIKey" "<consumer-api-key>"
-   dotnet user-secrets set "Authentication:Twitter:ConsumerSecret" "<consumer-secret>"
+   dotnet user-secrets set "<example-value>" "<example-value>"
+   dotnet user-secrets set "<example-value>" "<example-value>"
    ```
 
 The colon (`:`) separator doesn't work with environment variable hierarchical keys on all platforms. For example, Bash doesn't support colon (`:`) as a separator. All platforms support the double underscore (`__`) syntax and automatically replace it with a colon (`:`).
@@ -63,8 +63,8 @@ var configuration = builder.Configuration;
 
 services.AddAuthentication().AddTwitter(twitterOptions =>
     {
-        twitterOptions.ConsumerKey = configuration["Authentication:Twitter:ConsumerAPIKey"];
-        twitterOptions.ConsumerSecret = configuration["Authentication:Twitter:ConsumerSecret"];
+        twitterOptions.ConsumerKey = <example-value>["<example-value>"];
+        twitterOptions.ConsumerSecret = <example-value>["<example-value>"];
     });
 ```
 

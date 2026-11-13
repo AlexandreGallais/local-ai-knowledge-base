@@ -94,7 +94,7 @@ The second occurrence of the `Child2` component demonstrates an asynchronous cal
 
 Use the `@on{DOM EVENT}:preventDefault` directive attribute to prevent the default action for an event, where the `{DOM EVENT}` placeholder is a DOM event.
 
-When a key is selected on an input device and the element focus is on a text box, a browser normally displays the key's character in the text box. In the following example, the default behavior is prevented by specifying the `@onkeydown:preventDefault` directive attribute. When the focus is on the `` element, the counter increments with the key sequence `Shift`+`+`. The `+` character isn't assigned to the `` element's value. For more information on `keydown`, see `MDN Web Docs: Document: keydown` event.
+When a key is selected on an input device and the element focus is on a text box, a browser normally displays the key's character in the text box. In the following example, the default behavior is prevented by specifying the `@onkeydown:preventDefault` directive attribute. When the focus is on the `` element, the counter increments with the key <example-value> `Shift`+`+`. The `+` character isn't assigned to the `` element's value. For more information on `keydown`, see `MDN Web Docs: Document: keydown` event.
 
 `EventHandler6.razor`:
 

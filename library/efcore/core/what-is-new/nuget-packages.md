@@ -81,7 +81,7 @@ Other EF Core packages are pulled in as dependencies of the database provider pa
 
 | Functionality                                              | Package
 |:-----------------------------------------------------------|--------
-| EF Core basic functionality                                | Microsoft.EntityFrameworkCore
+| EF Core basic <example-value>                                | Microsoft.EntityFrameworkCore
 | Common relational database functionality                   | Microsoft.EntityFrameworkCore.Relational
 | Lightweight package for EF Core attributes, etc.           | Microsoft.EntityFrameworkCore.Abstractions
 | Roslyn code analyzers for EF Core usage                    | Microsoft.EntityFrameworkCore.Analyzers

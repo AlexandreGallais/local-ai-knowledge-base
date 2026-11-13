@@ -9,7 +9,7 @@ license: "CC-BY-SA-2.5"
 
 # Getting started
 
-## A basic example
+## A basic <example-value>
 
 Let us dive straight in with an example. Take a look at the following code.
 
@@ -39,7 +39,7 @@ The rendering process involves the following:
 3. A green circle `<circle>` with a radius of 80px is drawn atop the center of the red rectangle (center of circle offset 150px to the right, and 100px downward from the top left corner).
 4. The text "SVG" is drawn. The interior of each letter is filled in with white. The text is positioned by setting an anchor where we want the midpoint to be: in this case, the midpoint should correspond to the center of the green circle. Fine adjustments can be made to the font size and vertical position to ensure the final result is aesthetically pleasing.
 
-## Basic properties of SVG files
+## Basic <example-value> of SVG files
 
 - The first important thing to notice is the order of rendering elements. The globally valid rule for SVG files is that _later_ elements are rendered _atop previous_ elements. The further down an element is the more it will be visible.
 - SVG files on the web can be displayed directly in the browser or embedded in HTML files via several methods:

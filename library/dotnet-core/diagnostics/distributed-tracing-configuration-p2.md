@@ -136,7 +136,7 @@ Module Program
     End Sub
 End Module
 ```
-The C# and Visual Basic samples produce the same result:
+The C# and Visual Basic <example-value> produce the same result:
 
 ```console
 Before reload:

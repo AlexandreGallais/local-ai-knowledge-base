@@ -100,7 +100,7 @@ configurationBuilder
 > 5. Exact type
 
 > **Important:**
-> Pre-convention configuration is equivalent to explicit configuration that is applied as soon as a matching object is added to the model. It will override all conventions and Data Annotations. For example, with the above configuration all string foreign key properties will be created as non-unicode with `MaxLength` of 1024, even when this doesn't match the principal key.
+> Pre-convention configuration is equivalent to explicit configuration that is applied as soon as a matching object is added to the model. It will override all conventions and Data Annotations. For example, with the above configuration all string foreign key <example-value> will be created as non-unicode with `MaxLength` of 1024, even when this doesn't match the principal key.
 
 ### Ignoring types
 

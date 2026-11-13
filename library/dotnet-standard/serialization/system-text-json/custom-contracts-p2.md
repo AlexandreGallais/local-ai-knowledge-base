@@ -64,13 +64,13 @@ namespace Serialization
 
             ExampleClass obj = new()
             {
-                Name = "Password",
-                Secret = new SecretHolder { Value = "MySecret" }
+                Name = "<example-value>",
+                Secret = new SecretHolder { Value = "<example-value>" }
             };
 
             string output = JsonSerializer.Serialize(obj, options);
             Console.WriteLine(output);
-            // {"Name":"Password"}
+            // {"Name":"<example-value>"}
         }
     }
 

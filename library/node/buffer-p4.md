@@ -36,13 +36,13 @@ arr[1] = 4000;
 const buf = Buffer.from(arr.buffer);
 
 console.log(buf);
-// Prints: <Buffer 88 13 a0 0f>
+// Prints: <Buffer .. .. .. ..>
 
 // Changing the original Uint16Array changes the Buffer also.
 arr[1] = 6000;
 
 console.log(buf);
-// Prints: <Buffer 88 13 70 17>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ```cjs
@@ -57,13 +57,13 @@ arr[1] = 4000;
 const buf = Buffer.from(arr.buffer);
 
 console.log(buf);
-// Prints: <Buffer 88 13 a0 0f>
+// Prints: <Buffer .. .. .. ..>
 
 // Changing the original Uint16Array changes the Buffer also.
 arr[1] = 6000;
 
 console.log(buf);
-// Prints: <Buffer 88 13 70 17>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 The optional `byteOffset` and `length` arguments specify a memory range within
@@ -107,7 +107,7 @@ console.log(arrA.buffer === arrB.buffer); // true
 
 const buf = Buffer.from(arrB.buffer);
 console.log(buf);
-// Prints: <Buffer 63 64 65 66>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ```cjs
@@ -119,7 +119,7 @@ console.log(arrA.buffer === arrB.buffer); // true
 
 const buf = Buffer.from(arrB.buffer);
 console.log(buf);
-// Prints: <Buffer 63 64 65 66>
+// Prints: <Buffer .. .. .. ..>
 ```
 
 ### Static method: `Buffer.from(buffer)`
@@ -175,14 +175,14 @@ For objects whose `valueOf()` function returns a value not strictly equal to
 import { Buffer } from 'node:buffer';
 
 const buf = Buffer.from(new String('this is a test'));
-// Prints: <Buffer 74 68 69 73 20 69 73 20 61 20 74 65 73 74>
+// Prints: <Buffer .. .. .. .. .. .. .. .. .. .. .. .. .. ..>
 ```
 
 ```cjs
 const { Buffer } = require('node:buffer');
 
 const buf = Buffer.from(new String('this is a test'));
-// Prints: <Buffer 74 68 69 73 20 69 73 20 61 20 74 65 73 74>
+// Prints: <Buffer .. .. .. .. .. .. .. .. .. .. .. .. .. ..>
 ```
 
 For objects that support `Symbol.toPrimitive`, returns
@@ -198,7 +198,7 @@ class Foo {
 }
 
 const buf = Buffer.from(new Foo(), 'utf8');
-// Prints: <Buffer 74 68 69 73 20 69 73 20 61 20 74 65 73 74>
+// Prints: <Buffer .. .. .. .. .. .. .. .. .. .. .. .. .. ..>
 ```
 
 ```cjs
@@ -211,7 +211,7 @@ class Foo {
 }
 
 const buf = Buffer.from(new Foo(), 'utf8');
-// Prints: <Buffer 74 68 69 73 20 69 73 20 61 20 74 65 73 74>
+// Prints: <Buffer .. .. .. .. .. .. .. .. .. .. .. .. .. ..>
 ```
 
 A `TypeError` will be thrown if `object` does not have the mentioned methods or
@@ -491,7 +491,7 @@ console.log(buf2.compare(buf1));
 console.log(buf2.compare(buf3));
 // Prints: 1
 console.log([buf1, buf2, buf3].sort(Buffer.compare));
-// Prints: [ <Buffer 41 42 43>, <Buffer 41 42 43 44>, <Buffer 42 43 44> ]
+// Prints: [ <Buffer .. .. ..>, <Buffer .. .. .. ..>, <Buffer .. .. ..> ]
 // (This result is equal to: [buf1, buf3, buf2].)
 ```
 
@@ -513,7 +513,7 @@ console.log(buf2.compare(buf1));
 console.log(buf2.compare(buf3));
 // Prints: 1
 console.log([buf1, buf2, buf3].sort(Buffer.compare));
-// Prints: [ <Buffer 41 42 43>, <Buffer 41 42 43 44>, <Buffer 42 43 44> ]
+// Prints: [ <Buffer .. .. ..>, <Buffer .. .. .. ..>, <Buffer .. .. ..> ]
 // (This result is equal to: [buf1, buf3, buf2].)
 ```
 

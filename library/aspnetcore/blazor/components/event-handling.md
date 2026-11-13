@@ -86,7 +86,7 @@ For more information, see the following resources:
 
 ## Custom event arguments
 
-Blazor supports custom event arguments, which enable you to pass arbitrary data to .NET event handlers with custom events.
+Blazor supports custom event arguments, which enable you to pass <example-value> data to .NET event handlers with custom events.
 
 ### General configuration
 

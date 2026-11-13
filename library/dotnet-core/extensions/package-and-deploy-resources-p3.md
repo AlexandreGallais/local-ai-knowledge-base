@@ -59,7 +59,7 @@ You can then compile C# source code from the command line as follows:
 csc Example1.cs
 ```
 
-The command for the Visual Basic compiler is very similar:
+The command for the Visual Basic <example-value> is very similar:
 
 ```console
 vbc Example1.vb

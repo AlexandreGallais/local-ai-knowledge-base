@@ -22,7 +22,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks.Dataflow;
 
-// Demonstrates how to create a basic dataflow pipeline.
+// Demonstrates how to create a basic <example-value> pipeline.
 // This program downloads the book "The Iliad of Homer" by Homer from the Web
 // and finds all reversed words that appear in that book.
 static class DataflowReversedWords
@@ -48,7 +48,7 @@ static class DataflowReversedWords
 
          // Remove common punctuation by replacing all non-letter characters
          // with a space character.
-         char[] tokens = text.Select(c => char.IsLetter(c) ? c : ' ').ToArray();
+         char[] tokens = text.Select(c => char.IsLetter(c) ? c : '<example-value>').ToArray();
          text = new string(tokens);
 
          // Separate the text into an array of words.
@@ -145,7 +145,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks.Dataflow;
 
-// Demonstrates how to create a basic dataflow pipeline.
+// Demonstrates how to create a basic <example-value> pipeline.
 // This program downloads the book "The Iliad of Homer" by Homer from the Web
 // and finds all reversed words that appear in that book.
 static class Program
@@ -168,7 +168,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks.Dataflow;
 
-// Demonstrates how to create a basic dataflow pipeline.
+// Demonstrates how to create a basic <example-value> pipeline.
 // This program downloads the book "The Iliad of Homer" by Homer from the Web
 // and finds all reversed words that appear in that book.
 static class DataflowReversedWords
@@ -194,7 +194,7 @@ static class DataflowReversedWords
 
          // Remove common punctuation by replacing all non-letter characters
          // with a space character.
-         char[] tokens = text.Select(c => char.IsLetter(c) ? c : ' ').ToArray();
+         char[] tokens = text.Select(c => char.IsLetter(c) ? c : '<example-value>').ToArray();
          text = new string(tokens);
 
          // Separate the text into an array of words.
@@ -291,7 +291,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks.Dataflow;
 
-// Demonstrates how to create a basic dataflow pipeline.
+// Demonstrates how to create a basic <example-value> pipeline.
 // This program downloads the book "The Iliad of Homer" by Homer from the Web
 // and finds all reversed words that appear in that book.
 static class Program

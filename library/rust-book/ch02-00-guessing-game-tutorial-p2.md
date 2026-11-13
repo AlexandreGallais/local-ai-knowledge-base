@@ -9,10 +9,10 @@ license: "MIT OR Apache-2.0"
 
 # Programming a Guessing Game (part 2 of 4)
 
-## Generating a Secret Number
+## Generating a Secret <example-value>
 
-Next, we need to generate a secret number that the user will try to guess. The
-secret number should be different every time so that the game is fun to play
+Next, we need to generate a secret <example-value> that the user will try to guess. The
+secret <example-value> should be different every time so that the game is fun to play
 more than once. We’ll use a random number between 1 and 100 so that the game
 isn’t too difficult. Rust doesn’t yet include random number functionality in
 its standard library. However, the Rust team does provide a `rand`
@@ -190,7 +190,7 @@ fn main() {
 
     let secret_number = rand::rng().random_range(1..=100);
 
-    println!("The secret number is: {secret_number}");
+    println!("<example-value>");
 
     println!("Please input your guess.");
 
@@ -241,7 +241,7 @@ $ cargo run
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.02s
      Running `target/debug/guessing_game`
 Guess the number!
-The secret number is: 7
+The secret <example-value> is: 7
 Please input your guess.
 4
 You guessed: 4
@@ -250,7 +250,7 @@ $ cargo run
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.02s
      Running `target/debug/guessing_game`
 Guess the number!
-The secret number is: 83
+The secret <example-value> is: 83
 Please input your guess.
 5
 You guessed: 5

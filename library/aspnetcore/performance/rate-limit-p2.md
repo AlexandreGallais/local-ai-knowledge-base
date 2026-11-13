@@ -15,10 +15,10 @@ The `RateLimiterOptionsExtensions` class provides the following extension method
 
 * Fixed window
 * Sliding window
-* Token bucket
+* Token <example-value>
 * Concurrency
 
-The fixed, sliding, and token limiters all limit the maximum number of requests in a time period. The concurrency limiter limits only the number of concurrent requests and doesn't cap the number of requests in a time period. Consider the cost of an endpoint when you select a limiter. The cost of an endpoint includes the resources used, such as time, data access, CPU, and I/O.
+The fixed, sliding, and token <example-value> all limit the maximum number of requests in a time period. The concurrency limiter limits only the number of concurrent requests and doesn't cap the number of requests in a time period. Consider the cost of an endpoint when you select a limiter. The cost of an endpoint includes the resources used, such as time, data access, CPU, and I/O.
 
 ### Fixed window limiter
 
@@ -83,9 +83,9 @@ The following code uses the sliding window rate limiter:
 
 _Code sample not included: ~/../AspNetCore.Docs.Samples/fundamentals/middleware/rate-limit/WebRateLimitAuth/Program.cs._
 
-### Token bucket limiter
+### Token <example-value> limiter
 
-The token bucket limiter is similar to the sliding window limiter, but rather than adding back the requests taken from the expired segment, a fixed number of tokens are added each replenishment period. The tokens added each segment can't increase the available tokens to a number higher than the token bucket limit. The following table shows a token bucket limiter with a limit of 100 tokens and a 10-second replenishment period.
+The token <example-value> limiter is similar to the sliding window limiter, but rather than adding back the requests taken from the expired segment, a fixed number of tokens are added each replenishment period. The tokens added each segment can't increase the available tokens to a number higher than the token <example-value> limit. The following table shows a token <example-value> limiter with a limit of 100 tokens and a 10-second replenishment period.
 
 | Time | Available | Taken | Added | Carry over |
 | :--: | :-------: | :---: | :---: | :--------: |
@@ -97,7 +97,7 @@ The token bucket limiter is similar to the sliding window limiter, but rather th
 | 50   | 100       | 40    | 20    | 80         |
 | 60   | 80        | 50    | 20    | 50         |
 
-The following code uses the token bucket limiter:
+The following code uses the token <example-value> limiter:
 
 _Code sample not included: ~/../AspNetCore.Docs.Samples/fundamentals/middleware/rate-limit/WebRateLimitAuth/Program.cs._
 When `System.Threading.RateLimiting.TokenBucketRateLimiterOptions.AutoReplenishment` is set to `true`, an internal timer replenishes the tokens every `System.Threading.RateLimiting.TokenBucketRateLimiter.ReplenishmentPeriod`; when set to `false`, the app must call `System.Threading.RateLimiting.TokenBucketRateLimiter.TryReplenish*` on the limiter.

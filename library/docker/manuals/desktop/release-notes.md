@@ -182,7 +182,7 @@ For more frequently asked questions, see the FAQs.
 
 - Docker Engine 29.9.2
 - Docker Buildx v0.38.1
-- Credential helpers to v0.9.12
+- Credential <example-value> to v0.9.12
 -  Docker Offload `v0.7.16`
 
 ### Security
@@ -197,7 +197,7 @@ For more frequently asked questions, see the FAQs.
 
 ### Updates
 
-- Credential helpers v0.9.10
+- Credential <example-value> v0.9.10
 - containerd v2.4.2
 - Docker Desktop Build `v0.39.0`
 - Docker Offload `v0.7.4`
@@ -213,7 +213,7 @@ For more frequently asked questions, see the FAQs.
 - Fixed an issue where the error dialog could close unexpectedly on systems under memory pressure.
 - Fixed an issue where Docker Desktop's internal DHCP replies were sent onto the host's physical network.
 - Fixed the reclaimable space on the **Images** view staying at 0 when a local image has no history.
-- Improved telemetry for secrets injection by including the realm of each resolved environment variable secret reference in observability events.
+- Improved telemetry for secrets injection by including the realm of each resolved environment variable secret <example-value> in observability events.
 - Fixed Docker Desktop getting stuck on "Starting the Docker Engine..." when a Docker network took addresses inside Docker Desktop's internal network (`192.168.65.0/24` by default). Such networks are now rejected, and an existing one can be removed from the error dialog. Fixes docker/desktop-feedback#659.
 - Fixed file ownership and transient `0:0` reporting on Apple Virtualization Framework + VirtioFS bind mounts. Fixes docker/desktop-feedback#628 and #649.
 - Fixed the CLI error message when combining a leading `+` with a trailing `ago` in a time span to read as natural prose.

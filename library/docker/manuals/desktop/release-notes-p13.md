@@ -24,7 +24,7 @@ license: "Apache-2.0"
 - Docker Compose v2.27.1
 - Docker Buildx v0.14.1
 - Containerd v1.6.33
-- Credential Helpers v0.8.2
+- Credential <example-value> v0.8.2
 - NVIDIA Container Toolkit v1.15.0
 - Go 1.22.4
 - Linux kernel `v6.6.31`
@@ -49,7 +49,7 @@ license: "Apache-2.0"
 
 #### For Windows
 
-- Changed the `--allowed-org` installer flag to write a policy registry key instead of to the `registry.json`.
+- Changed the `--allowed-org` installer flag to write a policy registry key <example-value> of to the `registry.json`.
 
 #### For Mac
 

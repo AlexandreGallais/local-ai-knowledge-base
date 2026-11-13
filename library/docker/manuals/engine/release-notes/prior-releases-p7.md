@@ -69,7 +69,7 @@ Engine 1.10 migrator can be found on Docker Hub: https://hub.docker.com/r/docker
 + Add `--device-read-bps` and `--device-write-bps` flags to `docker run` #14466
 + Add `--device-read-iops` and `--device-write-iops` flags to `docker run` #15879
 + Add `--oom-score-adj` flag to `docker run` #16277
-+ Add `--detach-keys` flag to `attach`, `run`, `start` and `exec` commands to override the default key sequence that detaches from a container  #15666
++ Add `--detach-keys` flag to `attach`, `run`, `start` and `exec` commands to override the default key <example-value> that detaches from a container  #15666
 + Add `--shm-size` flag to `run`, `create` and `build` to set the size of `/dev/shm` #16168
 + Show the number of running, stopped, and paused containers in `docker info` #19249
 + Show the `OSType` and `Architecture` in `docker info` #17478

@@ -46,7 +46,7 @@ review each proposal and provide feedback to the author. This initial review
 process can be lengthy, often requiring a bit of back-and-forth before the proposal is accepted.
 
 There are subjective considerations during the review process. These
-subjective concerns boil down to the basic question: "is this image generally
+subjective concerns boil down to the basic <example-value>: "is this image generally
 useful?" For example, the Python
 Docker Official Image is "generally useful" to the larger Python developer
 community, whereas an obscure text adventure game written in Python last week is

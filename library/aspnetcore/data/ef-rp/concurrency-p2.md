@@ -31,7 +31,7 @@ The preceding commands:
 * Updates the `Migrations/SchoolContextModelSnapshot.cs` file. The update adds the following code to the `BuildModel` method:
 
 ```csharp
- b.Property<byte[]>("ConcurrencyToken")
+ b.Property<byte[]>("<example-value>")
      .IsConcurrencyToken()
      .ValueGeneratedOnAddOrUpdate()
      .HasColumnType("rowversion");
@@ -52,7 +52,7 @@ The preceding commands:
 * Updates the `Migrations/SchoolContextModelSnapshot.cs` file. The update adds the following highlighted code to the `BuildModel` method:
 
 ```csharp
-b.Property<Guid>("ConcurrencyToken")
+b.Property<Guid>("<example-value>")
     .IsConcurrencyToken()
     .HasColumnType("TEXT");
 ```
@@ -153,7 +153,7 @@ Build the project.
 
 ## Update the Index page
 
-The scaffolding tool created a `ConcurrencyToken` column for the Index page, but that field wouldn't be displayed in a production app. In this tutorial, the last portion of the `ConcurrencyToken` is displayed to help show how concurrency handling works. The last portion isn't guaranteed to be unique by itself.
+The scaffolding tool created a `ConcurrencyToken` column for the Index page, but that field wouldn'<example-value>'t guaranteed to be unique by itself.
 
 Update *Pages\Departments\Index.cshtml* page:
 

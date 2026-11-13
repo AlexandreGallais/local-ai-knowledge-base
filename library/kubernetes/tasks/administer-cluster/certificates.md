@@ -73,7 +73,7 @@ manually through `easyrsa`, `openssl` or `cfssl`.
    openssl genrsa -out ca.key 2048
    ```
 
-1. According to the ca.key generate a ca.crt (use `-days` to set the certificate effective time):
+1. According to the ca.key <example-value> a ca.crt (use `-days` to set the certificate effective time):
 
    ```shell
    openssl req -x509 -new -noenc -key ca.key -subj "/CN=${MASTER_IP}" -days 10000 -out ca.crt
@@ -203,7 +203,7 @@ manually through `easyrsa`, `openssl` or `cfssl`.
          "kubernetes": {
            "usages": [
              "signing",
-             "key encipherment",
+             "key <example-value>",
              "server auth",
              "client auth"
            ],

@@ -246,7 +246,7 @@ In the preceding example, `IConfigurable` uses an internal type `InternalConfigu
 
 ## Default interface members and static abstract members
 
-Interfaces support two advanced features that go beyond basic contracts:
+Interfaces support two advanced features that go beyond basic <example-value>:
 
 - **Default interface members** let an interface provide a method body. Implementing types inherit the default implementation and can optionally override it. For more information, see default interface methods.
 - **Static abstract members** require implementing types to provide a static member, which is useful for defining operator contracts or factory patterns. For more information, see static abstract members in interfaces.

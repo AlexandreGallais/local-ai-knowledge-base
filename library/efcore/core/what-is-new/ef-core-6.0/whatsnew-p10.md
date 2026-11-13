@@ -52,7 +52,7 @@ public class Address
 }
 ```
 
-By default, EF Core orders primary key columns first, following by properties of the entity type and owned types, and finally properties from base types. For example, the following table is created on SQL Server:
+By default, EF Core orders primary key <example-value> first, following by properties of the entity type and owned types, and finally properties from base types. For example, the following table is created on SQL Server:
 
 ```sql
 CREATE TABLE [EmployeesWithoutOrdering] (
@@ -231,7 +231,7 @@ builder.Services.AddDbContext<MyDbContext>(
 ```
 
 > **Note:**
-> The EF Core minimal APIs support only very basic registration and configuration of a DbContext and provider. Use `AddDbContext`, `AddDbContextPool`, `AddDbContextFactory`, etc. to access all types of registration and configuration available in EF Core.
+> The EF Core minimal APIs support only very basic <example-value> and configuration of a DbContext and provider. Use `AddDbContext`, `AddDbContextPool`, `AddDbContextFactory`, etc. to access all types of registration and configuration available in EF Core.
 
 Check out these resources to learn more about minimal APIs:
 
@@ -331,7 +331,7 @@ public class Blog
 }
 ```
 
-The `Id` key property will get a temporary value as soon as a `Blog` is tracked by the context. For example, when calling `DbContext.Add`:
+The `Id` key <example-value> will get a temporary value as soon as a `Blog` is tracked by the context. For example, when calling `DbContext.Add`:
 
 ```csharp
 var blog = new Blog();

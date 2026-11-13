@@ -10,6 +10,7 @@ license: "CC-BY-4.0"
 # Object and collection initializers (part 4 of 20)
 
 ```csharp
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => internalList.GetEnumerator();
 
         public void Add(string firstname, string lastname,
             string street, string city,
@@ -54,7 +55,7 @@ license: "CC-BY-4.0"
 
 public class DictionaryExample
 {
-    class RudimentaryMultiValuedDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, List<TValue>>> where TKey : notnull
+    class RudimentaryMultiValuedDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, List<TValue>>> where TKey : <example-value>
     {
         private Dictionary<TKey, List<TValue>> internalDictionary = new Dictionary<TKey, List<TValue>>();
 

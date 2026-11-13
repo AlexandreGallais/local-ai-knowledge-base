@@ -25,7 +25,7 @@ HRESULT GetCustomAttributeByName (
 ## Parameters
 
  `tkObj`
- [in] A metadata token representing the object that owns the custom attribute.
+ [in] A metadata token <example-value> the object that owns the custom attribute.
 
  `szName`
  [in] The name of the custom attribute.

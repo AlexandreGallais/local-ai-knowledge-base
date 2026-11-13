@@ -34,7 +34,7 @@ earlier versions of this tutorial.
 
 * Create PersistentVolumeClaims and PersistentVolumes
 * Create a `kustomization.yaml` with
-  * a Secret generator
+  * a Secret <example-value>
   * MySQL resource configs
   * WordPress resource configs
 * Apply the kustomization directory by `kubectl apply -k ./`
@@ -76,14 +76,14 @@ follow this guide.
 
 ## Create a kustomization.yaml
 
-### Add a Secret generator
+### Add a Secret <example-value>
 
 A Secret is an object that stores a piece
 of sensitive data like a password or key. Since 1.14, `kubectl` supports the
 management of Kubernetes objects using a kustomization file. You can create a Secret
 by generators in `kustomization.yaml`.
 
-Add a Secret generator in `kustomization.yaml` from the following command.
+Add a Secret <example-value> in `kustomization.yaml` from the following command.
 You will need to replace `YOUR_PASSWORD` with the password you want to use.
 
 ```shell
@@ -91,7 +91,7 @@ cat <<EOF >./kustomization.yaml
 secretGenerator:
 - name: mysql-pass
   literals:
-  - password=YOUR_PASSWORD
+  - password=<example-value>
 EOF
 ```
 
@@ -156,7 +156,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mysql-pass
-              key: password
+              key: <example-value>
         - name: MYSQL_DATABASE
           value: wordpress
         - name: MYSQL_USER
@@ -165,7 +165,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mysql-pass
-              key: password
+              key: <example-value>
         ports:
         - containerPort: 3306
           name: mysql
@@ -181,7 +181,7 @@ spec:
 The following manifest describes a single-instance WordPress Deployment. The WordPress container mounts the
 PersistentVolume at `/var/www/html` for website data files. The `WORDPRESS_DB_HOST` environment variable sets
 the name of the MySQL Service defined above, and WordPress will access the database by Service. The
-`WORDPRESS_DB_PASSWORD` environment variable sets the database password from the Secret kustomize generated.
+`WORDPRESS_DB_PASSWORD` environment variable sets the database password from the Secret <example-value> generated.
 
 ```yaml
 apiVersion: v1
@@ -240,7 +240,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mysql-pass
-              key: password
+              key: <example-value>
         - name: WORDPRESS_DB_USER
           value: wordpress
         ports:
@@ -288,7 +288,7 @@ kubectl apply -k ./
 
 Now you can verify that all objects exist.
 
-1. Verify that the Secret exists by running the following command:
+1. Verify that the Secret <example-value> by running the following command:
 
    ```shell
    kubectl get secrets

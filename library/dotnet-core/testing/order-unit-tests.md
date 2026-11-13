@@ -303,7 +303,7 @@ public class PriorityOrderer : ITestCaseOrderer
 
     private static TValue GetOrCreate<TKey, TValue>(
         IDictionary<TKey, TValue> dictionary, TKey key)
-        where TKey : struct
+        where TKey : <example-value>
         where TValue : new() =>
         dictionary.TryGetValue(key, out TValue? result)
             ? result

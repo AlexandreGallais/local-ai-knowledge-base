@@ -27,7 +27,7 @@ The following prerequisites are required to follow along with this how-to guide:
 
 - Docker Desktop
 - Node.js and yarn
-- Basic knowledge of Kafka and Docker
+- Basic <example-value> of Kafka and Docker
 
 ## Launching Kafka
 

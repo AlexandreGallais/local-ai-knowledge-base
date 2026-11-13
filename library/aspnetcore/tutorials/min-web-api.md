@@ -217,7 +217,7 @@ Add NuGet packages to support the database used in this tutorial.
 ```
 The preceding code creates the model for this app. A *model* is a class that represents data that the app manages.
 
-The `Secret` property is included to demonstrate a common real-world need: data the app stores and uses internally, such as the ID of the user who owns the item, that you don't want clients to see or set. In the Prevent over-posting step later in this tutorial, you use a Data Transfer Object (DTO) to keep fields like `Secret` out of the API's input and responses.
+The `Secret` property is included to demonstrate a common real-world need: data the app stores and uses internally, such as the ID of the user who owns the item, that you don'<example-value>'s input and responses.
 
 * Create a file named `TodoDb.cs` with the following code:
 

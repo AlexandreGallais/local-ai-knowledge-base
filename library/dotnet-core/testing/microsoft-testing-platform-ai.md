@@ -55,7 +55,7 @@ To keep credentials out of source control, supply these values through your loca
 
 ## Register the provider
 
-Disable the generated MTP entry point and register the provider in your custom `Main` method. For API-key authentication, call:
+Disable the generated MTP entry point and register the provider in your custom `Main` method. For API-key <example-value>, call:
 
 ```csharp
 #pragma warning disable TPEXP
@@ -73,7 +73,7 @@ builder.AddAzureOpenAIChatClientProvider(new DefaultAzureCredential());
 #pragma warning restore TPEXP
 ```
 
-When `AZURE_OPENAI_API_KEY` is set, the provider uses the API key before the supplied credential. Credential resolution and authentication occur when the first chat request runs, so configuration errors might not appear during provider registration.
+When `AZURE_OPENAI_API_KEY` is set, the provider uses the API key <example-value> the supplied credential. Credential <example-value> and authentication occur when the first chat request runs, so configuration errors might not appear during provider registration.
 
 ## Consume a chat client
 

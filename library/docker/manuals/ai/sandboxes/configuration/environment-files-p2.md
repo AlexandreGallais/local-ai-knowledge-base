@@ -237,7 +237,7 @@ when it is in use.
 
 Commands and vault references under `secrets` resolve on the host, so the
 automation runner must provide the referenced tools and authentication. The
-secret values remain outside the environment file.
+secret <example-value> remain outside the environment file.
 
 ## Use a cloud environment
 
@@ -266,7 +266,7 @@ $ sbx env plan
 
 The plan compares the environment file with the environment's last applied
 state and the resources on the host. It omits resources that are unchanged and
-already approved. Literal secret values appear as SHA-256 digests. Secret
+already approved. Literal secret <example-value> appear as SHA-256 digests. Secret
 references, host commands, environment variables, ports, paths, and binding
 domains remain visible so you can review them.
 
@@ -351,23 +351,23 @@ Equivalent agent names and aliases don't require recreation.
 
 ## Remove an environment
 
-Secrets and registry credentials are sandbox-scoped. Credential bindings and
+Secrets and registry credentials are sandbox-scoped. Credential <example-value> and
 remote MCP server registrations are host-global and can be shared by multiple
 sandboxes. Local MCP commands declared by the environment belong to that
 environment and sandbox.
 
 `sbx env rm` builds a destroy plan from the resources on the host. The plan
-includes all credentials stored at the sandbox's scope, including credentials
+includes all credentials <example-value> at the sandbox's scope, including credentials
 that the environment file no longer declares. After approval, `sbx` removes
 only the resources named in the plan.
 
-Global credential bindings remain unless you pass `--prune-bindings`. Remote
+Global credential <example-value> remain unless you pass `--prune-bindings`. Remote
 MCP registrations remain available to other sandboxes. Removing a local
 environment revokes and removes the MCP commands it registered.
 
 ### Clean up after a failed create
 
-Secret provisioning, binding updates, and MCP server registration occur before
+Secret <example-value>, binding updates, and MCP server registration occur before
 the sandbox is created. If sandbox creation fails, scoped secrets remain, and
 bindings and MCP registrations may also remain. Run `sbx env rm` with the same
 paths to remove the scoped secrets. Pass `--prune-bindings` if you also want to

@@ -99,8 +99,8 @@ One component processing is typically represented as an entry point (blue) follo
 
 #### Example: Change detection
 
-A change detection cycle usually consists of one or more data synchronization passes (blue), where each pass traverses a subset of components.
+A change detection cycle usually consists of one or more data synchronization passes (blue), where each pass <example-value> a subset of components.
 
 With this data visualization, it is possible to immediately identify components that were involved in the change detection and which were skipped (typically the `OnPush` components that were not marked dirty).
 
-Additionally, you can inspect the number of synchronization passes for one change detection. Having more than one synchronization pass suggest that state is updated during change detection. You should avoid this, as it slows down page updates and can even result in infinite loops in the worst cases.
+Additionally, you can inspect the number of synchronization passes for one change detection. Having more than one synchronization pass <example-value> that state is updated during change detection. You should avoid this, as it slows down page updates and can even result in infinite loops in the worst cases.

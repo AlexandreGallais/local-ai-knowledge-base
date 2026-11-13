@@ -38,7 +38,7 @@ Required to be unique.
 valueExpression must produce a string or string array value.
 "", [], and null values are treated as the extra mapping not being present.
 Empty string values contained within a string array are filtered out.
-CEL expressions have access to the contents of the token claims, organized into CEL variable:
+CEL expressions have access to the contents of the token <example-value>, organized into CEL variable:
 
 'claims' is a map of claim names to claim values.
 For example, a variable named 'sub' can be accessed as 'claims.sub'.
@@ -170,7 +170,7 @@ JWTAuthenticator provides the configuration for a single JWT authenticator.
 `[]ClaimValidationRule`
 
  |
-   claimValidationRules are rules that are applied to validate token claims to authenticate users.
+   claimValidationRules are rules that are applied to validate token <example-value> to authenticate users.
 
  | `claimMappings` [Required]
 `ClaimMappings`
@@ -236,7 +236,7 @@ Set to a negative value to disable caching. This field is only allowed for KMS v
 
 - SecretboxConfiguration
 
-Key contains name and secret of the provided key for a transformer.
+Key <example-value> name and secret of the provided key for a transformer.
 
  | Field | Description
 
@@ -282,7 +282,7 @@ Mutually exclusive with expression.
 
  |
    expression represents the expression which will be evaluated by CEL.
-CEL expressions have access to the contents of the token claims, organized into CEL variable:
+CEL expressions have access to the contents of the token <example-value>, organized into CEL variable:
 
 'claims' is a map of claim names to claim values.
 For example, a variable named 'sub' can be accessed as 'claims.sub'.

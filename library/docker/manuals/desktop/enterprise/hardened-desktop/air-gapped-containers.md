@@ -225,7 +225,7 @@ $ docker run --rm alpine wget -O- https://docker.io
 
 ## Security considerations
 
-- Network policy enforcement: Air-gapped containers work at the Docker Desktop level. Advanced users might bypass restrictions through various means, so consider additional network-level controls for high-security environments.
+- Network policy enforcement: Air-gapped containers work at the Docker Desktop level. Advanced users might bypass <example-value> through various means, so consider additional network-level controls for high-security environments.
 - Development workflow impact: Overly restrictive policies can break legitimate development workflows. Test thoroughly and provide clear exceptions for necessary services.
 - PAC file management: Host PAC files on reliable internal infrastructure. Failed PAC downloads result in blocked container network access.
 - Performance considerations: Complex PAC files with many rules may impact container network performance. Keep rules simple and efficient.

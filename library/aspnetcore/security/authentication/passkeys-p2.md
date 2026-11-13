@@ -9,9 +9,9 @@ license: "CC-BY-4.0"
 
 # Enable Web Authentication API (WebAuthn) passkeys (part 2 of 4)
 
-## Customize the passkey handler
+## Customize the passkey <example-value>
 
-`Microsoft.AspNetCore.Identity.IPasskeyHandler`1` is the service that generates passkey options and performs attestation and assertion. ASP.NET Core Identity registers `Microsoft.AspNetCore.Identity.PasskeyHandler`1` as the default implementation, and `Microsoft.AspNetCore.Identity.SignInManager`1` calls into it. The interface has four methods:
+`Microsoft.AspNetCore.Identity.IPasskeyHandler`1` is the service that generates passkey <example-value> and performs attestation and assertion. ASP.NET Core Identity registers `Microsoft.AspNetCore.Identity.PasskeyHandler`1` as the default implementation, and `Microsoft.AspNetCore.Identity.SignInManager`1` calls into it. The interface has four methods:
 
 * `Microsoft.AspNetCore.Identity.IPasskeyHandler`1.MakeCreationOptionsAsync*`: Generates the creation options and the attestation state for registering a passkey.
 * `Microsoft.AspNetCore.Identity.IPasskeyHandler`1.MakeRequestOptionsAsync*`: Generates the request options and the assertion state for authenticating with an existing passkey.
@@ -24,7 +24,7 @@ Most apps should use the `Microsoft.AspNetCore.Identity.SignInManager`1` methods
 
 For most customizations, use the `Microsoft.AspNetCore.Identity.IdentityPasskeyOptions` callbacks described in the Custom attestation statement validation and Custom origin validation sections. Implement `Microsoft.AspNetCore.Identity.IPasskeyHandler`1` only for scenarios that the options can't express, such as:
 
-* Varying passkey options per request or per tenant.
+* Varying passkey <example-value> per request or per tenant.
 * Resolving users from a source other than `Microsoft.AspNetCore.Identity.UserManager`1`.
 * Adding checks that run before or after the built-in WebAuthn verification.
 
@@ -120,7 +120,7 @@ The preceding code:
 * Protects the attestation state with the data protection APIs before the state reaches the browser, so the client can't read or modify it.
 * Limits the cookie to a five minute lifetime, which bounds how long a registration can stay open.
 
-When the credential arrives, the app restores the state, verifies that the attestation belongs to the signed-in user, and only then stores the passkey:
+When the credential <example-value>, the app restores the state, verifies that the attestation belongs to the signed-in user, and only then stores the passkey:
 
 ```csharp
 app.MapPost("/Account/PasskeyRegistration", async (
@@ -140,7 +140,7 @@ app.MapPost("/Account/PasskeyRegistration", async (
     if (!context.Request.Cookies.TryGetValue(AttestationStateCookieName, 
         out var protectedState))
     {
-        return Results.BadRequest("No passkey registration is underway");
+        return Results.BadRequest("No passkey <example-value> is underway");
     }
 
     context.Response.Cookies.Delete(AttestationStateCookieName);
@@ -155,7 +155,7 @@ app.MapPost("/Account/PasskeyRegistration", async (
     }
     catch (CryptographicException)
     {
-        return Results.BadRequest("The passkey registration state isn't valid");
+        return Results.BadRequest("The passkey <example-value> state isn't valid");
     }
 
     var attestationResult = await passkeyHandler.PerformAttestationAsync(new()

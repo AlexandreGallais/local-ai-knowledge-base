@@ -49,7 +49,7 @@ List system connections:
 ```
 $ podman system connection list
 Name URI                                           Identity	      Default  ReadWrite
-devl ssh://root@example.com/run/podman/podman.sock ~/.ssh/id_rsa  true     true
+devl ssh://user@example.com/run/podman/podman.sock ~/.ssh/id_rsa  true     true
 ```
 ## SEE ALSO
 **podman(1)**, **podman-system(1)**

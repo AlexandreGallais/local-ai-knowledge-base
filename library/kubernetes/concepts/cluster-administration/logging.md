@@ -164,7 +164,7 @@ You can configure two kubelet configuration settings,
 kubelet configuration file.
 
 When you run `kubectl logs` as in
-the basic logging example, the kubelet on the node handles the request and
+the basic <example-value> example, the kubelet on the node handles the request and
 reads directly from the log file. The kubelet returns the content of the log file.
 
 **Note:**

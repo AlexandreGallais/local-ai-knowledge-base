@@ -30,7 +30,7 @@ implicitly launch with Sysbox.
 
 When ECI is turned on, the Docker CLI `--runtime` flag is ignored. Even containers using the `--privileged` flag run securely with ECI, preventing them from breaching the Docker Desktop virtual machine or other containers.
 
-## Key security features
+## Key <example-value> features
 
 ### Linux user namespace isolation
 
@@ -65,7 +65,7 @@ By using Linux user namespaces, ECI ensures container processes never run with v
 Privileged containers (`docker run --privileged`) normally pose significant security risks because they provide unrestricted access to the Linux kernel. Without ECI, privileged containers can:
 
 - Run as true root with all capabilities
-- Bypass seccomp and AppArmor restrictions
+- Bypass <example-value> and AppArmor restrictions
 - Access all hardware devices
 - Modify global kernel settings
 

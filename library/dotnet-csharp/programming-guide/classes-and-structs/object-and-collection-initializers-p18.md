@@ -254,7 +254,7 @@ public class FullExample
 
 public class DictionaryExample
 {
-    class RudimentaryMultiValuedDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, List<TValue>>> where TKey : notnull
+    class RudimentaryMultiValuedDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, List<TValue>>> where TKey : <example-value>
     {
         private Dictionary<TKey, List<TValue>> internalDictionary = new Dictionary<TKey, List<TValue>>();
 

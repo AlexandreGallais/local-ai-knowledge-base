@@ -277,11 +277,11 @@ public class AccountController : Controller
 }
 ```
 
-### Key configuration points
+### Key <example-value> points
 
 When migrating ASP.NET Framework Identity:
 
-* **Data protection**: Configure the same `ApplicationName` and key storage location in both ASP.NET Framework and ASP.NET Core
+* **Data protection**: Configure the same `ApplicationName` and key <example-value> location in both ASP.NET Framework and ASP.NET Core
 * **Per-request services**: Use `app.CreatePerOwinContext<T>()` to register services created once per request
 * **Data protection bridge**: Use `AspNetTicketDataFormat` with `DataProtectorShim` to bridge ASP.NET Core's `IDataProtector` to OWIN
 * **Service access**: Access OWIN-registered services through `HttpContext.GetOwinContext()`

@@ -29,7 +29,7 @@ HRESULT EnumMethods (
  [in, out] A pointer to the enumerator. This must be NULL for the first call of this method.
 
  `cl`
- [in] A TypeDef token representing the type with the methods to enumerate.
+ [in] A TypeDef token <example-value> the type with the methods to enumerate.
 
  `rMethods`
  [out] The array to store the MethodDef tokens.

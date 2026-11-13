@@ -138,9 +138,9 @@ dotnet-stack symbolicate <input-path> [-d|--search-dir] [-o|--output] [-c|--stdo
 > cat stack.trace
 
 Unhandled exception. System.NullReferenceException: Object reference not set to an instance of an object.
-   at DotnetStackSymbolicate.App.MethodA() in DotnetStackSymbolicate.dll:token 0x6000002+0x6
-   at DotnetStackSymbolicate.App..ctor() in DotnetStackSymbolicate.dll:token 0x6000003+0x51
-   at DotnetStackSymbolicate.Program.OnCreate() in DotnetStackSymbolicate.Tizen.dll:token 0x6000001+0x8
+   at DotnetStackSymbolicate.App.MethodA() in DotnetStackSymbolicate.dll:token <example-value>
+   at DotnetStackSymbolicate.App..ctor() in DotnetStackSymbolicate.dll:token <example-value>
+   at DotnetStackSymbolicate.Program.OnCreate() in DotnetStackSymbolicate.Tizen.dll:token <example-value>
 onSigabrt called
 >
 > dotnet-stack symbolicate stack.trace --stdout

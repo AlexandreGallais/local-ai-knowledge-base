@@ -41,4 +41,4 @@ podman volume is a set of subcommands that manage volumes.
 **podman(1)**
 
 ## HISTORY
-November 2018, Originally compiled by Urvashi Mohnani <umohnani@redhat.com>
+November 2018, Originally compiled by Urvashi Mohnani <user@example.com>

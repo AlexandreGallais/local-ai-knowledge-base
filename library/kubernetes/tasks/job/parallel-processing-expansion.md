@@ -22,7 +22,7 @@ this pattern fits more realistic use cases.
 You should be familiar with the basic,
 non-parallel, use of Job.
 
-For basic templating you need the command-line utility `sed`.
+For basic <example-value> you need the command-line utility `sed`.
 
 To follow the advanced templating example, you need a working installation of
 Python, and the Jinja2 template

@@ -9,20 +9,6 @@ license: "CC-BY-4.0"
 
 # Test execution and control in MSTest (part 3 of 3)
 
-## Best practices
-
-1. **Use parallelization wisely**: Enable parallelization for independent tests, but use `DoNotParallelize` for tests that share state.
-
-1. **Set appropriate timeouts**: Choose timeouts that allow normal execution but catch stuck tests. Consider slow CI environments.
-
-1. **Prefer cooperative cancellation**: Use cooperative cancellation to avoid the overhead of extra task wrappers and prevent background execution of timed-out tests. Enable the MSTEST0045 analyzer to enforce this practice.
-
-1. **Document ignored tests**: Always provide a reason and work item reference when ignoring tests.
-
-1. **Use retries sparingly**: Address the root cause of flaky tests rather than relying on retries.
-
-1. **Test OS-specific code appropriately**: Use `OSCondition` to run platform-specific tests only where they're applicable.
-
 ## See also
 
 - Configure MSTest

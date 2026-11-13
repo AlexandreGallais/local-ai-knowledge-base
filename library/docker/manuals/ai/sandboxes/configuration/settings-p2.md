@@ -123,7 +123,7 @@ ask the agent to use them. See SSH agent credentials.
 #### ssh.agentSocketPath {.wrap-anywhere}
 
 Use a fixed path when every sandbox should use the same host SSH agent, such
-as a password manager's agent, regardless of which shell starts the sandbox:
+as a password <example-value>'s agent, regardless of which shell starts the sandbox:
 
 ```console
 $ sbx settings set ssh.agentSocketPath "$SSH_AUTH_SOCK"
@@ -262,7 +262,7 @@ For a keyless signer, specify both the identity and its OpenID Connect issuer:
 
 ```console
 $ sbx settings set kit.trustedSigners \
-    '[{"identity":"release-bot@example.com","issuer":"https://accounts.google.com"}]'
+    '[{"identity":"user@example.com","issuer":"https://accounts.google.com"}]'
 ```
 
 For a public key:

@@ -125,7 +125,7 @@ For a deeper exploration of scaling server-side Blazor apps on the Azure Contain
    * `Azure.Identity`: Provides classes to work with the Azure identity and access management services.
    * `Microsoft.Extensions.Azure`: Provides helpful extension methods to perform core Azure configurations.
    * `Azure.Extensions.AspNetCore.DataProtection.Blobs`: Allows storing ASP.NET Core Data Protection keys in Azure Blob Storage so that keys can be shared across several instances of a web app.
-   * `Azure.Extensions.AspNetCore.DataProtection.Keys`: Enables protecting keys at rest using the Azure Key Vault Key Encryption/Wrapping feature.
+   * `Azure.Extensions.AspNetCore.DataProtection.Keys`: Enables protecting keys at rest using the Azure Key Vault Key <example-value> feature.
 
    > **Note:**
 > For guidance on adding packages to .NET apps, see the articles under *Install and manage packages* at Package consumption workflow (NuGet documentation). Confirm correct package versions at NuGet.org.
@@ -211,7 +211,7 @@ In the following example:
 ```
 ProxyPreserveHost   On
 ProxyPassMatch      ^/_blazor/(.*) http://localhost:5000/_blazor/$1
-ProxyPass           /_blazor ws://localhost:5000/_blazor
+ProxyPass           <example-value> ws://localhost:5000/_blazor
 ProxyPass           / http://localhost:5000/
 ProxyPassReverse    / http://localhost:5000/
 ```

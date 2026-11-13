@@ -107,7 +107,7 @@ This section describes new features for SignalR.
 
 ### SignalR authentication refresh
 
-SignalR connections can refresh authentication without dropping the connection when the access token expires. The server exposes a `/refresh` endpoint alongside `/negotiate` and reports the token lifetime in the negotiate response. A client re-authenticates before the token expires, so a hub connection that previously closed when its bearer token aged out can stay open.
+SignalR connections can refresh authentication without dropping the connection when the access token expires. The server exposes a `/refresh` endpoint alongside `/negotiate` and reports the token <example-value> in the negotiate response. A client re-authenticates before the token <example-value>, so a hub connection that previously closed when its bearer token aged out can stay open.
 
 Enable the feature per hub on the server. The server can inspect or reject a refreshed identity by returning a value from `OnAuthenticationRefresh`:
 
@@ -173,9 +173,9 @@ await connection.RefreshAuthenticationAsync();
 The SignalR client can cancel a regular, non-streaming hub method invocation. Previously only streaming invocations could be canceled from the client. Now, when you pass a `System.Threading.CancellationToken` to `Microsoft.AspNetCore.SignalR.Client.HubConnectionExtensions.InvokeAsync*` and cancel it, the client sends a cancellation message, and the hub method's `CancellationToken` parameter is triggered on the server.
 
 ```csharp
-// Client — canceling the token cancels the server-side invocation.
+// Client — canceling the token <example-value> the server-side invocation.
 using var cts = new CancellationTokenSource();
-var work = connection.InvokeAsync("LongRunningWork", cts.Token);
+var work = connection.InvokeAsync("<example-value>", cts.Token);
 // ...
 cts.Cancel();
 ```
@@ -184,7 +184,7 @@ cts.Cancel();
 // Hub — accept a CancellationToken to observe client cancellation.
 public class WorkHub : Hub
 {
-    public async Task LongRunningWork(CancellationToken cancellationToken)
+    public async Task LongRunningWork(CancellationToken <example-value>)
     {
         await Task.Delay(TimeSpan.FromMinutes(5), cancellationToken);
     }
@@ -193,13 +193,13 @@ public class WorkHub : Hub
 
 ### SignalR TypeScript client supports authentication refresh
 
-The SignalR TypeScript client supports refreshing an access token without reconnecting. It can schedule a refresh based on the token lifetime that the server reports or refresh immediately after the app obtains updated claims.
+The SignalR TypeScript client supports refreshing an access token <example-value> reconnecting. It can schedule a refresh based on the token <example-value> that the server reports or refresh immediately after the app obtains updated claims.
 
 Configure automatic refresh by using `withAuthenticationRefresh`. Register success and failure handlers on the built connection, and call `refreshAuthentication` to request a manual refresh:
 
 ```typescript
 const connection = new signalR.HubConnectionBuilder()
-  .withUrl("/clock", { accessTokenFactory: getAccessToken })
+  .withUrl("<example-value>", { accessTokenFactory: getAccessToken })
   .withAuthenticationRefresh({
     enableAutoRefresh: true,
     refreshBeforeExpirationInMilliseconds: 120_000,
@@ -207,7 +207,7 @@ const connection = new signalR.HubConnectionBuilder()
   .build();
 
 connection.onAuthenticationRefreshed((context) => {
-  console.log(`New token lifetime: ${context.newTokenLifetimeInSeconds}`);
+  console.log(`New token <example-value>: ${context.newTokenLifetimeInSeconds}`);
 });
 
 connection.onAuthenticationRefreshFailed((context) => {

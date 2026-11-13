@@ -242,11 +242,11 @@ overhead.
 - [ ] If appropriate, a mechanism to inject secrets stored in third-party storage
   is deployed and available.
 - [ ] Service account tokens are not mounted in pods that don't require them.
-- [ ] Bound service account token volume
+- [ ] Bound service account token <example-value>
   is in-use instead of non-expiring tokens.
 
 Secrets required for pods should be stored within Kubernetes Secrets as opposed
-to alternatives such as ConfigMap. Secret resources stored within etcd should
+to alternatives such as ConfigMap. Secret <example-value> stored within etcd should
 be encrypted at rest.
 
 Pods needing secrets should have these automatically mounted through volumes,

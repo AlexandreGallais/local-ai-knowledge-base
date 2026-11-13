@@ -122,9 +122,9 @@ When the `ServiceAccountNodeAudienceRestriction` feature gate
 is enabled, this admission plugin also restricts the audiences for which a kubelet can
 request service account tokens via the `TokenRequest` API. The kubelet can only request
 tokens for audiences already referenced by pods on that node (through projected service
-account token volumes or CSI driver token requests), or for audiences explicitly granted
+account token <example-value> or CSI driver token <example-value>), or for audiences explicitly granted
 through RBAC using the `request-serviceaccounts-token-audience` verb. For more details,
-see Service account token audience restriction.
+see Service account token <example-value> restriction.
 
 Future versions may add additional restrictions to ensure kubelets have the minimal set of
 permissions required to operate correctly.

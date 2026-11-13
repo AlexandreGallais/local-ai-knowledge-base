@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Attaching existing entities
 
-### Explicit key values
+### Explicit key <example-value>
 
 Entities returned from queries are tracked in the `Unchanged` state. The `Unchanged` state means that the entity has not been modified since it was queried. A disconnected entity, perhaps returned from a web client in an HTTP request, can be put into this state using either `Microsoft.EntityFrameworkCore.DbContext.Attach*`, `Microsoft.EntityFrameworkCore.DbContext.AttachRange*`, or the equivalent methods on `Microsoft.EntityFrameworkCore.DbSet`1`. For example, to start tracking an existing blog:
 
@@ -81,9 +81,9 @@ Post {Id: 2} Unchanged
 
 Calling SaveChanges at this point will have no effect. All the entities are marked as `Unchanged`, so there is nothing to update in the database.
 
-### Generated key values
+### Generated key <example-value>
 
-As mentioned above, integer and GUID key properties are configured to use automatically generated key values by default. This has a major advantage when working with disconnected entities: an unset key value indicates that the entity has not yet been inserted into the database. This allows the change tracker to automatically detect new entities and put them in the `Added` state. For example, consider attaching this graph of a blog and posts:
+As mentioned above, integer and GUID key <example-value> are configured to use automatically generated key <example-value> by default. This has a major advantage when working with disconnected entities: an unset key value indicates that the entity has not yet been inserted into the database. This allows the change tracker to automatically detect new entities and put them in the `Added` state. For example, consider attaching this graph of a blog and posts:
 
 ```csharp
 context.Attach(
@@ -114,7 +114,7 @@ context.Attach(
     });
 ```
 
-The blog has a key value of 1, indicating that it already exists in the database. Two of the posts also have key values set, but the third does not. EF Core will see this key value as 0, the CLR default for an integer. This results in EF Core marking the new entity as `Added` instead of `Unchanged`:
+The blog has a key value of 1, indicating that it already exists in the database. Two of the posts also have key <example-value> set, but the third does not. EF Core will see this key value as 0, the CLR default for an integer. This results in EF Core marking the new entity as `Added` instead of `Unchanged`:
 
 ```output
 Blog {Id: 1} Unchanged
@@ -150,11 +150,11 @@ FROM "Posts"
 WHERE changes() = 1 AND "rowid" = last_insert_rowid();
 ```
 
-The important point to notice here is that, with generated key values, EF Core is able to **automatically distinguish new from existing entities in a disconnected graph**. In a nutshell, when using generated keys, EF Core will always insert an entity when that entity has no key value set.
+The important point to notice here is that, with generated key <example-value>, EF Core is able to **automatically distinguish new from existing entities in a disconnected graph**. In a nutshell, when using generated keys, EF Core will always insert an entity when that entity has no key value set.
 
 ## Updating existing entities
 
-### Explicit key values
+### Explicit key <example-value>
 
 `Microsoft.EntityFrameworkCore.DbContext.Update*`, `Microsoft.EntityFrameworkCore.DbContext.UpdateRange*`, and the equivalent methods on `Microsoft.EntityFrameworkCore.DbSet`1` behave exactly as the `Attach` methods described above, except that entities are put into the `Modified` instead of the `Unchanged` state. For example, to start tracking an existing blog as `Modified`:
 
@@ -238,9 +238,9 @@ WHERE "Id" = @p3;
 SELECT changes();
 ```
 
-### Generated key values
+### Generated key <example-value>
 
-As with `Attach`, generated key values have the same major benefit for `Update`: an unset key value indicates that the entity is new and has not yet been inserted into the database. As with `Attach`, this allows the DbContext to automatically detect new entities and put them in the `Added` state. For example, consider calling `Update` with this graph of a blog and posts:
+As with `Attach`, generated key <example-value> have the same major benefit for `Update`: an unset key value indicates that the entity is new and has not yet been inserted into the database. As with `Attach`, this allows the DbContext to automatically detect new entities and put them in the `Added` state. For example, consider calling `Update` with this graph of a blog and posts:
 
 ```csharp
 context.Update(

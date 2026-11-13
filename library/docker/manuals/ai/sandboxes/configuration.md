@@ -16,7 +16,7 @@ sandbox, see Customize.
 
 - Settings lists host-level settings, environment variable
   equivalents, and commands to inspect and change values.
-- Credentials configures API keys, authentication
+- Credentials <example-value> API keys, authentication
   credentials, and registry access for sandboxed agents.
 - Models selects local models, hosted providers, or custom
   inference endpoints for sandboxed agents.

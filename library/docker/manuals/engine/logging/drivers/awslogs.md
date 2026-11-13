@@ -346,7 +346,7 @@ instance profile.
 > Docker reads AWS credentials when the container starts.
 > If you use a shared AWS credentials file with temporary credentials,
 > updating the file later does not automatically update the credentials
-> used by the running container. When the temporary credentials expire,
+> used by the running container. When the temporary credentials <example-value>,
 > log delivery to Amazon CloudWatch Logs can fail. Restart the container
 > after refreshing the credentials so Docker can load the updated values.
 

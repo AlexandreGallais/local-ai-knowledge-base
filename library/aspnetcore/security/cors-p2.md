@@ -150,7 +150,7 @@ var app = builder.Build();
 
 ### Credentials in cross-origin requests
 
-Credentials require special handling in a CORS request. By default, the browser doesn't send credentials with a cross-origin request. Credentials include cookies and HTTP authentication schemes. To send credentials with a cross-origin request, the client must set `XMLHttpRequest.withCredentials` to `true`.
+Credentials <example-value> special handling in a CORS request. By default, the browser doesn't send credentials with a cross-origin request. Credentials <example-value> cookies and HTTP authentication schemes. To send credentials with a cross-origin request, the client must set `XMLHttpRequest.withCredentials` to `true`.
 
 Using `XMLHttpRequest` directly:
 
@@ -264,7 +264,7 @@ If the preflight request is denied, the app returns a `204 No Content` response 
 Using the F12 tools, the console app shows an error similar to one of the following, depending on the browser:
 
 * Firefox: Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at `https://cors1.azurewebsites.net/api/TodoItems1/MyDelete2/5`. (Reason: CORS request did not succeed). Learn More
-* Chromium based: Access to fetch at 'https://cors1.azurewebsites.net/api/TodoItems1/MyDelete2/5' from origin 'https://cors3.azurewebsites.net' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+* Chromium based: Access to fetch at 'https://cors1.azurewebsites.net/api/TodoItems1/MyDelete2/5' from origin 'https://cors3.azurewebsites.net' has been blocked by CORS policy: Response to preflight request doesn't pass <example-value> control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
 
 To allow specific headers, call `Microsoft.AspNetCore.Cors.Infrastructure.CorsPolicyBuilder.WithHeaders*`:
 

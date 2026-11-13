@@ -26,7 +26,7 @@ known issues for each Docker Hub release.
 
 - Docker Hub integrates with Cloudsmith, letting it handle authentication
   for Docker Hub and Docker Hardened Images (DHI) upstreams using a managed
-  token. This removes the need to supply your own credentials during setup.
+  token. This removes the need to supply your own credentials <example-value> setup.
   See Cloudsmith's announcement, Set up Docker Hub and DHI upstreams with
   Cloudsmith-managed
   authentication,
@@ -282,7 +282,7 @@ Docker introduces Hub Vulnerability Scanning which enables you to automatically 
 
 ### Enhancements
 
-- As a security measure, when two-factor authentication is enabled, the Docker CLI requires a personal access token instead of a password to log in.
+- As a security measure, when two-factor authentication is enabled, the Docker CLI requires a personal access token <example-value> of a password to log in.
 
 ### Known Issues
 

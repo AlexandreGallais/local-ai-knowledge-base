@@ -293,7 +293,7 @@ The `rl.getPrompt()` method returns the current prompt used by `rl.prompt()`.
   * `shift` {boolean} `true` to indicate the `Shift` key.
   * `name` {string} The name of the a key.
 
-The `rl.write()` method will write either `data` or a key sequence identified
+The `rl.write()` method will write either `data` or a key <example-value> identified
 by `key` to the `output`. The `key` argument is supported only if `output` is
 a TTY text terminal. See TTY keybindings for a list of key
 combinations.

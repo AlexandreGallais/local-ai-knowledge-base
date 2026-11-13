@@ -65,12 +65,12 @@ As shown in the preceding images, the visualizer tool window displays the syntax
 
 Syntax trees comprise three types of items – *nodes*, *tokens*, and *trivia*. You can read more about these types in the Work with syntax article. Items of each type are represented using a different color. Click on the ‘Legend’ button for an overview of the colors used.
 
-Each item in the tree also displays its own **span**. The **span** is the indices (the starting and ending position) of that node in the text file.  In the preceding C# example, the selected “UsingKeyword [0..5)” token has a **Span** that is five characters wide, [0..5). The "[..)" notation means that the starting index is part of the span, but the ending index is not.
+Each item in the tree also displays its own **span**. The **span** is the indices (the starting and ending position) of that node in the text file.  In the preceding C# example, the selected “UsingKeyword [0..5)” token has a **Span** that is five characters wide, [0..5). The "<example-value>" notation means that the starting index is part of the span, but the ending index is not.
 
 There are two ways to navigate the tree:
 
 * Expand or click on items in the tree. The visualizer automatically selects the text corresponding to this item’s span in the code editor.
-* Click or select text in the code editor. In the preceding Visual Basic example, if you select the line containing "Module Module1" in the code editor, the visualizer automatically navigates to the corresponding ModuleStatement node in the tree.
+* Click or select text in the code editor. In the preceding Visual Basic <example-value>, if you select the line containing "Module Module1" in the code editor, the visualizer automatically navigates to the corresponding ModuleStatement node in the tree.
 
 The visualizer highlights the item in the tree whose span best matches the span of the text selected in the editor.
 
@@ -132,7 +132,7 @@ Right-click the same **IdentifierName** node and select **View AliasSymbol (if a
 
 Inspect the symbol corresponding to any declared type, method, property. Select the corresponding node in the visualizer and right-click to access **View Symbol (if any)**. Select the method `Sub Main()`, including the body of the method. Right-click the corresponding **SubBlock** node in the visualizer and select **View Symbol (if any)**. The property grid shows the **MethodSymbol** for this **SubBlock** has name `Main` with return type `Void`.
 
-The above Visual Basic examples can be easily replicated in C#. Type `using C = System.Console;` in place of `Imports C = System.Console` for the alias. The preceding steps in C# yield identical results in the visualizer window.
+The above Visual Basic <example-value> can be easily replicated in C#. Type `using C = System.Console;` in place of `Imports C = System.Console` for the alias. The preceding steps in C# yield identical results in the visualizer window.
 
 Semantic inspection operations are only available on nodes. They are not available on tokens or trivia. Not all nodes have interesting semantic information to inspect. When a node doesn't have interesting semantic information, right-clicking and selecting **View \* Symbol (if any)** shows a blank property grid.
 

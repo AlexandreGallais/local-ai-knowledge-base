@@ -161,7 +161,7 @@ services:
       - go-network
     environment:
       - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=password
+      - GF_SECURITY_ADMIN_PASSWORD=<example-value>
 
 volumes:
   grafana-data:

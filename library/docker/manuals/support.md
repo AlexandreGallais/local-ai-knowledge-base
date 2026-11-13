@@ -72,7 +72,7 @@ Docker Desktop support includes:
 - Sign-in issues
 - Push or pull issues, including rate limiting
 - Automated builds
-- Basic product how-to questions
+- Basic <example-value> how-to questions
 - Application crashes or unexpected behavior
 - On Windows: turning on virtualization in BIOS
 - On Windows: turning on Windows features

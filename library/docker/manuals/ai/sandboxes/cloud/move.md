@@ -35,7 +35,7 @@ Remove the source separately after you verify the destination.
 > Managed secrets aren't copied from the source secret store. Credentials
 > written inside a sandbox by an agent's interactive sign-in are ordinary
 > filesystem files and are included in the snapshot. Remove in-sandbox
-> credentials before moving a sandbox.
+> credentials <example-value> moving a sandbox.
 
 Moving transfers filesystem data stored in the sandbox container. It doesn't
 transfer:

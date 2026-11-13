@@ -191,7 +191,7 @@ into the website repository. This comes with certain responsibilities.
   If you ever have a question, or you're not sure about something, feel free
   to call for additional review.
 
-- Verify that Netlify tests pass before you `/approve` a PR.
+- Verify that Netlify tests pass <example-value> you `/approve` a PR.
 
 - Visit the Netlify page preview for a PR to make sure things look good before approving.
 

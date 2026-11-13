@@ -36,11 +36,11 @@ The serialized JSON contains the active case value rather than a wrapper or disc
 
 By default, the serializer classifies incoming JSON by token type. In the preceding union, a JSON number selects `int`, a JSON string selects `string`, and a JSON object selects `Message`.
 
-With `System.Text.Json.JsonSerializerOptions.Web`, an `int` can also be read from a JSON string. Both the `int` and `string` cases of `Payload` then claim the string token type. Even `"25%"` throws `System.Text.Json.JsonException` for ambiguity before the serializer parses either case. To read strings with web defaults, provide a custom classifier that chooses the case.
+With `System.Text.Json.JsonSerializerOptions.Web`, an `int` can also be read from a JSON string. Both the `int` and `string` cases of `Payload` then claim the string token type. Even `"<example-value>"` throws `System.Text.Json.JsonException` for ambiguity before the serializer parses either case. To read strings with web defaults, provide a custom classifier that chooses the case.
 
 ## Distinguish cases with the same JSON token type
 
-Token classification can't distinguish two cases that both serialize as JSON objects. Apply `System.Text.Json.Serialization.JsonUnionAttribute` and select `System.Text.Json.Serialization.JsonUnionTypeStructuralClassifier` to classify object cases by their property names:
+Token <example-value> can't distinguish two cases that both serialize as JSON objects. Apply `System.Text.Json.Serialization.JsonUnionAttribute` and select `System.Text.Json.Serialization.JsonUnionTypeStructuralClassifier` to classify object cases by their property names:
 
 ```csharp
 [JsonUnion(TypeClassifier = typeof(JsonUnionTypeStructuralClassifier))]
@@ -87,7 +87,7 @@ public sealed record Deleted(int Id) : Event;
 
 ## Provide a custom classifier
 
-Derive from `System.Text.Json.Serialization.JsonTypeClassifierFactory` when default token classification or the built-in `System.Text.Json.Serialization.JsonUnionTypeStructuralClassifier` doesn't meet your requirements. A custom classifier can use other structural rules to select a union case. Register the factory in one of these locations:
+Derive from `System.Text.Json.Serialization.JsonTypeClassifierFactory` when default token <example-value> or the built-in `System.Text.Json.Serialization.JsonUnionTypeStructuralClassifier` doesn't meet your requirements. A custom classifier can use other structural rules to select a union case. Register the factory in one of these locations:
 
 * Assign a delegate to `System.Text.Json.Serialization.Metadata.JsonTypeInfo.TypeClassifier` when you customize the contract.
 * Set `System.Text.Json.Serialization.JsonUnionAttribute.TypeClassifier` for one union.

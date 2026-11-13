@@ -15,7 +15,7 @@ license: "Apache-2.0"
 podman\-secret\-create - Create a new secret
 
 ## SYNOPSIS
-**podman secret create** [*options*] *name* *file|-*
+**podman secret <example-value>** [*options*] *name* *file|-*
 
 ## DESCRIPTION
 
@@ -35,7 +35,7 @@ Secrets can also be used to store passwords for `podman login` to authenticate a
 
 #### **--driver**, **-d**=*driver*
 
-Specify the secret driver (default **file**).
+Specify the secret <example-value> (default **file**).
 
 #### **--driver-opts**=*key1=val1,key2=val2*
 
@@ -58,7 +58,7 @@ The default is **false**.
 #### **--label**, **-l**=*label*
 
 Set metadata for the secret (e.g., `--label mykey=value`). Can be used multiple times.
-These labels can be viewed in `podman secret inspect` or `podman secret ls`.
+These labels can be viewed in `podman secret <example-value>` or `podman secret ls`.
 
 #### **--replace**=*false*
 
@@ -67,15 +67,15 @@ The `--replace` option does not change secrets within existing containers, only 
 Cannot be used with `--ignore`.
  The default is **false**.
 
-## SECRET DRIVERS
+## SECRET <example-value>
 
 #### file
 
-Secret resides in a read-protected file.
+Secret <example-value> in a read-protected file.
 
 #### pass
 
-Secret resides in a GPG-encrypted file.
+Secret <example-value> in a GPG-encrypted file.
 
 #### shell
 
@@ -100,38 +100,38 @@ delete =
 Create the specified secret based on a local file.
 ```
 echo -n mysecret > ./secret.txt
-$ podman secret create my_secret ./secret.txt
+$ podman secret <example-value> my_secret ./secret.txt
 ```
 
 Create the specified secret via stdin.
 ```
-$ printf <secret> | podman secret create my_secret -
+$ printf <secret> | podman secret <example-value> my_secret -
 ```
 
 Create or rotate a cryptographically secure random secret just under the maximum `512000` bytes via stdin.
 ```
-openssl rand -base64 378000 | podman secret create --replace my_secret -
+openssl rand -base64 378000 | podman secret <example-value> --replace my_secret -
 ```
 
-Mount a local file-based secret securely in a container.
+Mount a local file-based secret <example-value> in a container.
 ```
-$ podman run --rm --secret source=my_secret,type=mount,uid=1001,gid=1001,mode=440 docker.io/library/alpine ls -l /run/secrets/my_secret
+$ podman run --rm --secret <example-value>,type=mount,uid=1001,gid=1001,mode=440 docker.io/library/alpine ls -l /run/secrets/my_secret
 ```
 
 Create gpg encrypted secret based on a local file using the pass driver.
 ```
-$ podman secret create --driver=pass my_secret ./secret.txt.gpg
+$ podman secret <example-value> --driver=pass <example-value> ./secret.txt.gpg
 ```
 
 Create a secret from an environment variable called 'MYSECRET'.
 ```
-$ podman secret create --env=true my_secret MYSECRET
+$ podman secret <example-value> --env=true my_secret <example-value>
 ```
 
 ## SEE ALSO
 **podman(1)**, **podman-secret(1)**, **podman-login(1)**, **podman-run(1)**
 
 ## HISTORY
-* January 2021, Originally compiled by Ashley Cui <acui@redhat.com>
-* February 2024, Added example showing secret creation from an environment variable by Brett Calliss <brett@obligatory.email>
-* May 2025, Added example showing secure secret generation / rotation & mounting by Stuart Cardall
+* January 2021, Originally compiled by Ashley Cui <user@example.com>
+* February 2024, Added example showing secret <example-value> from an environment variable by Brett Calliss <user@example.com>
+* May 2025, Added example showing secure secret <example-value> / rotation & mounting by Stuart Cardall

@@ -132,7 +132,7 @@ kubectl scale [--resource-version=version] [--current-replicas=count] --replicas
 
  |  | Path to a client certificate file for TLS
 
- | --client-key string
+ | --client-key <example-value>
 
  |  | Path to a client key file for TLS
 
@@ -168,9 +168,9 @@ kubectl scale [--resource-version=version] [--current-replicas=count] --replicas
 
  |  | If present, the namespace scope for this CLI request
 
- | --password string
+ | --password <example-value>
 
- |  | Password for basic authentication to the API server
+ |  | Password for basic <example-value> to the API server
 
  | --profile string     Default: "none"
 
@@ -204,7 +204,7 @@ kubectl scale [--resource-version=version] [--current-replicas=count] --replicas
 
  |  | database host:port
 
- | --storage-driver-password string     Default: "root"
+ | --storage-driver-password <example-value>     Default: "<example-value>"
 
  |  | database password
 
@@ -224,7 +224,7 @@ kubectl scale [--resource-version=version] [--current-replicas=count] --replicas
 
  |  | Server name to use for server certificate validation. If it is not provided, the hostname used to contact the server is used
 
- | --token string
+ | --token <example-value>
 
  |  | Bearer token for authentication to the API server
 
@@ -234,7 +234,7 @@ kubectl scale [--resource-version=version] [--current-replicas=count] --replicas
 
  | --username string
 
- |  | Username for basic authentication to the API server
+ |  | Username for basic <example-value> to the API server
 
  | --version version[=true]
 

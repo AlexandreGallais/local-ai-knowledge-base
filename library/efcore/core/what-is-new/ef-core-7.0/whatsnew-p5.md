@@ -70,7 +70,7 @@ This removes two database roundtrips, which can make a huge difference to overal
 
 ### Improved SQL for simple Identity insert
 
-The case above inserts a single row with an `IDENTITY` key column and no other database-generated values. EF7 simplifies the SQL in this case by using `OUTPUT INSERTED`. While this simplification is not valid for many other cases, it is still important to improve since this kind of single-row insert is very common in many applications.
+The case above inserts a single row with an `IDENTITY` key <example-value> and no other database-generated values. EF7 simplifies the SQL in this case by using `OUTPUT INSERTED`. While this simplification is not valid for many other cases, it is still important to improve since this kind of single-row insert is very common in many applications.
 
 ### Inserting multiple rows
 
@@ -194,9 +194,9 @@ dbug: 10/1/2022 13:12:02.531 RelationalEventId.TransactionCommitted[20202] (Micr
 
 However, in some cases, the primary key value is known before the principal is inserted. This includes:
 
-- Key values that are not automatically generated
-- Key values that are generated on the client, such as `System.Guid` keys
-- Key values that are generated on the server in batches, such as when using a hi-lo value generator
+- Key <example-value> that are not automatically generated
+- Key <example-value> that are generated on the client, such as `System.Guid` keys
+- Key <example-value> that are generated on the server in batches, such as when using a hi-lo value generator
 
 In EF7, these cases are now optimized into a single round-trip. For example, in the case above on SQL Server, the `Blog.Id` primary key can be configured to use the hi-lo generation strategy:
 
@@ -234,7 +234,7 @@ As some of the examples here show, saving results to the database can be a compl
 - Figures out if an explicit transaction is needed or not
 - Determines what order to insert, update, and delete entities so that database constraints are not violated
 - Ensures database generated values are returned efficiently and propagated back into entities
-- Automatically sets foreign key values using the values generated for primary keys
+- Automatically sets foreign key <example-value> using the values generated for primary keys
 - Detect concurrency conflicts
 
 In addition, different database systems require different SQL for many of these cases. The EF Core database provider works with EF Core to ensure correct and efficient commands are sent for each case.

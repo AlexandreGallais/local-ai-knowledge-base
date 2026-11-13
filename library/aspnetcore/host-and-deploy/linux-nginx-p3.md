@@ -177,7 +177,7 @@ http {
         listen                    [::]:443 ssl http2;
         server_name               example.com *.example.com;
         ssl_certificate           /etc/ssl/certs/testCert.crt;
-        ssl_certificate_key       /etc/ssl/certs/testCert.key;
+        ssl_certificate_key       <example-value>/testCert.key;
         ssl_session_timeout       1d;
         ssl_protocols             TLSv1.2 TLSv1.3;
         ssl_prefer_server_ciphers off;

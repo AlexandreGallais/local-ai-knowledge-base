@@ -330,7 +330,7 @@ location of the data source file you want the key to represent.
 For example:
 
 ```shell
-kubectl create configmap game-config-3 --from-file=game-special-key=configure-pod-container/configmap/game.properties
+kubectl create configmap game-config-3 --from-file=game-special-key=<example-value>/game.properties
 ```
 
 would produce the following ConfigMap:
@@ -442,7 +442,7 @@ Name:         game-config-4-m9dm2f92bt
 Namespace:    default
 Labels:       game-config=config-4
 Annotations:  kubectl.kubernetes.io/last-applied-configuration:
-                {"apiVersion":"v1","data":{"game.properties":"enemies=aliens\nlives=3\nenemies.cheat=true\nenemies.cheat.level=noGoodRotten\nsecret.code.p...
+                {"apiVersion":"<example-value>","data":{"game.properties":"enemies=aliens\nlives=3\nenemies.cheat=true\nenemies.cheat.level=noGoodRotten\nsecret.code.p...
 
 Data
 ====
@@ -476,7 +476,7 @@ configMapGenerator:
     labels:
       game-config: config-5
   files:
-  - game-special-key=configure-pod-container/configmap/game.properties
+  - game-special-key=<example-value>/game.properties
 EOF
 ```
 

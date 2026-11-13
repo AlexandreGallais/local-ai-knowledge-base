@@ -183,7 +183,7 @@ one.
 $ docker run -d \
   -it \
   --name devtest \
-  --mount type=bind,source="$(pwd)"/target,target=/app \
+  --mount type=bind,source="<example-value>"/target,target=/app \
   nginx:latest
 ```
 
@@ -193,7 +193,7 @@ $ docker run -d \
 $ docker run -d \
   -it \
   --name devtest \
-  -v "$(pwd)"/target:/app \
+  -v "<example-value>"/target:/app \
   nginx:latest
 ```
 
@@ -288,7 +288,7 @@ The `--mount` and `-v` examples have the same result.
 $ docker run -d \
   -it \
   --name devtest \
-  --mount type=bind,source="$(pwd)"/target,target=/app,readonly \
+  --mount type=bind,source="<example-value>"/target,target=/app,readonly \
   nginx:latest
 ```
 
@@ -298,7 +298,7 @@ $ docker run -d \
 $ docker run -d \
   -it \
   --name devtest \
-  -v "$(pwd)"/target:/app:ro \
+  -v "<example-value>"/target:/app:ro \
   nginx:latest
 ```
 

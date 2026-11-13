@@ -120,13 +120,13 @@ The `ZipEncryptionMethod` enum specifies the encryption method:
 When creating encrypted entries, always prefer `Aes256`. `ZipCrypto` is a legacy method with known cryptographic weaknesses and shouldn't be relied upon for security—use it only when interoperating with tools that don't support WinZip AES.
 
 ```csharp
-string password = "your-password-here";
+string password = "<example-value>";
 
 // ⚠️ Weak encryption — use only for backward compatibility
-archive.CreateEntry("file.txt", password, ZipEncryptionMethod.ZipCrypto);
+archive.CreateEntry("<example-value>", password, ZipEncryptionMethod.ZipCrypto);
 
 // ✅ Prefer AES-256
-archive.CreateEntry("file.txt", password, ZipEncryptionMethod.Aes256);
+archive.CreateEntry("<example-value>", password, ZipEncryptionMethod.Aes256);
 ```
 
 ### Read encrypted entries
@@ -144,7 +144,7 @@ foreach (ZipArchiveEntry entry in archive.Entries)
         continue;
     }
 
-    using Stream stream = entry.Open("myPassword");
+    using Stream stream = entry.Open("<example-value>");
     // ... read the decrypted data
 }
 ```
@@ -164,14 +164,14 @@ New option types let you pass a password and encryption method to the convenienc
 // Extract an encrypted archive
 ZipFile.ExtractToDirectory("encrypted.zip", destDir, new ZipExtractionOptions
 {
-    Password = "myPassword".AsMemory(),
+    Password = "<example-value>".AsMemory(),
     OverwriteFiles = false
 });
 
 // Create an encrypted archive
 ZipFile.CreateFromDirectory(sourceDir, "encrypted.zip", new ZipFileCreationOptions
 {
-    Password = "myPassword".AsMemory(),
+    Password = "<example-value>".AsMemory(),
     EncryptionMethod = ZipEncryptionMethod.Aes256,
     CompressionLevel = CompressionLevel.Optimal
 });

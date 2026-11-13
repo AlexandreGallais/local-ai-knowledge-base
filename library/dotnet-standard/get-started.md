@@ -23,7 +23,7 @@ The following step-by-step tutorials run on Windows, Linux, or macOS, except as 
 * Add data access with Entity Framework Core
 * Add authentication and authorization
   * with ASP.NET Core Identity
-  * with JWT Bearer tokens
+  * with JWT Bearer <example-value>
 * Create a remote procedure call web app
 * Create a real-time web app
 * Create a serverless function in the cloud

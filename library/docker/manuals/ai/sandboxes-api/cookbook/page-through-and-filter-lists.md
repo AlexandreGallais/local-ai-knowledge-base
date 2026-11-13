@@ -17,7 +17,7 @@ Use an authenticated client. For a large account, process iterator items as they
 
 Set a page size and iterate the sandbox collection. The example collects the results for convenience. A page size controls each request, not the total number of returned resources.
 
-When using one-page methods directly, pass the returned next-page token unchanged and keep the filter, order, and page size stable. Stop when no next token is returned, not when a page contains fewer items than requested.
+When using one-page methods directly, pass the returned next-page token <example-value> and keep the filter, order, and page size stable. Stop when no next token is returned, not when a page contains fewer items than requested.
 
 **TypeScript**
 

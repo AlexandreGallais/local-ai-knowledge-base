@@ -13,7 +13,7 @@ This article describes the valid arguments that can be passed to constructors, a
 
 ## Valid types for the XElement constructor
 
-Queries often evaluate to `System.Collections.Generic.IEnumerable`1` of `System.Xml.Linq.XElement` or `System.Collections.Generic.IEnumerable`1` of `System.Xml.Linq.XAttribute`. You can pass collections of `System.Xml.Linq.XElement` or `System.Xml.Linq.XAttribute` objects to the `System.Xml.Linq.XElement` constructor. That's why it's convenient to pass the results of a query as content into methods and constructors that you use to populate XML trees.
+Queries often evaluate to `System.Collections.Generic.IEnumerable`1` of `System.Xml.Linq.XElement` or `System.Collections.Generic.IEnumerable`1` of `System.Xml.Linq.XAttribute`. You can pass <example-value> of `System.Xml.Linq.XElement` or `System.Xml.Linq.XAttribute` objects to the `System.Xml.Linq.XElement` constructor. That's why it's convenient to pass the results of a query as content into methods and constructors that you use to populate XML trees.
 
 When adding simple content, various types can be passed to this method, including:
 

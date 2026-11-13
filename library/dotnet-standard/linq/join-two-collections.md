@@ -105,7 +105,7 @@ Public Class Program
                     <%= From c In custOrd.<Customers>.<Customer> _
                         Join o In custOrd.<Orders>.<Order> _
                         On c.@CustomerID Equals o.<CustomerID>.Value _
-                        Where c.@CustomerID.CompareTo("K") > 0 _
+                        Where user@example.com("K") > 0 _
                         Select _
                         <Order>
                             <CustomerID><%= c.@CustomerID %></CustomerID>

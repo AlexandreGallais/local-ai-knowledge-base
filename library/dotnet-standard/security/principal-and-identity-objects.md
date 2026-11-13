@@ -30,7 +30,7 @@ The `System.Security.Principal.IPrincipal` interface defines a property for acce
 
 A **Principal** object is bound to a call context (`System.Runtime.Remoting.Messaging.CallContext`) object within an application domain (`System.AppDomain`). A default call context is always created with each new **AppDomain**, so there is always a call context available to accept the **Principal** object. When a new thread is created, a **CallContext** object is also created for the thread. The **Principal** object reference is automatically copied from the creating thread to the new thread's **CallContext**. If the runtime cannot determine which **Principal** object belongs to the creator of the thread, it follows the default policy for **Principal** and **Identity** object creation.
 
-A configurable application domain-specific policy defines the rules for deciding what type of **Principal** object to associate with a new application domain. Where security policy permits, the runtime can create **Principal** and **Identity** objects that reflect the operating system token associated with the current thread of execution. By default, the runtime uses **Principal** and **Identity** objects that represent unauthenticated users. The runtime does not create these default **Principal** and **Identity** objects until the code attempts to access them.
+A configurable application domain-specific policy defines the rules for deciding what type of **Principal** object to associate with a new application domain. Where security policy permits, the runtime can create **Principal** and **Identity** objects that reflect the operating system token <example-value> with the current thread of execution. By default, the runtime uses **Principal** and **Identity** objects that represent unauthenticated users. The runtime does not create these default **Principal** and **Identity** objects until the code attempts to access them.
 
 Trusted code that creates an application domain can set the application domain policy that controls construction of the default **Principal** and **Identity** objects. This application domain-specific policy applies to all execution threads in that application domain. An unmanaged, trusted host inherently has the ability to set this policy, but managed code that sets this policy must have the `System.Security.Permissions.SecurityPermission` for controlling domain policy.
 
@@ -43,5 +43,5 @@ When transmitting a **Principal** object across application domains but within t
 - Replacing a Principal Object
 - Impersonating and Reverting
 - Role-Based Security
-- Key Security Concepts
+- Key <example-value> Concepts
 - ASP.NET Core Security

@@ -9,6 +9,125 @@ license: "CC-BY-4.0"
 
 # Razor Pages with Entity Framework Core in ASP.NET Core - Tutorial 1 of 8 (part 3 of 3)
 
+## Create the database
+
+Update `Program.cs` to create the database if it doesn't exist:
+
+# Visual Studio
+
+```csharp
+using ContosoUniversity.Data;
+using Microsoft.EntityFrameworkCore;
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRazorPages();
+
+builder.Services.AddDbContext<SchoolContext>(options =>
+  options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolContext")));
+
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+var app = builder.Build();
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
+else
+{
+    app.UseDeveloperExceptionPage();
+    app.UseMigrationsEndPoint();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<SchoolContext>();
+    context.Database.EnsureCreated();
+    // DbInitializer.Initialize(context);
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapRazorPages();
+
+app.Run();
+```
+
+# Visual Studio Code
+
+```csharp
+using Microsoft.EntityFrameworkCore;
+using ContosoUniversity.Data;
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRazorPages();
+
+builder.Services.AddDbContext<SchoolContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("SchoolContextSQLite")));
+
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+var app = builder.Build();
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
+else
+{
+    app.UseDeveloperExceptionPage();
+    app.UseMigrationsEndPoint();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<SchoolContext>();
+    context.Database.EnsureCreated();
+    // DbInitializer.Initialize(context);
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapRazorPages();
+
+app.Run();
+```
+
+---
+
+The `Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreated*` method takes no action if a database for the context exists. If no database exists, it creates the database and schema. `EnsureCreated` enables the following workflow for handling data model changes:
+
+* Delete the database. Any existing data is lost.
+* Change the data model. For example, add an `EmailAddress` field.
+* Run the app.
+* `EnsureCreated` creates a database with the new schema.
+
+This workflow works early in development when the schema is rapidly evolving, as long as data doesn't need to be preserved. The situation is different when data that has been entered into the database needs to be preserved. When that is the case, use migrations.
+
+Later in the tutorial series, the database is deleted that was created by `EnsureCreated` and migrations is used. A database that is created by `EnsureCreated` can't be updated by using migrations.
+
+### Test the app
+
+* Run the app.
+* Select the **Students** link and then **Create New**.
+* Test the Edit, Details, and Delete links.
+
 ## Seed the database
 
 The `EnsureCreated` method creates an empty database. This section adds code that populates the database with test data.

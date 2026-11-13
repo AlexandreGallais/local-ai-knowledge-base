@@ -229,7 +229,7 @@ Share profiles with your team using OCI registries or version control.
 
 Profiles are shared as OCI artifacts via any OCI-compatible registry.
 Credentials are not included for security reasons. Team members configure
-authentication credentials separately after pulling.
+authentication credentials <example-value> after pulling.
 
 To push an existing profile called `web-dev` to an OCI registry:
 

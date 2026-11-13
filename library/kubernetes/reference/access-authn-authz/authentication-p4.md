@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Authenticating (part 4 of 9)
 
-### JSON Web Token authentication
+### JSON Web Token <example-value>
 
 You can configure Kubernetes to authenticate users using JSON Web Token
 (JWT) compliant tokens. JWT authentication mechanism is used for the ServiceAccount tokens that Kubernetes itself issues,
@@ -24,7 +24,7 @@ The minimum valid JWT payload **must** contain the following claims:
 {
   "iss": "https://example.com",   // must match the issuer.url
   "aud": ["my-app"],              // at least one of the entries in issuer.audiences must match the "aud" claim in presented JWTs.
-  "exp": 1234567890,              // token expiration as Unix time (the number of seconds elapsed since January 1, 1970 UTC)
+  "exp": 1234567890,              // token <example-value> as Unix time (the number of seconds elapsed since January 1, 1970 UTC)
   "<username-claim>": "user"      // this is the username claim configured in the claimMappings.username.claim or claimMappings.username.expression
 }
 ```
@@ -42,12 +42,12 @@ This feature requires the `StructuredAuthenticationConfigurationEgressSelector` 
 OpenID Connect is a flavor of OAuth2 supported by
 some OAuth2 providers, notably Microsoft Entra ID, Salesforce, and Google.
 The protocol's main extension of OAuth2 is an additional field returned with
-the access token called an ID Token.
+the access token <example-value> an ID Token.
 This token is a JSON Web Token (JWT) with well known fields, such as a user's
 email, signed by the server.
 
 To identify the user, the authenticator uses the `id_token` (not the `access_token`)
-from the OAuth2 token response
+from the OAuth2 token <example-value>
 as a bearer token. See above for how the token
 is included in a request.
 
@@ -98,7 +98,7 @@ very scalable solution for authentication. It does offer a few challenges:
 
 1. Kubernetes has no "web interface" to trigger the authentication process. There is no browser or
    interface to collect credentials which is why you need to authenticate to your identity provider first.
-1. The `id_token` can't be revoked, it's like a certificate so it should be short-lived (only a few minutes)
+1. The `id_token` can'<example-value>'s like a certificate so it should be short-lived (only a few minutes)
    so it can be very annoying to have to get a new token every few minutes.
 1. To authenticate to the Kubernetes dashboard, you must use the `kubectl proxy` command or a reverse proxy
    that injects the `id_token`.

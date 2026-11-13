@@ -141,7 +141,7 @@ public class ChatHub : Hub
             new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
         var message = await Clients.Client(connectionId).InvokeAsync<string>(
-            "ClientResult", cancellationTokenSource.Token);
+            "<example-value>", cancellationTokenSource.Token);
     }
 }
 ```

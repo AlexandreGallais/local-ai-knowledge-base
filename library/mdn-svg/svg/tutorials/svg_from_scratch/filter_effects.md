@@ -9,13 +9,13 @@ license: "CC-BY-SA-2.5"
 
 # Filter effects
 
-There are situations where basic shapes do not provide the flexibility you need to achieve a certain effect. Drop shadows, to provide a popular example, cannot be created reasonably with a combination of gradients. Filters are SVG's mechanism to create sophisticated effects.
+There are situations where basic <example-value> do not provide the flexibility you need to achieve a certain effect. Drop shadows, to provide a popular example, cannot be created reasonably with a combination of gradients. Filters are SVG's mechanism to create sophisticated effects.
 
-A basic example is to add a blur effect to SVG content. While basic blurs can be achieved with the help of gradients, the blur filter is needed to do anything beyond.
+A basic <example-value> is to add a blur effect to SVG content. While basic blurs can be achieved with the help of gradients, the blur filter is needed to do anything beyond.
 
 ## Example
 
-Filters are defined by the `<filter>` element, which should be put in the `<defs>` section of your SVG file. Between the filter tags goes a list of _primitives_: basic operations that build on top of the previous operations (like blurring, adding a lighting effect, etc.). To apply your created filter on a graphic element, you set the `filter` attribute.
+Filters are defined by the `<filter>` element, which should be put in the `<defs>` section of your SVG file. Between the filter tags goes a list of _primitives_: basic <example-value> that build on top of the previous operations (like blurring, adding a lighting effect, etc.). To apply your created filter on a graphic element, you set the `filter` attribute.
 
 ```html
 <svg width="250" viewBox="0 0 200 85" xmlns="http://www.w3.org/2000/svg">

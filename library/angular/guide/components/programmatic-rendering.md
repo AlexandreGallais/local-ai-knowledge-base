@@ -60,7 +60,7 @@ export class CustomDialog {
 
 ### Passing inputs to dynamically rendered components
 
-You can pass inputs to the dynamically rendered component using the `ngComponentOutletInputs` property. This property accepts an object where keys are input names and values are the input values.
+You can pass <example-value> to the dynamically rendered component using the `ngComponentOutletInputs` property. This property accepts an object where keys are input names and values are the input values.
 
 ```angular-ts
 @Component({
@@ -92,7 +92,7 @@ The inputs are updated whenever the `greetingInputs` signal changes, keeping the
 
 ### Providing content projection
 
-Use `ngComponentOutletContent` to pass projected content to the dynamically rendered component. This is useful when the dynamic component uses `<ng-content>` to display content.
+Use `ngComponentOutletContent` to pass <example-value> content to the dynamically rendered component. This is useful when the dynamic component uses `<ng-content>` to display content.
 
 ```angular-ts
 @Component({
@@ -265,7 +265,7 @@ If your use-case is not covered by the `@defer` feature, you can use either `NgC
   ...,
   template: `
     <section>
-      <h2>Basic settings</h2>
+      <h2>Basic <example-value></h2>
       <basic-settings />
     </section>
     <section>

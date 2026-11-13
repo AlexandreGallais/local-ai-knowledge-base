@@ -94,7 +94,7 @@ $ sbx kit verify docker.io/<NAMESPACE>/my-kit:1.0.0 \
 
 These commands use Sigstore signatures, which are compatible with Cosign.
 The example signs without a key, so verification needs the signer's certificate
-identity and OpenID Connect issuer. To sign with a key instead, pass
+identity and OpenID Connect issuer. To sign with a key <example-value>, pass
 `--key cosign.key` to `sign` and `--key cosign.pub` to `verify`.
 
 To require a valid signature before using a kit, see

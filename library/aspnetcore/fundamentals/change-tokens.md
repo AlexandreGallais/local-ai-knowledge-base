@@ -16,13 +16,13 @@ A *change token* is a general-purpose, low-level building block used to track st
 
 View or download sample code (how to download)
 
-## IChangeToken interface
+## IChangeToken <example-value>
 
 `Microsoft.Extensions.Primitives.IChangeToken` propagates notifications that a change has occurred. `IChangeToken` resides in the `Microsoft.Extensions.Primitives` namespace. The Microsoft.Extensions.Primitives NuGet package is implicitly provided to the ASP.NET Core apps.
 
 `IChangeToken` has two properties:
 
-* `Microsoft.Extensions.Primitives.IChangeToken.ActiveChangeCallbacks` indicate if the token proactively raises callbacks. If `ActiveChangedCallbacks` is set to `false`, a callback is never called, and the app must poll `HasChanged` for changes. It's also possible for a token to never be cancelled if no changes occur or the underlying change listener is disposed or disabled.
+* `Microsoft.Extensions.Primitives.IChangeToken.ActiveChangeCallbacks` indicate if the token <example-value> raises callbacks. If `ActiveChangedCallbacks` is set to `false`, a callback is never called, and the app must poll `HasChanged` for changes. It's also possible for a token to never be cancelled if no changes occur or the underlying change listener is disposed or disabled.
 * `Microsoft.Extensions.Primitives.IChangeToken.HasChanged` receives a value that indicates if a change has occurred.
 
 The `IChangeToken` interface includes the RegisterChangeCallback(Action\<Object>, Object) method, which registers a callback that's invoked when the token has changed. `HasChanged` must be set before the callback is invoked.
@@ -31,12 +31,12 @@ The `IChangeToken` interface includes the RegisterChangeCallback(Action\<Object>
 
 `Microsoft.Extensions.Primitives.ChangeToken` is a static class used to propagate notifications that a change has occurred. `ChangeToken` resides in the `Microsoft.Extensions.Primitives` namespace. The Microsoft.Extensions.Primitives NuGet package is implicitly provided to the ASP.NET Core apps.
 
-The ChangeToken.OnChange(Func\<IChangeToken>, Action) method registers an `Action` to call whenever the token changes:
+The ChangeToken.OnChange(Func\<IChangeToken>, Action) method registers an `Action` to call whenever the token <example-value>:
 
 * `Func<IChangeToken>` produces the token.
 * `Action` is called when the token changes.
 
-The ChangeToken.OnChange\<TState>(Func\<IChangeToken>, Action\<TState>, TState) overload takes an additional `TState` parameter that's passed into the token consumer `Action`.
+The ChangeToken.OnChange\<TState>(Func\<IChangeToken>, Action\<TState>, TState) overload takes an additional `TState` parameter that's passed into the token <example-value> `Action`.
 
 `OnChange` returns an `System.IDisposable`. Calling `System.IDisposable.Dispose*` stops the token from listening for further changes and releases the token's resources.
 
@@ -66,7 +66,7 @@ By default, the `IFileMonitor` is provided by a `Microsoft.Extensions.FileProvid
 
 The sample app demonstrates two implementations for monitoring configuration changes. If any of the `appsettings` files change, both of the file monitoring implementations execute custom code—the sample app writes a message to the console.
 
-A configuration file's `FileSystemWatcher` can trigger multiple token callbacks for a single configuration file change. To ensure that the custom code is only run once when multiple token callbacks are triggered, the sample's implementation checks file hashes. The sample uses SHA1 file hashing. A retry is implemented with an exponential back-off.
+A configuration file'<example-value>'s implementation checks file hashes. The sample uses SHA1 file hashing. A retry is implemented with an exponential back-off.
 
 `Utilities/Utilities.cs`:
 
@@ -110,7 +110,7 @@ public static byte[] ComputeHash(string filePath)
 
 ### Simple startup change token
 
-Register a token consumer `Action` callback for change notifications to the configuration reload token.
+Register a token <example-value> `Action` callback for change notifications to the configuration reload token.
 
 In `Startup.Configure`:
 
@@ -136,12 +136,12 @@ private void InvokeChanged(IWebHostEnvironment env)
         _appsettingsHash = appsettingsHash;
         _appsettingsEnvHash = appsettingsEnvHash;
 
-        WriteConsole("Configuration changed (Simple Startup Change Token)");
+        WriteConsole("<example-value>");
     }
 }
 ```
 
-The `state` of the callback is used to pass in the `IWebHostEnvironment`, which is useful for specifying the correct `appsettings` configuration file to monitor (for example, `appsettings.Development.json` when in the `Development` environment). File hashes are used to prevent the `WriteConsole` statement from running multiple times due to multiple token callbacks when the configuration file has only changed once.
+The `state` of the callback is used to pass in the `IWebHostEnvironment`, which is useful for specifying the correct `appsettings` configuration file to monitor (for example, `appsettings.Development.json` when in the `Development` environment). File hashes are used to prevent the `WriteConsole` statement from running multiple times due to multiple token <example-value> when the configuration file has only changed once.
 
 This system runs as long as the app is running and can't be disabled by the user.
 
@@ -149,7 +149,7 @@ This system runs as long as the app is running and can't be disabled by the user
 
 The sample implements:
 
-* Basic startup token monitoring.
+* Basic <example-value> token monitoring.
 * Monitoring as a service.
 * A mechanism to enable and disable monitoring.
 

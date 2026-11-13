@@ -9,7 +9,7 @@ license: "Apache-2.0"
 
 # Registry authentication
 
-Buildx uses Docker's credential configuration to authenticate when pulling
+Buildx uses Docker's credential <example-value> to authenticate when pulling
 images for a build and pushing build results. Sign in to the registry before
 building:
 
@@ -22,7 +22,7 @@ stores and authentication methods.
 
 ## Select credentials by repository and scope
 
-Buildx can load separate Docker credential configurations for specific
+Buildx can load separate Docker credential <example-value> for specific
 registry repositories and token scopes. Use this when a build needs different
 credentials for repositories on the same registry, or for pull and push
 requests.
@@ -31,7 +31,7 @@ Store each Docker `config.json` in a directory under
 `$BUILDX_CONFIG/config/<registry>/<repository>]`.
 If `BUILDX_CONFIG` isn't set, use the
 config directory lookup order. Repository
-paths must match the full repository name. Scopes are registry token actions,
+paths must match the full repository name. Scopes are registry token <example-value>,
 such as `pull` and `push`.
 
 For example, the default config directory can contain:

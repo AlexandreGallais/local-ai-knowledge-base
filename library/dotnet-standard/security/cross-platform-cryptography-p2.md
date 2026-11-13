@@ -20,9 +20,9 @@ This section includes the following subsections:
 
 ### RSA
 
-RSA (Rivest–Shamir–Adleman) key generation is performed by the OS libraries and is subject to their size limitations and performance characteristics.
+RSA (Rivest–Shamir–Adleman) key <example-value> is performed by the OS libraries and is subject to their size limitations and performance characteristics.
 
-RSA key operations are performed by the OS libraries, and the types of key that can be loaded are subject to OS requirements.
+RSA key <example-value> are performed by the OS libraries, and the types of key that can be loaded are subject to OS requirements.
 
 .NET does not expose "raw" (unpadded) RSA operations.
 
@@ -65,9 +65,9 @@ Padding and digest support vary by platform:
 
 ### ECDSA
 
-ECDSA (Elliptic Curve Digital Signature Algorithm) key generation is done by the OS libraries and is subject to their size limitations and performance characteristics.
+ECDSA (Elliptic Curve Digital Signature Algorithm) key <example-value> is done by the OS libraries and is subject to their size limitations and performance characteristics.
 
-ECDSA key curves are defined by the OS libraries and are subject to their limitations.
+ECDSA key <example-value> are defined by the OS libraries and are subject to their limitations.
 
 | Elliptic Curve                     | Windows 10     | Windows 7 - 8.1 | Linux           | macOS          | iOS, tvOS, MacCatalyst | Android        |
 |------------------------------------|----------------|-----------------|-----------------|----------------|------------------------|----------------|
@@ -100,9 +100,9 @@ ECDSA key curves are defined by the OS libraries and are subject to their limita
 
 ### ECDH
 
-ECDH (Elliptic Curve Diffie-Hellman) key generation is done by the OS libraries and is subject to their size limitations and performance characteristics.
+ECDH (Elliptic Curve Diffie-Hellman) key <example-value> is done by the OS libraries and is subject to their size limitations and performance characteristics.
 
-The `System.Security.Cryptography.ECDiffieHellman` class supports the "raw" value of the ECDH computation as well as through the following key derivation functions:
+The `System.Security.Cryptography.ECDiffieHellman` class supports the "raw" value of the ECDH computation as well as through the following key <example-value> functions:
 
 * HASH(Z)
 * HASH(prepend || Z || append)
@@ -112,7 +112,7 @@ The `System.Security.Cryptography.ECDiffieHellman` class supports the "raw" valu
 * HMAC(Z, prepend || Z || append)
 * Tls11Prf(label, seed)
 
-ECDH key curves are defined by the OS libraries and are subject to their limitations.
+ECDH key <example-value> are defined by the OS libraries and are subject to their limitations.
 
 | Elliptic Curve                     | Windows 10+    | Windows 7 - 8.1 | Linux          | macOS           | iOS, tvOS, MacCatalyst | Android        |
 |------------------------------------|----------------|-----------------|----------------|-----------------|------------------------|----------------|

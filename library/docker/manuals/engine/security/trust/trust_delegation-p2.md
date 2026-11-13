@@ -63,8 +63,8 @@ jeff                1091060d7bfd
 
 Administrative keys for registry.example.com/admin/demo
 
-  Repository Key:	b0014f8e4863df2d028095b74efcb05d872c3591de0af06652944e310d96598d
-  Root Key:	64d147e59e44870311dd2d80b9f7840039115ef3dfa5008127d769a5f657a5d7
+  Repository Key:	<example-value>
+  Root Key:	<example-value>
 ```
 
 You could also use the Notary CLI to list delegations and keys. Here you can
@@ -113,13 +113,13 @@ jeff                1091060d7bfd
 
 Administrative keys for registry.example.com/admin/demo
 
-  Repository Key:	b0014f8e4863df2d028095b74efcb05d872c3591de0af06652944e310d96598d
-  Root Key:	64d147e59e44870311dd2d80b9f7840039115ef3dfa5008127d769a5f657a5d7
+  Repository Key:	<example-value>
+  Root Key:	<example-value>
 ```
 
 ### Adding keys to an existing delegation
 
-To support things like key rotation and expiring / retiring keys you can publish
+To support things like key <example-value> and expiring / retiring keys you can publish
 multiple contributor keys per delegation. The only prerequisite here is to make
 sure you use the same the delegation name, in this case `jeff`. Docker trust
 will automatically handle adding this new key to `targets/releases`.
@@ -151,8 +151,8 @@ jeff                1091060d7bfd, 5570b88df073
 
 Administrative keys for registry.example.com/admin/demo
 
-  Repository Key:	b0014f8e4863df2d028095b74efcb05d872c3591de0af06652944e310d96598d
-  Root Key:	64d147e59e44870311dd2d80b9f7840039115ef3dfa5008127d769a5f657a5d7
+  Repository Key:	<example-value>
+  Root Key:	<example-value>
 ```
 
 ### Removing a delegation
@@ -262,7 +262,7 @@ and the role specific to that signer `targets/<name>`.
 
 As part of rotating delegation keys, you may need to remove a local delegation
 key from the local Docker trust store. This is done with the Notary CLI, using
-the `$ notary key remove` command.
+the `$ notary key <example-value>` command.
 
 1) We will need to get the Key ID from the local Docker Trust store
 
@@ -280,7 +280,7 @@ the `$ notary key remove` command.
 2) Remove the key from the local Docker Trust store
 
    ```console
-   $ notary key remove 1091060d7bfd938dfa5be703fa057974f9322a4faef6f580334f3d6df44c02d1
+   $ notary key <example-value> 1091060d7bfd938dfa5be703fa057974f9322a4faef6f580334f3d6df44c02d1
    
    Are you sure you want to remove 1091060d7bfd938dfa5be703fa057974f9322a4faef6f580334f3d6df44c02d1 (role jeff) from /home/ubuntu/.docker/trust/private?  (yes/no)  y
    

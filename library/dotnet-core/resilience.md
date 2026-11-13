@@ -92,7 +92,7 @@ To add a strategy to the pipeline, call any of the available `Add*` extension me
 - `AddFallback`: Do something else when experiencing failures, which improves user experience.
 - `AddHedging`: Issue multiple requests in case of high latency or failure, which can improve responsiveness.
 
-For more information, see Resilience strategies. For examples, see Build resilient HTTP apps: Key development patterns.
+For more information, see Resilience strategies. For examples, see Build resilient HTTP apps: Key <example-value> patterns.
 
 ## Metrics enrichment
 
@@ -156,5 +156,5 @@ The preceding code executes the delegate within the `ExecuteAsync` method. When 
 
 ## See also
 
-- Build resilient HTTP apps: Key development patterns
+- Build resilient HTTP apps: Key <example-value> patterns
 - Challenges of idempotent handling of retried calls

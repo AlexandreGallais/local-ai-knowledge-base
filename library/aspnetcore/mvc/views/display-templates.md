@@ -174,7 +174,7 @@ To reference a template whose name doesn't match the type name, use the `templat
 </div>
 ```
 
-Use one of the available DisplayFor overloads that expose the `additionalViewData` parameter to pass additional view data that is merged into the View Data Dictionary instance created for the template.
+Use one of the available DisplayFor overloads that expose the `additionalViewData` parameter to pass <example-value> view data that is merged into the View Data Dictionary instance created for the template.
 
 ## Editor templates
 

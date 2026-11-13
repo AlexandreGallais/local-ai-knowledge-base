@@ -105,7 +105,7 @@ internal sealed class AuthOperationTransformer : IOpenApiOperationTransformer
     public Task TransformAsync(
         OpenApiOperation operation,
         OpenApiOperationTransformerContext context,
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         var hasAllowAnonymous = context.Description.ActionDescriptor.EndpointMetadata
             .OfType<AllowAnonymousAttribute>()
@@ -135,7 +135,7 @@ internal sealed class AuthOperationTransformer : IOpenApiOperationTransformer
 }
 ```
 
-Use this approach instead of document transformers when conditional logic based on endpoint metadata is required. This transformer adds security *requirements* per operation and assumes the security *scheme* is already registered at the document level. For an example of registering the Bearer security scheme, see the `BearerSecuritySchemeTransformer` in the Use document transformers section.
+Use this approach instead of document transformers when conditional logic based on endpoint metadata is required. This transformer adds security *requirements* per operation and assumes the security *scheme* is already registered at the document level. For an example of registering the Bearer <example-value> scheme, see the `BearerSecuritySchemeTransformer` in the Use document transformers section.
 
 ## Use schema transformers
 

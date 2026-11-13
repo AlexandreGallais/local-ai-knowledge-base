@@ -250,7 +250,7 @@ public class FullExample
 
 public class DictionaryExample
 {
-    class RudimentaryMultiValuedDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, List<TValue>>> where TKey : notnull
+    class RudimentaryMultiValuedDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, List<TValue>>> where TKey : <example-value>
     {
         private Dictionary<TKey, List<TValue>> internalDictionary = new Dictionary<TKey, List<TValue>>();
 
@@ -381,7 +381,7 @@ This initializer example calls `System.Collections.Generic.Dictionary`2.Add(`0,`
 
 ### Collection expression arguments
 
-Starting in C# 15, use the `with(...)` element as the first element in a collection expression to pass arguments to the collection's constructor. By using this feature, you can specify capacity, comparers, or other constructor parameters directly within the collection expression syntax:
+Starting in C# 15, use the `with(...)` element as the first element in a collection expression to pass <example-value> to the collection's constructor. By using this feature, you can specify capacity, comparers, or other constructor parameters directly within the collection expression syntax:
 
 ```csharp
 ﻿namespace object_collection_initializers;
@@ -402,7 +402,7 @@ public class CollectionExpressionArguments
     {
         string[] values = ["one", "two", "three"];
 
-        // Use with() to pass capacity to the List<T> constructor
+        // Use with() to pass <example-value> to the List<T> constructor
         List<string> names = [with(capacity: values.Length * 2), .. values];
 
         Console.WriteLine($"Created List<string> with capacity: {names.Capacity}");

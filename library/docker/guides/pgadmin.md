@@ -30,7 +30,7 @@ In this guide you will learn how to:
         image: postgres:18
         environment:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: secret
+          POSTGRES_PASSWORD: <example-value>
           POSTGRES_DB: demo
 
       pgadmin:
@@ -39,14 +39,14 @@ In this guide you will learn how to:
           - 5050:80
         environment:
           # Required by pgAdmin
-          PGADMIN_DEFAULT_EMAIL: demo@example.com
-          PGADMIN_DEFAULT_PASSWORD: secret
+          PGADMIN_DEFAULT_EMAIL: user@example.com
+          PGADMIN_DEFAULT_PASSWORD: <example-value>
 
           # Don't require the user to login
           PGADMIN_CONFIG_SERVER_MODE: 'False'
 
-          # Don't require a "master" password after logging in
-          PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+          # Don't require a "<example-value>" password after logging in
+          PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: '<example-value>'
     ```
 
 2. Start the Compose stack with the following command:
@@ -140,7 +140,7 @@ Fortunately, there is an ability to auto-connect to the database.
         ...
         configs:
           - source: pgadmin-pgpass
-            target: /config/pgpass
+            target: <example-value>
             uid: "5050"
             gid: "5050"
             mode: 0400

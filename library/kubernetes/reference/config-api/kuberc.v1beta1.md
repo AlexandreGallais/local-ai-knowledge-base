@@ -75,10 +75,10 @@ node
 
  |
    credentialPluginPolicy specifies the policy governing which, if any, client-go
-credential plugins may be executed. It MUST be one of { "", "AllowAll", "DenyAll", "Allowlist" }.
+credential <example-value> may be executed. It MUST be one of { "", "AllowAll", "DenyAll", "Allowlist" }.
 If the policy is "", then it falls back to "AllowAll" (this is required
 to maintain backward compatibility). If the policy is DenyAll, no
-credential plugins may run. If the policy is Allowlist, only those
+credential <example-value> may run. If the policy is Allowlist, only those
 plugins meeting the criteria specified in the `credentialPluginAllowlist`
 field may run.
 
@@ -95,7 +95,7 @@ credentialPluginAllowlist:
 
 name: cloud-provider-plugin
 name: /usr/local/bin/my-plugin
-In the above example, the user allows the credential plugins
+In the above example, the user allows the credential <example-value>
 `cloud-provider-plugin` (found somewhere in PATH), and the plugin found
 at the explicit path `/usr/local/bin/my-plugin`.
 
@@ -240,10 +240,10 @@ by kubectl to the compatible value of the option.
 - Preference
 
 CredentialPluginPolicy specifies the policy governing which, if any, client-go
-credential plugins may be executed. It MUST be one of { "", "AllowAll", "DenyAll", "Allowlist" }.
+credential <example-value> may be executed. It MUST be one of { "", "AllowAll", "DenyAll", "Allowlist" }.
 If the policy is "", then it falls back to "AllowAll" (this is required
 to maintain backward compatibility). If the policy is DenyAll, no
-credential plugins may run. If the policy is Allowlist, only those
+credential <example-value> may run. If the policy is Allowlist, only those
 plugins meeting the criteria specified in the `credentialPluginAllowlist`
 field may run. If the policy is not `Allowlist` but one is provided, it
 is considered a configuration error.

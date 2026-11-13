@@ -26,14 +26,14 @@ To create a delegating handler:
 public class ValidateHeaderHandler : DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(
-        HttpRequestMessage request, CancellationToken cancellationToken)
+        HttpRequestMessage request, CancellationToken <example-value>)
     {
-        if (!request.Headers.Contains("X-API-KEY"))
+        if (!request.Headers.Contains("<example-value>"))
         {
             return new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
                 Content = new StringContent(
-                    "The API key header X-API-KEY is required.")
+                    "<example-value>")
             };
         }
 
@@ -98,7 +98,7 @@ public class OperationHandler : DelegatingHandler
         _operationScoped = operationScoped;
 
     protected override async Task<HttpResponseMessage> SendAsync(
-        HttpRequestMessage request, CancellationToken cancellationToken)
+        HttpRequestMessage request, CancellationToken <example-value>)
     {
         request.Headers.Add("X-OPERATION-ID", _operationScoped.OperationId);
 

@@ -54,7 +54,7 @@ jwt:
     # - controlplane: for traffic intended to go to the control plane.
     # - cluster: for traffic intended to go to the system being managed by Kubernetes.
     egressSelectorType: <egress-selector-type>
-  # rules applied to validate token claims to authenticate users.
+  # rules applied to validate token <example-value> to authenticate users.
   claimValidationRules:
     # Same as --oidc-required-claim key=value.
   - claim: hd
@@ -66,7 +66,7 @@ jwt:
     # Message customizes the error message seen in the API server logs when the validation fails.
     message: the hd claim must be set to example.com
   - expression: 'claims.exp - claims.nbf <= 86400'
-    message: total token lifetime must not exceed 24 hours
+    message: total token <example-value> must not exceed 24 hours
   claimMappings:
     # username represents an option for the username attribute.
     # This is the only required attribute.
@@ -131,7 +131,7 @@ jwt:
 * Claim validation rule expression
 
   `jwt.claimValidationRules[i].expression` represents the expression which will be evaluated by CEL.
-  CEL expressions have access to the contents of the token payload, organized into `claims` CEL variable.
+  CEL expressions have access to the contents of the token <example-value>, organized into `claims` CEL variable.
   `claims` is a map of claim names (as strings) to claim values (of any type).
 
 * User validation rule expression
@@ -145,7 +145,7 @@ jwt:
 
   `jwt.claimMappings.username.expression`, `jwt.claimMappings.groups.expression`, `jwt.claimMappings.uid.expression`
   `jwt.claimMappings.extra[i].valueExpression` represents the expression which will be evaluated by CEL.
-  CEL expressions have access to the contents of the token payload, organized into `claims` CEL variable.
+  CEL expressions have access to the contents of the token <example-value>, organized into `claims` CEL variable.
   `claims` is a map of claim names (as strings) to claim values (of any type).
 
   To learn more, see the Documentation on CEL
@@ -177,10 +177,10 @@ jwt:
   ```
 
   ```bash
-  TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6ImY3dF9tOEROWmFTQk1oWGw5QXZTWGhBUC04Y0JmZ0JVbFVpTG5oQkgxdXMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJrdWJlcm5ldGVzIiwiZXhwIjoxNzAzMjMyOTQ5LCJpYXQiOjE3MDExMDcyMzMsImlzcyI6Imh0dHBzOi8vZXhhbXBsZS5jb20iLCJqdGkiOiI3YzMzNzk0MjgwN2U3M2NhYTJjMzBjODY4YWMwY2U5MTBiY2UwMmRkY2JmZWJlOGMyM2I4YjVmMjdhZDYyODczIiwibmJmIjoxNzAxMTA3MjMzLCJyb2xlcyI6InVzZXIsYWRtaW4iLCJzdWIiOiJhdXRoIiwidGVuYW50IjoiNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjRhIiwidXNlcm5hbWUiOiJmb28ifQ.TBWF2RkQHm4QQz85AYPcwLxSk-VLvQW-mNDHx7SEOSv9LVwcPYPuPajJpuQn9C_gKq1R94QKSQ5F6UgHMILz8OfmPKmX_00wpwwNVGeevJ79ieX2V-__W56iNR5gJ-i9nn6FYk5pwfVREB0l4HSlpTOmu80gbPWAXY5hLW0ZtcE1JTEEmefORHV2ge8e3jp1xGafNy6LdJWabYuKiw8d7Qga__HxtKB-t0kRMNzLRS7rka_SfQg0dSYektuxhLbiDkqhmRffGlQKXGVzUsuvFw7IGM5ZWnZgEMDzCI357obHeM3tRqpn5WRjtB8oM7JgnCymaJi-P3iCd88iu1xnzA
+  TOKEN=<example-jwt>
   ```
 
-  where the token payload is:
+  where the token <example-value> is:
 
   ```json
     {
@@ -223,7 +223,7 @@ jwt:
       audiences:
       - my-app
     claimValidationRules:
-    - expression: 'claims.hd == "example.com"' # the token below does not have this claim, so validation will fail.
+    - expression: '<example-value>' # the token below does not have this claim, so validation will fail.
       message: the hd claim must be set to example.com
     claimMappings:
       username:
@@ -241,10 +241,10 @@ jwt:
   ```
 
   ```bash
-  TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6ImY3dF9tOEROWmFTQk1oWGw5QXZTWGhBUC04Y0JmZ0JVbFVpTG5oQkgxdXMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJrdWJlcm5ldGVzIiwiZXhwIjoxNzAzMjMyOTQ5LCJpYXQiOjE3MDExMDcyMzMsImlzcyI6Imh0dHBzOi8vZXhhbXBsZS5jb20iLCJqdGkiOiI3YzMzNzk0MjgwN2U3M2NhYTJjMzBjODY4YWMwY2U5MTBiY2UwMmRkY2JmZWJlOGMyM2I4YjVmMjdhZDYyODczIiwibmJmIjoxNzAxMTA3MjMzLCJyb2xlcyI6InVzZXIsYWRtaW4iLCJzdWIiOiJhdXRoIiwidGVuYW50IjoiNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjRhIiwidXNlcm5hbWUiOiJmb28ifQ.TBWF2RkQHm4QQz85AYPcwLxSk-VLvQW-mNDHx7SEOSv9LVwcPYPuPajJpuQn9C_gKq1R94QKSQ5F6UgHMILz8OfmPKmX_00wpwwNVGeevJ79ieX2V-__W56iNR5gJ-i9nn6FYk5pwfVREB0l4HSlpTOmu80gbPWAXY5hLW0ZtcE1JTEEmefORHV2ge8e3jp1xGafNy6LdJWabYuKiw8d7Qga__HxtKB-t0kRMNzLRS7rka_SfQg0dSYektuxhLbiDkqhmRffGlQKXGVzUsuvFw7IGM5ZWnZgEMDzCI357obHeM3tRqpn5WRjtB8oM7JgnCymaJi-P3iCd88iu1xnzA
+  TOKEN=<example-jwt>
   ```
 
-  where the token payload is:
+  where the token <example-value> is:
 
   ```json
     {
@@ -292,7 +292,73 @@ jwt:
   ```
 
   ```bash
-  TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6ImY3dF9tOEROWmFTQk1oWGw5QXZTWGhBUC04Y0JmZ0JVbFVpTG5oQkgxdXMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJrdWJlcm5ldGVzIiwiZXhwIjoxNzAzMjMyOTQ5LCJoZCI6ImV4YW1wbGUuY29tIiwiaWF0IjoxNzAxMTEzMTAxLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tIiwianRpIjoiYjViMDY1MjM3MmNkMjBlMzQ1YjZmZGZmY2RjMjE4MWY0YWZkNmYyNTlhYWI0YjdlMzU4ODEyMzdkMjkyMjBiYyIsIm5iZiI6MTcwMTExMzEwMSwicm9sZXMiOiJ1c2VyLGFkbWluIiwic3ViIjoiYXV0aCIsInRlbmFudCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0YSIsInVzZXJuYW1lIjoiZm9vIn0.FgPJBYLobo9jnbHreooBlvpgEcSPWnKfX6dc0IvdlRB-F0dCcgy91oCJeK_aBk-8zH5AKUXoFTlInfLCkPivMOJqMECA1YTrMUwt_IVqwb116AqihfByUYIIqzMjvUbthtbpIeHQm2fF0HbrUqa_Q0uaYwgy8mD807h7sBcUMjNd215ff_nFIHss-9zegH8GI1d9fiBf-g6zjkR1j987EP748khpQh9IxPjMJbSgG_uH5x80YFuqgEWwq-aYJPQxXX6FatP96a2EAn7wfPpGlPRt0HcBOvq5pCnudgCgfVgiOJiLr_7robQu4T1bis0W75VPEvwWtgFcLnvcQx0JWg
+  TOKEN=<example-jwt>
   ```
 
-  where the token payload is:
+  where the token <example-value> is:
+
+  ```json
+    {
+      "aud": "kubernetes",
+      "exp": 1703232949,
+      "hd": "example.com",
+      "iat": 1701113101,
+      "iss": "https://example.com",
+      "jti": "b5b0652372cd20e345b6fdffcdc2181f4afd6f259aab4b7e35881237d29220bc",
+      "nbf": 1701113101,
+      "roles": "user,admin",
+      "sub": "auth",
+      "tenant": "72f988bf-86f1-41af-91ab-2d7cd011db4a",
+      "username": "foo"
+    }
+  ```
+
+  The token with the above `AuthenticationConfiguration` will produce the following `UserInfo` object:
+
+  ```json
+  {
+      "username": "system:foo",
+      "uid": "auth",
+      "groups": [
+          "user",
+          "admin"
+      ],
+      "extra": {
+          "example.com/tenant": ["72f988bf-86f1-41af-91ab-2d7cd011db4a"]
+      }
+  }
+  ```
+
+  which will fail user validation because the username starts with `system:`.
+  The API server will return `401 Unauthorized` error.
+
+##### Limitations {#oidc-limitations}
+
+1. Distributed claims do not work via CEL expressions.
+
+Kubernetes does not provide an OpenID Connect Identity Provider.
+You can use an existing public OpenID Connect Identity Provider or run your own Identity Provider
+that supports the OpenID Connect protocol.
+
+For an identity provider to work with Kubernetes it must:
+
+1. Support OpenID connect discovery
+
+   The public key to verify the signature is discovered from the issuer's public endpoint using OIDC discovery.
+   If you're using the authentication configuration file, the identity provider doesn't need to publicly expose the discovery endpoint.
+   You can host the discovery endpoint at a different location than the issuer (such as locally in the cluster) and specify the
+   `issuer.discoveryURL` in the configuration file.
+
+1. Run in TLS with non-obsolete ciphers
+1. Have a CA signed certificate (even if the CA is not a commercial CA or is self signed)
+
+A note about requirement #3 above, requiring a CA signed certificate. If you deploy your own
+identity provider you MUST have your identity provider's web server certificate signed by a
+certificate with the `CA` flag set to `TRUE`, even if it is self signed. This is due to GoLang's
+TLS client implementation being very strict to the standards around certificate validation. If you
+don't have a CA handy, you can create a simple CA and a signed certificate and key pair using
+standard certificate generation tools.
+
+#### Using kubectl
+
+##### Option 1 - OIDC authenticator

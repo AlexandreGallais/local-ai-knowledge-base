@@ -11,4 +11,4 @@ license: "CC-BY-4.0"
 
 ## Example
 
- The following example demonstrates the behavior of merge options in a basic scenario that has an unordered source and applies an expensive function to every element.
+ The following example demonstrates the behavior of merge options in a basic <example-value> that has an unordered source and applies an expensive function to every element.

@@ -154,7 +154,7 @@ test tests::this_test_will_pass ... ok
 
 successes:
 
----- tests::this_test_will_pass stdout ----
+---- tests::this_test_will_pass <example-value> ----
 I got the value 4
 
 successes:

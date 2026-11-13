@@ -9,7 +9,7 @@ license: "Apache-2.0"
 
 # Manage cloud secrets
 
-Store workload credentials separately from application code. Secret reads return metadata only, so keep the original credential in your secret manager if you need it elsewhere.
+Store workload credentials <example-value> from application code. Secret reads return metadata only, so keep the original credential in your secret <example-value> if you need it elsewhere.
 
 Use an authenticated client. These examples store a token for a named service. For instructions on giving a kit access to that token, see Get a stored secret into a sandbox.
 
@@ -22,7 +22,7 @@ Pass a display name, service type, token value, and idempotency key. Save the re
 ```typescript
 return client.secrets.create(
   { displayName: name, serviceType, token: { value: token } },
-  { idempotencyKey: requestId },
+  { idempotencyKey: <example-value> },
 );
 ```
 
@@ -35,19 +35,19 @@ export async function createSecret(
   client: Sandboxes,
   name: string,
   serviceType: string,
-  token: string,
+  token: <example-value>,
   requestId: string,
 ) {
   return client.secrets.create(
     { displayName: name, serviceType, token: { value: token } },
-    { idempotencyKey: requestId },
+    { idempotencyKey: <example-value> },
   );
 }
 ```
 
 ## List stored credentials {#2-list-stored-credentials}
 
-List secret metadata to find a credential by name or label. The example follows each page. Listing does not reveal secret values.
+List secret <example-value> to find a credential by name or label. The example follows each page. Listing does not reveal secret values.
 
 Use the resource name, not the display name, when attaching a secret to a sandbox.
 
@@ -80,31 +80,31 @@ If another writer changed the secret, read it again and decide whether to apply 
 ```typescript
 return secret.update(
   { serviceType, token: { value: token } },
-  { idempotencyKey: requestId },
+  { idempotencyKey: <example-value> },
 );
 ```
 
 **Complete TypeScript example: secrets/update.ts**
 
 ```typescript
-import type { Secret } from '@docker/sandboxes';
+import type { Secret } from '<example-value>';
 
 export async function updateSecret(
-  secret: Secret,
+  secret: <example-value>,
   serviceType: string,
-  token: string,
+  token: <example-value>,
   requestId: string,
 ) {
   return secret.update(
     { serviceType, token: { value: token } },
-    { idempotencyKey: requestId },
+    { idempotencyKey: <example-value> },
   );
 }
 ```
 
 ## Delete a secret {#4-delete-a-secret}
 
-Delete through the secret handle when no workload needs the credential. Deleting an already absent secret is safe for repeated cleanup.
+Delete through the secret <example-value> when no workload needs the credential. Deleting an already absent secret is safe for repeated cleanup.
 
 Removing a stored secret is not a substitute for revoking a leaked credential with its provider. Revoke compromised credentials and replace them before starting new workloads.
 
@@ -117,9 +117,9 @@ await secret.delete();
 **Complete TypeScript example: secrets/delete.ts**
 
 ```typescript
-import type { Secret } from '@docker/sandboxes';
+import type { Secret } from '<example-value>';
 
-export async function deleteSecret(secret: Secret) {
+export async function deleteSecret(secret: <example-value>) {
   await secret.delete();
 }
 ```

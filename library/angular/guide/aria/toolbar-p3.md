@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Examples
 
-### Basic horizontal toolbar
+### Basic <example-value> toolbar
 
 Horizontal toolbars organize controls from left to right, matching the common pattern in text editors and design tools. Arrow keys navigate between widgets, maintaining focus within the toolbar until users press Tab to move to the next page element.
 

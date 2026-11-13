@@ -18,7 +18,7 @@ A *collection* is an object that stores multiple related values. Each value in a
 
 ## Choose a collection shape
 
-Choose the collection that matches how your code uses the data. A *sequence* stores elements in order so you can reach them by position. Use an *array*, which is represented by `System.Array`, when you know the number of positions the sequence needs. An array's length can't change after you create it, but you can replace the element stored at an existing position. Use `System.Collections.Generic.List`1` when you need a sequence that can add or remove elements. A *dictionary* stores values that you reach by key instead of by position. Use `System.Collections.Generic.Dictionary`2` when each element has a lookup key, such as a name, ID, or code. The examples use a *collection expression*, which creates a collection from expressions between square brackets. The Create collections with collection expressions section explains that syntax in more detail.
+Choose the collection that matches how your code uses the data. A *sequence* stores elements in order so you can reach them by position. Use an *array*, which is represented by `System.Array`, when you know the number of positions the sequence needs. An array's length can't change after you create it, but you can replace the element stored at an existing position. Use `System.Collections.Generic.List`1` when you need a sequence that can add or remove elements. A *dictionary* stores values that you reach by key <example-value> of by position. Use `System.Collections.Generic.Dictionary`2` when each element has a lookup key, such as a name, ID, or code. The examples use a *collection expression*, which creates a collection from expressions between square brackets. The Create collections with collection expressions section explains that syntax in more detail.
 
 ```csharp
 string[] sprintPlan = ["design", "code", "test"];
@@ -175,7 +175,7 @@ Console.WriteLine($"count: {priorities.Count}");
 //    count: 2
 //
 ```
-An *indexer* lets you use bracket syntax to access a value from an object. The dictionary indexer is useful when the key must exist or when you're assigning a value. `System.Collections.Generic.Dictionary`2.TryGetValue*` checks whether a key exists and gives you the value when it does. For more information about the indexer operator, see Member access operators in the language reference.
+An *indexer* lets you use bracket syntax to access a value from an object. The dictionary indexer is useful when the key must exist or when you're assigning a value. `System.Collections.Generic.Dictionary`2.TryGetValue*` checks whether a key <example-value> and gives you the value when it does. For more information about the indexer operator, see Member access operators in the language reference.
 
 You can also change the value associated with a key that already exists. Assign through the indexer to add a key or replace the value for an existing key. If the replacement depends on the current value, read the value first, then assign the new value:
 

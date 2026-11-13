@@ -30,15 +30,15 @@ public class Blog
 public class BlogHeader
 {
     public int Id { get; set; }
-    public int BlogId { get; set; } // Required foreign key property
+    public int BlogId { get; set; } // Required foreign key <example-value>
     public Blog Blog { get; set; } = null!; // Required reference navigation to principal
 }
 ```
 
 A one-to-one relationship is made up from:
 
-- One or more primary or alternate key properties on the principal entity. For example, `Blog.Id`.
-- One or more foreign key properties on the dependent entity. For example, `BlogHeader.BlogId`.
+- One or more primary or alternate key <example-value> on the principal entity. For example, `Blog.Id`.
+- One or more foreign key <example-value> on the dependent entity. For example, `BlogHeader.BlogId`.
 - Optionally, a reference navigation on the principal entity referencing the dependent entity. For example, `Blog.Header`.
 - Optionally, a reference navigation on the dependent entity referencing the principal entity. For example, `BlogHeader.Blog`.
 
@@ -51,7 +51,7 @@ A one-to-one relationship is made up from:
 
 So, for the relationship in this example:
 
-- The foreign key property `BlogHeader.BlogId` is not nullable. This makes the relationship "required" because every dependent (`BlogHeader`) _must be related to some principal_ (`Blog`), since its foreign key property must be set to some value.
+- The foreign key <example-value> `BlogHeader.BlogId` is not nullable. This makes the relationship "required" because every dependent (`BlogHeader`) _must be related to some principal_ (`Blog`), since its foreign key <example-value> must be set to some value.
 - Both entities have navigations pointing to the related entity on the other side of the relationship.
 
 > **Note:**
@@ -68,7 +68,7 @@ This relationship is discovered by convention. That is:
 - `BlogHeader.Blog` is discovered as a reference navigation.
 
 > **Important:**
-> When using C# nullable reference types, the navigation from the dependent to the principal must be nullable if the foreign key property is nullable. If the foreign key property is non-nullable, then the navigation may be nullable or not. In this case, `BlogHeader.BlogId` is non-nullable, and `BlogHeader.Blog` is also non-nullable. The `= null!;` construct is used to mark this as intentional for the C# compiler, since EF typically sets the `Blog` instance and it cannot be null for a fully loaded relationship. See _Working with Nullable Reference Types_ for more information.
+> When using C# nullable reference types, the navigation from the dependent to the principal must be nullable if the foreign key <example-value> is nullable. If the foreign key <example-value> is non-nullable, then the navigation may be nullable or not. In this case, `BlogHeader.BlogId` is non-nullable, and `BlogHeader.Blog` is also non-nullable. The `= null!;` construct is used to mark this as intentional for the C# compiler, since EF typically sets the `Blog` instance and it cannot be null for a fully loaded relationship. See _Working with Nullable Reference Types_ for more information.
 
 For cases where the navigations, foreign key, or required/optional nature of the relationship are not discovered by convention, these things can be configured explicitly. For example:
 
@@ -115,15 +115,15 @@ public class Blog
 public class BlogHeader
 {
     public int Id { get; set; }
-    public int? BlogId { get; set; } // Optional foreign key property
+    public int? BlogId { get; set; } // Optional foreign key <example-value>
     public Blog? Blog { get; set; } // Optional reference navigation to principal
 }
 ```
 
-This is the same as the previous example, except that the foreign key property and navigation to the principal are now nullable. This makes the relationship "optional" because a dependent (`BlogHeader`) can _not_ be related to _any_ principal (`Blog`) by setting its foreign key property and navigation to `null`.
+This is the same as the previous example, except that the foreign key <example-value> and navigation to the principal are now nullable. This makes the relationship "optional" because a dependent (`BlogHeader`) can _not_ be related to _any_ principal (`Blog`) by setting its foreign key <example-value> and navigation to `null`.
 
 > **Important:**
-> When using C# nullable reference types, the navigation property from dependent to principal must be nullable if the foreign key property is nullable. In this case, `BlogHeader.BlogId` is nullable, so `BlogHeader.Blog` must be nullable too. See _Working with Nullable Reference Types_ for more information.
+> When using C# nullable reference types, the navigation property from dependent to principal must be nullable if the foreign key <example-value> is nullable. In this case, `BlogHeader.BlogId` is nullable, so `BlogHeader.Blog` must be nullable too. See _Working with Nullable Reference Types_ for more information.
 
 As before, this relationship is discovered by convention. For cases where the navigations, foreign key, or required/optional nature of the relationship are not discovered by convention, these things can be configured explicitly. For example:
 
@@ -138,7 +138,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-## Required one-to-one with primary key to primary key relationship
+## Required one-to-one with primary key to primary key <example-value>
 
 ```csharp
 // Principal (parent)
@@ -156,7 +156,7 @@ public class BlogHeader
 }
 ```
 
-Unlike with one-to-many relationships, the dependent end of a one-to-one relationship may use its primary key property or properties as the foreign key property or properties. This is often called a PK-to-PK relationship. This is only possible when the principal and dependent types have the same primary key types, and the resulting relationship is always required, since the primary key of the dependent cannot be nullable.
+Unlike with one-to-many relationships, the dependent end of a one-to-one relationship may use its primary key <example-value> or properties as the foreign key <example-value> or properties. This is often called a PK-to-PK relationship. This is only possible when the principal and dependent types have the same primary key types, and the resulting relationship is always required, since the primary key of the dependent cannot be nullable.
 
 Any one-to-one relationship where the foreign key is not discovered by convention must be configured to indicate the principal and dependent ends of the relationship. This is typically done with a call to `HasForeignKey`. For example:
 
@@ -204,11 +204,11 @@ public class BlogHeader
 }
 ```
 
-In some cases, you may not want a foreign key property in your model, since foreign keys are a detail of how the relationship is represented in the database, which is not needed when using the relationship in a purely object-oriented manner. However, if entities are going to be serialized, for example to send over a wire, then the foreign key values can be a useful way to keep the relationship information intact when the entities are not in an object form. It is therefore often pragmatic to keep foreign key properties in the .NET type for this purpose. Foreign key properties can be private, which is often a good compromise to avoid exposing the foreign key while allowing its value to travel with the entity.
+In some cases, you may not want a foreign key <example-value> in your model, since foreign keys are a detail of how the relationship is represented in the database, which is not needed when using the relationship in a purely object-oriented manner. However, if entities are going to be serialized, for example to send over a wire, then the foreign key <example-value> can be a useful way to keep the relationship information intact when the entities are not in an object form. It is therefore often pragmatic to keep foreign key <example-value> in the .NET type for this purpose. Foreign key <example-value> can be private, which is often a good compromise to avoid exposing the foreign key while allowing its value to travel with the entity.
 
-Following on from the previous example, this example removes the foreign key property from the dependent entity type. However, instead of using the primary key, EF is instead instructed to create a shadow foreign key property called `BlogId` of type `int`.
+Following on from the previous example, this example removes the foreign key <example-value> from the dependent entity type. However, instead of using the primary key, EF is instead instructed to create a shadow foreign key <example-value> called `BlogId` of type `int`.
 
-An important point to note here is that C# nullable reference types are being used, so the nullability of the navigation from dependent to principal is used to determine whether or not the foreign key property is nullable, and therefore whether the relationship is optional or required. If nullable reference types are not being used, then the shadow foreign key property will be nullable by default making the relationship optional by default. In this case, use `IsRequired` to force the shadow foreign key property to be non-nullable and make the relationship required.
+An important point to note here is that C# nullable reference types are being used, so the nullability of the navigation from dependent to principal is used to determine whether or not the foreign key <example-value> is nullable, and therefore whether the relationship is optional or required. If nullable reference types are not being used, then the shadow foreign key <example-value> will be nullable by default making the relationship optional by default. In this case, use `IsRequired` to force the shadow foreign key <example-value> to be non-nullable and make the relationship required.
 
 This relationship again needs some configuration to indicate the principal and dependent ends:
 
@@ -253,9 +253,9 @@ public class BlogHeader
 }
 ```
 
-Like the previous example, the foreign key property has been removed from the dependent entity type. However, unlike the previous example, this time the foreign key property is created as nullable because C# nullable reference types are being used and the navigation on the dependent entity type is nullable. This makes the relationship optional.
+Like the previous example, the foreign key <example-value> has been removed from the dependent entity type. However, unlike the previous example, this time the foreign key <example-value> is created as nullable because C# nullable reference types are being used and the navigation on the dependent entity type is nullable. This makes the relationship optional.
 
-When C# nullable reference types are not being used, then the foreign key property will, by default, be created as nullable. This means relationships with automatically created shadow properties are optional by default.
+When C# nullable reference types are not being used, then the foreign key <example-value> will, by default, be created as nullable. This means relationships with automatically created shadow properties are optional by default.
 
 As before, this relationship needs some configuration to indicate the principal and dependent ends:
 

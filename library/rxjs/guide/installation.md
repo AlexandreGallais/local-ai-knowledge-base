@@ -59,7 +59,7 @@ npm install @reactivex/rxjs
 If you are using npm version 2, you need to specify the library version explicitly:
 
 ```shell
-npm install @reactivex/rxjs@7.3.0
+npm install @reactivex/user@example.com
 ```
 
 ## CDN

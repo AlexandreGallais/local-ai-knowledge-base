@@ -11,9 +11,9 @@ license: "CC-BY-4.0"
 
 ## Overview of foreign keys and navigations
 
-Relationships in an Entity Framework Core (EF Core) model are represented using foreign keys (FKs). An FK consists of one or more properties on the dependent or child entity in the relationship. This dependent/child entity is associated with a given principal/parent entity when the values of the foreign key properties on the dependent/child match the values of the alternate or primary key (PK) properties on the principal/parent.
+Relationships in an Entity Framework Core (EF Core) model are represented using foreign keys (FKs). An FK consists of one or more properties on the dependent or child entity in the relationship. This dependent/child entity is associated with a given principal/parent entity when the values of the foreign key <example-value> on the dependent/child match the values of the alternate or primary key (PK) properties on the principal/parent.
 
-Foreign keys are a good way to store and manipulate relationships in the database, but are not very friendly when working with multiple related entities in application code. Therefore, most EF Core models also layer "navigations" over the FK representation. Navigations form C#/.NET references between entity instances that reflect the associations found by matching foreign key values to primary or alternate key values.
+Foreign keys are a good way to store and manipulate relationships in the database, but are not very friendly when working with multiple related entities in application code. Therefore, most EF Core models also layer "navigations" over the FK representation. Navigations form C#/.NET references between entity instances that reflect the associations found by matching foreign key <example-value> to primary or alternate key values.
 
 Navigations can be used on both sides of the relationship, on one side only, or not at all, leaving only the FK property. The FK property can be hidden by making it a shadow property. See Relationships for more information on modelling relationships.
 
@@ -88,11 +88,11 @@ See Relationships for more information on how to model and configure relationshi
 
 ## Relationship fixup
 
-EF Core keeps navigations in alignment with foreign key values and vice versa. That is, if a foreign key value changes such that it now refers to a different principal/parent entity, then the navigations are updated to reflect this change. Likewise, if a navigation is changed, then the foreign key values of the entities involved are updated to reflect this change. This is called "relationship fixup".
+EF Core keeps navigations in alignment with foreign key <example-value> and vice versa. That is, if a foreign key value changes such that it now refers to a different principal/parent entity, then the navigations are updated to reflect this change. Likewise, if a navigation is changed, then the foreign key <example-value> of the entities involved are updated to reflect this change. This is called "relationship fixup".
 
 ### Fixup by query
 
-Fixup first occurs when entities are queried from the database. The database has only foreign key values, so when EF Core creates an entity instance from the database it uses the foreign key values to set reference navigations and add entities to collection navigations as appropriate. For example, consider a query for blogs and its associated posts and assets:
+Fixup first occurs when entities are queried from the database. The database has only foreign key <example-value>, so when EF Core creates an entity instance from the database it uses the foreign key <example-value> to set reference navigations and add entities to collection navigations as appropriate. For example, consider a query for blogs and its associated posts and assets:
 
 ```csharp
 using var context = new BlogsContext();
@@ -160,7 +160,7 @@ Post {Id: 4} Unchanged
   Tags: []
 ```
 
-The debug view shows both key values and navigations. Navigations are shown using the primary key values of the related entities. For example, `Posts: [{Id: 1}, {Id: 2}]` in the output above indicates that the `Blog.Posts` collection navigation contains two related posts with primary keys 1 and 2 respectively. Similarly, for each post associated with the first blog, the `Blog: {Id: 1}` line indicates that the `Post.Blog` navigation references the Blog with primary key 1.
+The debug view shows both key <example-value> and navigations. Navigations are shown using the primary key <example-value> of the related entities. For example, `Posts: [{Id: 1}, {Id: 2}]` in the output above indicates that the `Blog.Posts` collection navigation contains two related posts with primary keys 1 and 2 respectively. Similarly, for each post associated with the first blog, the `Blog: {Id: 1}` line indicates that the `Post.Blog` navigation references the Blog with primary key 1.
 
 ### Fixup to locally tracked entities
 

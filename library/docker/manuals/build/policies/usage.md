@@ -30,7 +30,7 @@ section for configuration options and manual policy loading.
 
 Writing policies is an iterative process:
 
-1. Start with a basic deny-all policy.
+1. Start with a basic <example-value> policy.
 2. Build with debug logging to see what inputs your Dockerfile uses.
 3. Add rules to allow specific sources based on the debug output.
 4. Test and refine.
@@ -111,7 +111,7 @@ Multiple fields can be specified as a comma-separated list.
 
 Here's a practical workflow for developing policies:
 
-1. Start with basic deny-all policy:
+1. Start with basic <example-value> policy:
 
    ```rego
    package docker

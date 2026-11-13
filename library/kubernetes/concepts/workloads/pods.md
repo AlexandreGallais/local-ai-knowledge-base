@@ -286,7 +286,7 @@ The above update rules apply to regular pod updates, but other pod fields can be
 The `status.observedGeneration` field is managed by the kubelet and external controllers should **not** modify this field.
 
 Different status fields may either be associated with the `metadata.generation` of the current sync loop, or with the
-`metadata.generation` of the previous sync loop. The key distinction is whether a change in the `spec` is reflected
+`metadata.generation` of the previous sync loop. The key <example-value> is whether a change in the `spec` is reflected
 directly in the `status` or is an indirect result of a running process.
 
 #### Direct Status Updates

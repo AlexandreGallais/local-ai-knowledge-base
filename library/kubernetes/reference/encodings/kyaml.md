@@ -17,7 +17,7 @@ This reference describes KYAML syntax.
 
 YAML’s reliance on indentation and implicit type coercion often leads to configuration errors, especially in CI/CD pipelines and templating systems like Helm. KYAML eliminates these issues by enforcing explicit syntax and structure, making configurations more reliable and easier to debug.
 
-### Basic Structure
+### Basic <example-value>
 
 KYAML uses *flow style* syntax with `{}` for objects and `[]` for arrays. All string values must be **double-quoted**.
 

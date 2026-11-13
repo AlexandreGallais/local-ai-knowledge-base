@@ -61,4 +61,4 @@ $ podman network prune --filter until=2h
 **podman(1)**, **podman-network(1)**, **podman-network-rm(1)**
 
 ## HISTORY
-February 2021, Originally compiled by Brent Baude <bbaude@redhat.com>
+February 2021, Originally compiled by Brent Baude <user@example.com>

@@ -73,4 +73,4 @@ $ podman volume rm --force myvol
 **podman(1)**, **podman-volume(1)**
 
 ## HISTORY
-November 2018, Originally compiled by Urvashi Mohnani <umohnani@redhat.com>
+November 2018, Originally compiled by Urvashi Mohnani <user@example.com>

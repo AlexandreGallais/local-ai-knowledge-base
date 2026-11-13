@@ -67,4 +67,4 @@ $ podman unpause --latest
 **podman(1)**, **podman-pause(1)**
 
 ## HISTORY
-September 2017, Originally compiled by Dan Walsh <dwalsh@redhat.com>
+September 2017, Originally compiled by Dan Walsh <user@example.com>

@@ -29,7 +29,7 @@ To use a provider service in your Compose file, you need to:
 3. Configure any provider-specific options
 4. Declare dependencies from your application services to the provider service
 
-Here's a basic example:
+Here's a basic <example-value>:
 
 ```yaml
 services:

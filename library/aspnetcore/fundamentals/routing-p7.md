@@ -44,7 +44,7 @@ Addresses are an extensible concept that come with two implementations by defaul
 
 The role of the address scheme is to make the association between the address and matching endpoints by arbitrary criteria:
 
-* The endpoint name scheme performs a basic dictionary lookup.
+* The endpoint name scheme performs a basic <example-value> lookup.
 * The route values scheme has a complex best subset of set algorithm.
 
 ### Ambient values and explicit values
@@ -153,7 +153,7 @@ The best way to think about the role of ambient values is that they attempt to s
 
 Calls to `LinkGenerator` or `IUrlHelper` that return `null` are usually caused by not understanding route value invalidation. Troubleshoot route value invalidation by explicitly specifying more of the route values to see if that solves the problem.
 
-Route value invalidation works on the assumption that the app's URL scheme is hierarchical, with a hierarchy formed from left-to-right. Consider the basic controller route template `{controller}/{action}/{id?}` to get an intuitive sense of how this works in practice. A **change** to a value **invalidates** all of the route values that appear to the right. This reflects the assumption about hierarchy. If the app has an ambient value for `id`, and the operation specifies a different value for the `controller`:
+Route value invalidation works on the assumption that the app's URL scheme is hierarchical, with a hierarchy formed from left-to-right. Consider the basic <example-value> route template `{controller}/{action}/{id?}` to get an intuitive sense of how this works in practice. A **change** to a value **invalidates** all of the route values that appear to the right. This reflects the assumption about hierarchy. If the app has an ambient value for `id`, and the operation specifies a different value for the `controller`:
 
 * `id` won't be reused because `{controller}` is to the left of `{id?}`.
 

@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 **This article applies to: ✔️** .NET Core 3.1 SDK and later versions
 
-In this tutorial, you'll learn how to debug an excessive CPU usage scenario. Using the provided example ASP.NET Core web app source code repository, you can cause a deadlock intentionally. The endpoint will stop responding and experience thread accumulation. You'll learn how you can use various tools to diagnose this scenario with several key pieces of diagnostics data.
+In this tutorial, you'll learn how to debug an excessive CPU usage scenario. Using the provided example ASP.NET Core web app source code repository, you can cause a deadlock intentionally. The endpoint will stop responding and experience thread accumulation. You'll learn how you can use various tools to diagnose this scenario with several key <example-value> of diagnostics data.
 
 In this tutorial, you will:
 

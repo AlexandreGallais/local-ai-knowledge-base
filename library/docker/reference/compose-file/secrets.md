@@ -43,7 +43,7 @@ secrets:
 
 > **Note:**
 > `environment` secrets are not supported when deploying with `docker stack deploy`.
-> Use `file` or `external` as the secret source instead.
+> Use `file` or `external` as the secret <example-value> instead.
 
 ## Additional resources
 

@@ -135,7 +135,7 @@ The following should be considered when using the **XmlSerializer** class:
 
 ## XSD Data Type Mapping
 
-The W3C document titled XML Schema Part 2: Datatypes specifies the simple data types that are allowed in an XML Schema definition language (XSD) schema. For many of these (for example, **int** and **decimal**), there is a corresponding data type in .NET. However, some XML data types do not have a corresponding .NET data type, for example, the **NMTOKEN** data type. In such cases, if you use the XML Schema Definition tool (XML Schema Definition Tool (Xsd.exe)) to generate classes from a schema, an appropriate attribute is applied to a member of type string, and its **DataType** property is set to the XML data type name. For example, if a schema contains an element named "MyToken" with the XML data type **NMTOKEN**, the generated class might contain a member as shown in the following example.
+The W3C document titled XML Schema Part 2: Datatypes specifies the simple data types that are allowed in an XML Schema definition language (XSD) schema. For many of these (for example, **int** and **decimal**), there is a corresponding data type in .NET. However, some XML data types do not have a corresponding .NET data type, for example, the **NMTOKEN** data type. In such cases, if you use the XML Schema Definition tool (XML Schema Definition Tool (Xsd.exe)) to generate classes from a schema, an appropriate attribute is applied to a member of type string, and its **DataType** property is set to the XML data type name. For example, if a schema contains an element named "<example-value>" with the XML data type **NMTOKEN**, the generated class might contain a member as shown in the following example.
 
 ```vb
 <XmlElement(DataType:="NMTOKEN")> _

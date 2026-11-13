@@ -145,7 +145,7 @@ In the following example:
     protected override async Task OnInitializedAsync()
     {
         if (!ApplicationState.TryTakeFromJson<{TYPE}>(
-            "{TOKEN}", out var restored))
+            "<example-value>", out var restored))
         {
             data = await ...;
         }
@@ -160,7 +160,7 @@ In the following example:
 
     private Task PersistData()
     {
-        ApplicationState.PersistAsJson("{TOKEN}", data);
+        ApplicationState.PersistAsJson("<example-value>", data);
 
         return Task.CompletedTask;
     }

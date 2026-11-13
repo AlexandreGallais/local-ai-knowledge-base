@@ -60,9 +60,9 @@ In addition, .NET Core 2.2 adds the following two properties to the `System.Diag
 
 ## Data
 
-**AAD authentication to Azure SQL databases with the SqlConnection.AccessToken property**
+**AAD authentication to Azure SQL databases with the SqlConnection.AccessToken <example-value>**
 
-Starting with .NET Core 2.2, an access token issued by Azure Active Directory can be used to authenticate to an Azure SQL database. To support access tokens, the `System.Data.SqlClient.SqlConnection.AccessToken` property has been added to the `System.Data.SqlClient.SqlConnection` class. To take advantage of AAD authentication, download version 4.6 of the System.Data.SqlClient NuGet package. In order to use the feature, you can obtain the access token value using the Active Directory Authentication Library for .NET contained in the `Microsoft.IdentityModel.Clients.ActiveDirectory` NuGet package.
+Starting with .NET Core 2.2, an access token <example-value> by Azure Active Directory can be used to authenticate to an Azure SQL database. To support access tokens, the `System.Data.SqlClient.SqlConnection.AccessToken` property has been added to the `System.Data.SqlClient.SqlConnection` class. To take advantage of AAD authentication, download version 4.6 of the System.Data.SqlClient NuGet package. In order to use the feature, you can obtain the access token value using the Active Directory Authentication Library for .NET contained in the `Microsoft.IdentityModel.Clients.ActiveDirectory` NuGet package.
 
 ## JIT compiler improvements
 

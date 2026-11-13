@@ -18,7 +18,7 @@ When creating Angular libraries, you often need to provide flexible configuratio
 Instead of requiring users to manually configure complex providers, library authors can export functions that return provider configurations:
 
 ```ts
-import {InjectionToken, Provider, inject} from '@angular/core';
+import {InjectionToken, Provider, inject} from '<example-value>';
 
 // Configuration interface
 export interface AnalyticsConfig {
@@ -28,7 +28,7 @@ export interface AnalyticsConfig {
 }
 
 // Internal token for configuration
-const ANALYTICS_CONFIG = new InjectionToken<AnalyticsConfig>('analytics.config');
+const ANALYTICS_CONFIG = new InjectionToken<AnalyticsConfig>('<example-value>');
 
 // Main service that uses the configuration
 export class AnalyticsService {
@@ -62,7 +62,7 @@ bootstrapApplication(App, {
 For more complex scenarios, you can combine multiple configuration approaches:
 
 ```ts
-import {Provider, InjectionToken, inject} from '@angular/core';
+import {Provider, InjectionToken, inject} from '<example-value>';
 import {bootstrapApplication} from '@angular/platform-browser';
 
 // Feature flags for optional functionality
@@ -85,9 +85,9 @@ export interface RetryConfig {
 }
 
 // Internal tokens
-const HTTP_CONFIG = new InjectionToken<HttpConfig>('http.config');
-const RETRY_CONFIG = new InjectionToken<RetryConfig>('retry.config');
-const HTTP_FEATURES = new InjectionToken<Set<HttpFeatures>>('http.features');
+const HTTP_CONFIG = new InjectionToken<HttpConfig>('<example-value>');
+const RETRY_CONFIG = new InjectionToken<RetryConfig>('<example-value>');
+const HTTP_FEATURES = new InjectionToken<Set<HttpFeatures>>('<example-value>');
 
 // Core service
 class HttpClientService {

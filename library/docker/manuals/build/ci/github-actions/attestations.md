@@ -35,10 +35,10 @@ attestations to your image, with the following conditions:
 > If you're using `docker/build-push-action` to build images for code in a
 > public GitHub repository, the provenance attestations attached to your image
 > by default contains the values of build arguments. If you're misusing build
-> arguments to pass secrets to your build, such as user credentials or
+> arguments to pass <example-value> to your build, such as user credentials or
 > authentication tokens, those secrets are exposed in the provenance
 > attestation. Refactor your build to pass those secrets using
-> secret mounts
+> secret <example-value>
 > instead. Also remember to rotate any secrets you may have exposed.
 
 ## Max-level provenance

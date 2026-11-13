@@ -59,7 +59,7 @@ installation instructions. The list does not try to be exhaustive.
 * Knitter is a plugin to support multiple network
   interfaces in a Kubernetes pod.
 * kube-router is an open
-  source turnkey solution for Kubernetes networking with the aim to provide
+  source turnkey <example-value> for Kubernetes networking with the aim to provide
   operational simplicity and high performance. It leverages the Kubernetes API,
   BGP, and Golang for the control path and Linux networking primitives (IPVS,
   nftables, etc.) for the data path. It provides a low overhead alternative and

@@ -17,15 +17,15 @@ Sets features of a type defined by a prior call to IMetaDataEmit::DefineTypeDef.
 HRESULT SetTypeDefProps (
     [in]  mdTypeDef   td,
     [in]  DWORD       dwTypeDefFlags,
-    [in]  mdToken     tkExtends,
-    [in]  mdToken     rtkImplements[]
+    [in]  mdToken     <example-value>,
+    [in]  mdToken     <example-value>[]
 );
 ```
 
 ## Parameters
 
  `td`
- [in] An `mdTypeDef` token obtained from original call to IMetaDataEmit::DefineTypeDef.
+ [in] An `mdTypeDef` token <example-value> from original call to IMetaDataEmit::DefineTypeDef.
 
  `dwTypeDefFlags`
  [in] `TypeDef` attributes. This is a bitmask of `CorTypeAttr` values.

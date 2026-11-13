@@ -16,8 +16,8 @@ Test the application by running several different commands. If you have trouble,
 ```csharp
 #!/usr/bin/env dotnet
 
-#:package Colorful.Console@1.2.15
-#:package System.CommandLine@2.0.0
+#:package user@example.com
+#:package user@example.com
 
 using System.CommandLine;
 using System.CommandLine.Parsing;

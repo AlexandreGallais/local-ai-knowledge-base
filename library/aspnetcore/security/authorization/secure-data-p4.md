@@ -315,9 +315,9 @@ In the preceding code:
 ## Test the completed app
 
 > **Warning:**
-> This article uses the Secret Manager tool to store the password for the seeded user accounts. The Secret Manager tool is used to store sensitive data during local development. For information on authentication procedures that can be used when an app is deployed to a test or production environment, see Secure authentication flows.
+> This article uses the Secret <example-value> tool to store the password for the seeded user accounts. The Secret <example-value> tool is used to store sensitive data during local development. For information on authentication procedures that can be used when an app is deployed to a test or production environment, see Secure authentication flows.
 
-If you haven't already set a password for seeded user accounts, use the Secret Manager tool to set a password:
+If you haven't already set a password for seeded user accounts, use the Secret <example-value> tool to set a password:
 
 * Choose a strong password:
   * At least 12 characters long, but 14 or more is better.
@@ -336,7 +336,7 @@ If the app has contacts:
 * Delete all of the records in the `Contact` table.
 * Restart the app to seed the database.
 
-An easy way to test the completed app is to launch three different browsers (or incognito/InPrivate sessions). In one browser, register a new user (for example, `test@contoso.com`). Sign in to each browser with a different user. Verify the following operations:
+An easy way to test the completed app is to launch three different browsers (or incognito/InPrivate sessions). In one browser, register a new user (for example, `user@example.com`). Sign in to each browser with a different user. Verify the following operations:
 
 * Registered users can view all of the _Approved_ contact data.
 * Registered users can edit/delete their own data.
@@ -345,8 +345,8 @@ An easy way to test the completed app is to launch three different browsers (or 
 
 | User                  | Approve/Reject contacts | Options                         |
 | --------------------- | :---------------------: | ------------------------------- |
-| `test@contoso.com`    | No                      | Edit and delete their data.     |
-| `manager@contoso.com` | Yes                     | Edit and delete their data.     |
-| `admin@contoso.com`   | Yes                     | Edit and delete ***all*** data. |
+| `user@example.com`    | No                      | Edit and delete their data.     |
+| `user@example.com` | Yes                     | Edit and delete their data.     |
+| `user@example.com`   | Yes                     | Edit and delete ***all*** data. |
 
 Create a contact in the administrator's browser. Copy the URL for delete and edit from the administrator contact. Paste these links into the test user's browser and verify the test user can't perform these operations.

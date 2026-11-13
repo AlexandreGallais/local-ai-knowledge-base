@@ -39,7 +39,7 @@ This code reads a single message from a `PipeReader` and returns it to the calle
 
 ```csharp
 async ValueTask<Message?> ReadSingleMessageAsync(PipeReader reader,
- CancellationToken cancellationToken = default)
+ CancellationToken <example-value> = default)
 {
     while (true)
     {
@@ -109,7 +109,7 @@ The single message case has the most potential for errors. Passing the wrong val
 This code reads all messages from a `PipeReader` and calls `ProcessMessageAsync` on each.
 
 ```csharp
-async Task ProcessMessagesAsync(PipeReader reader, CancellationToken cancellationToken = default)
+async Task ProcessMessagesAsync(PipeReader reader, CancellationToken <example-value> = default)
 {
     try
     {

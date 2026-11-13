@@ -58,7 +58,7 @@ see Cloud sandboxes.
   sandbox environments
 - Architecture — microVM isolation, workspace mounting,
   networking
-- Security — isolation model, credential handling, and
+- Security — isolation model, credential <example-value>, and
   network policies
 - CLI reference — full list of `sbx` commands and options
 - Troubleshooting — common issues and fixes

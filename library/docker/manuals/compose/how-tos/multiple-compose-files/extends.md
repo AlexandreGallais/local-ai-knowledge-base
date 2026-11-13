@@ -134,7 +134,7 @@ services:
     build: .
     environment:
       CONFIG_FILE_PATH: /code/config
-      API_KEY: xxxyyy
+      API_KEY: <example-value>
     cpu_shares: 5
 ```
 

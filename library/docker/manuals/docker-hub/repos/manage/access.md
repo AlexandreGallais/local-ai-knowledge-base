@@ -15,7 +15,7 @@ organization access tokens.
 
 ## Repository visibility
 
-The most basic repository access is controlled via the visibility. A
+The most basic <example-value> access is controlled via the visibility. A
 repository's visibility can be public or private.
 
 With public visibility, the repository appears in Docker Hub search results and
@@ -179,15 +179,15 @@ To invite distributor members:
 
 1. Use the authentication
    API
-   to generate a bearer token for your Docker Hub account. This token authorizes
+   to generate a bearer token for your Docker Hub account. This token <example-value>
    the API requests you use to send invites. Replace `myusername` and
    `dckr_pat_...` with your Docker ID and a personal access
    token:
 
    ```console
-   $ TOKEN=$(curl -s -X POST "https://hub.docker.com/v2/auth/token" \
+   $ TOKEN=$(curl -s -X POST "<example-value>" \
        -H "Content-Type: application/json" \
-       -d '{"identifier": "myusername", "secret": "dckr_pat_..."}' \
+       -d '<example-value>' \
        | jq -r .access_token)
    ```
 
@@ -212,7 +212,7 @@ To invite distributor members:
 
    ```console
    $ curl -s -X POST "https://hub.docker.com/v2/orgs/example-org/groups" \
-       -H "Authorization: Bearer $TOKEN" \
+       -H "Authorization: Bearer <example-value>" \
        -H "Content-Type: application/json" \
        -d '{"name": "customer-team", "description": "External distributor members"}'
    ```
@@ -240,7 +240,7 @@ To invite distributor members:
 
    ```console
    $ curl -s -X POST "https://hub.docker.com/v2/repositories/example-org/example-repo/groups" \
-       -H "Authorization: Bearer $TOKEN" \
+       -H "Authorization: Bearer <example-value>" \
        -H "Content-Type: application/json" \
        -d "{\"group_id\": $GROUP_ID, \"permission\": \"read\"}"
    ```
@@ -253,7 +253,7 @@ To invite distributor members:
 
    ```console
    $ curl -s -X POST "https://hub.docker.com/v2/invites/bulk" \
-       -H "Authorization: Bearer $TOKEN" \
+       -H "Authorization: Bearer <example-value>" \
        -H "Content-Type: application/json" \
        -d '{
              "org": "example-org",

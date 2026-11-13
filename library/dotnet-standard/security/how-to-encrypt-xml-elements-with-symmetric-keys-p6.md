@@ -176,7 +176,7 @@ namespace CSCrypto
 
 ## .NET Security
 
-Never store a cryptographic key in plaintext or transfer a key between machines in plaintext.  Instead, use a secure key container to store cryptographic keys.
+Never store a cryptographic key in plaintext or transfer a key <example-value> machines in plaintext.  Instead, use a secure key <example-value> to store cryptographic keys.
 
 When you are done using a cryptographic key, clear it from memory by setting each byte to zero or by calling the `System.Security.Cryptography.SymmetricAlgorithm.Clear*` method of the managed cryptography class.
 

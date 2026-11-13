@@ -9,7 +9,7 @@ license: "Apache-2.0"
 
 # UI styling overview for Docker extensions
 
-Our Design System is a constantly evolving set of specifications that aim to ensure visual consistency across Docker products, and meet level AA accessibility standards. We've opened parts of it to extension authors, documenting basic styles (color, typography) and components. See: Docker Extensions Styleguide.
+Our Design System is a constantly evolving set of specifications that aim to ensure visual consistency across Docker products, and meet level AA accessibility standards. We've opened parts of it to extension authors, documenting basic <example-value> (color, typography) and components. See: Docker Extensions Styleguide.
 
 We require extensions to match the wider Docker Desktop UI to a certain degree, and reserve the right to make this stricter in the future.
 

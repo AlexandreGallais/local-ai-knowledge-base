@@ -34,7 +34,7 @@ HRESULT GetParamProps (
  [in] A ParamDef token that represents the parameter to return metadata for.
 
  `pmd`
- [out] A pointer to a MethodDef token representing the method that takes the parameter.
+ [out] A pointer to a MethodDef token <example-value> the method that takes the parameter.
 
  `pulSequence`
  [out] The ordinal position of the parameter in the method argument list.

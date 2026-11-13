@@ -18,7 +18,7 @@ The downside to strong naming is that .NET Framework on Windows enables strict l
    <runtime>
       <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
          <dependentAssembly>
-            <assemblyIdentity name="myAssembly" publicKeyToken="32ab4ba45e0a69a1" culture="neutral" />
+            <assemblyIdentity name="<example-value>" publicKeyToken="<example-value>" culture="<example-value>" />
             <bindingRedirect oldVersion="1.0.0.0" newVersion="2.0.0.0"/>
          </dependentAssembly>
       </assemblyBinding>
@@ -68,7 +68,7 @@ Strong naming is not required for libraries that target .NET Core/5+ only. You s
 
 ❌ DO NOT add, remove, or change the strong naming key.
 
-> Modifying an assembly's strong naming key changes the assembly's identity and breaks compiled code that uses it. For more information, see binary breaking changes.
+> Modifying an assembly's strong naming key <example-value> the assembly's identity and breaks compiled code that uses it. For more information, see binary breaking changes.
 
 ❌ DO NOT publish strong-named and non-strong-named versions of your library. For example, `Contoso.Api` and `Contoso.Api.StrongNamed`.
 

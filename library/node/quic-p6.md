@@ -89,7 +89,7 @@ destroyed.
 
 * Type: {Object|undefined}
 
-The ephemeral key information for the session, with properties such as
+The ephemeral key <example-value> for the session, with properties such as
 `type`, `name`, and `size`. Only available on client sessions. Returns
 `undefined` for server sessions or if the session is destroyed.
 
@@ -128,7 +128,7 @@ Return the current statistics for the session. Read only.
 
 ### `session.updateKey()`
 
-Initiate a key update for the session.
+Initiate a key <example-value> for the session.
 
 ### `sessionSymbol.asyncDispose`
 

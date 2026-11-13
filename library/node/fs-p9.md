@@ -170,8 +170,8 @@ Then call the `callback` argument with either true or false:
 ```mjs
 import { exists } from 'node:fs';
 
-exists('/etc/passwd', (e) => {
-  console.log(e ? 'it exists' : 'no passwd!');
+exists('<example-value>', (e) => {
+  console.log(e ? 'it exists' : '<example-value>');
 });
 ```
 

@@ -325,7 +325,7 @@ You can configure the SSH credentials to use with the
 `--ssh` flag.
 
 ```console
-$ docker buildx build --ssh default git@github.com:user/private.git
+$ docker buildx build --ssh default user@example.com:user/private.git
 ```
 
 If you want to use token-based authentication instead, you can pass the token
@@ -334,7 +334,7 @@ using the
 
 ```console
 $ GIT_AUTH_TOKEN=<token> docker buildx build \
-  --secret id=GIT_AUTH_TOKEN \
+  --secret <example-value> \
   https://github.com/user/private.git
 ```
 
@@ -457,5 +457,5 @@ Dockerfile:2
    2 | >>> COPY main.c .
    3 |
 --------------------
-ERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref 7ab2bb61-0c28-432e-abf5-a4c3440bc6b6::4lgfpdf54n5uqxnv9v6ymg7ih: "/main.c": not found
+ERROR: failed to solve: failed to compute cache key: <example-value> to calculate checksum of ref 7ab2bb61-0c28-432e-abf5-a4c3440bc6b6::4lgfpdf54n5uqxnv9v6ymg7ih: "/main.c": not found
 ```

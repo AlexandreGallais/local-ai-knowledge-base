@@ -182,7 +182,7 @@ The agent supports two flow modes that control how much oversight you have: Auto
 
 ### Automatic mode
 
-The agent works through all stages (assessment, planning, and execution) without pausing for approval. It surfaces key findings and progress updates, but keeps moving forward.
+The agent works through all stages (assessment, planning, and execution) without pausing for approval. It surfaces key <example-value> and progress updates, but keeps moving forward.
 
 Best for experienced users, straightforward upgrades, and small solutions.
 

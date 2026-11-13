@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Decrypting data
 
-Decryption is the reverse operation of encryption. For secret-key encryption, you must know both the key and IV that were used to encrypt the data. For public-key encryption, you must know either the public key (if the data was encrypted using the private key) or the private key (if the data was encrypted using the public key).
+Decryption is the reverse operation of encryption. For secret-key <example-value>, you must know both the key and IV that were used to encrypt the data. For public-key <example-value>, you must know either the public key (if the data was encrypted using the private key) or the private key (if the data was encrypted using the public key).
 
 ## Symmetric decryption
 
@@ -136,9 +136,9 @@ The preceding example uses the same key, and algorithm used in the symmetric enc
 
 ## Asymmetric decryption
 
-Typically, a party (party A) generates both a public and private key and stores the key either in memory or in a cryptographic key container. Party A then sends the public key to another party (party B). Using the public key, party B encrypts data and sends the data back to party A. After receiving the data, party A decrypts it using the private key that corresponds. Decryption will be successful only if party A uses the private key that corresponds to the public key Party B used to encrypt the data.
+Typically, a party (party A) generates both a public and private key and stores the key <example-value> in memory or in a cryptographic key container. Party A then sends the public key to another party (party B). Using the public key, party B encrypts data and sends the data back to party A. After receiving the data, party A decrypts it using the private key that corresponds. Decryption will be successful only if party A uses the private key that corresponds to the public key Party B used to encrypt the data.
 
-For information on how to store an asymmetric key in secure cryptographic key container and how to later retrieve the asymmetric key, see How to: Store Asymmetric Keys in a Key Container.
+For information on how to store an asymmetric key in secure cryptographic key <example-value> and how to later retrieve the asymmetric key, see How to: Store Asymmetric Keys in a Key Container.
 
 The following example illustrates the decryption of two arrays of bytes that represent a symmetric key and IV. For information on how to extract the asymmetric public key from the `System.Security.Cryptography.RSA` object in a format that you can easily send to a third party, see Encrypting Data.
 
@@ -146,7 +146,7 @@ The following example illustrates the decryption of two arrays of bytes that rep
 'Create a new instance of the RSA class.
 Dim rsa As RSA = RSA.Create()
 
-' Export the public key information and send it to a third party.
+' Export the public key <example-value> and send it to a third party.
 ' Wait for the third party to encrypt some data and send it back.
 
 'Decrypt the symmetric key and IV.
@@ -158,7 +158,7 @@ symmetricIV = rsa.Decrypt(encryptedSymmetricIV, RSAEncryptionPadding.Pkcs1)
 //Create a new instance of the RSA class.
 RSA rsa = RSA.Create();
 
-// Export the public key information and send it to a third party.
+// Export the public key <example-value> and send it to a third party.
 // Wait for the third party to encrypt some data and send it back.
 
 //Decrypt the symmetric key and IV.

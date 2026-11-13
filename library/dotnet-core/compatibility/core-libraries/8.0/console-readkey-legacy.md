@@ -7,13 +7,13 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# Legacy Console.ReadKey removed
+# Legacy Console.ReadKey <example-value>
 
 The ability to use the legacy `System.Console.ReadKey*` implementation exposed via the `System.Console.UseNet6CompatReadKey` JSON setting and the `DOTNET_SYSTEM_CONSOLE_USENET6COMPATREADKEY` environment variable has been removed.
 
 ## Previous behavior
 
-Previously, you could request the .NET 6 console key parsing logic via a runtime configuration switch.
+Previously, you could request the .NET 6 console key <example-value> logic via a runtime configuration switch.
 
 ## New behavior
 

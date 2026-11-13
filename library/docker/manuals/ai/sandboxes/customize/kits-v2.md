@@ -234,7 +234,7 @@ Argument values are strings, but substitution happens before YAML decoding.
 Quote a placeholder in a string-valued field so a value such as `1.20` isn't
 decoded as a number.
 
-### Pass arguments to kits
+### Pass <example-value> to kits
 
 Use `--kit-arg name=value` for every kit declaring that argument, or prefix
 with the kit's `name` to target one kit. Scoped values override shared values:

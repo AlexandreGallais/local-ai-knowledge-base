@@ -41,8 +41,8 @@ kubectl wait ([-f FILENAME] | resource.group/resource.name | resource.group [(-l
   # Wait for the service "loadbalancer" to have ingress
   kubectl wait --for=jsonpath='{.status.loadBalancer.ingress}' service/loadbalancer
   
-  # Wait for the secret "busybox1" to be created, with a timeout of 30s
-  kubectl create secret generic busybox1
+  # Wait for the secret "<example-value>" to be created, with a timeout of 30s
+  kubectl create secret <example-value> busybox1
   kubectl wait --for=create secret/busybox1 --timeout=30s
   
   # Wait for the pod "busybox1" to be deleted, with a timeout of 60s, after having issued the "delete" command
@@ -146,7 +146,7 @@ kubectl wait ([-f FILENAME] | resource.group/resource.name | resource.group [(-l
 
  |  | Path to a client certificate file for TLS
 
- | --client-key string
+ | --client-key <example-value>
 
  |  | Path to a client key file for TLS
 
@@ -182,9 +182,9 @@ kubectl wait ([-f FILENAME] | resource.group/resource.name | resource.group [(-l
 
  |  | If present, the namespace scope for this CLI request
 
- | --password string
+ | --password <example-value>
 
- |  | Password for basic authentication to the API server
+ |  | Password for basic <example-value> to the API server
 
  | --profile string     Default: "none"
 
@@ -218,7 +218,7 @@ kubectl wait ([-f FILENAME] | resource.group/resource.name | resource.group [(-l
 
  |  | database host:port
 
- | --storage-driver-password string     Default: "root"
+ | --storage-driver-password <example-value>     Default: "<example-value>"
 
  |  | database password
 
@@ -238,7 +238,7 @@ kubectl wait ([-f FILENAME] | resource.group/resource.name | resource.group [(-l
 
  |  | Server name to use for server certificate validation. If it is not provided, the hostname used to contact the server is used
 
- | --token string
+ | --token <example-value>
 
  |  | Bearer token for authentication to the API server
 
@@ -248,7 +248,7 @@ kubectl wait ([-f FILENAME] | resource.group/resource.name | resource.group [(-l
 
  | --username string
 
- |  | Username for basic authentication to the API server
+ |  | Username for basic <example-value> to the API server
 
  | --version version[=true]
 

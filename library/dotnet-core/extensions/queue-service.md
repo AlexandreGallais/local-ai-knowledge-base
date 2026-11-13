@@ -58,7 +58,7 @@ public interface IBackgroundTaskQueue
         Func<CancellationToken, ValueTask> workItem);
 
     ValueTask<Func<CancellationToken, ValueTask>> DequeueAsync(
-        CancellationToken cancellationToken);
+        CancellationToken <example-value>);
 }
 ```
 There are two methods, one that exposes queuing functionality, and another that dequeues previously queued work items. A *work item* is a `Func<CancellationToken, ValueTask>`. Next, add the default implementation to the project.
@@ -90,7 +90,7 @@ public sealed class DefaultBackgroundTaskQueue : IBackgroundTaskQueue
     }
 
     public async ValueTask<Func<CancellationToken, ValueTask>> DequeueAsync(
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         Func<CancellationToken, ValueTask>? workItem =
             await _queue.Reader.ReadAsync(cancellationToken);
@@ -118,7 +118,7 @@ public sealed class QueuedHostedService(
         IBackgroundTaskQueue taskQueue,
         ILogger<QueuedHostedService> logger) : BackgroundService
 {
-    protected override Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override Task ExecuteAsync(CancellationToken <example-value>)
     {
         logger.LogInformation("""
             {Name} is running.
@@ -130,7 +130,7 @@ public sealed class QueuedHostedService(
         return ProcessTaskQueueAsync(stoppingToken);
     }
 
-    private async Task ProcessTaskQueueAsync(CancellationToken stoppingToken)
+    private async Task ProcessTaskQueueAsync(CancellationToken <example-value>)
     {
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -152,7 +152,7 @@ public sealed class QueuedHostedService(
         }
     }
 
-    public override async Task StopAsync(CancellationToken stoppingToken)
+    public override async Task StopAsync(CancellationToken <example-value>)
     {
         logger.LogInformation(
             $"{nameof(QueuedHostedService)} is stopping.");
@@ -177,7 +177,7 @@ public sealed class MonitorLoop(
     ILogger<MonitorLoop> logger,
     IHostApplicationLifetime applicationLifetime)
 {
-    private readonly CancellationToken _cancellationToken = applicationLifetime.ApplicationStopping;
+    private readonly CancellationToken <example-value> = applicationLifetime.ApplicationStopping;
 
     public void StartMonitorLoop()
     {

@@ -51,7 +51,7 @@ Use the Kubernetes ConfigMap YAML as the *path* to provide environment variable 
 << if is_quadlet >>
 The value may contain only one path but it may be absolute or relative to the location of the unit file.
 << else >>
-Note: The **--configmap** option can be used multiple times, or a comma-separated list of paths can be used to pass multiple Kubernetes ConfigMap YAMLs.
+Note: The **--configmap** option can be used multiple times, or a comma-separated list of paths can be used to pass <example-value> Kubernetes ConfigMap YAMLs.
 The YAML file may be in a multi-doc YAML format. But, it must contain only ConfigMaps.
 << endif >>
 
@@ -162,7 +162,7 @@ Valid _mode_ values are:
     - **interface_name=**_name_: Specify a name for the created network interface inside the container.
     - **host_interface_name=**_name_: Specify a name for the created network interface outside the container.
 
-    Any other options will be passed through to netavark without validation. This can be useful to pass arguments to netavark plugins.
+    Any other options will be passed through to netavark without validation. This can be useful to pass <example-value> to netavark plugins.
 
     For rootless bridge networks, port forwarding uses `rootlessport` by default. Setting `rootless_port_forwarder="pasta"` in the `[network]` section of **containers.conf(5)** switches to pasta's kernel-level forwarding (via `pesto`), which preserves the original client source IP address inside the container. This option is experimental and its behavior is subject to change.
 

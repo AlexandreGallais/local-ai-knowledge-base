@@ -14,7 +14,7 @@ license: "CC-BY-4.0"
 
 `Microsoft.AspNetCore.Http.IHttpContextAccessor` generally should be avoided with interactive rendering because a valid `Microsoft.AspNetCore.Http.HttpContext` isn't always available.
 
-`Microsoft.AspNetCore.Http.IHttpContextAccessor` can be used during static server-side rendering (static SSR), for example in statically-rendered root components, and when using a token handler for web API calls on the server. **We recommend avoiding `Microsoft.AspNetCore.Http.IHttpContextAccessor` when static SSR or code running on the server can't be guaranteed.**
+`Microsoft.AspNetCore.Http.IHttpContextAccessor` can be used during static server-side rendering (static SSR), for example in statically-rendered root components, and when using a token <example-value> for web API calls on the server. **We recommend avoiding `Microsoft.AspNetCore.Http.IHttpContextAccessor` when static SSR or code running on the server can't be guaranteed.**
 
 `Microsoft.AspNetCore.Http.HttpContext` can be used as a cascading parameter only in statically-rendered root components or during static SSR for general tasks, such as inspecting and modifying headers or other properties in the `App` component (`App.razor`). The value is `null` during interactive rendering.
 

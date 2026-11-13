@@ -9,46 +9,6 @@ license: "CC-BY-4.0"
 
 # ASP.NET Core Blazor additional server-side security scenarios (part 4 of 4)
 
-```csharp
-app.MapPost("/logout",
-    async ([FromForm] string? returnUrl, HttpContext context,
-    IHttpClientFactory httpClientFactory) =>
-{
-    var accessToken = await context.GetTokenAsync("access_token");
-
-    if (!string.IsNullOrEmpty(accessToken))
-    {
-        // Prepare the revocation request (RFC 7009)
-        var content =
-            new FormUrlEncodedContent(new Dictionary<string, string>
-            {
-                { "token", accessToken },
-                { "token_type_hint", "access_token" },
-                { "client_id", "{API CLIENT ID}" },
-                { "client_secret", "{CLIENT SECRET}" }
-            });
-
-        // POST to the revocation endpoint
-        using var client = httpClientFactory.CreateClient();
-        await client.PostAsync("{AUTH SERVER TOKEN REVOCATION URI}", content);
-    }
-
-    return TypedResults.SignOut(new AuthenticationProperties { RedirectUri = "{REDIRECT URI}" },
-        [CookieAuthenticationDefaults.AuthenticationScheme]);
-});
-```
-
-The preceding example's placeholders:
-
-* `{AUTH SERVER TOKEN REVOCATION URI}`: The authentication server's token revocation URI.
-* `{API CLIENT ID}`: The API client ID.
-* `{CLIENT SECRET}`: The client secret obtained securely.
-* `{REDIRECT URI}`: The redirect URI.
-
-In Duende IdentityServer, tokens are revoked automatically by setting the `CoordinateLifetimeWithUserSession` client configuration property to `true`, which automatically cleans up associated tokens when a session ends. For more information, see Session Cleanup and Logout (Duende documentation).
-
-Built-in opaque access token support is under consideration for a future release of .NET. For more information, see Opaque - reference token validation (`dotnet/aspnetcore` #46026).
-
 ## Server-side Blazor app authorization patterns
 
 *For patterns that apply to Blazor WebAssembly apps, see Secure ASP.NET Core Blazor WebAssembly.*

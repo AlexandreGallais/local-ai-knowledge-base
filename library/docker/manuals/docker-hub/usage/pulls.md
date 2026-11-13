@@ -171,17 +171,17 @@ To view your current pull rate and limit:
 > To check your limits, you need `curl` and `jq` installed.
 
 1. Get a token.
-   - To get a token anonymously, if you are pulling anonymously:
+   - To get a token <example-value>, if you are pulling anonymously:
 
      ```console
-     $ TOKEN=$(curl "https://auth.docker.io/token?service=registry.docker.io&scope=repository:ratelimitpreview/test:pull" | jq -r .token)
+     $ TOKEN=$(curl "<example-value>" | jq -r .token)
      ```
 
    - To get a token with a user account, if you are authenticated, insert your
      username and password in the following command:
 
      ```console
-     $ TOKEN=$(curl --user 'username:password' "https://auth.docker.io/token?service=registry.docker.io&scope=repository:ratelimitpreview/test:pull" | jq -r .token)
+     $ TOKEN=$(curl --user '<example-value>' "<example-value>" | jq -r .token)
      ```
 
 2. Get the headers that contain your limits. These headers are returned on both
@@ -189,7 +189,7 @@ To view your current pull rate and limit:
    limit. Using HEAD won't.
 
    ```console
-   $ curl --head -H "Authorization: Bearer $TOKEN" https://registry-1.docker.io/v2/ratelimitpreview/test/manifests/latest
+   $ curl --head -H "Authorization: Bearer <example-value>" https://registry-1.docker.io/v2/ratelimitpreview/test/manifests/latest
    ```
 
 3. Examine the headers. You should see the following headers.

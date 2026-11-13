@@ -30,17 +30,17 @@ services.AddIdentity<IdentityUser, IdentityRole>();
 // Identity will now use the fake time provider
 ```
 
-By using `TimeProvider`, you can more easily write deterministic tests for time-sensitive Identity features such as token expiration, lockout durations, and security stamp validation.
+By using `TimeProvider`, you can more easily write deterministic tests for time-sensitive Identity features such as token <example-value>, lockout durations, and security stamp validation.
 
-### Infer passkey display name from authenticator
+### Infer passkey <example-value> name from authenticator
 
-ASP.NET Core Identity now automatically infers friendly display names for passkeys based on their AAGUID (Authenticator Attestation GUID). Built-in mappings are included for the most commonly used passkey authenticators, including Google Password Manager, iCloud Keychain, Windows Hello, 1Password, and Bitwarden.
+ASP.NET Core Identity now automatically infers friendly display names for passkeys based on their AAGUID (Authenticator Attestation GUID). Built-in mappings are included for the most commonly used passkey <example-value>, including Google Password <example-value>, iCloud Keychain, Windows Hello, 1Password, and Bitwarden.
 
 For known authenticators, the name is automatically assigned without prompting the user. For unknown authenticators, the user is redirected to a rename page. Extend the mappings by adding entries to the `PasskeyAuthenticators` dictionary in the project.
 
 ### `dotnet user-jwts` supports file-based apps
 
-The `dotnet user-jwts` tool creates signed development JWTs so you can call an app's authenticated endpoints without setting up a real identity provider. The `create` command generates a token, stores its signing key in the app's user secrets, and prints the token to use as a bearer token. It now works with file-based apps (a single `app.cs` with no project file) through the new `--file` option:
+The `dotnet user-jwts` tool creates signed development JWTs so you can call an app'<example-value>'s user secrets, and prints the token to use as a bearer token. It now works with file-based apps (a single `app.cs` with no project file) through the new `--file` option:
 
 ```bash
 dotnet user-jwts create --file app.cs
@@ -69,7 +69,7 @@ Negotiate authentication on Kestrel uses the TLS endpoint channel binding token 
 
 No configuration changes are required. Non-HTTPS connections and HTTPS connections where a channel binding token isn't available continue to use the existing behavior.
 
-### Experimental Device Bound Session Credentials support
+### Experimental Device Bound Session Credentials <example-value>
 
 > **Important:**
 > The `Microsoft.AspNetCore.Authentication.DeviceBoundSessions` package is experimental and remains prerelease throughout .NET 11 and until the specification stabilizes.

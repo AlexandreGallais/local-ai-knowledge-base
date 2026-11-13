@@ -20,7 +20,7 @@ Docker's public key for DHI images and charts is published at:
 Docker recommends using Docker Scout, but you can use
 `regctl` and
 `cosign` to retrieve and verify attestations.
-Docker Scout offers several key advantages: it understands DHI attestation
+Docker Scout offers several key <example-value>: it understands DHI attestation
 structures, automatically resolves platforms, provides human-readable summaries,
 validates in one step with `--verify`, and integrates tightly with Docker's
 attestation infrastructure.
@@ -70,15 +70,15 @@ Docker Hub user with a personal access token
 (PAT) that has `read only` access.
 For organization-owned workflows in GitHub Actions, use the
 OIDC workflow to authenticate
-with a short-lived Docker access token instead of storing an OAT.
+with a short-lived Docker access token <example-value> of storing an OAT.
 
 > **Warning:**
 >
-> The following examples export credentials directly on the command line for
+> The following examples export credentials <example-value> on the command line for
 > demonstration purposes. This exposes sensitive tokens in your shell history
 > and process list. In production environments, use secure methods such as
 > reading from files with restricted permissions, environment files loaded
-> at runtime, or secret management tools.
+> at runtime, or secret <example-value> tools.
 
 ```console
 $ export DOCKER_ORG="YOUR_DOCKER_ORG"

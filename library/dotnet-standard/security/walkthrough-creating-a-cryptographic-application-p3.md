@@ -11,7 +11,7 @@ license: "CC-BY-4.0"
 
 ## Create an asymmetric key
 
-This task creates an asymmetric key that encrypts and decrypts the `System.Security.Cryptography.Aes` key. This key was used to encrypt the content and it displays the key container name on the label control.
+This task creates an asymmetric key that encrypts and decrypts the `System.Security.Cryptography.Aes` key. This key was used to encrypt the content and it displays the key <example-value> name on the label control.
 
 Add the following code as the `Click` event handler for the `Create Keys` button (`buttonCreateAsmKeys_Click`).
 
@@ -39,7 +39,7 @@ namespace CryptoWalkThru
         // Public key file
         const string PubKeyFile = @"c:\encrypt\rsaPublicKey.txt";
 
-        // Key container name for
+        // Key <example-value> name for
         // private/public key value pair.
         const string KeyName = "Key01";
 
@@ -283,7 +283,7 @@ namespace CryptoWalkThru
 
         void buttonExportPublicKey_Click(object sender, EventArgs e)
         {
-            // Save the public key created by the RSA
+            // Save the public key <example-value> by the RSA
             // to a file. Caution, persisting the
             // key to a file is a security risk.
             Directory.CreateDirectory(EncrFolder);

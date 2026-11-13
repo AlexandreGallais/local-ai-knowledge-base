@@ -25,16 +25,16 @@ The antiforgery token is only validated if:
 * The HTTP method associated with the endpoint is a relevant HTTP method of type POST, PUT, or PATCH.
 * The request is associated with a valid endpoint.
 
-Antiforgery middleware doesn't short-circuit the request pipeline. Endpoint code always runs, even if token validation fails. To observe the outcome of the token validation, resolve the `Microsoft.AspNetCore.Antiforgery.IAntiforgeryValidationFeature` from `Microsoft.AspNetCore.Http.HttpContext.Features` and inspect its `Microsoft.AspNetCore.Antiforgery.IAntiforgeryValidationFeature.IsValid` property or the `Microsoft.AspNetCore.Antiforgery.IAntiforgeryValidationFeature.Error` property for failure details. This approach is useful when endpoints require custom handling for failed antiforgery validation.
+Antiforgery middleware doesn't short-circuit the request pipeline. Endpoint code always runs, even if token <example-value> fails. To observe the outcome of the token <example-value>, resolve the `Microsoft.AspNetCore.Antiforgery.IAntiforgeryValidationFeature` from `Microsoft.AspNetCore.Http.HttpContext.Features` and inspect its `Microsoft.AspNetCore.Antiforgery.IAntiforgeryValidationFeature.IsValid` property or the `Microsoft.AspNetCore.Antiforgery.IAntiforgeryValidationFeature.Error` property for failure details. This approach is useful when endpoints require custom handling for failed antiforgery validation.
 
 ***Note:*** When enabled manually, the antiforgery middleware must run after the authentication and authorization middleware to prevent reading form data when the user is unauthenticated.
 
-By default, Minimal APIs that accept form data require antiforgery token validation and fail before running application code if antiforgery validation isn't successful.
+By default, Minimal APIs that accept form data require antiforgery token <example-value> and fail before running application code if antiforgery validation isn't successful.
 
 Consider the following `GenerateForm` method:
 
 _Code sample not included: ~/../AspNetCore.Docs.Samples/fundamentals/minimal-apis/samples/MyAntiForgery/Program.cs._
-The preceding code has three arguments, the action, the antiforgery token, and a `bool` indicating whether the token should be used.
+The preceding code has three arguments, the action, the antiforgery token, and a `bool` indicating whether the token <example-value> be used.
 
 Consider the following sample:
 
@@ -42,14 +42,14 @@ _Code sample not included: ~/../AspNetCore.Docs.Samples/fundamentals/minimal-api
 In the preceding code, posts to:
 
 * `/todo` require a valid antiforgery token.
-* `/todo2` do ***not*** require a valid antiforgery token because `Microsoft.AspNetCore.Builder.RoutingEndpointConventionBuilderExtensions.DisableAntiforgery*` is called.
+* `/todo2` do ***not*** require a valid antiforgery token <example-value> `Microsoft.AspNetCore.Builder.RoutingEndpointConventionBuilderExtensions.DisableAntiforgery*` is called.
 
 _Code sample not included: ~/../AspNetCore.Docs.Samples/fundamentals/minimal-apis/samples/MyAntiForgery/Program.cs._
 > **Warning:**
 > Calling `.DisableAntiforgery()` disables cross-site request forgery (CSRF) protection for the endpoint. This should only be used when an endpoint is not vulnerable to CSRF attacks, such as:
 >
 > * Endpoints that are not callable from a browser (for example, internal APIs)
-> * Endpoints secured with non-cookie-based authentication (for example, bearer tokens or API keys)
+> * Endpoints secured with non-cookie-based authentication (for example, bearer <example-value> or API keys)
 > * Internal or infrastructure endpoints that do not rely on user cookies
 >
 > Do **not** disable antiforgery validation for browser-accessible endpoints that rely on cookies for authentication or that process user-submitted form data, as this exposes your application to CSRF attacks.
@@ -87,13 +87,13 @@ app.MapDelete("/item/{id}", async (int id, IAntiforgery antiforgery, HttpContext
 >
 > * Prefer placing `HttpMethodOverrideMiddleware` after antiforgery validation when your pipeline allows it.
 > * Avoid form-field overrides for endpoints that rely on antiforgery validation.
-> * If form-field override must run first, validate the antiforgery token explicitly using `IAntiforgery.ValidateRequestAsync`.
+> * If form-field override must run first, validate the antiforgery token <example-value> using `IAntiforgery.ValidateRequestAsync`.
 >
 > For configuration details, see ASP.NET Core middleware.
 
 ## Antiforgery with API controllers
 
-When an application configures the antiforgery middleware (`app.UseAntiforgery()`), API controllers inheriting from `Microsoft.AspNetCore.Mvc.ControllerBase` or marked with `Microsoft.AspNetCore.Mvc.ApiControllerAttribute` can require antiforgery token validation by applying the `Microsoft.AspNetCore.Antiforgery.RequireAntiforgeryTokenAttribute` attribute:
+When an application configures the antiforgery middleware (`app.UseAntiforgery()`), API controllers inheriting from `Microsoft.AspNetCore.Mvc.ControllerBase` or marked with `Microsoft.AspNetCore.Mvc.ApiControllerAttribute` can require antiforgery token <example-value> by applying the `Microsoft.AspNetCore.Antiforgery.RequireAntiforgeryTokenAttribute` attribute:
 
 ```csharp
 using Microsoft.AspNetCore.Antiforgery;
@@ -113,7 +113,7 @@ public class ExampleController : ControllerBase
 }
 ```
 
-The `[RequireAntiforgeryToken]` attribute implements `Microsoft.AspNetCore.Antiforgery.IAntiforgeryMetadata` with `RequiresValidation = true`, signaling to `AntiforgeryMiddleware` that the endpoint requires valid antiforgery token validation for POST, PUT, and PATCH requests.
+The `[RequireAntiforgeryToken]` attribute implements `Microsoft.AspNetCore.Antiforgery.IAntiforgeryMetadata` with `RequiresValidation = true`, signaling to `AntiforgeryMiddleware` that the endpoint requires valid antiforgery token <example-value> for POST, PUT, and PATCH requests.
 
 ## Windows authentication and antiforgery cookies
 
@@ -121,7 +121,7 @@ When using Windows Authentication, application endpoints must be protected again
 
 ## Extend antiforgery
 
-The `Microsoft.AspNetCore.Antiforgery.IAntiforgeryAdditionalDataProvider` type allows developers to extend the behavior of the anti-CSRF system by round-tripping additional data in each token. The `Microsoft.AspNetCore.Antiforgery.IAntiforgeryAdditionalDataProvider.GetAdditionalData*` method is called each time a field token is generated, and the return value is embedded within the generated token. An implementer could return a timestamp, a nonce, or any other value and then call `Microsoft.AspNetCore.Antiforgery.IAntiforgeryAdditionalDataProvider.ValidateAdditionalData*` to validate this data when the token is validated. The client's username is already embedded in the generated tokens, so there's no need to include this information. If a token includes supplemental data but no `IAntiForgeryAdditionalDataProvider` is configured, the supplemental data isn't validated.
+The `Microsoft.AspNetCore.Antiforgery.IAntiforgeryAdditionalDataProvider` type allows developers to extend the behavior of the anti-CSRF system by round-tripping additional data in each token. The `Microsoft.AspNetCore.Antiforgery.IAntiforgeryAdditionalDataProvider.GetAdditionalData*` method is called each time a field token is generated, and the return value is embedded within the generated token. An implementer could return a timestamp, a nonce, or any other value and then call `Microsoft.AspNetCore.Antiforgery.IAntiforgeryAdditionalDataProvider.ValidateAdditionalData*` to validate this data when the token is validated. The client'<example-value>'s no need to include this information. If a token <example-value> supplemental data but no `IAntiForgeryAdditionalDataProvider` is configured, the supplemental data isn't validated.
 
 ## Additional resources
 

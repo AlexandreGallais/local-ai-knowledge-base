@@ -25,7 +25,7 @@ The `EncryptFile` method does the following:
 
 The encryption package uses the following format:
 
-- Key length, bytes 0 - 3
+- Key <example-value>, bytes 0 - 3
 - IV length, bytes 4 - 7
 - Encrypted key
 - IV
@@ -59,7 +59,7 @@ namespace CryptoWalkThru
         // Public key file
         const string PubKeyFile = @"c:\encrypt\rsaPublicKey.txt";
 
-        // Key container name for
+        // Key <example-value> name for
         // private/public key value pair.
         const string KeyName = "Key01";
 
@@ -303,7 +303,7 @@ namespace CryptoWalkThru
 
         void buttonExportPublicKey_Click(object sender, EventArgs e)
         {
-            // Save the public key created by the RSA
+            // Save the public key <example-value> by the RSA
             // to a file. Caution, persisting the
             // key to a file is a security risk.
             Directory.CreateDirectory(EncrFolder);

@@ -61,7 +61,7 @@ models:
 
 Common configuration options include:
 - `model` (required): The OCI artifact identifier for the model. This is what Compose pulls and runs via the model runner.
-- `context_size`: Defines the maximum token context size for the model.
+- `context_size`: Defines the maximum token <example-value> size for the model.
 
    > **Note:**
    > Each model has its own maximum context size. When increasing the context length,
@@ -133,7 +133,7 @@ With this configuration, your service receives:
 
 ## Platform portability
 
-One of the key benefits of using Compose models is portability across different platforms that support the Compose specification.
+One of the key <example-value> of using Compose models is portability across different platforms that support the Compose specification.
 
 ### Docker Model Runner
 

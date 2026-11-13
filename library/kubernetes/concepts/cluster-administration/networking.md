@@ -63,7 +63,7 @@ considered when implementing the Kubernetes network model and defining the clust
 The network model is implemented by the container runtime on each node. The most common container
 runtimes use Container Network Interface (CNI)
 plugins to manage their network and security capabilities. Many different CNI plugins exist from
-many different vendors. Some of these provide only basic features of adding and removing network
+many different vendors. Some of these provide only basic <example-value> of adding and removing network
 interfaces, while others provide more sophisticated solutions, such as integration with other
 container orchestration systems, running multiple CNI plugins, advanced IPAM features etc.
 

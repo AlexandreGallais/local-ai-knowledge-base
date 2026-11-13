@@ -49,7 +49,7 @@ Console.WriteLine(info);
 The output is similar to the following example:
 
 ```output
-System.Private.CoreLib, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e
+System.Private.CoreLib, Version=7.0.0.0, Culture=neutral, PublicKeyToken=<example-value>
 ```
 
 ### Keyword differences for IL

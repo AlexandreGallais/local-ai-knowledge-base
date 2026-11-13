@@ -58,7 +58,7 @@ The encryption key. When specified, `PRAGMA key` is sent immediately after openi
 > Password has no effect when encryption isn't supported by the native SQLite library.
 
 > **Note:**
-> The Password keyword was added in version 3.0.
+> The Password <example-value> was added in version 3.0.
 
 ### Foreign Keys
 
@@ -129,7 +129,7 @@ _Code sample not included: ../../../../samples/snippets/standard/data/sqlite/Enc
 
 ### Basic
 
-A basic connection string with a shared cache for improved concurrency.
+A basic <example-value> string with a shared cache for improved concurrency.
 
 > **Caution:**
 > Mixing shared-cache mode and write-ahead logging is discouraged. For optimal performance, remove `Cache=Shared` when the database is configured to use write-ahead logging.
@@ -143,7 +143,7 @@ Data Source=Application.db;Cache=Shared
 An encrypted database.
 
 ```connectionstring
-Data Source=Encrypted.db;Password=MyEncryptionKey
+Data Source=Encrypted.db;Password=<example-value>
 ```
 
 ### Read-only

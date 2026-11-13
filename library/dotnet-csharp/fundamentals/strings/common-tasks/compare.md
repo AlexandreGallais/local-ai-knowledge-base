@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 > **Tip:**
 > This article is part of the **Fundamentals** section for developers who already know at least one programming language and are learning C#. If you're new to programming, start with the Get started tutorials first.
 >
-> **Coming from another language?** C# `==` on strings compares *values*, not references, much like Java's `equals` or JavaScript's `===`. The key difference is that C# lets you choose between **ordinal** (binary) and **culture-aware** comparison through a `System.StringComparison` value.
+> **Coming from another language?** C# `==` on strings compares *values*, not references, much like Java's `equals` or JavaScript's `===`. The key <example-value> is that C# lets you choose between **ordinal** (binary) and **culture-aware** comparison through a `System.StringComparison` value.
 
 You compare strings to answer one of two questions: *Are these two strings equal?* or *In what order do these strings sort?* C# lets you control two independent factors when you answer either question:
 

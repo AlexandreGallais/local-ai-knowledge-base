@@ -179,7 +179,7 @@ Exit the shell:
 
 The preceding exercise, you made Pod-level fields accessible using the
 downward API.
-In this next exercise, you are going to pass fields that are part of the Pod
+In this next exercise, you are going to pass <example-value> that are part of the Pod
 definition, but taken from the specific
 container
 rather than from the Pod overall. Here is a manifest for a Pod that again has

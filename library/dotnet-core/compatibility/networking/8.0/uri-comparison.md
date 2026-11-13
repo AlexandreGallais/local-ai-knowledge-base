@@ -16,12 +16,12 @@ Previously, `System.Uri` didn't compare user info when comparing two `Uri` insta
 Prior to .NET 8, both of the following comparisons returned `true`.
 
 ```csharp
-Uri uri1 = new Uri("https://user1@www.microsoft.com");
-Uri uri2 = new Uri("https://user2@www.microsoft.com");
+Uri uri1 = new Uri("https://user@example.com");
+Uri uri2 = new Uri("https://user@example.com");
 System.Console.WriteLine(uri1 == uri2); // True.
 
-Uri uri3 = new Uri("mailto:user1@microsoft.com");
-Uri uri4 = new Uri("mailto:user2@microsoft.com");
+Uri uri3 = new Uri("mailto:user@example.com");
+Uri uri4 = new Uri("mailto:user@example.com");
 System.Console.WriteLine(uri3 == uri4); // True.
 ```
 
@@ -30,12 +30,12 @@ System.Console.WriteLine(uri3 == uri4); // True.
 Starting in .NET 8, the first comparison still returns `true`, but the second comparison (of `mailto` URIs) returns `false`.
 
 ```csharp
-Uri uri1 = new Uri("https://user1@www.microsoft.com");
-Uri uri2 = new Uri("https://user2@www.microsoft.com");
+Uri uri1 = new Uri("https://user@example.com");
+Uri uri2 = new Uri("https://user@example.com");
 System.Console.WriteLine(uri1 == uri2); // True.
 
-Uri uri3 = new Uri("mailto:user1@microsoft.com");
-Uri uri4 = new Uri("mailto:user2@microsoft.com");
+Uri uri3 = new Uri("mailto:user@example.com");
+Uri uri4 = new Uri("mailto:user@example.com");
 System.Console.WriteLine(uri3 == uri4); // False.
 ```
 

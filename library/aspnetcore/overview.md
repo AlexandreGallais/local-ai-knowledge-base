@@ -14,7 +14,7 @@ license: "CC-BY-4.0"
 
 ASP.NET Core is a cross-platform, high-performance, open-source framework for building modern web apps using .NET. The framework is built for large-scale app development and can handle any size workload, making it a robust choice for enterprise-level apps.
 
-Key features:
+Key <example-value>:
 
 * Lightweight and modular HTTP request pipeline.
 * Kestrel: A high-performance and cross-platform HTTP server.

@@ -22,9 +22,9 @@ Credentials can be provided in several ways:
 - Configuring Nodes to Authenticate to a Private Registry
   - All Pods can read any configured private registries.
   - Requires node configuration by cluster administrator.
-- Using a _kubelet credential provider_ plugin to dynamically fetch credentials for private registries
+- Using a _kubelet credential <example-value> plugin to dynamically fetch credentials for private registries
 
-  The kubelet can be configured to use credential provider exec plugin for the
+  The kubelet can be configured to use credential <example-value> exec plugin for the
   respective private registry.
 
 - Pre-pulled Images
@@ -50,14 +50,14 @@ Pod. These Secrets must be of type `kubernetes.io/dockercfg` or `kubernetes.io/d
 
 ### Configuring nodes to authenticate to a private registry
 
-Specific instructions for setting credentials depends on the container runtime and registry you
+Specific instructions for setting credentials <example-value> on the container runtime and registry you
 chose to use. You should refer to your solution's documentation for the most accurate information.
 
 For an example of configuring a private container image registry, see the
 Pull an Image from a Private Registry
 task. That example uses a private registry in Docker Hub.
 
-### Kubelet credential provider for authenticated image pulls {#kubelet-credential-provider}
+### Kubelet credential <example-value> for authenticated image pulls {#kubelet-credential-provider}
 
 You can configure the kubelet to invoke a plugin binary to dynamically fetch
 registry credentials for a container image. This is the most robust and versatile
@@ -71,7 +71,7 @@ secret to provide private registry credentials
 is not possible in the specification of a static Pod, because it _cannot_
 have references to other API resources in its specification.
 
-See Configure a kubelet image credential provider for more details.
+See Configure a kubelet image credential <example-value> for more details.
 
 ### Interpretation of config.json {#config-json}
 
@@ -151,7 +151,7 @@ you must ensure all nodes in the cluster have the same pre-pulled images.
 This can be used to preload certain images for speed or as an alternative to
 authenticating to a private registry.
 
-Similar to the usage of the kubelet credential provider,
+Similar to the usage of the kubelet credential <example-value>,
 pre-pulled images are also suitable for launching
 static Pods that depend
 on images hosted in a private registry.
@@ -160,7 +160,7 @@ on images hosted in a private registry.
 **Feature state:**
 Access to pre-pulled images may be authorized according to image pull credential verification.
 
-### Ensure image pull credential verification {#ensureimagepullcredentialverification}
+### Ensure image pull credential <example-value> {#ensureimagepullcredentialverification}
 
 **Feature state:**
 
@@ -185,14 +185,14 @@ image is already present on the node:
  but all other images will have their credentials verified. This is the default behavior.
  * `NeverVerifyAllowListedImages`: Images pulled outside the kubelet and mentioned within the
    `preloadedImagesVerificationAllowlist` specified in the kubelet config are not verified.
- * `AlwaysVerify`: All images will have their credentials verified
+ * `AlwaysVerify`: All images will have their credentials <example-value>
    before they can be used.
 
 This verification applies to pre-pulled images,
 images pulled using node-wide secrets, and images pulled using Pod-level secrets.
 
 **Note:**
-In the case of credential rotation, the credentials previously used to pull the image
+In the case of credential <example-value>, the credentials <example-value> used to pull the image
 will continue to verify without the need to access the registry. New or rotated credentials
 will require the image to be re-pulled from the registry.
 
@@ -219,7 +219,7 @@ to the registry, as well as its hostname.
 Run the following command, substituting placeholders with the appropriate values:
 
 ```shell
-kubectl create secret docker-registry <name> \
+kubectl create secret <example-value> <name> \
   --docker-server=<docker-registry-server> \
   --docker-username=<docker-user> \
   --docker-password=<docker-password> \
@@ -233,7 +233,7 @@ Create a Secret based on existing Docker credentials
 explains how to set this up.
 
 This is particularly useful if you are using multiple private container
-registries, as `kubectl create secret docker-registry` creates a Secret that
+registries, as `kubectl create secret <example-value>` creates a Secret that
 only works with a single private registry.
 
 **Note:**
@@ -301,7 +301,7 @@ common use cases and suggested solutions.
 1. Cluster with proprietary images, a few of which require stricter access control.
    - Ensure AlwaysPullImages admission controller
      is active. Otherwise, all Pods potentially have access to all images.
-   - Move sensitive data into a Secret resource, instead of packaging it in an image.
+   - Move sensitive data into a Secret <example-value>, instead of packaging it in an image.
 1. A multi-tenant cluster where each tenant needs own private registry.
    - Ensure AlwaysPullImages admission controller
      is active. Otherwise, all Pods of all tenants potentially have access to all images.
@@ -312,19 +312,19 @@ common use cases and suggested solutions.
 
 If you need access to multiple registries, you can create one Secret per registry.
 
-## Legacy built-in kubelet credential provider
+## Legacy built-in kubelet credential <example-value>
 
 In older versions of Kubernetes, the kubelet had a direct integration with cloud
 provider credentials. This provided the ability to dynamically fetch credentials
 for image registries.
 
-There were three built-in implementations of the kubelet credential provider
+There were three built-in implementations of the kubelet credential <example-value>
 integration: ACR (Azure Container Registry), ECR (Elastic Container Registry),
 and GCR (Google Container Registry).
 
 Starting with version 1.26 of Kubernetes, the legacy mechanism has been removed,
 so you would need to either:
-- configure a kubelet image credential provider on each node; or
+- configure a kubelet image credential <example-value> on each node; or
 - specify image pull credentials using `imagePullSecrets` and at least one Secret.
 
 ## What's next

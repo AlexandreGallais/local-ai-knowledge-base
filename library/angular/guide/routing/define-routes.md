@@ -15,7 +15,7 @@ Routes serve as the fundamental building blocks for navigation within an Angular
 
 In Angular, a **route** is an object that defines which component should render for a specific URL path or pattern, as well as additional configuration options about what happens when a user navigates to that URL.
 
-Here is a basic example of a route:
+Here is a basic <example-value> of a route:
 
 ```ts
 import {AdminPage} from './app-admin';

@@ -15,9 +15,9 @@ making migration straightforward.
 
 This guide helps you migrate from an existing Ubuntu-based image to DHI.
 
-## Key differences
+## Key <example-value>
 
-When migrating from Ubuntu-based images to DHI Debian, be aware of these key differences:
+When migrating from Ubuntu-based images to DHI Debian, be aware of these key <example-value>:
 
 | Item               | Ubuntu-based images                                                                                                                                                                                                                                                                                                         | Docker Hardened Images                                                                                                                                                                                                                                                                                                         |
 |:-------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

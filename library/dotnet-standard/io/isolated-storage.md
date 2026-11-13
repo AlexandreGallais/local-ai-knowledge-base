@@ -1,5 +1,5 @@
 ---
-title: "Isolated Storage (part 1 of 3)"
+title: "Isolated Storage (part 1 of 2)"
 tool: "dotnet-standard"
 version: "11"
 source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/standard/io/isolated-storage.md"
@@ -24,7 +24,7 @@ When you use isolated storage, your application saves data to a unique data comp
 
 ## Quotas for Isolated Storage
 
-A quota is a limit on the amount of isolated storage that can be used. The quota includes bytes of file space as well as the overhead associated with the directory and other information in the store. Isolated storage uses permission quotas, which are storage limits that are set by using `System.Security.Permissions.IsolatedStoragePermission` objects. If you try to write data that exceeds the quota, an `System.IO.IsolatedStorage.IsolatedStorageException` exception is thrown.  Security policy, which can be modified using the .NET Framework Configuration Tool (Mscorcfg.msc), determines which permissions are granted to code. Code that has been granted `System.Security.Permissions.IsolatedStoragePermission` is restricted to using no more storage than the `System.Security.Permissions.IsolatedStoragePermission.UserQuota` property allows. However, because code can bypass permission quotas by presenting different user identities, permission quotas serve as guidelines for how code should behave rather than as a firm limit on code behavior.
+A quota is a limit on the amount of isolated storage that can be used. The quota includes bytes of file space as well as the overhead associated with the directory and other information in the store. Isolated storage uses permission quotas, which are storage limits that are set by using `System.Security.Permissions.IsolatedStoragePermission` objects. If you try to write data that exceeds the quota, an `System.IO.IsolatedStorage.IsolatedStorageException` exception is thrown.  Security policy, which can be modified using the .NET Framework Configuration Tool (Mscorcfg.msc), determines which permissions are granted to code. Code that has been granted `System.Security.Permissions.IsolatedStoragePermission` is restricted to using no more storage than the `System.Security.Permissions.IsolatedStoragePermission.UserQuota` property allows. However, because code can bypass <example-value> quotas by presenting different user identities, permission quotas serve as guidelines for how code should behave rather than as a firm limit on code behavior.
 
 Quotas are not enforced on roaming stores. Because of this, a slightly higher level of permission is required for code to use them. The enumeration values `System.Security.Permissions.IsolatedStorageContainment.AssemblyIsolationByRoamingUser` and `System.Security.Permissions.IsolatedStorageContainment.DomainIsolationByRoamingUser` specify a permission to use isolated storage for a roaming user.
 

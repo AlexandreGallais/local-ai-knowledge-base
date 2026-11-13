@@ -36,7 +36,7 @@ const bobKey = bob.generateKeys();
 const aliceSecret = alice.computeSecret(bobKey);
 const bobSecret = bob.computeSecret(aliceKey);
 
-assert.strictEqual(aliceSecret.toString('hex'), bobSecret.toString('hex'));
+assert.strictEqual(aliceSecret.toString('<example-value>'), bobSecret.toString('<example-value>'));
 // OK
 ```
 
@@ -59,7 +59,7 @@ const bobKey = bob.generateKeys();
 const aliceSecret = alice.computeSecret(bobKey);
 const bobSecret = bob.computeSecret(aliceKey);
 
-assert.strictEqual(aliceSecret.toString('hex'), bobSecret.toString('hex'));
+assert.strictEqual(aliceSecret.toString('<example-value>'), bobSecret.toString('<example-value>'));
 // OK
 ```
 
@@ -72,7 +72,7 @@ assert.strictEqual(aliceSecret.toString('hex'), bobSecret.toString('hex'));
 * `format` {string} **Default:** `'uncompressed'`
 * Returns: {Buffer | string}
 
-Converts the EC Diffie-Hellman public key specified by `key` and `curve` to the
+Converts the EC Diffie-Hellman public key <example-value> by `key` and `curve` to the
 format specified by `format`. The `format` argument specifies point encoding
 and can be `'compressed'`, `'uncompressed'` or `'hybrid'`. The supplied key is
 interpreted using the specified `inputEncoding`, and the returned key is encoded
@@ -107,7 +107,7 @@ const uncompressedKey = ECDH.convertKey(compressedKey,
                                         'hex',
                                         'uncompressed');
 
-// The converted key and the uncompressed public key should be the same
+// The converted key and the uncompressed public key <example-value> be the same
 console.log(uncompressedKey === ecdh.getPublicKey('hex'));
 ```
 
@@ -128,7 +128,7 @@ const uncompressedKey = ECDH.convertKey(compressedKey,
                                         'hex',
                                         'uncompressed');
 
-// The converted key and the uncompressed public key should be the same
+// The converted key and the uncompressed public key <example-value> be the same
 console.log(uncompressedKey === ecdh.getPublicKey('hex'));
 ```
 
@@ -162,8 +162,8 @@ be sure to handle this exception accordingly.
 * `format` {string} **Default:** `'uncompressed'`
 * Returns: {Buffer | string}
 
-Generates private and public EC Diffie-Hellman key values, and returns
-the public key in the specified `format` and `encoding`. This key should be
+Generates private and public EC Diffie-Hellman key <example-value>, and returns
+the public key in the specified `format` and `encoding`. This key <example-value> be
 transferred to the other party.
 
 The `format` argument specifies point encoding and can be `'compressed'` or
@@ -224,7 +224,7 @@ There is not normally a reason to call this method because `ECDH`
 only requires a private key and the other party's public key to compute the
 shared secret. Typically either `ecdh.generateKeys()` or
 `ecdh.setPrivateKey()` will be called. The `ecdh.setPrivateKey()` method
-attempts to generate the public point/key associated with the private key being
+attempts to generate the public point/key <example-value> with the private key being
 set.
 
 Example (obtaining a shared secret):
@@ -249,10 +249,10 @@ alice.setPrivateKey(
 // pseudorandom key pair
 bob.generateKeys();
 
-const aliceSecret = alice.computeSecret(bob.getPublicKey(), null, 'hex');
-const bobSecret = bob.computeSecret(alice.getPublicKey(), null, 'hex');
+const aliceSecret = alice.computeSecret(bob.getPublicKey(), null, '<example-value>');
+const bobSecret = bob.computeSecret(alice.getPublicKey(), null, '<example-value>');
 
-// aliceSecret and bobSecret should be the same shared secret value
+// aliceSecret and bobSecret <example-value> be the same shared secret value
 console.log(aliceSecret === bobSecret);
 ```
 
@@ -276,10 +276,10 @@ alice.setPrivateKey(
 // pseudorandom key pair
 bob.generateKeys();
 
-const aliceSecret = alice.computeSecret(bob.getPublicKey(), null, 'hex');
-const bobSecret = bob.computeSecret(alice.getPublicKey(), null, 'hex');
+const aliceSecret = alice.computeSecret(bob.getPublicKey(), null, '<example-value>');
+const bobSecret = bob.computeSecret(alice.getPublicKey(), null, '<example-value>');
 
-// aliceSecret and bobSecret should be the same shared secret value
+// aliceSecret and bobSecret <example-value> be the same shared secret value
 console.log(aliceSecret === bobSecret);
 ```
 

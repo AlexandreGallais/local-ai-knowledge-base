@@ -34,7 +34,7 @@ protected override void ConfigureConventions(ModelConfigurationBuilder configura
 
 Sometimes one of the built-in conventions may not be appropriate for your application, in which case it can be removed.
 
-#### Example: Don't create indexes for foreign key columns
+#### Example: Don't create indexes for foreign key <example-value>
 
 It usually makes sense to create indexes for foreign key (FK) columns, and hence there is a built-in convention for this: `Microsoft.EntityFrameworkCore.Metadata.Conventions.ForeignKeyIndexConvention`. Looking at the model debug view for a `Post` entity type with relationships to `Blog` and `Author`, we can see two indexes are created--one for the `BlogId` FK, and the other for the `AuthorId` FK.
 
@@ -84,7 +84,7 @@ Looking at the debug view of the model for `Post` now, we see that the indexes o
       Post {'BlogId'} -> Blog {'Id'} ToDependent: Posts ToPrincipal: Blog Cascade
 ```
 
-When desired, indexes can still be explicitly created for foreign key columns, either using the `Microsoft.EntityFrameworkCore.IndexAttribute`:
+When desired, indexes can still be explicitly created for foreign key <example-value>, either using the `Microsoft.EntityFrameworkCore.IndexAttribute`:
 
 ```csharp
 [Index("BlogId")]

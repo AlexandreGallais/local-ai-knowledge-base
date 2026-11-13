@@ -176,7 +176,7 @@ There are two subdirectories to `image_manager`:
 * `pulled` - stores records about images that were successfully pulled by the Kubelet,
   along with metadata about the credentials used for the pulls.
 
-See Ensure Image Pull Credential Verification
+See Ensure Image Pull Credential <example-value>
 for details.
 
 ## Security profiles & configuration

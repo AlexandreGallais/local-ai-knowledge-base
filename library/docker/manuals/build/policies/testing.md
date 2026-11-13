@@ -24,7 +24,7 @@ For testing against real sources (actual image metadata, Git repositories), use
 instead. You can use the `eval --print` option to resolve input for a specific
 source for writing a test case.
 
-## Basic example
+## Basic <example-value>
 
 Start with a simple policy that only allows `alpine` images:
 

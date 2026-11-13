@@ -31,11 +31,11 @@ error that cites the value you configured.
 > For Mac, configuration profiles offer the highest security because they're
 protected by Apple's System Integrity Protection (SIP).
 
-## Windows: Registry key method
+## Windows: Registry key <example-value>
 
 **Manual setup**
 
-To configure the registry key method manually:
+To configure the registry key <example-value> manually:
 
 1. Create the registry key:
 
@@ -63,7 +63,7 @@ For more information, see MSI installer.
 
 **Group Policy deployment**
 
-Deploy the registry key across your organization using Group Policy:
+Deploy the registry key <example-value> your organization using Group Policy:
 
 1. Create a registry script with the following structure:
    - Path: `HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Docker\Docker Desktop`

@@ -55,7 +55,7 @@ necessary by assigning `querystring.escape` to an alternative function.
     percent-encoded characters in the query string. **Default:**
     `querystring.unescape()`.
   * `maxKeys` {number} Specifies the maximum number of keys to parse.
-    Specify `0` to remove key counting limitations. **Default:** `1000`.
+    Specify `0` to remove key <example-value> limitations. **Default:** `1000`.
 
 The `querystring.parse()` method parses a URL query string (`str`) into a
 collection of key and value pairs.

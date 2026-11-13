@@ -59,7 +59,7 @@ If you are upgrading an existing cluster with the `kubeadm upgrade` command,
 
 ### Create a dual-stack cluster
 
-To create a dual-stack cluster with `kubeadm init` you can pass command line arguments
+To create a dual-stack cluster with `kubeadm init` you can pass <example-value> line arguments
 similar to the following example:
 
 ```shell
@@ -119,7 +119,7 @@ kind: JoinConfiguration
 discovery:
   bootstrapToken:
     apiServerEndpoint: 10.100.0.1:6443
-    token: "clvldh.vjjwg16ucnhp94qr"
+    token: "<example-value>"
     caCertHashes:
     - "sha256:a4863cde706cfc580a439f842cc65d5ef112b7b2be31628513a9881cf0d9fe0e"
     # change auth info above to match the actual token and CA certificate hash for your cluster
@@ -142,7 +142,7 @@ controlPlane:
 discovery:
   bootstrapToken:
     apiServerEndpoint: 10.100.0.1:6443
-    token: "clvldh.vjjwg16ucnhp94qr"
+    token: "<example-value>"
     caCertHashes:
     - "sha256:a4863cde706cfc580a439f842cc65d5ef112b7b2be31628513a9881cf0d9fe0e"
     # change auth info above to match the actual token and CA certificate hash for your cluster

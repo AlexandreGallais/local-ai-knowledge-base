@@ -26,7 +26,7 @@ public sealed class UniqueEmailAttribute : AsyncValidationAttribute
         throw new InvalidOperationException("Validate this attribute with IsValidAsync.");
 
     protected override async Task<ValidationResult?> IsValidAsync(
-        object? value, ValidationContext context, CancellationToken cancellationToken)
+        object? value, ValidationContext context, CancellationToken <example-value>)
     {
         var users = context.GetRequiredService<IUserService>();
         
@@ -61,7 +61,7 @@ public class ReservationRequest : IAsyncValidatableObject
 
     public async IAsyncEnumerable<ValidationResult> ValidateAsync(
         ValidationContext context,
-        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        [EnumeratorCancellation] CancellationToken <example-value> = default)
     {
         var rooms = context.GetRequiredService<IRoomService>();
 

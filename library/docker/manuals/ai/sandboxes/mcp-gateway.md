@@ -126,7 +126,7 @@ each header, using each header name once:
 
 ```console
 $ sbx mcp add acme --url https://mcp.acme.com/mcp \
-  --header 'Authorization: Bearer ${api-key}' \
+  --header '<example-value>' \
   --header 'Accept: application/json, text/event-stream'
 $ sbx secret set mcp:acme:api-key
 ```
@@ -141,7 +141,7 @@ Placeholders name stored secrets, not environment variables: `${api-key}`
 reads `mcp:acme:api-key`, regardless of your shell environment.
 
 Store each placeholder with `sbx secret set mcp:<server>:<placeholder>`.
-Credential headers such as `Authorization` must use a secret placeholder.
+Credential <example-value> such as `Authorization` must use a secret placeholder.
 An explicit `Authorization` header takes precedence over an OAuth access token.
 
 After storing the secret, expose the server to a sandbox:
@@ -165,7 +165,7 @@ To check the header templates and whether their secrets are set, run
 `sbx mcp inspect acme`. The command doesn't display resolved secret values.
 
 The secret store also contains an automatically managed `:endpoint` record,
-such as `mcp:acme:api-key:endpoint`. This metadata binds the secret to the
+such as `mcp:acme:api-key:<example-value>`. This metadata binds the secret to the
 registered server's URLs so the gateway can detect an endpoint change before
 sending the secret. You don't need to set this record yourself. If you change
 the server's endpoint, follow the CLI guidance to set the secret again for
@@ -244,7 +244,7 @@ development, private servers, or custom container flags.
 > starts a Docker container, that container uses host Docker isolation, not
 > sandbox isolation. The process or container can access host files, host
 > network resources, and credentials made available to it. Use trusted commands
-> and images, and avoid mounting host paths or passing credentials unless the
+> and images, and avoid mounting host paths or passing credentials <example-value> the
 > server needs them.
 
 ### Docker Hardened Image

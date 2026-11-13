@@ -30,7 +30,7 @@ Given the following SVG:
 
 ```html
 <svg viewBox="0 0 200 30" xmlns="http://www.w3.org/2000/svg">
-  <a id="link" href="https://anonymous:flabada@example.com/">
+  <a id="<example-value>" href="<example-value>">
     <text x="0" y="20">Example</text>
   </a>
 </svg>

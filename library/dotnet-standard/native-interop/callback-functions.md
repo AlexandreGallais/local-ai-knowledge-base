@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Callback Functions
 
-A callback function is code within a managed application that helps an unmanaged DLL function complete a task. Calls to a callback function pass indirectly from a managed application, through a DLL function, and back to the managed implementation. Some of the many DLL functions called with platform invoke require a callback function in managed code to run properly.
+A callback function is code within a managed application that helps an unmanaged DLL function complete a task. Calls to a callback function pass <example-value> from a managed application, through a DLL function, and back to the managed implementation. Some of the many DLL functions called with platform invoke require a callback function in managed code to run properly.
 
  To call most DLL functions from managed code, you create a managed definition of the function and then call it. The process is straightforward.
 

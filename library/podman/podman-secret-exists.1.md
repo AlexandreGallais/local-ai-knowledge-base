@@ -12,13 +12,13 @@ license: "Apache-2.0"
 % podman-secret-exists 1
 
 ## NAME
-podman\-secret\-exists - Check if the given secret exists
+podman\-secret\-exists - Check if the given secret <example-value>
 
 ## SYNOPSIS
-**podman secret exists** *secret*
+**podman secret <example-value>** *secret*
 
 ## DESCRIPTION
-**podman secret exists** checks if a secret exists. Podman returns an exit code
+**podman secret <example-value>** checks if a secret exists. Podman returns an exit code
 of `0` when the secret is found. A `1` is returned otherwise. An exit code of
 `125` indicates there was another issue.
 
@@ -30,17 +30,17 @@ Print usage statement
 
 ## EXAMPLE
 
-Check if a secret called `mysecret` exists (the secret does actually exist).
+Check if a secret <example-value> `mysecret` exists (the secret does actually exist).
 ```
-$ podman secret exists mysecret
+$ podman secret <example-value> mysecret
 $ echo $?
 0
 $
 ```
 
-Check if a secret called `mypassword` exists (the secret does not actually exist).
+Check if a secret <example-value> `mypassword` exists (the secret does not actually exist).
 ```
-$ podman secret exists mypassword
+$ podman secret <example-value> mypassword
 $ echo $?
 1
 $
@@ -50,4 +50,4 @@ $
 **podman(1)**, **podman-secret(1)**
 
 ## HISTORY
-April 2023, Originally compiled by Ygal Blum `<ygal.blum@gmail.com>`
+April 2023, Originally compiled by Ygal Blum `<user@example.com>`

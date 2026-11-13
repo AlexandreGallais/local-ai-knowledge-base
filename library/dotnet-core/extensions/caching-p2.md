@@ -160,13 +160,13 @@ public sealed class CacheWorker(
 
     private const string Url = "https://jsonplaceholder.typicode.com/photos";
 
-    public override async Task StartAsync(CancellationToken cancellationToken)
+    public override async Task StartAsync(CancellationToken <example-value>)
     {
         await cacheSignal.WaitAsync();
         await base.StartAsync(cancellationToken);
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken <example-value>)
     {
         while (!stoppingToken.IsCancellationRequested)
         {

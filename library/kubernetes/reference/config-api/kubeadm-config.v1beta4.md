@@ -179,10 +179,10 @@ configuration types to be used during a `kubeadm init` run.
 <pre style="background-color:#fff">apiVersion: kubeadm.k8s.io/v1beta4
 kind: InitConfiguration
 bootstrapTokens:
-  - token: &#34;9a08jv.c0izixklcxtmnze7&#34;
+  - token: &#34;<example-token>&#34;
     description: &#34;kubeadm bootstrap token&#34;
     ttl: &#34;24h&#34;
-  - token: &#34;783bde.3f89s0fje9f38fhf&#34;
+  - token: &#34;<example-token>&#34;
     description: &#34;another bootstrap token&#34;
     usages:
   - authentication
@@ -311,9 +311,9 @@ kind: JoinConfiguration
 discovery:
   bootstrapToken:
     apiServerEndpoint: some-address:6443
-    token: abcdef.0123456789abcdef
+    token: <example-token>
     unsafeSkipCAVerification: true
-  tlsBootstrapToken: abcdef.0123456789abcdef
+  tlsBootstrapToken: <example-token>
 </pre>The JoinConfiguration type should be used to configure runtime settings, that in case of kubeadm join
 are the discovery method used for accessing the cluster info and all the setting which are specific
 to the node where kubeadm is executed, including:

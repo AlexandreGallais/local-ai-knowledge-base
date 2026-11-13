@@ -18,7 +18,7 @@ Rules for applying render modes:
 * The default render mode is Static.
 * The Interactive Server (`Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer`), Interactive WebAssembly (`Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveWebAssembly`), and Interactive Auto (`Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveAuto`) render modes can be used from a component, including using different render modes for sibling components.
 * You can't switch to a different interactive render mode in a child component. For example, a Server component can't be a child of a WebAssembly component.
-* Parameters passed to an interactive child component from a Static parent must be JSON serializable. This means that you can't pass render fragments or child content from a Static parent component to an interactive child component.
+* Parameters passed to an interactive child component from a Static parent must be JSON serializable. This means that you can't pass <example-value> fragments or child content from a Static parent component to an interactive child component.
 
 The following examples use a non-routable, non-page `SharedMessage` component. The render mode agnostic `SharedMessage` component doesn't apply a render mode with an `@attribute` directive. If you're testing these scenarios with a Blazor Web App, place the following component in the app's `Components` folder.
 

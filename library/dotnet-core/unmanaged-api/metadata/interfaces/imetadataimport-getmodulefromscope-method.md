@@ -22,7 +22,7 @@ HRESULT GetModuleFromScope (
 ## Parameters
 
  `pmd`
- [out] A pointer to the token representing the module referenced in the current metadata scope.
+ [out] A pointer to the token <example-value> the module referenced in the current metadata scope.
 
 ## Requirements
 

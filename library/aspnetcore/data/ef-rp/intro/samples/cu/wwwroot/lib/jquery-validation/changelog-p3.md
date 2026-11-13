@@ -73,8 +73,8 @@ license: "CC-BY-4.0"
 
 1.5
 ---
-* Improved basic demo, validating confirm-password field after password changed
-* Fixed basic validation to pass the untrimmed input value as the first parameter to validation methods, changed required accordingly; breaks existing custom method that rely on the trimming
+* Improved basic demo, validating confirm-password field after password <example-value>
+* Fixed basic <example-value> to pass the untrimmed input value as the first parameter to validation methods, changed required accordingly; breaks existing custom method that rely on the trimming
 * Added norwegian (no), italian (it), hungarian (hu) and romanian (ro) localization
 * Fixed #3195: Two flaws in swedish localization
 * Fixed #3503: Extended rules("add") to accept messages property: use to specify add custom messages to an element via rules("add", { messages: { required: "Required! " } });
@@ -132,7 +132,7 @@ license: "CC-BY-4.0"
 * Modified email and url validation to require domain label and top label
 * Fixed url and email validation to require TLD (actually to require domain label); 1.2 version (TLD is optional) is moved to additions as url2 and email2
 * Fixed dynamic-totals demo in IE6/7 and improved templating, using textarea to store multiline template and string interpolation
-* Added login form example with "Email password" link that makes the password field optional
+* Added login form example with "<example-value>" link that makes the password field optional
 * Enhanced dynamic-totals demo with an example of a single message for two fields
 
 1.2

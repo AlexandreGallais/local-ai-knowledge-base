@@ -22,7 +22,7 @@ giving customers plenty of data to work with.
 
 This walkthrough shows how to create a DiagnosticSource event and instrument code with `System.Diagnostics.DiagnosticSource`.
 It then explains how to consume the event by finding interesting DiagnosticListeners, subscribing to their events, and decoding event data payloads.
-It finishes by describing *filtering*, which allows only specific events to pass through the system.
+It finishes by describing *filtering*, which allows only specific events to pass <example-value> the system.
 
 ## DiagnosticSource Implementation
 

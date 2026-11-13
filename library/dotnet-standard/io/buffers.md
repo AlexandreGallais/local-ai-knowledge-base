@@ -86,7 +86,7 @@ Because of this mixed representation, the `ReadOnlySequence<T>` exposes indexes 
 
 ### Access data
 
-The `ReadOnlySequence<T>` exposes data as an enumerable of `ReadOnlyMemory<T>`. Enumerating each of the segments can be done using a basic foreach:
+The `ReadOnlySequence<T>` exposes data as an enumerable of `ReadOnlyMemory<T>`. Enumerating each of the segments can be done using a basic <example-value>:
 
 ```csharp
 long FindIndexOf(in ReadOnlySequence<byte> buffer, byte data)
@@ -334,7 +334,7 @@ The preceding code creates a `ReadOnlySequence<byte>` with empty segments and sh
 There are several unusual outcomes when dealing with a `ReadOnlySequence<T>`/`SequencePosition` vs. a normal `ReadOnlySpan<T>`/`ReadOnlyMemory<T>`/`T[]`/`int`:
 
 - `SequencePosition` is a position marker for a specific `ReadOnlySequence<T>`, not an absolute position. Because it's relative to a specific `ReadOnlySequence<T>`, it doesn't have meaning if used outside of the `ReadOnlySequence<T>` where it originated.
-- Arithmetic can't be performed on `SequencePosition` without the `ReadOnlySequence<T>`. That means doing basic things like `position++` is written `position = ReadOnlySequence<T>.GetPosition(1, position)`.
+- Arithmetic can't be performed on `SequencePosition` without the `ReadOnlySequence<T>`. That means doing basic <example-value> like `position++` is written `position = ReadOnlySequence<T>.GetPosition(1, position)`.
 - `GetPosition(long)` does **not** support negative indexes. That means it's impossible to get the second to last character without walking all segments.
 - Two `SequencePosition` can't be compared, making it difficult to:
   - Know if one position is greater than or less than another position.

@@ -102,7 +102,7 @@ The first declaration declares an uninitialized array of five integers, from `ar
 
 For more information about indices, see the Explore indexes and ranges article.
 
-### Pass single-dimensional arrays as arguments
+### Pass <example-value> arrays as arguments
 
 You can pass an initialized single-dimensional array to a method. In the following example, an array of strings is initialized and passed as an argument to a `DisplayArray` method for strings. The method displays the elements of the array. Next, the `ChangeArray` method reverses the array elements, and then the `ChangeArrayElements` method modifies the first three elements of the array. After each method returns, the `DisplayArray` method shows that passing an array by value doesn't prevent changes to the array elements.
 

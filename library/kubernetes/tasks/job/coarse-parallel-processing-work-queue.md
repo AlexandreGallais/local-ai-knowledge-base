@@ -117,10 +117,10 @@ Next you will verify that you can create a queue, and publish and consume messag
 # Run these commands inside the Pod
 # In the next line, rabbitmq-service is the hostname where the rabbitmq-service
 # can be reached.  5672 is the standard port for rabbitmq.
-export BROKER_URL=amqp://guest:guest@rabbitmq-service:5672
+export BROKER_URL=amqp://guest:<example-password>@rabbitmq-service:5672
 # If you could not resolve "rabbitmq-service" in the previous step,
 # then use this command instead:
-BROKER_URL=amqp://guest:guest@$RABBITMQ_SERVICE_SERVICE_HOST:5672
+BROKER_URL=amqp://guest:<example-password>@$RABBITMQ_SERVICE_SERVICE_HOST:5672
 
 # Now create a queue:
 
@@ -253,7 +253,7 @@ spec:
         image: gcr.io/<project>/job-wq-1
         env:
         - name: BROKER_URL
-          value: amqp://guest:guest@rabbitmq-service:5672
+          value: amqp://guest:<example-password>@rabbitmq-service:5672
         - name: QUEUE
           value: job1
       restartPolicy: OnFailure
@@ -302,7 +302,7 @@ Pod Template:
     Image:      container-registry.example/causal-jigsaw-637/job-wq-1
     Port:
     Environment:
-      BROKER_URL:       amqp://guest:guest@rabbitmq-service:5672
+      BROKER_URL:       amqp://guest:<example-password>@rabbitmq-service:5672
       QUEUE:            job1
     Mounts:             <none>
   Volumes:              <none>

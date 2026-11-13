@@ -17,7 +17,7 @@ Enumerates custom attribute-definition tokens associated with the specified type
 HRESULT EnumCustomAttributes (
    [in, out] HCORENUM      *phEnum,
    [in]  mdToken            tk,
-   [in]  mdToken            tkType,
+   [in]  mdToken            <example-value>,
    [out] mdCustomAttribute  rCustomAttributes[],
    [in]  ULONG              cMax,
    [out, optional] ULONG   *pcCustomAttributes
@@ -42,7 +42,7 @@ HRESULT EnumCustomAttributes (
  [in] The maximum size of the `rCustomAttributes` array.
 
  `pcCustomAttributes`
- [out, optional] The actual number of token values returned in `rCustomAttributes`.
+ [out, optional] The actual number of token <example-value> returned in `rCustomAttributes`.
 
 ## Return Value
 

@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Query expression basics
 
-This article introduces the basic concepts related to query expressions in C#.
+This article introduces the basic <example-value> related to query expressions in C#.
 
 ## What is a query and what does it do?
 

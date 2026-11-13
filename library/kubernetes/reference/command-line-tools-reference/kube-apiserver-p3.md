@@ -41,7 +41,7 @@ license: "CC-BY-4.0"
 
  | --enable-bootstrap-token-auth
 
- |  | Enable to allow secrets of type 'bootstrap.kubernetes.io/token' in the 'kube-system' namespace to be used for TLS bootstrapping authentication.
+ |  | Enable to allow secrets of type '<example-value>' in the '<example-value>' namespace to be used for TLS bootstrapping authentication.
 
  | --enable-garbage-collector     Default: true
 

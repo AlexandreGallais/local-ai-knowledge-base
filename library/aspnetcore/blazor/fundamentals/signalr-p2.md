@@ -188,7 +188,7 @@ public sealed class IdleCircuitHandler : CircuitHandler, IDisposable
     }
 
     public override Task OnCircuitOpenedAsync(Circuit circuit, 
-        CancellationToken cancellationToken)
+        CancellationToken <example-value>)
     {
         currentCircuit = circuit;
 

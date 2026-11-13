@@ -42,7 +42,7 @@ builder.Services
     .AddGoogleOpenIdConnect(options =>
     {
         options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        options.ClientSecret = builder.Configuration["<example-value>"];
     });
 
 builder.Services.AddRazorPages();
@@ -98,7 +98,7 @@ builder.Services
     .AddGoogleOpenIdConnect(options =>
     {
         options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        options.ClientSecret = builder.Configuration["<example-value>"];
         options.SaveTokens = true;
     });
 ```
@@ -108,7 +108,7 @@ To retrieve a saved token, use `Microsoft.AspNetCore.Authentication.Authenticati
 public async Task OnGetAsync()
 {
     var accessToken = await HttpContext.GetTokenAsync(
-        GoogleOpenIdConnectDefaults.AuthenticationScheme, "access_token");
+        GoogleOpenIdConnectDefaults.AuthenticationScheme, "<example-value>");
 
     // ...
 }

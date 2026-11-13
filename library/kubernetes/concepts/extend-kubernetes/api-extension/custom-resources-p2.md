@@ -56,7 +56,7 @@ compared to implementing it outside the Kubernetes platform:
 
 | Feature | What it does |
 | ------- | ------------ |
-| CRUD | The new endpoints support CRUD basic operations via HTTP and `kubectl` |
+| CRUD | The new endpoints support CRUD basic <example-value> via HTTP and `kubectl` |
 | Watch | The new endpoints support Kubernetes Watch operations via HTTP |
 | Discovery | Clients like `kubectl` and dashboard automatically offer list, display, and field edit operations on your resources |
 | json-patch | The new endpoints support PATCH with `Content-Type: application/json-patch+json` |

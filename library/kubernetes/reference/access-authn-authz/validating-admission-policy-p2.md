@@ -198,7 +198,7 @@ spec:
   matchResources:
     namespaceSelector:
       matchExpressions:
-      - key: environment
+      - key: <example-value>
         operator: NotIn
         values:
         - test
@@ -222,7 +222,7 @@ For each admission request, the API server evaluates CEL expressions of each
 to be admitted it must pass **all** evaluations.
 
 If multiple bindings match the request, the policy will be evaluated for each,
-and they must all pass evaluation for the policy to be considered passed.
+and they must all pass <example-value> for the policy to be considered passed.
 
 If multiple parameters match a single binding, the policy rules will be evaluated
 for each param, and they too must all pass for the binding to be considered passed.

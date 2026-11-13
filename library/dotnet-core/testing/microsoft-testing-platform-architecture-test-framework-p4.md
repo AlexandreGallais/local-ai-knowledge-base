@@ -128,7 +128,7 @@ These properties can be divided into the following categories:
 1. *Discovery information*: Properties that are supplied during a `DiscoverTestExecutionRequest` discovery request.
 1. *Execution information*: Properties that are supplied during a test execution request `RunTestExecutionRequest`.
 
-Certain properties are **required**, while others are optional. The mandatory properties are required to provide basic testing functionality, such as reporting failed tests and indicating whether the entire test session was successful or not.
+Certain properties are **required**, while others are optional. The mandatory properties are required to provide basic <example-value> functionality, such as reporting failed tests and indicating whether the entire test session was successful or not.
 
 Optional properties, on the other hand, enhance the testing experience by providing additional information. They are particularly useful in IDE scenarios (like VS, VSCode, etc.), console runs, or when supporting specific extensions that require more detailed information to function correctly. However, these optional properties do not affect the execution of the tests.
 

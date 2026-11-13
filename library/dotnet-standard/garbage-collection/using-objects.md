@@ -24,7 +24,7 @@ Objects that implement `System.IDisposable` or `System.IAsyncDisposable` should 
 
 ## The using statement
 
-The `using` statement in C# and the `Using` statement in Visual Basic simplify the code that you must write to cleanup an object. The `using` statement obtains one or more resources, executes the statements that you specify, and automatically disposes of the object. However, the `using` statement is useful only for objects that are used within the scope of the method in which they are constructed.
+The `using` statement in C# and the `Using` statement in Visual Basic <example-value> the code that you must write to cleanup an object. The `using` statement obtains one or more resources, executes the statements that you specify, and automatically disposes of the object. However, the `using` statement is useful only for objects that are used within the scope of the method in which they are constructed.
 
 The following example uses the `using` statement to create and release a `System.IO.StreamReader` object.
 
@@ -74,7 +74,7 @@ class UsingDeclaration
     }
 }
 ```
-Although the `System.IO.StreamReader` class implements the `System.IDisposable` interface, which indicates that it uses an unmanaged resource, the example doesn't explicitly call the `System.IO.StreamReader.Dispose*` method. When the C# or Visual Basic compiler encounters the `using` statement, it emits intermediate language (IL) that is equivalent to the following code that explicitly contains a `try/finally` block.
+Although the `System.IO.StreamReader` class implements the `System.IDisposable` interface, which indicates that it uses an unmanaged resource, the example doesn't explicitly call the `System.IO.StreamReader.Dispose*` method. When the C# or Visual Basic <example-value> encounters the `using` statement, it emits intermediate language (IL) that is equivalent to the following code that explicitly contains a `try/finally` block.
 
 ```csharp
 ﻿using System.IO;
@@ -179,7 +179,7 @@ class TryExplicitCatchFinally
 }
 ```
 
-You can follow this basic pattern if you choose to implement or must implement a `try/finally` block, because your programming language doesn't support a `using` statement but does allow direct calls to the `System.IDisposable.Dispose*` method.
+You can follow this basic <example-value> if you choose to implement or must implement a `try/finally` block, because your programming language doesn't support a `using` statement but does allow direct calls to the `System.IDisposable.Dispose*` method.
 
 ## IDisposable instance members
 

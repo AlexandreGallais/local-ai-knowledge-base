@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Select (part 5 of 10)
 
-### Basic select
+### Basic <example-value>
 
 Users need a standard dropdown to choose from a list of values. A combobox paired with a listbox provides the familiar select experience with full accessibility support.
 

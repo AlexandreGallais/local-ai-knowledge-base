@@ -77,12 +77,12 @@ security expectations you have about your network and node lifecycles.
 
 This is the default mode in kubeadm. In this mode, kubeadm downloads
 the cluster configuration (including root CA) and validates it using the token
-as well as validating that the root CA public key matches the provided hash and
+as well as validating that the root CA public key <example-value> the provided hash and
 that the API server certificate is valid under the root CA.
 
 The CA key hash has the format `sha256:<hex_encoded_hash>`.
 By default, the hash value is printed at the end of the `kubeadm init` command or
-in the output from the `kubeadm token create --print-join-command` command.
+in the output from the `kubeadm token <example-value> --print-join-command` command.
 It is in a standard format (see RFC7469)
 and can also be calculated by 3rd party tools or provisioning systems.
 For example, using the OpenSSL CLI:
@@ -96,13 +96,13 @@ openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outfor
 For worker nodes:
 
 ```shell
-kubeadm join --discovery-token abcdef.1234567890abcdef --discovery-token-ca-cert-hash sha256:1234..cdef 1.2.3.4:6443
+kubeadm join --discovery-token <example-token> --discovery-token-ca-cert-hash sha256:1234..cdef 1.2.3.4:6443
 ```
 
 For control-plane nodes:
 
 ```shell
-kubeadm join --discovery-token abcdef.1234567890abcdef --discovery-token-ca-cert-hash sha256:1234..cdef --control-plane 1.2.3.4:6443
+kubeadm join --discovery-token <example-token> --discovery-token-ca-cert-hash sha256:1234..cdef --control-plane 1.2.3.4:6443
 ```
 
 You can also call `join` for a control-plane node with `--certificate-key` to copy certificates to this node,
@@ -134,7 +134,7 @@ using one of the other modes if possible.
 **Example `kubeadm join` command:**
 
 ```shell
-kubeadm join --token abcdef.1234567890abcdef --discovery-token-unsafe-skip-ca-verification 1.2.3.4:6443
+kubeadm join --token <example-token> --discovery-token-unsafe-skip-ca-verification 1.2.3.4:6443
 ```
 
 **Advantages:**

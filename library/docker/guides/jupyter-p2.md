@@ -46,7 +46,7 @@ To share your image and data, you'll use Docker Hub. Docker Hub is a cloud-based
 Other users can now download and run your image using the `docker run` command. They need to replace `YOUR-USER-NAME` with your Docker ID.
 
 ```console
-$ docker run --rm -p 8889:8888 YOUR-USER-NAME/my-jupyter-image start-notebook.py --NotebookApp.token='my-token'
+$ docker run --rm -p 8889:8888 YOUR-USER-NAME/my-jupyter-image start-notebook.py --NotebookApp.token='<example-value>'
 ```
 
 ### Share your volume
@@ -86,7 +86,7 @@ Other users can now download and import your volume. To import the volume and th
    Replace `YOUR-USER-NAME` with your Docker ID.
 
    ```console
-   $ docker run --rm -p 8889:8888 -v jupyter-data-2:/home/jovyan/work YOUR-USER-NAME/my-jupyter-image start-notebook.py --NotebookApp.token='my-token'
+   $ docker run --rm -p 8889:8888 -v jupyter-data-2:/home/jovyan/work YOUR-USER-NAME/my-jupyter-image start-notebook.py --NotebookApp.token='<example-value>'
    ```
 
 ## Summary

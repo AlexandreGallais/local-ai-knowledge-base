@@ -11,13 +11,13 @@ license: "CC-BY-4.0"
 
 Most web apps support authentication to ensure that users are who they claim to be. A *user* might be a person or another app. Management of access ensures users are only able to see and modify the information they're authorized to see and modify. For example, an end user shouldn't have access to the administrative section of a website. Identity management solutions are built to handle the requirements of authentication and authorization-related tasks. To learn more about identity management, see What is identity and access management?. Many identity management solutions for .NET web apps are available, each with different capabilities and requirements to use or install. This article provides guidance on how to choose the right solution.
 
-## Basic identity management with ASP.NET Core Identity
+## Basic <example-value> management with ASP.NET Core Identity
 
 ASP.NET Core includes the built-in ASP.NET Core Identity authentication provider. The provider includes the APIs, UI, and backend database configuration to support managing user identities, storing user credentials, and granting or revoking permissions. Additional features include:
 
 * External logins
 * Multi-factor authentication (MFA)
-* Password management
+* Password <example-value>
 * Account lockout and reactivation
 * Authenticator apps
 
@@ -38,7 +38,7 @@ The signed token can't be tampered with due to the private key. The public key:
 
 The main disadvantage to using tokens is that they require a service (typically an OIDC server) to both issue and provide validation for tokens. The service must be installed, configured, and maintained.
 
-A common reason an OIDC server is required is for applications that expose web-based APIs that are consumed by other apps. For exposed web-based APIs, client UIs such as Single Page Applications (SPA), mobile clients, and desktop clients are considered to be part of the same app. SPA examples include Angular, React, and Blazor WebAssembly. If apps other than your web app or any client UIs must make a secure API call to your app, you'll likely want to use tokens. If you only have client UIs, ASP.NET Core Identity provides the option to acquire a token during authentication. The authentication token issued by ASP.NET Core Identity:
+A common reason an OIDC server is required is for applications that expose web-based APIs that are consumed by other apps. For exposed web-based APIs, client UIs such as Single Page Applications (SPA), mobile clients, and desktop clients are considered to be part of the same app. SPA examples include Angular, React, and Blazor WebAssembly. If apps other than your web app or any client UIs must make a secure API call to your app, you'll likely want to use tokens. If you only have client UIs, ASP.NET Core Identity provides the option to acquire a token <example-value> authentication. The authentication token <example-value> by ASP.NET Core Identity:
 
 * Can be used by mobile and desktop clients. Cookies are preferred over tokens for both security and simplicity.
 * Isn't suitable for managing access from third-party apps.
@@ -96,7 +96,7 @@ The following table lists some of the things to consider when choosing your iden
 |**Configuration**|Self host solutions require configuring the software for the environment in addition to setting up how you want to manage identities. Container-based solutions typically provide a web-based UI for configuration.|Cloud-based solutions typically provide a web-based UI for configuration.|
 |**Customization**|Self-host solutions are usually highly customizable, including code-based changes. Although containerized solutions provide extensibility options, they are often more limited.|Cloud-based services allow customization, but it's typically limited to configuration-based changes.|
 |**Maintenance**|Installed products require a dedicated resource to ensure all security patches are applied in a timely fashion and to manage upgrades. The upgrade and patch process for containers is usually lower-friction and involves simply installing the provided container image.|The service provider maintains their cloud-based solution, including applying needed patches and handling upgrades.|
-|**User credentials storage**|You are responsible for data governance and handling breaches.|Managing the risks associated with handling user credentials, and complying with regulations. is delegated to the service provider.|
+|**User credentials <example-value>**|You are responsible for data governance and handling breaches.|Managing the risks associated with handling user credentials, and complying with regulations. is delegated to the service provider.|
 
 For more information about available options, see Identity management solutions for ASP.NET Core.
 

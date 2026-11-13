@@ -29,7 +29,7 @@ license: "CC-BY-4.0"
 
  | --authentication-kubeconfig string
 
- |  | kubeconfig file pointing at the 'core' kubernetes server with enough rights to create tokenreviews.authentication.k8s.io. This is optional. If empty, all token requests are considered to be anonymous and no client CA is looked up in the cluster.
+ |  | kubeconfig file pointing at the '<example-value>' kubernetes server with enough rights to create tokenreviews.authentication.k8s.io. This is optional. If empty, all token <example-value> are considered to be anonymous and no client CA is looked up in the cluster.
 
  | --authentication-skip-lookup
 
@@ -201,7 +201,7 @@ license: "CC-BY-4.0"
 
  | --concurrent-serviceaccount-token-syncs int32     Default: 5
 
- |  | The number of service account token objects that are allowed to sync concurrently. Larger number = more responsive token generation, but more CPU (and network) load
+ |  | The number of service account token <example-value> that are allowed to sync concurrently. Larger number = more responsive token <example-value>, but more CPU (and network) load
 
  | --concurrent-statefulset-syncs int32     Default: 5
 
@@ -233,7 +233,7 @@ license: "CC-BY-4.0"
 
  | --controllers strings     Default: "*"
 
- |  | A list of controllers to enable. '*' enables all on-by-default controllers, 'foo' enables the controller named 'foo', '-foo' disables the controller named 'foo'.All controllers: bootstrap-signer-controller, certificatesigningrequest-approving-controller, certificatesigningrequest-cleaner-controller, certificatesigningrequest-signing-controller, clusterrole-aggregation-controller, cronjob-controller, daemonset-controller, deployment-controller, device-taint-eviction-controller, disruption-controller, endpoints-controller, endpointslice-controller, endpointslice-mirroring-controller, ephemeral-volume-controller, garbage-collector-controller, horizontal-pod-autoscaler-controller, job-controller, kube-apiserver-serving-clustertrustbundle-publisher-controller, legacy-serviceaccount-token-cleaner-controller, namespace-controller, node-ipam-controller, node-lifecycle-controller, persistentvolume-attach-detach-controller, persistentvolume-binder-controller, persistentvolume-expander-controller, persistentvolume-protection-controller, persistentvolumeclaim-protection-controller, pod-garbage-collector-controller, podcertificaterequest-cleaner-controller, podgroup-protection-controller, replicaset-controller, replicationcontroller-controller, resourceclaim-controller, resourcepoolstatusrequest-controller, resourcequota-controller, root-ca-certificate-publisher-controller, selinux-warning-controller, service-cidr-controller, serviceaccount-controller, serviceaccount-token-controller, statefulset-controller, storage-version-migrator-controller, storageversion-garbage-collector-controller, taint-eviction-controller, token-cleaner-controller, ttl-after-finished-controller, ttl-controller, validatingadmissionpolicy-status-controller, volumeattributesclass-protection-controllerDisabled-by-default controllers: bootstrap-signer-controller, selinux-warning-controller, token-cleaner-controller
+ |  | A list of controllers to enable. '<example-value>' enables all on-by-default controllers, '<example-value>' enables the controller named '<example-value>', '<example-value>' disables the controller named '<example-value>'.All controllers: bootstrap-signer-controller, certificatesigningrequest-approving-controller, certificatesigningrequest-cleaner-controller, certificatesigningrequest-signing-controller, clusterrole-aggregation-controller, cronjob-controller, daemonset-controller, deployment-controller, device-taint-eviction-controller, disruption-controller, endpoints-controller, endpointslice-controller, endpointslice-mirroring-controller, ephemeral-volume-controller, garbage-collector-controller, horizontal-pod-autoscaler-controller, job-controller, kube-apiserver-serving-clustertrustbundle-publisher-controller, legacy-serviceaccount-token-cleaner-controller, namespace-controller, node-ipam-controller, node-lifecycle-controller, persistentvolume-attach-detach-controller, persistentvolume-binder-controller, persistentvolume-expander-controller, persistentvolume-protection-controller, persistentvolumeclaim-protection-controller, pod-garbage-collector-controller, podcertificaterequest-cleaner-controller, podgroup-protection-controller, replicaset-controller, replicationcontroller-controller, resourceclaim-controller, resourcepoolstatusrequest-controller, resourcequota-controller, root-ca-certificate-publisher-controller, selinux-warning-controller, service-cidr-controller, serviceaccount-controller, serviceaccount-token-controller, statefulset-controller, storage-version-migrator-controller, storageversion-garbage-collector-controller, taint-eviction-controller, token-cleaner-controller, ttl-after-finished-controller, ttl-controller, validatingadmissionpolicy-status-controller, volumeattributesclass-protection-controllerDisabled-by-default controllers: bootstrap-signer-controller, selinux-warning-controller, token-cleaner-controller
 
  | --disable-attach-detach-reconcile-sync
 
@@ -262,5 +262,3 @@ license: "CC-BY-4.0"
  | --enable-garbage-collector     Default: true
 
  |  | Enables the generic garbage collector. MUST be synced with the corresponding flag of the kube-apiserver.
-
- | --enable-hostpath-provisioner

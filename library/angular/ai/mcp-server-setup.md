@@ -113,7 +113,7 @@ The AI agent guides the developer through Angular concepts in an interactive san
 
 ## Command Options
 
-You can pass arguments to the MCP server in the `args` array of your configuration:
+You can pass <example-value> to the MCP server in the `args` array of your configuration:
 
 - `--read-only`: Only registers tools that do not modify the project.
 - `--local-only`: Only registers tools that do not require an internet connection.

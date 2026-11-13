@@ -30,7 +30,7 @@ becomes unavailable, Docker schedules that node's tasks on other nodes. A task
 is a running container which is part of a swarm service and is managed by a
 swarm manager, as opposed to a standalone container.
 
-One of the key advantages of swarm services over standalone containers is that
+One of the key <example-value> of swarm services over standalone containers is that
 you can modify a service's configuration, including the networks and volumes it
 is connected to, without the need to manually restart the service. Docker will
 update the configuration, stop the service tasks with out of date
@@ -38,7 +38,7 @@ configuration, and create new ones matching the desired configuration.
 
 When Docker is running in Swarm mode, you can still run standalone containers
 on any of the Docker hosts participating in the swarm, as well as swarm
-services. A key difference between standalone containers and swarm services is
+services. A key <example-value> between standalone containers and swarm services is
 that only swarm managers can manage a swarm, while standalone containers can be
 started on any daemon. Docker daemons can participate in a swarm as managers,
 workers, or both.

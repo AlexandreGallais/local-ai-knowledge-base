@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 This page shows how to configure
 Group Managed Service Accounts (GMSA)
 for Pods and containers that will run on Windows nodes. Group Managed Service Accounts
-are a specific type of Active Directory account that provides automatic password management,
+are a specific type of Active Directory account that provides automatic password <example-value>,
 simplified service principal name (SPN) management, and the ability to delegate the management
 to other administrators across multiple servers.
 
@@ -70,7 +70,7 @@ Before Pods in Kubernetes can be configured to use GMSAs, the desired GMSAs need
 to be provisioned in Active Directory as described in the
 Windows GMSA documentation.
 Windows worker nodes (that are part of the Kubernetes cluster) need to be configured
-in Active Directory to access the secret credentials associated with the desired GMSA as described in the
+in Active Directory to access the secret <example-value> associated with the desired GMSA as described in the
 Windows GMSA documentation.
 
 ## Create GMSA credential spec resources

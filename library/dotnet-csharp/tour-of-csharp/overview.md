@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # A tour of the C# language
 
-This article gives you a high-level overview of the C# language. Whether you're writing your first program or you're an experienced developer exploring C#, you'll find the key concepts and features here.
+This article gives you a high-level overview of the C# language. Whether you're writing your first program or you're an experienced developer exploring C#, you'll find the key <example-value> and features here.
 
 > **Tip:**
 > **New to programming?** Skim this article for the big picture, then start the beginner tutorials to write code hands-on.
@@ -35,7 +35,7 @@ Console.WriteLine("Hello, World");
 
 The line starting with `//` is a *single line comment*. C# single line comments start with  `//` and continue to the end of the current line. C# also supports *multi-line comments*. Multi-line comments start with `/*` and end with `*/`. The `WriteLine` method of the `Console` class, which is in the `System` namespace, produces the output of the program. The standard class libraries provide this class, and every C# program automatically references these libraries by default. Another program form requires you to declare the containing class and method for the program's entry point. The compiler synthesizes these elements when you use top-level statements.
 
-This alternative format is still valid and contains many of the basic concepts in all C# programs. Many existing C# samples use the following equivalent format:
+This alternative format is still valid and contains many of the basic <example-value> in all C# programs. Many existing C# samples use the following equivalent format:
 
 ```csharp
 ﻿using System;

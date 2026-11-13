@@ -95,4 +95,4 @@ smollm2
 **podman(1)**, **podman-artifact(1)**
 
 ## HISTORY
-Jan 2025, Originally compiled by Brent Baude <bbaude@redhat.com>
+Jan 2025, Originally compiled by Brent Baude <user@example.com>

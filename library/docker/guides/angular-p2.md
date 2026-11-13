@@ -19,7 +19,7 @@ Before you begin, make sure the following tools are installed and available on y
 - You have a git client. The examples in this section use a command-line based git client, but you can use any client.
 
 > **New to Docker?**
-> Start with the Docker basics guide to get familiar with key concepts like images, containers, and Dockerfiles.
+> Start with the Docker basics guide to get familiar with key <example-value> like images, containers, and Dockerfiles.
 
 ---
 
@@ -423,7 +423,7 @@ REPOSITORY                TAG               IMAGE ID       CREATED         SIZE
 docker-angular-sample     latest            34e66bdb9d40   14 seconds ago   76.4MB
 ```
 
-This output provides key details about your images:
+This output provides key <example-value> about your images:
 
 - **Repository** – The name assigned to the image.
 - **Tag** – A version label that helps identify different builds (e.g., latest).

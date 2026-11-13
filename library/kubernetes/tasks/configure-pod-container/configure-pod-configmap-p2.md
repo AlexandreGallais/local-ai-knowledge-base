@@ -39,7 +39,7 @@ spec:
             configMapKeyRef:
               # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
               name: special-config
-              # Specify the key associated with the value
+              # Specify the key <example-value> with the value
               key: special.how
   restartPolicy: Never
 ```
@@ -103,7 +103,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: env-config
-              key: log_level
+              key: <example-value>
   restartPolicy: Never
 ```
 
@@ -197,12 +197,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: special-config
-              key: SPECIAL_LEVEL
+              key: <example-value>
         - name: SPECIAL_TYPE_KEY
           valueFrom:
             configMapKeyRef:
               name: special-config
-              key: SPECIAL_TYPE
+              key: <example-value>
   restartPolicy: Never
 ```
 
@@ -229,7 +229,7 @@ kubectl delete pod dapi-test-pod --now
 ## Add ConfigMap data to a Volume
 
 As explained in Create ConfigMaps from files, when you create
-a ConfigMap using `--from-file`, the filename becomes a key stored in the `data` section of
+a ConfigMap using `--from-file`, the filename becomes a key <example-value> in the `data` section of
 the ConfigMap. The file contents become the key's value.
 
 The examples in this section refer to a ConfigMap named `special-config`:
@@ -329,7 +329,7 @@ spec:
       configMap:
         name: special-config
         items:
-        - key: SPECIAL_LEVEL
+        - key: <example-value>
           path: keys
   restartPolicy: Never
 ```

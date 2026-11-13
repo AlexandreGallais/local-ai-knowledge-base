@@ -179,10 +179,10 @@ Constants Passed To The Conflict Handler in the SQLite documentation.
      | Description
 
      | `SQLITE_CHANGESET_DATA`
-     | The conflict handler is invoked with this constant when processing a DELETE or UPDATE change if a row with the required PRIMARY KEY fields is present in the database, but one or more other (non primary-key) fields modified by the update do not contain the expected "before" values.
+     | The conflict handler is invoked with this constant when processing a DELETE or UPDATE change if a row with the required PRIMARY KEY <example-value> is present in the database, but one or more other (non primary-key) fields modified by the update do not contain the expected "before" values.
 
      | `SQLITE_CHANGESET_NOTFOUND`
-     | The conflict handler is invoked with this constant when processing a DELETE or UPDATE change if a row with the required PRIMARY KEY fields is not present in the database.
+     | The conflict handler is invoked with this constant when processing a DELETE or UPDATE change if a row with the required PRIMARY KEY <example-value> is not present in the database.
 
      | `SQLITE_CHANGESET_CONFLICT`
      | This constant is passed to the conflict handler while processing an INSERT change if the operation would result in duplicate primary key values.
@@ -191,7 +191,7 @@ Constants Passed To The Conflict Handler in the SQLite documentation.
      | If any other constraint violation occurs while applying a change (i.e. a UNIQUE, CHECK or NOT NULL constraint), the conflict handler is invoked with this constant.
 
      | `SQLITE_CHANGESET_FOREIGN_KEY`
-     | If foreign key handling is enabled, and applying a changeset leaves the database in a state containing foreign key violations, the conflict handler is invoked with this constant exactly once before the changeset is committed. If the conflict handler returns `SQLITE_CHANGESET_OMIT`, the changes, including those that caused the foreign key constraint violation, are committed. Or, if it returns `SQLITE_CHANGESET_ABORT`, the changeset is rolled back.
+     | If foreign key <example-value> is enabled, and applying a changeset leaves the database in a state containing foreign key <example-value>, the conflict handler is invoked with this constant exactly once before the changeset is committed. If the conflict handler returns `SQLITE_CHANGESET_OMIT`, the changes, including those that caused the foreign key <example-value> violation, are committed. Or, if it returns `SQLITE_CHANGESET_ABORT`, the changeset is rolled back.
 
 One of the following constants must be returned from the `onConflict` conflict
 resolution handler passed to `database.applyChangeset()`. See also

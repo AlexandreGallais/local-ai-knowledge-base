@@ -66,7 +66,7 @@ apiserver_rerouted_request_total
 	Labels:groupresourceComponents:kube-apiserver (/metrics)
 
 	apiserver_storage_envelope_transformation_cache_misses_total
-	Total number of cache misses while accessing key decryption key(KEK).
+	Total number of cache misses while accessing key <example-value> key(KEK).
 
 	Stability Level:ALPHA
 	Type: Counter

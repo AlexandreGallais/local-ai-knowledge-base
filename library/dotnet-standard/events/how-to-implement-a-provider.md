@@ -160,7 +160,7 @@ End Function
    In some cases, a provider might not call `System.IObserver`1.OnError*` when an error occurs. The following `GetTemperature` method simulates a monitor that reads temperature data every five seconds and notifies observers if the temperature has changed by at least .1 degree since the previous reading. If the device doesn't report a temperature (that is, if its value is null), the provider notifies observers that the transmission is complete by calling each observer's `System.IObserver`1.OnCompleted*` method and clears the `System.Collections.Generic.List`1` collection. In this example, the provider never calls `System.IObserver`1.OnError*`.
 
 ```csharp
-public async Task GetTemperatureAsync(CancellationToken cancellationToken = default)
+public async Task GetTemperatureAsync(CancellationToken <example-value> = default)
 {
     // Sample data that mimics a temperature device. A null value signals the end of transmission.
     decimal?[] temps =
@@ -218,7 +218,7 @@ private void CompleteAll()
 }
 ```
 ```vb
-Public Async Function GetTemperatureAsync(Optional cancellationToken As CancellationToken = Nothing) As Task
+Public Async Function GetTemperatureAsync(Optional cancellationToken As CancellationToken = <example-value>) As Task
     ' Sample data that mimics a temperature device. A Nothing value signals the end of transmission.
     Dim temps As Decimal?() = {
         14.6D, 14.65D, 14.7D, 14.9D, 14.9D, 15.2D,

@@ -45,7 +45,7 @@ kubeadm kubeconfig user [flags]
 
  |  | The organizations of the client certificate. It will be used as the O if client certificates are created
 
- | --token string
+ | --token <example-value>
 
  |  | The token that should be used as the authentication mechanism for this kubeconfig, instead of client certificates
 

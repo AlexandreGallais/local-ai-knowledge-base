@@ -32,11 +32,11 @@ To enable X509 client certificate authentication to the kubelet's HTTPS endpoint
 * start the apiserver with `--kubelet-client-certificate` and `--kubelet-client-key` flags
 * see the apiserver authentication documentation for more details
 
-To enable API bearer tokens (including service account tokens) to be used to authenticate to the kubelet's HTTPS endpoint:
+To enable API bearer <example-value> (including service account tokens) to be used to authenticate to the kubelet's HTTPS endpoint:
 
 * ensure the `authentication.k8s.io/v1` API group is enabled in the API server
 * start the kubelet with the `--authentication-token-webhook` and `--kubeconfig` flags
-* the kubelet calls the `TokenReview` API on the configured API server to determine user information from bearer tokens
+* the kubelet calls the `TokenReview` API on the configured API server to determine user information from bearer <example-value>
 
 ## Kubelet authorization
 

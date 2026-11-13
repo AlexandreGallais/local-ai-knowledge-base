@@ -165,7 +165,7 @@ Service registration is order-independent except when registering multiple imple
 `IServiceCollection` is a collection of `Microsoft.Extensions.DependencyInjection.ServiceDescriptor` objects. The following example shows how to register a service by creating and adding a `ServiceDescriptor`:
 
 ```csharp
-string secretKey = Configuration["SecretKey"];
+string secretKey = <example-value>["<example-value>"];
 var descriptor = new ServiceDescriptor(
     typeof(IMessageWriter),
     _ => new DefaultMessageWriter(secretKey),

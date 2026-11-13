@@ -192,20 +192,20 @@ Each tracked entity and its state is shown as before. However, the long view als
 
 For each property, the long view shows whether or not the property is part of a primary key (PK), alternate key (AK), or foreign key (FK). For example:
 
-- `Blog.Id` is a primary key property: `Id: 1 PK`
-- `Blog.AssetsId` is an alternate key property: `AssetsId: 'ed727978-1ffe-4709-baee-73913e8e44a0' AK`
-- `Post.BlogId` is a foreign key property: `BlogId: 2 FK`
-- `BlogAssets.Id` is both a primary key and a foreign key property: `Id: '3a54b880-2b9d-486b-9403-dc2e52d36d65' PK FK`
+- `Blog.Id` is a primary key <example-value>: `Id: 1 PK`
+- `Blog.AssetsId` is an alternate key <example-value>: `AssetsId: 'ed727978-1ffe-4709-baee-73913e8e44a0' AK`
+- `Post.BlogId` is a foreign key <example-value>: `BlogId: 2 FK`
+- `BlogAssets.Id` is both a primary key and a foreign key <example-value>: `Id: '3a54b880-2b9d-486b-9403-dc2e52d36d65' PK FK`
 
 Property values that have been modified are marked as such, and the original value of the property is also shown. For example, `Name: '.NET Blog (All new!)' Modified Originally '.NET Blog'`.
 
-Finally, `Added` entities with temporary key values indicate that the value is temporary. For example, `Id: -2147482643 PK Temporary`.
+Finally, `Added` entities with temporary key <example-value> indicate that the value is temporary. For example, `Id: -2147482643 PK Temporary`.
 
 #### Navigation values
 
-Navigation values are displayed using the primary key values of the entities that the navigations reference. For example, in the output above, post 3 is related to blog 2. This means that the `Post.Blog` navigation points to the `Blog` instance with ID 2. This is shown as `Blog: {Id: 2}`.
+Navigation values are displayed using the primary key <example-value> of the entities that the navigations reference. For example, in the output above, post 3 is related to blog 2. This means that the `Post.Blog` navigation points to the `Blog` instance with ID 2. This is shown as `Blog: {Id: 2}`.
 
-The same thing happens for collection navigations, except that in this case there can be multiple related entities. For example, the collection navigation `Blog.Posts` contains three entities, with key values 1, 2, and -2147482643 respectively. This is shown as `[{Id: 1}, {Id: 2}, {Id: -2147482643}]`.
+The same thing happens for collection navigations, except that in this case there can be multiple related entities. For example, the collection navigation `Blog.Posts` contains three entities, with key <example-value> 1, 2, and -2147482643 respectively. This is shown as `[{Id: 1}, {Id: 2}, {Id: -2147482643}]`.
 
 ## Change tracker logging
 
@@ -249,7 +249,7 @@ The following table summaries the change tracker logging messages:
 | `Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.DetectChangesStarting`        | `Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DetectChanges` is starting
 | `Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.DetectChangesCompleted`       | `Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.DetectChanges` has completed
 | `Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.PropertyChangeDetected`       | A normal property value has changed
-| `Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.ForeignKeyChangeDetected`     | A foreign key property value has changed
+| `Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.ForeignKeyChangeDetected`     | A foreign key <example-value> value has changed
 | `Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.CollectionChangeDetected`     | A non-skip collection navigation has had related entities added or removed.
 | `Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.ReferenceChangeDetected`      | A reference navigation has been changed to point to another entity, or set to null
 | `Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.StartedTracking`              | EF Core started tracking an entity

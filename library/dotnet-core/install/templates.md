@@ -32,7 +32,7 @@ dotnet new install Microsoft.DotNet.Web.Spa.ProjectTemplates
 To install a template package from the default NuGet feed with a specific version, use the `dotnet new install {package-id}@{version}` command:
 
 ```dotnetcli
-dotnet new install Microsoft.DotNet.Web.Spa.ProjectTemplates@2.2.6
+dotnet new install user@example.com
 ```
 
 > **Note:**

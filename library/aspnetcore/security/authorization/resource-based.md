@@ -306,6 +306,6 @@ var authorizationResult = await AuthorizationService
 
 In the sample app's `AccessDocumentCrud` page:
 
-* Leela (`leela@contoso.com`), as an `Admin` and `SuperUser`, can perform full CRUD operations on resources.
-* Harry (`harry@contoso.com`), as only an `Admin`, can create, read, and update resources.
-* Sarah (`sarah@contoso.com`), as only a `SuperUser`, can delete and read resources.
+* Leela (`user@example.com`), as an `Admin` and `SuperUser`, can perform full CRUD operations on resources.
+* Harry (`user@example.com`), as only an `Admin`, can create, read, and update resources.
+* Sarah (`user@example.com`), as only a `SuperUser`, can delete and read resources.

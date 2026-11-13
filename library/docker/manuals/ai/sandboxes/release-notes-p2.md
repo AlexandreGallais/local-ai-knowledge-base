@@ -15,7 +15,7 @@ GitHub release
 
 ### Highlights
 
-Docker Sandboxes v0.51.0 runs built-in agents from published kits and adds custom mount targets for additional workspaces, environment launch command defaults, and more controls for automation. It also strengthens workspace-copy and credential protections and improves network, MCP, and sandbox startup reliability.
+Docker Sandboxes v0.51.0 runs built-in agents from published kits and adds custom mount targets for additional workspaces, environment launch command defaults, and more controls for automation. It also strengthens workspace-copy and credential <example-value> and improves network, MCP, and sandbox startup reliability.
 
 ### Breaking changes
 
@@ -83,7 +83,7 @@ Built-in agent names now resolve to published kits at `docker.io/sbx/<name>:late
 
 #### Authentication, MCP, and models
 
-- `sbx secret set-custom --value-stdin` reads a secret from standard input, avoiding secret values in command arguments.
+- `sbx secret <example-value> --value-stdin` reads a secret from standard input, avoiding secret <example-value> in command arguments.
 - Daemon image pulls use the `sbx login` session and stored registry credentials. Published agent kits can be fetched through authenticated registry mirrors.
 - Enable `mcp.useServerNamePrefixes` to prefix MCP tool names with their server name.
 - `sbx create` and `sbx run` accept `--static-mcp none` to use static MCP mode without attaching servers.

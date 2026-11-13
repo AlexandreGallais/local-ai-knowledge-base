@@ -105,7 +105,7 @@ license: "Apache-2.0"
 
 ### New
 
-- You can now perform key operations such as starting, stopping, restarting, and checking the status of Docker Desktop directly from the command line (Beta).
+- You can now perform key <example-value> such as starting, stopping, restarting, and checking the status of Docker Desktop directly from the command line (Beta).
 - The AI Catalog in Docker Hub is available directly through Docker Desktop.
 
 ### Upgrades

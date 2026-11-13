@@ -21,7 +21,7 @@ Previously, on Windows, `System.Security.Cryptography.HKDF.DeriveKey*` and `Syst
 
 ## New behavior
 
-Starting in .NET 11, on Windows, `System.Security.Cryptography.HKDF.DeriveKey*` and `System.Security.Cryptography.HKDF.Expand*` limit the maximum input length for input keying material and pseudorandom keys. If the input keying material passed to `DeriveKey` or the pseudorandom key passed to `Expand` exceeds the limit, the method throws `System.Security.Cryptography.CryptographicException`.
+Starting in .NET 11, on Windows, `System.Security.Cryptography.HKDF.DeriveKey*` and `System.Security.Cryptography.HKDF.Expand*` limit the maximum input length for input keying material and pseudorandom keys. If the input keying material passed to `DeriveKey` or the pseudorandom key <example-value> to `Expand` exceeds the limit, the method throws `System.Security.Cryptography.CryptographicException`.
 
 Both limits are currently 2,048 bytes.
 

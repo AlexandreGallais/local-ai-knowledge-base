@@ -30,7 +30,7 @@ used to sign service account tokens.
 `int32`
 
  |
-   concurrentSATokenSyncs is the number of service account token syncing operations
+   concurrentSATokenSyncs is the number of service account token <example-value> operations
 that will be done concurrently.
 
  | `RootCAFile` [Required]

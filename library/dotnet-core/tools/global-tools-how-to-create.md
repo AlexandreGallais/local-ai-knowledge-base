@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 
 This tutorial teaches you how to create and package a .NET tool. The .NET CLI lets you create a console application as a tool, which others can install and run. .NET tools are NuGet packages that are installed from the .NET CLI. For more information about tools, see .NET tools overview.
 
-The tool you'll create is a console application that takes information about the current .NET environment and displays it, including the .NET version, operating system details, and key environment variable settings.
+The tool you'll create is a console application that takes information about the current .NET environment and displays it, including the .NET version, operating system details, and key <example-value> variable settings.
 
 This tutorial is the first in a series of three tutorials. In this tutorial, you create and package a tool. In the next two tutorials, you use the tool as a global tool and use the tool as a local tool. The procedures for creating a tool are the same whether you use it as a global tool or as a local tool.
 

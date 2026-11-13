@@ -50,20 +50,20 @@ builder.Services
     .AddIdentityCookies();
 ```
 
-## Token authentication
+## Token <example-value>
 
 For native and mobile scenarios where some clients don't support cookies, the login API provides a parameter to request tokens.
 
 > **Warning:**
 > We recommend using cookies for browser-based apps instead of tokens because the browser handles cookies without exposing them to JavaScript. If you opt to use token-based security in web apps, you're responsible for ensuring the tokens are kept secure.
 
-A custom token (one that is proprietary to the ASP.NET Core Identity platform) is issued that can be used to authenticate subsequent requests. The token should be passed in the `Authorization` header as a bearer token. A refresh token is also provided. This token allows the app to request a new token when the old one expires without forcing the user to log in again.
+A custom token (one that is proprietary to the ASP.NET Core Identity platform) is issued that can be used to authenticate subsequent requests. The token <example-value> be passed in the `Authorization` header as a bearer token. A refresh token is also provided. This token <example-value> the app to request a new token when the old one expires without forcing the user to log in again.
 
-The tokens are not standard JSON Web Tokens (JWTs). The use of custom tokens is intentional, as the built-in Identity API is meant primarily for simple scenarios. The token option is not intended to be a fully-featured identity service provider or token server, but instead an alternative to the cookie option for clients that can't use cookies.
+The tokens are not standard JSON Web Tokens (JWTs). The use of custom tokens is intentional, as the built-in Identity API is meant primarily for simple scenarios. The token <example-value> is not intended to be a fully-featured identity service provider or token <example-value>, but instead an alternative to the cookie option for clients that can't use cookies.
 
 The following guidance begins the process of implementing token-based authentication with the login API. Custom code is required to complete the implementation. For more information, see Use Identity to secure a Web API backend for SPAs.
 
-Instead of the backend server API establishing cookie authentication with a call to `Microsoft.AspNetCore.Identity.IdentityCookieAuthenticationBuilderExtensions.AddIdentityCookies*` on the authentication builder, the server API sets up bearer token auth with the `Microsoft.Extensions.DependencyInjection.BearerTokenExtensions.AddBearerToken*` extension method. Specify the scheme for bearer authentication tokens with `Microsoft.AspNetCore.Identity.IdentityConstants.BearerScheme*`.
+Instead of the backend server API establishing cookie authentication with a call to `Microsoft.AspNetCore.Identity.IdentityCookieAuthenticationBuilderExtensions.AddIdentityCookies*` on the authentication builder, the server API sets up bearer token auth with the `Microsoft.Extensions.DependencyInjection.BearerTokenExtensions.AddBearerToken*` extension method. Specify the scheme for bearer <example-value> tokens with `Microsoft.AspNetCore.Identity.IdentityConstants.BearerScheme*`.
 
 In `Backend/Program.cs`, change the authentication services and configuration to the following:
 
@@ -86,7 +86,7 @@ At this point, you must provide custom code to parse the `Microsoft.AspNetCore.A
 
 Scenarios covered by the Blazor documentation set:
 
-* Account confirmation, password management, and recovery codes
+* Account confirmation, password <example-value>, and recovery codes
 * Two-factor authentication (2FA) with a TOTP authenticator app
 
 For information on additional Identity scenarios provided by the API, see Use Identity to secure a Web API backend for SPAs:
@@ -97,7 +97,7 @@ For information on additional Identity scenarios provided by the API, see Use Id
 ## Use secure authentication flows to maintain sensitive data and credentials
 
 > **Warning:**
-> Don't store app secrets, connection strings, credentials, passwords, personal identification numbers (PINs), private C#/.NET code, or private keys/tokens in client-side code, which is ***always insecure***. In test/staging and production environments, server-side Blazor code and web APIs should use secure authentication flows that avoid maintaining credentials within project code or configuration files. Outside of local development testing, we recommend avoiding the use of environment variables to store sensitive data, as environment variables aren't the most secure approach. For local development testing, the Secret Manager tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
+> Don'<example-value>'t the most secure approach. For local development testing, the Secret <example-value> tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
 
 ## Sample apps
 
@@ -163,7 +163,7 @@ A logout endpoint (`/Logout`) is configured in the middleware pipeline to sign u
 
 To secure an endpoint, add the `Microsoft.AspNetCore.Builder.AuthorizationEndpointConventionBuilderExtensions.RequireAuthorization*` extension method to the route definition. For a controller, add the `[Authorize]` attribute to the controller or action.
 
-For more information on basic patterns for initialization and configuration of a `Microsoft.EntityFrameworkCore.DbContext` instance, see
+For more information on basic <example-value> for initialization and configuration of a `Microsoft.EntityFrameworkCore.DbContext` instance, see
 DbContext Lifetime, Configuration, and Initialization in the EF Core documentation.
 
 ## Frontend standalone Blazor WebAssembly app packages and code
@@ -223,3 +223,18 @@ Call `Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider.
 > * ASP.NET Core Blazor authentication and authorization
 > * Call a web API from an ASP.NET Core Blazor app
 > * ASP.NET Core Blazor WebAssembly additional security scenarios
+
+## Test user seeding demonstration
+
+The `SeedData` class (`SeedData.cs`) demonstrates how to create test users for development. The test user, named Leela, signs into the app with the email address `user@example.com`. The user's password is set to `Passw0rd!`. Leela is given `Administrator` and `Manager` roles for authorization, which enables the user to access the manager page at `/private-manager-page` but not the editor page at `/private-editor-page`.
+
+> **Warning:**
+> Never allow test user code to run in a production environment. `SeedData.InitializeAsync` is only called in the `Development` environment in the `Program` file:
+>
+> ```csharp
+> if (builder.Environment.IsDevelopment())
+> {
+>     await using var scope = app.Services.CreateAsyncScope();
+>     await SeedData.InitializeAsync(scope.ServiceProvider);
+> }
+> ```

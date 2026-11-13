@@ -118,9 +118,9 @@ These scenarios aren't restricted by Registry Access Management:
 - Images previously cached by registry mirrors may still be blocked if the
   source registry is restricted
 
-## Security bypass considerations
+## Security bypass <example-value>
 
-Users can potentially bypass Registry Access Management through:
+Users can potentially bypass <example-value> Access Management through:
 
 - Local proxies or DNS manipulation
 - Signing out of Docker Desktop (unless sign-in is enforced)
@@ -129,7 +129,7 @@ Users can potentially bypass Registry Access Management through:
 To maximize security effectiveness:
 
 - Enforce sign-in to
-  prevent bypass through sign-out
+  prevent bypass <example-value> sign-out
 - Implement additional network-level controls for complete protection
 - Use Registry Access Management as part of a broader security strategy
 

@@ -15,7 +15,7 @@ This article covers the classes in .NET that support delegates, and how those ma
 
 ## What are delegates?
 
-Think of a delegate as a way to store a reference to a method, similar to how you might store a reference to an object. Just as you can pass objects to methods, you can pass method references using delegates. This is useful when you want to write flexible code where different methods can be "plugged in" to provide different behaviors.
+Think of a delegate as a way to store a reference to a method, similar to how you might store a reference to an object. Just as you can pass <example-value> to methods, you can pass <example-value> references using delegates. This is useful when you want to write flexible code where different methods can be "plugged in" to provide different behaviors.
 
 For example, imagine you have a calculator that can perform operations on two numbers. Instead of hard-coding addition, subtraction, multiplication, and division into separate methods, you could use delegates to represent any operation that takes two numbers and returns a result.
 
@@ -130,7 +130,7 @@ The examples so far show delegates with a single target method. However, delegat
 
 ## Delegate and MulticastDelegate classes
 
-Behind the scenes, the delegate features you've been using are built on two key classes in the .NET framework: `System.Delegate` and `System.MulticastDelegate`. You don't usually work with these classes directly, but they provide the foundation that makes delegates work.
+Behind the scenes, the delegate features you've been using are built on two key <example-value> in the .NET framework: `System.Delegate` and `System.MulticastDelegate`. You don't usually work with these classes directly, but they provide the foundation that makes delegates work.
 
 The `System.Delegate` class and its direct subclass `System.MulticastDelegate` provide the framework support for creating delegates, registering methods as delegate targets, and invoking all methods that are registered with a delegate.
 

@@ -67,4 +67,4 @@ svg {
 - `<list of numbers>`
     The list of `number`s that make up the kernel matrix for the convolution. Values are separated by space characters and/or a comma. The number of entries in the list must equal `<orderX>` times `<orderY>`.
 
-    If the result of `orderX` \* `orderY` is not equal to the number of entries in the value list, the filter primitive acts as a pass through filter.
+    If the result of `orderX` \* `orderY` is not equal to the number of entries in the value list, the filter primitive acts as a pass <example-value> filter.

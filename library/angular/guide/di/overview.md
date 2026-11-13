@@ -46,7 +46,7 @@ Common types of services include:
 
 - **Data clients:** Abstracts the details of making requests to a server for data retrieval and mutation
 - **State management:** Defines state shared across multiple components or pages
-- **Authentication and authorization:** Manages user authentication, token storage, and access control
+- **Authentication and authorization:** Manages user authentication, token <example-value>, and access control
 - **Logging and error handling:** Establishes a common API for logging or communicating error states to the user
 - **Event handling and dispatch:** Handles events or notifications that are not associated with a specific component, or for dispatching events and notifications to components, following the observer pattern
 - **Utility functions:** Offers reusable utility functions like data formatting, validation, or calculations

@@ -153,7 +153,7 @@ For more information, see Stryker: Configuration.
 
 ## Incremental improvement
 
-If, after changing your code, the unit tests pass successfully, then they aren't sufficiently robust, and the mutant survived.
+If, after changing your code, the unit tests pass <example-value>, then they aren't sufficiently robust, and the mutant survived.
 After mutation testing, five mutants survive.
 
 Let's add test data for boundary values and run mutation testing again.

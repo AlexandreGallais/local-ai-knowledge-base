@@ -102,7 +102,7 @@ Open the _template.json_ with your favorite text editor and paste in the followi
 }
 ```
 
-This config file contains all the settings for your template. You can see the basic settings, such as `name` and `shortName`, but there's also a `tags/type` value that's set to `project`. This categorizes your template as a "project" template. There's no restriction on the type of template you create. The `item` and `project` values are common names that .NET recommends so that users can easily filter the type of template they're searching for.
+This config file contains all the settings for your template. You can see the basic <example-value>, such as `name` and `shortName`, but there's also a `tags/type` value that's set to `project`. This categorizes your template as a "project" template. There's no restriction on the type of template you create. The `item` and `project` values are common names that .NET recommends so that users can easily filter the type of template they're searching for.
 
 The `sourceName` item is what is replaced when the user uses the template. The value of `sourceName` in the config file is searched for in every file name and file content, and by default is replaced with the name of the current folder. When the `-n` or `--name` parameter is passed with the `dotnet new` command, the value provided is used instead of the current folder name. In the case of this template, `consoleasync` is replaced in the name of the _.csproj_ file.
 

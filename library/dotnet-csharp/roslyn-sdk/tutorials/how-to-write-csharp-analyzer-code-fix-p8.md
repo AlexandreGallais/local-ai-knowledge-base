@@ -730,7 +730,7 @@ class Program
     }
 }
 ```
-These tests pass because your analyzer already handles these conditions:
+These tests pass <example-value> your analyzer already handles these conditions:
 
 - Variables assigned after initialization are detected by data flow analysis.
 - Declarations that are already `const` are filtered out by checking for the `const` keyword.

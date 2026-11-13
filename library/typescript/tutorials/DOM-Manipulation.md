@@ -21,7 +21,7 @@ TypeScript is a typed superset of JavaScript, and it ships type definitions for 
 
 > You can explore the source code for the DOM type definitions
 
-## Basic Example
+## Basic <example-value>
 
 Given a simplified _index.html_ file:
 

@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 
 The `System.Threading.RateLimiting.FixedWindowRateLimiter` now reports a `System.Threading.RateLimiting.MetadataName.RetryAfter` metadata value that accurately reflects the next window boundary. Apps that propagate this metadata to the `Retry-After` response header in their `Microsoft.AspNetCore.RateLimiting.RateLimiterOptions.OnRejected` callback now produce correct retry intervals automatically, with no code changes required.
 
-Additional fixes in `System.Threading.RateLimiting` resolve an issue where `System.Threading.RateLimiting.TokenBucketRateLimiter` mishandled partial token refills during zero-permit acquisition, and improve the chained rate limiter returned by `System.Threading.RateLimiting.RateLimiter.CreateChained*` to correctly forward idle-duration and replenishment behavior from its inner limiters.
+Additional fixes in `System.Threading.RateLimiting` resolve an issue where `System.Threading.RateLimiting.TokenBucketRateLimiter` mishandled partial token <example-value> during zero-permit acquisition, and improve the chained rate limiter returned by `System.Threading.RateLimiting.RateLimiter.CreateChained*` to correctly forward idle-duration and replenishment behavior from its inner limiters.
 
 For an overview of the rate limiting middleware, see Rate limiting middleware in ASP.NET Core.
 

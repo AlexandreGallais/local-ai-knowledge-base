@@ -21,7 +21,7 @@ Including ASP.NET Core targeting both .NET Framework and .NET Core on Windows, O
 
 ## Modelling
 
-### Basic modelling
+### Basic <example-value>
 
 Based on POCO entities with get/set properties of common scalar types (`int`, `string`, etc.).
 
@@ -67,7 +67,7 @@ Defining indexes in the model automatically introduces indexes in the database. 
 
 ### Shadow state properties
 
-Allows for properties to be defined in the model that are not declared and are not stored in the .NET class but can be tracked and updated by EF Core. Commonly used for foreign key properties when exposing these in the object is not desired.
+Allows for properties to be defined in the model that are not declared and are not stored in the .NET class but can be tracked and updated by EF Core. Commonly used for foreign key <example-value> when exposing these in the object is not desired.
 
 ### Table-Per-Hierarchy inheritance pattern
 

@@ -151,7 +151,7 @@ Alternatively, you can edit the Docker Desktop settings file located at `%APPDAT
 
 ### Updates
 
-- Amazon ECR Credential Helper v0.6.0
+- Amazon ECR Credential <example-value> v0.6.0
 
 ### Security
 

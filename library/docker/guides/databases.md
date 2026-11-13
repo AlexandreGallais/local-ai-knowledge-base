@@ -48,14 +48,14 @@ CLI.
 To run a container using the CLI, run the following command in a terminal:
 
 ```console
-$ docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=mydb -d mysql:latest
+$ docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=<example-value> -e MYSQL_DATABASE=mydb -d mysql:latest
 ```
 
 In this command:
 
 - `--name my-mysql` assigns the name my-mysql to your container for easier
   reference.
-- `-e MYSQL_ROOT_PASSWORD=my-secret-pw` sets the root password for MySQL to
+- `-e MYSQL_ROOT_PASSWORD=<example-value>` sets the root password for MySQL to
   my-secret-pw. Replace my-secret-pw with a secure password of your choice.
 - `-e MYSQL_DATABASE=mydb` optionally creates a database named mydb. You can
   change mydb to your desired database name.
@@ -137,7 +137,7 @@ list the databases.
 
 ```console
 # mysql -u root -p
-Enter password: my-secret-pw
+Enter password: <example-value>
 
 mysql> SHOW DATABASES;
 
@@ -178,7 +178,7 @@ the port mapped.
 Run the following command in a terminal.
 
 ```console
-$ docker run -p 3307:3306 --name my-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=mydb -d mysql:latest
+$ docker run -p 3307:3306 --name my-mysql -e MYSQL_ROOT_PASSWORD=<example-value> -e MYSQL_DATABASE=mydb -d mysql:latest
 ```
 
 In this command, `-p 3307:3306` maps port 3307 on the host to port 3306 in the container.
@@ -250,7 +250,7 @@ To create a network and run containers on it:
    option. This runs the container on the my-network network.
 
    ```console
-   $ docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=mydb --network my-network -d mysql:latest
+   $ docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=<example-value> -e MYSQL_DATABASE=mydb --network my-network -d mysql:latest
    ```
 
 3. Run your other containers and specify the network using the `--network`

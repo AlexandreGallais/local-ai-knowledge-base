@@ -75,7 +75,7 @@ while (feedIterator.HasMoreResults)
             item.Remove("Discriminator");
 
             // The id and partition key are required for ReplaceItemAsync.
-            // Adjust the partition key extraction to match your container's partition key path.
+            // Adjust the partition key <example-value> to match your container's partition key path.
             var id = item["id"]!.GetValue<string>();
             var partitionKey = new PartitionKey(item["myPartitionKeyProperty"]!.GetValue<string>());
             await container.ReplaceItemAsync(item, id, partitionKey);
@@ -87,7 +87,7 @@ while (feedIterator.HasMoreResults)
 > **Note:**
 > Replace `myPartitionKeyProperty` with the name of the property that is configured as the partition key in your container. If your container uses the document `id` as the partition key, use `id` for the partition key value as well.
 
-#### The `id` property now contains only the EF key property by default
+#### The `id` property now contains only the EF key <example-value> by default
 
 Tracking Issue #34179
 
@@ -175,7 +175,7 @@ Previously, EF created a shadow property mapped to the JSON `id` property, unles
 
 ##### New behavior
 
-Starting with EF Core 9, the key property will be mapped to the JSON `id` property by convention if possible. This means that the key property will no longer be persisted in the document under a different name with the same value, so non-EF code consuming the documents and relying on this property being present would no longer function correctly.
+Starting with EF Core 9, the key <example-value> will be mapped to the JSON `id` property by convention if possible. This means that the key <example-value> will no longer be persisted in the document under a different name with the same value, so non-EF code consuming the documents and relying on this property being present would no longer function correctly.
 
 ##### Why
 
@@ -195,7 +195,7 @@ Doing this for all your top-level entity types will make EF behave just like bef
 modelBuilder.HasShadowIds();
 ```
 
-Alternatively, if you wish to adopt the new EF 9.0 behavior and your existing documents contain the key property stored separately (e.g., as `"Id": 8` alongside `"id": "Blog|8"`), you can remove the redundant key property using the Azure Cosmos DB SDK. If you are also migrating the `id` property format (removing the discriminator prefix), you can combine both steps as shown in the `id` property migration above. The following example removes a redundant `"Id"` property if the `id` migration has already been performed:
+Alternatively, if you wish to adopt the new EF 9.0 behavior and your existing documents contain the key <example-value> stored separately (e.g., as `"Id": 8` alongside `"id": "Blog|8"`), you can remove the redundant key <example-value> using the Azure Cosmos DB SDK. If you are also migrating the `id` property format (removing the discriminator prefix), you can combine both steps as shown in the `id` property migration above. The following example removes a redundant `"Id"` property if the `id` migration has already been performed:
 
 ```csharp
 using Microsoft.Azure.Cosmos;
@@ -205,7 +205,7 @@ using System.Text.Json.Nodes;
 var cosmosClient = new CosmosClient(connectionString);
 var container = cosmosClient.GetContainer("myDatabase", "myContainer");
 
-// Adjust "Id" to match your entity's key property name.
+// Adjust "Id" to match your entity's key <example-value> name.
 using var feedIterator = container.GetItemQueryIterator<JsonObject>("SELECT * FROM c WHERE IS_DEFINED(c.Id)");
 while (feedIterator.HasMoreResults)
 {
@@ -215,7 +215,7 @@ while (feedIterator.HasMoreResults)
 
         var id = item["id"]!.GetValue<string>();
 
-        // Adjust the partition key extraction to match your container's partition key path.
+        // Adjust the partition key <example-value> to match your container's partition key path.
         var partitionKey = new PartitionKey(item["myPartitionKeyProperty"]!.GetValue<string>());
         await container.ReplaceItemAsync(item, id, partitionKey);
     }
@@ -223,4 +223,4 @@ while (feedIterator.HasMoreResults)
 ```
 
 > **Note:**
-> Replace `Id` with the name of your entity's key property and `myPartitionKeyProperty` with the name of the property configured as the partition key in your container.
+> Replace `Id` with the name of your entity's key <example-value> and `myPartitionKeyProperty` with the name of the property configured as the partition key in your container.

@@ -91,11 +91,11 @@ Separate models for different concerns makes forms easier to understand and reus
 Design models with validation in mind. Group fields that validate together:
 
 ```ts
-// Password fields grouped for comparison
+// Password <example-value> grouped for comparison
 interface PasswordChangeData {
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
+  currentPassword: <example-value>;
+  newPassword: <example-value>;
+  confirmPassword: <example-value>;
 }
 ```
 

@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # Using a KMS provider for data encryption
 
-This page shows how to configure a Key Management Service (KMS) provider and plugin to enable secret data encryption.
+This page shows how to configure a Key <example-value> Service (KMS) provider and plugin to enable secret data encryption.
 In Kubernetes  there are two versions of KMS at-rest encryption.
 You should use KMS v2 if feasible because KMS v1 is deprecated (since Kubernetes v1.28) and disabled by default (since Kubernetes v1.29).
 KMS v2 offers significantly better performance characteristics than KMS v1.
@@ -51,15 +51,15 @@ you have selected.  Kubernetes recommends using KMS v2.
 
 The KMS encryption provider uses an envelope encryption scheme to encrypt data in etcd.
 The data is encrypted using a data encryption key (DEK).
-The DEKs are encrypted with a key encryption key (KEK) that is stored and managed in a remote KMS.
+The DEKs are encrypted with a key <example-value> key (KEK) that is stored and managed in a remote KMS.
 
 If you use the (deprecated) v1 implementation of KMS, a new DEK is generated for each encryption.
 
 With KMS v2, a new DEK is generated **per encryption**: the API server uses a
-_key derivation function_ to generate single use data encryption keys from a secret seed
+_key <example-value> function_ to generate single use data encryption keys from a secret seed
 combined with some random data.
 The seed is rotated whenever the KEK is rotated
-(see the _Understanding key_id and Key Rotation_ section below for more details).
+(see the _Understanding key_id and Key <example-value> section below for more details).
 
 The KMS provider uses gRPC to communicate with a specific KMS plugin over a UNIX domain socket.
 The KMS plugin, which is implemented as a gRPC server and deployed on the same host(s)
@@ -190,7 +190,7 @@ Then use the functions and data structures in the stub file to develop the serve
   plugin implementations must perform these calls as quickly as possible, and should aim to keep each request's latency
   at under 10 milliseconds.
 
-* Understanding `key_id` and Key Rotation
+* Understanding `key_id` and Key <example-value>
 
   The `key_id` is the public, non-secret name of the remote KMS KEK that is currently in use.  It may be logged
   during regular operation of the API server, and thus must not contain any private data.  Plugin implementations

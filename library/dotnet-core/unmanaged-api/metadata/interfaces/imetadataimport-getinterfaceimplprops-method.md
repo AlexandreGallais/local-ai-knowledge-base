@@ -24,13 +24,13 @@ HRESULT GetInterfaceImplProps (
 ## Parameters
 
  `iiImpl`
- [in] The metadata token representing the method to return the class and interface tokens for.
+ [in] The metadata token <example-value> the method to return the class and interface tokens for.
 
  `pClass`
- [out] The metadata token representing the class that implements the method.
+ [out] The metadata token <example-value> the class that implements the method.
 
  `ptkIface`
- [out] The metadata token representing the interface that defines the implemented method.
+ [out] The metadata token <example-value> the interface that defines the implemented method.
 
 ## Remarks
 

@@ -129,9 +129,9 @@ the current position of the cursor down.
     will always be considered a single newline (which may be reasonable for
     reading files with `\r\n` line delimiter). **Default:** `100`.
   * `escapeCodeTimeout` {number} The duration `readline` will wait for a
-    character (when reading an ambiguous key sequence in milliseconds one that
-    can both form a complete key sequence using the input read so far and can
-    take additional input to complete a longer key sequence).
+    character (when reading an ambiguous key <example-value> in milliseconds one that
+    can both form a complete key <example-value> using the input read so far and can
+    take additional input to complete a longer key <example-value>).
     **Default:** `500`.
   * `tabSize` {integer} The number of spaces a tab is equal to (minimum 1).
     **Default:** `8`.

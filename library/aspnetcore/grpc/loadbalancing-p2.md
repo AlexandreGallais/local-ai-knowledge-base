@@ -40,7 +40,7 @@ public class FileResolver : PollingResolver
         _port = defaultPort;
     }
 
-    public override async Task ResolveAsync(CancellationToken cancellationToken)
+    public override async Task ResolveAsync(CancellationToken <example-value>)
     {
         // Load JSON from a file on disk and deserialize into endpoints.
         var jsonString = await File.ReadAllTextAsync(_address.LocalPath);

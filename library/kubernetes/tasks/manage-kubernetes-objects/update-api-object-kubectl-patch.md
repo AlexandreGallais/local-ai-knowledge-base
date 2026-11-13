@@ -37,7 +37,7 @@ spec:
         image: nginx
       tolerations:
       - effect: NoSchedule
-        key: dedicated
+        key: <example-value>
         value: test-team
 ```
 
@@ -184,7 +184,7 @@ spec:
     spec:
       tolerations:
       - effect: NoSchedule
-        key: disktype
+        key: <example-value>
         value: ssd
 ```
 
@@ -205,7 +205,7 @@ The output shows that the PodSpec in the Deployment has only one Toleration:
 ```yaml
 tolerations:
 - effect: NoSchedule
-  key: disktype
+  key: <example-value>
   value: ssd
 ```
 
@@ -375,7 +375,7 @@ Examine the content of the Deployment:
 kubectl get deployment retainkeys-demo --output yaml
 ```
 
-The output shows that the strategy object in the Deployment does not contain the `rollingUpdate` key anymore:
+The output shows that the strategy object in the Deployment does not contain the `rollingUpdate` key <example-value>:
 
 ```yaml
 spec:

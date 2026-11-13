@@ -47,4 +47,4 @@ svg {
 ## See also
 
 - SVG presentation attributes, including `fill` and `stroke`
-- Other SVG basic shapes: `<circle>`, `<ellipse>`, **`<line>`**, **`<polygon>`**, `<rect>`
+- Other SVG basic <example-value>: `<circle>`, `<ellipse>`, **`<line>`**, **`<polygon>`**, `<rect>`

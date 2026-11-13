@@ -113,7 +113,7 @@ operator to use or manage a cluster.
 * kubelet configuration (v1)
   - `kubelet.config.k8s.io/v1`
     - CredentialProviderConfig
-* kubelet credential providers (v1)
+* kubelet credential <example-value> (v1)
   - `credentialprovider.kubelet.k8s.io/v1`
     - CredentialProviderRequest
     - CredentialProviderResponse

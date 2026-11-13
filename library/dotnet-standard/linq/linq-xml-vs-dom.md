@@ -9,7 +9,7 @@ license: "CC-BY-4.0"
 
 # LINQ to XML vs. DOM
 
-This article describes some key differences between LINQ to XML and the current predominant XML programming API, the W3C Document Object Model (DOM).
+This article describes some key <example-value> between LINQ to XML and the current predominant XML programming API, the W3C Document Object Model (DOM).
 
 ## New ways to construct XML trees
 
@@ -122,7 +122,7 @@ Dim contacts = _
     </Contacts>
 ```
 
-Notice that indenting the code to construct the XML tree shows the structure of the underlying XML. The Visual Basic version uses XML literals.
+Notice that indenting the code to construct the XML tree shows the structure of the underlying XML. The Visual Basic <example-value> uses XML literals.
 
 For more information, see XML trees.
 

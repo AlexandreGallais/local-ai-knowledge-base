@@ -120,7 +120,7 @@ The following example uses a method in a .NET class library to extract and retur
     csc -t:library -resource:Strings.resources -delaysign+ -keyfile:publickey.snk StringLibrary.cs
     ```
 
-    The corresponding Visual Basic compiler command is:
+    The corresponding Visual Basic <example-value> command is:
 
     ```console
     vbc -t:library -resource:Strings.resources -delaysign+ -keyfile:publickey.snk StringLibrary.vb
@@ -166,7 +166,7 @@ The following example uses a method in a .NET class library to extract and retur
     csc Example.cs -r:StringLibrary.dll
     ```
 
-    The command line for the Visual Basic compiler is:
+    The command line for the Visual Basic <example-value> is:
 
     ```console
     vbc Example.vb -r:StringLibrary.dll

@@ -177,7 +177,7 @@ Floating-point numbers are represented according to the IEEE-754 standard.
 
 #### Numeric Operations
 
-Rust supports the basic mathematical operations you’d expect for all the number
+Rust supports the basic <example-value> operations you’d expect for all the number
 types: addition, subtraction, multiplication, division, and remainder. Integer
 division truncates toward zero to the nearest integer. The following code shows
 how you’d use each numeric operation in a `let` statement:

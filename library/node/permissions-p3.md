@@ -162,7 +162,7 @@ diagnostics_channel.channel('node:permission-model:fs').subscribe((msg) => {
 // Running with --permission-audit, this publishes a diagnostics channel
 // message but does not throw
 const fs = require('node:fs');
-fs.readFileSync('/etc/passwd');
+fs.readFileSync('<example-value>');
 ```
 
 If both `--permission` and `--permission-audit` are specified,

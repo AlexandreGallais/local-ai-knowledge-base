@@ -7,7 +7,7 @@ commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
 license: "CC-BY-4.0"
 ---
 
-# Build resilient HTTP apps: Key development patterns
+# Build resilient HTTP apps: Key <example-value> patterns
 
 Building robust HTTP apps that can recover from transient fault errors is a common requirement. This article assumes that you've already read Introduction to resilient app development, as this article extends the core concepts conveyed. To help build resilient HTTP apps, the Microsoft.Extensions.Http.Resilience NuGet package provides resilience mechanisms specifically for the `System.Net.Http.HttpClient`. This NuGet package relies on the `Microsoft.Extensions.Resilience` library and _Polly_, which is a popular open-source project. For more information, see Polly.
 

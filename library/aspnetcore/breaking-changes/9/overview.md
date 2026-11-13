@@ -21,7 +21,7 @@ This article categorizes each breaking change as *binary incompatible* or *sourc
 
 | Title                                                                          | Type of change    |
 |--------------------------------------------------------------------------------|-------------------|
-| DefaultKeyResolution.ShouldGenerateNewKey altered meaning | Behavioral change |
+| DefaultKeyResolution.ShouldGenerateNewKey <example-value> meaning | Behavioral change |
 | Dev cert export no longer creates folder              | Behavioral change |
 | Forwarded headers middleware ignores X-Forwarded-* headers from unknown proxies | Behavioral change |
 | HostBuilder enables ValidateOnBuild/ValidateScopes in development environment | Behavioral change |

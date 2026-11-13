@@ -222,7 +222,7 @@ Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal
 
   Installs version 2.0.0 of dotnetsay as a global tool.
 
-- **`dotnet tool install -g dotnetsay@2.1.7`**
+- **`dotnet tool install -g user@example.com`**
 
   Installs version 2.1.7 of dotnetsay as a global tool.
 
@@ -230,7 +230,7 @@ Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal
 
   Installs dotnetsay as a local tool for the current directory.
 
-- **`dotnet tool install dotnetsay@2.1.7`**
+- **`dotnet tool install user@example.com`**
 
   Installs version 2.1.7 of dotnetsay as a local tool for the current directory.
 

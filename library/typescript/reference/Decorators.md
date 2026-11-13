@@ -101,14 +101,14 @@ If we were to use decorator factories, we can observe this evaluation order with
 ```ts
 function first() {
   console.log("first(): factory evaluated");
-  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (target: any, propertyKey: <example-value>, descriptor: PropertyDescriptor) {
     console.log("first(): called");
   };
 }
 
 function second() {
   console.log("second(): factory evaluated");
-  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (target: any, propertyKey: <example-value>, descriptor: PropertyDescriptor) {
     console.log("second(): called");
   };
 }
@@ -231,7 +231,7 @@ The following is an example of a method decorator (`@enumerable`) applied to a m
 
 ```ts
 function enumerable(value: boolean) {
-  return function (target: any,propertyKey: string,descriptor: PropertyDescriptor) {
+  return function (target: any,propertyKey: <example-value>,descriptor: PropertyDescriptor) {
     descriptor.enumerable = value;
   };
 }
@@ -252,7 +252,7 @@ We can define the `@enumerable` decorator using the following function declarati
 
 ```ts
 function enumerable(value: boolean) {
-  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (target: any, propertyKey: <example-value>, descriptor: PropertyDescriptor) {
     descriptor.enumerable = value;
   };
 }
@@ -289,7 +289,7 @@ The following is an example of an accessor decorator (`@configurable`) applied t
 function configurable(value: boolean) {
   return function (
     target: any,
-    propertyKey: string,
+    propertyKey: <example-value>,
     descriptor: PropertyDescriptor
   ) {
     descriptor.configurable = value;
@@ -319,7 +319,7 @@ We can define the `@configurable` decorator using the following function declara
 
 ```ts
 function configurable(value: boolean) {
-  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (target: any, propertyKey: <example-value>, descriptor: PropertyDescriptor) {
     descriptor.configurable = value;
   };
 }
@@ -368,7 +368,7 @@ function format(formatString: string) {
   return Reflect.metadata(formatMetadataKey, formatString);
 }
 
-function getFormat(target: any, propertyKey: string) {
+function getFormat(target: any, propertyKey: <example-value>) {
   return Reflect.getMetadata(formatMetadataKey, target, propertyKey);
 }
 ```

@@ -65,7 +65,7 @@ SQL Server allows you to create sequences and use them as detailed in the genera
 
 For GUID primary keys, the provider automatically generates optimal sequential values, similar to SQL Server's NEWSEQUENTIALID function. Generating the value on the client is more efficient in some scenarios, i.e. an extra database round trip isn't needed to get the database-generated value, when a dependent is also being inserted that references that key.
 
-To have EF generate the same sequential GUID values for non-key properties, configure them as follows:
+To have EF generate the same sequential GUID values for non-key <example-value>, configure them as follows:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)

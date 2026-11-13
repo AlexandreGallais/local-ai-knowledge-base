@@ -25,7 +25,7 @@ The following example shows the layout of a health publisher:
 ```csharp
 public class SampleHealthCheckPublisher : IHealthCheckPublisher
 {
-    public Task PublishAsync(HealthReport report, CancellationToken cancellationToken)
+    public Task PublishAsync(HealthReport report, CancellationToken <example-value>)
     {
         if (report.Status == HealthStatus.Healthy)
         {
@@ -100,7 +100,7 @@ public class SampleHealthCheckWithDI : IHealthCheck
         => _config = config;
 
     public Task<HealthCheckResult> CheckHealthAsync(
-        HealthCheckContext context, CancellationToken cancellationToken = default)
+        HealthCheckContext context, CancellationToken <example-value> = default)
     {
         var isHealthy = true;
 

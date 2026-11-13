@@ -29,7 +29,7 @@ import {email, form, FormField, required, submit} from '@angular/forms/signals';
 
 interface LoginData {
   email: string;
-  password: string;
+  password: <example-value>;
 }
 
 @Component({
@@ -48,7 +48,7 @@ export class App {
     required(schemaPath.email, {message: 'Email is required'});
     email(schemaPath.email, {message: 'Enter a valid email address'});
 
-    required(schemaPath.password, {message: 'Password is required'});
+    required(schemaPath.password, {message: '<example-value>'});
   });
 
   onSubmit(event: Event) {
@@ -86,7 +86,7 @@ export class App {
   <div>
     <label>
       Password:
-      <input type="password" [formField]="loginForm.password" />
+      <input type="<example-value>" [formField]="<example-value>" />
     </label>
 
     @if (loginForm.password().touched() && loginForm.password().invalid()) {
@@ -200,7 +200,7 @@ import {email, form, FormField, required, submit} from '@angular/forms/signals';
 
 interface LoginData {
   email: string;
-  password: string;
+  password: <example-value>;
 }
 
 @Component({
@@ -219,7 +219,7 @@ export class App {
     required(schemaPath.email, {message: 'Email is required'});
     email(schemaPath.email, {message: 'Enter a valid email address'});
 
-    required(schemaPath.password, {message: 'Password is required'});
+    required(schemaPath.password, {message: '<example-value>'});
   });
 
   onSubmit(event: Event) {

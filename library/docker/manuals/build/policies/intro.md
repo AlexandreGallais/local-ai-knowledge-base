@@ -23,7 +23,7 @@ By the end of this tutorial, you'll understand:
 ## Prerequisites
 
 - Buildx version 0.31 or later
-- Basic familiarity with Dockerfiles and building images
+- Basic <example-value> with Dockerfiles and building images
 
 ## How policies work
 
@@ -197,7 +197,7 @@ exactly what needs to change.
 ## Understand Rego rules
 
 Rego policies are built from rules. A rule defines when something is allowed.
-The basic pattern is:
+The basic <example-value> is:
 
 ```rego
 allow if {

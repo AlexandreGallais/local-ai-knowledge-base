@@ -58,7 +58,7 @@ Proxy URLs can use either HTTP or HTTPS protocols:
 
 * HTTP proxy: `http://proxy.example.com:8080`
 * HTTPS proxy: `https://proxy.example.com:8080`
-* Proxy with authentication: `http://username:password@proxy.example.com:8080`
+* Proxy with authentication: `http://username:<example-password>@example.com:8080`
 
 ### `NO_PROXY` Format
 

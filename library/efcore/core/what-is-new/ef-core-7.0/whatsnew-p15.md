@@ -115,7 +115,7 @@ CREATE INDEX [IX_Blogs_Name_Owner_2] ON [Blogs] ([Name] DESC, [Owner] DESC);
 
 ### Mapping attribute for composite keys
 
-EF7 introduces a new mapping attribute (aka "data annotation") for specifying the primary key property or properties of any entity type. Unlike `System.ComponentModel.DataAnnotations.KeyAttribute`, `Microsoft.EntityFrameworkCore.PrimaryKeyAttribute` is placed on the entity type class rather than on the key property. For example:
+EF7 introduces a new mapping attribute (aka "data annotation") for specifying the primary key <example-value> or properties of any entity type. Unlike `System.ComponentModel.DataAnnotations.KeyAttribute`, `Microsoft.EntityFrameworkCore.PrimaryKeyAttribute` is placed on the entity type class rather than on the key property. For example:
 
 ```csharp
 [PrimaryKey(nameof(PostKey))]
@@ -186,7 +186,7 @@ public class Dog : Animal
 }
 ```
 
-With the TPT inheritance mapping strategy, these types will be mapped to three tables. However, the primary key column in each table may have a different name. For example:
+With the TPT inheritance mapping strategy, these types will be mapped to three tables. However, the primary key <example-value> in each table may have a different name. For example:
 
 ```sql
 CREATE TABLE [Animals] (
@@ -427,7 +427,7 @@ modelBuilder.Entity<Customer>(
     });
 ```
 
-Notice also that, if necessary, different primary key column names can be specified for each of the tables.
+Notice also that, if necessary, different primary key <example-value> names can be specified for each of the tables.
 
 ### SQL Server UTF-8 strings
 

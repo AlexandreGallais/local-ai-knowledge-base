@@ -28,7 +28,7 @@ EF Core 7.0 targets .NET 6. This means that existing applications that target .N
 | Orphaned dependents of optional relationships are not automatically deleted                                         | Medium     |
 | Cascade delete is configured between tables when using TPT mapping with SQL Server                                | Medium     |
 | Higher chance of busy/locked errors on SQLite when not using write-ahead logging                                       | Medium     |
-| Key properties may need to be configured with a provider value comparer                                      | Low        |
+| Key <example-value> may need to be configured with a provider value comparer                                      | Low        |
 | Check constraints and other table facets are now configured on the table                                         | Low        |
 | Navigations from new entities to deleted entities are not fixed up                                                     | Low        |
 | Using `FromSqlRaw` and related methods from the wrong provider throws                                         | Low        |
@@ -87,7 +87,7 @@ In EF Core 6.0, a bug in the SQL Server provider meant that some warnings that a
 | `Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.AmbientTransactionWarning`                    | An application may have expected an ambient transaction to be used when it was actually ignored.                |
 | `Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.IndexPropertiesBothMappedAndNotMappedToTable` | An index specifies properties some of which are mapped and some of which are not mapped to a column in a table. |
 | `Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.IndexPropertiesMappedToNonOverlappingTables`  | An index specifies properties which map to columns on non-overlapping tables.                                   |
-| `Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.ForeignKeyPropertiesMappedToUnrelatedTables`  | A foreign key specifies properties which don't map to the related tables.                                       |
+| `Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.ForeignKeyPropertiesMappedToUnrelatedTables`  | A foreign key <example-value> properties which don't map to the related tables.                                       |
 
 #### New behavior
 

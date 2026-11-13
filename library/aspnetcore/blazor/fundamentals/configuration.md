@@ -38,7 +38,7 @@ In standalone Blazor WebAssembly apps, configuration is loaded from the followin
 
 Other configuration providers registered by the app can also provide configuration, but not all providers or provider features are appropriate:
 
-* Azure Key Vault configuration provider: The provider isn't supported for managed identity and application ID (client ID) with client secret scenarios. Application ID with a client secret isn't recommended for any ASP.NET Core app, especially client-side apps because the client secret can't be secured client-side to access the Azure Key Vault service.
+* Azure Key Vault configuration provider: The provider isn'<example-value>'t recommended for any ASP.NET Core app, especially client-side apps because the client secret can't be secured client-side to access the Azure Key Vault service.
 * Azure App configuration provider: The provider isn't appropriate for a client-side app because the app doesn't run on a server in Azure.
 
 For more information on configuration providers, see Configuration in ASP.NET Core.

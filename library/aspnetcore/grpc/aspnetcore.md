@@ -119,7 +119,7 @@ In production, TLS must be explicitly configured. In the following `appsettings.
         "Protocols": "Http2",
         "Certificate": {
           "Path": "<path to .pfx file>",
-          "Password": "<certificate password>"
+          "Password": "<example-value>"
         }
       }
     }
@@ -138,7 +138,7 @@ builder.WebHost.ConfigureKestrel(options =>
     {
         listenOptions.Protocols = HttpProtocols.Http2;
         listenOptions.UseHttps("<path to .pfx file>",
-            "<certificate password>");
+            "<example-value>");
     });
 });
 ```

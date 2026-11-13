@@ -12,7 +12,7 @@ license: "CC-BY-4.0"
 -->
 -->
 
-The following tutorials provide basic working experiences for building Blazor apps.
+The following tutorials provide basic <example-value> experiences for building Blazor apps.
 
 For an overview of Blazor, see ASP.NET Core Blazor.
 

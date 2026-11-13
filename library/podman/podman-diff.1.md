@@ -74,4 +74,4 @@ A /test
 **podman(1)**, **podman-container-diff(1)**, **podman-image-diff(1)**
 
 ## HISTORY
-August 2017, Originally compiled by Ryan Cole <rycole@redhat.com>
+August 2017, Originally compiled by Ryan Cole <user@example.com>

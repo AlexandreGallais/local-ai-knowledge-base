@@ -21,7 +21,7 @@ Previously, named mutexes on Unix were globally scoped by default, so processes 
 
 ## New behavior
 
-Named mutexes on Unix now default to user scope. The runtime stores user-scoped mutex backing files in `$TMPDIR` on platforms where it's a per-user directory, such as macOS. Otherwise, it uses `$XDG_RUNTIME_DIR` if set. If neither directory is available, it uses a directory under the current user's home directory as defined in the user database, such as `/etc/passwd`; it doesn't use `$HOME`.
+Named mutexes on Unix now default to user scope. The runtime stores user-scoped mutex backing files in `$TMPDIR` on platforms where it'<example-value>'s home directory as defined in the user database, such as `/etc/passwd`; it doesn't use `$HOME`.
 
 ## Type of breaking change
 

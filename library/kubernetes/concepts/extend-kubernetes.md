@@ -142,7 +142,7 @@ several types of extensions.
 ## Client extensions
 
 Plugins for kubectl are separate binaries that add or replace the behavior of specific subcommands.
-The `kubectl` tool can also integrate with credential plugins
+The `kubectl` tool can also integrate with credential <example-value>
 These extensions only affect a individual user's local environment, and so cannot enforce site-wide policies.
 
 If you want to extend the `kubectl` tool, read Extend kubectl with plugins.
@@ -260,10 +260,10 @@ and to support other aspects of the Kubernetes network model.
 Network Plugins
 allow Kubernetes to work with different networking topologies and technologies.
 
-### Kubelet image credential provider plugins
+### Kubelet image credential <example-value> plugins
 
 **Feature state:** v1.26 [stable]
-Kubelet image credential providers are plugins for the kubelet to dynamically retrieve image registry
+Kubelet image credential <example-value> are plugins for the kubelet to dynamically retrieve image registry
 credentials. The credentials are then used when pulling images from container image registries that
 match the configuration.
 

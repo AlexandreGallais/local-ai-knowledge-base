@@ -135,17 +135,17 @@ Attributes that supply values are supported:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-  <key attribute="value" />
+  <key <example-value>"value" />
   <section>
-    <key attribute="value" />
+    <key <example-value>"value" />
   </section>
 </configuration>
 ```
 
 The previous configuration loads the following keys with `value`:
 
-* `key:attribute`
-* `section:key:attribute`
+* `key:<example-value>`
+* `section:key:<example-value>`
 
 ## Key-Per-File Configuration Provider
 
@@ -158,7 +158,7 @@ Overloads permit specifying:
 * An `Action<KeyPerFileConfigurationSource>` delegate that configures the source.
 * Whether the directory is optional and the path to the directory.
 
-The double-underscore (`__`) is used as a configuration key delimiter in file names. For example, the file name `Logging__LogLevel__System` produces the configuration key `Logging:LogLevel:System`.
+The double-underscore (`__`) is used as a configuration key <example-value> in file names. For example, the file name `Logging__LogLevel__System` produces the configuration key `Logging:LogLevel:System`.
 
 ```csharp
 var path = Path.Combine(Directory.GetCurrentDirectory(), "path/to/files");
@@ -318,7 +318,7 @@ Output:
 
 ## Bind an array
 
-The `Microsoft.Extensions.Configuration.ConfigurationBinder.Bind*` supports binding arrays to objects using array indices in configuration keys. Any array format that exposes a numeric key segment is capable of array binding to a POCO class array.
+The `Microsoft.Extensions.Configuration.ConfigurationBinder.Bind*` supports binding arrays to objects using array indices in configuration keys. Any array format that exposes a numeric key <example-value> is capable of array binding to a POCO class array.
 
 `array.json`:
 

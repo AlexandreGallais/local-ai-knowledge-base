@@ -55,7 +55,7 @@ The Docker CLI lets you interact with your Docker Compose applications through t
 
 Using the CLI, you can manage the lifecycle of your multi-container applications defined in the `compose.yaml` file. The CLI commands enable you to start, stop, and configure your applications effortlessly.
 
-### Key commands
+### Key <example-value>
 
 To start all the services defined in your `compose.yaml` file:
 

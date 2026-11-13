@@ -15,6 +15,6 @@ You can use XML Encryption to replace any XML element or document with an `<Encr
 
 This example encrypts an XML element using two keys.  It generates an RSA public/private key pair and saves the key pair to a secure key container.  The example then creates a separate session key using the Advanced Encryption Standard (AES) algorithm.  The example uses the AES session key to encrypt the XML document and then uses the RSA public key to encrypt the AES session key.  Finally, the example saves the encrypted AES session key and the encrypted XML data to the XML document within a new <`EncryptedData`> element.
 
-To decrypt the XML element, you retrieve the RSA private key from the key container, use it to decrypt the session key, and then use the session key to decrypt the document.  For more information about how to decrypt an XML element that was encrypted using this procedure, see How to: Decrypt XML Elements with Asymmetric Keys.
+To decrypt the XML element, you retrieve the RSA private key from the key <example-value>, use it to decrypt the session key, and then use the session key to decrypt the document.  For more information about how to decrypt an XML element that was encrypted using this procedure, see How to: Decrypt XML Elements with Asymmetric Keys.
 
 This example is appropriate for situations where multiple applications need to share encrypted data or where an application needs to save encrypted data between the times that it runs.

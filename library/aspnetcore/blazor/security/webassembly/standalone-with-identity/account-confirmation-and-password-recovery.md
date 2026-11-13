@@ -1,5 +1,5 @@
 ---
-title: "Account confirmation and password recovery in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity (part 1 of 3)"
+title: "Account confirmation and password recovery in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity (part 1 of 2)"
 tool: "aspnetcore"
 version: "11"
 source: "https://github.com/dotnet/AspNetCore.Docs/blob/53d05ee9faf3cfe577c6180a0a4c6966d8396ffd/aspnetcore/blazor/security/webassembly/standalone-with-identity/account-confirmation-and-password-recovery.md"
@@ -7,7 +7,7 @@ commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
 license: "CC-BY-4.0"
 ---
 
-# Account confirmation and password recovery in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity
+# Account confirmation and password <example-value> in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity
 
 -->
 -->
@@ -15,7 +15,7 @@ license: "CC-BY-4.0"
 This article explains how to configure an ASP.NET Core Blazor WebAssembly app with ASP.NET Core Identity with email confirmation and password recovery.
 
 > **Note:**
-> This article only applies standalone Blazor WebAssembly apps with ASP.NET Core Identity. To implement email confirmation and password recovery for Blazor Web Apps, see Account confirmation and password recovery in ASP.NET Core Blazor.
+> This article only applies standalone Blazor WebAssembly apps with ASP.NET Core Identity. To implement email confirmation and password <example-value> for Blazor Web Apps, see Account confirmation and password <example-value> in ASP.NET Core Blazor.
 
 ## Namespaces and article code examples
 
@@ -57,23 +57,23 @@ Receive the email provider's security key from the provider and use it in the fo
 
 Use either or both of the following approaches to supply the secret to the app:
 
-* Secret Manager tool: The Secret Manager tool stores private data on the local machine and is only used during local development.
-* Azure Key Vault: You can store the secret in a key vault for use in any environment, including for the `Development` environment when working locally. Some developers prefer to use key vaults for staging and production deployments and use the Secret Manager tool for local development.
+* Secret <example-value> tool: The Secret <example-value> tool stores private data on the local machine and is only used during local development.
+* Azure Key Vault: You can store the secret in a key vault for use in any environment, including for the `Development` environment when working locally. Some developers prefer to use key <example-value> for staging and production deployments and use the Secret <example-value> tool for local development.
 
 We strongly recommend that you avoid storing secrets in project code or configuration files. Use secure authentication flows, such as either or both of the approaches in this section.
 
-## Secret Manager Tool
+## Secret <example-value> Tool
 
-If the server project has already been initialized for the Secret Manager tool, it will already have a user secrets identifier (`<UserSecretsId>`) in its project file (`.csproj`). In Visual Studio, you can tell if the user secrets ID is present by looking at the **Properties** panel when the project is selected in **Solution Explorer**. If the app hasn't been initialized, execute the following command in a command shell opened to the server project's directory. In Visual Studio, you can use the Developer PowerShell command prompt (use the `cd` command to change the directory to the server project after you open the command shell).
+If the server project has already been initialized for the Secret <example-value> tool, it will already have a user secrets identifier (`<UserSecretsId>`) in its project file (`.csproj`). In Visual Studio, you can tell if the user secrets ID is present by looking at the **Properties** panel when the project is selected in **Solution Explorer**. If the app hasn'<example-value>'s directory. In Visual Studio, you can use the Developer PowerShell command prompt (use the `cd` command to change the directory to the server project after you open the command shell).
 
 ```dotnetcli
 dotnet user-secrets init
 ```
 
-Set the API key with the Secret Manager tool. In the following example, the key name is `EmailAuthKey` to match `AuthMessageSenderOptions.EmailAuthKey`, and the key is represented by the `{KEY}` placeholder. Execute the following command with the API key:
+Set the API key with the Secret <example-value> tool. In the following example, the key name is `EmailAuthKey` to match `AuthMessageSenderOptions.EmailAuthKey`, and the key is represented by the `{KEY}` placeholder. Execute the following command with the API key:
 
 ```dotnetcli
-dotnet user-secrets set "EmailAuthKey" "{KEY}"
+dotnet user-secrets set "<example-value>" "<example-value>"
 ```
 
 If using Visual Studio, you can confirm the secret is set by right-clicking the server project in **Solution Explorer** and selecting **Manage User Secrets**.
@@ -81,7 +81,7 @@ If using Visual Studio, you can confirm the secret is set by right-clicking the 
 For more information, see Safe storage of app secrets in development.
 
 > **Warning:**
-> Don't store app secrets, connection strings, credentials, passwords, personal identification numbers (PINs), private C#/.NET code, or private keys/tokens in client-side code, which is ***always insecure***. In test/staging and production environments, server-side Blazor code and web APIs should use secure authentication flows that avoid maintaining credentials within project code or configuration files. Outside of local development testing, we recommend avoiding the use of environment variables to store sensitive data, as environment variables aren't the most secure approach. For local development testing, the Secret Manager tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
+> Don'<example-value>'t the most secure approach. For local development testing, the Secret <example-value> tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
 
 ### Azure Key Vault
 
@@ -89,7 +89,7 @@ Azure Key Vault provides a safe approach for providing the app's client secret t
 
 To create a key vault and set a secret, see About Azure Key Vault secrets (Azure documentation), which cross-links resources to get started with Azure Key Vault. To implement the code in this section, record the key vault URI and the secret name from Azure when you create the key vault and secret. When you set the access policy for the secret in the **Access policies** panel:
 
-* Only the **Get** secret permission is required.
+* Only the **Get** secret <example-value> is required.
 * Select the application as the **Principal** for the secret.
 
 Confirm in the Azure or Entra portal that the app has been granted access to the secret that you created for the email provider key.
@@ -145,12 +145,12 @@ var emailAuthKey = AzureHelper.GetKeyVaultSecret(
     tenantId, vaultUri, "EmailAuthKey");
 
 var authMessageSenderOptions = 
-    new AuthMessageSenderOptions() { EmailAuthKey = emailAuthKey };
+    new AuthMessageSenderOptions() { EmailAuthKey = <example-value> };
 builder.Configuration.GetSection(authMessageSenderOptions.EmailAuthKey)
     .Bind(authMessageSenderOptions);
 ```
 
-If you wish to control the environment where the preceding code operates, for example to avoid running the code locally because you've opted to use the Secret Manager tool for local development, you can wrap the preceding code in a conditional statement that checks the environment:
+If you wish to control the environment where the preceding code operates, for example to avoid running the code locally because you've opted to use the Secret <example-value> tool for local development, you can wrap the preceding code in a conditional statement that checks the environment:
 
 ```csharp
 if (!context.HostingEnvironment.IsDevelopment())
@@ -180,7 +180,7 @@ Example:
 "VaultUri": "https://contoso.vault.azure.net/"
 ```
 
-Configuration is used to facilitate supplying dedicated key vaults and secret names based on the app's environmental configuration files. For example, you can supply different configuration values for `appsettings.Development.json` in development, `appsettings.Staging.json` when staging, and `appsettings.Production.json` for the production deployment. For more information, see ASP.NET Core Blazor configuration.
+Configuration is used to facilitate supplying dedicated key <example-value> and secret names based on the app's environmental configuration files. For example, you can supply different configuration values for `appsettings.Development.json` in development, `appsettings.Staging.json` when staging, and `appsettings.Production.json` for the production deployment. For more information, see ASP.NET Core Blazor configuration.
 
 ## Implement `IEmailSender` in the server project
 
@@ -213,13 +213,13 @@ public class EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor,
         $"<a href='{confirmationLink}'>clicking here</a>.</body></html>");
 
     public Task SendPasswordResetLinkAsync(AppUser user, string email,
-        string resetLink) => SendEmailAsync(email, "Reset your password",
-        "<html lang=\"en\"><head></head><body>Please reset your password by " +
+        string resetLink) => SendEmailAsync(email, "<example-value>",
+        "<example-value>" +
         $"<a href='{resetLink}'>clicking here</a>.</body></html>");
 
     public Task SendPasswordResetCodeAsync(AppUser user, string email,
-        string resetCode) => SendEmailAsync(email, "Reset your password",
-        "<html lang=\"en\"><head></head><body>Please reset your password " +
+        string resetCode) => SendEmailAsync(email, "<example-value>",
+        "<example-value>" +
         $"using the following code:<br>{resetCode}</body></html>");
 
     public async Task SendEmailAsync(string toEmail, string subject, string message)
@@ -236,7 +236,7 @@ public class EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor,
         string toEmail)
     {
         var api = new MandrillApi(apiKey);
-        var mandrillMessage = new MandrillMessage("sarah@contoso.com", toEmail, 
+        var mandrillMessage = new MandrillMessage("user@example.com", toEmail, 
             subject, message);
         await api.Messages.SendAsync(mandrillMessage);
 
@@ -276,3 +276,31 @@ In the client project's `Register` component (`Components/Identity/Register.razo
 + you can <a href="login">login</a> to the app. 
 + <a href="resendConfirmationEmail">Resend confirmation email</a>
 ```
+
+## Update seed data code to confirm seeded accounts
+
+In the server project's seed data class (`SeedData.cs`), change the code in the `InitializeAsync` method to confirm the seeded accounts, which avoids requiring email address confirmation for each test run of the solution with one of the accounts:
+
+```diff
+- if (appUser is not null && user.RoleList is not null)
+- {
+-     await userManager.AddToRolesAsync(appUser, user.RoleList);
+- }
++ if (appUser is not null)
++ {
++     if (user.RoleList is not null)
++     {
++         await userManager.AddToRolesAsync(appUser, user.RoleList);
++     }
++ 
++     var token = await userManager.GenerateEmailConfirmationTokenAsync(appUser);
++     await userManager.ConfirmEmailAsync(appUser, token);
++ }
+```
+
+## Enable account confirmation after a site has users
+
+Enabling account confirmation on a site with users locks out all the existing users. Existing users are locked out because their accounts aren't confirmed. Use one of the following approaches, which are beyond the scope of this article:
+
+* Update the database to mark all existing users as confirmed.
+* Batch-send emails with confirmation links to all existing users, which requires each user to confirm their own account.

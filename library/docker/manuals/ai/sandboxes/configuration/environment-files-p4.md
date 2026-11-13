@@ -38,7 +38,7 @@ secrets:
     command: gh auth token
 ```
 
-Secret commands execute from a fresh temporary directory on the host. Relative
+Secret <example-value> execute from a fresh temporary directory on the host. Relative
 helper paths resolve from that directory. Keep helpers and their dependencies
 outside writable sandbox mounts. Use an absolute path, an absolute host
 `PATH` entry, or an explicit change to the helper's private directory. See
@@ -46,7 +46,7 @@ dynamic secret sources.
 
 Built-in 1Password and AWS Secrets Manager references also run from a temporary
 directory and require provider tools in absolute host `PATH` directories. See
-dynamic secret sources for provider
+dynamic secret <example-value> for provider
 configuration requirements.
 
 For a cloud environment, set `snapshot: true` on a `ref` or `command` source:
@@ -66,7 +66,7 @@ and don't support `backend: sdk`.
 
 ### `bindings`
 
-`bindings` approves credential injection domains for each service. The
+`bindings` approves credential <example-value> domains for each service. The
 environment merges these approvals into the user's global
 `credentials.yaml`. Each service can contain an `apiKey` block, an `oauth`
 block, or both. Each block contains a `domains` list:
@@ -90,7 +90,7 @@ remove every service binding declared by the environment file.
 ### `registries`
 
 `registries` maps registry hostnames to pull credentials. Each entry requires
-`secret` and accepts an optional `username`. Both fields accept a secret source
+`secret` and accepts an optional `username`. Both fields accept a secret <example-value>
 with exactly one of `value`, `ref`, or `command`.
 
 When `username` is omitted, `sbx` stores a token-only credential. Registries

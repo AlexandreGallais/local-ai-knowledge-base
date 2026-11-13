@@ -24,7 +24,7 @@ Manage additional parameters to a login request with the following methods one o
 In the following `LoginDisplay` component example, additional parameters are added to the login request:
 
 * `prompt` is set to `login`: Forces the user to enter their credentials on that request, negating single sign on.
-* `loginHint` is set to `peter@contoso.com`: Pre-fills the username/email address field of the sign-in page for the user to `peter@contoso.com`. Apps often use this parameter during re-authentication, having already extracted the username from a previous sign in using the `preferred_username` claim.
+* `loginHint` is set to `user@example.com`: Pre-fills the username/email address field of the sign-in page for the user to `user@example.com`. Apps often use this parameter during re-authentication, having already extracted the username from a previous sign in using the `preferred_username` claim.
 
 `Shared/LoginDisplay.razor`:
 
@@ -59,7 +59,7 @@ In the following `LoginDisplay` component example, additional parameters are add
             };
 
         requestOptions.TryAddAdditionalParameter("prompt", "login");
-        requestOptions.TryAddAdditionalParameter("loginHint", "peter@contoso.com");
+        requestOptions.TryAddAdditionalParameter("loginHint", "user@example.com");
 
         Navigation.NavigateToLogin("authentication/login", requestOptions);
     }
@@ -71,9 +71,9 @@ For more information, see the following resources:
 * `Microsoft.AspNetCore.Components.WebAssembly.Authentication.InteractiveRequestOptions`
 * Popup request parameter list
 
-### Customize options before obtaining a token interactively
+### Customize options before obtaining a token <example-value>
 
-If an `Microsoft.AspNetCore.Components.WebAssembly.Authentication.AccessTokenNotAvailableException` occurs, manage additional parameters for a new identity provider access token request with the following methods one or more times on a new instance of `Microsoft.AspNetCore.Components.WebAssembly.Authentication.InteractiveRequestOptions`:
+If an `Microsoft.AspNetCore.Components.WebAssembly.Authentication.AccessTokenNotAvailableException` occurs, manage additional parameters for a new identity provider access token <example-value> with the following methods one or more times on a new instance of `Microsoft.AspNetCore.Components.WebAssembly.Authentication.InteractiveRequestOptions`:
 
 * `Microsoft.AspNetCore.Components.WebAssembly.Authentication.InteractiveRequestOptions.TryAddAdditionalParameter*`
 * `Microsoft.AspNetCore.Components.WebAssembly.Authentication.InteractiveRequestOptions.TryRemoveAdditionalParameter*`
@@ -82,7 +82,7 @@ If an `Microsoft.AspNetCore.Components.WebAssembly.Authentication.AccessTokenNot
 In the following example that obtains JSON data via web API, additional parameters are added to the redirect request if an access token isn't available (`Microsoft.AspNetCore.Components.WebAssembly.Authentication.AccessTokenNotAvailableException` is thrown):
 
 * `prompt` is set to `login`: Forces the user to enter their credentials on that request, negating single sign on.
-* `loginHint` is set to `peter@contoso.com`: Pre-fills the username/email address field of the sign-in page for the user to `peter@contoso.com`. Apps often use this parameter during re-authentication, having already extracted the username from a previous sign in using the `preferred_username` claim.
+* `loginHint` is set to `user@example.com`: Pre-fills the username/email address field of the sign-in page for the user to `user@example.com`. Apps often use this parameter during re-authentication, having already extracted the username from a previous sign in using the `preferred_username` claim.
 
 ```csharp
 try
@@ -95,7 +95,7 @@ catch (AccessTokenNotAvailableException ex)
 {
     ex.Redirect(requestOptions => {
         requestOptions.TryAddAdditionalParameter("prompt", "login");
-        requestOptions.TryAddAdditionalParameter("loginHint", "peter@contoso.com");
+        requestOptions.TryAddAdditionalParameter("loginHint", "user@example.com");
     });
 }
 ```
@@ -112,7 +112,7 @@ For more information, see the following resources:
 
 ### Customize options when using an `IAccessTokenProvider`
 
-If obtaining a token fails when using an `Microsoft.AspNetCore.Components.WebAssembly.Authentication.IAccessTokenProvider`, manage additional parameters for a new identity provider access token request with the following methods one or more times on a new instance of `Microsoft.AspNetCore.Components.WebAssembly.Authentication.InteractiveRequestOptions`:
+If obtaining a token fails when using an `Microsoft.AspNetCore.Components.WebAssembly.Authentication.IAccessTokenProvider`, manage additional parameters for a new identity provider access token <example-value> with the following methods one or more times on a new instance of `Microsoft.AspNetCore.Components.WebAssembly.Authentication.InteractiveRequestOptions`:
 
 * `Microsoft.AspNetCore.Components.WebAssembly.Authentication.InteractiveRequestOptions.TryAddAdditionalParameter*`
 * `Microsoft.AspNetCore.Components.WebAssembly.Authentication.InteractiveRequestOptions.TryRemoveAdditionalParameter*`
@@ -121,7 +121,7 @@ If obtaining a token fails when using an `Microsoft.AspNetCore.Components.WebAss
 In the following example that attempts to obtain an access token for the user, additional parameters are added to the login request if the attempt to obtain a token fails when `Microsoft.AspNetCore.Components.WebAssembly.Authentication.AccessTokenResult.TryGetToken*` is called:
 
 * `prompt` is set to `login`: Forces the user to enter their credentials on that request, negating single sign on.
-* `loginHint` is set to `peter@contoso.com`: Pre-fills the username/email address field of the sign-in page for the user to `peter@contoso.com`. Apps often use this parameter during re-authentication, having already extracted the username from a previous sign in using the `preferred_username` claim.
+* `loginHint` is set to `user@example.com`: Pre-fills the username/email address field of the sign-in page for the user to `user@example.com`. Apps often use this parameter during re-authentication, having already extracted the username from a previous sign in using the `preferred_username` claim.
 
 ```csharp
 var tokenResult = await TokenProvider.RequestAccessToken(
@@ -132,9 +132,9 @@ var tokenResult = await TokenProvider.RequestAccessToken(
 
 if (!tokenResult.TryGetToken(out var token))
 {
-    tokenResult.InteractionOptions.TryAddAdditionalParameter("prompt", "login");
-    tokenResult.InteractionOptions.TryAddAdditionalParameter("loginHint", 
-        "peter@contoso.com");
+    tokenResult.InteractionOptions.TryAddAdditionalParameter("<example-value>", "<example-value>");
+    tokenResult.InteractionOptions.TryAddAdditionalParameter("<example-value>", 
+        "user@example.com");
 
     Navigation.NavigateToLogin(accessTokenResult.InteractiveRequestUrl, 
         accessTokenResult.InteractionOptions);

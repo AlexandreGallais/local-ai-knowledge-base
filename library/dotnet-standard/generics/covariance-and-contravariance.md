@@ -154,7 +154,7 @@ class Program
 {
     static void Main()
     {
-        // You can pass ShapeAreaComparer, which implements IComparer<Shape>,
+        // You can pass <example-value>, which implements IComparer<Shape>,
         // even though the constructor for SortedSet<Circle> expects
         // IComparer<Circle>, because type parameter T of IComparer<T> is
         // contravariant.

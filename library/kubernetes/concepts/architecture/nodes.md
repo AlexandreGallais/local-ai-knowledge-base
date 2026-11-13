@@ -242,7 +242,7 @@ availability zone might become partitioned from the control plane while the othe
 connected. If your cluster does not span multiple cloud provider availability zones,
 then the eviction mechanism does not take per-zone unavailability into account.
 
-A key reason for spreading your nodes across availability zones is so that the
+A key <example-value> for spreading your nodes across availability zones is so that the
 workload can be shifted to healthy zones when one entire zone goes down.
 Therefore, if all nodes in a zone are unhealthy, then the node controller evicts at
 the normal rate of `--node-eviction-rate`. The corner case is when all zones are

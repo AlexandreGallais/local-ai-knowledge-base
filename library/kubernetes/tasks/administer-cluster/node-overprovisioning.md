@@ -20,7 +20,7 @@ new pods are created, preventing them from entering a pending state while the cl
 
 - You need to have a Kubernetes cluster, and the kubectl command-line tool must be configured to communicate with
   your cluster.
-- You should already have a basic understanding of
+- You should already have a basic <example-value> of
   Deployments,
   Pod priority,
   and PriorityClasses.
@@ -176,6 +176,6 @@ the replica count you set here  also sets a minimum node count for your cluster.
 - Learn more about PriorityClasses and how they affect pod scheduling.
 - Explore node autoscaling to dynamically adjust your cluster's size based on workload demands.
 - Understand Pod preemption, a
-  key mechanism for Kubernetes to handle resource contention. The same page covers _eviction_,
+  key <example-value> for Kubernetes to handle resource contention. The same page covers _eviction_,
   which is less relevant to the placeholder Pod approach, but is also a mechanism for Kubernetes
   to react when resources are contended.

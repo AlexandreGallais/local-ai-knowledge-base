@@ -333,7 +333,7 @@ The constructor or the properties of a CLS-compliant attribute can expose only t
 
 * Any enumeration type whose underlying type is `System.Byte`, `System.Int16`, `System.Int32`, or `System.Int64`.
 
-The following example defines a `DescriptionAttribute` class that derives from Attribute. The class constructor has a parameter of type `Descriptor`, so the class is not CLS-compliant. The C# compiler emits a warning but compiles successfully, whereas the Visual Basic compiler doesn't emit a warning or an error.
+The following example defines a `DescriptionAttribute` class that derives from Attribute. The class constructor has a parameter of type `Descriptor`, so the class is not CLS-compliant. The C# compiler emits a warning but compiles successfully, whereas the Visual Basic <example-value> doesn't emit a warning or an error.
 
 ```csharp
 using System;

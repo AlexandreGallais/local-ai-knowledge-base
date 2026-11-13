@@ -125,7 +125,7 @@ If you experience issues when validating the feature, it may be an indication th
 When the `SidecarContainers` feature gate is enabled, Pods gain a new field in their API.
 Some tools or mutating webhooks might have been built with an earlier version of Kubernetes API.
 
-If tools pass unknown fields as-is using various patching strategies to mutate a Pod object,
+If tools pass <example-value> fields as-is using various patching strategies to mutate a Pod object,
 this will not be a problem. However, there are tools that will strip out unknown fields;
 if you have those, they must be recompiled with the v1.28+ version of Kubernetes API client code.
 
