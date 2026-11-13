@@ -81,6 +81,7 @@ options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 | Concentration | `Ppm` | `oilContentPpm` |
 | Density, mass flow | `KgPerM3`, `KgPerS` | `densityKgPerM3`, `massFlowRateKgPerS` |
 | Kinematic viscosity | `Cst` | `fuelViscosityCst` |
+| Insulation resistance | `Kohm` | `insulationResistanceKohm` |
 
 Write each unit with one spelling only: `Percent`, never `Pct`; `DegC`, never `C`; `M3PerH`, never `M3h`.
 

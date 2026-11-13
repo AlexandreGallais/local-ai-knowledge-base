@@ -50,5 +50,11 @@
     "angular-lib",
     "ts-lib",
     "ts-pure-lib"
+  ],
+  "synoptics": [
+    "angular-app",
+    "angular-lib",
+    "ts-lib",
+    "ts-pure-lib"
   ]
 }
