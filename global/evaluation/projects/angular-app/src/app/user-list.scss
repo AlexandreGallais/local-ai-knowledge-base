@@ -1,0 +1,13 @@
+.user-list {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0;
+}
+
+.user-list-item {
+  list-style: none;
+}
+
+.user-list-count {
+  color: #333;
+}

@@ -1,0 +1,4 @@
+{
+  "src/round-to-decimals.ts": "global/kit/math/round-to-decimals.ts",
+  "src/shift-decimal-point.ts": "global/kit/math/shift-decimal-point.ts"
+}

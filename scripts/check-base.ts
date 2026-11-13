@@ -56,6 +56,15 @@ const AGENT_MODES = new Set([
   'primary',
   'subagent',
 ]);
+const EVALUATION_TASKS = 10;
+const EVALUATION_FIELDS = [
+  'id',
+  'title',
+  'project',
+  'size',
+  'proof',
+  'test',
+];
 const INDEX_LINE = /^- \[([^\]]+)\]\(([^)]+)\): (.+)$/;
 const MARKDOWN_LINK = /\[[^\]]*\]\(([^)\s]+)\)/g;
 
@@ -507,6 +516,43 @@ function checkAllLinks(root: string): BaseResult {
   };
 }
 
+// One evaluation task: its header, its two sections and its proof file.
+export function checkEvaluationTask(text: string, file: string, hasProof: boolean): Finding[] {
+  const header = parseHeader(text);
+  const sections = new Set(analyseLines(text).map((line) => line.section));
+
+  return [
+    ...EVALUATION_FIELDS
+      .filter((name) => (header?.fields.get(name) ?? '') === '')
+      .map((name) => finding(file, `missing "${name}" in the header`)),
+    ...[
+      'Request',
+      'Proof of success',
+    ]
+      .filter((name) => !sections.has(name))
+      .map((name) => finding(file, `missing ## ${name} section`)),
+    ...hasProof ? [] : [finding(file, 'missing proof.spec.ts next to task.md')],
+  ];
+}
+
+function checkEvaluation(root: string): BaseResult {
+  const tasks = join(root, 'global', 'evaluation', 'tasks');
+  const names = folders(tasks);
+  const findings = names.flatMap((name) => {
+    const path = join(tasks, name, 'task.md');
+
+    return existsSync(path) ? checkEvaluationTask(read(path), path, existsSync(join(tasks, name, 'proof.spec.ts'))) : [finding(path, 'missing task.md')];
+  });
+
+  return {
+    findings: names.length === EVALUATION_TASKS || !existsSync(tasks) ? findings : [
+      ...findings,
+      finding(tasks, `${String(names.length)} tasks; the evaluation has ${String(EVALUATION_TASKS)}`),
+    ],
+    files: names.length,
+  };
+}
+
 export function checkBase(root: string): BaseResult {
   const skills = checkSkills(root);
   const results = [
@@ -516,6 +562,7 @@ export function checkBase(root: string): BaseResult {
     checkRules(root),
     checkProjectKit(root),
     checkOpenCodeConfig(root),
+    checkEvaluation(root),
     checkAllLinks(root),
   ];
 

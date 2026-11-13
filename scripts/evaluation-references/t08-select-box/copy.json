@@ -1,0 +1,6 @@
+{
+  "src/app/select-box.ts": "global/templates/angular/component/select-box.ts",
+  "src/app/select-box.html": "global/templates/angular/component/select-box.html",
+  "src/app/select-box.scss": "global/templates/angular/component/select-box.scss",
+  "src/app/move-active-index.ts": "global/templates/angular/component/move-active-index.ts"
+}

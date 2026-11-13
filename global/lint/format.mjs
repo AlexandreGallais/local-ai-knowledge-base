@@ -173,11 +173,45 @@ const BLANKS = {
 // Sort everything. The blank lines between class members belong to Stylistic.
 const SORTING = {
   ...perfectionist.configs['recommended-natural'].rules,
+  // Fields set by inject() come first, as @angular-eslint/inject-at-top asks of the lint pass; the
+  // other members keep the default order of the plugin.
   'perfectionist/sort-classes': [
     ERROR,
     {
       type: 'natural',
       newlinesBetween: 'ignore',
+      customGroups: [
+        {
+          groupName: 'injected-property',
+          selector: 'property',
+          elementValuePattern: '^inject\\(',
+        },
+      ],
+      groups: [
+        'injected-property',
+        'index-signature',
+        ['static-property', 'static-accessor-property'],
+        ['static-get-method', 'static-set-method'],
+        ['protected-static-property', 'protected-static-accessor-property'],
+        ['protected-static-get-method', 'protected-static-set-method'],
+        ['private-static-property', 'private-static-accessor-property'],
+        ['private-static-get-method', 'private-static-set-method'],
+        'static-block',
+        ['property', 'accessor-property'],
+        ['get-method', 'set-method'],
+        ['protected-property', 'protected-accessor-property'],
+        ['protected-get-method', 'protected-set-method'],
+        ['private-property', 'private-accessor-property'],
+        ['private-get-method', 'private-set-method'],
+        'constructor',
+        ['static-method', 'static-function-property'],
+        ['protected-static-method', 'protected-static-function-property'],
+        ['private-static-method', 'private-static-function-property'],
+        ['method', 'function-property'],
+        ['protected-method', 'protected-function-property'],
+        ['private-method', 'private-function-property'],
+        'unknown',
+      ],
     },
   ],
   'perfectionist/sort-imports': [

@@ -1,0 +1,8 @@
+{
+  "src/app/circuit.store.ts": "global/templates/angular/composed-store/circuit.store.ts",
+  "src/app/circuit-services.feature.ts": "global/templates/angular/composed-store/circuit-services.feature.ts",
+  "src/app/valves.feature.ts": "global/templates/angular/composed-store/valves.feature.ts",
+  "src/app/valve-selection.feature.ts": "global/templates/angular/composed-store/valve-selection.feature.ts",
+  "src/app/valve.ts": "global/templates/angular/composed-store/valve.ts",
+  "src/app/valve-api.ts": "global/templates/angular/composed-store/valve-api.ts"
+}
