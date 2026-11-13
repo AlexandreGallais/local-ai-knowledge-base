@@ -1,11 +1,13 @@
-// Rebuilds the knowledge base from its export: a few text files `base-<n>.txt`, pasted by hand.
+// Rebuilds the knowledge base from its export: a few text files `base-<n>.txt`, pasted by hand, and
+// `library-<n>.txt` when the export carries official documentation (compressed, in base64 lines).
 // Run with Node 22.18 or later, on Linux, macOS or Windows, no build step, no package:
-//   node import.ts                    reads ./base-*.txt, rebuilds the base in the current folder
+//   node import.ts                    reads ./base-*.txt and ./library-*.txt, rebuilds the base here
 //   node import.ts --from <folder>    reads the export files from <folder>
 //   node import.ts --to <folder>      writes the base into <folder>
 //   node import.ts --project          writes only what a project needs: AGENTS.md, .agents/, docs/,
 //                                     templates/ at the root, scripts/check-base.ts,
-//                                     scripts/check-versions.ts, adapters/opencode/ and adapters/mcp/
+//                                     scripts/check-versions.ts, adapters/opencode/, adapters/mcp/
+//                                     and library/
 //   node import.ts --opencode 2       also writes opencode.json at the root, from
 //                                     adapters/opencode/v2/ (1 for OpenCode 1.x)
 //   node import.ts --force            replaces files that already exist and differ
@@ -29,6 +31,7 @@ import {
 } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
+import { gunzipSync } from 'node:zlib';
 
 export interface ExportedFile {
   path: string;
@@ -56,12 +59,16 @@ interface ParsedPart {
 
 export const FORMAT = 'BASE-EXPORT-1';
 export const PART_PATTERN = /^base-\d+\.txt$/;
+export const PROJECT_RULES = 'AGENTS.project.md';
+export const LIBRARY_FORMAT = 'LIBRARY-EXPORT-1';
+export const LIBRARY_PART_PATTERN = /^library-\d+\.txt$/;
 const PROJECT_FOLDERS = [
   'code/',
   'scripts/check-base.ts',
   'scripts/check-versions.ts',
   'adapters/opencode/',
   'adapters/mcp/',
+  'library/',
 ];
 const OPENCODE_VERSIONS = new Set([
   '1',
@@ -271,13 +278,84 @@ export function withOpenCode(files: ExportedFile[], version?: string): ExportedF
 
 export function readParts(folder: string): Part[] {
   return readdirSync(folder)
-    .filter((name) => PART_PATTERN.test(name))
+    .filter((name) => PART_PATTERN.test(name) || LIBRARY_PART_PATTERN.test(name))
     .map((name) => {
       return {
         name,
         text: readFileSync(join(folder, name), 'utf8'),
       };
     });
+}
+
+function bytesHash(data: Buffer): string {
+  return createHash('sha256')
+    .update(data)
+    .digest('hex');
+}
+
+interface LibraryPart {
+  name: string;
+  number: number;
+  total: number;
+  whole: string;
+  data: string;
+}
+
+function parseLibraryPart(part: Part): LibraryPart {
+  const lines = part.text
+    .replaceAll('\r', '')
+    .split(NEWLINE);
+  const match = new RegExp(`^=+${LIBRARY_FORMAT} PART (\\d+) OF (\\d+) SHA256 ([\\da-f]{64}) TOTAL ([\\da-f]{64})=+$`).exec((lines[0] ?? '').trim());
+
+  if (match === null) {
+    throw new ImportError(`${part.name}: the first line is not the header of a library part. Paste the whole file again.`);
+  }
+  const data = lines
+    .slice(1)
+    .join('')
+    .replaceAll(/\s+/g, '');
+
+  if (sha256(data) !== match[3]) {
+    throw new ImportError(`${part.name}: library part ${match[1]} of ${match[2]} was damaged by the copy. Paste it again, whole.`);
+  }
+  return {
+    name: part.name,
+    number: Number(match[1]),
+    total: Number(match[2]),
+    whole: match[4] ?? '',
+    data,
+  };
+}
+
+// The library parts: base64 lines of the gzip of one export of the files of library/.
+export function decodeLibrary(parts: Part[]): ExportedFile[] {
+  if (parts.length === 0) {
+    return [];
+  }
+  const parsed = parts
+    .map(parseLibraryPart)
+    .toSorted((first, second) => first.number - second.number);
+  const total = parsed[0]?.total ?? 0;
+  const missing = Array
+    .from({ length: total }, (_, index) => index + 1)
+    .filter((number) => !parsed.some((part) => part.number === number));
+
+  if (missing.length > 0 || parsed.length !== total || parsed.some((part) => part.total !== total || part.whole !== parsed[0]?.whole)) {
+    throw new ImportError(`Library parts missing or from two exports: ${missing.map((number) => `library-${number}.txt`).join(', ') || 'check the numbers'}.`);
+  }
+  const gzip = Buffer.from(
+    parsed
+      .map((part) => part.data)
+      .join(''),
+    'base64',
+  );
+
+  if (bytesHash(gzip) !== parsed[0]?.whole) {
+    throw new ImportError('The library parts do not fit together. Paste them all again.');
+  }
+  const text = gunzipSync(gzip).toString('utf8');
+
+  return assemble([parsePart(text, 'library')]);
 }
 
 export function importBase(
@@ -289,8 +367,15 @@ export function importBase(
     opencode?: string;
   },
 ): string[] {
-  const files = assemble(parts.map((part) => parsePart(part.text, part.name)));
-  const chosen = options.project ? forProject(files) : files;
+  const baseParts = parts.filter((part) => !LIBRARY_PART_PATTERN.test(part.name));
+  const library = decodeLibrary(parts.filter((part) => LIBRARY_PART_PATTERN.test(part.name)));
+  const base = assemble(baseParts.map((part) => parsePart(part.text, part.name)));
+  const files = [
+    ...base,
+    ...library,
+  ];
+  // The rules of a project are its own: an update of the base never writes AGENTS.project.md.
+  const chosen = (options.project ? forProject(files) : files).filter((file) => file.path !== PROJECT_RULES);
 
   return writeFiles(withOpenCode(chosen, options.opencode), target, options.force);
 }
@@ -314,6 +399,9 @@ function main(): void {
     });
 
     process.stdout.write(`Import done: ${written.length} files written.\n`);
+    if (existsSync(join(resolve(values.to ?? '.'), PROJECT_RULES))) {
+      process.stdout.write(`${PROJECT_RULES} kept as it is: it holds the rules of this project.\n`);
+    }
   } catch (error) {
     process.stdout.write(`Import failed: ${(error as Error).message}\n`);
     process.exitCode = 1;
