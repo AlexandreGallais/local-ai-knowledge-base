@@ -58,7 +58,15 @@ describe('the OpenCode configuration of the global base', () => {
   it('runs every MCP server of the base with stdio, tools exposed directly', () => {
     const servers = Object.entries(config.mcp?.servers ?? {});
 
-    assert.ok(servers.length >= 6);
+    assert.deepEqual(servers.map(([name]) => name), [
+      'docs',
+      'practices',
+      'skills',
+      'project',
+      'work',
+      'code',
+      'parse',
+    ]);
     for (const [
       name,
       server,
@@ -73,6 +81,7 @@ describe('the OpenCode configuration of the global base', () => {
   it('opens the read-only servers to every agent and keeps work for the agents that open it', () => {
     assert.equal(evaluate(config, 'docs_search_docs', '*'), 'allow');
     assert.equal(evaluate(config, 'code_outline', '*'), 'allow');
+    assert.equal(evaluate(config, 'parse_outline', '*'), 'allow');
     assert.equal(evaluate(config, 'work_next_task', '*'), 'deny');
   });
 });

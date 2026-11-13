@@ -35,6 +35,14 @@ Versions pinned exactly; every one was installed and run on the four sample proj
 | postcss-scss | 4.0.9 | MIT | angular-app, angular-lib | SCSS syntax |
 | @double-great/stylelint-a11y | 3.8.3 | MIT | angular-app, angular-lib | Accessibility of styles |
 
+## Vendored in the base
+
+Copied into the global base, so that no project installs it.
+
+| Package | Version | License | Where | Why |
+| --- | --- | --- | --- | --- |
+| pdfjs-dist (legacy build) | 6.5.438 | Apache-2.0 | `vendor/pdfjs/` | The `parse` tools read PDF files: text with its place, images. Two files, no dependency; its optional canvas package is not needed and not installed. |
+
 ## Set aside
 
 | Package | Why |

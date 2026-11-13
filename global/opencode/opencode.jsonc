@@ -55,6 +55,11 @@
         "type": "local",
         "command": ["node", "/opt/local-ai-base/servers/code.ts"],
         "codemode": false
+      },
+      "parse": {
+        "type": "local",
+        "command": ["node", "/opt/local-ai-base/servers/parse.ts"],
+        "codemode": false
       }
     }
   },
@@ -79,6 +84,7 @@
     { "action": "skills_*", "resource": "*", "effect": "allow" },
     { "action": "project_*", "resource": "*", "effect": "allow" },
     { "action": "code_*", "resource": "*", "effect": "allow" },
+    { "action": "parse_*", "resource": "*", "effect": "allow" },
     { "action": "work_*", "resource": "*", "effect": "deny" },
 
     // Shell: ask by default, then a short allowlist of checks and read-only commands.
