@@ -201,6 +201,84 @@ function headerList(text: string, field: string): string[] {
     .filter(Boolean);
 }
 
+function headerField(text: string, field: string): string {
+  return new RegExp(`^${field}:\\s*(.*)$`, 'm')
+    .exec(text)?.[1]
+    .trim() ?? '';
+}
+
+function topicLine(agentsText: string, topic: string): string {
+  const line = agentsText
+    .split(NEWLINE)
+    .find((item) => item.startsWith(`- [${topic}](docs/${topic}/index.md): `));
+
+  return line === undefined ? topic : line.slice(line.indexOf('): ') + 3);
+}
+
+// The manifest that adapters/open-webui/push.ts reads: one knowledge base per topic, one skill per
+// chat skill, one model per chat/models/*.md, each with only its own knowledge and skills.
+function manifestModels(root: string): {
+  id: string;
+  name: string;
+  description: string;
+  prompt: string;
+  knowledge: string[];
+  skills: string[];
+}[] {
+  return walk(root, 'chat/models')
+    .filter((path) => path.endsWith('.md'))
+    .map((path) => {
+      const text = read(root, path);
+
+      return {
+        id: headerField(text, 'id'),
+        name: headerField(text, 'name'),
+        description: headerField(text, 'description'),
+        prompt: path,
+        knowledge: headerList(text, 'knowledge'),
+        skills: headerList(text, 'skills'),
+      };
+    });
+}
+
+function manifestSkill(root: string, name: string): Record<string, string> {
+  return {
+    id: name,
+    name,
+    description: headerField(read(root, `code/.agents/skills/${name}/SKILL.md`), 'description'),
+    dir: `chat/skills/${name}`,
+  };
+}
+
+export function openWebUiManifest(root: string): ExportedFile {
+  const models = manifestModels(root);
+  const agentsText = existsSync(join(root, 'code/AGENTS.md')) ? read(root, 'code/AGENTS.md') : '';
+  const knowledge = [...new Set(models.flatMap((model) => model.knowledge))]
+    .toSorted()
+    .map((topic) => {
+      return {
+        key: topic,
+        name: topic,
+        description: topicLine(agentsText, topic),
+        dir: `chat/knowledge/${topic}`,
+      };
+    });
+  const manifest = {
+    mode: 'native',
+    toolsBlock: 'adapters/open-webui/knowledge-tools.md',
+    knowledge,
+    skills: [...new Set(models.flatMap((model) => model.skills))]
+      .toSorted()
+      .map((name) => manifestSkill(root, name)),
+    models,
+  };
+
+  return {
+    path: 'adapters/open-webui/manifest.json',
+    content: `${JSON.stringify(manifest, null, 2)}\n`,
+  };
+}
+
 // The chat profile: chat/skills/<name>/SKILL.md and chat/knowledge/<topic>/<document>.md.
 export function chatProfile(root: string): ExportedFile[] {
   const skills = walk(root, 'code/.agents/skills')
@@ -229,6 +307,7 @@ export function chatProfile(root: string): ExportedFile[] {
   return [
     ...skills,
     ...knowledge,
+    ...(existsSync(join(root, 'chat/models')) ? [openWebUiManifest(root)] : []),
   ];
 }
 

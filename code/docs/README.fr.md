@@ -148,4 +148,11 @@ anglais.
 - `chat/models/commit-assistant.md` : un assistant de commits pour les personnes qui ne sont pas
   développeurs. Il propose le message de commit, explique le type choisi, et refuse tout autre
   sujet en une phrase.
+- `chat/models/` contient aussi quatre modèles par sujet : TypeScript et Angular, C# et .NET,
+  conteneurs et Kubernetes, simulation et naval. Chacun cherche d'abord dans sa base documentaire
+  et cite les documents utilisés sur une ligne `Sources:`.
 - `adapters/` : ce qu'un logiciel précis exige en plus. Facultatif : la base marche sans.
+- `adapters/open-webui/push.ts` : sur le poste, après l'import, il crée ou met à jour dans Open WebUI
+  les bases documentaires, les skills et les cinq modèles, lisibles par le groupe de l'équipe, sans
+  aucun clic. L'adresse, le jeton, le modèle de base et le groupe se lisent dans l'environnement ;
+  `--dry-run` montre ce qu'il ferait sans rien envoyer.

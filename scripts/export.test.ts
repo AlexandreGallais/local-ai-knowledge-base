@@ -25,6 +25,7 @@ import {
   chatProfile,
   chatSkill,
   exportBase,
+  openWebUiManifest,
 } from './export.ts';
 
 const NEWLINE = '\n';
@@ -134,10 +135,11 @@ describe('chat profile', () => {
   const files = chatProfile(testBase());
   const paths = files.map((file) => file.path);
 
-  it('writes one chat skill and the knowledge of the subjects the models name', () => {
+  it('writes one chat skill, the knowledge of the subjects the models name, and the Open WebUI manifest', () => {
     assert.deepEqual(paths, [
       'chat/skills/do-thing/SKILL.md',
       'chat/knowledge/demo/doc.md',
+      'adapters/open-webui/manifest.json',
     ]);
   });
   it('leaves out every French summary and marks documents as chat', () => {
@@ -266,6 +268,76 @@ describe('import refusals', () => {
       force: false,
     }), /exist and differ; nothing was written[\s\S]*README\.md/);
     assert.equal(readFileSync(join(target, 'README.md'), 'utf8'), 'Mine.\n');
+  });
+});
+
+interface ManifestModel {
+  id: string;
+  knowledge: string[];
+  skills: string[];
+}
+
+interface Manifest {
+  knowledge: {
+    key: string;
+    dir: string;
+  }[];
+  skills: {
+    id: string;
+    description: string;
+  }[];
+  models: ManifestModel[];
+}
+
+describe('Open WebUI manifest', () => {
+  const manifest = JSON.parse(openWebUiManifest(WORK).content) as Manifest;
+  const byId = new Map(manifest.models.map((model) => [
+    model.id,
+    model,
+  ]));
+
+  it('gives each model of the base only its own knowledge and skills', () => {
+    assert.deepEqual(byId.get('commit-assistant'), {
+      ...byId.get('commit-assistant'),
+      knowledge: [],
+      skills: ['write-commit-message'],
+    });
+    assert.deepEqual(byId.get('containers-kubernetes')?.knowledge, [
+      'containers',
+      'kubernetes',
+    ]);
+    assert.deepEqual(byId.get('csharp-dotnet')?.skills, [
+      'analyze-csharp',
+      'look-up-api',
+    ]);
+    assert.equal(manifest.models.length, 5);
+  });
+  it('lists each knowledge base and skill that a model uses, and nothing else', () => {
+    const usedKnowledge = new Set(manifest.models.flatMap((model) => model.knowledge));
+    const usedSkills = new Set(manifest.models.flatMap((model) => model.skills));
+
+    assert.deepEqual(
+      manifest.knowledge
+        .map((item) => item.key)
+        .toSorted(),
+      [...usedKnowledge].toSorted(),
+    );
+    assert.deepEqual(
+      manifest.skills
+        .map((item) => item.id)
+        .toSorted(),
+      [...usedSkills].toSorted(),
+    );
+    for (const skill of manifest.skills) {
+      assert.match(skill.description, /Use when/, skill.id);
+    }
+  });
+  it('points each knowledge base to its folder of the generated chat profile', () => {
+    const paths = new Set(chatProfile(WORK).map((file) => file.path));
+
+    for (const knowledge of manifest.knowledge) {
+      assert.ok([...paths].some((path) => path.startsWith(`${knowledge.dir}/`)), knowledge.key);
+    }
   });
 });
 describe('check of the chat profile', () => {
