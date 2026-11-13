@@ -37,6 +37,7 @@ const SKILLS = [
   'report-task',
   'final-check',
   'write-project-skill',
+  'welcome',
   'write-component',
   'write-store',
   'write-service',
@@ -47,7 +48,10 @@ const SKILLS = [
   'start-typescript-library',
 ];
 const EXPECTED_SKILLS: Record<string, string[]> = {
-  'orchestrator': ['write-project-skill'],
+  'orchestrator': [
+    'write-project-skill',
+    'welcome',
+  ],
   'brief': ['write-brief'],
   'planner': ['plan-tasks'],
   'checker': [

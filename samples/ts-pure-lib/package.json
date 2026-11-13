@@ -2,6 +2,7 @@
   "name": "sample-ts-pure-lib",
   "private": true,
   "type": "module",
+  "sideEffects": false,
   "devDependencies": {
     "typescript": "6.0.3",
     "vitest": "5.1.0"
