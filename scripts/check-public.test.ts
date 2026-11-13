@@ -23,7 +23,7 @@ import {
 
 const TERMS = [
   'acme marine',
-  'fifty million tokens',
+  'blue harbour quota',
 ];
 
 function run(root: string, args: string[]): void {
@@ -103,7 +103,7 @@ describe('public repository check', () => {
     assert.doesNotMatch(result, /acme/i);
   });
   it('refuses a forbidden term kept only in the history', () => {
-    const root = repository({ 'notes.md': 'We have fifty million tokens per day.\n' });
+    const root = repository({ 'notes.md': 'The blue harbour quota is reached.\n' });
 
     rmSync(join(root, 'notes.md'));
     commit(root, { 'README.md': '# Base\n' }, 'docs: remove the notes');
