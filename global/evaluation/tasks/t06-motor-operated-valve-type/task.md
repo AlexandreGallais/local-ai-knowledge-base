@@ -4,7 +4,7 @@ title: "The properties of a motor-operated valve"
 project: ts-lib
 size: medium
 proof: src/motor-operated-valve.proof.spec.ts
-test: npx --no vitest run src/motor-operated-valve.proof.spec.ts
+test: npx --no -- vitest run src/motor-operated-valve.proof.spec.ts
 ---
 
 # T06 · The properties of a motor-operated valve

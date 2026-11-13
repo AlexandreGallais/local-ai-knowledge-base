@@ -108,7 +108,19 @@ function dependencies(task: Task): string[] {
     .filter((item) => /^T\d+$/.test(item));
 }
 
-// The defects of one task: missing fields, state, files, agent, vague words, dependencies.
+// The form of the check of a task: one command between backquotes. The final check may name several
+// commands, or none ("the four check commands of the profile").
+export function checkCommandProblems(id: string, check: string, isChecker: boolean): string[] {
+  const commands = [...check.matchAll(/`([^`]+)`/g)];
+
+  if (commands.length === 0) {
+    return isChecker ? [] : [`${id}: the check must be one command between backquotes`];
+  }
+  return !isChecker && commands.length > 1 ? [`${id}: one check command only`] : [];
+}
+
+// The defects of one task: missing fields, state, files, agent, vague words, dependencies, the form
+// of its check.
 function checkTask(task: Task, earlier: ReadonlySet<string>, agents: readonly string[] | undefined): string[] {
   const field = (name: string): string => task.fields.get(name) ?? '';
   const isChecker = field('Agent') === CHECKER;
@@ -118,6 +130,7 @@ function checkTask(task: Task, earlier: ReadonlySet<string>, agents: readonly st
     .match(VAGUE_WORDS);
 
   return [
+    ...field('Check') === '' ? [] : checkCommandProblems(task.id, field('Check'), isChecker),
     ...TASK_FIELDS
       .filter((name) => field(name) === '')
       .map((name) => `${task.id}: missing "- ${name}: "`),

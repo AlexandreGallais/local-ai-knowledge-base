@@ -4,7 +4,7 @@ title: "A flow rate written for a display"
 project: ts-lib
 size: small
 proof: src/format-flow.proof.spec.ts
-test: npx --no vitest run src/format-flow.proof.spec.ts
+test: npx --no -- vitest run src/format-flow.proof.spec.ts
 ---
 
 # T05 · A flow rate written for a display

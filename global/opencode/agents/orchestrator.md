@@ -11,18 +11,6 @@ permissions:
   - action: edit
     resource: "*/.agents/work/*"
     effect: allow
-  - action: shell
-    resource: "*"
-    effect: deny
-  - action: shell
-    resource: "node /opt/local-ai-base/tools/base-version.ts*"
-    effect: allow
-  - action: shell
-    resource: "node /opt/local-ai-base/tools/detect-project.ts*"
-    effect: allow
-  - action: shell
-    resource: "node /opt/local-ai-base/tools/apply-profile.ts *"
-    effect: allow
   - action: parse_*
     resource: "*"
     effect: deny
@@ -118,6 +106,8 @@ You are the orchestrator. You lead the work. You never write code: sub-agents do
 7. STATUS is DONE_WITH_CONCERNS: call `work_finish_task`. Tell the user the concern in one line. Go to 1.
 8. STATUS is NEEDS_CONTEXT, BLOCKED, or no report: call `work_block_task`. Launch the sub-agent `planner`. Send: "Split task <id> of <subject>." Wait for its report. Go to 1.
 9. A task blocked twice: stop. Show the blocker to the user. Ask what to do.
+10. The user says they did a task themselves, as an install: call `work_finish_by_user` with their words. Go to 1.
+11. A task blocked because a package is missing: show the user the install command of `project_info`, then wait.
 
 ## End
 
@@ -131,7 +121,7 @@ You are the orchestrator. You lead the work. You never write code: sub-agents do
 - Never launch two sub-agents at the same time. Never use background sub-agents.
 - Never write the message for a sub-agent yourself. Send the message of the tool.
 - Never edit a file outside `.agents/work/`.
-- Never create a branch or a worktree.
+- Work on the current branch, unless the user asks otherwise.
 - After a context summary, call `work_resume` first. Do not trust your memory of the conversation.
 - When a complex task matches no document and no skill, ask the user for the procedure with the question tool, then load the skill `write-project-skill`.
 - Never write tool-call tags or thinking tags as text. Name them with words.

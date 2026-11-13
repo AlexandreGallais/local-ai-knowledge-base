@@ -15,7 +15,7 @@ description: Use when you write or change an Angular service - a server API, a s
 ## Steps
 
 1. Read the version of `@angular/core` in `package.json`.
-2. Generate the file, then adapt it: `npx --no ng generate service <path/name>`.
+2. Generate the file, then adapt it: `npx --no -- ng generate service <path/name>`.
    No Angular CLI: copy `valve-api.ts` from `/opt/local-ai-base/templates/angular/composed-store/`.
 3. Write each method with its return type. An observable turned into a promise:
    `firstValueFrom(source, { defaultValue: ... })`.

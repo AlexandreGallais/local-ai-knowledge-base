@@ -25,6 +25,7 @@ import {
   setAnswers,
   setState,
   type Task,
+  taskFiles,
 } from '../tools/work-files.ts';
 import {
   baseRoot,
@@ -171,6 +172,39 @@ export function finish(args: Arguments): string {
   return `${id} done. ${progress(parseTasks(updated))}.`;
 }
 
+// A task the user did outside the session (an install, a fix by hand): marked done on their word,
+// with a report that quotes it. Only on the user's request; the final check still checks everything.
+export function finishByUser(args: Arguments): string {
+  const folder = subjectFolder(args);
+  const id = requiredText(args, 'task');
+  const note = requiredText(args, 'note')
+    .replaceAll(/\s+/g, ' ')
+    .trim();
+  const text = readFile(folder, 'tasks.md');
+  const task = findTask(parseTasks(text), id);
+  const report = [
+    `# Report ${id}`,
+    '',
+    'STATUS: DONE',
+    `TASK: ${id} · ${task.title}`,
+    'FILES:',
+    ...taskFiles(task).map((path) => `- ${path} (by the user)`),
+    'CHECK: done by the user, outside the session -> 0 errors',
+    'EVIDENCE:',
+    `The user said: ${note}`,
+    'NOTES:',
+    '- Marked done on the word of the user; the final check checks the result.',
+    'BLOCKER: none',
+  ].join('\n');
+
+  mkdirSync(join(folder, 'reports'), { recursive: true });
+  writeFileSync(join(folder, 'reports', `${id}.md`), `${report}\n`);
+  const updated = setState(text, id, 'done');
+
+  writeFileSync(join(folder, 'tasks.md'), updated);
+  return `${id} done by the user. ${progress(parseTasks(updated))}.`;
+}
+
 export function block(args: Arguments): string {
   const folder = subjectFolder(args);
   const id = requiredText(args, 'task');
@@ -295,6 +329,24 @@ export const server: Server = {
         'task',
       ],
       run: finish,
+    },
+    {
+      name: 'finish_by_user',
+      description: 'Mark a task done because the user says they did it themselves, as an install. Only when the user says so; quote their words in the note.',
+      properties: {
+        subject: SUBJECT,
+        task: TASK,
+        note: {
+          type: 'string',
+          description: 'What the user said they did, in their words.',
+        },
+      },
+      required: [
+        'subject',
+        'task',
+        'note',
+      ],
+      run: finishByUser,
     },
     {
       name: 'block_task',

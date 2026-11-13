@@ -10,6 +10,10 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkBaseVersion } from '../tools/base-version.ts';
 import { checkVersions } from '../tools/check-versions.ts';
+import {
+  installAdvice,
+  missingPackages,
+} from '../tools/missing-packages.ts';
 import { agentsOfProfile } from '../tools/work-files.ts';
 import {
   baseRoot,
@@ -65,6 +69,11 @@ export function projectInfo(): string {
     ]) => `- ${name}: \`${command}\``);
   const versions = declaredVersions(project);
   const agents = agentsOfProfile(baseRoot(), profile.profile);
+  const packages = profile.profile === undefined ? [] : [
+    '',
+    'Packages of the profile:',
+    installAdvice(missingPackages(baseRoot(), project)),
+  ];
 
   return [
     profile.profile === undefined ? 'Profile: none yet. Load the skill welcome first.' : `Profile: ${profile.profile}`,
@@ -76,6 +85,7 @@ export function projectInfo(): string {
     '',
     'Check commands, in this order:',
     ...checks.length === 0 ? ['- none in .agents/profile.json'] : checks,
+    ...packages,
     '',
     `Project skills: ${skills.length === 0 ? 'none' : skills.join(', ')}`,
     `Agents for the tasks: ${agents === undefined ? 'none until the profile is set' : [
@@ -105,7 +115,7 @@ export const server: Server = {
     {
       // OpenCode prefixes the server name: the model sees "project_info".
       name: 'info',
-      description: 'The profile of the project, its subject, the versions in package.json, the check commands in order, the project skills and the state of the global base.',
+      description: 'The profile of the project, its subject, the versions in package.json, the check commands in order, the packages of the profile still to install, the project skills and the state of the global base.',
       properties: {},
       required: [],
       run: projectInfo,

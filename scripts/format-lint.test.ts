@@ -188,6 +188,40 @@ describe('the pure functions profile', { skip: SKIP }, () => {
     assert.match(name.output, /^src\/zz-wrong-name\.ts:\d+:\d+ local\/filename-matches-export Name this file "twice\.ts"/);
   });
 });
+describe('the Storybook files', { skip: SKIP }, () => {
+  it('may export a default meta and stories in a library, where any other file may not', () => {
+    const library = join(SAMPLES, 'ts-lib', 'src');
+    const story = scratch(library, 'zz-valve.stories.ts', [
+      'interface ValveArgs {',
+      '  readonly open: boolean;',
+      '}',
+      '',
+      'const meta = {',
+      '  args: { open: true },',
+      '  title: \'Symbols/Valve\',',
+      '};',
+      '',
+      'export default meta;',
+      '',
+      'export const Closed: { readonly args: ValveArgs } = { args: { open: false } };',
+      '',
+    ].join('\n'));
+    const plain = scratch(library, 'zz-plain.ts', 'const meta = { title: \'x\' };\n\nexport default meta;\n');
+    const storyResult = runTool('lint-file.ts', [story], SAMPLES);
+    const plainResult = runTool('lint-file.ts', [plain], SAMPLES);
+
+    rmSync(story);
+    rmSync(plain);
+    for (const rule of [
+      'import-lite/no-default-export',
+      'local/single-exported-function',
+      'local/filename-matches-export',
+    ]) {
+      assert.doesNotMatch(storyResult.output, new RegExp(` ${rule} `), rule);
+    }
+    assert.match(plainResult.output, / import-lite\/no-default-export /);
+  });
+});
 describe('a write', { skip: SKIP }, () => {
   it('is formatted, then gives only the errors left, one line each', () => {
     const path = scratch(PURE, 'zz-half.ts', 'export function half(value:number):number{return value/2}\n');

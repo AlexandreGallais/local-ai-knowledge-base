@@ -16,6 +16,7 @@ import {
 import { fileURLToPath } from 'node:url';
 import {
   evaluate,
+  evaluateShell,
   readAgentRules,
   readCommonConfig,
   type Rule,
@@ -137,11 +138,10 @@ describe('the agents of the base', () => {
         .sort(),
     );
   });
-  it('let the orchestrator write its work files only, never code, and run no command', () => {
+  it('let the orchestrator write its work files only, never code', () => {
     assert.equal(can('orchestrator', 'edit', 'src/app/user-list.component.ts'), 'deny');
     assert.equal(can('orchestrator', 'edit', 'src/app/user-list.store.ts'), 'deny');
     assert.equal(can('orchestrator', 'edit', '.agents/work/user-list/tasks.md'), 'allow');
-    assert.equal(can('orchestrator', 'shell', 'npm run lint'), 'deny');
     assert.equal(can('orchestrator', 'work_next_task', '*'), 'allow');
   });
   it('let the orchestrator delegate to each agent, and no sub-agent delegate', () => {
@@ -184,16 +184,56 @@ describe('the agents of the base', () => {
       assert.equal(can(agent, 'geometry_call_function', '*'), expected, agent);
     }
   });
-  it('let no agent create a branch or a worktree, install a package, reach the network or destroy', () => {
+  it('let every agent run any command, chained or not', () => {
+    const lines = [
+      'npx --no -- tsc -p tsconfig.json',
+      'npm test',
+      'node -e "console.log(1)"',
+      'cd src && ls',
+      'npm run lint | tail -20',
+      'mkdir -p src/lib/symbols',
+      'cat package.json',
+    ];
+
+    for (const [
+      agent,
+      line,
+    ] of [...AGENTS.keys()].flatMap((name) => lines.map((item) => [
+      name,
+      item,
+    ] as const))) {
+      assert.equal(evaluateShell(CONFIG, rulesOf(agent), line), 'allow', `${agent}: ${line}`);
+    }
+  });
+  it('ask the user before what cannot be undone: an install, a push, a branch, a deletion', () => {
+    const lines = [
+      'npm install --save-dev storybook',
+      'npx storybook init',
+      'git push origin main',
+      'git checkout -b feature/list',
+      'git worktree add ../list',
+      'rm -rf src',
+      'ls && git reset --hard HEAD',
+    ];
+
+    for (const [
+      agent,
+      line,
+    ] of [...AGENTS.keys()].flatMap((name) => lines.map((item) => [
+      name,
+      item,
+    ] as const))) {
+      assert.equal(evaluateShell(CONFIG, rulesOf(agent), line), 'ask', `${agent}: ${line}`);
+    }
+  });
+  it('refuse to every agent only the web: search, fetch and download', () => {
     for (const agent of AGENTS.keys()) {
-      assert.equal(can(agent, 'shell', 'git checkout -b feature/list'), 'deny', agent);
-      assert.equal(can(agent, 'shell', 'git switch -c feature/list'), 'deny', agent);
-      assert.equal(can(agent, 'shell', 'git worktree add ../list'), 'deny', agent);
-      assert.equal(can(agent, 'shell', 'git push origin main'), 'deny', agent);
-      assert.equal(can(agent, 'shell', 'curl http://example.test'), 'deny', agent);
-      assert.equal(can(agent, 'shell', 'rm -rf src'), 'deny', agent);
-      assert.notEqual(can(agent, 'shell', 'npm install left-pad'), 'allow', agent);
-      assert.notEqual(can(agent, 'shell', 'npx left-pad'), 'allow', agent);
+      assert.equal(can(agent, 'webfetch', 'https://example.test'), 'deny', agent);
+      assert.equal(can(agent, 'websearch', 'angular signals'), 'deny', agent);
+      assert.equal(evaluateShell(CONFIG, rulesOf(agent), 'curl http://example.test'), 'deny', agent);
+      assert.equal(evaluateShell(CONFIG, rulesOf(agent), 'cat a.txt | wget -i -'), 'deny', agent);
+      assert.equal(evaluateShell(CONFIG, rulesOf(agent), 'git clone https://example.test/a.git'), 'deny', agent);
+      assert.equal(can(agent, 'read', 'design/screens.xd'), 'allow', agent);
     }
   });
 });

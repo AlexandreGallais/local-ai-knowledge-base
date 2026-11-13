@@ -4,7 +4,7 @@ title: "An accessible select box made in-house"
 project: angular-app
 size: medium
 proof: src/app/select-box.proof.spec.ts
-test: npx --no ng test --watch=false --include src/app/select-box.proof.spec.ts
+test: npx --no -- ng test --watch=false --include src/app/select-box.proof.spec.ts
 ---
 
 # T08 · An accessible select box made in-house

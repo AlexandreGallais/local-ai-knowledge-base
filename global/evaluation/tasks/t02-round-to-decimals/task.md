@@ -4,7 +4,7 @@ title: "Rounding to decimals as a person expects it"
 project: ts-pure-lib
 size: small
 proof: src/round-to-decimals.proof.spec.ts
-test: npx --no vitest run src/round-to-decimals.proof.spec.ts
+test: npx --no -- vitest run src/round-to-decimals.proof.spec.ts
 ---
 
 # T02 · Rounding to decimals as a person expects it

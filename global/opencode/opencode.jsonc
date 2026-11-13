@@ -69,86 +69,56 @@
     }
   },
 
-  // Ordered rules: the last matching rule wins; an agent's own rules come after these.
+  // Ordered rules: the last matching rule wins; an agent's own rules come after these. The base gives
+  // tools and guidance, not bans (decision 0020): everything is allowed, what cannot be undone asks the
+  // user, and only the web is refused, in "policies" below.
   "permissions": [
+    { "action": "*", "resource": "*", "effect": "allow" },
+
     // Outside the project: ask, except the read-only global base.
     { "action": "external_directory", "resource": "*", "effect": "ask" },
     { "action": "external_directory", "resource": "/opt/local-ai-base/*", "effect": "allow" },
     { "action": "edit", "resource": "/opt/local-ai-base/*", "effect": "deny" },
     { "action": "edit", "resource": "/etc/opencode/*", "effect": "deny" },
 
-    // No web, no Code Mode, no built-in session or worktree tools.
-    { "action": "webfetch", "resource": "*", "effect": "deny" },
-    { "action": "websearch", "resource": "*", "effect": "deny" },
+    // Code Mode off: small models fail to write its JavaScript (decision 0012).
     { "action": "execute", "resource": "*", "effect": "deny" },
-    { "action": "opencode_*", "resource": "*", "effect": "deny" },
+    // The built-in session and worktree tools ask first.
+    { "action": "opencode_*", "resource": "*", "effect": "ask" },
 
-    // MCP servers: the read-only ones for every agent; "work" only for the agents that open it.
-    { "action": "docs_*", "resource": "*", "effect": "allow" },
-    { "action": "practices_*", "resource": "*", "effect": "allow" },
-    { "action": "skills_*", "resource": "*", "effect": "allow" },
-    { "action": "project_*", "resource": "*", "effect": "allow" },
-    { "action": "code_*", "resource": "*", "effect": "allow" },
-    { "action": "parse_*", "resource": "*", "effect": "allow" },
-    { "action": "geometry_*", "resource": "*", "effect": "allow" },
+    // The "work" server only for the agents that open it.
     { "action": "work_*", "resource": "*", "effect": "deny" },
     { "action": "work_resume", "resource": "*", "effect": "allow" },
 
-    // Shell: ask by default, then a short allowlist of checks and read-only commands.
-    { "action": "shell", "resource": "*", "effect": "ask" },
-    { "action": "shell", "resource": "npm run *", "effect": "allow" },
-    { "action": "shell", "resource": "npx --no *", "effect": "allow" },
-    { "action": "shell", "resource": "node /opt/local-ai-base/tools/*", "effect": "allow" },
-    { "action": "shell", "resource": "git status *", "effect": "allow" },
-    { "action": "shell", "resource": "git diff *", "effect": "allow" },
-    { "action": "shell", "resource": "git log *", "effect": "allow" },
-    { "action": "shell", "resource": "git show *", "effect": "allow" },
-    { "action": "shell", "resource": "ls *", "effect": "allow" },
-    { "action": "shell", "resource": "wc *", "effect": "allow" },
-
-    // Package changes always ask, even when a rule above would allow them.
+    // What cannot be undone asks the user: packages, a push, a branch, a deletion.
     { "action": "shell", "resource": "npm install *", "effect": "ask" },
+    { "action": "shell", "resource": "npm i *", "effect": "ask" },
     { "action": "shell", "resource": "npm ci *", "effect": "ask" },
     { "action": "shell", "resource": "npm update *", "effect": "ask" },
     { "action": "shell", "resource": "npm uninstall *", "effect": "ask" },
     { "action": "shell", "resource": "npx *", "effect": "ask" },
-    { "action": "shell", "resource": "npx --no *", "effect": "allow" }
+    { "action": "shell", "resource": "npx --no *", "effect": "allow" },
+    { "action": "shell", "resource": "git push *", "effect": "ask" },
+    { "action": "shell", "resource": "git checkout -b *", "effect": "ask" },
+    { "action": "shell", "resource": "git switch -c *", "effect": "ask" },
+    { "action": "shell", "resource": "git branch *", "effect": "ask" },
+    { "action": "shell", "resource": "git worktree *", "effect": "ask" },
+    { "action": "shell", "resource": "git reset --hard *", "effect": "ask" },
+    { "action": "shell", "resource": "git clean *", "effect": "ask" },
+    { "action": "shell", "resource": "rm -rf *", "effect": "ask" },
+    { "action": "shell", "resource": "rm -fr *", "effect": "ask" }
   ],
 
-  // Hard denies: stronger than agent rules and than "allow always" answers.
+  // The only hard denies: no search nor download on the web. The test container without the base
+  // has the same ones (templates/devcontainer/opencode-user/), so both work in the same conditions.
   "policies": [
     { "action": "tool.use", "resource": "webfetch:*", "effect": "deny" },
     { "action": "tool.use", "resource": "websearch:*", "effect": "deny" },
-
     { "action": "tool.use", "resource": "shell:curl *", "effect": "deny" },
     { "action": "tool.use", "resource": "shell:wget *", "effect": "deny" },
-    { "action": "tool.use", "resource": "shell:git push *", "effect": "deny" },
     { "action": "tool.use", "resource": "shell:git clone *", "effect": "deny" },
     { "action": "tool.use", "resource": "shell:git fetch *", "effect": "deny" },
-    { "action": "tool.use", "resource": "shell:git pull *", "effect": "deny" },
-    { "action": "tool.use", "resource": "shell:git remote *", "effect": "deny" },
-
-    { "action": "tool.use", "resource": "shell:git checkout -b *", "effect": "deny" },
-    { "action": "tool.use", "resource": "shell:git switch -c *", "effect": "deny" },
-    { "action": "tool.use", "resource": "shell:git switch --create *", "effect": "deny" },
-    { "action": "tool.use", "resource": "shell:git branch *", "effect": "deny" },
-    { "action": "tool.use", "resource": "shell:git worktree *", "effect": "deny" },
-
-    { "action": "tool.use", "resource": "shell:rm -rf *", "effect": "deny" },
-    { "action": "tool.use", "resource": "shell:rm -fr *", "effect": "deny" },
-    { "action": "tool.use", "resource": "shell:git reset --hard *", "effect": "deny" },
-    { "action": "tool.use", "resource": "shell:git clean *", "effect": "deny" },
-
-    // Heavy files: never read raw; the parse tools read them.
-    { "action": "tool.use", "resource": "read:*.xd", "effect": "deny" },
-    { "action": "tool.use", "resource": "read:*.pdf", "effect": "deny" },
-    { "action": "tool.use", "resource": "read:*.docx", "effect": "deny" },
-    { "action": "tool.use", "resource": "read:*.xlsx", "effect": "deny" },
-    { "action": "tool.use", "resource": "read:*.pptx", "effect": "deny" },
-    { "action": "tool.use", "resource": "read:*.png", "effect": "deny" },
-    { "action": "tool.use", "resource": "read:*.jpg", "effect": "deny" },
-    { "action": "tool.use", "resource": "read:*.jpeg", "effect": "deny" },
-    { "action": "tool.use", "resource": "read:*.zip", "effect": "deny" }
+    { "action": "tool.use", "resource": "shell:git pull *", "effect": "deny" }
   ],
 
   // A new session starts with the orchestrator of the base (agents/orchestrator.md): it answers a

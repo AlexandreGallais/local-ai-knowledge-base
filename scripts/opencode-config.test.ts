@@ -100,42 +100,29 @@ describe('the project kit', () => {
     assert.match(ignored, /^cache\/$/m);
   });
 });
-describe('the guards of the closed environment', () => {
-  it('asks before a package changes', () => {
+describe('the rights of the AI', () => {
+  it('allows any command, chained or not, and asks before a package changes', () => {
+    assert.equal(shell('npm run lint'), 'allow');
+    assert.equal(shell('cd src && npx --no -- tsc'), 'allow');
+    assert.equal(shell('node -e "1"'), 'allow');
     assert.equal(shell('npm install lodash'), 'ask');
     assert.equal(shell('npm install'), 'ask');
-    assert.equal(shell('npm update'), 'ask');
     assert.equal(shell('npx cowsay hello'), 'ask');
   });
-  it('allows the checks and the read-only commands', () => {
-    assert.equal(shell('npm run lint'), 'allow');
-    assert.equal(shell('npx --no eslint src'), 'allow');
-    assert.equal(shell('git status --short'), 'allow');
-    assert.equal(shell('node /opt/local-ai-base/tools/base-version.ts'), 'allow');
+  it('asks before what cannot be undone: a push, a branch, a worktree, a deletion', () => {
+    assert.equal(shell('git push origin main'), 'ask');
+    assert.equal(shell('git checkout -b feature/x'), 'ask');
+    assert.equal(shell('git worktree add ../x'), 'ask');
+    assert.equal(shell('rm -rf src'), 'ask');
+    assert.equal(shell('git reset --hard HEAD'), 'ask');
   });
-  it('refuses network commands', () => {
+  it('refuses only the web, and writing in the global base', () => {
     assert.equal(shell('curl https://example.org'), 'deny');
     assert.equal(shell('wget https://example.org'), 'deny');
-    assert.equal(shell('git push origin main'), 'deny');
     assert.equal(shell('git clone https://example.org/a.git'), 'deny');
     assert.equal(evaluate(config, 'webfetch', 'https://example.org'), 'deny');
     assert.equal(evaluate(config, 'websearch', 'angular signals'), 'deny');
-  });
-  it('refuses branches and worktrees', () => {
-    assert.equal(shell('git checkout -b feature/x'), 'deny');
-    assert.equal(shell('git switch -c feature/x'), 'deny');
-    assert.equal(shell('git branch feature/x'), 'deny');
-    assert.equal(shell('git worktree add ../x'), 'deny');
-    assert.equal(evaluate(config, 'opencode_worktree_create', '*'), 'deny');
-  });
-  it('refuses destructive commands', () => {
-    assert.equal(shell('rm -rf src'), 'deny');
-    assert.equal(shell('git reset --hard HEAD'), 'deny');
-    assert.equal(shell('git clean -fd'), 'deny');
-  });
-  it('refuses to read a heavy file raw and to write in the global base', () => {
-    assert.equal(evaluate(config, 'read', 'design/screens.xd'), 'deny');
-    assert.equal(evaluate(config, 'read', 'specs/manual.pdf'), 'deny');
     assert.equal(evaluate(config, 'edit', '/opt/local-ai-base/rules/common.md'), 'deny');
+    assert.equal(evaluate(config, 'read', 'design/screens.xd'), 'allow');
   });
 });

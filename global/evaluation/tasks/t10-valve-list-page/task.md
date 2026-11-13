@@ -4,7 +4,7 @@ title: "A page of valves with a filter and its store"
 project: angular-app
 size: large
 proof: src/app/valve-list-page.proof.spec.ts
-test: npx --no ng test --watch=false --include src/app/valve-list-page.proof.spec.ts
+test: npx --no -- ng test --watch=false --include src/app/valve-list-page.proof.spec.ts
 ---
 
 # T10 · A page of valves with a filter and its store

@@ -135,6 +135,20 @@ describe('the check of tasks.md', () => {
       'the last task must be the final check, with "- Agent: checker"',
     ]);
   });
+  it('asks one check command between backquotes, and accepts any command', () => {
+    const check = (command: string): string[] => checkTasks(TASKS.replace('- Check: `npm run lint`', `- Check: ${command}`), ['component']);
+
+    assert.deepEqual(check('`npm run lint`, `npm run test`'), ['T01: one check command only']);
+    assert.deepEqual(check('run the lint'), ['T01: the check must be one command between backquotes']);
+    for (const command of [
+      'npx --no -- tsc -p tsconfig.json',
+      'cd src && npx --no -- tsc',
+      'node -e "JSON.parse(1)"',
+      'grep -c "<symbol id=" src/symbols/symbols.svg',
+    ]) {
+      assert.deepEqual(check(`\`${command}\``), [], command);
+    }
+  });
   it('knows the agents of each profile', () => {
     assert.ok(agentsOfProfile(BASE, 'angular-app')?.includes('store'));
     assert.equal(agentsOfProfile(BASE, 'ts-pure-lib')?.includes('component'), false);

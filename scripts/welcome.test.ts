@@ -133,7 +133,7 @@ describe('the profile of a project', () => {
     const profile = JSON.parse(readFileSync(join(project, '.agents', 'profile.json'), 'utf8')) as Record<string, unknown>;
 
     assert.equal(profile['profile'], 'ts-lib');
-    assert.equal((profile['checks'] as Record<string, string>)['test'], 'npx --no vitest run');
+    assert.equal((profile['checks'] as Record<string, string>)['test'], 'npx --no -- vitest run');
     assert.match(readFileSync(join(project, '.agents', 'lint', 'lint.config.mjs'), 'utf8'), /lintConfig\('ts-lib'/);
     assert.match(readFileSync(join(project, '.opencode', 'opencode.json'), 'utf8'), /skills\/typescript/);
     assert.match(readFileSync(join(project, '.git', 'info', 'exclude'), 'utf8'), /^\.opencode\/$/m);
@@ -147,7 +147,7 @@ describe('the profile of a project', () => {
     });
     const profile = JSON.parse(readFileSync(join(project, '.agents', 'profile.json'), 'utf8')) as { checks: Record<string, string> };
 
-    assert.equal(profile.checks['test'], 'npx --no ng test --watch=false');
+    assert.equal(profile.checks['test'], 'npx --no -- ng test --watch=false');
   });
   it('keeps AGENTS.md, the project skills and the check commands of the team when run again', () => {
     const project = sampleCopy('angular-app');

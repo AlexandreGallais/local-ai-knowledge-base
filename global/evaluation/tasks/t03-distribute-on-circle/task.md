@@ -4,7 +4,7 @@ title: "Points at equal distance on a circle"
 project: ts-pure-lib
 size: medium
 proof: src/distribute-on-circle.proof.spec.ts
-test: npx --no vitest run src/distribute-on-circle.proof.spec.ts
+test: npx --no -- vitest run src/distribute-on-circle.proof.spec.ts
 ---
 
 # T03 · Points at equal distance on a circle

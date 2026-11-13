@@ -4,7 +4,7 @@ title: "A badge component with signal inputs and an output"
 project: angular-app
 size: small
 proof: src/app/valve-badge.proof.spec.ts
-test: npx --no ng test --watch=false --include src/app/valve-badge.proof.spec.ts
+test: npx --no -- ng test --watch=false --include src/app/valve-badge.proof.spec.ts
 ---
 
 # T07 · A badge component with signal inputs and an output

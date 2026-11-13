@@ -18,6 +18,9 @@ requirements, what stays out, the assumptions and the questions. Every task of t
 6. A fact the code or the docs can give: search again. A choice only the user can make: a question.
 7. Write 1 to 5 questions, 2 to 4 options each, the recommended option first. Nothing open: ask
    "Start with this brief?" with "Start" and "Change".
+   Packages: when `project_info` lists packages to install, or the request needs another package,
+   Q1 asks the user to run the install, with the exact command and pinned versions. The options are
+   "Installed" and "Change". No task ever installs a package.
 8. Second pass, after the answers: change the requirements, mark each assumption `[CONFIRMED]` or
    `[OPEN]`, write the summary for sub-agents, then call `work_check_brief` and fix every finding.
 

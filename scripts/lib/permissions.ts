@@ -17,13 +17,25 @@ export interface Config {
   policies: Rule[];
 }
 
+// As Wildcard.match of OpenCode 2.2.7 (packages/core/src/util/wildcard.ts): "*" is any text, "?" one
+// character, and a final " *" is optional, so "git status *" also matches "git status".
 export function wildcard(pattern: string, value: string): boolean {
-  const source = pattern
-    .split('*')
-    .map((part) => part.replaceAll(/[.+?^${}()|[\]\\]/g, '\\$&'))
-    .join('.*');
+  const escaped = pattern
+    .replaceAll(/[.+^${}()|[\]\\]/g, '\\$&')
+    .replaceAll('*', '.*')
+    .replaceAll('?', '.');
+  const source = escaped.endsWith(' .*') ? `${escaped.slice(0, -3)}( .*)?` : escaped;
 
   return new RegExp(`^${source}$`, 's').test(value);
+}
+
+// The commands of one shell line, as OpenCode checks them: each part between "&&", "||", "|" and ";"
+// on its own. A simple split, enough for the tests: no quotes nor sub-shells.
+export function shellCommands(line: string): string[] {
+  return line
+    .split(/&&|\|\||\||;/)
+    .map((part) => part.trim())
+    .filter((part) => part !== '');
 }
 
 export function readCommonConfig(opencode: string): Config {
@@ -57,4 +69,14 @@ export function evaluate(config: Config, agentRules: readonly Rule[], action: st
   const last = rules.findLast((rule) => wildcard(rule.action, action) && wildcard(rule.resource, resource));
 
   return isDeniedByPolicy ? 'deny' : last?.effect ?? 'ask';
+}
+
+// The effect of a whole shell line: denied when one of its commands is denied, asked when one asks.
+export function evaluateShell(config: Config, agentRules: readonly Rule[], line: string): string {
+  const effects = shellCommands(line).map((command) => evaluate(config, agentRules, 'shell', command));
+
+  if (effects.includes('deny')) {
+    return 'deny';
+  }
+  return effects.includes('ask') ? 'ask' : 'allow';
 }

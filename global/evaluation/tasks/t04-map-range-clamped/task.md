@@ -4,7 +4,7 @@ title: "A value of one range shown on another"
 project: ts-pure-lib
 size: small
 proof: src/map-range-clamped.proof.spec.ts
-test: npx --no vitest run src/map-range-clamped.proof.spec.ts
+test: npx --no -- vitest run src/map-range-clamped.proof.spec.ts
 ---
 
 # T04 · A value of one range shown on another

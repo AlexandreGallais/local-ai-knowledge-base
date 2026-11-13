@@ -19,6 +19,10 @@ import {
 } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import {
+  checkReport,
+  parseTasks,
+} from '../global/tools/work-files.ts';
+import {
   type Client,
   startServer,
 } from './lib/mcp-client.ts';
@@ -148,6 +152,28 @@ describe('the work server', () => {
 
     assert.equal(result.text, 'T01 done. 1/2 tasks done.');
     assert.match(readFileSync(join(project, '.agents/work/user-list/tasks.md'), 'utf8'), /## T01 · Write the user type\n- State: done/);
+  });
+  it('marks a task done by the user, with a report in the form that quotes their words', async () => {
+    const result = await work.call('finish_by_user', {
+      subject: 'user-list',
+      task: 'T02',
+      note: 'I installed the packages myself.',
+    });
+    const report = readFileSync(join(project, '.agents/work/user-list/reports/T02.md'), 'utf8');
+
+    assert.equal(result.text, 'T02 done by the user. 2/2 tasks done.');
+    assert.match(readFileSync(join(project, '.agents/work/user-list/tasks.md'), 'utf8'), /## T02 · Write the user list\n- State: done/);
+    assert.match(report, /^STATUS: DONE$/m);
+    assert.match(report, /^The user said: I installed the packages myself\.$/m);
+    assert.deepEqual(checkReport(report, parseTasks(TASKS).find((task) => task.id === 'T02')), []);
+  });
+  it('refuses to mark a task done by the user without their words', async () => {
+    const result = await work.call('finish_by_user', {
+      subject: 'user-list',
+      task: 'T02',
+    });
+
+    assert.equal(result.isError, true);
   });
   it('refuses a subject name that leaves the work folder', async () => {
     const result = await work.call('next_task', { subject: '../escape' });

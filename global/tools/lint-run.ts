@@ -3,6 +3,7 @@
 // OpenCode plugin of the base. No package of its own; Node 22.18 or later.
 import {
   existsSync,
+  readdirSync,
   realpathSync,
 } from 'node:fs';
 import { createRequire } from 'node:module';
@@ -119,14 +120,47 @@ async function stylelintPass(project: string, pass: Pass, patterns: string[]): P
   return pass === 'format' ? [] : result.results.flatMap((item) => item.warnings.map((warning) => `${relative(project, item.source ?? '')}:${warning.line}:${warning.column} ${warning.rule} ${warning.text}`));
 }
 
+const SKIPPED_FOLDERS = new Set([
+  'node_modules',
+  '.git',
+  '.agents',
+  '.angular',
+  'dist',
+  'coverage',
+  'storybook-static',
+]);
+
+// Whether the project holds a CSS or SCSS file of its own: a project without styles needs no Stylelint.
+export function hasStyleFiles(folder: string): boolean {
+  return readdirSync(folder, { withFileTypes: true }).some((entry) => {
+    if (entry.isDirectory()) {
+      return !SKIPPED_FOLDERS.has(entry.name) && hasStyleFiles(join(folder, entry.name));
+    }
+    return STYLE_FILES.has(extname(entry.name));
+  });
+}
+
+// A package of the profile is not installed: one clear line, never a stack trace.
+async function orMissing(name: string, pass: () => Promise<string[]>): Promise<string[]> {
+  try {
+    return await pass();
+  } catch (error) {
+    if ((error as { code?: string }).code !== 'MODULE_NOT_FOUND') {
+      throw error;
+    }
+    return [`${name} is not installed in this project. Run node /opt/local-ai-base/tools/missing-packages.ts, then ask the user to run the install command it gives.`];
+  }
+}
+
 // Runs one pass on some files of the project, or on all of it. Returns one line per error left.
 export async function runPass(project: string, pass: Pass, files: string[] | 'all'): Promise<string[]> {
   const scripts = files === 'all' ? ['.'] : files.filter((file) => ESLINT_FILES.has(extname(file)));
-  const styles = files === 'all' ? ['**/*.{css,scss}'] : files.filter((file) => STYLE_FILES.has(extname(file)));
+  const allStyles = hasStyleFiles(project) ? ['**/*.{css,scss}'] : [];
+  const styles = files === 'all' ? allStyles : files.filter((file) => STYLE_FILES.has(extname(file)));
 
   return [
-    ...scripts.length === 0 ? [] : await eslintPass(project, pass, scripts),
-    ...styles.length === 0 ? [] : await stylelintPass(project, pass, styles),
+    ...scripts.length === 0 ? [] : await orMissing('eslint', async () => await eslintPass(project, pass, scripts)),
+    ...styles.length === 0 ? [] : await orMissing('stylelint', async () => await stylelintPass(project, pass, styles)),
   ];
 }
 

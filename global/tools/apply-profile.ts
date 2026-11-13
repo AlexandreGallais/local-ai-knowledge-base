@@ -57,16 +57,16 @@ function testCommand(project: string, profile: string): string {
   const runner = detectProject(project).testRunner;
 
   if (profile.startsWith('angular-') || runner.startsWith('ng test')) {
-    return 'npx --no ng test --watch=false';
+    return 'npx --no -- ng test --watch=false';
   }
-  return runner === 'jest' ? 'npx --no jest' : 'npx --no vitest run';
+  return runner === 'jest' ? 'npx --no -- jest' : 'npx --no -- vitest run';
 }
 
 export function defaultChecks(project: string, profile: string): Record<string, string> {
   return {
     format: `node ${BASE_MOUNT}/tools/format-file.ts --all`,
     lint: `node ${BASE_MOUNT}/tools/lint-file.ts --all`,
-    build: 'npx --no tsc -p tsconfig.json',
+    build: 'npx --no -- tsc -p tsconfig.json',
     test: testCommand(project, profile),
   };
 }

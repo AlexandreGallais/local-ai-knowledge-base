@@ -49,7 +49,8 @@ Brief: .agents/work/<subject>/brief.md
 ## Rules for one task
 
 - 1 to 3 source files plus their tests, with exact paths.
-- One agent of the profile; one exact check command that runs from the project root and ends alone.
+- One agent of the profile; one exact check command, best a check command of the profile.
+- A package to install is a question of the brief, answered by the user before the tasks start.
 - `Do` names each file, function and type. `Consumes` gives the names and signatures from earlier tasks.
 - `Done when` is a fact, never "it works".
 - Never write "etc.", "as needed", "if necessary", "similar to" or "TBD".

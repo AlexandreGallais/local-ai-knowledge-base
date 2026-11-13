@@ -24,14 +24,31 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
   machine with Podman), OpenCode, the check.
 - "navigation" and "damage" stay without card on purpose; the AI asks what they show if a task
   needs one.
-
 - `THIRD_PARTY_NOTICES.md` gives the copyright lines of each source, its license address and its
   license files, and what share-alike (MDN) and the Artistic License (npm) ask. The check of the
   library refuses a tool without copyright or without its license file.
+- Tools and guidance, not bans (decision 0020 of the project): every command is allowed to every
+  agent; an install, a push, a branch, a worktree or a deletion asks the user; only the web is
+  refused (`webfetch`, `websearch`, `curl`, `wget`, `git clone`, `git fetch`, `git pull`). Heavy files
+  are no longer refused raw: the common rules say to open them with the `parse` tools, and why.
+- The check of `tasks.md` checks only the form of a check command.
+- The test containers share the same rights through `opencode-user/opencode.jsonc`, the web closed in
+  both; they pass `ANTHROPIC_API_KEY` of the machine, and install packages only when a project has a
+  `package.json`.
+- The lint pass lets Storybook files (`.storybook/*.ts`, `*.stories.ts`) export a default and their
+  stories; it runs Stylelint only when the project has styles; a missing package is one clear line.
+
+### Added in the tools
+
+- `tools/missing-packages.ts` lists the packages of the profile a project lacks and the one command
+  that installs them; `project_info` shows it, and the brief asks the user to run it.
+- `work_finish_by_user` marks done a task the user did, as an install, with their words.
 
 ### Fixed
 
 - The authors of eslint-plugin-functional and of @vitest/eslint-plugin, as their licenses name them.
+- Every `npx --no <tool>` command is now `npx --no -- <tool>`: npm 12 read `-p` as its own option and
+  tried to download a package named `tsconfig.json`.
 
 ## [0.2.0] - 2026-11-13
 

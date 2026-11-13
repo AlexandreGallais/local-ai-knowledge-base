@@ -4,7 +4,7 @@ title: "A linear interpolation function"
 project: ts-pure-lib
 size: small
 proof: src/lerp.proof.spec.ts
-test: npx --no vitest run src/lerp.proof.spec.ts
+test: npx --no -- vitest run src/lerp.proof.spec.ts
 ---
 
 # T01 · A linear interpolation function

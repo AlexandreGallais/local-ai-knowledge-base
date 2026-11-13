@@ -7,6 +7,9 @@
     // Your own OpenCode configuration (the model): the same folder for both test projects.
     "type=bind,source=${localWorkspaceFolder}/../opencode-user,target=/home/node/.config/opencode"
   ],
-  // Once, when the container is created: the same OpenCode, then the packages.
-  "postCreateCommand": "npm install --global @opencode/cli@2.2.7 && npm install"
+  // A Claude key of the machine, if there is one: the same in both containers, never written down.
+  "remoteEnv": { "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}" },
+  // Once, when the container is created: OpenCode at the version of the base, then the packages of
+  // the project, if it has some yet.
+  "postCreateCommand": "npm install --global @opencode/cli@2.2.7 && if [ -f package.json ]; then npm install; fi"
 }

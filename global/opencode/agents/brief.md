@@ -12,9 +12,6 @@ permissions:
   - action: edit
     resource: "*/.agents/work/*"
     effect: allow
-  - action: shell
-    resource: "*"
-    effect: deny
   - action: subagent
     resource: "*"
     effect: deny

@@ -18,24 +18,6 @@ permissions:
   - action: edit
     resource: "*/.agents/*"
     effect: deny
-  - action: shell
-    resource: "*"
-    effect: deny
-  - action: shell
-    resource: "npm run *"
-    effect: allow
-  - action: shell
-    resource: "npx --no *"
-    effect: allow
-  - action: shell
-    resource: "node /opt/local-ai-base/tools/*"
-    effect: allow
-  - action: shell
-    resource: "git status *"
-    effect: allow
-  - action: shell
-    resource: "git diff *"
-    effect: allow
   - action: subagent
     resource: "*"
     effect: deny

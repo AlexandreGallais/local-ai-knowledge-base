@@ -153,13 +153,13 @@ export function sumTokens(jsonLines: string): Usage {
   return usage;
 }
 
-// A command of a task, run with the packages of the evaluation projects: "npx --no tsc" runs the tsc
+// A command of a task, run with the packages of the evaluation projects: "npx --no -- tsc" runs the tsc
 // of their node_modules, never a download.
 function run(command: string, cwd: string, options: ProofOptions): {
   status: number;
   output: string;
 } {
-  const result = spawnSync(command.replace(/^npx --no /, ''), {
+  const result = spawnSync(command.replace(/^npx --no (?:-- )?/, ''), {
     cwd,
     encoding: 'utf8',
     shell: true,
@@ -205,7 +205,7 @@ function proofSteps(project: string, task: EvaluationTask, options: ProofOptions
     ['format', () => run(`${tool('format-file.ts')} --all`, project, options)],
     ['lint', () => run(`${tool('lint-file.ts')} --all`, project, options)],
     ['proof copy', () => copyProof(project, task)],
-    ['build', () => run('npx --no tsc -p tsconfig.json', project, options)],
+    ['build', () => run('npx --no -- tsc -p tsconfig.json', project, options)],
     ['test', () => run(task.test, project, options)],
   ];
 }

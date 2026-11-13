@@ -22,6 +22,9 @@ const TEST_FILES = [
   '**/*.test.ts',
 ];
 const ONE_FUNCTION = 'local/single-exported-function';
+const NO_DEFAULT_EXPORT = 'import-lite/no-default-export';
+const FILE_NAME = 'local/filename-matches-export';
+const REQUIRE_JSDOC = 'jsdoc/require-jsdoc';
 const FUNCTION_LINES = 'max-lines-per-function';
 const SIGNALS = 'Use @ngrx/signals.';
 const linterOptions = {
@@ -208,7 +211,7 @@ const PLUGIN_RULES = {
     'unicorn/no-empty-file',
   ]),
   ...errors([
-    'import-lite/no-default-export',
+    NO_DEFAULT_EXPORT,
     'import-lite/no-mutable-exports',
     'local/no-undeclared-import',
     'local/no-import-cycle',
@@ -271,9 +274,9 @@ const tests = {
       FUNCTION_LINES,
       'max-nested-callbacks',
       ONE_FUNCTION,
-      'local/filename-matches-export',
+      FILE_NAME,
       'local/copyright-header',
-      'jsdoc/require-jsdoc',
+      REQUIRE_JSDOC,
     ].map((name) => [
       name,
       OFF,
@@ -285,11 +288,31 @@ const toolConfigs = {
   files: ['*.config.{ts,mts}'],
   extends: [tseslint.configs.disableTypeChecked],
   rules: {
-    'import-lite/no-default-export': OFF,
+    [NO_DEFAULT_EXPORT]: OFF,
     'max-lines': OFF,
     [FUNCTION_LINES]: OFF,
     'complexity': OFF,
   },
+};
+// Storybook asks for a default export (the config, the meta of a story file) and stories that are
+// objects: the file rules of a library do not apply; the typed rules do.
+const STORYBOOK_FILES = [
+  '.storybook/*.ts',
+  '**/*.stories.ts',
+];
+const storybook = {
+  name: 'lint/storybook',
+  files: STORYBOOK_FILES,
+  rules: Object.fromEntries([
+    NO_DEFAULT_EXPORT,
+    ONE_FUNCTION,
+    FILE_NAME,
+    REQUIRE_JSDOC,
+    FUNCTION_LINES,
+  ].map((name) => [
+    name,
+    OFF,
+  ])),
 };
 // ---- Angular profiles ---------------------------------------------------------------------------
 const BANNED_IMPORTS = {
@@ -486,7 +509,7 @@ async function jsdocLayer() {
     ignores: TEST_FILES,
     extends: [jsdoc.configs['flat/recommended-typescript-error']],
     rules: {
-      'jsdoc/require-jsdoc': [
+      [REQUIRE_JSDOC]: [
         ERROR,
         {
           publicOnly: true,
@@ -522,7 +545,7 @@ function typescriptLibrary(copyright) {
     rules: {
       ...limitRules(LIMITS.library),
       [ONE_FUNCTION]: ERROR,
-      'local/filename-matches-export': [
+      [FILE_NAME]: [
         ERROR,
         { case: 'kebab' },
       ],
@@ -664,10 +687,12 @@ export async function lintConfig(name, options = {}) {
       '.angular/',
       '.agents/',
       'node_modules/',
+      'storybook-static/',
     ]),
     typescriptBase,
     ...await profileLayers(name, options),
     tests,
     toolConfigs,
+    storybook,
   ]);
 }

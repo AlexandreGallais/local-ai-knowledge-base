@@ -1,11 +1,44 @@
 {
-  // Your own OpenCode configuration, mounted in both test containers at ~/.config/opencode.
+  // Your own OpenCode configuration, mounted in both test containers at ~/.config/opencode: the
+  // project with the base and the project without it get the same rights.
   "$schema": "https://opencode.ai/config.json",
 
   // Keep OpenCode at 2.2.7: the base is written for this version.
-  "update": "disable"
+  "update": "disable",
 
   // Add here the model you use with OpenCode, as you configure it today: its provider, its name,
   // its context window (limit.context) and tool calls (capabilities.tools: true). A model served
   // on the machine itself is reached from a container at host.docker.internal, not localhost.
+
+  // Everything is allowed; what cannot be undone asks you. The same rules as the global base.
+  "permissions": [
+    { "action": "*", "resource": "*", "effect": "allow" },
+    { "action": "shell", "resource": "npm install *", "effect": "ask" },
+    { "action": "shell", "resource": "npm i *", "effect": "ask" },
+    { "action": "shell", "resource": "npm ci *", "effect": "ask" },
+    { "action": "shell", "resource": "npm update *", "effect": "ask" },
+    { "action": "shell", "resource": "npm uninstall *", "effect": "ask" },
+    { "action": "shell", "resource": "npx *", "effect": "ask" },
+    { "action": "shell", "resource": "npx --no *", "effect": "allow" },
+    { "action": "shell", "resource": "git push *", "effect": "ask" },
+    { "action": "shell", "resource": "git checkout -b *", "effect": "ask" },
+    { "action": "shell", "resource": "git switch -c *", "effect": "ask" },
+    { "action": "shell", "resource": "git branch *", "effect": "ask" },
+    { "action": "shell", "resource": "git worktree *", "effect": "ask" },
+    { "action": "shell", "resource": "git reset --hard *", "effect": "ask" },
+    { "action": "shell", "resource": "git clean *", "effect": "ask" },
+    { "action": "shell", "resource": "rm -rf *", "effect": "ask" },
+    { "action": "shell", "resource": "rm -fr *", "effect": "ask" }
+  ],
+
+  // No search nor download on the web, in both containers.
+  "policies": [
+    { "action": "tool.use", "resource": "webfetch:*", "effect": "deny" },
+    { "action": "tool.use", "resource": "websearch:*", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:curl *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:wget *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git clone *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git fetch *", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:git pull *", "effect": "deny" }
+  ]
 }

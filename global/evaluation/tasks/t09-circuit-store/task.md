@@ -4,7 +4,7 @@ title: "A store of two sub-domains, one feature per file"
 project: angular-app
 size: medium
 proof: src/app/circuit.proof.spec.ts
-test: npx --no ng test --watch=false --include src/app/circuit.proof.spec.ts
+test: npx --no -- ng test --watch=false --include src/app/circuit.proof.spec.ts
 ---
 
 # T09 · A store of two sub-domains, one feature per file

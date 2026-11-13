@@ -97,7 +97,7 @@ describe('the tasks of the evaluation', () => {
       assert.ok(task.request.length > 80, `${task.id}: request too short`);
       assert.ok(existsSync(join(PROJECTS, task.project, 'package.json')), `${task.id}: no project ${task.project}`);
       assert.ok(existsSync(join(task.folder, 'proof.spec.ts')), `${task.id}: no proof.spec.ts`);
-      assert.match(task.test, task.project === 'angular-app' ? /^npx --no ng test --watch=false --include / : /^npx --no vitest run /, task.id);
+      assert.match(task.test, task.project === 'angular-app' ? /^npx --no -- ng test --watch=false --include / : /^npx --no -- vitest run /, task.id);
       assert.ok(task.test.endsWith(task.proof), `${task.id}: the test runs another file than the proof`);
       assert.ok(existsSync(join(REFERENCES, task.folder.split('/').at(-1) ?? '')), `${task.id}: no reference solution`);
     }
