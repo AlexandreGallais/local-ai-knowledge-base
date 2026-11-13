@@ -34,6 +34,7 @@ anglais.
 | Skill | Ce qu'il fait |
 | --- | --- |
 | `analyze-csharp` | Écrit du C# conforme à l'analyse, puis lance le formatage et `dotnet build` jusqu'à zéro erreur. |
+| `explain-equipment` | Un agent écrit comme un skill : il explique un équipement du bord par son fonctionnement réel, puis par son modèle, avec les noms de propriétés du catalogue. |
 | `check-container-change` | Contrôle un `Dockerfile`, un `devcontainer.json`, un manifeste Kubernetes, un chart Helm ou une surcouche Kustomize avec l'outil de son type (hadolint, kubeconform, KubeLinter, `helm lint`), et dit ce qui n'a pas pu être contrôlé. |
 | `look-up-api` | Cherche la signature exacte d'une API dans la doc installée avec le projet (types `.d.ts`, XML de .NET, `--help`), par recherche ciblée, sans lire de gros fichier. |
 | `lint-typescript` | Écrit du TypeScript et de l'Angular conformes au lint, puis lance `npm run fix`, `npm run check` et `npm run build` jusqu'à zéro erreur. |
@@ -61,6 +62,7 @@ anglais.
 | `docs/dotnet/` | Ce qui a changé dans C#, .NET, ASP.NET Core et EF Core de la 6 à la 11, et les bibliothèques devenues payantes. |
 | `docs/containers/` | Les règles d'un `Dockerfile`, les images .NET et Angular, Podman, les dev containers et les problèmes de conteneur. |
 | `docs/kubernetes/` | Les manifestes Kubernetes, les `apiVersion`, les sondes, les ressources et le temps réel, le déploiement, le contrôle sans cluster et le dépannage d'un Pod. |
+| `docs/simulation/` | Les principes d'un simulateur d'entraînement, le temps et l'ordonnanceur, l'architecture, les fonctions d'entraînement (gel, instantané, rejeu, pannes), l'interface et les tests d'un modèle, HLA, DIS, DDS, FMI, le déploiement temps réel et la diffusion vers les synoptiques. |
 | `docs/synoptics/` | Les règles pour représenter un équipement sur un synoptique, la convention de nommage des propriétés des symboles, la structure d'un composant symbole (gabarit `templates/typescript-angular/synoptic-symbol.ts`), et le catalogue des équipements de fluides avec son index français → anglais. |
 | `docs/maintenance/` | La procédure pour mettre à jour les documents d'un outil qui change de version. |
 | `docs/csharp-analysis/` | Les règles d'analyse C# que le build fait échouer, chacune avec un exemple faux et un juste. |

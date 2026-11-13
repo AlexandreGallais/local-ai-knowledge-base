@@ -4,8 +4,8 @@ name: Simulation and naval equipment
 description: Answers questions on synoptics, symbols, property names and ship equipment from the knowledge of the team.
 subject: simulation, synoptics, symbols and ship equipment
 scope: subject
-knowledge: synoptics
-skills: none
+knowledge: synoptics, simulation
+skills: explain-equipment
 access: team
 ---
 
