@@ -2,7 +2,8 @@
   "extends": "./.agents/lint/tsconfig.strict.json",
   "compilerOptions": {
     "declaration": true,
-    "isolatedDeclarations": true
+    "isolatedDeclarations": true,
+    "allowImportingTsExtensions": true
   },
   "include": ["src"]
 }

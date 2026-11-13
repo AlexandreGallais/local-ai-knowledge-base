@@ -28,32 +28,40 @@ const linterOptions = {
   noInlineConfig: true,
   reportUnusedDisableDirectives: OFF,
 };
-/** Size and complexity limits, one set per kind of file. */
+/**
+ * Size and complexity limits, one set per kind of file. The size of a function is counted in
+ * statements: the format pass puts each argument of a long call on its own line, so lines only
+ * catch the extremes.
+ */
 const LIMITS = {
   pure: {
-    file: 80,
-    fn: 25,
+    file: 150,
+    fn: 40,
+    statements: 10,
     complexity: 6,
     depth: 2,
     params: 3,
   },
   library: {
-    file: 150,
-    fn: 30,
+    file: 200,
+    fn: 50,
+    statements: 15,
     complexity: 8,
     depth: 3,
     params: 3,
   },
   angularClass: {
-    file: 200,
-    fn: 30,
+    file: 250,
+    fn: 50,
+    statements: 15,
     complexity: 8,
     depth: 3,
     params: 3,
   },
   storeFeature: {
-    file: 150,
-    fn: 60,
+    file: 200,
+    fn: 80,
+    statements: 20,
     complexity: 8,
     depth: 3,
     params: 3,
@@ -76,6 +84,7 @@ function limitRules(limit) {
   return {
     'max-lines': lines(limit.file),
     [FUNCTION_LINES]: lines(limit.fn),
+    'max-statements': atMost(limit.statements),
     'complexity': atMost(limit.complexity),
     'max-depth': atMost(limit.depth),
     'max-params': atMost(limit.params),
@@ -108,6 +117,12 @@ const TYPESCRIPT_RULES = {
       requireDefaultForNonUnion: true,
     },
   ],
+  // The format pass sorts the functions of a module by name: a function declaration may then come
+  // after its first call. Function declarations are hoisted; everything else must come first.
+  '@typescript-eslint/no-use-before-define': [
+    ERROR,
+    { functions: false },
+  ],
   '@typescript-eslint/no-explicit-any': [
     ERROR,
     {
@@ -122,7 +137,6 @@ const TYPESCRIPT_RULES = {
     '@typescript-eslint/explicit-function-return-type',
     '@typescript-eslint/explicit-module-boundary-types',
     '@typescript-eslint/no-shadow',
-    '@typescript-eslint/no-use-before-define',
     '@typescript-eslint/default-param-last',
     '@typescript-eslint/consistent-return',
   ]),
