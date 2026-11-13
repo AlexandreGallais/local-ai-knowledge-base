@@ -21,6 +21,7 @@ import {
   checkChatModel,
   checkDocument,
   checkPropertyNames,
+  checkReadingGuide,
   checkSkill,
   findWebRequests,
   lookUpFrench,
@@ -654,6 +655,25 @@ describe('catalog cards and the French to English index', () => {
   it('gives the English name of a French term, whatever its case', () => {
     assert.equal(lookUpFrench([FRENCH_INDEX], 'Robinet-vanne'), 'Gate valve');
     assert.equal(lookUpFrench([FRENCH_INDEX], 'pompe'), undefined);
+  });
+});
+const GUIDE = [
+  '| You read | Meaning | C# equivalent | Kind |',
+  '| --- | --- | --- | --- |',
+  '| `std::move(x)` | A cast | None | false friend |',
+  '| `auto x` | Deduced type | `var` | same meaning |',
+  '',
+].join(NEWLINE);
+
+describe('reading guides', () => {
+  it('accepts a guide whose rows are each same meaning, false friend or no equivalent', () => {
+    assert.deepEqual(checkReadingGuide(GUIDE, 'cpp.md'), []);
+  });
+  it('refuses a row with another kind', () => {
+    assert.match(messages(checkReadingGuide(GUIDE.replace('| same meaning |', '| close |'), 'cpp.md')), /row kind must be/);
+  });
+  it('refuses a guide without the table', () => {
+    assert.match(messages(checkReadingGuide('# Guide\n', 'cpp.md')), /missing table/);
   });
 });
 const TOPIC_INDEX_TEXT = [

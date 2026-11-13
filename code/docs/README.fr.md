@@ -36,6 +36,7 @@ anglais.
 | `analyze-csharp` | Écrit du C# conforme à l'analyse, puis lance le formatage et `dotnet build` jusqu'à zéro erreur. |
 | `architecture-review` | Un agent qui revoit l'architecture d'une application .NET et Angular : il part des objectifs de qualité, liste les risques avec leur preuve et la plus petite correction, et ne change aucun fichier. |
 | `code-review` | Un agent qui revoit une modification de code : ce que le lint ne voit pas, avec le fichier, la ligne et la correction, sans changer de fichier. |
+| `explain-code` | Explique un extrait de C, C++, Java ou Rust, ou un fichier de build, à un développeur C# : ce que fait le code, pas à pas, les équivalents C#, les faux amis et ce que l'extrait ne permet pas de savoir. |
 | `explain-equipment` | Un agent écrit comme un skill : il explique un équipement du bord par son fonctionnement réel, puis par son modèle, avec les noms de propriétés du catalogue. |
 | `check-container-change` | Contrôle un `Dockerfile`, un `devcontainer.json`, un manifeste Kubernetes, un chart Helm ou une surcouche Kustomize avec l'outil de son type (hadolint, kubeconform, KubeLinter, `helm lint`), et dit ce qui n'a pas pu être contrôlé. |
 | `look-up-api` | Cherche la signature exacte d'une API dans la doc installée avec le projet (types `.d.ts`, XML de .NET, `--help`), par recherche ciblée, sans lire de gros fichier. |
@@ -65,6 +66,7 @@ anglais.
 | `docs/containers/` | Les règles d'un `Dockerfile`, les images .NET et Angular, Podman, les dev containers et les problèmes de conteneur. |
 | `docs/kubernetes/` | Les manifestes Kubernetes, les `apiVersion`, les sondes, les ressources et le temps réel, le déploiement, le contrôle sans cluster et le dépannage d'un Pod. |
 | `docs/architecture/` | L'architecture d'une application .NET et Angular : découpage, contrat d'API, temps réel, messagerie, patrons .NET et Angular, bibliothèques et patrons dépassés, et les deux listes de revue. |
+| `docs/reading-code/` | Lire du C, du C++, du Java et du Rust quand on connaît C# : un guide par langage, les idiomes de l'embarqué et les fichiers de build. |
 | `docs/simulation/` | Les principes d'un simulateur d'entraînement, le temps et l'ordonnanceur, l'architecture, les fonctions d'entraînement (gel, instantané, rejeu, pannes), l'interface et les tests d'un modèle, HLA, DIS, DDS, FMI, le déploiement temps réel et la diffusion vers les synoptiques. |
 | `docs/synoptics/` | Les règles pour représenter un équipement sur un synoptique, la convention de nommage des propriétés des symboles, la structure d'un composant symbole (gabarit `templates/typescript-angular/synoptic-symbol.ts`), et le catalogue des équipements de fluides avec son index français → anglais. |
 | `docs/maintenance/` | La procédure pour mettre à jour les documents d'un outil qui change de version. |

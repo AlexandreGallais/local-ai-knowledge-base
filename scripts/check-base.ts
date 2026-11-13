@@ -1300,6 +1300,52 @@ function checkCards(text: string, file: string, suffixes: string[], indexTexts: 
   ]);
 }
 
+const KIND_HEADER = '| You read | Meaning | C# equivalent | Kind |';
+const KINDS = new Set([
+  'same meaning',
+  'false friend',
+  'no equivalent',
+]);
+
+// A language guide (docs/reading-code/*-for-csharp-readers.md) has at least one table "You read |
+// Meaning | C# equivalent | Kind", and each of its rows has one of the three kinds.
+export function checkReadingGuide(text: string, file: string): Finding[] {
+  const lines = splitLines(text);
+  const findings: Finding[] = [];
+  let inTable = false;
+  let tables = 0;
+
+  for (const line of lines) {
+    if (line.trim() === KIND_HEADER) {
+      inTable = true;
+      tables += 1;
+    } else if (!line.startsWith('|')) {
+      inTable = false;
+    } else if (inTable && !line.startsWith('| ---')) {
+      const kind = line
+        .split('|')
+        .at(-2)
+        ?.trim() ?? '';
+
+      if (!KINDS.has(kind)) {
+        findings.push(finding(file, `row kind must be "same meaning", "false friend" or "no equivalent": ${line.trim()}`));
+      }
+    }
+  }
+  return tables === 0 ? [finding(file, `missing table "${KIND_HEADER}"`)] : findings;
+}
+
+function checkReadingGuides(base: string): BaseResult {
+  const folder = join(base, 'docs', 'reading-code');
+
+  return {
+    findings: existsSync(folder) ? markdownFiles(folder)
+      .filter((path) => path.endsWith('-for-csharp-readers.md'))
+      .flatMap((path) => checkReadingGuide(read(path), shown(path))) : [],
+    files: 0,
+  };
+}
+
 function checkSynopticNames(base: string): BaseResult {
   const folder = join(base, 'docs', 'synoptics');
   const namingPath = join(folder, 'symbol-property-naming.md');
@@ -1353,6 +1399,7 @@ export function checkBase(base: string, chatModels?: string): BaseResult {
     ...skillNames.map((name) => checkOneSkill(skillsFolder, name)),
     docs,
     checkSynopticNames(base),
+    checkReadingGuides(base),
     {
       findings: agents,
       files: 1,

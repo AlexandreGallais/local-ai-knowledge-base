@@ -311,6 +311,7 @@ describe('Open WebUI manifest', () => {
       'look-up-api',
       'architecture-review',
       'code-review',
+      'explain-code',
     ]);
     assert.equal(manifest.models.length, 5);
   });

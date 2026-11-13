@@ -36,6 +36,7 @@
 | To write or change C# code, or to fix a build error | load the skill `analyze-csharp` |
 | To write or check a Dockerfile, a devcontainer.json, a Kubernetes manifest, a Helm chart or a kustomization | load the skill `check-container-change` |
 | To check an API signature, an option or a command flag | load the skill `look-up-api` |
+| To explain or summarize code in C, C++, Java or Rust, or their build files | load the skill `explain-code` |
 | To explain how a ship equipment works, how to model it or name its properties | load the skill `explain-equipment` |
 | To review code or a diff; to review an architecture, an API contract or a library choice | load the skill `code-review` for code, `architecture-review` for a design |
 | To read a heavy file, or a folder of them | load the skill `read-heavy-file` |
@@ -60,6 +61,7 @@ Open the index of your topic, then only the documents your task needs.
 - [dotnet](docs/dotnet/index.md): What changed in C#, .NET, ASP.NET Core and EF Core 6 to 11, and paid packages.
 - [kubernetes](docs/kubernetes/index.md): Manifests, API versions, probes, resources, rollout, validation without a cluster and debugging.
 - [maintenance](docs/maintenance/index.md): Update the documents of a tool to a new version.
+- [reading-code](docs/reading-code/index.md): Read C, C++, Java and Rust as a C# developer, with embedded idioms and build files.
 - [simulation](docs/simulation/index.md): Training simulator principles, time and scheduler, architecture, training functions, model interface and tests, HLA, FMI, deployment.
 - [synoptics](docs/synoptics/index.md): Synoptic display rules, property names, symbol component, equipment catalogs with real working and model, French to English names.
 - [typescript](docs/typescript/index.md): What changed in TypeScript 5.0 to 7.0, RxJS 7 and Node.js 22 to 26.
