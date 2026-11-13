@@ -10,6 +10,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkBaseVersion } from '../tools/base-version.ts';
 import { checkVersions } from '../tools/check-versions.ts';
+import { agentsOfProfile } from '../tools/work-files.ts';
 import {
   baseRoot,
   projectRoot,
@@ -63,6 +64,7 @@ export function projectInfo(): string {
       command,
     ]) => `- ${name}: \`${command}\``);
   const versions = declaredVersions(project);
+  const agents = agentsOfProfile(baseRoot(), profile.profile);
 
   return [
     profile.profile === undefined ? 'Profile: none yet. Load the skill welcome first.' : `Profile: ${profile.profile}`,
@@ -76,6 +78,10 @@ export function projectInfo(): string {
     ...checks.length === 0 ? ['- none in .agents/profile.json'] : checks,
     '',
     `Project skills: ${skills.length === 0 ? 'none' : skills.join(', ')}`,
+    `Agents for the tasks: ${agents === undefined ? 'none until the profile is set' : [
+      ...agents,
+      'checker (final check)',
+    ].join(', ')}`,
   ].join('\n');
 }
 

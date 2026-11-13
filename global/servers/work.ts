@@ -4,6 +4,7 @@
 import {
   existsSync,
   mkdirSync,
+  readdirSync,
   readFileSync,
   realpathSync,
   writeFileSync,
@@ -11,17 +12,25 @@ import {
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
+  agentsOfProfile,
+  briefQuestions,
   briefSummary,
+  checkBrief,
   checkReport,
   checkTasks,
   isSubject,
   nextTask,
   parseReport,
   parseTasks,
+  setAnswers,
   setState,
   type Task,
 } from '../tools/work-files.ts';
-import { projectRoot } from './lib/base.ts';
+import {
+  baseRoot,
+  projectRoot,
+  readProfile,
+} from './lib/base.ts';
 import {
   type Arguments,
   requiredText,
@@ -111,9 +120,8 @@ export function writeReport(args: Arguments): string {
   const folder = subjectFolder(args);
   const id = requiredText(args, 'task');
   const report = requiredText(args, 'report');
-  const problems = checkReport(report);
+  const problems = checkReport(report, findTask(parseTasks(readFile(folder, 'tasks.md')), id));
 
-  findTask(parseTasks(readFile(folder, 'tasks.md')), id);
   if (problems.length > 0) {
     throw new ToolError(`The report is not in the form of the base: ${problems.join('; ')}.`);
   }
@@ -144,13 +152,13 @@ export function finish(args: Arguments): string {
   const id = requiredText(args, 'task');
   const text = readFile(folder, 'tasks.md');
   const path = join(folder, 'reports', `${id}.md`);
+  const task = findTask(parseTasks(text), id);
 
-  findTask(parseTasks(text), id);
   if (!existsSync(path)) {
     throw new ToolError(`${id} has no report. The agent must write it first.`);
   }
   const report = readFileSync(path, 'utf8');
-  const problems = checkReport(report);
+  const problems = checkReport(report, task);
 
   if (!parseReport(report).status.startsWith('DONE') || problems.length > 0) {
     const defects = problems.length > 0 ? '; '.concat(problems.join('; ')) : '';
@@ -174,9 +182,53 @@ export function block(args: Arguments): string {
 }
 
 export function check(args: Arguments): string {
-  const problems = checkTasks(readFile(subjectFolder(args), 'tasks.md'));
+  const agents = agentsOfProfile(baseRoot(), readProfile(projectRoot()).profile);
+  const problems = checkTasks(readFile(subjectFolder(args), 'tasks.md'), agents);
 
   return problems.length === 0 ? 'tasks.md is well formed.' : problems.join('\n');
+}
+
+export function checkBriefFile(args: Arguments): string {
+  const problems = checkBrief(readFile(subjectFolder(args), 'brief.md'));
+
+  return problems.length === 0 ? 'brief.md is well formed.' : problems.join('\n');
+}
+
+export function getQuestions(args: Arguments): string {
+  const questions = briefQuestions(readFile(subjectFolder(args), 'brief.md'));
+
+  return questions === '' ? 'The brief has no question.' : questions;
+}
+
+export function saveAnswers(args: Arguments): string {
+  const folder = subjectFolder(args);
+
+  writeFileSync(join(folder, 'brief.md'), setAnswers(readFile(folder, 'brief.md'), requiredText(args, 'answers')));
+  return 'Answers saved in brief.md.';
+}
+
+// After a break or a context summary: every subject, its progress and where to go on.
+export function resume(): string {
+  const root = join(projectRoot(), '.agents', 'work');
+  const subjects = existsSync(root) ? readdirSync(root, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && existsSync(join(root, entry.name, 'tasks.md')))
+    .map((entry) => entry.name)
+    .sort() : [];
+
+  if (subjects.length === 0) {
+    return 'No subject in .agents/work/. Start with the brief of the request.';
+  }
+  return subjects
+    .map((subject) => {
+      const tasks = parseTasks(readFileSync(join(root, subject, 'tasks.md'), 'utf8'));
+      const doing = tasks.find((task) => task.fields.get('State') === 'doing');
+      const following = nextTask(tasks);
+      const nextName = following === undefined ? 'none' : `${following.id} · ${following.title}`;
+      const where = doing === undefined ? `next: ${nextName}` : `running: ${doing.id} · ${doing.title}, read its report with read_status`;
+
+      return `${subject}: ${progress(tasks)}; ${where}`;
+    })
+    .join('\n');
 }
 
 const SUBJECT = {
@@ -191,7 +243,7 @@ const TASK = {
 export const server: Server = {
   name: 'work',
   version: '0.2.0',
-  instructions: 'The task list of a subject. Call next_task, give its message to the agent it names, save the report, then finish_task or block_task. Never read tasks.md whole.',
+  instructions: 'The task list of a subject. At the start of a session, call resume. Call next_task, give its message to the agent it names, save the report, then finish_task or block_task. Never read tasks.md whole.',
   tools: [
     {
       name: 'next_task',
@@ -259,10 +311,47 @@ export const server: Server = {
     },
     {
       name: 'check_tasks',
-      description: 'Check the form of tasks.md: one line per defect.',
+      description: 'Check the form of tasks.md and the agents of the profile: one line per defect.',
       properties: { subject: SUBJECT },
       required: ['subject'],
       run: check,
+    },
+    {
+      name: 'check_brief',
+      description: 'Check the form of brief.md: one line per defect.',
+      properties: { subject: SUBJECT },
+      required: ['subject'],
+      run: checkBriefFile,
+    },
+    {
+      name: 'get_questions',
+      description: 'The questions of brief.md, with their options, to ask the user with the question tool.',
+      properties: { subject: SUBJECT },
+      required: ['subject'],
+      run: getQuestions,
+    },
+    {
+      name: 'save_answers',
+      description: 'Write the answers of the user in the section "Answers" of brief.md.',
+      properties: {
+        subject: SUBJECT,
+        answers: {
+          type: 'string',
+          description: 'One line per question: "- Q1: <answer>".',
+        },
+      },
+      required: [
+        'subject',
+        'answers',
+      ],
+      run: saveAnswers,
+    },
+    {
+      name: 'resume',
+      description: 'After a break or a context summary: each subject of .agents/work/, its progress, the running or next task.',
+      properties: {},
+      required: [],
+      run: resume,
     },
   ],
 };

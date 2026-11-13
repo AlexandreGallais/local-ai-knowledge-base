@@ -92,6 +92,7 @@
     { "action": "parse_*", "resource": "*", "effect": "allow" },
     { "action": "geometry_*", "resource": "*", "effect": "allow" },
     { "action": "work_*", "resource": "*", "effect": "deny" },
+    { "action": "work_resume", "resource": "*", "effect": "allow" },
 
     // Shell: ask by default, then a short allowlist of checks and read-only commands.
     { "action": "shell", "resource": "*", "effect": "ask" },
@@ -149,6 +150,10 @@
     { "action": "tool.use", "resource": "read:*.jpeg", "effect": "deny" },
     { "action": "tool.use", "resource": "read:*.zip", "effect": "deny" }
   ],
+
+  // A new session starts with the orchestrator of the base (agents/orchestrator.md): it answers a
+  // question itself and hands every change to one fresh sub-agent at a time (decision 0018).
+  "default_agent": "orchestrator",
 
   // Built-in agents that invite parallel work are switched off (decision 0018).
   "agents": {

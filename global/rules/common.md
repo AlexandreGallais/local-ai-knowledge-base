@@ -35,4 +35,5 @@ These rules apply in every project. The project's `AGENTS.md` adds its own rules
 
 18. Say "done" only after the check commands of `.agents/profile.json` end with zero errors: format, lint, build, tests.
 19. Stop after 3 failed attempts on the same error. Show the error to the user.
-20. After a context summary, read `.agents/work/<subject>/tasks.md` again and go on with the first task that is not checked.
+20. At the start of a session and after a context summary, call `work_resume` first when you have this tool. Go on from the task it gives, never from your memory of the conversation.
+21. Never write tool-call tags or thinking tags as text. Name them with words.
