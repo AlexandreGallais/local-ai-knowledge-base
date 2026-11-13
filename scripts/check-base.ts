@@ -16,6 +16,11 @@ import {
   resolve,
 } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import {
+  checkCards,
+  checkPropertyNames,
+  unitSuffixes,
+} from './lib/catalog.ts';
 import { parseJsonc } from './lib/jsonc.ts';
 import {
   analyseLines,
@@ -348,6 +353,25 @@ function checkAgents(root: string, skillNames: Set<string>): BaseResult {
   };
 }
 
+// The cards of the symbol catalog, and the property names of every synoptics document.
+function checkCatalog(documents: readonly string[]): Finding[] {
+  const naming = documents.find((path) => basename(path) === 'symbol-property-naming.md');
+  const suffixes = naming === undefined ? [] : unitSuffixes(read(naming));
+  const indexTexts = documents
+    .filter((path) => basename(path).startsWith('index-fr-en'))
+    .map((path) => read(path));
+
+  return documents.flatMap((path) => {
+    const text = read(path);
+    const cards = basename(path).startsWith('catalog-') ? checkCards(text, path, suffixes, indexTexts) : [];
+
+    return [
+      ...cards,
+      ...checkPropertyNames(text, path, suffixes),
+    ].map((item) => finding(item.file, item.message));
+  });
+}
+
 function checkDocs(root: string): BaseResult {
   const docs = join(root, 'global', 'docs');
   const findings: Finding[] = [];
@@ -365,6 +389,9 @@ function checkDocs(root: string): BaseResult {
       findings.push(finding(indexPath, 'missing index.md for this topic'));
     }
     findings.push(...documents.flatMap((path) => checkDocument(read(path), path, topic)));
+    if (topic === 'synoptics') {
+      findings.push(...checkCatalog(documents));
+    }
   }
   return {
     findings,
