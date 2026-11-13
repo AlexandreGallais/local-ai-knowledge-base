@@ -41,7 +41,7 @@ Contents: 1. The rule · 2. Runner and Jasmine · 3. TestBed, HTTP and routing �
 | `component.value = x` on an input | `fixture.componentRef.setInput('value', x)` | 19 | Error under the OnPush rules of a zoneless `TestBed` | [S48] [S49] |
 | `TestBed.flushEffects()` | `TestBed.tick()` | 20 | Deprecated | [S52] |
 | `HttpClientTestingModule` | `provideHttpClient()`, then `provideHttpClientTesting()` | 18 | Replaced | [S50] |
-| `RouterTestingModule` | `provideRouter(routes)` and `RouterTestingHarness` | 21 | Deprecated | [S55] |
+| `RouterTestingModule` | `provideRouter(routes)`, `provideLocationMocks()` and `RouterTestingHarness` | 17 | Deprecated in 21 | [S55] |
 | `NO_ERRORS_SCHEMA` everywhere | Stub children with `overrideComponent` | 17 | Hides template errors | [S48] |
 
 ## Sources

@@ -52,6 +52,8 @@ const ROOT_FILES = [
   'scripts/check-versions.ts',
   'import.ts',
   'README.md',
+  'CHANGELOG.md',
+  'THIRD_PARTY_NOTICES.md',
   'LICENSE',
 ];
 const TREE_FOLDERS = [

@@ -1108,6 +1108,84 @@ function checkOpenCodeAdapters(adaptersFolder: string, context: AdapterContext):
   return checkFolder(paths, (text, file) => checkOpenCodeAdapter(text, file, context));
 }
 
+const PATH_SPAN = /`((?:docs|templates|\.agents|adapters|library|scripts)\/[^`\s]+?)[.,:;]?`/g;
+const PLACEHOLDER = /[<>*{}[\]|]|\.\.\./;
+const SECTION_REF = /(?:`(docs\/[^`\s]+\.md)`,?\s+)?\bsection (\d+)\b/g;
+const NUMBERED_HEADING = /^## (\d+)\./;
+
+// Whether a path of the base exists; undefined when it cannot be known (library/ not imported).
+export type PathExists = (path: string) => boolean | undefined;
+
+function readableLines(text: string): Line[] {
+  return analyseLines(text).filter((line) => !line.inCode && line.section !== 'Sources');
+}
+
+// Every path quoted in the text must exist: a document, a skill, a template, a script.
+export function checkInternalLinks(text: string, file: string, exists: PathExists): Finding[] {
+  return readableLines(text).flatMap((line) => [...line.text.matchAll(PATH_SPAN)].map((match) => match[1] ?? '').filter((path) => !PLACEHOLDER.test(path) && exists(path) === false).map((path) => finding(file, `links to a missing file: ${path}`)));
+}
+
+function sectionNumbers(text: string): Set<string> {
+  return new Set(text
+    .split('\n')
+    .map((line) => NUMBERED_HEADING.exec(line)?.[1])
+    .filter((value) => value !== undefined));
+}
+
+// "section 3" of this document, or "`docs/x.md`, section 3", must name a numbered H2 heading.
+export function checkSectionRefs(text: string, file: string, readDocument: (path: string) => string | undefined): Finding[] {
+  const own = sectionNumbers(text);
+  const numbersOf = (target: string | undefined): Set<string> | undefined => {
+    if (target === undefined) {
+      return own;
+    }
+    const other = readDocument(target);
+
+    return other === undefined ? undefined : sectionNumbers(other);
+  };
+
+  return readableLines(text).flatMap((line) => [...line.text.matchAll(SECTION_REF)].flatMap((match) => {
+    const target = match[1];
+    const number = match[2] ?? '';
+    const numbers = numbersOf(target);
+    const where = target === undefined ? '' : ' of '.concat(target);
+
+    return numbers === undefined || numbers.has(number) ? [] : [finding(file, `names a missing section ${number}${where}`)];
+  }));
+}
+
+function allMarkdown(folder: string): string[] {
+  if (!existsSync(folder)) {
+    return [];
+  }
+  return readdirSync(folder, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(folder, entry.name);
+
+    if (entry.isDirectory()) {
+      return allMarkdown(path);
+    }
+    return entry.name.endsWith('.md') ? [path] : [];
+  });
+}
+
+function checkReferencesOf(base: string): BaseResult {
+  const root = basename(base) === 'code' ? dirname(base) : base;
+  const hasLibrary = existsSync(join(root, 'library')) || existsSync(join(base, 'library'));
+  const exists: PathExists = (path) => {
+    if (path.startsWith('library/') && !hasLibrary) {
+      return undefined;
+    }
+    return existsSync(join(base, path)) || existsSync(join(root, path));
+  };
+  const readDocument = (path: string): string | undefined => existsSync(join(base, path)) ? read(join(base, path)) : undefined;
+  const paths = allMarkdown(base).filter((path) => !path.endsWith('.fr.md') && !path.includes(`${join('library', '')}`));
+
+  return checkFolder(paths, (text, file) => [
+    ...checkInternalLinks(text, file, exists),
+    ...checkSectionRefs(text, file, readDocument),
+  ]);
+}
+
 const MAX_PROJECT_RULES_LINES = 40;
 
 // The rules of a project, AGENTS.project.md: short, in English, and never a request to use the web.
@@ -1544,6 +1622,15 @@ function checkSynopticNames(base: string): BaseResult {
   };
 }
 
+// The adapters, the rules of the project, and the links and section references of every file.
+function checkAroundTheBase(base: string, agentsText: string, skillNames: string[]): BaseResult {
+  return merge([
+    checkAdaptersOf(base, agentsText, skillNames),
+    checkProjectRulesOf(base),
+    checkReferencesOf(base),
+  ]);
+}
+
 export function checkBase(base: string, chatModels?: string): BaseResult {
   const agentsPath = join(base, 'AGENTS.md');
 
@@ -1571,8 +1658,7 @@ export function checkBase(base: string, chatModels?: string): BaseResult {
   ];
 
   return merge([
-    checkAdaptersOf(base, agentsText, skillNames),
-    checkProjectRulesOf(base),
+    checkAroundTheBase(base, agentsText, skillNames),
     ...skillNames.map((name) => checkOneSkill(skillsFolder, name)),
     docs,
     checkSynopticNames(base),

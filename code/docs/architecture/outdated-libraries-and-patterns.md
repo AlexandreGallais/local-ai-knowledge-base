@@ -17,7 +17,7 @@ Contents: 1. Rule · 2. Retired .NET patterns · 3. Retired Angular patterns · 
 
 ## 1. Rule for outdated libraries
 
-Never propose a library that changed license (MediatR, AutoMapper, MassTransit, FluentAssertions, Polly as a direct reference) without its license status and the version concerned; if the project already uses it, report it as a risk to decide. The table and the free replacements are in `docs/dotnet/paid-packages.md`. A tracking site lists more packages (Moq, IdentityServer, ImageSharp, QuestPDF, EPPlus and others); single secondary source. [S1]
+Never propose a library that changed license (MediatR, AutoMapper, MassTransit, FluentAssertions, Verify, Polly as a direct reference) without its license status and the version concerned; if the project already uses it, report it as a risk to decide. The table and the free replacements are in `docs/dotnet/paid-packages.md`. A tracking site lists more packages (IdentityServer, ImageSharp, QuestPDF, EPPlus and others); single secondary source. [S1] It also lists Moq for its SponsorLink episode of 2023; Moq stayed BSD-3-Clause and dropped SponsorLink in 4.20.2 (`docs/dotnet-testing/test-old-to-new.md`).
 
 ## 2. Retired .NET patterns
 

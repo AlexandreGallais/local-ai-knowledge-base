@@ -15,6 +15,8 @@ variant: files
 
 Contents: 1. Tests from the references · 2. Tests of a training simulator · 3. Verification and validation · Sources
 
+This document says what to test in a model. To write and run the tests in C#, read `docs/dotnet-testing/unit-test-rules.md` and `docs/dotnet-testing/run-tests.md`; for the clock, `FakeTimeProvider` in `docs/dotnet-testing/integration-tests.md`.
+
 ## 1. Tests from the references (model testing)
 
 | Test | What it checks |

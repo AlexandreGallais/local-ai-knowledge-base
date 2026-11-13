@@ -15,7 +15,7 @@ variant: files
 
 Contents: 1. Pumps and motor · 2. Cylinder and valves · 3. Pressure and flow valves · 4. Storage and conditioning · 5. Servo valve and cooler · Sources
 
-How to read a card: the symbol standard is ISO 1219-1 for the whole family, cited, never copied [S1]. A symbol shows ports, flow paths and function, never the construction; it is drawn at rest and can be rotated [S8]. Roles: P parameter, C command or setpoint, M measured, D fault, X derived. The property sets `drive`, `tank`, `onOffValve`, `modulatingValve` and `processPoint` are in `docs/synoptics/catalog-fluid-common.md`. A shape or a law without [Sn] is an analysis of the writer: check it on the standard the team owns.
+How to read a card: the symbol standard is ISO 1219-1 for the whole family, cited, never copied [S1]. A symbol shows ports, flow paths and function, never the construction; it is drawn at rest and can be rotated [S8]. Roles: P parameter, C command or setpoint, M measured, D fault, X derived. The property sets `drive`, `tank`, `onOffValve`, `modulatingValve` and `processPoint` are in `docs/synoptics/fluid-common.md`. A shape or a law without [Sn] is an analysis of the writer: check it on the standard the team owns.
 
 ## 1. Pumps and motor (hydraulic catalog)
 
