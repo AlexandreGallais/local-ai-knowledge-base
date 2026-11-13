@@ -168,6 +168,16 @@ anglais.
   base ne s'applique pas à ce dossier (`THIRD_PARTY_NOTICES.md`).
 - `node scripts/fetch-library.ts` la reconstruit depuis les dépôts de doc (`library/sources.json`),
   `node scripts/check-library.ts` la contrôle.
+- L'IA n'y va qu'en second : si les documents de la base ne répondent pas, elle cherche dans l'index
+  d'un outil avec grep, puis lit une seule section d'un seul fichier. Le serveur de docs cherche
+  aussi dedans, après les documents de la base.
+- Sur le poste : `node scripts/export.ts --library core` ajoute à l'export le jeu de base
+  (TypeScript, Angular, règles ESLint, RxJS, MDN sur SVG, Dev Containers) en parties compressées
+  `library-<n>.txt`, qu'on colle comme les autres ; `all` ou une liste d'outils en emporte plus.
+- Dans le chat : `OPEN_WEBUI_LIBRARY=core node adapters/open-webui/push.ts` crée une base
+  documentaire par outil et la donne au modèle de son sujet.
+- `node scripts/check-versions.ts <projet>` dit aussi quel outil de `library/` est en retard sur le
+  projet.
 
 ## Dans le dépôt de la base, en plus
 

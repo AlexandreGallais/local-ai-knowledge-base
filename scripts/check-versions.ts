@@ -1,4 +1,5 @@
-// Lists the documents of the base whose tool version is behind the version a project uses.
+// Lists the documents of the base whose tool version is behind the version a project uses, and the
+// tools of the official documentation library (library/) that are behind it.
 // Run with Node 22.18 or later, no build step, no package:
 //   node scripts/check-versions.ts <project-folder> [base-folder]
 // The project versions come from package.json (npm), and from *.csproj, global.json and
@@ -222,6 +223,48 @@ export function documentTools(text: string): [string, number][] {
     .filter((pair): pair is [string, number] => pair[0] !== '' && pair[1] !== undefined);
 }
 
+// The library tools named after a project tool: the .NET docs follow the .NET version.
+const LIBRARY_TOOLS: Record<string, string> = {
+  'dotnet-csharp': 'dotnet',
+  'dotnet-core': 'dotnet',
+  'dotnet-standard': 'dotnet',
+  'aspnetcore': 'dotnet',
+};
+
+// The tools of library/ behind the project, one line per tool: library/sources.json gives the
+// version of each. The library sits next to the base in a project, above code/ in this repository.
+export function libraryBehind(base: string, versions: Map<string, number>): Behind[] {
+  const folder = [
+    join(base, 'library'),
+    join(base, '..', 'library'),
+  ].find((path) => existsSync(join(path, 'sources.json')));
+
+  if (folder === undefined) {
+    return [];
+  }
+  const parsed = readJson(join(folder, 'sources.json'))['sources'];
+  const sources = Array.isArray(parsed) ? parsed as {
+    tool?: string;
+    version?: string;
+  }[] : [];
+
+  return sources.flatMap((source) => {
+    const tool = toolKey(LIBRARY_TOOLS[source.tool ?? ''] ?? source.tool ?? '');
+    const documentVersion = major(source.version);
+    const projectVersion = versions.get(tool);
+    const built = existsSync(join(folder, source.tool ?? '', 'index.md'));
+
+    return built && documentVersion !== undefined && projectVersion !== undefined && projectVersion > documentVersion ? [
+      {
+        document: `library/${source.tool ?? ''}/`,
+        tool,
+        documentVersion,
+        projectVersion,
+      },
+    ] : [];
+  });
+}
+
 export function checkVersions(base: string, project: string): Behind[] {
   const versions = projectVersions(project);
   const documents = [
@@ -229,23 +272,26 @@ export function checkVersions(base: string, project: string): Behind[] {
     ...files(join(base, '.agents', 'skills'), /\.md$/, 4),
   ].filter((path) => !path.endsWith('.fr.md') && basename(path) !== 'template.md');
 
-  return documents.flatMap((path) => documentTools(readFileSync(path, 'utf8')).flatMap(([
-    tool,
-    documentVersion,
-  ]) => {
-    const projectVersion = versions.get(tool);
+  return [
+    ...documents.flatMap((path) => documentTools(readFileSync(path, 'utf8')).flatMap(([
+      tool,
+      documentVersion,
+    ]) => {
+      const projectVersion = versions.get(tool);
 
-    return projectVersion !== undefined && projectVersion > documentVersion ? [
-      {
-        document: relative(base, path)
-          .split('\\')
-          .join('/'),
-        tool,
-        documentVersion,
-        projectVersion,
-      },
-    ] : [];
-  }));
+      return projectVersion !== undefined && projectVersion > documentVersion ? [
+        {
+          document: relative(base, path)
+            .split('\\')
+            .join('/'),
+          tool,
+          documentVersion,
+          projectVersion,
+        },
+      ] : [];
+    })),
+    ...libraryBehind(base, versions),
+  ];
 }
 
 function defaultBase(): string {

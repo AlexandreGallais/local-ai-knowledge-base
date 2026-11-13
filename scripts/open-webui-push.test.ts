@@ -172,6 +172,41 @@ describe('push to Open WebUI', () => {
     assert.match(modelB, /"knowledge":\[\]/);
     await fake.close();
   });
+  it('creates a knowledge base per chosen library tool and gives it only to the model of its source', async () => {
+    const fake = await startFakeOpenWebUi();
+    const root = profile();
+
+    write(root, 'library/sources.json', JSON.stringify({
+      sources: [
+        {
+          tool: 'demo',
+          title: 'Demo docs',
+          core: true,
+          chat: 'model-a',
+        },
+        {
+          tool: 'other',
+          core: false,
+          chat: 'model-b',
+        },
+      ],
+    }));
+    write(root, 'library/demo/index.md', '# demo library index\n');
+    write(root, 'library/demo/api/valve.md', '# Valve API\n');
+    write(root, 'library/other/index.md', '# other library index\n');
+    await push(config(fake.url, root, { library: 'demo' }));
+    const bases = [...fake.state.knowledge.entries()];
+    const demo = bases.find(([, base]) => [...base.files.values()].some((file) => file.filename === 'valve.md'));
+    const modelA = JSON.stringify(fake.state.models.get('model-a'));
+    const modelB = JSON.stringify(fake.state.models.get('model-b'));
+
+    assert.equal(bases.length, 2);
+    assert.ok(demo !== undefined);
+    assert.match(modelA, new RegExp(`"id":"${demo[0]}"`));
+    assert.doesNotMatch(modelB, new RegExp(demo[0]));
+    assert.match(modelB, /"knowledge":\[\]/);
+    await fake.close();
+  });
   it('sends no write in a dry run', async () => {
     const fake = await startFakeOpenWebUi();
 

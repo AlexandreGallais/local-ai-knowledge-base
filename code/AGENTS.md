@@ -6,7 +6,7 @@
 2. Read this base in English, whatever the language of the question.
 3. Write code, comments, file content and commit messages in English.
 4. Never search the web. Never open a URL. Links in documents only cite sources.
-5. Find the topic of your task in `## Index`. Open its index file, then only the documents your task needs. Never read the whole `docs/` folder. Trust these documents more than your memory.
+5. Find the topic of your task in `## Index`. Open its index file, then only the documents your task needs. Never read the whole `docs/` folder. Trust these documents more than your memory. If they do not answer, search the official documentation: `grep -i -m 10 "<words>" library/<tool>/index.md` (tools in `library/README.md`), then read one section of one file. Never read a whole index or folder of `library/`.
 6. Never read files that end with `.fr.md`. They are summaries for people. Open one only when a skill tells you to.
 7. Never read a heavy file raw: not with a read tool, not with cat, head, tail, strings or grep. Load the skill `read-heavy-file` first, then read only the extract in `.extract/`.
    Heavy files: .docx .docm .xlsx .xlsm .pptx .pptm .doc .xls .ppt .odt .ods .odp .rtf .pdf .png .jpg .jpeg .gif .webp .tif .tiff .bmp .heic .psd .ai .eps .emf .wmf .xd .sketch .fig .vsdx .drawio .ipynb .zip .7z .tar .gz .tgz .jar .war .nupkg .sqlite .db .msg .eml .dwg .dxf .dll .exe .so .wasm .class .bin

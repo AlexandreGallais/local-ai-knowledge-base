@@ -57,6 +57,9 @@ function fixture(): string {
   writeFileSync(join(root, 'docs', 'fluids', 'index.md'), '# fluids index\n\n- [Valves](docs/fluids/valves.md): How a valve works and how to model its flow.\n');
   writeFileSync(join(root, 'docs', 'fluids', 'valves.md'), VALVE_DOC);
   writeFileSync(join(root, 'docs', 'fluids', 'README.fr.md'), '# Fluides\n');
+  mkdirSync(join(root, 'library', 'demo', 'api'), { recursive: true });
+  writeFileSync(join(root, 'library', 'demo', 'index.md'), '# demo library index\n\n- [Valve API](library/demo/api/valve.md): The valve object and its flow methods. (2 KB)\n');
+  writeFileSync(join(root, 'library', 'demo', 'api', 'valve.md'), '---\ntitle: "Valve API"\ntool: "demo"\n---\n\n# Valve API\n\n## open()\n\nOpens the valve.\n\n## setFlow()\n\nSets the flow.\n');
   return root;
 }
 
@@ -202,6 +205,17 @@ describe('docs server', () => {
     ]) {
       assert.equal(readDoc(root, path).isError, true, path);
     }
+  });
+  it('finds a page of library/ after the documents of the base, and reads one section of it', () => {
+    const root = fixture();
+    const lines = searchDocs(root, 'valve flow').text.split('\n');
+    const section = readDoc(root, 'library/demo/api/valve.md', 'setFlow()');
+
+    assert.match(lines[0] ?? '', /^docs\/fluids\/valves\.md/);
+    assert.ok(lines.some((line) => line.startsWith('library/demo/api/valve.md | Valve API')));
+    assert.equal(section.isError, false);
+    assert.equal(section.text, '## setFlow()\n\nSets the flow.');
+    assert.equal(readDoc(root, 'library/../docs/fluids/valves.md').isError, true);
   });
   it('finds a section by its words and returns at most 10 lines', () => {
     const found = searchDocs(fixture(), 'flow coefficient');

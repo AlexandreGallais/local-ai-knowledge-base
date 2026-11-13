@@ -10,6 +10,8 @@
 //   OPEN_WEBUI_BASE_MODEL  Id of the base model every custom model wraps.
 //   OPEN_WEBUI_SHARE       "private", "public" or "group:<group name>". Default: private.
 //   OPEN_WEBUI_MODE        "native" or "legacy". Default: the mode of the manifest.
+//   OPEN_WEBUI_LIBRARY     Optional: tools of library/ to push as knowledge bases, "core", "all"
+//                          or a comma list. Each goes to the chat model its source names.
 import { createHash } from 'node:crypto';
 import {
   existsSync,
@@ -100,6 +102,8 @@ export interface PushConfig {
   share: string;
   mode?: Mode;
   root: string;
+  // Tools of library/ to push: "core", "all" or a comma list.
+  library?: string;
   dryRun: boolean;
   log: (line: string) => void;
   pollMs?: number;
@@ -501,6 +505,73 @@ export function buildModel(context: ModelContext, entry: ModelEntry): Record<str
   };
 }
 
+interface LibrarySource {
+  tool: string;
+  title?: string;
+  core?: boolean;
+  chat?: string;
+}
+
+function librarySources(root: string, selection: string): LibrarySource[] {
+  const path = join(root, 'library', 'sources.json');
+
+  if (!existsSync(path)) {
+    throw new Error('OPEN_WEBUI_LIBRARY is set, but library/sources.json is missing: import the library parts first.');
+  }
+  const all = (JSON.parse(readFileSync(path, 'utf8')) as { sources: LibrarySource[] }).sources;
+
+  if (selection === 'all' || selection === 'core') {
+    return all.filter((source) => selection === 'all' || source.core === true);
+  }
+  return selection
+    .split(',')
+    .map((tool) => {
+      const found = all.find((source) => source.tool === tool.trim());
+
+      if (found === undefined) {
+        throw new Error(`OPEN_WEBUI_LIBRARY: unknown tool ${tool.trim()}`);
+      }
+      return found;
+    });
+}
+
+// The manifest with one knowledge base per chosen tool of library/, attached to the model of its source.
+export function withLibrary(manifest: Manifest, root: string, selection?: string): Manifest {
+  if (selection === undefined || selection.trim() === '') {
+    return manifest;
+  }
+  const chosen = librarySources(root, selection).filter((source) => {
+    return source.chat !== undefined && existsSync(join(root, 'library', source.tool));
+  });
+  const knowledge = chosen.map((source) => {
+    return {
+      key: `library-${source.tool}`,
+      name: `${source.tool} official docs`,
+      description: `${source.title ?? source.tool}: official documentation, one file per page.`,
+      dir: `library/${source.tool}`,
+    };
+  });
+
+  return {
+    ...manifest,
+    knowledge: [
+      ...manifest.knowledge,
+      ...knowledge,
+    ],
+    models: manifest.models.map((model) => {
+      return {
+        ...model,
+        knowledge: [
+          ...model.knowledge,
+          ...chosen
+            .filter((source) => source.chat === model.id)
+            .map((source) => `library-${source.tool}`),
+        ],
+      };
+    }),
+  };
+}
+
 async function checkInstance(call: Call, config: PushConfig, mode: Mode): Promise<void> {
   const version = text(record(await call('GET', '/api/version'))['version']);
 
@@ -516,7 +587,7 @@ async function checkInstance(call: Call, config: PushConfig, mode: Mode): Promis
 export async function push(config: PushConfig): Promise<void> {
   const adapter = join(config.root, 'adapters', 'open-webui');
   const stateFile = join(adapter, 'state.local.json');
-  const manifest = JSON.parse(readFileSync(join(adapter, 'manifest.json'), 'utf8')) as Manifest;
+  const manifest = withLibrary(JSON.parse(readFileSync(join(adapter, 'manifest.json'), 'utf8')) as Manifest, config.root, config.library);
   const mode = config.mode ?? manifest.mode;
   const call = createCall(config);
   const state = existsSync(stateFile) ? JSON.parse(readFileSync(stateFile, 'utf8')) as State : { knowledge: {} };
@@ -584,6 +655,7 @@ async function main(): Promise<void> {
     share: environment('OPEN_WEBUI_SHARE', 'private'),
     mode: modeFromEnvironment(),
     root: process.cwd(),
+    ...process.env['OPEN_WEBUI_LIBRARY'] === undefined ? {} : { library: process.env['OPEN_WEBUI_LIBRARY'] },
     dryRun: process.argv.includes('--dry-run'),
     log: (line) => {
       process.stdout.write(`${line}\n`);

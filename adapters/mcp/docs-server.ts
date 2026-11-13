@@ -57,14 +57,15 @@ const SERVER_INFO = {
   version: '0.1.0',
 };
 const INSTRUCTIONS = 'Find documents of the knowledge base with search_docs. Then read one section with read_doc. Read the table of contents of a document before a section.';
-const INDEX_LINE = /^- \[([^\]]+)\]\((docs\/[^)]+)\): (.+)$/;
-const DOC_PATH = /^docs\/[\w-]+(?:\/[\w.-]+)*\.md$/;
+const INDEX_LINE = /^- \[([^\]]+)\]\(((?:docs|library)\/[^)]+)\):\s*(.*)$/;
+const DOC_PATH = /^(?:docs|library)\/[\w-]+(?:\/[\w.-]+)*\.md$/;
+const cachedEntries = new Map<string, Entry[]>();
 const NEWLINE = '\n';
 const TOOLS = [
   {
     name: 'search_docs',
     title: 'Search the knowledge base',
-    description: 'Search the topic indexes and the section titles of the knowledge base. Returns at most 10 lines: a document path, or a path and a section title.',
+    description: 'Search the topic indexes and the section titles of the knowledge base, then the indexes of the official documentation in library/. Returns at most 10 lines, documents of the base first: a document path, or a path and a section title.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -110,16 +111,25 @@ function read(path: string): string {
   return readFileSync(path, 'utf8');
 }
 
-function topicIndexes(root: string): string[] {
-  const docs = join(root, 'docs');
+// The folder that holds library/: the root in a project, the folder above code/ in this repository.
+export function libraryBase(root: string): string {
+  return existsSync(join(root, 'library')) || !existsSync(join(root, '..', 'library')) ? root : join(root, '..');
+}
 
-  if (!existsSync(docs)) {
+function baseOf(root: string, path: string): string {
+  return path.startsWith('library/') ? libraryBase(root) : root;
+}
+
+function topicIndexes(base: string, folder: 'docs' | 'library'): string[] {
+  const top = join(base, folder);
+
+  if (!existsSync(top)) {
     return [];
   }
-  return readdirSync(docs)
-    .filter((topic) => statSync(join(docs, topic)).isDirectory())
+  return readdirSync(top)
+    .filter((topic) => statSync(join(top, topic)).isDirectory())
     .toSorted()
-    .map((topic) => join(docs, topic, 'index.md'))
+    .map((topic) => join(top, topic, 'index.md'))
     .filter((path) => existsSync(path));
 }
 
@@ -130,8 +140,10 @@ function headings(text: string): string[] {
     .map((line) => line.slice(3).trim());
 }
 
-function entries(root: string): Entry[] {
-  return topicIndexes(root).flatMap((index) => read(index)
+// One entry per document, and one per section of a document of the base. The library is searched
+// by its index lines only: it holds thousands of files.
+function indexEntries(root: string, index: string): Entry[] {
+  return read(index)
     .split(NEWLINE)
     .flatMap((line) => {
       const match = INDEX_LINE.exec(line.trim());
@@ -141,12 +153,12 @@ function entries(root: string): Entry[] {
       }
       const [
         ,
-        title,
-        path,
-        summary,
+        title = '',
+        path = '',
+        summary = '',
       ] = match;
-      const file = join(root, path);
-      const sections = existsSync(file) ? headings(read(file)) : [];
+      const file = join(baseOf(root, path), path);
+      const sections = path.startsWith('docs/') && existsSync(file) ? headings(read(file)) : [];
 
       return [
         {
@@ -159,7 +171,22 @@ function entries(root: string): Entry[] {
           text: `${title} ${section}`,
         })),
       ];
-    }));
+    });
+}
+
+function entries(root: string): Entry[] {
+  const cached = cachedEntries.get(root);
+
+  if (cached !== undefined) {
+    return cached;
+  }
+  const found = [
+    ...topicIndexes(root, 'docs'),
+    ...topicIndexes(libraryBase(root), 'library'),
+  ].flatMap((index) => indexEntries(root, index));
+
+  cachedEntries.set(root, found);
+  return found;
 }
 
 function words(text: string): string[] {
@@ -188,7 +215,7 @@ export function searchDocs(root: string, query: string): ToolResult {
       };
     })
     .filter((item) => item.score > 0)
-    .toSorted((first, second) => second.score - first.score)
+    .toSorted((first, second) => second.score - first.score || Number(first.entry.path.startsWith('library/')) - Number(second.entry.path.startsWith('library/')))
     .slice(0, MAX_RESULTS)
     .map(({ entry }) => entry.section === undefined ? `${entry.path} | ${entry.text}` : `${entry.path} | section: ${entry.section}`);
 
@@ -204,10 +231,11 @@ function safeDocument(root: string, path: string): string | undefined {
     .includes('..')) {
     return undefined;
   }
-  const docs = resolve(root, 'docs');
-  const file = resolve(root, path);
+  const base = baseOf(root, path);
+  const top = resolve(base, path.split('/')[0] ?? 'docs');
+  const file = resolve(base, path);
 
-  return relative(docs, file).startsWith(`..${sep}`) || !existsSync(file) ? undefined : file;
+  return relative(top, file).startsWith(`..${sep}`) || !existsSync(file) ? undefined : file;
 }
 
 function frontField(text: string, name: string): string {

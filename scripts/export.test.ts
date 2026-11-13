@@ -295,6 +295,76 @@ describe('trial export', () => {
     assert.equal(readFileSync(join(target, 'trials/f03-base.md'), 'utf8'), '# F3 trial\n');
   });
 });
+describe('library export', () => {
+  // Pages of varied text, so that the gzip cannot shrink them to nothing.
+  const pages = Object.fromEntries(Array.from({ length: 40 }, (_, index) => [
+    `library/angular/guide/page-${index}.md`,
+    `---\ntitle: "Page ${index}"\n---\n\n# Page ${index}\n\n${Array.from({ length: 300 }, (_, line) => `Line ${line} of page ${index}: ${(index * 7919 + line * 104_729).toString(36)} signal é ±.`).join('\n')}\n`,
+  ]));
+  const libraryBase = (): string => testBase({
+    'library/sources.json': JSON.stringify({
+      sources: [
+        {
+          tool: 'angular',
+          core: true,
+        },
+        {
+          tool: 'node',
+          core: false,
+        },
+      ],
+    }),
+    'library/README.md': '# Library\n',
+    'library/angular/index.md': '# angular library index\n',
+    'library/node/index.md': '# node library index\n',
+    ...pages,
+  });
+
+  it('adds compressed ASCII parts of 500 KB at most, that the import puts back in library/', () => {
+    const root = libraryBase();
+    const parts = exportBase(root, 500, false, 'angular');
+    const library = parts.filter((part) => part.name.startsWith('library-'));
+    const target = mkdtempSync(join(tmpdir(), 'import-'));
+
+    assert.ok(library.length >= 1);
+    assert.ok(library.every((part) => /^[ -~\n]*$/.test(part.text) && Buffer.byteLength(part.text) <= 500_000));
+    importBase(parts, target, {
+      project: false,
+      force: false,
+    });
+    for (const [
+      path,
+      content,
+    ] of Object.entries(pages)) {
+      assert.equal(readFileSync(join(target, path), 'utf8'), content, path);
+    }
+    assert.ok(!existsSync(join(target, 'library/node/index.md')));
+  });
+  it('cuts the library into more parts with --max-kb 100, and adds none without --library', () => {
+    const root = libraryBase();
+
+    assert.ok(exportBase(root, 100, false, 'core').filter((part) => part.name.startsWith('library-')).length > 1);
+    assert.ok(!exportBase(root).some((part) => part.name.startsWith('library-')));
+  });
+  it('refuses a library part with a changed line, names it and writes nothing', () => {
+    const root = libraryBase();
+    const parts = exportBase(root, 100, false, 'angular');
+    const damaged = parts.map((part) => part.name === 'library-1.txt' ? {
+      name: part.name,
+      text: part.text.replace(/\n(.)/, (_, first: string) => `\n${first === 'A' ? 'B' : 'A'}`),
+    } : part);
+    const target = mkdtempSync(join(tmpdir(), 'import-'));
+
+    assert.throws(() => importBase(damaged, target, {
+      project: false,
+      force: false,
+    }), /library-1\.txt: library part 1 of \d+ was damaged by the copy/);
+    assert.deepEqual(readdirSync(target), []);
+  });
+  it('refuses an unknown tool', () => {
+    assert.throws(() => exportBase(libraryBase(), 500, false, 'cobol'), /unknown tool cobol/);
+  });
+});
 describe('import refusals', () => {
   it('refuses a part with a changed line, names it and writes nothing', () => {
     const parts = exportBase(testBase(), 10);

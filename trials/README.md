@@ -16,19 +16,20 @@ Read parts 1 to 4 once, then play the table of part 5 from the top. Fill the tab
 
 ```sh
 node scripts/paste-sample.ts paste-sample   # the paste test of F7
-node scripts/export.ts --trial              # the base and the trial material, in export/
+node scripts/export.ts --trial --library core   # base, trial material and core docs, in export/
 ```
 
 `--trial` adds this folder `trials/`, `samples/`, `evaluation/`, `scripts/fixtures.ts` and
-`scripts/evaluation-summary.ts`. Without it, the export holds the base only. The export of the last
-delivery is also in the `export/` folder of this repository.
+`scripts/evaluation-summary.ts`. `--library core` adds the core set of the official documentation
+as compressed parts `library-<n>.txt`. Without them, the export holds the base only. The export of
+the last delivery, built with both, is also in the `export/` folder of this repository.
 
 ## 2. Carry the base (F7)
 
 1. Play parts 1 and 2 of `f07-export-import.md`: one 476 KB part, pasted at
    once, accepted by the import.
-2. Paste `export/import.ts` and every `export/base-<n>.txt` into an empty folder `export/` of the
-   workstation. Then, next to it:
+2. Paste `export/import.ts`, every `export/base-<n>.txt` and every `export/library-<n>.txt` into an
+   empty folder `export/` of the workstation. Then, next to it:
 
 ```sh
 node export/import.ts --from export --to base
@@ -58,7 +59,8 @@ node export/import.ts --from export --to trial --project --opencode 2
 ```
 
 Use `--opencode 1` for OpenCode 1.x. The project gets `AGENTS.md`, `.agents/`, `docs/`,
-`templates/`, the check scripts, `adapters/opencode/`, `adapters/mcp/` and `opencode.json`.
+`templates/`, the check scripts, `adapters/opencode/`, `adapters/mcp/`, `library/` and
+`opencode.json`.
 
 Then prepare its dev container, as part 1 of `f12-containers-kubernetes.md`
 says: copy `templates/containers/devcontainer/` to `.devcontainer/`, put the check tools and the
@@ -89,6 +91,7 @@ skip their part 1 step 1, the import is done.
 | 8 | `f13-synoptic-rules.md`, `f14-fluid-catalog.md`, `f15-systems-catalog.md` | C20, C21, C22 | 40 min |
 | 9 | `f17-simulation-equipment-agent.md`, `f18-architecture-code-review.md`: for "agent mode", call the subagent of `opencode.json` | C19, C26, C27 | 40 min |
 | 10 | `f19-reading-code.md` | C15 | 20 min |
+| 10b | `f25-library.md`: library parts pasted, a question only the official docs answer | C14, C38 | 30 min |
 | 11 | `f06-git-skills-commit-assistant.md` part 2, then `f16-open-webui.md`, then `f06-git-skills-commit-assistant.md` part 1 in the chat | C29 to C34, C45 | 1 h 30 |
 | 12 | Part 7 of this file: the docs server | Decision 0008 | 45 min |
 | 13 | `f20-public-check-evaluation.md` part 2: the evaluation, last, as it needs all the rest | C44 | half a day |

@@ -10,8 +10,13 @@
       "attribution": "Microsoft and the TypeScript Website contributors",
       "flavor": "typescript",
       "core": true,
-      "paths": ["packages/documentation/copy/en/"],
-      "docs": ["packages/documentation/copy/en"]
+      "chat": "typescript-angular",
+      "paths": [
+        "packages/documentation/copy/en/"
+      ],
+      "docs": [
+        "packages/documentation/copy/en"
+      ]
     },
     {
       "tool": "angular",
@@ -23,8 +28,13 @@
       "attribution": "Google LLC and the Angular contributors",
       "flavor": "angular",
       "core": true,
-      "paths": ["adev/src/content/"],
-      "docs": ["adev/src/content"],
+      "chat": "typescript-angular",
+      "paths": [
+        "adev/src/content/"
+      ],
+      "docs": [
+        "adev/src/content"
+      ],
       "exclude": [
         "adev/src/content/examples",
         "adev/src/content/tutorials",
@@ -42,8 +52,13 @@
       "attribution": "OpenJS Foundation and other contributors",
       "flavor": "eslint",
       "core": true,
-      "paths": ["docs/src/rules/"],
-      "docs": ["docs/src/rules"]
+      "chat": "typescript-angular",
+      "paths": [
+        "docs/src/rules/"
+      ],
+      "docs": [
+        "docs/src/rules"
+      ]
     },
     {
       "tool": "typescript-eslint",
@@ -55,8 +70,13 @@
       "attribution": "typescript-eslint and other contributors",
       "flavor": "mdx",
       "core": true,
-      "paths": ["packages/eslint-plugin/docs/rules/"],
-      "docs": ["packages/eslint-plugin/docs/rules"]
+      "chat": "typescript-angular",
+      "paths": [
+        "packages/eslint-plugin/docs/rules/"
+      ],
+      "docs": [
+        "packages/eslint-plugin/docs/rules"
+      ]
     },
     {
       "tool": "angular-eslint",
@@ -68,6 +88,7 @@
       "attribution": "James Henry and the angular-eslint contributors",
       "flavor": "markdown",
       "core": true,
+      "chat": "typescript-angular",
       "paths": [
         "packages/eslint-plugin/docs/rules/",
         "packages/eslint-plugin-template/docs/rules/"
@@ -87,8 +108,13 @@
       "attribution": "Google, Inc., Netflix, Inc., Microsoft Corp. and contributors",
       "flavor": "markdown",
       "core": true,
-      "paths": ["docs_app/content/"],
-      "docs": ["docs_app/content"],
+      "chat": "typescript-angular",
+      "paths": [
+        "docs_app/content/"
+      ],
+      "docs": [
+        "docs_app/content"
+      ],
       "exclude": [
         "docs_app/content/marketing",
         "docs_app/content/images",
@@ -108,6 +134,7 @@
       "attribution": "Mozilla Contributors",
       "flavor": "mdn",
       "core": true,
+      "chat": "typescript-angular",
       "paths": [
         "files/en-us/web/svg/",
         "files/en-us/web/api/svg*/",
@@ -126,7 +153,9 @@
         "files/en-us/web/css/reference/properties/transform*/",
         "files/en-us/web/css/reference/values/transform-function/"
       ],
-      "docs": ["files/en-us/web"]
+      "docs": [
+        "files/en-us/web"
+      ]
     },
     {
       "tool": "devcontainers",
@@ -138,8 +167,13 @@
       "attribution": "Microsoft Corporation and the Dev Container Spec contributors",
       "flavor": "markdown",
       "core": true,
-      "paths": ["docs/specs/"],
-      "docs": ["docs/specs"]
+      "chat": "containers-kubernetes",
+      "paths": [
+        "docs/specs/"
+      ],
+      "docs": [
+        "docs/specs"
+      ]
     },
     {
       "tool": "node",
@@ -151,8 +185,13 @@
       "attribution": "Node.js contributors",
       "flavor": "node",
       "core": false,
-      "paths": ["doc/api/"],
-      "docs": ["doc/api"]
+      "chat": "typescript-angular",
+      "paths": [
+        "doc/api/"
+      ],
+      "docs": [
+        "doc/api"
+      ]
     },
     {
       "tool": "dotnet-csharp",
@@ -164,12 +203,15 @@
       "attribution": "Microsoft and the .NET docs contributors",
       "flavor": "docfx",
       "core": false,
+      "chat": "csharp-dotnet",
       "paths": [
         "docs/csharp/",
         "samples/snippets/csharp/",
         "includes/"
       ],
-      "docs": ["docs/csharp"]
+      "docs": [
+        "docs/csharp"
+      ]
     },
     {
       "tool": "dotnet-core",
@@ -181,11 +223,14 @@
       "attribution": "Microsoft and the .NET docs contributors",
       "flavor": "docfx",
       "core": false,
+      "chat": "csharp-dotnet",
       "paths": [
         "docs/core/",
         "includes/"
       ],
-      "docs": ["docs/core"]
+      "docs": [
+        "docs/core"
+      ]
     },
     {
       "tool": "dotnet-standard",
@@ -197,12 +242,15 @@
       "attribution": "Microsoft and the .NET docs contributors",
       "flavor": "docfx",
       "core": false,
+      "chat": "csharp-dotnet",
       "paths": [
         "docs/standard/",
         "samples/snippets/csharp/",
         "includes/"
       ],
-      "docs": ["docs/standard"]
+      "docs": [
+        "docs/standard"
+      ]
     },
     {
       "tool": "aspnetcore",
@@ -214,8 +262,13 @@
       "attribution": "Microsoft and the ASP.NET Core docs contributors",
       "flavor": "docfx",
       "core": false,
-      "paths": ["aspnetcore/"],
-      "docs": ["aspnetcore"]
+      "chat": "csharp-dotnet",
+      "paths": [
+        "aspnetcore/"
+      ],
+      "docs": [
+        "aspnetcore"
+      ]
     },
     {
       "tool": "efcore",
@@ -227,12 +280,17 @@
       "attribution": "Microsoft and the Entity Framework docs contributors",
       "flavor": "docfx",
       "core": false,
+      "chat": "csharp-dotnet",
       "paths": [
         "entity-framework/",
         "samples/"
       ],
-      "docs": ["entity-framework"],
-      "exclude": ["entity-framework/ef6"]
+      "docs": [
+        "entity-framework"
+      ],
+      "exclude": [
+        "entity-framework/ef6"
+      ]
     },
     {
       "tool": "kubernetes",
@@ -244,11 +302,14 @@
       "attribution": "The Kubernetes Authors",
       "flavor": "hugo",
       "core": false,
+      "chat": "containers-kubernetes",
       "paths": [
         "content/en/docs/",
         "content/en/examples/"
       ],
-      "docs": ["content/en/docs"]
+      "docs": [
+        "content/en/docs"
+      ]
     },
     {
       "tool": "docker",
@@ -260,8 +321,13 @@
       "attribution": "Docker, Inc. and the Docker docs contributors",
       "flavor": "hugo",
       "core": false,
-      "paths": ["content/"],
-      "docs": ["content"],
+      "chat": "containers-kubernetes",
+      "paths": [
+        "content/"
+      ],
+      "docs": [
+        "content"
+      ],
       "exclude": [
         "content/contribute",
         "content/includes",
@@ -278,9 +344,16 @@
       "attribution": "The Podman contributors",
       "flavor": "podman",
       "core": false,
-      "paths": ["docs/source/markdown/"],
-      "docs": ["docs/source/markdown"],
-      "exclude": ["docs/source/markdown/options"]
+      "chat": "containers-kubernetes",
+      "paths": [
+        "docs/source/markdown/"
+      ],
+      "docs": [
+        "docs/source/markdown"
+      ],
+      "exclude": [
+        "docs/source/markdown/options"
+      ]
     },
     {
       "tool": "rust-book",
@@ -296,7 +369,9 @@
         "src/",
         "listings/"
       ],
-      "docs": ["src"]
+      "docs": [
+        "src"
+      ]
     }
   ]
 }

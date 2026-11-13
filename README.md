@@ -31,14 +31,19 @@ On a machine that has this repository, with Node 22.18 or later:
 node scripts/export.ts               # writes export/import.ts and export/base-1.txt, base-2.txt…
 node scripts/export.ts --max-kb 100  # parts of 100 KB at most instead of 500
 node scripts/export.ts --trial       # also the trial guides, samples and evaluation (trials/)
+node scripts/export.ts --library core  # also the core set of library/, as compressed parts
 ```
 
-The `export/` folder of this repository holds the export of the last delivery, built with `--trial`.
+`--library` takes `core`, `all` or a list of tools (`angular,dotnet-csharp`). Its parts,
+`library-<n>.txt`, are gzip then base64 in lines of 76 characters: ASCII only, about 2.6 times less
+text to paste than plain Markdown. The export says how many parts each tool adds. The `export/`
+folder of this repository holds the export of the last delivery, built with `--trial --library core`.
 
 On the workstation, in an empty folder:
 
 1. Create `import.ts` and paste the content of `export/import.ts` into it.
-2. Create `base-1.txt`, `base-2.txt`… and paste each part into the file of the same name.
+2. Create `base-1.txt`, `base-2.txt`… and `library-1.txt`… when the export has them, and paste
+   each part into the file of the same name.
 3. Run `node import.ts`. It checks every part, says which one was damaged by the copy, and writes
    nothing until all of them are right.
 
@@ -124,7 +129,12 @@ import.ts                    Rebuilds the base from its export, one file, no pac
   `adapters/open-webui/manifest.json`, readable by one group. It reads `OPEN_WEBUI_URL`,
   `OPEN_WEBUI_TOKEN`, `OPEN_WEBUI_BASE_MODEL`, `OPEN_WEBUI_SHARE` (`group:<name>`, `public` or
   `private`) and `OPEN_WEBUI_MODE` (`native` or `legacy`) from the environment; `--dry-run` sends
-  nothing. It keeps the knowledge ids in `state.local.json`, never in Git.
+  nothing. It keeps the knowledge ids in `state.local.json`, never in Git. With
+  `OPEN_WEBUI_LIBRARY` (`core`, `all` or a list of tools), it also pushes one knowledge base per tool
+  of `library/`, given to the chat model that `library/sources.json` names for it.
+- The AI reads `library/` second: when the documents of the base do not answer, it searches the index
+  of one tool with grep, then reads one section of one file (`AGENTS.md`, skill `look-up-api`, and
+  the docs server).
 
 ## Principles
 

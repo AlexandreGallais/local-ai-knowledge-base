@@ -39,11 +39,15 @@ metadata:
    - NuGet packages: the same search in `~/.nuget/packages/<package id in lowercase>/<version>/lib/<framework>/*.xml`.
    - Commands: `<tool> <command> --help`, for example `dotnet build --help` or `kubectl apply --help`.
 5. Read the lines around the match only: `sed -n '<line - 30>,<line + 40>p' <file>`.
-6. If nothing matches, widen the pattern once. If nothing matches again, stop and say so.
+6. If nothing matches, search the official documentation in `library/`, when the project has it:
+   - Find the tool in `library/README.md`, for example `angular`, `mdn-svg`, `dotnet-csharp`.
+   - Run `grep -i -m 10 "<words>" library/<tool>/index.md`. Never read the index whole.
+   - Open the file of the best line. List its headings with `grep -n "^## " <file>`, then read only the section you need.
+7. If nothing matches, widen the pattern once. If nothing matches again, stop and say so.
 
 <!-- files:end -->
 
-7. Give the signature or option, one sentence on what it does, the default value, any deprecation, the version, and the file or command it comes from.
+8. Give the signature or option, one sentence on what it does, the default value, any deprecation, the version, and the file or command it comes from.
 
 ## Example
 
@@ -67,7 +71,8 @@ It creates a writable signal. The options can hold an equality function.
 - Using the version you remember: read the version from the project files first.
 - The declaration sits in a "chunk" file with an odd name: search the whole package folder, not one file.
 - `kubectl explain` fails without a cluster: use `kubectl <command> --help` and the documents of this base.
-- An XML documentation file is missing: say the documentation is not installed, then use the documents of this base.
+- An XML documentation file is missing: say the documentation is not installed, then use the documents of this base and `library/`.
+- A file of `library/` has a version in its header: say it when it differs from the version of the project.
 - Many matches: add the type name or the opening bracket to the pattern.
 
 ## Final check

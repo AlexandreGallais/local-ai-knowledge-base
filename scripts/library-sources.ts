@@ -22,6 +22,8 @@ export interface Source {
   attribution: string;
   flavor: Flavor;
   core: boolean;
+  // The chat model that receives this documentation as a knowledge base, if any.
+  chat?: string;
   // Sparse checkout patterns: what git fetches, includes and code samples too.
   paths: string[];
   // Folders whose Markdown files become the library of the tool.

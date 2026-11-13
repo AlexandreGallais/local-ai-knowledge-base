@@ -172,6 +172,33 @@ describe('documents behind a project', () => {
       ],
     );
   });
+  it('lists the tool of library/ behind the project, once, and not the tools that are not built', () => {
+    const base = writeTree({
+      'library/sources.json': JSON.stringify({
+        sources: [
+          {
+            tool: 'angular',
+            version: '22.2',
+          },
+          {
+            tool: 'dotnet-csharp',
+            version: '11',
+          },
+          {
+            tool: 'typescript',
+            version: '6.0',
+          },
+        ],
+      }),
+      'library/angular/index.md': '# angular library index\n',
+      'library/dotnet-csharp/index.md': '# dotnet-csharp library index\n',
+    });
+    const behind = checkVersions(base, npmProject('^23.0.0', '7.0.2'));
+    const dotnet = checkVersions(base, writeTree({ 'App.csproj': '<Project><PropertyGroup><TargetFramework>net12.0</TargetFramework></PropertyGroup></Project>' }));
+
+    assert.deepEqual(behind.map((item) => `${item.document} ${item.tool} ${item.documentVersion} ${item.projectVersion}`), ['library/angular/ angular 22 23']);
+    assert.deepEqual(dotnet.map((item) => item.document), ['library/dotnet-csharp/']);
+  });
   it('exits with 1 and names the documents from the command line', () => {
     const result = spawnSync(
       process.execPath,

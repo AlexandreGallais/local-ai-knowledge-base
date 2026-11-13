@@ -7,6 +7,8 @@
 //   node scripts/export.ts --chat <folder>   writes only the generated chat profile into <folder>
 //   node scripts/export.ts --trial           adds what the trials on the workstation need: trials/,
 //                                            samples/, evaluation/ and their scripts
+//   node scripts/export.ts --library core    adds the core set of library/ as compressed parts
+//                                            library-<n>.txt; or "all", or "angular,dotnet-csharp"
 import { spawnSync } from 'node:child_process';
 import {
   copyFileSync,
@@ -30,10 +32,17 @@ import { parseArgs } from 'node:util';
 import {
   type ExportedFile,
   FORMAT,
+  LIBRARY_PART_PATTERN,
   type Part,
   PART_PATTERN,
   sha256,
 } from '../import.ts';
+import {
+  libraryFiles,
+  libraryParts,
+  libraryReport,
+  libraryTools,
+} from './export-library.ts';
 
 export const DEFAULT_MAX_KB = 500;
 const KB = 1000;
@@ -443,8 +452,9 @@ export function trialFiles(root: string): ExportedFile[] {
     });
 }
 
-export function exportBase(root: string, maxKb = DEFAULT_MAX_KB, trial = false): Part[] {
-  return buildExport(
+// The base parts, then the library parts of the selected tools ("core", "all" or a comma list).
+export function exportBase(root: string, maxKb = DEFAULT_MAX_KB, trial = false, library?: string): Part[] {
+  const base = buildExport(
     [
       ...baseFiles(root),
       ...chatProfile(root),
@@ -452,6 +462,12 @@ export function exportBase(root: string, maxKb = DEFAULT_MAX_KB, trial = false):
     ],
     maxKb,
   );
+  const tools = library === undefined ? [] : libraryTools(root, library);
+
+  return [
+    ...base,
+    ...libraryParts(libraryFiles(root, tools), maxKb, buildExport),
+  ];
 }
 
 function writeChat(root: string, target: string): void {
@@ -462,18 +478,31 @@ function writeChat(root: string, target: string): void {
   console.log(`Chat profile written to ${target}.`);
 }
 
-function writeExport(root: string, out: string, maxKb: number, trial: boolean): void {
-  const parts = exportBase(root, maxKb, trial);
+function writeExport(
+  root: string,
+  out: string,
+  options: {
+    maxKb: number;
+    trial: boolean;
+    library?: string;
+  },
+): void {
+  const parts = exportBase(root, options.maxKb, options.trial, options.library);
+  const libraryCount = parts.filter((part) => LIBRARY_PART_PATTERN.test(part.name)).length;
 
   mkdirSync(out, { recursive: true });
-  for (const name of readdirSync(out).filter((entry) => PART_PATTERN.test(entry))) {
+  for (const name of readdirSync(out).filter((entry) => PART_PATTERN.test(entry) || LIBRARY_PART_PATTERN.test(entry))) {
     rmSync(join(out, name));
   }
   for (const part of parts) {
     writeFileSync(join(out, part.name), part.text);
   }
   copyFileSync(join(root, 'import.ts'), join(out, 'import.ts'));
-  console.log(`Export written to ${relative(process.cwd(), out) || '.'}: import.ts and ${parts.length} part(s) of ${maxKb} KB at most.`);
+  console.log(`Export written to ${relative(process.cwd(), out) || '.'}: import.ts, ${parts.length - libraryCount} base part(s) and ${libraryCount} library part(s) of ${options.maxKb} KB at most.`);
+  if (options.library !== undefined) {
+    console.log('Library parts per tool, each exported alone:');
+    console.log(libraryReport(root, libraryTools(root, options.library), options.maxKb, buildExport).join(NEWLINE));
+  }
 }
 
 function main(): void {
@@ -483,6 +512,7 @@ function main(): void {
       'out': { type: 'string' },
       'chat': { type: 'string' },
       'trial': { type: 'boolean' },
+      'library': { type: 'string' },
     },
   });
   const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -497,7 +527,11 @@ function main(): void {
     writeChat(root, resolve(values.chat));
     return;
   }
-  writeExport(root, resolve(values.out ?? join(root, 'export')), maxKb, values.trial === true);
+  writeExport(root, resolve(values.out ?? join(root, 'export')), {
+    maxKb,
+    trial: values.trial === true,
+    ...values.library === undefined ? {} : { library: values.library },
+  });
 }
 
 if (process.argv[1] !== undefined && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url))) {
