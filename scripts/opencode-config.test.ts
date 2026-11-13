@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {
+  existsSync,
   readdirSync,
   readFileSync,
 } from 'node:fs';
@@ -24,6 +25,16 @@ interface Config extends RuleConfig {
   instructions?: string[];
   formatter?: Record<string, { disabled?: boolean }>;
   agents?: Record<string, { disabled?: boolean }>;
+  mcp?: {
+    servers?: Record<
+      string,
+      {
+        type: string;
+        command: string[];
+        codemode?: boolean;
+      }
+    >;
+  };
 }
 
 const config = parseJsonc(readFileSync(join(ROOT, 'global', 'opencode', 'opencode.jsonc'), 'utf8')) as Config;
@@ -43,6 +54,26 @@ describe('the OpenCode configuration of the global base', () => {
     assert.equal(config.formatter?.oxfmt?.disabled, true);
     assert.equal(config.agents?.general?.disabled, true);
     assert.equal(config.agents?.explore?.disabled, true);
+  });
+  it('runs every MCP server of the base with stdio, tools exposed directly', () => {
+    const servers = Object.entries(config.mcp?.servers ?? {});
+
+    assert.ok(servers.length >= 6);
+    for (const [
+      name,
+      server,
+    ] of servers) {
+      const script = (server.command[1] ?? '').replace('/opt/local-ai-base/', '');
+
+      assert.equal(server.type, 'local', name);
+      assert.equal(server.codemode, false, name);
+      assert.ok(existsSync(join(ROOT, 'global', script)), `${name}: ${script} is missing`);
+    }
+  });
+  it('opens the read-only servers to every agent and keeps work for the agents that open it', () => {
+    assert.equal(evaluate(config, 'docs_search_docs', '*'), 'allow');
+    assert.equal(evaluate(config, 'code_outline', '*'), 'allow');
+    assert.equal(evaluate(config, 'work_next_task', '*'), 'deny');
   });
 });
 describe('the project kit', () => {

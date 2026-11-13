@@ -22,8 +22,42 @@
     }
   },
 
-  // MCP servers are added by their features, each with "codemode": false.
-  "mcp": { "servers": {} },
+  // MCP servers of the base, run with stdio in the project folder; tools exposed directly
+  // ("codemode": false), as small models fail to write Code Mode JavaScript (decision 0012).
+  "mcp": {
+    "servers": {
+      "docs": {
+        "type": "local",
+        "command": ["node", "/opt/local-ai-base/servers/docs.ts"],
+        "codemode": false
+      },
+      "practices": {
+        "type": "local",
+        "command": ["node", "/opt/local-ai-base/servers/practices.ts"],
+        "codemode": false
+      },
+      "skills": {
+        "type": "local",
+        "command": ["node", "/opt/local-ai-base/servers/skills.ts"],
+        "codemode": false
+      },
+      "project": {
+        "type": "local",
+        "command": ["node", "/opt/local-ai-base/servers/project.ts"],
+        "codemode": false
+      },
+      "work": {
+        "type": "local",
+        "command": ["node", "/opt/local-ai-base/servers/work.ts"],
+        "codemode": false
+      },
+      "code": {
+        "type": "local",
+        "command": ["node", "/opt/local-ai-base/servers/code.ts"],
+        "codemode": false
+      }
+    }
+  },
 
   // Ordered rules: the last matching rule wins; an agent's own rules come after these.
   "permissions": [
@@ -38,6 +72,14 @@
     { "action": "websearch", "resource": "*", "effect": "deny" },
     { "action": "execute", "resource": "*", "effect": "deny" },
     { "action": "opencode_*", "resource": "*", "effect": "deny" },
+
+    // MCP servers: the read-only ones for every agent; "work" only for the agents that open it.
+    { "action": "docs_*", "resource": "*", "effect": "allow" },
+    { "action": "practices_*", "resource": "*", "effect": "allow" },
+    { "action": "skills_*", "resource": "*", "effect": "allow" },
+    { "action": "project_*", "resource": "*", "effect": "allow" },
+    { "action": "code_*", "resource": "*", "effect": "allow" },
+    { "action": "work_*", "resource": "*", "effect": "deny" },
 
     // Shell: ask by default, then a short allowlist of checks and read-only commands.
     { "action": "shell", "resource": "*", "effect": "ask" },
