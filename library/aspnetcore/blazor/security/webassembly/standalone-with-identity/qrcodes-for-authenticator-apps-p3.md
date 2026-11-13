@@ -1,0 +1,297 @@
+---
+title: "Enable QR code generation for TOTP authenticator apps in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity (part 3 of 3)"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/53d05ee9faf3cfe577c6180a0a4c6966d8396ffd/aspnetcore/blazor/security/webassembly/standalone-with-identity/qrcodes-for-authenticator-apps.md"
+commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
+license: "CC-BY-4.0"
+---
+
+# Enable QR code generation for TOTP authenticator apps in ASP.NET Core Blazor WebAssembly with ASP.NET Core Identity (part 3 of 3)
+
+## Manage 2FA page
+
+Add the following `Manage2fa` component to the app to manage 2FA for users.
+
+If 2FA isn't enabled, the component loads a form with a QR code to enable 2FA with a TOTP authenticator app. The user adds the app to their authenticator app and then verifies the authenticator app and enables 2FA by providing a TOTP code from the authenticator app.
+
+If 2FA is enabled, buttons appear to disable 2FA and regenerate recovery codes.
+
+`Components/Identity/Manage2fa.razor`:
+
+```razor
+@page "/manage-2fa"
+@using System.ComponentModel.DataAnnotations
+@using System.Globalization
+@using System.Text
+@using System.Text.Encodings.Web
+@using Net.Codecrete.QrCodeGenerator
+@using BlazorWasmAuth.Identity
+@using BlazorWasmAuth.Identity.Models
+@attribute [Authorize]
+@inject IAccountManagement Acct
+@inject IAuthorizationService AuthorizationService
+@inject IConfiguration Config
+@inject ILogger<Manage2fa> Logger
+
+<PageTitle>Manage 2FA</PageTitle>
+
+<h1>Manage Two-factor Authentication</h1>
+<hr />
+<div class="row">
+    <div class="col">
+        @if (loading)
+        {
+            <p>Loading ...</p>
+        }
+        else
+        {
+            @if (twoFactorResponse is not null)
+            {
+                @foreach (var error in twoFactorResponse.ErrorList)
+                {
+                    <div class="alert alert-danger">@error</div>
+                }
+                @if (twoFactorResponse.IsTwoFactorEnabled)
+                {
+                    <div class="alert alert-success" role="alert">
+                        Two-factor authentication is enabled for your account.
+                    </div>
+
+                    <div class="m-1">
+                        <button @onclick="Disable2FA" class="btn btn-lg btn-primary">
+                            Disable 2FA
+                        </button>
+                    </div>
+
+                    @if (twoFactorResponse.RecoveryCodes is null)
+                    {
+                        <div class="m-1">
+                            Recovery Codes Remaining: 
+                            @twoFactorResponse.RecoveryCodesLeft
+                        </div>
+                        <div class="m-1">
+                            <button @onclick="GenerateNewCodes" 
+                                    class="btn btn-lg btn-primary">
+                                Generate New Recovery Codes
+                            </button>
+                        </div>
+                    }
+                    else
+                    {
+                        <ShowRecoveryCodes 
+                            RecoveryCodes="twoFactorResponse.RecoveryCodes" />
+                    }
+                }
+                else
+                {
+                    <h3>Configure authenticator app</h3>
+                    <div>
+                        <p>To use an authenticator app:</p>
+                        <ol class="list">
+                            <li>
+                                <p>
+                                    Download a two-factor authenticator app, such 
+                                    as either of the following:
+                                    <ul>
+                                        <li>
+                                            Microsoft Authenticator for
+                                            <a href="https://go.microsoft.com/fwlink/?Linkid=825072">
+                                                Android
+                                            </a> and
+                                            <a href="https://go.microsoft.com/fwlink/?Linkid=825073">
+                                                iOS
+                                            </a>
+                                        </li>
+                                        <li>
+                                            Google Authenticator for
+                                            <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2">
+                                                Android
+                                            </a> and
+                                            <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8">
+                                                iOS
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    Scan the QR Code or enter this key 
+                                    <kbd>@twoFactorResponse.SharedKey</kbd> into your 
+                                    two-factor authenticator app. Spaces and casing 
+                                    don't matter.
+                                </p>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="300" 
+                                            width="300" stroke="none" version="1.1" 
+                                            viewBox="0 0 50 50">
+                                        <rect width="300" height="300" fill="#ffffff" />
+                                        <path d="@svgGraphicsPath" fill="#000000" />
+                                    </svg>
+                                </div>
+                            </li>
+                            <li>
+                                <p>
+                                    After you have scanned the QR code or input the 
+                                    key above, your two-factor authenticator app 
+                                    will provide you with a unique two-factor code. 
+                                    Enter the code in the confirmation box below.
+                                </p>
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <EditForm Model="Input" 
+                                                FormName="send-code" 
+                                                OnValidSubmit="OnValidSubmitAsync" 
+                                                method="post">
+                                            <DataAnnotationsValidator />
+                                            <div class="form-floating mb-3">
+                                                <InputText 
+                                                    @bind-Value="Input.Code" 
+                                                    id="Input.Code" 
+                                                    class="form-control" 
+                                                    autocomplete="off" 
+                                                    placeholder="Enter the code" />
+                                                <label for="Input.Code" 
+                                                        class="control-label form-label">
+                                                    Verification Code
+                                                </label>
+                                                <ValidationMessage 
+                                                    For="() => Input.Code" 
+                                                    class="text-danger" />
+                                            </div>
+                                            <button type="submit" 
+                                                    class="w-100 btn btn-lg btn-primary">
+                                                Verify
+                                            </button>
+                                        </EditForm>
+                                    </div>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>
+
+@code {
+    private TwoFactorResponse twoFactorResponse = new();
+    private bool loading = true;
+    private string? svgGraphicsPath;
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationState { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        twoFactorResponse = await Acct.TwoFactorRequestAsync(new());
+        svgGraphicsPath = await GetQrCode(twoFactorResponse.SharedKey);
+        loading = false;
+    }
+
+    private async Task<string> GetQrCode(string sharedKey)
+    {
+        if (authenticationState is not null && !string.IsNullOrEmpty(sharedKey))
+        {
+            var authState = await authenticationState;
+            var email = authState?.User?.Identity?.Name!;
+            var uri = string.Format(
+                CultureInfo.InvariantCulture,
+                "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6",
+                UrlEncoder.Default.Encode(Config["TotpOrganizationName"]!),
+                email,
+                twoFactorResponse.SharedKey);
+            var qr = QrCode.EncodeText(uri, QrCode.Ecc.Medium);
+
+            return qr.ToGraphicsPath();
+        }
+
+        return string.Empty;
+    }
+
+    private async Task Disable2FA()
+    {
+        await Acct.TwoFactorRequestAsync(new() { ForgetMachine = true });
+        twoFactorResponse = 
+            await Acct.TwoFactorRequestAsync(new() { ResetSharedKey = true });
+        svgGraphicsPath = await GetQrCode(twoFactorResponse.SharedKey);
+    }
+
+    private async Task GenerateNewCodes()
+    {
+        twoFactorResponse = 
+            await Acct.TwoFactorRequestAsync(new() { ResetRecoveryCodes = true });
+    }
+
+    private async Task OnValidSubmitAsync()
+    {
+        twoFactorResponse = await Acct.TwoFactorRequestAsync(
+            new() 
+            { 
+                Enable = true, 
+                TwoFactorCode = Input.Code 
+            });
+        Input.Code = string.Empty;
+
+        // When 2FA is first enabled, recovery codes are returned.
+        // However, subsequently disabling and re-enabling 2FA
+        // leaves the existing codes in place and doesn't generate
+        // a new set of recovery codes. The following code ensures
+        // that a new set of recovery codes is generated each
+        // time 2FA is enabled.
+        if (twoFactorResponse.RecoveryCodes is null || 
+            twoFactorResponse.RecoveryCodes.Length == 0)
+        {
+            await GenerateNewCodes();
+        }
+    }
+
+    private sealed class InputModel
+    {
+        [Required]
+        [RegularExpression(@"^([0-9]{6})$", 
+            ErrorMessage = "Must be a six-digit authenticator code (######)")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Verification Code")]
+        public string Code { get; set; } = string.Empty;
+    }
+}
+```
+
+## Link to the Manage 2FA page
+
+Add a link to the navigation menu for users to reach the `Manage2fa` component page.
+
+In the `<Authorized>` content of the `<AuthorizeView>` in `Components/Layout/NavMenu.razor`, add the following markup:
+
+```diff
+<AuthorizeView>
+    <Authorized>
+
+        ...
+
++       <div class="nav-item px-3">
++           <NavLink class="nav-link" href="manage-2fa">
++               <span class="bi bi-key" aria-hidden="true"></span> Manage 2FA
++           </NavLink>
++       </div>
+
+        ...
+
+    </Authorized>
+</AuthorizeView>
+```
+
+## Failures due to TOTP time skew
+
+TOTP authentication depends on accurate time keeping on the TOTP authenticator app device and the app's host. TOTP tokens are only valid for 30 seconds. If logins are failing due to rejected TOTP codes, confirm accurate time is maintained, preferably synchronized to an accurate NTP service.
+
+## Related content
+
+* `nimiq/qr-creator`
+* `Microsoft.AspNetCore.Routing.IdentityApiEndpointRouteBuilderExtensions.MapIdentityApi*`

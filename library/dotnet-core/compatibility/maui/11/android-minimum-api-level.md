@@ -1,0 +1,44 @@
+---
+title: "Breaking change: Minimum Android API level raised to 24"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/core/compatibility/maui/11/android-minimum-api-level.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# Minimum Android API level raised to 24
+
+The minimum supported Android API level for .NET 11 has been raised from 21 (Android 5.0) to 24 (Android 7.0).
+
+## Version introduced
+
+.NET 11
+
+## Previous behavior
+
+Previously, you could target devices running Android API 21 (Android 5.0 Lollipop) or newer.
+
+## New behavior
+
+Starting in .NET 11, devices running Android API 24 (Android 7.0 Nougat) or newer are supported. Apps built with .NET 11 can't be installed or run on devices running Android API 21, 22, or 23.
+
+## Type of breaking change
+
+This change is a behavioral change.
+
+## Reason for change
+
+.NET 11 uses CoreCLR by default, which requires Android API 24 or later. .NET for Android also uses API level 24 as the minimum for Mono, CoreCLR, and NativeAOT.
+
+## Recommended action
+
+Set `SupportedOSPlatformVersion` to `24` in your project file so your app declares the correct minimum supported Android version to build analyzers and assembly metadata.
+
+If you set `android:minSdkVersion` manually in your Android manifest, raise that value to `24` too so it matches the project setting.
+
+Notify users on devices that run Android 5.x or 6.x that they won't be able to install new updates of your app.
+
+## Affected APIs
+
+None.

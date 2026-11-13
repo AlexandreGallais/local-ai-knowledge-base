@@ -1,0 +1,85 @@
+---
+title: "How to project a new type - LINQ to XML"
+tool: "dotnet-standard"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/standard/linq/project-new-type.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# How to project a new type (LINQ to XML)
+
+Other examples in this section have shown queries that return results as `System.Collections.Generic.IEnumerable`1` of `System.Xml.Linq.XElement`, `System.Collections.Generic.IEnumerable`1` of `string`, and `System.Collections.Generic.IEnumerable`1` of `int`. These are common result types, but they're not appropriate for every scenario. In many cases, you'll want your queries to return an `System.Collections.Generic.IEnumerable`1` of some other type.
+
+## Example: Define a new type and have the `select` statement create an instance of the type
+
+This example shows how to instantiate objects in the `select` clause. The code first invokes a constructor to define a new class, and then modifies the `select` statement so that the expression is a new instance of the new class. The example uses XML document Sample XML file: Typical purchase order.
+
+```csharp
+class NameQty
+{
+    public string name;
+    public int qty;
+    public NameQty(string n, int q)
+    {
+        name = n;
+        qty = q;
+    }
+};
+
+class Program {
+    public static void Main()
+    {
+        XElement po = XElement.Load("PurchaseOrder.xml");
+
+        IEnumerable<NameQty> nqList =
+            from n in po.Descendants("Item")
+            select new NameQty(
+                    (string)n.Element("ProductName"),
+                    (int)n.Element("Quantity")
+                );
+
+        foreach (NameQty n in nqList)
+            Console.WriteLine(n.name + ":" + n.qty);
+    }
+}
+```
+
+```vb
+Public Class NameQty
+    Public name As String
+    Public qty As Integer
+    Public Sub New(ByVal n As String, ByVal q As Integer)
+        name = n
+        qty = q
+    End Sub
+End Class
+
+Public Class Program
+    Shared Sub Main()
+        Dim po As XElement = XElement.Load("PurchaseOrder.xml")
+
+        Dim nqList As IEnumerable(Of NameQty) = _
+            From n In po...<Item> _
+            Select New NameQty( _
+                n.<ProductName>.Value, CInt(n.<Quantity>.Value))
+
+        For Each n As NameQty In nqList
+            Console.WriteLine(n.name & ":" & n.qty)
+        Next
+    End Sub
+End Class
+```
+
+This example uses the `System.Xml.Linq.XContainer.Element*` method that was introduced in the How to retrieve a single child element article. It also uses casts to retrieve the values of the elements that are returned by the `System.Xml.Linq.XContainer.Element*` method.
+
+This example produces the following output:
+
+```output
+Lawnmower:1
+Baby Monitor:2
+```
+
+## See also
+
+- Projections and Transformations (LINQ to XML) (Visual Basic)

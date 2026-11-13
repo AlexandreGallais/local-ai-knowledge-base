@@ -1,0 +1,405 @@
+---
+title: "Using build policies (part 1 of 2)"
+tool: "docker"
+version: "2026-11"
+source: "https://github.com/docker/docs/blob/a0442378fca4987b1235614ec917b4138b5d5e5d/content/manuals/build/policies/usage.md"
+commit: "a0442378fca4987b1235614ec917b4138b5d5e5d"
+license: "Apache-2.0"
+---
+
+Build policies validate build inputs and can check HTTP(S) requests during build
+steps. This guide covers how to develop policies iteratively and apply them to
+builds with `docker buildx build` and `docker buildx bake`.
+
+## Prerequisites
+
+- Buildx 0.31.0 or later - Check your version: `docker buildx version`
+- BuildKit 0.26.0 or later - Verify with: `docker buildx inspect
+  --bootstrap`
+
+If you're using Docker Desktop, ensure you're on a version that includes these
+updates.
+
+## Policy development workflow
+
+Buildx automatically loads policies that match your Dockerfile name. When you
+build with `Dockerfile`, Buildx looks for `Dockerfile.rego` in the same
+directory. For a file named `app.Dockerfile`, it looks for
+`app.Dockerfile.rego`. See the Advanced: Policy configuration
+section for configuration options and manual policy loading.
+
+Writing policies is an iterative process:
+
+1. Start with a basic deny-all policy.
+2. Build with debug logging to see what inputs your Dockerfile uses.
+3. Add rules to allow specific sources based on the debug output.
+4. Test and refine.
+
+### Viewing inputs from your Dockerfile
+
+To see the inputs that your Dockerfile references (images, Git repos, HTTP
+downloads), build with debug logging:
+
+```console
+$ docker buildx build --progress=plain --policy log-level=debug .
+```
+
+Example output for an image source:
+
+```text
+#1 0.010 checking policy for source docker-image://alpine:3.19 (linux/arm64)
+#1 0.011 policy input: {
+#1 0.011   "env": {
+#1 0.011     "filename": "."
+#1 0.011   },
+#1 0.011   "image": {
+#1 0.011     "ref": "docker.io/library/alpine:3.19",
+#1 0.011     "host": "docker.io",
+#1 0.011     "repo": "alpine",
+#1 0.011     "tag": "3.19",
+#1 0.011     "platform": "linux/arm64"
+#1 0.011   }
+#1 0.011 }
+#1 0.011 unknowns for policy evaluation: [input.image.checksum input.image.labels ...]
+#1 0.012 policy decision for source docker-image://alpine:3.19: ALLOW
+```
+
+This shows the complete input structure, which fields are unresolved, and the
+policy decision for each source. See Input reference for all
+available fields.
+
+### Testing policies with policy eval
+
+Use `docker buildx policy eval` to
+test whether your policy allows a specific source without running a full build.
+
+Note: `docker buildx policy eval` tests the source specified as the argument.
+It doesn't parse your Dockerfile to evaluate all inputs - for that, build with
+--progress=plain.
+
+Test if your policy allows the local context:
+
+```console
+$ docker buildx policy eval .
+```
+
+No output means the policy allowed the source. If denied, you see:
+
+```console
+ERROR: policy denied
+```
+
+Test other sources:
+
+```console
+$ docker buildx policy eval https://example.com              # Test HTTP
+$ docker buildx policy eval https://github.com/org/repo.git  # Test Git
+```
+
+By default, `--print` shows reference information parsed from the source string
+(like `repo`, `tag`, `host`) without fetching from registries. To inspect
+metadata that requires fetching the source (like `labels`, `checksum`, or
+`hasProvenance`), specify which fields to fetch with `--fields`:
+
+```console
+$ docker buildx policy eval --print --fields image.labels docker-image://alpine:3.19
+```
+
+Multiple fields can be specified as a comma-separated list.
+
+### Iterative development example
+
+Here's a practical workflow for developing policies:
+
+1. Start with basic deny-all policy:
+
+   ```rego
+   package docker
+
+   default allow := false
+
+   allow if input.local
+
+   decision := {"allow": allow}
+   ```
+
+2. Build with debug logging to see what inputs your Dockerfile uses:
+
+   ```console
+   $ docker buildx build --progress=plain --policy log-level=debug .
+   ```
+
+   The output shows the denied image and its input structure:
+
+   ```text
+   #1 0.026 checking policy for source docker-image://docker.io/library/alpine:3.19
+   #1 0.027 policy input: {
+   #1 0.027   "image": {
+   #1 0.027     "repo": "alpine",
+   #1 0.027     "tag": "3.19",
+   #1 0.027     ...
+   #1 0.027   }
+   #1 0.027 }
+   #1 0.028 policy decision for source docker-image://alpine:3.19: DENY
+   #1 ERROR: source "docker-image://alpine:3.19" not allowed by policy
+   ```
+
+3. Add a rule allowing the alpine image:
+
+   ```rego
+   allow if {
+       input.image.repo == "alpine"
+   }
+   ```
+
+4. Build again to verify the policy works:
+
+   ```console
+   $ docker buildx build .
+   ```
+
+If it fails, see Debugging for troubleshooting guidance.
+
+## Using policies with `docker build`
+
+Once you've developed and tested your policy, apply it to real builds.
+
+### Basic usage
+
+Create a policy alongside your Dockerfile:
+
+```dockerfile
+FROM alpine:3.19
+RUN echo "hello"
+```
+
+```rego
+package docker
+
+default allow := false
+
+allow if input.local
+
+allow if {
+    input.image.repo == "alpine"
+}
+
+decision := {"allow": allow}
+```
+
+Build normally:
+
+```console
+$ docker buildx build .
+```
+
+Buildx loads the policy automatically and validates the `alpine:3.19` image
+before building.
+
+### Build with different Dockerfile names
+
+Specify the Dockerfile with `-f`:
+
+```console
+$ docker buildx build -f app.Dockerfile .
+```
+
+Buildx looks for `app.Dockerfile.rego` in the same directory.
+
+### Build with manual policy
+
+Add an extra policy to the automatic one:
+
+```console
+$ docker buildx build --policy filename=extra-checks.rego .
+```
+
+Both `Dockerfile.rego` (automatic) and `extra-checks.rego` (manual) must pass.
+
+### Build without automatic policy
+
+Use only your specified policy:
+
+```console
+$ docker buildx build --policy reset=true,filename=strict.rego .
+```
+
+## Block URLs in build steps
+
+To check HTTP(S) requests from `RUN` instructions, add
+`"caps": {"exec.proxy": true}` to the policy's `decision` object. This enables
+BuildKit's proxy, which checks requests against your `input.http` rules.
+By default, these rules only apply to `ADD` downloads.
+
+Save this policy as `Dockerfile.rego` alongside your Dockerfile to allow Debian
+package downloads and block requests to other hosts:
+
+```rego
+package docker
+
+default allow := false
+
+allow if input.local
+
+allow if {
+    input.image.repo == "debian"
+}
+
+allow if {
+    input.http.host == "deb.debian.org"
+}
+
+decision := {
+    "allow": allow,
+    "caps": {"exec.proxy": true},
+}
+```
+
+Test it with this Dockerfile:
+
+```dockerfile
+FROM debian:trixie
+RUN apt-get update && apt-get install -y curl
+RUN curl -f http://example.com/
+```
+
+```console
+$ docker buildx build --no-cache --progress=plain .
+```
+
+The package downloads from `deb.debian.org` succeed. The proxy denies the request
+to `example.com` with HTTP 403, and `curl -f` fails the build. Use `--no-cache`
+when testing to run the steps again.
+
+To restrict individual URLs, use `input.http.url` or match both `input.http.host`
+and `input.http.path`. See the HTTP input reference.
+
+The proxy supports Linux build steps. Applications must use the injected proxy
+environment variables and trust BuildKit's certificate for HTTPS. BuildKit adds
+the certificate to the system trust store. Traffic that bypasses the proxy is
+blocked.
+
+### Enable the proxy for a CI builder
+
+For a dedicated CI builder, enable the proxy for all builds with
+`--buildkitd-flags '--proxy-network'`:
+
+```console
+$ docker buildx create --name ci-policy --driver docker-container \
+    --buildkitd-flags '--proxy-network' --use --bootstrap
+```
+
+This replaces the `exec.proxy` opt-in in each policy file. You still need a
+policy to restrict URLs.
+
+## Using policies with bake
+
+Bake supports automatic policy loading just like `docker buildx
+build`. Place `Dockerfile.rego` alongside your Dockerfile and run:
+
+```console
+$ docker buildx bake
+```
+
+### Manual policy in bake files
+
+Specify additional policies in your `docker-bake.hcl`:
+
+```hcl
+target "default" {
+  dockerfile = "Dockerfile"
+  policy = ["extra.rego"]
+}
+```
+
+The `policy` attribute takes a list of policy files. Bake loads these in
+addition to the automatic `Dockerfile.rego` (if it exists).
+
+### Multiple policies in bake
+
+```hcl
+target "webapp" {
+  dockerfile = "Dockerfile"
+  policy = [
+    "shared/base-policy.rego",
+    "security/image-signing.rego"
+  ]
+}
+```
+
+All policies must pass for the target to build successfully.
+
+### Different policies per target
+
+Apply different validation rules to different targets:
+
+```hcl
+target "development" {
+  dockerfile = "dev.Dockerfile"
+  policy = ["policies/permissive.rego"]
+}
+
+target "production" {
+  dockerfile = "prod.Dockerfile"
+  policy = ["policies/strict.rego", "policies/signing-required.rego"]
+}
+```
+
+Build with the appropriate target:
+
+```console
+$ docker buildx bake development  # Uses permissive policy
+$ docker buildx bake production   # Uses strict policies
+```
+
+### Bake with policy options
+
+Use objects in the `policy` list to configure policy loading and evaluation
+for a target. Each object supports `filename`, `reset`, `disabled`, `strict`,
+and `log-level`, with the same meanings as the
+`docker buildx build --policy` options.
+
+For example, load only the specified policy and require policy support from
+the builder:
+
+```hcl
+target "production" {
+  policy = [{
+    filename = "policies/production.rego"
+    reset    = true
+    strict   = true
+  }]
+}
+```
+
+Use `disabled = true` to disable policy evaluation for a target. For a
+per-invocation override across the selected targets, use the `--policy` flag:
+
+```console
+$ docker buildx bake --policy disabled=true production
+```
+
+## Testing in CI/CD
+
+Validate policies in continuous integration by running builds with the `--policy` flag. For unit testing policies before running builds, see Test build policies.
+
+Test policies during CI builds:
+
+```yaml
+name: Test Build Policies
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@{{% param "checkout_action_version" %}}
+      - uses: docker/setup-buildx-action@{{% param "setup_buildx_action_version" %}}
+      - name: Test build with policy
+        run: docker buildx build --policy strict=true .
+```
+
+This ensures policy changes don't break builds and that new rules work as
+intended. The `strict=true` flag fails the build if policies aren't loaded (for
+example, if the BuildKit instance used by the build is too old and doesn't
+support policies).

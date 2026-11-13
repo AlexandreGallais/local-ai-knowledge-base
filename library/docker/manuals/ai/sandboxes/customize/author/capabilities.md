@@ -1,0 +1,101 @@
+---
+title: "Kit capability support"
+tool: "docker"
+version: "2026-11"
+source: "https://github.com/docker/docs/blob/a0442378fca4987b1235614ec917b4138b5d5e5d/content/manuals/ai/sandboxes/customize/author/capabilities.md"
+commit: "a0442378fca4987b1235614ec917b4138b5d5e5d"
+license: "Apache-2.0"
+---
+
+# Kit capability support
+
+Use this reference to check whether a v3 kit can run on your version of Docker
+Sandboxes and whether it needs a local sandbox. Follow each capability link
+for its settings and examples in the Docker Sandbox Kit Specification.
+
+## Support by capability
+
+Version numbers identify the first `sbx` release that supports the
+capability, subject to the restrictions in the table. Limited support means
+that Docker Sandboxes applies only part of the capability. Declaration only
+means that Docker Sandboxes accepts the entry without using its commands.
+
+All capability names in the table have the `com.docker.sandbox/` prefix.
+
+| Capability | Local sandboxes | Cloud sandboxes | Restrictions |
+| --- | --- | --- | --- |
+| `agent-context@1` | v0.45.0 | v0.45.0 | Agent instructions are applied when creating the sandbox. |
+| `agent-context@2` | v0.51.0 | Limited: v0.51.0 | Cloud sandboxes write one workload profile in `/home/agent`. Mixins use the workload's profile and cannot specify a `directory`. Unsupported required profiles prevent creation; optional ones are skipped. |
+| `agent-interactive-sessions@1` | Unsupported | Unsupported | Docker Sandboxes does not use these session commands. |
+| `agent-sessions@1` | Declaration only | Declaration only | Accepted since v0.45.0, but Docker Sandboxes does not execute the declared session commands. |
+| `agent-skill@1` | v0.48.0 | Unsupported | Requires a selected `agent-skills@1` destination. Bundled skills remain available with `--skills=off`. |
+| `agent-skills@1` | v0.45.0 | Unsupported | Local sandboxes mount the shared skills store. From v0.48.0, discovery paths also receive bundled skills. |
+| `credential@1` | v0.45.0 | Limited: v0.45.0 | In cloud sandboxes, credentials scoped to installation remain available after setup. |
+| `git-identity@1` | v0.48.0 | Unsupported | Requires `user.name` and `user.email` in the host Git config. |
+| `host-mount@1` | v0.50.0 | Unsupported | Users can select host directories at creation time. Cloud sandboxes reject required entries and skip optional ones. |
+| `kit-registry@1` | v0.45.0 | Unsupported | Restricted to approved OCI builder kits. Local and Git kit sources do not receive registry access. |
+| `lifecycle@1` | v0.45.0 | v0.45.0 | Local startup hooks run alongside the agent, rather than blocking its launch. |
+| `long-running@1` | v0.47.0 | Unsupported | Keeps a local sandbox running after its last session disconnects. |
+| `network-policy@1` | v0.45.0 | Limited: v0.45.0 | Cloud sandboxes keep installation-phase network access after setup. |
+| `network-policy@2` | v0.45.0 | Limited: v0.45.0 | Cloud sandboxes enforce host rules, but not HTTP method or path restrictions. Installation-phase access remains after setup. |
+| `port@1` | v0.45.0 | Limited: v0.45.0 | Cloud sandboxes expose IPv4 TCP ports only. See Port address families. |
+| `privileged@1` | v0.48.0 | Unsupported | Accepted by the local runtime, which runs Docker-in-Docker containers in privileged mode inside the sandbox VM. |
+| `resources@1` | Limited: v0.45.0 | Limited: v0.45.0 | Workload CPU and memory defaults are applied. The `gpu` field does not select GPUs; cloud creation rejects a required GPU request. |
+| `sbx@1` | v0.45.0 | v0.45.0 | Docker Sandboxes launches the agent using the workload command. |
+| `ssh-agent@1` | v0.48.0 | Unsupported | Requires SSH-agent forwarding to be enabled and a host SSH agent to be available. |
+| `usb-device@1` | Unsupported | Unsupported | Kit requests for USB device access are not supported. |
+| `volume@1` | v0.45.0 | Limited: v0.45.0 | Local sandboxes provide block storage or tmpfs and retain block volumes across removal and recreation. Cloud sandboxes use ordinary sandbox disk at the declared paths, including for tmpfs requests. |
+
+## Port address families
+
+For v3 `port@1` entries, `family` selects the address families used to publish
+the port: `ipv4`, `ipv6`, or `dual` for both. If no kit specifies a family,
+the port defaults to IPv4, even with an explicit `transport: tcp`. Use
+`family: dual` when the service needs both IPv4 and IPv6 clients.
+
+When kits declare the same port and transport, an entry without `family`
+uses the family specified by another kit in the set. Kits that specify
+conflicting families for that port cannot be used together.
+
+Cloud sandboxes support IPv4 TCP ports only. They reject required `ipv6` and
+`dual` entries and skip optional ones. For capability syntax and
+examples, follow the `port@1` specification link in the table.
+
+## Capability groups
+
+Docker Sandboxes supports capability groups in `sbx` v0.48.0 and later.
+A group is selected only when the runtime can provide every capability in it.
+If a capability is unavailable, an optional group is skipped in full, including
+its network rules, setup commands, generated files, and agent instructions.
+An unavailable capability in a required group prevents sandbox creation.
+
+Availability also depends on the host: Git identity requires configured
+`user.name` and `user.email`, and SSH-agent access requires an available
+agent with forwarding enabled. See the upstream
+capability group definition
+for syntax and composition rules.
+
+## Capabilities that require sandbox creation
+
+Include kits that need the following settings when you create the sandbox.
+`sbx kit add` cannot apply these settings to an existing sandbox:
+
+| Capability | Settings that require creation |
+| --- | --- |
+| `credential@1` | Credential routing and authentication |
+| `kit-registry@1` | Access to the kit registry |
+| `long-running@1` | Keeping the sandbox running after sessions disconnect |
+| `port@1` | Published ports |
+| `resources@1` | CPU and memory allocation |
+| `volume@1` | Block storage and tmpfs mounts |
+| `lifecycle@1` | Generated `files` require sandbox creation. Install and startup hooks can be added with `sbx kit add`. |
+| `network-policy@1` and `network-policy@2` | Host-level deny rules require sandbox creation. Allow rules can be added with `sbx kit add`, as can HTTP method and path rules for `network-policy@2`. |
+
+`sbx kit add` rejects kits that declare credentials, published ports,
+resource settings, volumes, generated lifecycle files, or host-level deny
+rules. To use those kits, remove and recreate the sandbox with the kits
+included. Save any work you need from the sandbox before removing it.
+
+Skill discovery paths (`agent-skills@1`) and bundled skills (`agent-skill@1`)
+can be added with `sbx kit add`: the command replaces the sandbox container
+and applies the updated skill configuration.

@@ -1,0 +1,85 @@
+---
+title: "Managing Namespaces in an XML Document"
+tool: "dotnet-standard"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/standard/data/xml/managing-namespaces-in-an-xml-document.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# Managing Namespaces in an XML Document
+
+XML namespaces associate element and attribute names in an XML document with custom and predefined URIs. To create these associations, you define prefixes for namespace URIs, and use those prefixes to qualify element and attribute names in XML data. Namespaces prevent element and attribute name collisions, and enable elements and attributes of the same name to be handled and validated differently.
+
+## Declaring namespaces
+
+ To declare a namespace on an element, you use the `xmlns:` attribute:
+
+ `xmlns:<name>=<"uri">`
+
+ where `<name>` is the namespace prefix and `<"uri">` is the URI that identifies the namespace. After you declare the prefix, you can use it to qualify elements and attributes in an XML document and associate them with the namespace URI. Because the namespace prefix is used throughout a document, it should be short in length.
+
+ This example defines two `BOOK` elements. The first element is qualified by the prefix, `mybook`, and the second element is qualified by the prefix, `bb`. Each prefix is associated with a different namespace URI:
+
+```xml
+<mybook:BOOK xmlns:mybook="http://www.contoso.com/books.dtd">
+    <bb:BOOK xmlns:bb="urn:blueyonderairlines" />
+</mybook:BOOK>
+```
+
+ To signify that an element is a part of a particular namespace, add the namespace prefix to it. For example, if an `Author` element belongs to the `mybook` namespace, it is declared as `<mybook:Author>`.
+
+## Declaration scope
+
+ A namespace is effective from its point of declaration until the end of the element it was declared in. In this example, the namespace defined in the `BOOK` element doesn't apply to elements outside the `BOOK` element, such as the `Publisher` element:
+
+```xml
+<Author>Joe Smith</Author>
+<BOOK xmlns:book="http://www.contoso.com">
+    <title>My Wonderful Day</title>
+      <price>$3.95</price>
+</BOOK>
+<Publisher>
+    <Name>MSPress</Name>
+</Publisher>
+```
+
+ A namespace must be declared before it can be used, but it doesn't have to appear at the top of the XML document.
+
+ When you use multiple namespaces in an XML document, you can define one namespace as the default namespace to create a cleaner looking document. The default namespace is declared in the root element and applies to all unqualified elements in the document. Default namespaces apply to elements only, not to attributes.
+
+ To use the default namespace, omit the prefix and the colon from the declaration on the element:
+
+```xml
+<BOOK xmlns="http://www.contoso.com/books.dtd">
+...
+</BOOK>
+```
+
+## Managing namespaces
+
+ The `System.Xml.XmlNamespaceManager` class stores a collection of namespace URIs and their prefixes, and lets you look up, add, and remove namespaces from this collection. In certain contexts, this class is required for better XML processing performance. For example, the `System.Xml.Xsl.XsltContext` class uses `System.Xml.XmlNamespaceManager` for XPath support.
+
+ The namespace manager doesn't perform any validation on the namespaces, but assumes that prefixes and namespaces have already been verified and conform to the W3C Namespaces specification.
+
+> **Note:**
+> LINQ TO XML in C# and Visual Basic don't use `System.Xml.XmlNamespaceManager` to manage namespaces. See Working with XML Namespaces (C#) and Working with XML Namespaces (Visual Basic) in the LINQ documentation for information about managing namespaces when using LINQ to XML.
+
+ Here are some of the management and lookup tasks you can perform with the `System.Xml.XmlNamespaceManager` class. For more information and examples, follow the links to the reference page for each method or property.
+
+|To|Use|
+|--------|---------|
+|Add a namespace|`System.Xml.XmlNamespaceManager.AddNamespace*` method|
+|Remove a namespace|`System.Xml.XmlNamespaceManager.RemoveNamespace*` method|
+|Find the URI for the default namespace|`System.Xml.XmlNamespaceManager.DefaultNamespace` property|
+|Find the URI for a namespace prefix|`System.Xml.XmlNamespaceManager.LookupNamespace*` method|
+|Find the prefix for a namespace URI|`System.Xml.XmlNamespaceManager.LookupPrefix*` method|
+|Get a list of namespaces in the current node|`System.Xml.XmlNamespaceManager.GetNamespacesInScope*` method|
+|Scope a namespace|`System.Xml.XmlNamespaceManager.PushScope*` and `System.Xml.XmlNamespaceManager.PopScope*` methods|
+|Check whether a prefix is defined in the current scope|`System.Xml.XmlNamespaceManager.HasNamespace*` method|
+|Get the name table used to look up prefixes and URIs|`System.Xml.XmlNamespaceManager.NameTable` property|
+
+## See also
+
+- `System.Xml.XmlNamespaceManager`
+- XML Documents and Data

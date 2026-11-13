@@ -1,0 +1,70 @@
+---
+title: "dotnet package remove command"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/core/tools/dotnet-package-remove.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# dotnet package remove
+
+**This article applies to:** ✔️ .NET 6 SDK and later versions
+
+## Name
+
+`dotnet package remove` - Removes a package reference from a project file.
+
+> **Note:**
+> If you're using .NET 9 SDK or earlier, use the "verb first" form (`dotnet remove package`) instead. The "noun first" form was introduced in .NET 10. For more information, see More consistent command order.
+
+## Synopsis
+
+```dotnetcli
+dotnet package remove <PACKAGE_NAME>  
+  [--file <FILE>] [--interactive] [--project <PROJECT>]
+
+dotnet package remove -h|--help
+```
+
+## Description
+
+The `dotnet package remove` command provides a convenient option to remove a NuGet package reference from a project.
+
+## Arguments
+
+`PACKAGE_NAME`
+
+The package reference to remove.
+
+## Options
+
+- **`--file <FILE>`**
+
+  The file-based app to operate on.
+
+- **`--interactive`**
+
+Allows the command to stop and wait for user input or action. For example, to complete authentication.
+
+- **`-p|--project <PROJECT>`**
+
+  The project file to operate on. If a solution file is specified, the command will update the package in all projects in the solution that reference it. If not specified, the command will search the current directory for a project file.
+
+- **`-?|-h|--help`**
+
+Prints out a description of how to use the command.
+
+## Examples
+
+- Remove `Newtonsoft.Json` NuGet package from a project in the current directory:
+
+  ```dotnetcli
+  dotnet package remove Newtonsoft.Json
+  ```
+
+- Remove `Newtonsoft.Json` NuGet package from a specific project file:
+
+  ```dotnetcli
+  dotnet package remove Newtonsoft.Json --file MyApp.cs
+  ```

@@ -1,0 +1,85 @@
+---
+title: "Breaking change: New StringBuilder.Append overloads"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/core/compatibility/core-libraries/6.0/stringbuilder-append-evaluation-order.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# StringBuilder.Append overloads and evaluation order
+
+C# 10 adds support for better string interpolation, including the ability to target custom "handlers" in addition to strings. `System.Text.StringBuilder` takes advantage of this with new overloads of `System.Text.StringBuilder.Append*` and `System.Text.StringBuilder.AppendLine*` that accept a custom interpolated string handler. Existing calls to these methods may now start binding to the new overloads. In general, behavior is identical but with improved performance. For example, rather than a string first being created and then that string appended, the individual components of the interpolated string are appended directly to the builder. However, this can change the evaluation order of objects used as format items, which can manifest as a difference in behavior.
+
+## Previous behavior
+
+In previous versions, a call to:
+
+```csharp
+stringBuilder.Append($"{a} {b}");
+```
+
+compiled to the equivalent of:
+
+```csharp
+stringBuilder.Append(string.Format("{0} {1}", a, b));
+```
+
+This means `a` is evaluated, then `b` is evaluated, then a string is created from the results of those evaluations, and then that string is appended to the builder.
+
+## New behavior
+
+Starting in .NET 6, a call to:
+
+```csharp
+stringBuilder.Append($"{a} {b}");
+```
+
+compiles to the equivalent of:
+
+```csharp
+var handler = new StringBuilder.AppendInterpolatedStringHandler(1, 2, stringBuilder);
+handler.AppendFormatted(a);
+handler.AppendLiteral(" ");
+handler.AppendFormatted(b);
+stringBuilder.Append(ref handler);
+```
+
+This means `a` is evaluated and appended to the builder, and then `b` is evaluated and appended to the builder.
+
+If, for example, either `a` or `b` is itself the builder, as shown in the following code, the new evaluation order can result in different behavior at runtime.
+
+```csharp
+stringBuilder.Append($"{a} {stringBuilder}");
+```
+
+## Version introduced
+
+6.0 RC 1
+
+## Type of breaking change
+
+This change can affect source compatibility.
+
+## Reason for change
+
+It's common for developers to pass interpolated strings to `System.Text.StringBuilder`, as it's more convenient than manually splitting the string up and calling `System.Text.StringBuilder.Append*` for each part. These new overloads enable the concise syntax and most of the performance of doing the individual calls.
+
+## Recommended action
+
+In most cases where `System.Text.StringBuilder.Append*` and `System.Text.StringBuilder.AppendLine*` are used, you won't notice a functional difference. If you find a difference that proves to be problematic, you can restore the previous behavior by adding a cast to `(string)` prior to the interpolated string. For example:
+
+```csharp
+stringBuilder.Append((string)$"{a} {b}")
+```
+
+This is not recommended, however, unless it's actually required for compatibility.
+
+## Affected APIs
+
+- `System.Text.StringBuilder.Append*`
+- `System.Text.StringBuilder.AppendLine*`
+
+## See also
+
+- String Interpolation in C# 10 and .NET 6

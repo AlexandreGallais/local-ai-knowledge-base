@@ -1,0 +1,200 @@
+---
+title: "Access HttpContext in ASP.NET Core"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/53d05ee9faf3cfe577c6180a0a4c6966d8396ffd/aspnetcore/fundamentals/http-context.md"
+commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
+license: "CC-BY-4.0"
+---
+
+# Access HttpContext in ASP.NET Core
+
+-->
+-->
+
+The `Microsoft.AspNetCore.Http.HttpContext` encapsulates all information about an individual HTTP request and response. An `HttpContext` instance is initialized when an HTTP request is received. The `HttpContext` instance is accessible by middleware and app frameworks such as Web API controllers, Razor Pages, SignalR, gRPC, and more.
+
+For information about using `HttpContext` with an HTTP request and response, see Use HttpContext in ASP.NET Core.
+
+## Access HttpContext from Razor Pages
+
+The Razor Pages `Microsoft.AspNetCore.Mvc.RazorPages.PageModel` exposes the `Microsoft.AspNetCore.Mvc.RazorPages.PageModel.HttpContext` property:
+
+```csharp
+public class IndexModel : PageModel
+{
+    public void OnGet()
+    {
+        var message = HttpContext.Request.PathBase;
+
+        // ...
+    }
+}
+```
+
+You can use the same property in the corresponding Razor Page View:
+
+```cshtml
+@page
+@model IndexModel
+
+@{
+    var message = HttpContext.Request.PathBase;
+    
+    // ...
+}
+```
+
+## Access HttpContext from a Razor view in MVC
+
+Razor views in the MVC pattern expose the `HttpContext` via the `Microsoft.AspNetCore.Mvc.Razor.RazorPage.Context` property on the view. The following example retrieves the current username in an intranet app by using Windows Authentication:
+
+```cshtml
+@{
+    var username = Context.User.Identity.Name;
+    
+    // ...
+}
+```
+
+## Access HttpContext from a controller
+
+Controllers expose the `Microsoft.AspNetCore.Mvc.ControllerBase.HttpContext` property:
+
+```csharp
+public class HomeController : Controller
+{
+    public IActionResult About()
+    {
+        var pathBase = HttpContext.Request.PathBase;
+
+        // ...
+
+        return View();
+    }
+}
+```
+
+## Access HttpContext from Minimal APIs
+
+To use `HttpContext` from Minimal APIs:
+
+```csharp
+app.MapGet("/", (HttpContext context) => context.Response.WriteAsync("Hello World"));
+```
+
+## Access HttpContext from middleware
+
+To use `HttpContext` from custom middleware components, pass the `HttpContext` parameter into the `Invoke` or `InvokeAsync` method:
+
+```csharp
+public class MyCustomMiddleware
+{
+    // ...
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        // ...
+    }
+}
+```
+
+## Access HttpContext from SignalR
+
+To use `HttpContext` from SignalR, call the `Microsoft.AspNetCore.SignalR.GetHttpContextExtensions.GetHttpContext*` on the `Microsoft.AspNetCore.SignalR.Hub.Context`:
+
+```csharp
+public class MyHub : Hub
+{
+    public async Task SendMessage()
+    {
+        var httpContext = Context.GetHttpContext();
+
+        // ...
+    }
+}
+```
+
+## Access HttpContext from gRPC methods
+
+To use `HttpContext` from gRPC methods, see Resolve HttpContext in gRPC methods.
+
+## Access HttpContext from custom components
+
+For other framework and custom components that require access to `HttpContext`, the recommended approach is to register a dependency by using the built-in Dependency Injection (DI) container. The DI container supplies the `IHttpContextAccessor` to any classes that declare it as a dependency in their constructors:
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+```
+
+In the following example:
+
+* The `UserRepository` instance declares its dependency on `IHttpContextAccessor`.
+* The dependency is supplied when DI resolves the dependency chain and creates an instance of `UserRepository`.
+
+```csharp
+public class UserRepository : IUserRepository
+{
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public UserRepository(IHttpContextAccessor httpContextAccessor) =>
+        _httpContextAccessor = httpContextAccessor;
+
+    public void LogCurrentUser()
+    {
+        var username = _httpContextAccessor.HttpContext.User.Identity.Name;
+        
+        // ...
+    }
+}
+```
+
+## Access HttpContext from a background thread
+
+`HttpContext` isn't thread-safe. Reading or writing properties of the `HttpContext` outside of processing a request can result in a `System.NullReferenceException` error.
+
+> **Note:**
+> If your app generates sporadic `NullReferenceException` errors, review parts of the code that start background processing or code that continues processing after a request completes. Look for mistakes, such as defining a controller method as `async void`.
+
+To safely do background work with `HttpContext` data:
+
+* Copy the required data during request processing.
+* Pass the copied data to a background task.
+* **Don't** reference `HttpContext` data in parallel tasks. Extract the data needed from the context before starting the parallel tasks.
+
+To avoid unsafe code, never pass `HttpContext` into a method that does background work. Pass the required data instead.
+
+In the following example, the `SendEmail` method calls the `SendEmailCoreAsync` method to start sending an email. The value of the `X-Correlation-Id` header is passed to `SendEmailCoreAsync` instead of the `HttpContext`. Code execution doesn't wait for `SendEmailCoreAsync` to complete:
+
+```csharp
+public class EmailController : Controller
+{
+    public IActionResult SendEmail(string email)
+    {
+        var correlationId = HttpContext.Request.Headers["X-Correlation-Id"].ToString();
+
+        _ = SendEmailCoreAsync(correlationId);
+
+        return View();
+    }
+
+    private async Task SendEmailCoreAsync(string correlationId)
+    {
+        // ...
+    }
+}
+```
+
+## Access IHttpContextAccessor or HttpContext in Razor components (Blazor)
+
+If you want to access the `IHttpContextAccessor` or `HttpContext` in Razor components (Blazor apps), see IHttpContextAccessor/HttpContext in ASP.NET Core Blazor apps.
+
+## Related content
+
+- Use HttpContext in ASP.NET Core
+- Razor Pages architecture and concepts in ASP.NET Core
+- gRPC services with ASP.NET Core

@@ -1,0 +1,121 @@
+---
+title: "SQLite Database Provider - Limitations - EF Core"
+tool: "efcore"
+version: "11"
+source: "https://github.com/dotnet/EntityFramework.Docs/blob/5fa9f7b63ae7ff93d631f4ddc47fdc9f72dcbdc7/entity-framework/core/providers/sqlite/limitations.md"
+commit: "5fa9f7b63ae7ff93d631f4ddc47fdc9f72dcbdc7"
+license: "CC-BY-4.0"
+---
+
+# SQLite EF Core Database Provider Limitations
+
+The SQLite provider has a number of migrations limitations. Most of these limitations are a result of limitations in the underlying SQLite database engine and are not specific to EF.
+
+## Modeling limitations
+
+The common relational library (shared by EF Core relational database providers) defines APIs for modelling concepts that are common to most relational database engines. A couple of these concepts are not supported by the SQLite provider.
+
+* Schemas
+* Sequences
+* Database-generated concurrency tokens (see documentation)
+
+## Query limitations
+
+SQLite doesn't natively support the following data types. EF Core can read and write values of these types, and querying for equality (`where e.Property == value`) is also supported. Other operations, however, like comparison and ordering, aren't translated to SQL and have to be evaluated on the client.
+
+* `DateTimeOffset`
+* `TimeSpan`
+* `ulong`
+
+Instead of `DateTimeOffset`, we recommend using `DateTime` values. When handling multiple time zones, we recommend converting the values to UTC before saving and then converting back to the appropriate time zone.
+
+SQLite doesn't natively support `decimal` either, but EF Core translates comparison, ordering, arithmetic and aggregate operations on `decimal` values to functions and a collation that it registers on the connection, such as `ef_compare` and `EF_DECIMAL`. See Function Mappings for the translations.
+
+If you don't need the precision of `decimal`, you can use `double` instead. You can use a value converter to continue using `decimal` in your classes.
+
+```csharp
+modelBuilder.Entity<MyEntity>()
+    .Property(e => e.DecimalProperty)
+    .HasConversion<double>();
+```
+
+## Migrations limitations
+
+The SQLite database engine does not support a number of schema operations that are supported by the majority of other relational databases. If you attempt to apply one of the unsupported operations to a SQLite database then a `NotSupportedException` will be thrown.
+
+A rebuild will be attempted in order to perform certain operations. Rebuilds are only possible for database artifacts that are part of your EF Core model. If a database artifact isn't part of the model - for example, if it was created manually inside a migration - then a `NotSupportedException` is still thrown.
+
+Operation            | Supported?
+---------------------|:----------
+AddCheckConstraint   | ✔ (rebuild)
+AddColumn            | ✔
+AddForeignKey        | ✔ (rebuild)
+AddPrimaryKey        | ✔ (rebuild)
+AddUniqueConstraint  | ✔ (rebuild)
+AlterColumn          | ✔ (rebuild)
+CreateIndex          | ✔
+CreateTable          | ✔
+DropCheckConstraint  | ✔ (rebuild)
+DropColumn           | ✔ (rebuild)
+DropForeignKey       | ✔ (rebuild)
+DropIndex            | ✔
+DropPrimaryKey       | ✔ (rebuild)
+DropTable            | ✔
+DropUniqueConstraint | ✔ (rebuild)
+RenameColumn         | ✔
+RenameIndex          | ✔ (rebuild)
+RenameTable          | ✔
+EnsureSchema         | ✔ (no-op)
+DropSchema           | ✔ (no-op)
+Insert               | ✔
+Update               | ✔
+Delete               | ✔
+
+### Migrations limitations workaround
+
+You can workaround some of these limitations by manually writing code in your migrations to perform a rebuild. Table rebuilds involve creating a new table, copying data to the new table, dropping the old table, renaming the new table. You will need to use the `Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder.Sql*` method to perform some of these steps.
+
+See Making Other Kinds Of Table Schema Changes in the SQLite documentation for more details.
+
+### Idempotent script limitations
+
+Unlike other databases, SQLite doesn't include a procedural language. Because of this, there is no way to generate the if-then logic required by the idempotent migration scripts.
+
+If you know the last migration applied to a database, you can generate a script from that migration to the latest migration.
+
+```dotnetcli
+dotnet ef migrations script CurrentMigration
+```
+
+Otherwise, we recommend using `dotnet ef database update` to apply migrations. You can specify the database file when running the command.
+
+```dotnetcli
+dotnet ef database update --connection "Data Source=My.db"
+```
+
+## Concurrent migrations protection
+
+EF9 introduced a migration locking mechanism to protect against concurrent migration executions. Unlike SQL Server, which uses a session-level application lock (`sp_getapplock`) that is automatically released when the connection closes, SQLite doesn't have built-in application locks. EF Core instead creates a `__EFMigrationsLock` table and inserts a row to acquire the lock.
+
+### Handling abandoned locks
+
+If the application terminates unexpectedly (for example, the process is killed during migration), the lock row in the `__EFMigrationsLock` table may not be cleaned up. This prevents any subsequent migration from completing, because each attempt will wait indefinitely for the lock to be released.
+
+To resolve an abandoned lock, drop the `__EFMigrationsLock` table from the database:
+
+```sql
+DROP TABLE "__EFMigrationsLock";
+```
+
+Or, alternatively, delete all rows from the table:
+
+```sql
+DELETE FROM "__EFMigrationsLock";
+```
+
+After clearing the lock, subsequent migration operations proceed normally. The table is automatically recreated as needed.
+
+## See also
+
+* Microsoft.Data.Sqlite Async Limitations
+* Microsoft.Data.Sqlite ADO.NET Limitations

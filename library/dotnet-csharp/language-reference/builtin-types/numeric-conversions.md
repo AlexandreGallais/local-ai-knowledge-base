@@ -1,0 +1,108 @@
+---
+title: "Built-in numeric conversions"
+tool: "dotnet-csharp"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/csharp/language-reference/builtin-types/numeric-conversions.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# Built-in numeric conversions (C# reference)
+
+C# provides a set of integral and floating-point numeric types. An implicit or explicit conversion exists between any two numeric types. Use a cast expression to perform an explicit conversion.
+
+The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
+
+The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
+
+> **Tip:**
+> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+
+## Implicit numeric conversions
+
+The following table shows the predefined implicit conversions between the built-in numeric types:
+
+| From                                     | To     |
+|------------------------------------------|--------|
+| `sbyte`       | `short`, `int`, `long`, `float`, `double`, `decimal`, or `nint` |
+| `byte`        | `short`, `ushort`, `int`, `uint`, `long`, `ulong`, `float`, `double`, `decimal`, `nint`, or `nuint` |
+| `short`       | `int`, `long`, `float`, `double`, `decimal`, or `nint` |
+| `ushort`      | `int`, `uint`, `long`, `ulong`, `float`, `double`, `decimal`, `nint`, or `nuint` |
+| `int`         | `long`, `float`, `double`, `decimal`, or `nint` |
+| `uint`        | `long`, `ulong`, `float`, `double`, `decimal`, or `nuint` |
+| `long`        | `float`, `double`, or `decimal` |
+| `ulong`       | `float`, `double`, or `decimal` |
+| `float` | `double` |
+| `nint`        | `long`, `float`, `double`, or `decimal` |
+| `nuint`       | `ulong`, `float`, `double`, or `decimal` |
+
+> **Note:**
+> The implicit conversions from `int`, `uint`, `long`, `ulong`, `nint`, or `nuint` to `float` and from `long`, `ulong`, `nint`, or `nuint` to `double` can cause a loss of precision, but never a loss of an order of magnitude. The other implicit numeric conversions never lose any information.
+
+Also note that
+
+- Any integral numeric type is implicitly convertible to any floating-point numeric type.
+- There are no implicit conversions to the `byte` and `sbyte` types. There are no implicit conversions from the `double` and `decimal` types.
+- There are no implicit conversions between the `decimal` type and the `float` or `double` types.
+- A value of a constant expression of type `int` (for example, a value represented by an integer literal) can be implicitly converted to `sbyte`, `byte`, `short`, `ushort`, `uint`, `ulong`, `nint`, or `nuint` if it's within the range of the destination type:
+
+  ```csharp
+  byte a = 13;
+  byte b = 300;  // CS0031: Constant value '300' cannot be converted to a 'byte'
+  ```
+
+If the constant value isn't within the range of the destination type, a compiler error CS0031 occurs.
+
+## Explicit numeric conversions
+
+The following table shows the predefined explicit conversions between the built-in numeric types for which there's no implicit conversion:
+
+| From                                       | To     |
+|--------------------------------------------|--------|
+| `sbyte`         | `byte`, `ushort`, `uint`, `ulong`, or `nuint` |
+| `byte`          | `sbyte` |
+| `short`         | `sbyte`, `byte`, `ushort`, `uint`, `ulong`, or `nuint` |
+| `ushort`        | `sbyte`, `byte`, or `short` |
+| `int`           | `sbyte`, `byte`, `short`, `ushort`, `uint`, `ulong`, or `nuint` |
+| `uint`          | `sbyte`, `byte`, `short`, `ushort`, `int`, or `nint` |
+| `long`          | `sbyte`, `byte`, `short`, `ushort`, `int`, `uint`, `ulong`, `nint`, or `nuint` |
+| `ulong`         | `sbyte`, `byte`, `short`, `ushort`, `int`, `uint`, `long`, `nint`, or `nuint` |
+| `float`   | `sbyte`, `byte`, `short`, `ushort`, `int`, `uint`, `long`, `ulong`, `decimal`, `nint`, or `nuint` |
+| `double`  | `sbyte`, `byte`, `short`, `ushort`, `int`, `uint`, `long`, `ulong`, `float`, `decimal`, `nint`, or `nuint` |
+| `decimal` | `sbyte`, `byte`, `short`, `ushort`, `int`, `uint`, `long`, `ulong`, `float`, `double`, `nint`, or `nuint` |
+| `nint`          | `sbyte`, `byte`, `short`, `ushort`, `int`, `uint`, `ulong`, or `nuint` |
+| `nuint`         | `sbyte`, `byte`, `short`, `ushort`, `int`, `uint`, `long`, or `nint` |
+
+> **Note:**
+> An explicit numeric conversion might result in data loss or throw an exception, typically an `System.OverflowException`.
+
+Also note that:
+
+- When you convert a value of an integral type to another integral type, the result depends on the overflow-checking context. In a checked context, the conversion succeeds if the source value is within the range of the destination type. Otherwise, an `System.OverflowException` is thrown. In an unchecked context, the conversion always succeeds, and proceeds as follows:
+  - If the source type is larger than the destination type, then the source value is truncated by discarding its "extra" most significant bits. The result is then treated as a value of the destination type.
+  - If the source type is smaller than the destination type, then the source value is either sign-extended or zero-extended so that it's of the same size as the destination type. Sign-extension is used if the source type is signed; zero-extension is used if the source type is unsigned. The result is then treated as a value of the destination type.
+  - If the source type is the same size as the destination type, then the source value is treated as a value of the destination type.
+
+- When you convert a `decimal` value to an integral type, this value is rounded toward zero to the nearest integral value. If the resulting integral value is outside the range of the destination type, an `System.OverflowException` is thrown.
+
+- When you convert a `double` or `float` value to an integral type, this value is rounded toward zero to the nearest integral value. If the resulting integral value is outside the range of the destination type, the result depends on the overflow-checking context. In a checked context, an `System.OverflowException` is thrown, while in an unchecked context, the result is an unspecified value of the destination type.
+
+- When you convert `double` to `float`, the `double` value is rounded to the nearest `float` value. If the `double` value is too small or too large to fit into the `float` type, the result is zero or infinity.
+- When you convert `float` or `double` to `decimal`, the source value is converted to `decimal` representation and rounded to the nearest number after the 28th decimal place if necessary. Depending on the value of the source value, one of the following results may occur:
+  - If the source value is too small to be represented as a `decimal`, the result becomes zero.
+  - If the source value is NaN (not a number), infinity, or too large to be represented as a `decimal`, an `System.OverflowException` is thrown.
+- When you convert `decimal` to `float` or `double`, the source value is rounded to the nearest `float` or `double` value, respectively.
+
+  > **Note:**
+  > Starting in .NET 11, conversions between `decimal` and `float` or `double` are correctly rounded. Previously, these conversions could round through intermediate values or discard significant digits. For more information, see Decimal and BigInteger floating-point conversions are correctly rounded.
+
+## C# language specification
+
+For more information, see the following sections of the C# language specification:
+
+- Implicit numeric conversions
+- Explicit numeric conversions
+
+## See also
+
+- Casting and type conversions

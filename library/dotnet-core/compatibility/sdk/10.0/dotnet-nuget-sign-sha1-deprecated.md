@@ -1,0 +1,49 @@
+---
+title: "Breaking change - SHA-1 fingerprint support deprecated in dotnet nuget sign"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/core/compatibility/sdk/10.0/dotnet-nuget-sign-sha1-deprecated.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# SHA-1 fingerprint support deprecated in `dotnet nuget sign`
+
+Starting in .NET 10, the NU3043 warning is promoted to an error when using SHA-1 fingerprints with the `dotnet nuget sign` command. This change enforces the use of only strong, approved hash algorithms (SHA-2 family) for signing operations.
+
+## Version introduced
+
+.NET 10
+
+## Previous behavior
+
+In .NET 9 SDK, the `dotnet nuget sign` command accepted certificate fingerprints using SHA-1 and SHA-2 family algorithms (SHA256, SHA384, SHA512). If a SHA-1 fingerprint was used, a warning (NU3043) was issued, indicating the use of an insecure hashing algorithm, but the operation continued successfully.
+
+## New behavior
+
+Starting in .NET 10, the NU3043 warning is elevated to an error. This change blocks the use of SHA-1 fingerprints with the `--certificate-fingerprint` option in the `dotnet nuget sign` command, improving overall signing security.
+
+## Type of breaking change
+
+This is a behavioral change.
+
+## Reason for change
+
+This change was made to enforce stronger security standards by disallowing the use of SHA-1 for certificate fingerprinting. SHA-1 is considered cryptographically weak and vulnerable to collision attacks.
+
+## Recommended action
+
+Update the usage of `dotnet nuget sign` to use fingerprints from the SHA-2 family only:
+
+- SHA256 (recommended)
+- SHA384
+- SHA512
+
+## Affected APIs
+
+None.
+
+## See also
+
+- dotnet nuget sign
+- NuGet warning NU3043

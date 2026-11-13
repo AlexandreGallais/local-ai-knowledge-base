@@ -1,0 +1,84 @@
+---
+title: "dotnet tool uninstall command"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/core/tools/dotnet-tool-uninstall.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# dotnet tool uninstall
+
+**This article applies to:** ✔️ .NET 6 SDK and later versions
+
+## Name
+
+`dotnet tool uninstall` - Uninstalls the specified .NET tool from your machine.
+
+## Synopsis
+
+```dotnetcli
+dotnet tool uninstall <PACKAGE_NAME> -g|--global
+
+dotnet tool uninstall <PACKAGE_NAME> --tool-path <PATH> [--tool-manifest <PATH>]
+
+dotnet tool uninstall <PACKAGE_NAME>
+
+dotnet tool uninstall -h|--help
+```
+
+## Description
+
+The `dotnet tool uninstall` command provides a way for you to uninstall .NET tools from your machine. To use the command, you specify one of the following options:
+
+* To uninstall a global tool that was installed in the default location, use the `--global` option.
+* To uninstall a global tool that was installed in a custom location,  use the `--tool-path` option.
+* To uninstall a local tool, omit the `--global` and `--tool-path` options.
+
+## Arguments
+
+- **`PACKAGE_NAME`**
+
+  Name/ID of the NuGet package that contains the .NET tool to uninstall. You can find the package name using the dotnet tool list command.
+
+## Options
+
+- **`-g|--global`**
+
+  Specifies that the tool to be removed is from a user-wide installation. Can't be combined with the `--tool-path` option. Omitting both `--global` and `--tool-path` specifies that the tool to be removed is a local tool.
+
+- **`-?|-h|--help`**
+
+Prints out a description of how to use the command.
+
+- **`--tool-path `**
+
+  Specifies the location where to uninstall the tool. PATH can be absolute or relative. Can't be combined with the `--global` option. Omitting both `--global` and `--tool-path` specifies that the tool to be removed is a local tool.
+
+- **`--tool-manifest `**
+
+  Specifies the manifest file that the tool is to be removed from. PATH can be absolute or relative. Can't be combined with the `--global` option.
+
+## Examples
+
+- **`dotnet tool uninstall -g dotnetsay`**
+
+  Uninstalls the dotnetsay global tool.
+
+- **`dotnet tool uninstall dotnetsay --tool-path c:\global-tools`**
+
+  Uninstalls the dotnetsay global tool from a specific Windows directory.
+
+- **`dotnet tool uninstall dotnetsay --tool-path ~/bin`**
+
+  Uninstalls the dotnetsay global tool from a specific Linux/macOS directory.
+
+- **`dotnet tool uninstall dotnetsay`**
+
+  Uninstalls the dotnetsay local tool from the current directory.
+
+## See also
+
+- .NET tools
+- Tutorial: Install and use a .NET global tool using the .NET CLI
+- Tutorial: Install and use a .NET local tool using the .NET CLI

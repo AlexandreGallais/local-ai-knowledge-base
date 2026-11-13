@@ -1,0 +1,72 @@
+---
+title: "podman-init.1"
+tool: "podman"
+version: "6.2"
+source: "https://github.com/containers/podman/blob/055de046937d29450f310fce0fe3071485d8bed9/docs/source/markdown/podman-init.1.md.in"
+commit: "055de046937d29450f310fce0fe3071485d8bed9"
+license: "Apache-2.0"
+---
+
+# podman-init.1
+
+% podman-init 1
+
+## NAME
+podman\-init - Initialize one or more containers
+
+## SYNOPSIS
+**podman init** [*options*] *container* [*container*...]
+
+**podman container init** [*options*] *container* [*container*...]
+
+## DESCRIPTION
+Initialize one or more containers.
+You may use container IDs or names as input.
+Initializing a container performs all tasks necessary for starting the container (mounting filesystems, creating an OCI spec, initializing the container network) but does not start the container.
+If a container is not initialized, the `podman start` and `podman run` commands initialize it automatically prior to starting it.
+This command is intended to be used for inspecting a container's filesystem or OCI spec prior to starting it.
+This can be used to inspect the container before it runs, or debug why a container is failing to run.
+
+## OPTIONS
+
+#### **--all**, **-a**
+
+Initialize all containers. Containers that have already initialized (including containers that have been started and are running) are ignored.
+
+#### **--latest**, **-l**
+
+Instead of providing the <<container|pod>> name or ID, use the last created <<container|pod>>.
+Note: the last started <<container|pod>> can be from other users of Podman on the host machine.
+(This option is not available with the remote Podman client, including Mac and Windows
+(excluding WSL2) machines)
+
+## EXAMPLES
+
+Initialize specified container with a given ID.
+```
+$ podman init 35480fc9d568
+```
+
+Initialize specified container with a given name.
+```
+$ podman init test1
+```
+
+Initialize the latest container. (This option is not available with the remote Podman client, including Mac and Windows (excluding WSL2) machines)
+```
+$ podman init --latest
+```
+
+Initialize all containers.
+```
+$ podman init --all
+9d2629dda7b9d4ca35c1fc63fa56592a08b9d5ab988b4301fddf16b623f676cc
+a9b78bcac97e131236930e3fa0be576e95ab89c96a7cb6fb1c821b772db9f623
+9db345273719c14bc254f90ef2df24779193b42d68b1364c0914ca6f76cf5e9c
+```
+
+## SEE ALSO
+**podman(1)**, **podman-start(1)**
+
+## HISTORY
+April 2019, Originally compiled by Matthew Heon <mheon@redhat.com>

@@ -1,0 +1,40 @@
+---
+title: "ASP.NET Core built-in diagnostics metrics"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/53d05ee9faf3cfe577c6180a0a4c6966d8396ffd/aspnetcore/metrics/diagnostics.md"
+commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
+license: "CC-BY-4.0"
+---
+
+# ASP.NET Core built-in diagnostics metrics
+
+This article describes the built-in diagnostics metrics for ASP.NET Core produced using the `System.Diagnostics.Metrics` API. These metrics report diagnostics information from the ASP.NET Core error handling middleware.
+
+For an overview of all built-in metrics reference pages and how to read this reference, see ASP.NET Core built-in metrics. For information on how to collect, report, enrich, and test with ASP.NET Core metrics, see ASP.NET Core metrics.
+
+## `Microsoft.AspNetCore.Diagnostics`
+
+The `Microsoft.AspNetCore.Diagnostics` metrics report diagnostics information from ASP.NET Core error handling middleware:
+
+* `aspnetcore.diagnostics.exceptions`
+
+### Metric: `aspnetcore.diagnostics.exceptions`
+
+Name | Instrument Type | Unit (UCUM) | Description
+--- | --- | --- | ---
+`aspnetcore.diagnostics.exceptions` | Counter | `{exception}` | Number of exceptions caught by exception handling middleware.
+
+Attribute | Type | Description | Examples | Presence
+--- | --- | --- | --- | ---
+`aspnetcore.diagnostics.exception.result` | string | ASP.NET Core exception middleware handling result. | `handled`; `unhandled` | Always
+`aspnetcore.diagnostics.handler.type` | string | Full type name of the `IExceptionHandler` implementation that handled the exception. | `Contoso.MyHandler` | If the exception was handled by this handler.
+`exception.type` | string | The full name of exception type. | `System.OperationCanceledException`; `Contoso.MyException` | Always
+
+## Related content
+
+* ASP.NET Core built-in metrics
+* ASP.NET Core built-in HTTP metrics
+* ASP.NET Core built-in Blazor (Razor components) metrics
+* ASP.NET Core built-in authentication and authorization metrics
+* ASP.NET Core metrics

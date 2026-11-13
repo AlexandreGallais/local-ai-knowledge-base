@@ -1,0 +1,14 @@
+---
+title: "How to: Handle Exceptions in a PLINQ Query (part 6 of 9)"
+tool: "dotnet-standard"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/standard/parallel-programming/how-to-handle-exceptions-in-a-plinq-query.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# How to: Handle Exceptions in a PLINQ Query (part 6 of 9)
+
+## Example 2
+
+The following example shows how to put a try-catch block in a delegate to make it possible to catch an exception and continue with the query execution.

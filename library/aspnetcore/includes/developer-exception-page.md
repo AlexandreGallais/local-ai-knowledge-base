@@ -1,0 +1,54 @@
+---
+title: "developer-exception-page"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/53d05ee9faf3cfe577c6180a0a4c6966d8396ffd/aspnetcore/includes/developer-exception-page.md"
+commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
+license: "CC-BY-4.0"
+---
+
+# developer-exception-page
+
+The *Developer Exception Page* displays detailed information about unhandled request exceptions. It uses `Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware` to capture synchronous and asynchronous exceptions from the HTTP pipeline and to generate error responses. The developer exception page runs early in the middleware pipeline, so that it can catch unhandled exceptions thrown in middleware that follows.
+
+ASP.NET Core apps enable the developer exception page by default when both:
+
+* Running in the `Development` environment.
+* The app was created with the current templates, that is, by using `Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder*`.
+
+Apps created using earlier templates, that is, by using `Microsoft.AspNetCore.WebHost.CreateDefaultBuilder*`, can enable the developer exception page by calling `app.UseDeveloperExceptionPage`).
+
+> **Warning:**
+> Don't enable the Developer Exception Page **unless the app is running in the `Development` environment**. Don't share detailed exception information publicly when the app runs in production. For more information on configuring environments, see ASP.NET Core runtime environments.
+
+The Developer Exception Page can include the following information about the exception and the request:
+
+* Stack trace
+* Query string parameters, if any
+* Cookies, if any
+* Headers
+* Endpoint metadata, if any
+
+The Developer Exception Page isn't guaranteed to provide any information. Use Logging for complete error information.
+
+The following image shows a sample developer exception page with animation to show the tabs and the information displayed:
+
+In response to a request with an `Accept: text/plain` header, the Developer Exception Page returns plain text instead of HTML. For example:
+
+```text
+Status: 500 Internal Server Error
+Time: 9.39 msSize: 480 bytes
+FormattedRawHeadersRequest
+Body
+text/plain; charset=utf-8, 480 bytes
+System.InvalidOperationException: Sample Exception
+   at WebApplicationMinimal.Program.<>c.<Main>b__0_0() in C:\Source\WebApplicationMinimal\Program.cs:line 12
+   at lambda_method1(Closure, Object, HttpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+
+HEADERS
+=======
+Accept: text/plain
+Host: localhost:7267
+traceparent: 00-0eab195ea19d07b90a46cd7d6bf2f
+```

@@ -156,6 +156,19 @@ anglais.
 - L'export produit aussi la version pour le chat : chaque skill sans ses étapes qui lancent des
   commandes, et les documents de chaque sujet, sans les résumés en français.
 
+## La doc officielle (`library/`)
+
+- `library/` contient la doc officielle complète des outils, en Markdown simple, à une version
+  notée : TypeScript, Angular, ESLint et ses greffons, RxJS, MDN sur SVG, `DOMMatrix` et Web
+  Animations, Dev Containers, Node.js, C#, .NET, ASP.NET Core, EF Core, Kubernetes, Docker, Podman
+  et le livre de Rust. Environ 90 Mo, en fichiers de 16 Ko au plus.
+- Chaque outil a son index, `library/<outil>/index.md`, une ligne par fichier. L'index est long :
+  on y cherche avec grep, on ne le lit jamais en entier.
+- Chaque fichier garde sa source, son commit et sa licence dans son en-tête ; la licence MIT de la
+  base ne s'applique pas à ce dossier (`THIRD_PARTY_NOTICES.md`).
+- `node scripts/fetch-library.ts` la reconstruit depuis les dépôts de doc (`library/sources.json`),
+  `node scripts/check-library.ts` la contrôle.
+
 ## Dans le dépôt de la base, en plus
 
 - `chat/` : le profil pour une interface de chat sans accès aux fichiers. Les consignes de base des

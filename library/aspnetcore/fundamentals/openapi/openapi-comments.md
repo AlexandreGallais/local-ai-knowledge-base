@@ -1,0 +1,335 @@
+---
+title: "ASP.NET Core OpenAPI XML documentation comment support in ASP.NET Core (part 1 of 2)"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/53d05ee9faf3cfe577c6180a0a4c6966d8396ffd/aspnetcore/fundamentals/openapi/openapi-comments.md"
+commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
+license: "CC-BY-4.0"
+---
+
+# OpenAPI XML documentation comment support in ASP.NET Core
+
+ASP.NET Core XML documentation processing automatically extracts code comments to populate API documentation, so your code and documentation stay in sync. If you configure your project to generate the XML documentation file, the generated OpenAPI document includes metadata from XML documentation comments without needing any changes to your app code. The application assembly and referenced assemblies with XML documentation enabled automatically provide XML documentation comments.
+
+ASP.NET Core processes XML documentation tags like: `<c>`, `<code>`, `<list>`, `<para>`, `<paramref>`, `<typeparamref>`, `<see>`, and `<seealso>`. For XML documentation tags that use references to other elements, like `<see cref="SomeOtherType">`, the implementation removes the XML tag and maps the reference to plain text for inclusion in the OpenAPI document.
+
+ASP.NET Core XML documentation processing doesn't affect runtime performance. The source generator processes XML documentation at compile time and caches the results, so there's minimal runtime overhead when rendering the OpenAPI documentation. You can also cache the OpenAPI document at runtime by using output-caching to further optimize performance.
+
+This article includes a sample app that demonstrates the `Microsoft.AspNetCore.OpenApi` package's ability to integrate XML documentation comments on types into OpenAPI documents. The sample app is a minimal ASP.NET Core Web API project to generate OpenAPI documents. The XML documentation comments populate summaries, descriptions, parameter information, and response details in the generated OpenAPI document.
+
+The following image shows the Scalar UI with XML documentation comments integrated into the OpenAPI document of the sample app:
+
+### Supported XML documentation tags
+
+* `<summary>`
+* `<remarks>`
+* `<param>`
+* `<returns>`
+* `<response>`
+* `<example>`
+* `<deprecated>`
+* `<inheritdoc>`
+
+### Document HTTP responses
+
+Document HTTP responses by using the `<response>` tag and the `code` attribute:
+
+```csharp
+/// <summary>
+/// Retrieves a specific project board by ID.
+/// </summary>
+/// <param name="id">The ID of the project board to retrieve.</param>
+/// <returns>The requested project board.</returns>
+/// <response code="200">Returns the requested project board.</response>
+/// <response code="404">If the project board is not found.</response>
+public static IResult GetProjectBoardById(int id)
+{
+    var board = Boards.FirstOrDefault(b => b.Id == id);
+    if (board == null)
+    {
+        return Results.NotFound();
+    }
+    return Results.Ok(board);
+}
+```
+<!--```csharp
+/// <response code="200">Success response with data</response>
+/// <response code="404">Resource not found</response>
+```--
+
+The `<response>` tag supplies the *description* for a response, but it doesn't by itself *declare* that an endpoint can return a given status code. The set of status codes in the generated OpenAPI document comes from the endpoint's response metadata, which the framework infers from the endpoint's return types or reads from explicit metadata. The `<response>` tag then annotates those already-declared responses with descriptions.
+
+To make a status code appear in the OpenAPI document, ensure it's part of the endpoint's response metadata:
+
+* For Minimal APIs, return a typed result such as `Results<Ok<T>, NotFound>` or add [`Produces`](xref:Microsoft.AspNetCore.Http.OpenApiRouteHandlerBuilderExtensions.Produces*)/[`ProducesProblem`](xref:Microsoft.AspNetCore.Http.OpenApiRouteHandlerBuilderExtensions.ProducesProblem*) metadata. In the preceding sample, `GetProjectBoardById` returns `Results.Ok(...)` and `Results.NotFound()`, so both the `200` and `404` responses are inferred and the `<response>` descriptions are applied.
+* For controllers, add a [`[ProducesResponseType]`](xref:Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute) attribute for each status code. For example, a `204` response requires `[ProducesResponseType(StatusCodes.Status204NoContent)]`.
+
+> [!NOTE]
+> If a status code isn't part of the endpoint's response metadata, adding a `<response>` tag for it has no effect and the response is omitted from the OpenAPI document.
+
+### Add examples
+
+To add examples to documentation, use the [`<example>`](/dotnet/csharp/language-reference/xmldoc/recommended-tags#example) tag for types or the `example` attribute for parameters:
+
+```csharp
+/// <example>{"name":"Sample","value":42}</example>
+/// <param name="id" example="42">The unique identifier</param>
+```
+
+### Document `[AsParameters]` types
+
+Minimal API endpoints can group request parameters into a single type annotated with the `[AsParameters]` attribute. ASP.NET Core processes XML documentation comments on the properties of an `[AsParameters]` type to add metadata, such as parameter descriptions, to the generated OpenAPI document.
+
+```csharp
+app.MapGet("/todos", ([AsParameters] TodoParameters parameters) => { /* ... */ });
+
+/// <summary>Parameters for querying todos.</summary>
+public struct TodoParameters
+{
+    /// <summary>The page number to return.</summary>
+    public int Page { get; set; }
+
+    /// <summary>The number of items to return per page.</summary>
+    public int PageSize { get; set; }
+}
+```
+
+## Customizing XML documentation behavior
+
+The following sections describe how to enable and customize XML documentation support.
+
+### Enable XML documentation in an ASP.NET Core API project
+
+1. Enable XML documentation in the project file:
+
+```xml
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+</Project>
+```
+2. Use the AddOpenApi method in the service configuration. No configuration is needed, the source generator handles the rest.
+
+```csharp
+using Api;
+using Scalar.AspNetCore;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddOpenApi();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+}
+
+app.Map("/", () => Results.Redirect("/scalar/v1"));
+app.MapProjectBoardApis();
+app.MapTodoApis();
+
+app.Run();
+```
+The source generator detects all standard overloads:
+
+* `AddOpenApi()`)
+* `AddOpenApi("v1")`)
+* `AddOpenApi(options => {})`)
+* `AddOpenApi("v1", options => {})`)
+
+Each overload is intercepted to automatically include the XML documentation transformers. The source generator doesn't handle overloads where the `documentName` parameter isn't a literal string expression. For example, the transformer isn't registered in the following scenarios:
+
+```csharp
+var documentName = "v1";
+builder.Services.AddOpenApi(documentName); // No XML support
+```
+
+### Add XML documentation sources
+
+The `Microsoft.AspNetCore.OpenApi` NuGet package automatically resolves XML documentation comments from:
+
+* The application assembly, when the `GenerateDocumentationFile` property is set. In the sample app, the `API` project.
+
+```xml
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+</Project>
+```
+* Any projects referenced via `ProjectReferences` that have the `GenerateDocumentationFile` property set. In the sample app, the `Models` project:
+
+```xml
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.0.30" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\models\Models.csproj" />
+  </ItemGroup>
+
+</Project>
+```
+The implementation discovers XML files statically at compile-time. The `AdditionalFiles` item group specifies additional sources for XML files:
+
+```xml
+<ItemGroup>
+  <PackageReference Include="Some.Package" Version="10.0.0"
+                    GeneratePathProperty="true" />
+</ItemGroup>
+
+<ItemGroup>
+  <AdditionalFiles Include="$(PkgSome_Package)/lib/net10.0/Some.Package.xml" />
+</ItemGroup>
+```
+To include XML documentation files from referenced assemblies, add them as `AdditionalFiles` in the project:
+
+```xml
+<ItemGroup>
+  <AdditionalFiles Include="Path/To/AssemblyDoc.xml" />
+</ItemGroup>
+```
+
+XML doc comment processing can be configured to access XML comments in other assemblies. This is useful for generating documentation for types that are defined outside the current assembly, such as the `ProblemDetails` type in the `Microsoft.AspNetCore.Http` namespace. This configuration is done with directives in the project build file. The following example shows how to configure the XML comment generator to access XML comments for types in the `Microsoft.AspNetCore.Http` assembly, which includes the `ProblemDetails` class:
+
+```xml
+<Target Name="AddOpenApiDependencies" AfterTargets="ResolveReferences">
+  <ItemGroup>
+    <AdditionalFiles
+          Include="@(ReferencePath->'
+            %(RootDir)%(Directory)%(Filename).xml')"
+          Condition="'%(ReferencePath.Filename)' ==
+           'Microsoft.AspNetCore.Http.Abstractions'"
+          KeepMetadata="Identity;HintPath" />
+  </ItemGroup>
+</Target>
+```
+
+#### Disabling XML documentation support
+
+To turn off XML documentation integration, remove the source generator from the `Analyzers` item group. Removing the source generator prevents it from being used during compilation.
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0-preview.2.25161.17" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.0.30" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\models\Models.csproj" />
+  </ItemGroup>
+
+  <Target Name="DisableCompileTimeOpenApiXmlGenerator" BeforeTargets="CoreCompile">
+    <ItemGroup>
+      <Analyzer Remove="$(PkgMicrosoft_AspNetCore_OpenApi)/analyzers/dotnet/cs/Microsoft.AspNetCore.OpenApi.SourceGenerators.dll" />
+    </ItemGroup>
+  </Target>
+
+</Project>
+```
+
+## Source generator implementation
+
+The XML documentation feature is implemented as a source generator. The source generator analyzes XML documentation comments at compile time and injects code that translates these comments into OpenAPI metadata. The `XmlCommentGenerator` extracts XML comments from two sources:
+
+* XML documentation files passed as `AdditionalFiles` via a `ParseXmlFile` implementation.
+* XML comments from the target assembly's own code via a `ParseCompilation` implementation.
+
+The distinction between these two sources is important. XML documentation files passed as `AdditionalFiles` are static. XML comments from the target assembly come from Roslyn's  XML documentation comments provider. The XML documentation comments provider enhances functionality for connecting an XML comment to the compilation symbol's that it's associated with. This has implications for the way `<inheritdoc />` resolution happens in the implementation, discussed in the next section.
+
+XML comments are parsed into structured `XmlComment` objects with:
+
+* Summary, description, remarks, returns, value sections.
+* Parameter documentation with name, description, examples.
+* Response documentation with status codes and descriptions.
+* Support for examples and deprecated markers.
+
+### Handling of complex types
+
+XML comment processing produces accurate and complete OpenApi descriptions for a wide range of types and supports complex scenarios. But if an error is encountered when processing a complex types, the process bypasses the type gracefully.
+
+In this way, scenarios that might have resulted in build errors now simply result in missing metadata, helping to avoid build failures.
+
+XML documentation comments from referenced assemblies are correctly merged even when their documentation IDs include return type suffixes. As a result, all valid XML comments are reliably included in generated OpenAPI documentation, improving documentation accuracy and completeness for APIs using referenced assemblies.
+
+### `<inheritdoc/>`
+
+The generator supports `<inheritdoc>` tags, which inherit documentation *as long as they exist in the compilation assembly*. `<inheritdoc />` tags indicate that comments must be resolved from:
+
+* Base classes
+* Implemented interfaces
+* Base methods for overrides
+
+When `<inheritdoc />` is placed on a symbol, The source generator:
+
+* Uses its knowledge of the symbol in the compilation to discover base classes and interfaces associated with the symbol.
+* Supports resolving them automatically
+* Substitutes generic type parameters in inherited documentation comments, preserving type references across inheritance boundaries.
+
+The automatic resolution behavior is currently available for XML documentation comments that exist in the assembly under compilation, and ***not*** XML documentation tags that are in referenced projects or packages. In the later scenario, XML documentation comments:
+
+* Are only presented as text.
+* Don't provide a trivial strategy for:
+  * Associating the text content to compilation symbols.
+  * Developing an understanding of the inheritance hierarchy associated with the types.
+
+XML documentation comments from `ProjectReferences` are automatically resolved and don't require additional configuration.
+
+## Download and run the API sample
+
+Download the sample code for this article.
+
+To run the sample, navigate to the `api` directory and enter `dotnet run`.
+
+```dotnetcli
+cd api
+dotnet run
+```
+
+Output similar to the following is displayed:
+
+```dotnetcli
+Building...
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5052
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: ~/git/aspnet-openapi-xml/api
+```
+
+Navigate to http://localhost:5052/ to view the Scalar UI for interacting with the app. The Scalar UI includes summaries and descriptions on various elements sourced from XML documentation comments.

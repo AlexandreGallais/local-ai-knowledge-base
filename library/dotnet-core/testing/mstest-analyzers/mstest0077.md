@@ -1,0 +1,83 @@
+---
+title: "MSTEST0077: Avoid hardcoded or shared filesystem paths in a parallelized test"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/core/testing/mstest-analyzers/mstest0077.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# MSTEST0077: Avoid hardcoded or shared filesystem paths in a parallelized test
+
+| Property                            | Value                                              |
+|-------------------------------------|----------------------------------------------------|
+| **Rule ID**                         | MSTEST0077                                          |
+| **Title**                           | Avoid hardcoded or shared filesystem paths in a parallelized test |
+| **Category**                        | Usage                                              |
+| **Fix is breaking or non-breaking** | Non-breaking                                       |
+| **Enabled by default**              | Yes                                                |
+| **Default severity**                | Info                                               |
+| **Introduced in version**           | 4.4.0                                              |
+| **Is there a code fix**             | No                                                 |
+
+> **Note:**
+> This analyzer activates only when assembly parallelization is syntactically enabled, for example through `[assembly: Parallelize]` without a matching `[assembly: DoNotParallelize]`, or when a `.editorconfig` file sets `mstest_parallel_safety_mode = always`. The analyzer can't detect parallelization that's enabled only through `.runsettings` or MSBuild properties such as `MSTestParallelizeWorkers`. Set the `.editorconfig` option if you configure parallelization that way and still want this analyzer to run.
+
+## Cause
+
+A test passes a constant absolute path, or a relative path literal, directly to a filesystem-mutating `File.*`/`Directory.*` method, such as `File.WriteAllText` or `Directory.CreateDirectory`.
+
+## Rule description
+
+A hardcoded or relative constant path targets a location shared by every other test in the assembly. Under in-assembly parallelization, two tests can then write to the same location concurrently and collide.
+
+```csharp
+[TestMethod]
+public void WritesReport()
+{
+    File.WriteAllText("report.txt", contents); // Violation
+}
+```
+
+Only statically constant paths passed to a mutating API are flagged. Reads, path construction, and paths built from variables are left for you to review manually, because the analyzer can't tell whether two tests actually collide on a computed path.
+
+## How to fix violations
+
+Use a unique per-test location, such as `TestContext.TestTempDirectory`, instead of a fixed or relative path.
+
+```csharp
+[TestMethod]
+public void WritesReport()
+{
+    string path = Path.Combine(TestContext.TestTempDirectory!, "report.txt");
+    File.WriteAllText(path, contents);
+}
+```
+
+## When to suppress warnings
+
+It's safe to suppress this warning if the path intentionally targets a fixture that every test reads but no test writes concurrently, or if the tests that write to it are already coordinated, for example through `[DoNotParallelize]`.
+
+## Suppress a warning
+
+If you just want to suppress a single violation, add preprocessor directives to your source file to disable and then re-enable the rule.
+
+```csharp
+#pragma warning disable MSTEST0077
+// The code that's violating the rule is on this line.
+#pragma warning restore MSTEST0077
+```
+
+To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+
+```ini
+[*.{cs,vb}]
+dotnet_diagnostic.MSTEST0077.severity = none
+```
+
+For more information, see How to suppress code analysis warnings.
+
+## See also
+
+- Per-test temporary directory
+- DoNotParallelizeAttribute

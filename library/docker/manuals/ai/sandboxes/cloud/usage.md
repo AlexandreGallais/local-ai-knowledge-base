@@ -1,0 +1,450 @@
+---
+title: "Use cloud sandboxes"
+tool: "docker"
+version: "2026-11"
+source: "https://github.com/docker/docs/blob/a0442378fca4987b1235614ec917b4138b5d5e5d/content/manuals/ai/sandboxes/cloud/usage.md"
+commit: "a0442378fca4987b1235614ec917b4138b5d5e5d"
+license: "Apache-2.0"
+---
+
+# Use cloud sandboxes
+
+Use the `--cloud` flag with supported `sbx` commands to create and manage
+sandboxes on Docker-managed infrastructure. Cloud operations use cloud IDs,
+names, resources, and lifecycle controls rather than the local sandbox daemon.
+
+## Create a sandbox
+
+A cloud sandbox expires after one hour by default. On expiration, the service
+stops sandboxes that can be resumed and deletes the rest. See
+Configure expiration to choose the timeout and action
+before creating it.
+
+Credentials saved for local sandboxes aren't available in cloud sandboxes.
+Configure a cloud credential before launching an agent.
+
+Create a sandbox and attach to its agent, or reuse the named sandbox if it
+already exists:
+
+```console
+$ sbx --cloud run claude --name cloud-project
+```
+
+Without `--name`, an interactive run offers existing sandboxes for that agent
+and an option to create another. Pass `--new` to create a fresh sandbox.
+Launches that bake a kit template also create a fresh sandbox.
+
+Reusing a sandbox keeps its creation settings. Flags such as `--cpus`,
+`--memory`, `--platform`, `--ttl`, `--env`, and `--allow-network` are rejected
+when resuming. Use `--new` to create a sandbox with different settings.
+
+To create the sandbox without opening an agent session, use `create`:
+
+```console
+$ sbx --cloud create --name cloud-project claude
+```
+
+The command prints the cloud sandbox ID. Attach by ID or name:
+
+```console
+$ sbx --cloud attach cloud-project
+```
+
+Cloud sandbox names must be 2–63 characters long, contain only ASCII letters,
+numbers, and hyphens, and start and end with a letter or number. The name
+`default` is reserved. Periods accepted in local sandbox names aren't accepted
+in the cloud.
+
+Cloud creation doesn't accept workspace paths. For example,
+`sbx --cloud run claude .` returns an error because `.` refers to the local
+filesystem.
+
+### Choose resources and platform
+
+Without resource flags, a cloud sandbox starts with 2 CPUs and 4 GiB of
+memory. Use `--cpus` and `--memory` to select one of these configurations:
+
+| Size | CPUs | Memory |
+| --- | --- | --- |
+| micro | 1 | 2 GiB |
+| small | 2 | 4 GiB |
+| medium | 4 | 8 GiB |
+| large | 8 | 16 GiB |
+| xl | 16 | 32 GiB |
+
+For example:
+
+```console
+$ sbx --cloud create --name cloud-project --cpus 4 --memory 8g claude
+```
+
+If you specify only CPU or memory, the CLI selects the matching value for the
+other resource. Unsupported combinations are rejected.
+
+Use `--platform linux/amd64` or `--platform linux/arm64` to select an
+architecture supported by your account. This matters when you plan to
+move the sandbox to your machine: the architectures must match.
+
+## Run without attaching
+
+For scripts or terminals without interactive input, start the sandbox without
+opening an agent session:
+
+```console
+$ sbx --cloud run --detach claude --name cloud-task
+```
+
+A detached run with `--name` reuses the named sandbox and starts it if stopped.
+If the sandbox doesn't exist, or you omit `--name`, it creates a sandbox.
+Use `sbx --cloud exec` to run commands and `sbx --cloud rm --force` for
+unattended cleanup. An interactive agent session requires `run` or `attach`
+from a terminal.
+
+To detach from an interactive `run` or `attach` session while leaving the
+agent running, press `Ctrl+\`. Reconnect with `sbx --cloud attach <sandbox-name>`.
+Reconnecting joins the existing agent session. Use `--detach-keys` with `run`
+or `attach` to change the detach gesture, for example `--detach-keys ctrl-x,ctrl-d`.
+
+## List and inspect sandboxes
+
+List cloud sandboxes separately from local sandboxes:
+
+```console
+$ sbx --cloud ls
+```
+
+Most cloud commands accept either the sandbox name or the `sbx_`-prefixed ID
+shown in the output.
+
+Inspect a sandbox's state, template, resources, timeout settings, and
+published port URLs:
+
+```console
+$ sbx --cloud inspect cloud-project
+```
+
+Use `--format json` or `--format yaml` for structured output. For example,
+retrieve the published port URLs in a script:
+
+```console
+$ sbx --cloud inspect cloud-project --format json | jq -r '.ports[]? | .url // empty'
+```
+
+## Run commands
+
+Run a command inside a cloud sandbox:
+
+```console
+$ sbx --cloud exec cloud-project pwd
+```
+
+## Connect with SSH
+
+Configure cloud SSH access and connect with your SSH client:
+
+```console
+$ sbx --cloud setup ssh
+$ ssh sbx_01abc123@sbx_cloud
+```
+
+Replace the example with `ssh <sandbox-id>@sbx_cloud`, using the
+`sbx_`-prefixed ID from `sbx --cloud ls`.
+
+Cloud SSH honors your host's configured upstream proxy. If the proxy refuses
+SSH connections, see Cloud SSH proxy configuration.
+
+## Transfer files
+
+Use `sbx --cloud cp` to copy files or directories between the client machine
+and a cloud sandbox. Use absolute sandbox paths:
+
+```console
+$ sbx --cloud cp ./src cloud-project:/home/agent/workspace/src
+$ sbx --cloud cp cloud-project:/home/agent/workspace/result.json ./result.json
+```
+
+Cloud copies don't preserve permissions or timestamps. Set executable
+permissions after downloading a program.
+
+Cloud copies don't preserve empty directories or symbolic links themselves.
+Symbolic links are handled differently depending on the transfer:
+
+- Uploading a symbolic link as the source copies its target automatically.
+- Uploading a directory skips symbolic links inside it unless you pass
+  `-L` (`--follow-link`) to copy their targets.
+- Downloading a symbolic link to a file requires `-L` to copy its target.
+- Downloading a directory skips symbolic links, even with `-L`.
+
+Copying creates a point-in-time transfer. It doesn't mount or synchronize the
+local path. For source control workflows, you can also clone a remote
+repository from inside the sandbox and push changes to the remote. Configure
+cloud credentials before creating a sandbox that needs access
+to a private repository. The cloud walkthrough shows a
+public repository example.
+
+## Expose a port
+
+Expose a TCP service by specifying its sandbox port:
+
+```console
+$ sbx --cloud ports cloud-project --publish 8080
+```
+
+The command returns a public HTTPS URL assigned by the cloud control plane.
+Cloud mode accepts a sandbox port number with an optional `/tcp` suffix, such
+as `8080/tcp`. Host IP addresses, host port bindings, and other protocols are
+rejected.
+
+List or remove exposed ports:
+
+```console
+$ sbx --cloud ports cloud-project
+$ sbx --cloud ports cloud-project --unpublish 8080
+```
+
+Treat an exposed URL as a public endpoint. Apply authentication in the service
+and remove the exposure when you no longer need it.
+
+## Configure expiration
+
+Set the time-to-live and the action taken when it lapses during creation:
+
+```console
+$ sbx --cloud create --name cloud-project --ttl 2h --on-timeout delete claude
+```
+
+The default time-to-live is one hour. If you omit `--on-timeout`, the server
+stops sandboxes that can be resumed and deletes the rest. Choose an action
+explicitly when you need a particular outcome:
+
+- `stop` preserves the sandbox so it can be started again. This requires
+  support for stopping the sandbox.
+- `restart` stops and immediately starts the sandbox. If you also specify
+  `--ttl`, it must be at least one hour.
+- `delete` removes the sandbox.
+
+Volume-backed sandboxes require the `delete` action. Omitting `--ttl` uses
+the server default. Setting `--ttl 0` is an error, not a way to disable
+expiration.
+
+Inspect or extend the expiration. Extensions cannot move expiration beyond
+24 hours from creation:
+
+```console
+$ sbx --cloud ttl cloud-project
+$ sbx --cloud ttl +30m cloud-project
+```
+
+A stopped sandbox has no running time-to-live, so `sbx --cloud ttl` reports
+that it is stopped instead of showing an expiration time. Its time-to-live
+starts again when the sandbox resumes. In `--json` output, `stopped` and
+`ttl_paused` are `true`, and the expiry fields still hold the previous
+deadline. While the sandbox is resuming, only `ttl_paused` is `true`.
+
+## Stop or remove a sandbox
+
+Stop a cloud sandbox while preserving its memory and filesystem:
+
+```console
+$ sbx --cloud stop cloud-project
+```
+
+The command returns when the stop request is accepted. Check `sbx --cloud ls`
+to confirm that the sandbox has stopped. Compute isn't billed while it is
+stopped.
+
+To resume the sandbox and connect to its agent:
+
+```console
+$ sbx --cloud attach cloud-project
+```
+
+You can also use `sbx --cloud run claude --name cloud-project`, or run the agent
+without `--name` and select the sandbox when prompted. Add `--detach` to a
+named run to resume without attaching.
+
+Resuming keeps the sandbox ID and state, and starts a new time-to-live
+period. Check its expiration with `sbx --cloud ttl cloud-project` after
+resuming.
+
+If stop or resume reports that an existing sandbox was not found, the operation
+may be disabled for your account.
+
+Volume-backed sandboxes can't be stopped. Remove a volume-backed sandbox to end
+it and save the volume snapshot.
+
+Remove a sandbox when you no longer need its state:
+
+```console
+$ sbx --cloud rm cloud-project
+```
+
+Removal asks for confirmation, deletes the cloud sandbox, and can't be undone.
+Use `--force` to skip the prompt in scripts.
+
+### Remove a sandbox when the agent exits
+
+Pass `--rm` to an interactive `run` to remove the sandbox when the agent
+session ends:
+
+```console
+$ sbx --cloud run --rm claude
+```
+
+The detach gesture is turned off for that session, and you can't combine
+`--rm` with `--detach`. If the session ends without completing, for example
+because the connection drops, the sandbox is kept and the CLI prints the
+command to remove it.
+
+## Use persistent volumes
+
+Cloud volumes are experimental and preserve data independently of a sandbox.
+Create a volume, then attach it at sandbox creation:
+
+```console
+$ sbx --cloud volume create dependency-cache
+$ sbx --cloud create --name cloud-project \
+    --volume dependency-cache:/workspace/cache claude
+```
+
+The root directory of a newly created volume is owned by `root`. Change its
+ownership after attaching it so the agent can write to it:
+
+```console
+$ sbx --cloud exec cloud-project \
+    sudo chown agent:agent /workspace/cache
+```
+
+Volume data is saved as a snapshot when a sandbox exits, not continuously. If
+multiple sandboxes mount the same volume at the same time, the last sandbox to
+exit overwrites the stored snapshot.
+
+## Customize a cloud sandbox
+
+### Save and reuse a template
+
+Save a running cloud sandbox as a template to reuse its configured filesystem.
+Before saving, remove credentials written to the sandbox filesystem: snapshots
+include those files. Managed cloud secrets stay in the secret store. See
+Authenticate cloud agents.
+
+```console
+$ sbx --cloud template save cloud-project cloud-template
+$ sbx --cloud create --name cloud-copy --template cloud-template
+```
+
+By default, saving a template captures disk state, and sandboxes created from
+it cold-boot from that filesystem. To resume from the running sandbox's state
+instead, add `--capture-mode all` to `template save`. This captures memory,
+disk, and the microVM checkpoint, and takes longer to load.
+
+The template supplies its CPU and memory configuration. Do not combine
+`--template` with an agent name, `--cpus`, or `--memory`. To launch an OCI image
+directly instead, use `--image-ref` with explicit CPU and memory values.
+
+### Import a local template
+
+Cloud templates have a separate store. To use a local template in the cloud,
+upload its tar file with a name that is unique in your account:
+
+```console
+$ sbx --cloud template load my-template.tar cloud-template \
+  --cpus 2 --memory-mib 4096
+```
+
+Both resource flags are required and must match a
+cloud size. Like `template save`,
+`template load` uses disk capture by default and accepts `--capture-mode all` to capture
+memory and checkpoint state as well. Uploading or saving large templates can
+take several minutes.
+
+### Customize with kits
+
+Cloud sandboxes also support sandbox kits and `--kit` mixins. See
+Kits for customization and
+Local and cloud differences for host-dependent features.
+Configure cloud credentials before adapting a local kit.
+
+Use `--kit-arg` or `--kit-args-file` with `sbx --cloud create` to pass
+arguments to kits supplied with `--kit`.
+For example, configure a mixin that declares a `version` argument:
+
+```console
+$ sbx --cloud create --name cloud-tools claude \
+    --kit docker.io/<NAMESPACE>/company-cli:1.0.0 \
+    --kit-arg company-cli.version=1.2
+```
+
+Replace the kit reference and argument with those from your kit's
+documentation. The `company-cli` prefix targets the kit by its repository
+name.
+
+To load arguments from a file, pass `--kit-args-file <FILE>` with one
+`name=value` entry per line, such as `company-cli.version=1.2`. Values passed
+with `--kit-arg` override values from the file.
+
+To declare reusable cloud configuration in a file, see
+Use environment files in the cloud.
+
+## Load an MCP server
+
+Connect an MCP server in Docker Agentic Platform
+before loading it into a cloud sandbox. Use the same Docker account you use
+with `sbx`.
+
+Load the connected server into a running cloud sandbox, using its name from
+the console:
+
+```console
+$ sbx --cloud mcp load <server-name> --sandbox cloud-project
+```
+
+The server name is resolved by the MCP gateway associated with your Docker
+Agentic Platform account. Cloud sandboxes don't use servers registered in the
+local MCP store with `sbx mcp add`.
+
+List servers reported by existing cloud sandbox gateways, or inspect one
+sandbox's gateway:
+
+```console
+$ sbx --cloud mcp ls
+$ sbx --cloud mcp ls cloud-project
+```
+
+The account listing shows servers reported by gateways, with the sandboxes
+that use them. It omits unused server configurations and servers skipped by
+a gateway. The sandbox view includes skipped servers.
+
+## Diagnose cloud access
+
+Check the CLI, Docker sign-in, cloud API connectivity, and account access:
+
+```console
+$ sbx --cloud diagnose
+```
+
+These checks don't require a local sandbox daemon. For local diagnostics,
+see Troubleshooting.
+
+## Known limitations
+
+### Docker exec and healthchecks
+
+When running Docker inside a cloud sandbox, `docker exec` can access the
+sandbox VM filesystem instead of the target container's filesystem. This also
+affects `docker compose exec` and Docker healthchecks, which use the same
+execution path.
+
+Commands can fail because application files, binaries, or mounted data aren't
+found. They can also succeed while reading or writing the wrong files. A
+successful exit status doesn't confirm that the command used the target
+container's filesystem.
+
+Healthchecks can report incorrect results. Compose services that depend on
+`condition: service_healthy` can remain blocked even when the service they
+need is running.
+
+A container's main process, started by `docker run`, uses the correct
+filesystem. Where your workflow supports it, run setup or readiness checks
+as a container's main command. This avoids the affected exec path for that
+command but doesn't restore exec behavior or ongoing health monitoring.

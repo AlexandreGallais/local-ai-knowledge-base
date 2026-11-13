@@ -1,0 +1,53 @@
+---
+title: "Install Docker Desktop from the Microsoft Store on Windows"
+tool: "docker"
+version: "2026-11"
+source: "https://github.com/docker/docs/blob/a0442378fca4987b1235614ec917b4138b5d5e5d/content/manuals/desktop/enterprise/enterprise-deployment/ms-store.md"
+commit: "a0442378fca4987b1235614ec917b4138b5d5e5d"
+license: "Apache-2.0"
+---
+
+# Install Docker Desktop from the Microsoft Store on Windows
+
+You can deploy Docker Desktop for Windows through the Microsoft app store.
+
+The Microsoft Store version of Docker Desktop provides the same functionality as the standard installer but has a different update behavior depending on whether your developers install it themselves or if installation is handled by an MDM tool such as Intune. This is described in the following section.
+
+Choose the installation method that best aligns with your environment's requirements and management practices.
+
+## Update behavior
+
+### Developer-managed installations
+
+For developers who install Docker Desktop directly:
+
+- The Microsoft Store does not automatically update Win32 apps like Docker Desktop for most users.
+- Only a subset of users (approximately 20%) may receive update notifications on the Microsoft Store page.
+- Most users must manually check for and apply updates within the Store.
+
+### Intune-managed installations
+
+In environments managed with Intune:
+- - Intune checks for updates periodically, typically several times a day. The exact interval is controlled by Intune, not by Docker.
+- When a new version is detected, Intune triggers a `winget` upgrade.
+- If appropriate policies are configured, updates can occur automatically without user intervention.
+- Updates are handled by Intune's management infrastructure rather than the Microsoft Store itself.
+
+## WSL considerations
+
+Docker Desktop for Windows integrates closely with WSL. When updating Docker Desktop installed from the Microsoft Store:
+- Make sure you have quit Docker Desktop and that it is no longer running so updates can complete successfully
+- In some environments, virtual hard disk (VHDX) file locks may prevent the update from completing.
+
+## Recommendations for Intune management
+
+If using Intune to manage Docker Desktop for Windows:
+- Ensure your Intune policies are configured to handle application updates
+- Be aware that the update process uses WinGet APIs rather than direct Store mechanisms
+- Consider testing the update process in a controlled environment to verify proper functionality
+
+## Installation mode
+
+Available with Docker Desktop version 4.85 and later, fresh installations from the Microsoft Store use per-user install mode by default, which removes the need for admin privileges.
+
+With version 4.97 and later, per-user installations from the Microsoft Store can use the Docker VMM (Beta) backend in addition to WSL 2. For more information, see Virtual Machine Manager.

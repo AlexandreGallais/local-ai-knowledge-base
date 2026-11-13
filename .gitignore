@@ -8,6 +8,9 @@ target/
 # Extracts of heavy files, written by the read-heavy-file skill
 .extract/
 
+# Clones of the documentation sources, made by scripts/fetch-library.ts
+.library-cache/
+
 # Local state of the chat adapter. The export/ folder is kept: it holds the export of the last
 # delivery, built by scripts/export.ts --trial.
 state.local.json

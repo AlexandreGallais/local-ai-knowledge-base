@@ -1,0 +1,77 @@
+---
+title: "Breaking change - Single-file apps no longer look for native libraries in executable directory"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/core/compatibility/interop/10.0/native-library-search.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# Single-file apps no longer look for native libraries in executable directory
+
+Previously, in single-file .NET applications, the directory of the single-file executable was added to the `NATIVE_DLL_SEARCH_DIRECTORIES` property during startup. Consequently, .NET always probed the application directory when unmanaged libraries were loaded. On non-Windows with NativeAOT, the `rpath` was set to the application directory by default, such that it also always looked for native libraries in the application directory.
+
+The application directory is no longer added to `NATIVE_DLL_SEARCH_DIRECTORIES` in single-file apps, and the `rpath` setting has been removed in NativeAOT. In both cases, `System.Runtime.InteropServices.DllImportSearchPath.AssemblyDirectory` (included in the default behaviour for P/Invokes) means the application directory. If you specify that value or leave the default, .NET looks in the application directory. If you specify flags without that value, .NET no longer looks in the application directory.
+
+## Version introduced
+
+.NET 10
+
+## Previous behavior
+
+Previously, single-file applications always looked in the application directory when loading native libraries. On non-Windows operating systems, NativeAOT applications always looked in the application directory when loading native libraries.
+
+For example, the following P/Invoke looked *in the application directory* for `lib` and loaded it from there if it existed:
+
+```csharp
+[DllImport("lib")
+[DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+static extern void Method()
+```
+
+## New behavior
+
+Starting in .NET 10, single-file applications only look in the application directory if the search paths for a native library load indicate including the assembly directory.
+
+```csharp
+// Look in System32 on Windows.
+// Search the OS on non-Windows.
+[DllImport("lib")
+[DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+static extern void Method()
+
+// Look next to the single-file app because assembly directory
+// means application directory for single-file apps.
+[DllImport("lib")
+[DefaultDllImportSearchPaths(DllImportSearchPath.AssemblyDirectory)]
+static extern void Method()
+
+// Look next to the single-file app (because assembly
+// directory is searched by default), then default OS search.
+[DllImport("lib")
+static extern void Method()
+```
+
+## Type of breaking change
+
+This is a behavioral change.
+
+## Reason for change
+
+The existing behavior (always look in the application directory even if search paths exclude it) has caused confusion. It's also inconsistent with how the search flags are handled in regular (non-single-file, non-NativeAOT) .NET applications.
+
+## Recommended action
+
+If the application/assembly directory is desired for a P/Invoke or native library load and wasn't previously specified, specify `System.Runtime.InteropServices.DllImportSearchPath.AssemblyDirectory`.
+
+If the `RPATH` setting is desired in NativeAOT, explicitly add the corresponding linker arguments to your project.
+
+## Affected APIs
+
+- P/Invokes
+- `System.Runtime.InteropServices.NativeLibrary.Load*`
+- `System.Runtime.InteropServices.NativeLibrary.TryLoad*`
+
+## See also
+
+- Specifying DllImportSearchPath.AssemblyDirectory only searches the assembly directory

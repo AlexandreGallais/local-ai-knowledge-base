@@ -1,0 +1,75 @@
+---
+title: "YARP Cross-Origin Requests (CORS)"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/53d05ee9faf3cfe577c6180a0a4c6966d8396ffd/aspnetcore/fundamentals/servers/yarp/cors.md"
+commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
+license: "CC-BY-4.0"
+---
+
+# YARP Cross-Origin Requests (CORS)
+
+## Introduction
+
+The reverse proxy can handle cross-origin requests before they are proxied to the destination servers. This can reduce load on the destination servers and ensure consistent policies are implemented across your applications.
+
+## Defaults
+The requests won't be automatically matched for cors preflight requests unless enabled in the route or application configuration.
+
+## Configuration
+CORS policies can be specified per route via RouteConfig.CorsPolicy and can be bound from the `Routes` sections of the config file. As with other route properties, this can be modified and reloaded without restarting the proxy. Policy names are case insensitive.
+
+Example:
+```json
+{
+  "ReverseProxy": {
+    "Routes": {
+      "route1" : {
+        "ClusterId": "cluster1",
+        "CorsPolicy": "customPolicy",
+        "Match": {
+          "Hosts": [ "localhost" ]
+        }
+      }
+    },
+    "Clusters": {
+      "cluster1": {
+        "Destinations": {
+          "cluster1/destination1": {
+            "Address": "https://localhost:10001/"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+CORS policies are an ASP.NET Core concept that the proxy utilizes. The proxy provides the above configuration to specify a policy per route and the rest is handled by existing ASP.NET Core CORS middleware.
+
+CORS policies can be configured in the application as follows:
+```csharp
+services.AddCors(options =>
+{
+    options.AddPolicy("customPolicy", builder =>
+    {
+        builder.AllowAnyOrigin();
+    });
+});
+```
+
+Then add the CORS middleware.
+
+```csharp
+app.UseCors();
+
+app.MapReverseProxy();
+```
+
+### DefaultPolicy
+
+Specifying the value `default` in a route's `CorsPolicy` parameter means that route will use the policy defined in CorsOptions.DefaultPolicy.
+
+### Disable CORS
+
+Specifying the value `disable` in a route's `CorsPolicy` parameter means the CORS middleware will refuse the CORS requests.

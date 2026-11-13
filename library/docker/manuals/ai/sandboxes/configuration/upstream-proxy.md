@@ -1,0 +1,204 @@
+---
+title: "Configure an upstream proxy"
+tool: "docker"
+version: "2026-11"
+source: "https://github.com/docker/docs/blob/a0442378fca4987b1235614ec917b4138b5d5e5d/content/manuals/ai/sandboxes/configuration/upstream-proxy.md"
+commit: "a0442378fca4987b1235614ec917b4138b5d5e5d"
+license: "Apache-2.0"
+---
+
+# Configure an upstream proxy
+
+This page describes proxy settings for local sandboxes, the local daemon, and
+host CLI connections to cloud sandboxes. These settings don't configure traffic
+originating inside a cloud sandbox. For cloud sandbox egress controls, see
+Cloud network policy.
+
+> **Important:**
+> Upstream proxy support is experimental. Everything described on this page —
+> proxy URLs, PAC files, SOCKS5, use of the OS system proxy, proxy
+> authentication, and the settings that configure them — is subject to change.
+> Share feedback and bug reports in the
+> docker/sbx-releases repository.
+
+An upstream proxy is the corporate or network proxy that Docker Sandboxes
+forwards outbound traffic through on its way to the internet. This is separate
+from network policy, which decides _which_ destinations are allowed. The
+upstream proxy decides _how_ allowed traffic reaches them. For how network
+policy is set, see Sandbox governance.
+
+Docker Sandboxes sends two kinds of outbound traffic, and you can proxy them
+independently:
+
+- Sandbox traffic — network access from inside your local sandboxes.
+- Daemon and host CLI traffic — the daemon's own access, including image pulls,
+  telemetry, and feature flags, and host CLI requests, including `sbx login`,
+  `sbx diagnose --upload`, cloud commands, `sbx move`, the TUI, and cloud SSH.
+
+## Default behavior
+
+By default, both kinds of traffic use your operating system's proxy settings,
+including any PAC URL configured there. You don't need to configure anything. On
+macOS and Windows, `sbx` tracks the OS proxy setting while it runs, so a change
+to your network, VPN, or PAC configuration is picked up without a restart. If
+your OS has no proxy configured, traffic goes direct.
+
+## Set a proxy manually
+
+Use `sbx settings set` to override the default
+for one or both kinds of traffic:
+
+```console
+$ sbx settings set proxy http://proxy.corp:3128          # both kinds of traffic
+$ sbx settings set proxy.sandbox socks5://proxy.corp:1080 # sandbox traffic only
+$ sbx settings set proxy.daemon direct                    # daemon traffic only
+```
+
+A proxy value can be any of the following:
+
+| Value                                                                                  | Meaning                                                                                          |
+| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| _(unset)_                                                                              | Fall back to the wider scope, then environment variables, then the OS system proxy (the default) |
+| `http://host:port` or `https://host:port`                                              | An HTTP or HTTPS proxy                                                                           |
+| `socks5://host:port` or `socks5h://host:port`                                          | A SOCKS5 proxy                                                                                   |
+| `pac+http://host/proxy.pac`, `pac+https://host/proxy.pac`, or `file:///path/proxy.pac` | A PAC (proxy auto-config) file                                                                   |
+| `system`                                                                               | Force the use of the OS system proxy                                                             |
+| `direct`                                                                               | Force a direct connection with no proxy                                                          |
+
+With `socks5://`, DNS is resolved locally before the connection is handed to the
+proxy. With `socks5h://`, DNS resolution is delegated to the proxy.
+
+### Exclude destinations from the proxy
+
+Exclusion lists mirror the same scopes. Each takes a comma-separated list of
+hosts, domain suffixes, IP addresses, or CIDR ranges, or `*` to bypass the
+proxy entirely:
+
+```console
+$ sbx settings set no_proxy "*.internal.corp,10.0.0.0/8"    # both kinds of traffic
+$ sbx settings set no_proxy.sandbox "*.svc.cluster.local"   # sandbox traffic only
+$ sbx settings set no_proxy.daemon "registry.internal"      # daemon traffic only
+```
+
+## Environment variables
+
+Because `sbx` runs from your shell, it also honors the standard and legacy proxy
+environment variables, so existing setups keep working without migration:
+
+- `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` (and their lowercase forms) — the
+  standard variables. They apply to both kinds of traffic when no `proxy` or
+  `no_proxy` setting is configured.
+- `DOCKER_SANDBOXES_PROXY` and `DOCKER_SANDBOXES_NO_PROXY` — the environment
+  form of `proxy.sandbox` and `no_proxy.sandbox`. They apply to sandbox traffic
+  only and never affect daemon traffic.
+
+For how to apply environment variable changes to the CLI and daemon, see
+Settings environment variables.
+
+## Precedence
+
+For each kind of traffic, the first match wins:
+
+1. The scope-specific value:
+   - `proxy.sandbox` or `DOCKER_SANDBOXES_PROXY` for sandbox traffic
+   - `proxy.daemon` for daemon traffic
+2. The `proxy` setting
+3. `HTTP_PROXY` or `HTTPS_PROXY` from the shell
+4. The OS system proxy (the default)
+5. Direct
+
+The matching exclusion list (`no_proxy.<scope>`, then `no_proxy`) applies to the
+chosen proxy, and the standard `NO_PROXY` variable still applies on the
+environment path.
+
+For example, if `proxy` specifies a shared proxy and `proxy.sandbox` is set to
+`direct`, sandbox traffic connects directly while daemon traffic uses the
+shared proxy. If no proxy setting is configured, `HTTP_PROXY` takes precedence
+over the OS system proxy.
+
+## When changes take effect
+
+Proxy settings take effect at different times depending on the consumer:
+
+- Sandbox scope (`proxy.sandbox`, `no_proxy.sandbox`, and the sandbox side of
+  `proxy` and `no_proxy`) is resolved when a sandbox network proxy is created.
+  Sandboxes you create after a change use the updated settings. Existing
+  sandboxes retain their selected upstream proxy until `sbx daemon restart`
+  rebuilds their network proxies. Restarting a sandbox alone is insufficient.
+- Daemon scope (`proxy.daemon`, `no_proxy.daemon`, and the daemon side of
+  `proxy` and `no_proxy`) is resolved once when the daemon starts. Changes to
+  the daemon's own traffic require `sbx daemon restart`.
+- Host CLI clients read daemon-scoped settings on each invocation. Changes
+  apply on the next invocation without a daemon restart.
+
+The `DOCKER_SANDBOXES_*` environment variables are a separate case. They control
+sandbox traffic only, as described in
+Environment variables, but `sbx` reads them from the
+daemon's environment as the daemon starts, so changing one also requires a
+daemon restart. If one of these variables overrides a stored setting, unset
+the variable and restart the daemon for the stored setting to take effect.
+
+When a `system` or PAC proxy is in use, `sbx` still tracks OS-level proxy changes
+(such as switching networks, connecting a VPN, or updated PAC contents) live.
+
+A host network change can also leave established sandbox connections stalled.
+To tune or disable the timeout that closes these connections, see
+`egress.stalledConnectionTimeoutSeconds`.
+
+## Cloud SSH
+
+Cloud SSH uses the configured host proxy to connect to the SSH gateway. Some
+proxies refuse connections to the gateway's SSH port. If your network permits
+direct SSH connections, bypass the proxy for cloud SSH:
+
+```console
+$ sbx settings set proxy.sshDirect true
+```
+
+This setting skips the proxy entirely for cloud SSH, without trying it first.
+Other host CLI requests keep using the configured proxy. The change applies on
+the next SSH connection without a daemon restart. Set it to `false` to use the
+proxy again.
+
+## Authentication
+
+If the upstream proxy requires you to authenticate to it, `sbx` supports two
+mechanisms.
+
+### Credentials in the proxy URL
+
+Put the credentials in the proxy URL: `http://user:pass@host:port` for an HTTP
+or HTTPS proxy, or `socks5://user:pass@host:port` for SOCKS5. This works on all
+platforms and covers proxies that challenge with Basic authentication.
+
+### Integrated Windows authentication
+
+Proxies that answer `CONNECT` with a `407` challenge and accept only integrated
+schemes — NTLM or Kerberos/Negotiate — can instead authenticate you with your
+Windows sign-in identity. This is opt-in and off by default:
+
+```console
+$ sbx settings set proxy.integratedAuth true
+```
+
+The setting isn't scoped: it applies to both sandbox and daemon traffic. If the
+proxy offers several schemes, the strongest one is used, preferring Negotiate
+over NTLM. Changes follow the same
+schedule as other proxy settings: on the next
+invocation for supported CLI clients, when you create a sandbox, and after
+`sbx daemon restart` for daemon traffic and existing sandbox proxies.
+
+Your identity stays on the host. Authentication to the upstream proxy happens
+on the host side of the sandbox boundary, after network policy has already been
+applied, so no credential enters the sandbox and nothing about which
+destinations a sandbox may reach changes.
+
+This depends on Windows SSPI, so it has no effect on macOS or Linux. On those
+platforms, credentials in the proxy URL remain the only option.
+
+## Related pages
+
+- Network isolation — how traffic leaves a sandbox and
+  the network policy it passes through
+- Troubleshooting: API calls fail with a certificate error
+  — installing an internal root CA when your proxy inspects HTTPS traffic

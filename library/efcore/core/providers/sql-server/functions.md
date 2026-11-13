@@ -1,0 +1,177 @@
+---
+title: "Function Mappings - Microsoft SQL Server Database Provider - EF Core (part 1 of 2)"
+tool: "efcore"
+version: "11"
+source: "https://github.com/dotnet/EntityFramework.Docs/blob/5fa9f7b63ae7ff93d631f4ddc47fdc9f72dcbdc7/entity-framework/core/providers/sql-server/functions.md"
+commit: "5fa9f7b63ae7ff93d631f4ddc47fdc9f72dcbdc7"
+license: "CC-BY-4.0"
+---
+
+# Function Mappings of the Microsoft SQL Server Provider
+
+This page shows which .NET members are translated into which SQL functions when using the SQL Server provider.
+
+## Aggregate functions
+
+For general information about using aggregate functions in queries, see Aggregate functions.
+
+.NET                                                                    | SQL                              | Added in
+----------------------------------------------------------------------- | -------------------------------- | --------
+EF.Functions.StandardDeviationSample(group.Select(x => x.Property))     | STDEV(Property)
+EF.Functions.StandardDeviationPopulation(group.Select(x => x.Property)) | STDEVP(Property)
+EF.Functions.VarianceSample(group.Select(x => x.Property))              | VAR(Property)
+EF.Functions.VariancePopulation(group.Select(x => x.Property))          | VARP(Property)
+group.Average(x => x.Property)                                          | AVG(Property)
+group.Count()                                                           | COUNT(*)
+group.LongCount()                                                       | COUNT_BIG(*)
+group.Max(x => x.Property)                                              | MAX(Property)
+group.Min(x => x.Property)                                              | MIN(Property)
+group.Sum(x => x.Property)                                              | SUM(Property)
+string.Concat(group.Select(x => x.Property))                            | STRING_AGG(Property, N'')
+string.Concat(group.OrderBy(x => x.Other).Select(x => x.Property))      | STRING_AGG(Property, N'') WITHIN GROUP (ORDER BY Other) | EF Core 11.0
+string.Join(separator, group.Select(x => x.Property))                   | STRING_AGG(Property, @separator)
+string.Join(separator, group.OrderBy(x => x.Other).Select(x => x.Property)) | STRING_AGG(Property, @separator) WITHIN GROUP (ORDER BY Other) | EF Core 11.0
+
+## Binary functions
+
+.NET                         | SQL                           | Added in
+---------------------------- | ----------------------------- | --------
+bytes.Contains(value)        | CHARINDEX(@value, @bytes) > 0
+bytes.ElementAt(i)           | SUBSTRING(@bytes, @i + 1, 1)
+bytes.First()                | SUBSTRING(@bytes, 1, 1)
+bytes.Length                 | DATALENGTH(@bytes)
+bytes.SequenceEqual(second)  | @bytes = @second
+bytes[i]                     | SUBSTRING(@bytes, @i + 1, 1)
+EF.Functions.DataLength(arg) | DATALENGTH(@arg)
+
+## Conversion functions
+
+.NET                      | SQL                                    | Added in
+------------------------- | -------------------------------------- | --------
+bytes.ToString()          | CONVERT(varchar(100), @bytes)
+byteValue.ToString()      | CONVERT(varchar(3), @byteValue)
+charValue.ToString()      | CONVERT(varchar(1), @charValue)
+Convert.ToBoolean(value)  | CONVERT(bit, @value)
+Convert.ToByte(value)     | CONVERT(tinyint, @value)
+Convert.ToDecimal(value)  | CONVERT(decimal(18, 2), @value)
+Convert.ToDouble(value)   | CONVERT(float, @value)
+Convert.ToInt16(value)    | CONVERT(smallint, @value)
+Convert.ToInt32(value)    | CONVERT(int, @value)
+Convert.ToInt64(value)    | CONVERT(bigint, @value)
+Convert.ToString(value)   | CONVERT(nvarchar(max), @value)
+dateOnly.ToString()       | CONVERT(varchar(100), @dateOnly)
+dateTime.ToString()       | CONVERT(varchar(100), @dateTime)
+dateTimeOffset.ToString() | CONVERT(varchar(100), @dateTimeOffset)
+decimalValue.ToString()   | CONVERT(varchar(100), @decimalValue)
+doubleValue.ToString()    | CONVERT(varchar(100), @doubleValue)
+floatValue.ToString()     | CONVERT(varchar(100), @floatValue)
+guid.ToString()           | CONVERT(varchar(36), @guid)
+intValue.ToString()       | CONVERT(varchar(11), @intValue)
+longValue.ToString()      | CONVERT(varchar(20), @longValue)
+sbyteValue.ToString()     | CONVERT(varchar(4), @sbyteValue)
+shortValue.ToString()     | CONVERT(varchar(6), @shortValue)
+timeOnly.ToString()       | CONVERT(varchar(100), @timeOnly)
+timeSpan.ToString()       | CONVERT(varchar(100), @timeSpan)
+uintValue.ToString()      | CONVERT(varchar(10), @uintValue)
+ulongValue.ToString()     | CONVERT(varchar(19), @ulongValue)
+ushortValue.ToString()    | CONVERT(varchar(5), @ushortValue)
+
+## Date and time functions
+
+.NET                                                        | SQL                                                                             | Added in
+----------------------------------------------------------- | ------------------------------------------------------------------------------- | --------
+DateTime.Now                                                | GETDATE()
+DateTime.Today                                              | CONVERT(date, GETDATE())
+DateTime.UtcNow                                             | GETUTCDATE()
+dateTime.AddDays(value)                                     | DATEADD(day, @value, @dateTime)
+dateTime.AddHours(value)                                    | DATEADD(hour, @value, @dateTime)
+dateTime.AddMilliseconds(value)                             | DATEADD(millisecond, @value, @dateTime)
+dateTime.AddMinutes(value)                                  | DATEADD(minute, @value, @dateTime)
+dateTime.AddMonths(months)                                  | DATEADD(month, @months, @dateTime)
+dateTime.AddSeconds(value)                                  | DATEADD(second, @value, @dateTime)
+dateTime.AddYears(value)                                    | DATEADD(year, @value, @dateTime)
+dateTime.Date                                               | CONVERT(date, @dateTime)
+dateTime.Day                                                | DATEPART(day, @dateTime)
+dateTime.DayOfYear                                          | DATEPART(dayofyear, @dateTime)
+dateTime.Hour                                               | DATEPART(hour, @dateTime)
+dateTime.Microsecond                                        | DATEPART(microsecond, @dateTime) % 1000                                         | EF Core 10.0
+dateTime.Millisecond                                        | DATEPART(millisecond, @dateTime)
+dateTime.Minute                                             | DATEPART(minute, @dateTime)
+dateTime.Month                                              | DATEPART(month, @dateTime)
+dateTime.Nanosecond                                         | DATEPART(nanosecond, @dateTime) % 1000                                          | EF Core 10.0
+dateTime.Second                                             | DATEPART(second, @dateTime)
+dateTime.TimeOfDay                                          | CONVERT(time, @dateTime)
+dateTime.Year                                               | DATEPART(year, @dateTime)
+DateTimeOffset.Now                                          | SYSDATETIMEOFFSET()
+DateTimeOffset.UtcNow                                       | SYSUTCDATETIME()
+dateTimeOffset.AddDays(days)                                | DATEADD(day, @days, @dateTimeOffset)
+dateTimeOffset.AddHours(hours)                              | DATEADD(hour, @hours, @dateTimeOffset)
+dateTimeOffset.AddMilliseconds(milliseconds)                | DATEADD(millisecond, @milliseconds, @dateTimeOffset)
+dateTimeOffset.AddMinutes(minutes)                          | DATEADD(minute, @minutes, @dateTimeOffset)
+dateTimeOffset.AddMonths(months)                            | DATEADD(month, @months, @dateTimeOffset)
+dateTimeOffset.AddSeconds(seconds)                          | DATEADD(second, @seconds, @dateTimeOffset)
+dateTimeOffset.AddYears(years)                              | DATEADD(year, @years, @dateTimeOffset)
+dateTimeOffset.Date                                         | CONVERT(date, @dateTimeOffset)
+dateTimeOffset.DateTime                                     | CONVERT(datetime2, @dateTimeOffset)                                             | EF Core 11.0
+dateTimeOffset.Day                                          | DATEPART(day, @dateTimeOffset)
+dateTimeOffset.DayOfYear                                    | DATEPART(dayofyear, @dateTimeOffset)
+dateTimeOffset.Hour                                         | DATEPART(hour, @dateTimeOffset)
+dateTimeOffset.LocalDateTime                                | CONVERT(datetime2, @dateTimeOffset AT TIME ZONE CURRENT_TIMEZONE_ID())          | EF Core 11.0
+dateTimeOffset.Microsecond                                  | DATEPART(microsecond, @dateTimeOffset) % 1000                                   | EF Core 10.0
+dateTimeOffset.Millisecond                                  | DATEPART(millisecond, @dateTimeOffset)
+dateTimeOffset.Minute                                       | DATEPART(minute, @dateTimeOffset)
+dateTimeOffset.Month                                        | DATEPART(month, @dateTimeOffset)
+dateTimeOffset.Nanosecond                                   | DATEPART(nanosecond, @dateTimeOffset) % 1000                                    | EF Core 10.0
+dateTimeOffset.Offset.TotalMinutes                          | CAST(DATEPART(tz, @dateTimeOffset) AS float)                                    | EF Core 11.0
+dateTimeOffset.Second                                       | DATEPART(second, @dateTimeOffset)
+dateTimeOffset.TimeOfDay                                    | CONVERT(time, @dateTimeOffset)
+dateTimeOffset.ToOffset(offset)                             | SWITCHOFFSET(@dateTimeOffset, @offset)                                          | EF Core 11.0
+dateTimeOffset.ToUnixTimeSeconds()                          | DATEDIFF_BIG(second, '1970-01-01T00:00:00.0000000+00:00', @dateTimeOffset)
+dateTimeOffset.ToUnixTimeMilliseconds()                     | DATEDIFF_BIG(millisecond, '1970-01-01T00:00:00.0000000+00:00', @dateTimeOffset)
+dateTimeOffset.UtcDateTime                                  | CONVERT(datetime2, @dateTimeOffset AT TIME ZONE 'UTC')                          | EF Core 11.0
+dateTimeOffset.Year                                         | DATEPART(year, @dateTimeOffset)
+new DateTimeOffset(dateTime)                                | TODATETIMEOFFSET(@dateTime, '+00:00')                                           | EF Core 11.0
+new DateTimeOffset(dateTime, offset)                        | TODATETIMEOFFSET(@dateTime, @offset)                                            | EF Core 11.0
+DateOnly.FromDateTime(dateTime)                             | CONVERT(date, @dateTime)
+dateOnly.AddDays(value)                                     | DATEADD(day, @value, @dateOnly)
+dateOnly.AddMonths(months)                                  | DATEADD(month, @months, @dateOnly)
+dateOnly.AddYears(value)                                    | DATEADD(year, @value, @dateOnly)
+dateOnly.Day                                                | DATEPART(day, @dateOnly)
+dateOnly.DayOfYear                                          | DATEPART(dayofyear, @dateOnly)
+dateOnly.Month                                              | DATEPART(month, @dateOnly)
+dateOnly.Year                                               | DATEPART(year, @dateOnly)
+dateOnly.DayNumber                                          | DATEDIFF(day, '0001-01-01', @dateOnly)                                          | EF Core 10.0
+EF.Functions.AtTimeZone(dateTime, timeZone)                 | @dateTime AT TIME ZONE @timeZone
+EF.Functions.DateDiffDay(start, end)                        | DATEDIFF(day, @start, @end)
+EF.Functions.DateDiffHour(start, end)                       | DATEDIFF(hour, @start, @end)
+EF.Functions.DateDiffMicrosecond(start, end)                | DATEDIFF(microsecond, @start, @end)
+EF.Functions.DateDiffMillisecond(start, end)                | DATEDIFF(millisecond, @start, @end)
+EF.Functions.DateDiffMinute(start, end)                     | DATEDIFF(minute, @start, @d2)
+EF.Functions.DateDiffMonth(start, end)                      | DATEDIFF(month, @start, @end)
+EF.Functions.DateDiffNanosecond(start, end)                 | DATEDIFF(nanosecond, @start, @end)
+EF.Functions.DateDiffSecond(start, end)                     | DATEDIFF(second, @start, @end)
+EF.Functions.DateDiffWeek(start, end)                       | DATEDIFF(week, @start, @end)
+EF.Functions.DateDiffYear(start, end)                       | DATEDIFF(year, @start, @end)
+EF.Functions.DateFromParts(year, month, day)                | DATEFROMPARTS(@year, @month, @day)
+EF.Functions.DateTime2FromParts(year, month, day, ...)      | DATETIME2FROMPARTS(@year, @month, @day, ...)
+EF.Functions.DateTimeFromParts(year, month, day, ...)       | DATETIMEFROMPARTS(@year, @month, @day, ...)
+EF.Functions.DateTimeOffsetFromParts(year, month, day, ...) | DATETIMEOFFSETFROMPARTS(@year, @month, @day, ...)
+EF.Functions.DateTrunc(datepart, value)                     | DATETRUNC(@datepart, @value)                                                    | EF Core 11.0
+EF.Functions.IsDate(expression)                             | ISDATE(@expression)
+EF.Functions.SmallDateTimeFromParts(year, month, day, ...)  | SMALLDATETIMEFROMPARTS(@year, @month, @day, ...)
+EF.Functions.TimeFromParts(hour, minute, second, ...)       | TIMEFROMPARTS(@hour, @minute, @second, ...)
+timeOnly.AddHours(value)                                    | DATEADD(hour, @value, @timeOnly)
+timeOnly.AddMinutes(value)                                  | DATEADD(minute, @value, @timeOnly)
+timeOnly.Hour                                               | DATEPART(hour, @timeOnly)
+timeOnly.IsBetween(start, end)                              | @timeOnly >= @start AND @timeOnly < @end
+timeOnly.Microsecond                                        | DATEPART(microsecond, @timeOnly) % 1000                                         | EF Core 10.0
+timeOnly.Millisecond                                        | DATEPART(millisecond, @timeOnly)
+timeOnly.Minute                                             | DATEPART(minute, @timeOnly)
+timeOnly.Nanosecond                                         | DATEPART(nanosecond, @timeOnly) % 1000                                          | EF Core 10.0
+timeOnly.Second                                             | DATEPART(second, @timeOnly)
+timeSpan.Hours                                              | DATEPART(hour, @timeSpan)
+timeSpan.Microsecond                                        | DATEPART(microsecond, @timeSpan) % 1000                                         | EF Core 10.0
+timeSpan.Milliseconds                                       | DATEPART(millisecond, @timeSpan)
+timeSpan.Minutes                                            | DATEPART(minute, @timeSpan)
+timeSpan.Nanosecond                                         | DATEPART(nanosecond, @timeSpan) % 1000                                          | EF Core 10.0
+timeSpan.Seconds                                            | DATEPART(second, @timeSpan)

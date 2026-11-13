@@ -1,0 +1,36 @@
+---
+title: "Names of Assemblies and DLLs"
+tool: "dotnet-standard"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/standard/design-guidelines/names-of-assemblies-and-dlls.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# Names of Assemblies and DLLs
+
+> **Note:**
+> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+
+An assembly is the unit of deployment and identity for managed code programs. Although assemblies can span one or more files, typically an assembly maps one-to-one with a DLL. Therefore, this section describes only DLL naming conventions, which then can be mapped to assembly naming conventions.
+
+ ✔️ DO choose names for your assembly DLLs that suggest large chunks of functionality, such as System.Data.
+
+ Assembly and DLL names don’t have to correspond to namespace names, but it is reasonable to follow the namespace name when naming assemblies. A good rule of thumb is to name the DLL based on the common prefix of the namespaces contained in the assembly. For example, an assembly with two namespaces, `MyCompany.MyTechnology.FirstFeature` and `MyCompany.MyTechnology.SecondFeature`, could be called `MyCompany.MyTechnology.dll`.
+
+ ✔️ CONSIDER naming DLLs according to the following pattern:
+
+ `<Company>.<Component>.dll`
+
+ where `<Component>` contains one or more dot-separated clauses. For example:
+
+ `Litware.Controls.dll`.
+
+ *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
+
+ *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+
+## See also
+
+- Framework Design Guidelines
+- Naming Guidelines

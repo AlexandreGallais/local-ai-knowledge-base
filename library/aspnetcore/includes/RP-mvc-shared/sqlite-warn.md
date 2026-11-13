@@ -1,0 +1,27 @@
+---
+title: "sqlite-warn"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/53d05ee9faf3cfe577c6180a0a4c6966d8396ffd/aspnetcore/includes/RP-mvc-shared/sqlite-warn.md"
+commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
+license: "CC-BY-4.0"
+---
+
+# sqlite-warn
+
+> **Note:**
+> For this tutorial you use the Entity Framework Core *migrations* feature where possible. Migrations updates the database schema to match changes in the data model. However, migrations can only do the kinds of changes that the EF Core provider supports, and the SQLite provider's capabilities are limited. For example, adding a column is supported, but removing or changing a column is not supported. If a migration is created to remove or change a column, the `ef migrations add` command succeeds but the `ef database update` command fails. Due to these limitations, this tutorial doesn't use migrations for SQLite schema changes. Instead, when the schema changes, you drop and re-create the database.
+>
+>The workaround for the SQLite limitations is to manually write migrations code to perform a table rebuild when something in the table changes. A table rebuild involves:
+>
+>* Creating a new table.
+>* Copying data from the old table to the new table.
+>* Dropping the old table.
+>* Renaming the new table.
+>
+>For more information, see the following resources:
+>
+> * SQLite EF Core Database Provider Limitations
+> * Customize migration code
+> * Data seeding
+> * SQLite ALTER TABLE statement

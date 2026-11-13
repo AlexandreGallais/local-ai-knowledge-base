@@ -1,0 +1,479 @@
+---
+title: "HTTP/2 (part 14 of 15)"
+tool: "node"
+version: "26.13"
+source: "https://github.com/nodejs/node/blob/e9c277643b0249c50f6e6de5413be8a88ea11b6a/doc/api/http2.md"
+commit: "e9c277643b0249c50f6e6de5413be8a88ea11b6a"
+license: "MIT"
+---
+
+# HTTP/2 (part 14 of 15)
+
+### Class: `http2.Http2ServerResponse`
+
+* Extends: {Stream}
+
+This object is created internally by an HTTP server, not by the user. It is
+passed as the second parameter to the `'request'` event.
+
+#### Event: `'close'`
+
+Indicates that the underlying `Http2Stream` was terminated before
+`response.end()` was called or able to flush.
+
+#### Event: `'finish'`
+
+Emitted when the response has been sent. More specifically, this event is
+emitted when the last segment of the response headers and body have been
+handed off to the HTTP/2 multiplexing for transmission over the network. It
+does not imply that the client has received anything yet.
+
+After this event, no more events will be emitted on the response object.
+
+#### `response.addTrailers(headers)`
+
+* `headers` {Object}
+
+This method adds HTTP trailing headers (a header but at the end of the
+message) to the response.
+
+Attempting to set a header field name or value that contains invalid characters
+will result in a `TypeError` being thrown.
+
+#### `response.appendHeader(name, value)`
+
+* `name` {string}
+* `value` {string|string\[]}
+
+Append a single header value to the header object.
+
+If the value is an array, this is equivalent to calling this method multiple
+times.
+
+If there were no previous values for the header, this is equivalent to calling
+`response.setHeader()`.
+
+Attempting to set a header field name or value that contains invalid characters
+will result in a `TypeError` being thrown.
+
+```js
+// Returns headers including "set-cookie: a" and "set-cookie: b"
+const server = http2.createServer((req, res) => {
+  res.setHeader('set-cookie', 'a');
+  res.appendHeader('set-cookie', 'b');
+  res.writeHead(200);
+  res.end('ok');
+});
+```
+
+#### `response.connection`
+
+> Stability: 0 - Deprecated. Use `response.socket`.
+
+* Type: {net.Socket|tls.TLSSocket}
+
+See `response.socket`.
+
+#### `response.createPushResponse(headers, callback)`
+
+* `headers` {HTTP/2 Headers Object} An object describing the headers
+* `callback` {Function} Called once `http2stream.pushStream()` is finished,
+  or either when the attempt to create the pushed `Http2Stream` has failed or
+  has been rejected, or the state of `Http2ServerRequest` is closed prior to
+  calling the `http2stream.pushStream()` method
+  * `err` {Error}
+  * `res` {http2.Http2ServerResponse} The newly-created `Http2ServerResponse`
+    object
+
+Call `http2stream.pushStream()` with the given headers, and wrap the
+given `Http2Stream` on a newly created `Http2ServerResponse` as the callback
+parameter if successful. When `Http2ServerRequest` is closed, the callback is
+called with an error `ERR_HTTP2_INVALID_STREAM`.
+
+#### `response.end(data[, encoding])`
+
+* `data` {string|Buffer|Uint8Array}
+* `encoding` {string}
+* `callback` {Function}
+* Returns: {this}
+
+This method signals to the server that all of the response headers and body
+have been sent; that server should consider this message complete.
+The method, `response.end()`, MUST be called on each response.
+
+If `data` is specified, it is equivalent to calling
+`response.write(data, encoding)` followed by `response.end(callback)`.
+
+If `callback` is specified, it will be called when the response stream
+is finished.
+
+#### `response.finished`
+
+> Stability: 0 - Deprecated. Use `response.writableEnded`.
+
+* Type: {boolean}
+
+Boolean value that indicates whether the response has completed. Starts
+as `false`. After `response.end()` executes, the value will be `true`.
+
+#### `response.getHeader(name)`
+
+* `name` {string}
+* Returns: {string}
+
+Reads out a header that has already been queued but not sent to the client.
+The name is case-insensitive.
+
+```js
+const contentType = response.getHeader('content-type');
+```
+
+#### `response.getHeaderNames()`
+
+* Returns: {string\[]}
+
+Returns an array containing the unique names of the current outgoing headers.
+All header names are lowercase.
+
+```js
+response.setHeader('Foo', 'bar');
+response.setHeader('Set-Cookie', ['foo=bar', 'bar=baz']);
+
+const headerNames = response.getHeaderNames();
+// headerNames === ['foo', 'set-cookie']
+```
+
+#### `response.getHeaders()`
+
+* Returns: {Object}
+
+Returns a shallow copy of the current outgoing headers. Since a shallow copy
+is used, array values may be mutated without additional calls to various
+header-related http module methods. The keys of the returned object are the
+header names and the values are the respective header values. All header names
+are lowercase.
+
+The object returned by the `response.getHeaders()` method _does not_
+prototypically inherit from the JavaScript `Object`. This means that typical
+`Object` methods such as `obj.toString()`, `obj.hasOwnProperty()`, and others
+are not defined and _will not work_.
+
+```js
+response.setHeader('Foo', 'bar');
+response.setHeader('Set-Cookie', ['foo=bar', 'bar=baz']);
+
+const headers = response.getHeaders();
+// headers === { foo: 'bar', 'set-cookie': ['foo=bar', 'bar=baz'] }
+```
+
+#### `response.hasHeader(name)`
+
+* `name` {string}
+* Returns: {boolean}
+
+Returns `true` if the header identified by `name` is currently set in the
+outgoing headers. The header name matching is case-insensitive.
+
+```js
+const hasContentType = response.hasHeader('content-type');
+```
+
+#### `response.headersSent`
+
+* Type: {boolean}
+
+True if headers were sent, false otherwise (read-only).
+
+#### `response.removeHeader(name)`
+
+* `name` {string}
+
+Removes a header that has been queued for implicit sending.
+
+```js
+response.removeHeader('Content-Encoding');
+```
+
+#### `response.req`
+
+* Type: {http2.Http2ServerRequest}
+
+A reference to the original HTTP2 `request` object.
+
+#### `response.sendDate`
+
+* Type: {boolean}
+
+When true, the Date header will be automatically generated and sent in
+the response if it is not already present in the headers. Defaults to true.
+
+This should only be disabled for testing; HTTP requires the Date header
+in responses.
+
+#### `response.setHeader(name, value)`
+
+* `name` {string}
+* `value` {string|string\[]}
+
+Sets a single header value for implicit headers. If this header already exists
+in the to-be-sent headers, its value will be replaced. Use an array of strings
+here to send multiple headers with the same name.
+
+```js
+response.setHeader('Content-Type', 'text/html; charset=utf-8');
+```
+
+or
+
+```js
+response.setHeader('Set-Cookie', ['type=ninja', 'language=javascript']);
+```
+
+Attempting to set a header field name or value that contains invalid characters
+will result in a `TypeError` being thrown.
+
+When headers have been set with `response.setHeader()`, they will be merged
+with any headers passed to `response.writeHead()`, with the headers passed
+to `response.writeHead()` given precedence.
+
+```js
+// Returns content-type = text/plain
+const server = http2.createServer((req, res) => {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.setHeader('X-Foo', 'bar');
+  res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+  res.end('ok');
+});
+```
+
+#### `response.setTimeout(msecs[, callback])`
+
+* `msecs` {number}
+* `callback` {Function}
+* Returns: {http2.Http2ServerResponse}
+
+Sets the `Http2Stream`'s timeout value to `msecs`. If a callback is
+provided, then it is added as a listener on the `'timeout'` event on
+the response object.
+
+If no `'timeout'` listener is added to the request, the response, or
+the server, then `Http2Stream`s are destroyed when they time out. If a
+handler is assigned to the request, the response, or the server's `'timeout'`
+events, timed out sockets must be handled explicitly.
+
+#### `response.socket`
+
+* Type: {net.Socket|tls.TLSSocket}
+
+Returns a `Proxy` object that acts as a `net.Socket` (or `tls.TLSSocket`) but
+applies getters, setters, and methods based on HTTP/2 logic.
+
+`destroyed`, `readable`, and `writable` properties will be retrieved from and
+set on `response.stream`.
+
+`destroy`, `emit`, `end`, `on` and `once` methods will be called on
+`response.stream`.
+
+`setTimeout` method will be called on `response.stream.session`.
+
+`pause`, `read`, `resume`, and `write` will throw an error with code
+`ERR_HTTP2_NO_SOCKET_MANIPULATION`. See `Http2Session` and Sockets for
+more information.
+
+All other interactions will be routed directly to the socket.
+
+```mjs
+import { createServer } from 'node:http2';
+const server = createServer((req, res) => {
+  const ip = req.socket.remoteAddress;
+  const port = req.socket.remotePort;
+  res.end(`Your IP address is ${ip} and your source port is ${port}.`);
+}).listen(3000);
+```
+
+```cjs
+const http2 = require('node:http2');
+const server = http2.createServer((req, res) => {
+  const ip = req.socket.remoteAddress;
+  const port = req.socket.remotePort;
+  res.end(`Your IP address is ${ip} and your source port is ${port}.`);
+}).listen(3000);
+```
+
+#### `response.statusCode`
+
+* Type: {number}
+
+When using implicit headers (not calling `response.writeHead()` explicitly),
+this property controls the status code that will be sent to the client when
+the headers get flushed.
+
+```js
+response.statusCode = 404;
+```
+
+After response header was sent to the client, this property indicates the
+status code which was sent out.
+
+#### `response.statusMessage`
+
+* Type: {string}
+
+Status message is not supported by HTTP/2 (RFC 7540 8.1.2.4). It returns
+an empty string.
+
+#### `response.stream`
+
+* Type: {Http2Stream}
+
+The `Http2Stream` object backing the response.
+
+#### `response.writableEnded`
+
+* Type: {boolean}
+
+Is `true` after `response.end()` has been called. This property
+does not indicate whether the data has been flushed, for this use
+`writable.writableFinished` instead.
+
+#### `response.write(chunk, encoding)`
+
+* `chunk` {string|Buffer|Uint8Array}
+* `encoding` {string}
+* `callback` {Function}
+* Returns: {boolean}
+
+If this method is called and `response.writeHead()` has not been called,
+it will switch to implicit header mode and flush the implicit headers.
+
+This sends a chunk of the response body. This method may
+be called multiple times to provide successive parts of the body.
+
+In the `node:http` module, the response body is omitted when the
+request is a HEAD request. Similarly, the `204` and `304` responses
+_must not_ include a message body.
+
+`chunk` can be a string or a buffer. If `chunk` is a string,
+the second parameter specifies how to encode it into a byte stream.
+By default the `encoding` is `'utf8'`. `callback` will be called when this chunk
+of data is flushed.
+
+This is the raw HTTP body and has nothing to do with higher-level multi-part
+body encodings that may be used.
+
+The first time `response.write()` is called, it will send the buffered
+header information and the first chunk of the body to the client. The second
+time `response.write()` is called, Node.js assumes data will be streamed,
+and sends the new data separately. That is, the response is buffered up to the
+first chunk of the body.
+
+Returns `true` if the entire data was flushed successfully to the kernel
+buffer. Returns `false` if all or part of the data was queued in user memory.
+`'drain'` will be emitted when the buffer is free again.
+
+#### `response.writeContinue()`
+
+Sends a status `100 Continue` to the client, indicating that the request body
+should be sent. See the `'checkContinue'` event on `Http2Server` and
+`Http2SecureServer`.
+
+#### `response.writeEarlyHints(hints)`
+
+* `hints` {Object}
+
+Sends a status `103 Early Hints` to the client with a Link header,
+indicating that the user agent can preload/preconnect the linked resources.
+The `hints` is an object containing the values of headers to be sent with
+early hints message.
+
+**Example**
+
+```js
+const earlyHintsLink = '</styles.css>; rel=preload; as=style';
+response.writeEarlyHints({
+  'link': earlyHintsLink,
+});
+
+const earlyHintsLinks = [
+  '</styles.css>; rel=preload; as=style',
+  '</scripts.js>; rel=preload; as=script',
+];
+response.writeEarlyHints({
+  'link': earlyHintsLinks,
+});
+```
+
+#### `response.writeInformation(statusCode[, headers])`
+
+* `statusCode` {number} An HTTP 1xx informational status code, between `100`
+  and `199` inclusive, excluding `101` (Switching Protocols) which is not
+  allowed in HTTP/2.
+* `headers` {Object} An optional object of headers to send with the
+  informational response.
+
+Sends an arbitrary HTTP 1xx informational response, equivalent in HTTP/2 to a
+`HEADERS` frame whose `:status` pseudo-header is a 1xx code. May be called
+multiple times before the final response. After the final response headers
+have been sent, this method is a no-op and returns `false`.
+
+This is the generic equivalent of `response.writeContinue()` and
+`response.writeEarlyHints()`.
+
+```js
+response.writeInformation(110, { 'X-Progress': '50%' });
+```
+
+#### `response.writeHead(statusCode, statusMessage)`
+
+* `statusCode` {number}
+* `statusMessage` {string}
+* `headers` {HTTP/2 Headers Object|HTTP/2 Raw Headers}
+* Returns: {http2.Http2ServerResponse}
+
+Sends a response header to the request. The status code is a 3-digit HTTP
+status code, like `404`. The last argument, `headers`, are the response headers.
+
+Returns a reference to the `Http2ServerResponse`, so that calls can be chained.
+
+For compatibility with HTTP/1, a human-readable `statusMessage` may be
+passed as the second argument. However, because the `statusMessage` has no
+meaning within HTTP/2, the argument will have no effect and a process warning
+will be emitted.
+
+```js
+const body = 'hello world';
+response.writeHead(200, {
+  'Content-Length': Buffer.byteLength(body),
+  'Content-Type': 'text/plain; charset=utf-8',
+});
+```
+
+`Content-Length` is given in bytes not characters. The
+`Buffer.byteLength()` API may be used to determine the number of bytes in a
+given encoding. On outbound messages, Node.js does not check if Content-Length
+and the length of the body being transmitted are equal or not. However, when
+receiving messages, Node.js will automatically reject messages when the
+`Content-Length` does not match the actual payload size.
+
+This method may be called at most one time on a message before
+`response.end()` is called.
+
+If `response.write()` or `response.end()` are called before calling
+this, the implicit/mutable headers will be calculated and call this function.
+
+When headers have been set with `response.setHeader()`, they will be merged
+with any headers passed to `response.writeHead()`, with the headers passed
+to `response.writeHead()` given precedence.
+
+```js
+// Returns content-type = text/plain
+const server = http2.createServer((req, res) => {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.setHeader('X-Foo', 'bar');
+  res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+  res.end('ok');
+});
+```
+
+Attempting to set a header field name or value that contains invalid characters
+will result in a `TypeError` being thrown.

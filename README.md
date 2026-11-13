@@ -56,7 +56,11 @@ With Node 22.18 or later, from the root of this repository, with no package to i
 node scripts/check-base.ts          # checks code/, chat/models/ and a generated chat profile
 node --test 'scripts/*.test.ts'     # tests of the check, extract.ts, export and import
 node scripts/fixtures.ts samples    # fake sample files, to try extract.ts by hand
+node scripts/check-library.ts       # the official documentation library (library/)
 ```
+
+`node scripts/fetch-library.ts` rebuilds `library/` from the documentation repositories listed in
+`library/sources.json`, each at a pinned version. It needs git and network access.
 
 The check fails on any finding: `AGENTS.md` too long, a skill without its trigger line or with an
 unmarked action step, a document without its header or sources, a request to use the web, French
@@ -92,6 +96,11 @@ scripts/
   export.ts                  Builds the export and generates the chat profile
   check-public.ts            Checks that this repository can be made public
   evaluation-summary.ts      Sums up an evaluation with and without the base
+library/                     Official documentation of the tools, under their own licenses
+  sources.json               Each source: repository, pinned version, paths, license, core or not
+  <tool>/index.md            One line per file; search it with grep
+  <tool>/<page>.md           One page, 16 KB at most, with its source, commit and license
+THIRD_PARTY_NOTICES.md       The license and authors of each source of library/
 evaluation/                  The task set and protocol of the evaluation
 samples/                     Sample projects for the tests and the trials
 trials/                      The trial session on a workstation (README.md), one guide per feature
@@ -308,5 +317,7 @@ out of this repository; each topic is built from its report.
 
 - Everything written for this base, documents and scripts, is under the MIT License: see
   `LICENSE`.
-- Text adapted from an official documentation keeps the attribution its own license asks for. Each
-  such source is listed in `THIRD_PARTY_NOTICES.md` once the first one is added.
+- The documents of the base summarize official documentation in their own words and cite it.
+- `library/` holds official documentation of other projects, each under its own license (CC BY 4.0,
+  CC BY-SA 2.5, Apache 2.0, MIT), with its authors in `THIRD_PARTY_NOTICES.md` and its source in
+  the header of each file. The MIT License of the base does not apply to it.

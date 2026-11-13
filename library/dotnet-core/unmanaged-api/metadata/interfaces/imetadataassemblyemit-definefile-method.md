@@ -1,0 +1,57 @@
+---
+title: "IMetaDataAssemblyEmit::DefineFile Method"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/core/unmanaged-api/metadata/interfaces/imetadataassemblyemit-definefile-method.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# IMetaDataAssemblyEmit::DefineFile Method
+
+Creates a `File` metadata structure containing metadata for assembly referenced by this assembly, and returns the associated metadata token.
+
+## Syntax
+
+```cpp
+HRESULT DefineFile (
+    [in]  LPCWSTR        szName,
+    [in]  const void     *pbHashValue,
+    [in]  ULONG          cbHashValue,
+    [in]  DWORD          dwFileFlags,
+    [out] mdFile         *pmdf
+);
+```
+
+## Parameters
+
+ `szName`
+ [in] The name of the file to be consumed.
+
+ `pbHashValue`
+ [in] A pointer to the hash data associated with the assembly.
+
+ `cbHashValue`
+ [in] The size in bytes of `pbHashValue`.
+
+ `dwFileFlags`
+ [in] A bitwise combination of `FileFlags` values that specify property settings.
+
+ `pmdf`
+ [out] A pointer to the returned `File` token.
+
+## Remarks
+
+ One `File` metadata structure must be defined for each file that was part of this assembly at the time that this assembly was built, excluding the file that contains the metadata.
+
+## Requirements
+
+ **Platform:** See .NET supported operating systems.
+
+ **Header:** Cor.h
+
+ **Library:** CorGuids.lib
+
+## See also
+
+- IMetaDataAssemblyEmit Interface

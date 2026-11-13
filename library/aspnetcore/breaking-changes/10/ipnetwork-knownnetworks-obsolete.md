@@ -1,0 +1,52 @@
+---
+title: "Breaking change: IPNetwork and ForwardedHeadersOptions.KnownNetworks are obsolete"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/53d05ee9faf3cfe577c6180a0a4c6966d8396ffd/aspnetcore/breaking-changes/10/ipnetwork-knownnetworks-obsolete.md"
+commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
+license: "CC-BY-4.0"
+---
+
+# IPNetwork and ForwardedHeadersOptions.KnownNetworks are obsolete
+
+`Microsoft.AspNetCore.HttpOverrides.IPNetwork` and `Microsoft.AspNetCore.Builder.ForwardedHeadersOptions.KnownNetworks` have been marked as obsolete in favor of using `System.Net.IPNetwork` and `KnownIPNetworks`.
+
+## Version introduced
+
+.NET 10 Preview 7
+
+## Previous behavior
+
+Previously, you could use `Microsoft.AspNetCore.HttpOverrides.IPNetwork` and `Microsoft.AspNetCore.Builder.ForwardedHeadersOptions.KnownNetworks` to configure known networks for the forwarded headers middleware:
+
+```csharp
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    KnownNetworks.Add(new(IPAddress.Loopback, 8))
+});
+```
+
+## New behavior
+
+Starting in .NET 10, if you use the obsolete APIs in your code, you'll get warning `ASPDEPR005` at compile time:
+
+> warning ASPDEPR005: Please use KnownIPNetworks instead. For more information, visit <https://aka.ms/aspnet/deprecate/005>.
+
+Use the `System.Net.IPNetwork` type and `KnownIPNetworks` property instead.
+
+## Type of breaking change
+
+This change can affect source compatibility.
+
+## Reason for change
+
+`System.Net.IPNetwork` has replaced the `Microsoft.AspNetCore.HttpOverrides.IPNetwork` type that was implemented for `Microsoft.AspNetCore.HttpOverrides.ForwardedHeadersMiddleware`.
+
+## Recommended action
+
+Change to using `System.Net.IPNetwork` and `KnownIPNetworks`.
+
+## Affected APIs
+
+- `Microsoft.AspNetCore.HttpOverrides.IPNetwork`
+- `Microsoft.AspNetCore.Builder.ForwardedHeadersOptions.KnownNetworks`

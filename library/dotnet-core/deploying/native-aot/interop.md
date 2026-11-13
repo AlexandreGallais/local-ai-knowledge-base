@@ -1,0 +1,91 @@
+---
+title: "Native code interop with Native AOT"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/core/deploying/native-aot/interop.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# Native code interop with Native AOT
+
+Native code interop is a technology that allows you to access unmanaged libraries from managed code, or expose managed libraries to unmanaged code (the opposite direction).
+
+While native code interop works similarly in Native AOT and non-AOT deployments, there are some specifics that differ when publishing as Native AOT.
+
+## Direct P/Invoke calls
+
+The P/Invoke calls in AOT-compiled binaries are bound lazily at runtime by default, for better compatibility. You can configure the AOT compiler to generate direct calls for selected P/Invoke methods that are bound during startup by the dynamic loader that comes with the operating system. The unmanaged libraries and entry points referenced via direct calls must always be available at runtime, otherwise the native binary fails to start.
+
+The benefits of direct P/Invoke calls are:
+
+- They have *better steady state performance*.
+- They make it possible to *link the unmanaged dependencies statically*.
+
+You can configure the direct P/Invoke generation using `<DirectPInvoke>` items in the project file. The item name can be either *\<modulename>*, which enables direct calls for all entry points in the module, or *\<modulename!entrypointname>*, which enables a direct call for the specific module and entry point only.
+
+To specify a list of entry points in an external file, use `<DirectPInvokeList>` items in the project file. A list is useful when the number of direct P/Invoke calls is large and it's unpractical to specify them using individual `<DirectPInvoke>` items. The file can contain empty lines and comments starting with `#`.
+
+Examples:
+
+```xml
+<ItemGroup>
+  <!-- Generate direct PInvoke calls for everything in __Internal -->
+  <!-- This option replicates Mono AOT behavior that generates direct PInvoke calls for __Internal -->
+  <DirectPInvoke Include="__Internal" />
+  <!-- Generate direct PInvoke calls for everything in libc (also matches libc.so on Linux or libc.dylib on macOS) -->
+  <DirectPInvoke Include="libc" />
+  <!-- Generate direct PInvoke calls for Sleep in kernel32 (also matches kernel32.dll on Windows) -->
+  <DirectPInvoke Include="kernel32!Sleep" />
+  <!-- Generate direct PInvoke for all APIs listed in DirectXAPIs.txt -->
+  <DirectPInvokeList Include="DirectXAPIs.txt" />
+</ItemGroup>
+```
+
+On Windows, Native AOT uses a prepopulated list of direct P/Invoke methods that are available on all supported versions of Windows.
+
+> **Warning:**
+> Because direct P/Invoke methods are resolved by the operating system dynamic loader and not by the Native AOT runtime library, direct P/Invoke methods will not respect the `System.Runtime.InteropServices.DefaultDllImportSearchPathsAttribute`. The library search order will follow the dynamic loader rules as defined by the operating system. Some operating systems and loaders offer ways to control dynamic loading through linker flags (such as `/DEPENDENTLOADFLAG` on Windows or `-rpath` on Linux). For more information on how to specify linker flags, see the Linking section.
+
+### Linking
+
+To statically link against one or more unmanaged libraries, you need to specify `<NativeLibrary Include="filename" />` pointing to a `.lib` file on Windows and a `.a` file on Unix-like systems for each library.
+
+Examples:
+
+```xml
+<ItemGroup>
+  <!-- Generate direct PInvokes for Dependency -->
+  <DirectPInvoke Include="Dependency" />
+  <!-- Specify library to link against -->
+  <NativeLibrary Include="Dependency.lib" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
+  <NativeLibrary Include="Dependency.a" Condition="!$(RuntimeIdentifier.StartsWith('win'))" />
+</ItemGroup>
+```
+
+If the specified native library has a dependency on other static libraries, then `NativeLibrary` items will need to be added for each of the transitive depenencies as well, otherwise the native linker will fail because of missing symbols.
+
+Platform conventions are followed when it comes to the format of `NativeLibrary` entries. The underlying native linker may search standard library paths or allow rooted file paths.
+
+To specify additional flags to the native linker, use the `<LinkerArg>` item.
+
+Examples:
+
+```xml
+<ItemGroup>
+  <!-- link.exe is used as the linker on Windows -->
+  <LinkerArg Include="/DEPENDENTLOADFLAG:0x800" Condition="$(RuntimeIdentifier.StartsWith('win'))" />
+
+  <!-- Native AOT invokes clang/gcc as the linker, so arguments need to be prefixed with "-Wl," -->
+  <LinkerArg Include="-Wl,-rpath,'/bin/'" Condition="$(RuntimeIdentifier.StartsWith('linux'))" />
+</ItemGroup>
+```
+
+## Native exports
+
+The Native AOT compiler exports methods annotated with `System.Runtime.InteropServices.UnmanagedCallersOnlyAttribute` with a nonempty `EntryPoint` property as
+public C entry points. This makes it possible to either dynamically or statically link the AOT compiled modules into external
+programs. Only methods marked `UnmanagedCallersOnly` in the published assembly are considered. Methods in project references or NuGet packages won't be exported.
+For more information, see NativeLibrary sample.
+
+Methods annotated with `UnmanagedCallersOnly` don't perform marshalling and require blittable parameter and return types. Starting in .NET 11, when runtime marshalling is enabled, Native AOT throws `System.InvalidProgramException` if an unmanaged caller invokes such a method with a non-blittable signature, such as a `bool` return type or a `char` parameter. The exception causes the process to terminate (fail fast) and can't be caught to recover from the invalid signature. Use blittable equivalents or, for supported unmanaged types, disable runtime marshalling in the assembly that declares the method. For details, see Native AOT rejects non-blittable UnmanagedCallersOnly signatures.

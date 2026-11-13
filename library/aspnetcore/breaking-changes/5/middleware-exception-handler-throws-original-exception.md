@@ -1,0 +1,46 @@
+---
+title: "Breaking change: Middleware: Exception handler middleware throws original exception if handler not found"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/53d05ee9faf3cfe577c6180a0a4c6966d8396ffd/aspnetcore/breaking-changes/5/middleware-exception-handler-throws-original-exception.md"
+commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
+license: "CC-BY-4.0"
+---
+
+# Middleware: Exception handler middleware throws original exception if handler not found
+
+Before ASP.NET Core 5.0, the exception handler middleware executes the configured exception handler when an exception has occurred. If the exception handler, configured via `Microsoft.AspNetCore.Builder.ExceptionHandlerOptions.ExceptionHandlingPath`, can't be found, an HTTP 404 response is produced. The response is misleading in that it:
+
+* Seems to be a user error.
+* Obscures the fact that an exception occurred on the server.
+
+To address the misleading error in ASP.NET Core 5.0, the `ExceptionHandlerMiddleware` throws the original exception if the exception handler can't be found. As a result, an HTTP 500 response is produced by the server. The response will be easier to examine in the server logs when debugging the error that occurred.
+
+For discussion, see GitHub issue dotnet/aspnetcore#25288.
+
+## Version introduced
+
+5.0 RC 1
+
+## Old behavior
+
+The exception handler middleware produces an HTTP 404 response if the configured exception handler can't be found.
+
+## New behavior
+
+The exception handler middleware throws the original exception if the configured exception handler can't be found.
+
+## Reason for change
+
+The HTTP 404 error doesn't make it obvious that an exception occurred on the server. This change produces an HTTP 500 error to make it obvious that:
+
+* The problem isn't caused by a user error.
+* An exception was encountered on the server.
+
+## Recommended action
+
+There are no API changes. All existing apps will continue to compile and run. The exception thrown is handled by the server. For example, the exception is converted to an HTTP 500 error response by Kestrel or HTTP.sys.
+
+## Affected APIs
+
+None

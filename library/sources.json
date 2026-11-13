@@ -1,0 +1,302 @@
+{
+  "sources": [
+    {
+      "tool": "typescript",
+      "title": "TypeScript Handbook, reference and release notes",
+      "repository": "https://github.com/microsoft/TypeScript-Website.git",
+      "ref": "v2",
+      "version": "6.0",
+      "license": "CC-BY-4.0",
+      "attribution": "Microsoft and the TypeScript Website contributors",
+      "flavor": "typescript",
+      "core": true,
+      "paths": ["packages/documentation/copy/en/"],
+      "docs": ["packages/documentation/copy/en"]
+    },
+    {
+      "tool": "angular",
+      "title": "Angular documentation (angular.dev)",
+      "repository": "https://github.com/angular/angular.git",
+      "ref": "v22.2.6",
+      "version": "22.2",
+      "license": "CC-BY-4.0",
+      "attribution": "Google LLC and the Angular contributors",
+      "flavor": "angular",
+      "core": true,
+      "paths": ["adev/src/content/"],
+      "docs": ["adev/src/content"],
+      "exclude": [
+        "adev/src/content/examples",
+        "adev/src/content/tutorials",
+        "adev/src/content/aria",
+        "adev/src/content/events"
+      ]
+    },
+    {
+      "tool": "eslint",
+      "title": "ESLint core rules",
+      "repository": "https://github.com/eslint/eslint.git",
+      "ref": "v10.14.0",
+      "version": "10.14",
+      "license": "MIT",
+      "attribution": "OpenJS Foundation and other contributors",
+      "flavor": "eslint",
+      "core": true,
+      "paths": ["docs/src/rules/"],
+      "docs": ["docs/src/rules"]
+    },
+    {
+      "tool": "typescript-eslint",
+      "title": "typescript-eslint rules",
+      "repository": "https://github.com/typescript-eslint/typescript-eslint.git",
+      "ref": "v8.72.2",
+      "version": "8.72",
+      "license": "MIT",
+      "attribution": "typescript-eslint and other contributors",
+      "flavor": "mdx",
+      "core": true,
+      "paths": ["packages/eslint-plugin/docs/rules/"],
+      "docs": ["packages/eslint-plugin/docs/rules"]
+    },
+    {
+      "tool": "angular-eslint",
+      "title": "angular-eslint rules for TypeScript and templates",
+      "repository": "https://github.com/angular-eslint/angular-eslint.git",
+      "ref": "v22.6.0",
+      "version": "22.6",
+      "license": "MIT",
+      "attribution": "James Henry and the angular-eslint contributors",
+      "flavor": "markdown",
+      "core": true,
+      "paths": [
+        "packages/eslint-plugin/docs/rules/",
+        "packages/eslint-plugin-template/docs/rules/"
+      ],
+      "docs": [
+        "packages/eslint-plugin/docs/rules",
+        "packages/eslint-plugin-template/docs/rules"
+      ]
+    },
+    {
+      "tool": "rxjs",
+      "title": "RxJS 7 guides and deprecations",
+      "repository": "https://github.com/ReactiveX/rxjs.git",
+      "ref": "7.8.2",
+      "version": "7.8",
+      "license": "Apache-2.0",
+      "attribution": "Google, Inc., Netflix, Inc., Microsoft Corp. and contributors",
+      "flavor": "markdown",
+      "core": true,
+      "paths": ["docs_app/content/"],
+      "docs": ["docs_app/content"],
+      "exclude": [
+        "docs_app/content/marketing",
+        "docs_app/content/images",
+        "docs_app/content/blackLivesMatter.md",
+        "docs_app/content/file-not-found.md",
+        "docs_app/content/code-of-conduct.md",
+        "docs_app/content/maintainer-guidelines.md"
+      ]
+    },
+    {
+      "tool": "mdn-svg",
+      "title": "MDN Web Docs: SVG, geometry, Web Animations, animation frames and pointer events",
+      "repository": "https://github.com/mdn/content.git",
+      "ref": "main",
+      "version": "2026-11",
+      "license": "CC-BY-SA-2.5",
+      "attribution": "Mozilla Contributors",
+      "flavor": "mdn",
+      "core": true,
+      "paths": [
+        "files/en-us/web/svg/",
+        "files/en-us/web/api/svg*/",
+        "files/en-us/web/api/dommatrix*/",
+        "files/en-us/web/api/dompoint*/",
+        "files/en-us/web/api/domrect*/",
+        "files/en-us/web/api/web_animations_api/",
+        "files/en-us/web/api/animation/",
+        "files/en-us/web/api/keyframeeffect/",
+        "files/en-us/web/api/element/animate/",
+        "files/en-us/web/api/window/requestanimationframe/",
+        "files/en-us/web/api/window/cancelanimationframe/",
+        "files/en-us/web/api/pointer_events/",
+        "files/en-us/web/api/pointerevent/",
+        "files/en-us/web/css/transform*/",
+        "files/en-us/web/css/reference/properties/transform*/",
+        "files/en-us/web/css/reference/values/transform-function/"
+      ],
+      "docs": ["files/en-us/web"]
+    },
+    {
+      "tool": "devcontainers",
+      "title": "Development Container Specification",
+      "repository": "https://github.com/devcontainers/spec.git",
+      "ref": "main",
+      "version": "2026-11",
+      "license": "CC-BY-4.0",
+      "attribution": "Microsoft Corporation and the Dev Container Spec contributors",
+      "flavor": "markdown",
+      "core": true,
+      "paths": ["docs/specs/"],
+      "docs": ["docs/specs"]
+    },
+    {
+      "tool": "node",
+      "title": "Node.js API reference",
+      "repository": "https://github.com/nodejs/node.git",
+      "ref": "v26.13.1",
+      "version": "26.13",
+      "license": "MIT",
+      "attribution": "Node.js contributors",
+      "flavor": "node",
+      "core": false,
+      "paths": ["doc/api/"],
+      "docs": ["doc/api"]
+    },
+    {
+      "tool": "dotnet-csharp",
+      "title": "C# guide and language reference",
+      "repository": "https://github.com/dotnet/docs.git",
+      "ref": "main",
+      "version": "11",
+      "license": "CC-BY-4.0",
+      "attribution": "Microsoft and the .NET docs contributors",
+      "flavor": "docfx",
+      "core": false,
+      "paths": [
+        "docs/csharp/",
+        "samples/snippets/csharp/",
+        "includes/"
+      ],
+      "docs": ["docs/csharp"]
+    },
+    {
+      "tool": "dotnet-core",
+      "title": ".NET fundamentals, SDK, deployment and breaking changes",
+      "repository": "https://github.com/dotnet/docs.git",
+      "ref": "main",
+      "version": "11",
+      "license": "CC-BY-4.0",
+      "attribution": "Microsoft and the .NET docs contributors",
+      "flavor": "docfx",
+      "core": false,
+      "paths": [
+        "docs/core/",
+        "includes/"
+      ],
+      "docs": ["docs/core"]
+    },
+    {
+      "tool": "dotnet-standard",
+      "title": ".NET standard library guides",
+      "repository": "https://github.com/dotnet/docs.git",
+      "ref": "main",
+      "version": "11",
+      "license": "CC-BY-4.0",
+      "attribution": "Microsoft and the .NET docs contributors",
+      "flavor": "docfx",
+      "core": false,
+      "paths": [
+        "docs/standard/",
+        "samples/snippets/csharp/",
+        "includes/"
+      ],
+      "docs": ["docs/standard"]
+    },
+    {
+      "tool": "aspnetcore",
+      "title": "ASP.NET Core documentation",
+      "repository": "https://github.com/dotnet/AspNetCore.Docs.git",
+      "ref": "main",
+      "version": "11",
+      "license": "CC-BY-4.0",
+      "attribution": "Microsoft and the ASP.NET Core docs contributors",
+      "flavor": "docfx",
+      "core": false,
+      "paths": ["aspnetcore/"],
+      "docs": ["aspnetcore"]
+    },
+    {
+      "tool": "efcore",
+      "title": "Entity Framework Core documentation",
+      "repository": "https://github.com/dotnet/EntityFramework.Docs.git",
+      "ref": "main",
+      "version": "11",
+      "license": "CC-BY-4.0",
+      "attribution": "Microsoft and the Entity Framework docs contributors",
+      "flavor": "docfx",
+      "core": false,
+      "paths": [
+        "entity-framework/",
+        "samples/"
+      ],
+      "docs": ["entity-framework"],
+      "exclude": ["entity-framework/ef6"]
+    },
+    {
+      "tool": "kubernetes",
+      "title": "Kubernetes documentation",
+      "repository": "https://github.com/kubernetes/website.git",
+      "ref": "main",
+      "version": "1.37",
+      "license": "CC-BY-4.0",
+      "attribution": "The Kubernetes Authors",
+      "flavor": "hugo",
+      "core": false,
+      "paths": [
+        "content/en/docs/",
+        "content/en/examples/"
+      ],
+      "docs": ["content/en/docs"]
+    },
+    {
+      "tool": "docker",
+      "title": "Docker documentation",
+      "repository": "https://github.com/docker/docs.git",
+      "ref": "main",
+      "version": "2026-11",
+      "license": "Apache-2.0",
+      "attribution": "Docker, Inc. and the Docker docs contributors",
+      "flavor": "hugo",
+      "core": false,
+      "paths": ["content/"],
+      "docs": ["content"],
+      "exclude": [
+        "content/contribute",
+        "content/includes",
+        "content/tags"
+      ]
+    },
+    {
+      "tool": "podman",
+      "title": "Podman command reference",
+      "repository": "https://github.com/containers/podman.git",
+      "ref": "v6.2.0",
+      "version": "6.2",
+      "license": "Apache-2.0",
+      "attribution": "The Podman contributors",
+      "flavor": "podman",
+      "core": false,
+      "paths": ["docs/source/markdown/"],
+      "docs": ["docs/source/markdown"],
+      "exclude": ["docs/source/markdown/options"]
+    },
+    {
+      "tool": "rust-book",
+      "title": "The Rust Programming Language",
+      "repository": "https://github.com/rust-lang/book.git",
+      "ref": "main",
+      "version": "2026-11",
+      "license": "MIT OR Apache-2.0",
+      "attribution": "Steve Klabnik, Carol Nichols, Chris Krycho and the Rust community",
+      "flavor": "mdbook",
+      "core": false,
+      "paths": [
+        "src/",
+        "listings/"
+      ],
+      "docs": ["src"]
+    }
+  ]
+}

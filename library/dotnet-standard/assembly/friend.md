@@ -1,0 +1,100 @@
+---
+title: "Friend assemblies"
+tool: "dotnet-standard"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/standard/assembly/friend.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# Friend assemblies
+
+A *friend assembly* is an assembly that can access another assembly's internal (C#) or Friend (Visual Basic) types and members. If you add an assembly attribute to *AssemblyA* to identify *AssemblyB* as a friend assembly, you no longer have to mark types and members in *AssemblyA* as public in order for them to be accessed by *AssemblyB*. This is especially convenient in the following scenarios:
+
+- During unit testing, when test code runs in a separate assembly but requires access to members in the assembly being tested that are marked as `internal` in C# or `Friend` in Visual Basic.
+
+- When you are developing a class library and additions to the library are contained in separate assemblies but require access to members in existing assemblies that are marked as `internal` in C# or `Friend` in Visual Basic.
+
+## Remarks
+
+You can use the `System.Runtime.CompilerServices.InternalsVisibleToAttribute` attribute to identify one or more friend assemblies for a given assembly. The following example uses the `System.Runtime.CompilerServices.InternalsVisibleToAttribute` attribute in *AssemblyA* and specifies assembly *AssemblyB* as a friend assembly. This gives assembly *AssemblyB* access to all types and members in *Assembly A* that are marked as `internal` in C# or `Friend` in Visual Basic.
+
+> **Note:**
+> When you compile an assembly like *AssemblyB* that will access internal types or internal members of another assembly like *AssemblyA*, you must explicitly specify the name of the output file (*.exe* or *.dll*) by using the **-out** compiler option. This is required because the compiler has not yet generated the name for the assembly it is building at the time it is binding to external references. For more information, see **OutputAssembly** (C#) or -out (Visual Basic).
+
+```csharp
+using System.Runtime.CompilerServices;
+using System;
+
+[assembly: InternalsVisibleTo("AssemblyB")]
+
+// The class is internal by default.
+class FriendClass
+{
+    public void Test()
+    {
+        Console.WriteLine("Sample Class");
+    }
+}
+
+// Public class that has an internal method.
+public class ClassWithFriendMethod
+{
+    internal void Test()
+    {
+        Console.WriteLine("Sample Method");
+    }
+
+}
+```
+
+```vb
+Imports System.Runtime.CompilerServices
+<Assembly: InternalsVisibleTo("AssemblyB")>
+
+' Friend class.
+Friend Class FriendClass
+    Public Sub Test()
+        Console.WriteLine("Sample Class")
+    End Sub
+End Class
+
+' Public class with a Friend method.
+Public Class ClassWithFriendMethod
+    Friend Sub Test()
+        Console.WriteLine("Sample Method")
+    End Sub
+End Class
+```
+
+Only assemblies that you explicitly specify as friends can access `internal` (C#) or `Friend` (Visual Basic) types and members. For example, if *AssemblyB* is a friend of *Assembly A* and *Assembly C* references *AssemblyB*, *Assembly C* does not have access to `internal` (C#) or `Friend` (Visual Basic) types in *Assembly A*.
+
+The compiler performs some basic validation of the friend assembly name passed to the `System.Runtime.CompilerServices.InternalsVisibleToAttribute` attribute. If *Assembly A* declares *AssemblyB* as a friend assembly, the validation rules are as follows:
+
+- If *Assembly A* is strong named, *AssemblyB* must also be strong named. The friend assembly name that is passed to the attribute must consist of the assembly name and the public key of the strong-name key that is used to sign *AssemblyB*.
+
+     The friend assembly name that is passed to the `System.Runtime.CompilerServices.InternalsVisibleToAttribute` attribute cannot be the strong name of *AssemblyB*. Don't include the assembly version, culture, architecture, or public key token.
+
+- If *Assembly A* is not strong named, the friend assembly name should consist of only the assembly name. For more information, see How to: Create unsigned friend assemblies.
+
+- If *AssemblyB* is strong named, you must specify the strong-name key for *AssemblyB* by using the project setting or the command-line `/keyfile` compiler option. For more information, see How to: Create signed friend assemblies.
+
+ The `System.Security.Permissions.StrongNameIdentityPermission` class also provides the ability to share types, with the following differences:
+
+- `System.Security.Permissions.StrongNameIdentityPermission` applies to an individual type, while a friend assembly applies to the whole assembly.
+
+- If there are hundreds of types in *Assembly A* that you want to share with *AssemblyB*, you have to add `System.Security.Permissions.StrongNameIdentityPermission` to all of them. If you use a friend assembly, you only need to declare the friend relationship once.
+
+- If you use `System.Security.Permissions.StrongNameIdentityPermission`, the types you want to share have to be declared as public. If you use a friend assembly, the shared types are declared as `internal` (C#) or `Friend` (Visual Basic).
+
+For information about how to access an assembly's `internal` (C#) or `Friend` (Visual Basic) types and methods from a module file (a file with the *.netmodule* extension), see **ModuleAssemblyName** (C#) or -moduleassemblyname (Visual Basic).
+
+## See also
+
+- `System.Runtime.CompilerServices.InternalsVisibleToAttribute`
+- `System.Security.Permissions.StrongNameIdentityPermission`
+- How to: Create unsigned friend assemblies
+- How to: Create signed friend assemblies
+- Assemblies in .NET
+- C# programming guide
+- Programming concepts (Visual Basic)

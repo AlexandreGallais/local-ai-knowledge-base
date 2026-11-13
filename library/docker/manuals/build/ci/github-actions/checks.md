@@ -1,0 +1,130 @@
+---
+title: "Validating build configuration with GitHub Actions"
+tool: "docker"
+version: "2026-11"
+source: "https://github.com/docker/docs/blob/a0442378fca4987b1235614ec917b4138b5d5e5d/content/manuals/build/ci/github-actions/checks.md"
+commit: "a0442378fca4987b1235614ec917b4138b5d5e5d"
+license: "Apache-2.0"
+---
+
+# Validating build configuration with GitHub Actions
+
+Build checks let you validate your `docker build`
+configuration without actually running the build.
+
+## Run checks with `docker/build-push-action`
+
+To run build checks in a GitHub Actions workflow with the `build-push-action`,
+set the `call` input parameter to `check`. With this set, the workflow fails if
+any check warnings are detected for your build's configuration.
+
+```yaml
+name: ci
+
+on:
+  push:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@{{% param "login_action_version" %}}
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@{{% param "setup_buildx_action_version" %}}
+
+      - name: Validate build configuration
+        uses: docker/build-push-action@{{% param "build_push_action_version" %}}
+        with:
+          call: check
+
+      - name: Build and push
+        uses: docker/build-push-action@{{% param "build_push_action_version" %}}
+        with:
+          push: true
+          tags: user/app:latest
+```
+
+## Run checks with `docker/bake-action`
+
+If you're using Bake and `docker/bake-action` to run your builds, you don't
+need to specify any special inputs in your GitHub Actions workflow
+configuration. Instead, define a Bake target that calls the `check` method,
+and invoke that target in your CI.
+
+```hcl
+target "build" {
+  dockerfile = "Dockerfile"
+  args = {
+    FOO = "bar"
+  }
+}
+target "validate-build" {
+  inherits = ["build"]
+  call = "check"
+}
+```
+
+```yaml
+name: ci
+
+on:
+  push:
+
+env:
+  IMAGE_NAME: user/app
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@{{% param "login_action_version" %}}
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@{{% param "setup_buildx_action_version" %}}
+
+      - name: Validate build configuration
+        uses: docker/bake-action@{{% param "bake_action_version" %}}
+        with:
+          targets: validate-build
+
+      - name: Build
+        uses: docker/bake-action@{{% param "bake_action_version" %}}
+        with:
+          targets: build
+          push: true
+```
+
+### Using the `call` input directly
+
+You can also set the build method with the `call` input which is equivalent to using the `--call` flag with `docker buildx bake`
+
+For example, to run a check without defining `call` in your Bake file:
+
+```yaml
+name: ci
+
+on:
+  push:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@{{% param "setup_buildx_action_version" %}}
+
+      - name: Validate build configuration
+        uses: docker/bake-action@{{% param "bake_action_version" %}}
+        with:
+          targets: build
+          call: check
+```

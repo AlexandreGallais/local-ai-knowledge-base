@@ -1,0 +1,50 @@
+---
+title: "Breaking change - Linux native library resolution no longer uses `netcoredeps`"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/core/compatibility/interop/8.0/linux-netcoredeps.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# Linux native library resolution no longer uses `netcoredeps`
+
+Starting in .NET 8, Linux applications no longer search the `netcoredeps` subdirectory for native libraries.
+
+## Version introduced
+
+.NET 8
+
+## Previous behavior
+
+In earlier versions of .NET, Linux applications searched for native libraries in a `netcoredeps` subdirectory located next to the application executable. This behavior applied to all native library loads, including user-defined platform invokes (p/invokes).
+
+## New behavior
+
+In .NET 8 and later, Linux applications no longer search the `netcoredeps` subdirectory for native libraries. Native library resolution now follows standard mechanisms without relying on this subdirectory.
+
+## Type of breaking change
+
+This is a behavioral change.
+
+## Reason for change
+
+The `netcoredeps` behavior was originally introduced to handle complex dependencies on third-party libraries in earlier .NET versions. .NET 8+ no longer requires this behavior due to improved dependency handling. Additionally, the mechanism isn't aligned with recommended practices for ELF platforms.
+
+For more information, see GitHub issue #114393.
+
+## Recommended action
+
+If your application relied on the `netcoredeps` subdirectory for p/invokes or custom native library resolution, use the following alternatives:
+
+- Implement a custom resolution mechanism using one of the following:
+  - `System.Runtime.Loader.AssemblyLoadContext.ResolvingUnmanagedDll`
+  - System.Runtime.Loader.AssemblyLoadContext.LoadUnmanagedDll
+  - `System.Runtime.InteropServices.NativeLibrary.SetDllImportResolver(System.Reflection.Assembly,System.Runtime.InteropServices.DllImportResolver)`
+  - `System.Runtime.InteropServices.NativeLibrary.Load*`
+- If an `RPATH` is required in your deployment, modify the ELF file explicitly using the `patchelf` utility.
+
+## Affected APIs
+
+- `DllImport`
+- `System.Runtime.InteropServices.NativeLibrary.Load*`

@@ -1,0 +1,107 @@
+---
+title: "ASP.NET Core built-in authentication and authorization metrics"
+tool: "aspnetcore"
+version: "11"
+source: "https://github.com/dotnet/AspNetCore.Docs/blob/53d05ee9faf3cfe577c6180a0a4c6966d8396ffd/aspnetcore/metrics/security.md"
+commit: "53d05ee9faf3cfe577c6180a0a4c6966d8396ffd"
+license: "CC-BY-4.0"
+---
+
+# ASP.NET Core built-in authentication and authorization metrics
+
+This article describes the built-in authentication and authorization metrics for ASP.NET Core produced using the `System.Diagnostics.Metrics` API. These metrics cover authorization attempts and authentication operations. They're available in ASP.NET Core 10.0 or later.
+
+For an overview of all built-in metrics reference pages and how to read this reference, see ASP.NET Core built-in metrics. For information on how to collect, report, enrich, and test with ASP.NET Core metrics, see ASP.NET Core metrics.
+
+## `Microsoft.AspNetCore.Authorization`
+
+The `Microsoft.AspNetCore.Authorization` metrics report information about authorization attempts in ASP.NET Core apps:
+
+* `aspnetcore.authorization.attempts`
+
+### Metric: `aspnetcore.authorization.attempts`
+
+Name | Instrument Type | Unit (UCUM) | Description
+--- | --- | --- | ---
+`aspnetcore.authorization.attempts` | Counter | `{request}` | The total number of requests for which authorization was attempted.
+
+Attribute | Type | Description | Examples | Presence
+--- | --- | --- | --- | ---
+`user.is_authenticated` | boolean | Whether the request came from an authenticated user. | `true` | `Required`
+`aspnetcore.authorization.policy` | string | The name of the authorization policy. | `AtLeast21`; `EmployeeOnly` | `Conditionally Required` if an authorization policy is used.
+`aspnetcore.authorization.result` | string | Whether the authorization succeeded or failed. | `success`; `failure` | `Conditionally Required` if an exception is not thrown during authorization.
+`error.type` | string | The full name of the exception type. | `System.InvalidOperationException`; `Contoso.MyException` | `Conditionally Required` if the request has ended with an error.
+
+## `Microsoft.AspNetCore.Authentication`
+
+The `Microsoft.AspNetCore.Authentication` metrics report information about Authentication in ASP.NET Core apps:
+
+* `aspnetcore.authentication.authenticate.duration`
+* `aspnetcore.authentication.challenges`
+* `aspnetcore.authentication.forbids`
+* `aspnetcore.authentication.sign_ins`
+* `aspnetcore.authentication.sign_outs`
+
+### Metric: `aspnetcore.authentication.authenticate.duration`
+
+Name | Instrument Type | Unit (UCUM) | Description
+--- | --- | --- | ---
+`aspnetcore.authentication.authenticate.duration` | Histogram | `s` | The authentication duration for a request.
+
+Attribute | Type | Description | Examples | Presence
+--- | --- | --- | --- | ---
+`aspnetcore.authentication.result` | string | The authentication result. | `success`; `failure`; `none`; `_OTHER` | `Conditionally Required` if the request did not end with an error.
+`aspnetcore.authentication.scheme` | string | The name of the authentication scheme. | `Bearer`; `Cookies` | `Conditionally Required` if the request did not end with an error.
+`error.type` | string | The full name of the exception type. | `System.InvalidOperationException`; `Contoso.MyException` | `Conditionally Required` if authentication failed or the request has ended with an error.
+
+### Metric: `aspnetcore.authentication.challenges`
+
+Name | Instrument Type | Unit (UCUM) | Description
+--- | --- | --- | ---
+`aspnetcore.authentication.challenges` | Counter | `{request}` | The total number of times a scheme is challenged.
+
+Attribute | Type | Description | Examples | Presence
+--- | --- | --- | --- | ---
+`aspnetcore.authentication.scheme` | string | The name of the authentication scheme. | `Bearer`; `Cookies` | `Conditionally Required` if the request did not end with an error.
+`error.type` | string | The full name of the exception type. | `System.InvalidOperationException`; `Contoso.MyException` | `Conditionally Required` if the request has ended with an error.
+
+### Metric: `aspnetcore.authentication.forbids`
+
+Name | Instrument Type | Unit (UCUM) | Description
+--- | --- | --- | ---
+`aspnetcore.authentication.forbids` | Counter | `{request}` | The total number of times an authenticated user attempts to access a resource they aren't permitted to access.
+
+Attribute | Type | Description | Examples | Presence
+--- | --- | --- | --- | ---
+`aspnetcore.authentication.scheme` | string | The name of the authentication scheme. | `Bearer`; `Cookies` | `Conditionally Required` if the request did not end with an error.
+`error.type` | string | The full name of the exception type. | `System.InvalidOperationException`; `Contoso.MyException` | `Conditionally Required` if the request has ended with an error.
+
+### Metric: `aspnetcore.authentication.sign_ins`
+
+Name | Instrument Type | Unit (UCUM) | Description
+--- | --- | --- | ---
+`aspnetcore.authentication.sign_ins` | Counter | `{request}` | The total number of times a principal is signed in with a scheme.
+
+Attribute | Type | Description | Examples | Presence
+--- | --- | --- | --- | ---
+`aspnetcore.authentication.scheme` | string | The name of the authentication scheme. | `Bearer`; `Cookies` | `Conditionally Required` if the request did not end with an error.
+`error.type` | string | The full name of the exception type. | `System.InvalidOperationException`; `Contoso.MyException` | `Conditionally Required` if the request has ended with an error.
+
+### Metric: `aspnetcore.authentication.sign_outs`
+
+Name | Instrument Type | Unit (UCUM) | Description
+--- | --- | --- | ---
+`aspnetcore.authentication.sign_outs` | Counter | `{request}` | The total number of times a principal is signed out with a scheme.
+
+Attribute | Type | Description | Examples | Presence
+--- | --- | --- | --- | ---
+`aspnetcore.authentication.scheme` | string | The name of the authentication scheme. | `Bearer`; `Cookies` | `Conditionally Required` if the request did not end with an error.
+`error.type` | string | The full name of the exception type. | `System.InvalidOperationException`; `Contoso.MyException` | `Conditionally Required` if the request has ended with an error.
+
+## Related content
+
+* ASP.NET Core built-in metrics
+* ASP.NET Core built-in HTTP metrics
+* ASP.NET Core built-in diagnostics metrics
+* ASP.NET Core built-in Blazor (Razor components) metrics
+* ASP.NET Core metrics

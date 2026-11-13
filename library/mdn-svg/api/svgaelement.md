@@ -1,0 +1,83 @@
+---
+title: "SVGAElement"
+tool: "mdn-svg"
+version: "2026-11"
+source: "https://github.com/mdn/content/blob/aa3f3f5d4d00cba08b88bddcfa94a84e2a4d976d/files/en-us/web/api/svgaelement/index.md"
+commit: "aa3f3f5d4d00cba08b88bddcfa94a84e2a4d976d"
+license: "CC-BY-SA-2.5"
+---
+
+# SVGAElement
+
+The **`SVGAElement`** interface provides access to the properties of an `` element, as well as methods to manipulate them.
+
+## Instance properties
+
+_This interface also inherits properties from its parent, `SVGGraphicsElement`._
+
+- `SVGAElement.download`
+    A string indicating that the linked resource is intended to be downloaded rather than displayed in the browser.
+- `SVGAElement.hash` (experimental)
+    A string representing the fragment identifier, including the leading hash mark (`#`), if any, in the referenced URL.
+- `SVGAElement.host` (experimental)
+    A string representing the hostname and port (if it's not the default port) in the referenced URL.
+- `SVGAElement.hostname` (experimental)
+    A string representing the hostname in the referenced URL.
+- `SVGAElement.href` (read-only)
+    An `SVGAnimatedString` that reflects the `href` or `xlink:href` (deprecated) attribute.
+- `SVGAElement.hreflang`
+    A string indicating the language of the linked resource.
+- `SVGAElement.interestForElement` (experimental) (non-standard)
+    Gets or sets the target element of an interest invoker, in cases where the associated `` element is specified as an interest invoker.
+- `SVGAElement.origin` (read-only) (experimental)
+    Returns a string containing the origin of the URL — that is, its scheme, its domain and its port.
+- `SVGAElement.pathname` (experimental)
+    A string containing an initial `/` followed by the path of the URL, not including the query string or fragment.
+- `SVGAElement.password` (experimental)
+    A string containing the password specified before the domain name.
+- `SVGAElement.ping`
+    A string that reflects the `ping` attribute, containing a space-separated list of URLs to which, when the hyperlink is followed, `POST` requests with the body `PING` will be sent by the browser (in the background). Typically used for tracking.
+- `SVGAElement.port` (experimental)
+    A string representing the port component, if any, of the referenced URL.
+- `SVGAElement.protocol` (experimental)
+    A string representing the protocol component, including trailing colon (`:`), of the referenced URL.
+- `SVGAElement.referrerPolicy`
+    A string specifying which referrer to send when fetching the URL.
+- `SVGAElement.rel`
+    A string reflecting the `rel` SVG attribute, specifying the relationship of the link's target.
+- `SVGAElement.relList`
+    A `DOMTokenList` reflecting the `rel` SVG attribute, as a list of tokens.
+- `SVGAElement.search` (experimental)
+    A string representing the URL's query string, if any, including the leading question mark (`?`).
+- `SVGAElement.target` (read-only)
+    It corresponds to the `target` attribute of the given element.
+- `SVGAElement.type`
+    A string that reflects the `type` attribute, indicating the MIME type of the linked resource.
+- `SVGAElement.username` (experimental)
+    A string containing the username specified before the domain name.
+
+## Instance methods
+
+_This interface has no methods but inherits methods from its parent, `SVGGraphicsElement`._
+
+## Example
+
+In the example below, the `target` attribute of the `` element is set to `_blank` and when the link is clicked, it logs to notify whether the condition is met or not.
+
+```js
+const linkRef = document.querySelector("a");
+linkRef.target = "_self";
+
+linkRef.onclick = () => {
+  if (linkRef.target === "_blank") {
+    console.log("BLANK!");
+    linkRef.target = "_self";
+  } else {
+    console.log("SORRY! not _blank");
+  }
+};
+```
+
+## See also
+
+- SVG `` element

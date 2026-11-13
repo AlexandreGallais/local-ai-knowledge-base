@@ -1,0 +1,420 @@
+---
+title: "Object and collection initializers (part 14 of 20)"
+tool: "dotnet-csharp"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/csharp/programming-guide/classes-and-structs/object-and-collection-initializers.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# Object and collection initializers (part 14 of 20)
+
+```csharp
+﻿namespace object_collection_initializers;
+
+public class BasicObjectInitializers
+{
+    public class Cat
+    {
+        // Automatically implemented properties.
+        public int Age { get; set; }
+        public string? Name { get; set; }
+
+        public Cat()
+        {
+        }
+
+        public Cat(string name)
+        {
+            this.Name = name;
+        }
+    }
+
+    public class CatOwner
+    {
+        public IList<Cat> Cats { get; } = new List<Cat>();
+    }
+
+    public class Matrix
+    {
+        private double[,] storage = new double[3, 3];
+
+        public double this[int row, int column]
+        {
+            // The embedded array will throw out of range exceptions as appropriate.
+            get { return storage[row, column]; }
+            set { storage[row, column] = value; }
+        }
+    }
+
+    public class Product
+    {
+        public string? ProductName { get; set; }
+        public decimal UnitPrice { get; set; }
+    }
+
+    public static void ObjectInitializerExamples()
+    {
+        Cat cat = new Cat { Age = 10, Name = "Fluffy" };
+        Cat sameCat = new Cat("Fluffy"){ Age = 10 };
+
+        var identity = new Matrix
+        {
+            [0, 0] = 1.0,
+            [0, 1] = 0.0,
+            [0, 2] = 0.0,
+
+            [1, 0] = 0.0,
+            [1, 1] = 1.0,
+            [1, 2] = 0.0,
+
+            [2, 0] = 0.0,
+            [2, 1] = 0.0,
+            [2, 2] = 1.0,
+        };
+
+        var products = new List<Product>();
+
+        var productInfos =
+            from p in products
+            select new { p.ProductName, p.UnitPrice };
+
+        List<Cat> cats =
+        [
+            new Cat { Name = "Sylvester", Age = 8 },
+            new Cat { Name = "Whiskers", Age = 2 },
+            new Cat { Name = "Sasha", Age = 14 }
+        ];
+
+        List<Cat?> moreCats = new List<Cat?>
+        {
+            new Cat{ Name = "Furrytail", Age=5 },
+            new Cat{ Name = "Peaches", Age=4 },
+            null
+        };
+
+        List<Cat> allCats = [.. cats, .. moreCats];
+
+        List<Cat> additionalCats = [.. cats, new Cat { Name = "Furrytail", Age = 5 }, .. moreCats];
+
+        var numbers = new Dictionary<int, string>
+        {
+            [7] = "seven",
+            [9] = "nine",
+            [13] = "thirteen"
+        };
+
+        var moreNumbers = new Dictionary<int, string>
+        {
+            {19, "nineteen" },
+            {23, "twenty-three" },
+            {42, "forty-two" }
+        };
+
+        {
+            CatOwner owner = new CatOwner
+            {
+                Cats =
+                {
+                    new Cat{ Name = "Sylvester", Age=8 },
+                    new Cat{ Name = "Whiskers", Age=2 },
+                    new Cat{ Name = "Sasha", Age=14 }
+                }
+            };
+        }
+
+        {
+            CatOwner owner = new ();
+            owner.Cats.Add(new Cat{ Name = "Sylvester", Age=8 });
+            owner.Cats.Add(new Cat{ Name = "Whiskers", Age=2 });
+            owner.Cats.Add(new Cat{ Name = "Sasha", Age=14 });
+        }
+
+        InitializationSample.Main();
+        FullExample.Main();
+        DictionaryExample.Main();
+    }
+}
+
+// The following code consolidates examples from the topic.
+public class InitializationSample
+{
+    public class Cat
+    {
+        // Automatically implemented properties.
+        public int Age { get; set; }
+        public string? Name { get; set; }
+
+        public Cat() { }
+
+        public Cat(string name)
+        {
+            Name = name;
+        }
+    }
+
+    public static void Main()
+    {
+        Cat cat = new Cat { Age = 10, Name = "Fluffy" };
+        Cat sameCat = new Cat("Fluffy"){ Age = 10 };
+
+        List<Cat> cats =
+        [
+            new Cat { Name = "Sylvester", Age = 8 },
+            new Cat { Name = "Whiskers", Age = 2 },
+            new Cat { Name = "Sasha", Age = 14 }
+        ];
+
+        List<Cat?> moreCats = new List<Cat?>
+        {
+            new Cat { Name = "Furrytail", Age = 5 },
+            new Cat { Name = "Peaches", Age = 4 },
+            null
+        };
+
+        List<Cat> allCats = [.. cats, new Cat { Name = "Łapka", Age = 5 }, cat, .. moreCats];
+
+        // Display results.
+        foreach (Cat? c in allCats)
+        {
+            if (c != null)
+            {
+                System.Console.WriteLine(c.Name);
+            }
+            else
+            {
+                System.Console.WriteLine("List element has null value.");
+            }
+        }
+    }
+    // Output:
+    // Sylvester
+    // Whiskers
+    // Sasha
+    // Łapka
+    // Fluffy
+    // Furrytail
+    // Peaches
+    // List element has null value.
+}
+
+public class FullExample
+{
+    class FormattedAddresses : IEnumerable<string>
+    {
+        private List<string> internalList = new();
+        public IEnumerator<string> GetEnumerator() => internalList.GetEnumerator();
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => internalList.GetEnumerator();
+
+        public void Add(string firstname, string lastname,
+            string street, string city,
+            string state, string zipcode) => internalList.Add($"""
+            {firstname} {lastname}
+            {street}
+            {city}, {state} {zipcode}
+            """
+            );
+    }
+
+    public static void Main()
+    {
+        FormattedAddresses addresses = new FormattedAddresses()
+        {
+            {"John", "Doe", "123 Street", "Topeka", "KS", "00000" },
+            {"Jane", "Smith", "456 Street", "Topeka", "KS", "00000" }
+        };
+
+        Console.WriteLine("Address Entries:");
+
+        foreach (string addressEntry in addresses)
+        {
+            Console.WriteLine("\r\n" + addressEntry);
+        }
+    }
+
+    /*
+        * Prints:
+
+        Address Entries:
+
+        John Doe
+        123 Street
+        Topeka, KS 00000
+
+        Jane Smith
+        456 Street
+        Topeka, KS 00000
+        */
+}
+
+public class DictionaryExample
+{
+    class RudimentaryMultiValuedDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, List<TValue>>> where TKey : notnull
+    {
+        private Dictionary<TKey, List<TValue>> internalDictionary = new Dictionary<TKey, List<TValue>>();
+
+        public IEnumerator<KeyValuePair<TKey, List<TValue>>> GetEnumerator() => internalDictionary.GetEnumerator();
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => internalDictionary.GetEnumerator();
+
+        public List<TValue> this[TKey key]
+        {
+            get => internalDictionary[key];
+            set => Add(key, value);
+        }
+
+        public void Add(TKey key, params TValue[] values) => Add(key, (IEnumerable<TValue>)values);
+
+        public void Add(TKey key, IEnumerable<TValue> values)
+        {
+            if (!internalDictionary.TryGetValue(key, out List<TValue>? storedValues))
+            {
+                internalDictionary.Add(key, storedValues = new());
+            }
+            storedValues.AddRange(values);
+        }
+    }
+
+    public static void Main()
+    {
+        RudimentaryMultiValuedDictionary<string, string> rudimentaryMultiValuedDictionary1
+            = new RudimentaryMultiValuedDictionary<string, string>()
+            {
+                {"Group1", "Bob", "John", "Mary" },
+                {"Group2", "Eric", "Emily", "Debbie", "Jesse" }
+            };
+        RudimentaryMultiValuedDictionary<string, string> rudimentaryMultiValuedDictionary2
+            = new RudimentaryMultiValuedDictionary<string, string>()
+            {
+                ["Group1"] = new List<string>() { "Bob", "John", "Mary" },
+                ["Group2"] = new List<string>() { "Eric", "Emily", "Debbie", "Jesse" }
+            };
+        RudimentaryMultiValuedDictionary<string, string> rudimentaryMultiValuedDictionary3
+            = new RudimentaryMultiValuedDictionary<string, string>()
+            {
+                {"Group1", new string []{ "Bob", "John", "Mary" } },
+                { "Group2", new string[]{ "Eric", "Emily", "Debbie", "Jesse" } }
+            };
+
+        Console.WriteLine("Using first multi-valued dictionary created with a collection initializer:");
+
+        foreach (KeyValuePair<string, List<string>> group in rudimentaryMultiValuedDictionary1)
+        {
+            Console.WriteLine($"\r\nMembers of group {group.Key}: ");
+
+            foreach (string member in group.Value)
+            {
+                Console.WriteLine(member);
+            }
+        }
+
+        Console.WriteLine("\r\nUsing second multi-valued dictionary created with a collection initializer using indexing:");
+
+        foreach (KeyValuePair<string, List<string>> group in rudimentaryMultiValuedDictionary2)
+        {
+            Console.WriteLine($"\r\nMembers of group {group.Key}: ");
+
+            foreach (string member in group.Value)
+            {
+                Console.WriteLine(member);
+            }
+        }
+        Console.WriteLine("\r\nUsing third multi-valued dictionary created with a collection initializer using indexing:");
+
+        foreach (KeyValuePair<string, List<string>> group in rudimentaryMultiValuedDictionary3)
+        {
+            Console.WriteLine($"\r\nMembers of group {group.Key}: ");
+
+            foreach (string member in group.Value)
+            {
+                Console.WriteLine(member);
+            }
+        }
+    }
+
+    /*
+        * Prints:
+
+        Using first multi-valued dictionary created with a collection initializer:
+
+        Members of group Group1:
+        Bob
+        John
+        Mary
+
+        Members of group Group2:
+        Eric
+        Emily
+        Debbie
+        Jesse
+
+        Using second multi-valued dictionary created with a collection initializer using indexing:
+
+        Members of group Group1:
+        Bob
+        John
+        Mary
+
+        Members of group Group2:
+        Eric
+        Emily
+        Debbie
+        Jesse
+
+        Using third multi-valued dictionary created with a collection initializer using indexing:
+
+        Members of group Group1:
+        Bob
+        John
+        Mary
+
+        Members of group Group2:
+        Eric
+        Emily
+        Debbie
+        Jesse
+        */
+}
+```
+This initializer example calls `System.Collections.Generic.Dictionary`2.Add(`0,`1)` to add the three items into the dictionary. These two different ways to initialize associative collections have slightly different behavior because of the method calls the compiler generates. Both variants work with the `Dictionary` class. Other types might only support one or the other based on their public API.
+
+### Collection expression arguments
+
+Starting in C# 15, use the `with(...)` element as the first element in a collection expression to pass arguments to the collection's constructor. By using this feature, you can specify capacity, comparers, or other constructor parameters directly within the collection expression syntax:
+
+```csharp
+﻿namespace object_collection_initializers;
+
+public class CollectionExpressionArguments
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine("Testing Collection Expression with Arguments:");
+        Console.WriteLine("==========================================");
+
+        CollectionExpressionWithArgumentsExample();
+
+        Console.WriteLine("\nDemonstration completed successfully!");
+    }
+
+    public static void CollectionExpressionWithArgumentsExample()
+    {
+        string[] values = ["one", "two", "three"];
+
+        // Use with() to pass capacity to the List<T> constructor
+        List<string> names = [with(capacity: values.Length * 2), .. values];
+
+        Console.WriteLine($"Created List<string> with capacity: {names.Capacity}");
+        Console.WriteLine($"List contains {names.Count} elements: [{string.Join(", ", names)}]");
+
+        // Use with() to pass a comparer to the HashSet<T> constructor
+        HashSet<string> caseInsensitiveSet = [with(StringComparer.OrdinalIgnoreCase), "Hello", "HELLO"];
+        // caseInsensitiveSet contains only one element because "Hello" and "HELLO" are equal
+
+        Console.WriteLine($"HashSet with case-insensitive comparer contains {caseInsensitiveSet.Count} elements: [{string.Join(", ", caseInsensitiveSet)}]");
+        Console.WriteLine("Note: 'Hello' and 'HELLO' are treated as the same element due to OrdinalIgnoreCase comparer");
+    }
+}
+```
+For more information about collection expression arguments, including supported target types and restrictions, see Collection expression arguments.

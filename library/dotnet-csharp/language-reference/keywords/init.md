@@ -1,0 +1,139 @@
+---
+title: "The init keyword - init only properties"
+tool: "dotnet-csharp"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/csharp/language-reference/keywords/init.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# The `init` keyword (C# Reference)
+
+The `init` keyword defines an *accessor* method in a property or indexer. An init-only setter assigns a value to the property or the indexer element **only** during object construction. An `init` enforces immutability, so that once the object is initialized, it can't be changed. An `init` accessor enables calling code to use an object initializer to set the initial value. In contrast, an
+ automatically implemented property with only a `get` accessor must be initialized by calling a constructor. A property with a `private set` accessor can be modified after construction, but only in the class.
+
+The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
+
+The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
+
+> **Tip:**
+> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+
+The following code demonstrates an `init` accessor in an automatically implemented property:
+
+```csharp
+class Person_InitExampleAutoProperty
+{
+    public int YearOfBirth { get; init; }
+}
+```
+You might need to implement one of the accessors to provide parameter validation. You can do that validation by using the `field` keyword, introduced in C# 14. The `field` keyword accesses the compiler synthesized backing field for that property. The following example shows a property where the `init` accessor validates the range of the `value` parameter.
+
+```csharp
+﻿class Person_InitExampleFieldProperty
+{
+    public int YearOfBirth
+    {
+        get;
+        init
+        {
+            field = (value <= DateTime.Now.Year)
+                ? value
+                : throw new ArgumentOutOfRangeException(nameof(value), "Year of birth can't be in the future");
+        }
+    }
+}
+```
+The `init` accessor can be used as an expression-bodied member. Example:
+
+```csharp
+class Person_InitExampleExpressionBodied
+{
+    private int _yearOfBirth;
+
+    public int YearOfBirth
+    {
+        get => _yearOfBirth;
+        init => _yearOfBirth = value;
+    }
+}
+```
+The following example defines both a `get` and an `init` accessor for a property named `YearOfBirth`. It uses a private field named `_yearOfBirth` to back the property value.
+
+```csharp
+class Person_InitExample
+{
+     private int _yearOfBirth;
+
+     public int YearOfBirth
+     {
+         get { return _yearOfBirth; }
+         init { _yearOfBirth = value; }
+     }
+}
+```
+An `init` accessor doesn't force callers to set the property. Instead, it allows callers to use an object initializer while prohibiting later modification. You can add the `required` modifier to force callers to set a property. The following example shows an `init` only property with a nullable value type as its backing field. If a caller doesn't initialize the `YearOfBirth` property, that property has the default `null` value:
+
+```csharp
+class Person_InitExampleNullability
+{
+    private int? _yearOfBirth;
+
+    public int? YearOfBirth
+    {
+        get => _yearOfBirth;
+        init => _yearOfBirth = value;
+    }
+}
+```
+To force callers to set an initial non-null value, add the `required` modifier, as shown in the following example:
+
+```csharp
+class Person_InitExampleNonNull
+{
+    private int _yearOfBirth;
+
+    public required int YearOfBirth
+    {
+        get => _yearOfBirth;
+        init => _yearOfBirth = value;
+    }
+}
+```
+The following example shows the distinction between a `private set`, read-only, and `init` property. Both the private set version and the read-only version require callers to use the added constructor to set the name property. The `private set` version allows a person to change their name after the instance is constructed. The `init` version doesn't require a constructor. Callers can initialize the properties by using an object initializer:
+
+```csharp
+class PersonPrivateSet
+{
+    public string FirstName { get; private set; }
+    public string LastName { get; private set; }
+    public PersonPrivateSet(string first, string last) => (FirstName, LastName) = (first, last);
+
+    public void ChangeName(string first, string last) => (FirstName, LastName) = (first, last);
+}
+
+class PersonReadOnly
+{
+    public string FirstName { get; }
+    public string LastName { get; }
+    public PersonReadOnly(string first, string last) => (FirstName, LastName) = (first, last);
+}
+
+class PersonInit
+{
+    public string FirstName { get; init; }
+    public string LastName { get; init; }
+}
+```
+```csharp
+PersonPrivateSet personPrivateSet = new("Bill", "Gates");
+PersonReadOnly personReadOnly = new("Bill", "Gates");
+PersonInit personInit = new() { FirstName = "Bill", LastName = "Gates" };
+```
+## C# language specification
+
+For more information, see the C# Language Specification. The language specification is the definitive source for C# syntax and usage.
+
+## See also
+
+- Properties

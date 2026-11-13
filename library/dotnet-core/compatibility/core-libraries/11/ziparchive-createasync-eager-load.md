@@ -1,0 +1,70 @@
+---
+title: "Breaking change: ZipArchive.CreateAsync eagerly loads ZIP archive entries"
+tool: "dotnet-core"
+version: "11"
+source: "https://github.com/dotnet/docs/blob/c3377f5f732f604c8f9bffc14d814dd35c99f3c0/docs/core/compatibility/core-libraries/11/ziparchive-createasync-eager-load.md"
+commit: "c3377f5f732f604c8f9bffc14d814dd35c99f3c0"
+license: "CC-BY-4.0"
+---
+
+# ZipArchive.CreateAsync eagerly loads ZIP archive entries
+
+`System.IO.Compression.ZipArchive.CreateAsync*` now eagerly loads all ZIP archive entries during the method call. This change ensures that accessing the `System.IO.Compression.ZipArchive.Entries` property doesn't perform synchronous reads on the underlying stream, which aligns with asynchronous programming patterns.
+
+## Version introduced
+
+.NET 11
+
+## Previous behavior
+
+Previously, when you created a `ZipArchive` using `CreateAsync`, accessing the `Entries` property could result in synchronous (blocking) read operations being performed on the underlying stream. This behavior was inconsistent with the asynchronous nature of the `CreateAsync` method and could cause issues with streams that don't support synchronous reads.
+
+```csharp
+using System.IO;
+using System.IO.Compression;
+
+using var stream = new FileStream("archive.zip", FileMode.Open);
+using var archive = await ZipArchive.CreateAsync(stream, ZipArchiveMode.Read);
+
+// This call performs synchronous reads on the stream.
+// Might throw if the file entries are malformed
+// or if the stream doesn't support synchronous reads.
+var entries = archive.Entries;
+```
+
+## New behavior
+
+Starting in .NET 11, the central directory of the ZIP archive is read asynchronously as part of the `ZipArchive.CreateAsync` method call. Any exceptions related to malformed entries or issues reading the central directory are now thrown during the `CreateAsync` call. Subsequent access to the `Entries` property doesn't perform any read operations on the underlying stream.
+
+```csharp
+using System.IO;
+using System.IO.Compression;
+
+using var stream = new FileStream("archive.zip", FileMode.Open);
+
+// This call eagerly loads the ZIP archive entries.
+// Any exceptions related to malformed entries are surfaced here.
+using var archive = await ZipArchive.CreateAsync(stream, ZipArchiveMode.Read);
+
+// Accessing Entries no longer performs stream read operations.
+var entries = archive.Entries;
+```
+
+## Type of breaking change
+
+This change is a behavioral change.
+
+## Reason for change
+
+This change was made to improve consistency and reliability when working with asynchronous streams. By eagerly loading entries during the `CreateAsync` call, the API avoids unexpected synchronous read operations later. Avoiding synchronous reads is especially important for streams that might end up blocking until data are available (such as network streams). This aligns with the approved API design and provides a more predictable programming experience.
+
+For more information, see dotnet/runtime#121938, dotnet/runtime#121624, and the API design discussion.
+
+## Recommended action
+
+If your code uses `ZipArchive.CreateAsync`, ensure that you handle `System.IO.InvalidDataException` exceptions from the `CreateAsync` method call. This exception could already be thrown in previous .NET versions (for example, when the ZIP central directory can't be found), but now it's also thrown for malformed entries that were previously only discovered when accessing the `Entries` property.
+
+## Affected APIs
+
+- `System.IO.Compression.ZipArchive.CreateAsync(System.IO.Stream,System.IO.Compression.ZipArchiveMode,System.Boolean,System.Text.Encoding,System.Threading.CancellationToken)`
+- `System.IO.Compression.ZipArchive.Entries`
