@@ -13,10 +13,10 @@ description: Use when you cut a brief into .agents/work/<subject>/tasks.md, or s
 4. Cut the work: one task is one behaviour that one command checks.
 5. Order the tasks: a task comes after every task it depends on.
 6. Write `tasks.md` in the form below. The last task is the final check, agent `checker`.
-7. Call `check_tasks`. Fix every finding.
+7. Call `work_check_tasks`. Fix every finding.
 
-To split a blocked task: read its report with `read_status`, write 2 smaller tasks in its place with new
-ids, keep the order of the others, then call `check_tasks`.
+To split a blocked task: read its report with `work_read_status`, write 2 smaller tasks in its place with new
+ids, keep the order of the others, then call `work_check_tasks`.
 
 ## Form
 
@@ -64,4 +64,4 @@ withUsers() and withSelection(). Add loadUsers(): void that calls UserApi.getUse
 
 - Does every task have its files, its agent, its check command and its `Done when`?
 - Is the final check the last task?
-- Does `check_tasks` say "tasks.md is well formed."?
+- Does `work_check_tasks` say "tasks.md is well formed."?

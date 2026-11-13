@@ -19,7 +19,7 @@ requirements, what stays out, the assumptions and the questions. Every task of t
 7. Write 1 to 5 questions, 2 to 4 options each, the recommended option first. Nothing open: ask
    "Start with this brief?" with "Start" and "Change".
 8. Second pass, after the answers: change the requirements, mark each assumption `[CONFIRMED]` or
-   `[OPEN]`, write the summary for sub-agents, then call `check_brief` and fix every finding.
+   `[OPEN]`, write the summary for sub-agents, then call `work_check_brief` and fix every finding.
 
 ## Form
 
@@ -75,4 +75,4 @@ UserApi.getUsers(), sorted by name, for the operators."
 - Is the request copied word for word?
 - Does each requirement say how it is checked?
 - Is every assumption marked `[OPEN]` or `[CONFIRMED]`?
-- Does `check_brief` say "brief.md is well formed."?
+- Does `work_check_brief` say "brief.md is well formed."?

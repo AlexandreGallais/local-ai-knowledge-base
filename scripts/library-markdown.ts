@@ -359,11 +359,20 @@ const CONSTANT_NAME = /^[A-Z][A-Z\d_]*$/;
 const URL_PASSWORD = /(:\/\/[^\s:/@]+:)[^\s@/]+@/g;
 const BASE64_VALUE = /^(\s*[\w.-]+:\s*)([A-Za-z0-9+/]{8,}={0,2})\s*$/;
 const HEX_DUMP = /<Buffer(?: [\da-f]{2}){4,}/;
+// A key block: its body holds only base64, blanks and escaped line ends, never code.
+const PRIVATE_KEY = /-----BEGIN ([A-Z ]*)PRIVATE KEY-----(?:[A-Za-z\d+/=\s]|\\n)+-----END \1PRIVATE KEY-----/g;
+const CARD_NUMBER = /\b\d{4}([ -]?)\d{4}\1\d{4}\1\d{4}\b/g;
+const PHONE_LINK = /\btel:\+?[\d.() -]{6,}\d/g;
+const INTERNATIONAL_PHONE = /(?<![\w.])\+\d{2,3}[ .-]?\d{3,4}[ .-]?\d{3,8}\b/g;
 
 // Example credentials, tokens and addresses of the official docs, replaced by neutral markers:
 // they are fake, but a published file must hold no value that looks like a real secret or person.
 export function neutralizeExamples(text: string): string {
   return text
+    .replaceAll(PRIVATE_KEY, '<example-private-key>')
+    .replaceAll(CARD_NUMBER, '<example-card-number>')
+    .replaceAll(PHONE_LINK, 'tel:<example-phone>')
+    .replaceAll(INTERNATIONAL_PHONE, '<example-phone>')
     .split('\n')
     .map((line) => {
       const neutral = line

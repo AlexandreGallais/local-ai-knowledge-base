@@ -104,7 +104,7 @@ The response returns a list of all the IdP accounts that the user is currently s
       "given_name": "Elaina",
       "name": "Elaina Maduro",
       "email": "user@example.com",
-      "tel": "+491234567890",
+      "tel": "<example-phone>",
       "username": "elaina420",
       "picture": "https://idp.example/profile/123",
       "approved_clients": ["123", "456", "789"],

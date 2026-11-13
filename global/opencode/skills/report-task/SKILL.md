@@ -5,7 +5,7 @@ description: Use when you finish, block or stop one task given by the orchestrat
 
 # Report a task
 
-You did one task. Your report is all the orchestrator reads. Save it with `write_report`, then answer
+You did one task. Your report is all the orchestrator reads. Save it with `work_write_report`, then answer
 with the STATUS line only.
 
 ## Statuses
@@ -50,5 +50,5 @@ Wrong: `STATUS: finished, everything works.` Right: `STATUS: DONE` with
 
 ## Final check
 
-- Did `write_report` accept the report?
+- Did `work_write_report` accept the report?
 - Is your answer the STATUS line only?

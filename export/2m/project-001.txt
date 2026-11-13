@@ -1,0 +1,20 @@
+LOCAL-AI-BASE EXPORT
+pack: project
+format: 1
+part: 1/1
+compression: brotli
+encoding: z85
+total-bytes: 558
+total-sha256: 86bc45b8152036fc7f4069488d2a7bb7bf2148b9332bd994d1935e5a4618b344
+part-sha256: 01c95704822ece6d0e18ad5fc8802c545550a52d44cb57fcd951e880cb780ab7
+---
+5NDd=0i^(Qu1*A@OA0q.q!?TSLT!c$*fAaUSnc1MZ&=U(GY*/On>8Tvl?}-+u%sF{UxZ[TA:CC<f1Hk+
+?z3/BisqObTtciQ3ADbs.LEwX5P<2d7SKi0ARX(sz3k(j(*2{9Mpai[v@3%Vm?ChXQ&8[R:dn+3&ODAu
+w^SMGt$S6a?@To((&SWet@{GC]Or63nHMI7Hch.hQhWXfcyk(a47l(&TTyk}sfdGXPGl)(XB{*30D-51
+w(n}&*ZLlKbbQrhP<!7JUd6Xo6Wo:xq79R=dP<fLz>L>(8%57[yl.K@5YzL(i.mr4whXISok68[e2d?e
+R^1dO]Y=A1o^c3Yn$+sl[oXg>U+x}.k]weT^$xY(MJtHjAMZBB6*9=FsECA%f)H-s!Z/6J@9n9=H(C2j
+{.L1!dS#cNww%+4V8m[4hX?6how@hW0n$MHOLWUAx/.!Zpizgf3FZkg)8Zj(YeZC}:pIk+k8Oih0eLQN
+kzgs7)&FXP^Hs65r=%@hgPRs9v4L:qgvItECT=<1ct4Si.5pimyDJB:)7HIS5}T=&i1h?Z=9d5[}.dkn
+fQyQ>+^ak{E]N][pq<weLH=3&p<n]3N1QBYxDZGb051J>HtZD#-g]+?Z61T(mp(h>I#viM=X/7&I<t=3
+{?9$}[GIuw=9i=Q(31b&gwv&u!p4MlejBoSsxa^7IAVL=W}Lhvv8ceM2SR>+
+END OF PART 1/1

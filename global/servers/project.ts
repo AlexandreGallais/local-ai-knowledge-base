@@ -103,7 +103,8 @@ export const server: Server = {
   instructions: 'What this project is. Call project_info before your first task.',
   tools: [
     {
-      name: 'project_info',
+      // OpenCode prefixes the server name: the model sees "project_info".
+      name: 'info',
       description: 'The profile of the project, its subject, the versions in package.json, the check commands in order, the project skills and the state of the global base.',
       properties: {},
       required: [],

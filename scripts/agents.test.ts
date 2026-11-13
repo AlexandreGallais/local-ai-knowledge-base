@@ -53,7 +53,11 @@ const EXPECTED_SKILLS: Record<string, string[]> = {
     'welcome',
   ],
   'brief': ['write-brief'],
-  'planner': ['plan-tasks'],
+  'planner': [
+    'plan-tasks',
+    'start-angular-project',
+    'start-typescript-library',
+  ],
   'checker': [
     'report-task',
     'final-check',
@@ -62,6 +66,7 @@ const EXPECTED_SKILLS: Record<string, string[]> = {
     'report-task',
     'write-component',
     'write-tests',
+    'start-angular-project',
   ],
   'store': [
     'report-task',
@@ -82,6 +87,7 @@ const EXPECTED_SKILLS: Record<string, string[]> = {
     'write-library-function',
     'document-function',
     'write-tests',
+    'start-typescript-library',
   ],
   'tests': [
     'report-task',

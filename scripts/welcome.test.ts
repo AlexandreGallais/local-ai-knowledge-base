@@ -138,6 +138,17 @@ describe('the profile of a project', () => {
     assert.match(readFileSync(join(project, '.opencode', 'opencode.json'), 'utf8'), /skills\/typescript/);
     assert.match(readFileSync(join(project, '.git', 'info', 'exclude'), 'utf8'), /^\.opencode\/$/m);
   });
+  it('gives an empty project of an Angular profile the test command of Angular', () => {
+    const project = temporary('empty-angular-');
+
+    applyProfile(project, {
+      profile: 'angular-app',
+      subject: 'Invented sample: a new panel',
+    });
+    const profile = JSON.parse(readFileSync(join(project, '.agents', 'profile.json'), 'utf8')) as { checks: Record<string, string> };
+
+    assert.equal(profile.checks['test'], 'npx --no ng test --watch=false');
+  });
   it('keeps AGENTS.md, the project skills and the check commands of the team when run again', () => {
     const project = sampleCopy('angular-app');
     const skill = join(project, '.agents', 'skills', 'number-alarms', 'SKILL.md');

@@ -52,21 +52,22 @@ function readJson<T>(path: string, fallback: T): T {
   return existsSync(path) ? JSON.parse(readFileSync(path, 'utf8')) as T : fallback;
 }
 
-function testCommand(project: string): string {
+// An Angular project tests with "ng test", even before "ng new" wrote angular.json.
+function testCommand(project: string, profile: string): string {
   const runner = detectProject(project).testRunner;
 
-  if (runner.startsWith('ng test')) {
+  if (profile.startsWith('angular-') || runner.startsWith('ng test')) {
     return 'npx --no ng test --watch=false';
   }
   return runner === 'jest' ? 'npx --no jest' : 'npx --no vitest run';
 }
 
-export function defaultChecks(project: string): Record<string, string> {
+export function defaultChecks(project: string, profile: string): Record<string, string> {
   return {
     format: `node ${BASE_MOUNT}/tools/format-file.ts --all`,
     lint: `node ${BASE_MOUNT}/tools/lint-file.ts --all`,
     build: 'npx --no tsc -p tsconfig.json',
-    test: testCommand(project),
+    test: testCommand(project, profile),
   };
 }
 
@@ -113,7 +114,7 @@ function writeProfile(project: string, answers: Answers): ProfileFile {
     ...version === undefined ? {} : { baseVersion: version },
     ...answers.copyright === undefined ? {} : { copyright: answers.copyright },
     ...answers.prefix === undefined ? {} : { prefix: answers.prefix },
-    checks: before.checks ?? defaultChecks(project),
+    checks: before.checks ?? defaultChecks(project, answers.profile),
   };
 
   mkdirSync(dirname(path), { recursive: true });

@@ -25,7 +25,8 @@ Do this before any other work. Ask, never guess in silence: the user confirms ea
    `--copyright "<line>"` when there is one, and `--convention "<rule>"` for each convention the user
    confirmed (for example "File names are in kebab-case.").
 6. Tell the user to restart OpenCode: the skills and agents of the profile load at start.
-7. An `empty` project: after the restart, offer the skill `start-angular-project` or
+7. An `empty` project: after the restart, offer to start it. The request "start the project" then goes
+   through the brief and the plan, which use the skill `start-angular-project` or
    `start-typescript-library`, as the profile says.
 
 ## Rules

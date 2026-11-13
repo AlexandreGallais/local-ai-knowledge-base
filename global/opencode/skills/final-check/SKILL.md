@@ -12,7 +12,7 @@ description: Use when you run the final check of a subject - the four check comm
 3. For each command keep the command, its exit code, its number of errors and its first 20 error lines.
 4. Run `git status --short`. Compare each changed file with the `Files` of the tasks in
    `.agents/work/<subject>/tasks.md`. Name every file that no task owns.
-5. Write the report with `write_report` and the skill `report-task`.
+5. Write the report with `work_write_report` and the skill `report-task`.
 6. `DONE` only when the four commands end with 0 errors and every changed file belongs to a task.
    Otherwise `BLOCKED`: for each error, the file and the task that owns it.
 

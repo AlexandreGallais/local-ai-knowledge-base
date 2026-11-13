@@ -12,21 +12,20 @@ description: Use when the user asks for a new Angular application or a new Angul
 
 ## Steps
 
-1. Ask with the question tool, one question at a time:
-   - application or library;
-   - the name (kebab-case) and the component prefix (`app`, or a short team prefix);
-   - the copyright header of the files, if any.
-2. Give the user the command to run, and wait:
-   - application: `npx @angular/cli@22 new <name> --style=scss --ssr=false --skip-git` (Vitest is
-     the default test runner since Angular 21);
-   - library: `npx @angular/cli@22 new <name> --no-create-application --skip-git`, then
-     `npx --no ng generate library <name>`.
-3. Ask the user to install `@ngrx/signals` at the version of Angular: `npm install @ngrx/signals@22`.
-4. Write `.agents/profile.json` with the profile (`angular-app` or `angular-lib`), the prefix and the
-   copyright; then ask the user to run `node /opt/local-ai-base/tools/install-lint.ts .` and to install
-   the packages of the profile, listed in `/opt/local-ai-base/packages.md`.
-5. Run the check commands of `.agents/profile.json` on the generated project. Fix until 0 errors.
-6. Write the subject of the project in `AGENTS.md`, in two lines.
+1. Read `.agents/profile.json`: the welcome wrote the profile (`angular-app` or `angular-lib`), the
+   subject and the copyright. If it is missing, load the skill `welcome` first.
+2. Ask with the question tool: the name (kebab-case) and the component prefix (`app`, or a short team
+   prefix).
+3. Give the user the command to run in the project folder, and wait:
+   - application: `npx @angular/cli@22 new <name> --directory . --style=scss --ssr=false --skip-git`
+     (Vitest is the default test runner since Angular 21);
+   - library: `npx @angular/cli@22 new <name> --directory . --no-create-application --skip-git`,
+     then `npx --no ng generate library <name>`.
+4. Ask the user to install `@ngrx/signals` at the version of Angular (`npm install @ngrx/signals@22`)
+   and the packages of the profile listed in `/opt/local-ai-base/packages.md`.
+5. Run `node /opt/local-ai-base/tools/apply-profile.ts --profile <profile> --subject "<subject>"
+   --prefix <prefix>`: it refreshes the lint configs and keeps the team's files.
+6. Run the check commands of `.agents/profile.json` on the generated project. Fix until 0 errors.
 
 ## Example
 
@@ -46,4 +45,4 @@ npx @angular/cli@22 new pump-panel --style=scss --ssr=false --skip-git
 ## Final check
 
 - Did the user run every install and download?
-- Is `.agents/profile.json` written, and do the checks end at 0 errors?
+- Did `apply-profile.ts` end with "Profile <profile> applied", and do the checks end at 0 errors?

@@ -19,7 +19,7 @@ Content within each `` _should_ indicate the link's destination. If the `href` a
 <ul>
   <li><a href="https://example.com">Website</a></li>
   <li><a href="mailto:user@example.com">Email</a></li>
-  <li><a href="tel:+123456789">Phone</a></li>
+  <li><a href="tel:<example-phone>">Phone</a></li>
 </ul>
 ```
 

@@ -72,8 +72,8 @@ For details about `mailto:` URLs, such as including a subject or body, see Email
 ### Linking to telephone numbers
 
 ```html
-<a href="tel:+49.157.0156">+49 157 0156</a>
-<a href="tel:+1(800)555-0123">(800) 555-0123</a>
+<a href="tel:<example-phone>"><example-phone></a>
+<a href="tel:<example-phone>">(800) 555-0123</a>
 ```
 
 #### Result

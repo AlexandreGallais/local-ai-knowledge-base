@@ -108,7 +108,7 @@ after(() => {
 });
 describe('the project server', () => {
   it('gives the profile, the versions and the check commands', async () => {
-    const result = await info.call('project_info', {});
+    const result = await info.call('info', {});
 
     assert.match(result.text, /Profile: angular-app/);
     assert.match(result.text, /@angular\/core \^22\.2\.0/);

@@ -332,6 +332,27 @@ describe('example values of the official docs', () => {
       'const id = <example-jwt>;',
     ].join('\n'));
   });
+  it('replaces example private keys, card numbers and phone numbers, and keeps codec strings', () => {
+    const text = [
+      'const pem = `-----BEGIN PRIVATE KEY-----',
+      'MIIEvQIBADANBgkqhkiG9w0BAQEFAASC',
+      '-----END PRIVATE KEY-----`;',
+      'Test card: 5299 1234 5678 9010.',
+      '<a href="tel:+0000000000">Call</a> or +44 207 1234567.',
+      'codecs="vp09.00.10.08"',
+      'const pemHeader = "-----BEGIN PRIVATE KEY-----";',
+      'const pemFooter = "-----END PRIVATE KEY-----";',
+    ].join('\n');
+
+    assert.equal(neutralizeExamples(text), [
+      'const pem = `<example-private-key>`;',
+      'Test card: <example-card-number>.',
+      '<a href="tel:<example-phone>">Call</a> or <example-phone>.',
+      'codecs="vp09.00.10.08"',
+      'const pemHeader = "-----BEGIN PRIVATE KEY-----";',
+      'const pemFooter = "-----END PRIVATE KEY-----";',
+    ].join('\n'));
+  });
 });
 describe('regions and split', () => {
   it('finds a #region of C# and drops the nested marks', () => {
