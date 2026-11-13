@@ -369,17 +369,17 @@
       "docs": ["docs/rules"]
     },
     {
-      "tool": "import-x",
-      "title": "eslint-plugin-import-x rules",
-      "repository": "https://github.com/un-ts/eslint-plugin-import-x.git",
-      "ref": "v4.18.1",
-      "version": "4.18",
+      "tool": "import-lite",
+      "title": "eslint-plugin-import-lite rules: the import rules that need no resolver",
+      "repository": "https://github.com/9romise/eslint-plugin-import-lite.git",
+      "ref": "v0.6.0",
+      "version": "0.6",
       "license": "MIT",
-      "attribution": "JounQin, Ben Mosher and the import-x contributors",
+      "attribution": "Vida Xie and the eslint-plugin-import-lite contributors",
       "flavor": "markdown",
       "core": true,
-      "paths": ["docs/rules/"],
-      "docs": ["docs/rules"]
+      "paths": ["src/rules/*/README.md"],
+      "docs": ["src/rules"]
     },
     {
       "tool": "eslint-jsdoc",

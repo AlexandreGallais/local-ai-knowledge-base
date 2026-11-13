@@ -41,7 +41,7 @@ node scripts/check-library.ts                 # headers, index, 16 KB at most, n
 | [perfectionist](perfectionist/index.md) | eslint-plugin-perfectionist rules: sort everything | 5.13 | MIT | all | 50 files, 0.4 MB |
 | [unicorn](unicorn/index.md) | eslint-plugin-unicorn rules | 79.0 | MIT | all | 377 files, 0.9 MB |
 | [eslint-regexp](eslint-regexp/index.md) | eslint-plugin-regexp rules | 3.3 | MIT | all | 84 files, 0.2 MB |
-| [import-x](import-x/index.md) | eslint-plugin-import-x rules | 4.18 | MIT | all | 53 files, 0.1 MB |
+| [import-lite](import-lite/index.md) | eslint-plugin-import-lite rules: the import rules that need no resolver | 0.6 | MIT | all | 9 files, 0.0 MB |
 | [eslint-jsdoc](eslint-jsdoc/index.md) | eslint-plugin-jsdoc rules | 65.4 | BSD-3-Clause | angular-lib, ts-lib, ts-pure-lib | 116 files, 0.8 MB |
 | [eslint-functional](eslint-functional/index.md) | eslint-plugin-functional rules | 10.0 | MIT | ts-pure-lib | 21 files, 0.1 MB |
 | [eslint-vitest](eslint-vitest/index.md) | @vitest/eslint-plugin rules | 1.6 | MIT | all | 82 files, 0.1 MB |

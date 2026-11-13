@@ -245,11 +245,13 @@ export function findWebRequests(text: string, file: string): Finding[] {
         findings.push(finding(file, `URL outside the Sources section; links only cite sources: ${line.text.trim()}`));
       }
       // "Never search the web" is a rule, not a request: the negation must come before the verb.
+      // Inline code is left out: `(click)` is an Angular binding, not a request.
+      const words = line.text.replaceAll(/`[^`]*`/g, ' ');
       const request = WEB_REQUESTS
-        .map((pattern) => pattern.exec(line.text))
+        .map((pattern) => pattern.exec(words))
         .find((match) => match !== null);
 
-      if (request !== undefined && request !== null && !NEGATION.test(line.text.slice(0, request.index))) {
+      if (request !== undefined && request !== null && !NEGATION.test(words.slice(0, request.index))) {
         findings.push(finding(file, `asks to use the web: ${line.text.trim()}`));
       }
       return findings;

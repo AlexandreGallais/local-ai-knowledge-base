@@ -188,11 +188,11 @@ official documentation of other projects, each under its own license, listed bel
 - License: MIT
 - Changes: converted to plain Markdown, site markup removed, code samples inlined, pages cut into files of 16 KB at most.
 
-## import-x
+## import-lite
 
-- Work: eslint-plugin-import-x rules
-- Authors: JounQin, Ben Mosher and the import-x contributors
-- Source: <https://github.com/un-ts/eslint-plugin-import-x>, v4.18.1, commit 522c2c259cb080030afca4359561c932505ebe80
+- Work: eslint-plugin-import-lite rules: the import rules that need no resolver
+- Authors: Vida Xie and the eslint-plugin-import-lite contributors
+- Source: <https://github.com/9romise/eslint-plugin-import-lite>, v0.6.0, commit 2433f46392879f8ed9a40fe427b12f33972cf17f
 - License: MIT
 - Changes: converted to plain Markdown, site markup removed, code samples inlined, pages cut into files of 16 KB at most.
 
