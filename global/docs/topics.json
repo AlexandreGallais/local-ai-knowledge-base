@@ -11,6 +11,18 @@
     "angular-app",
     "angular-lib"
   ],
+  "geometry": [
+    "angular-app",
+    "angular-lib",
+    "ts-lib",
+    "ts-pure-lib"
+  ],
+  "math": [
+    "angular-app",
+    "angular-lib",
+    "ts-lib",
+    "ts-pure-lib"
+  ],
   "ngrx-signals": [
     "angular-app",
     "angular-lib"

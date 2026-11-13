@@ -195,7 +195,39 @@ export function checkDocument(text: string, file: string, topic: string): Findin
   return [
     ...findings,
     ...checkSinceColumns(text, file),
+    ...FORMULA_TOPICS.has(topic) ? checkFormulaSections(text, file) : [],
   ];
+}
+
+// The topics where every section is a calculation: its formula, an example, a pitfall, its sources.
+const FORMULA_TOPICS = new Set([
+  'math',
+  'geometry',
+]);
+const FORMULA_PARTS = [
+  'Formula:',
+  'Example:',
+  'Pitfall:',
+];
+
+export function checkFormulaSections(text: string, file: string): Finding[] {
+  const sections = text
+    .split(/^## /m)
+    .slice(1);
+
+  return sections
+    .filter((section) => !section.startsWith('Sources'))
+    .flatMap((section) => {
+      const heading = section.split('\n')[0] ?? '';
+      const missing = FORMULA_PARTS.filter((part) => !new RegExp(`^${part}`, 'm').test(section));
+      // A numbered source of the document, a run [E], or another document of the base.
+      const cites = /\[(?:S\d+|E\d*)\]|`[\w./-]+\.md`/.test(section);
+
+      return [
+        ...missing.map((part) => finding(file, `section "${heading}" has no "${part}" line`)),
+        ...cites ? [] : [finding(file, `section "${heading}" cites no source`)],
+      ];
+    });
 }
 
 function cells(line: string): string[] {
