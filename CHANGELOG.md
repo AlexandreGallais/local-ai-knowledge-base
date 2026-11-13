@@ -11,9 +11,19 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
   `global/licenses/<tool>/` and `archive/v0.1/licenses/<tool>/`, by `node scripts/fetch-licenses.ts`.
   `scripts/fetch-library.ts` now copies them too.
 - A guide to give one request to a project with the base and to the same project without it:
-  `guides/compare-with-and-without.md`.
+  `guides/compare-with-and-without.md`, on macOS or Linux, from the paste to both conversations.
+- Two test dev containers on `mcr.microsoft.com/devcontainers/javascript-node:26`, with and without
+  the base, and the shared OpenCode user configuration, in `global/templates/devcontainer/`.
 
 ### Changed
+
+- `import-base.ts` puts the base in `./local-ai-base` of the folder it runs from, instead of a hidden
+  folder of the home. It refuses the folder of the pasted parts, and a folder that is not empty and
+  holds no base, where it used to replace them whole. `--machine` stays, for Podman only.
+- `guides/install.md` is shorter: one folder, two mounts (in `devcontainer.json`, or for the whole
+  machine with Podman), OpenCode, the check.
+- "navigation" and "damage" stay without card on purpose; the AI asks what they show if a task
+  needs one.
 
 - `THIRD_PARTY_NOTICES.md` gives the copyright lines of each source, its license address and its
   license files, and what share-alike (MDN) and the Artistic License (npm) ask. The check of the

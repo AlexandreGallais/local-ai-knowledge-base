@@ -239,6 +239,59 @@ describe('a damaged or missing part', () => {
     assert.equal(existsSync(target), false);
   });
 });
+describe('where the global base goes', () => {
+  it('lands in ./local-ai-base of the folder the command runs from', () => {
+    const folder = copySize('10m');
+    const here = temporary('here-');
+    const output = execFileSync(process.execPath, [join(folder, 'import-base.ts')], {
+      cwd: here,
+      encoding: 'utf8',
+    });
+
+    assert.match(output, /Global base installed/);
+    assert.equal(readFileSync(join(here, 'local-ai-base', 'VERSION'), 'utf8'), '0.2.0\n');
+  });
+  it('refuses the folder of the pasted parts, and keeps every part', () => {
+    const folder = copySize('10m');
+    const pasted = readdirSync(folder).sort();
+
+    assert.match(runImport({
+      binary: process.execPath,
+      folder,
+      script: 'import-base.ts',
+      target: folder,
+    }), /holds the pasted parts/);
+    assert.deepEqual(readdirSync(folder).sort(), pasted);
+  });
+  it('refuses a folder that is not empty and holds no base, and leaves it as it was', () => {
+    const folder = copySize('10m');
+    const other = temporary('other-');
+
+    write(other, 'notes.txt', 'mine\n');
+    assert.match(runImport({
+      binary: process.execPath,
+      folder,
+      script: 'import-base.ts',
+      target: other,
+    }), /not empty and holds no base/);
+    assert.deepEqual(readdirSync(other), ['notes.txt']);
+  });
+  it('replaces a previous base', () => {
+    const folder = copySize('10m');
+    const base = temporary('previous-');
+
+    write(base, 'VERSION', '0.1.0\n');
+    write(base, 'old.md', 'old\n');
+    assert.match(runImport({
+      binary: process.execPath,
+      folder,
+      script: 'import-base.ts',
+      target: base,
+    }), /Global base installed/);
+    assert.equal(existsSync(join(base, 'old.md')), false);
+    assert.equal(readFileSync(join(base, 'VERSION'), 'utf8'), '0.2.0\n');
+  });
+});
 describe('the project import', () => {
   it('updates .agents/ and keeps what the team wrote', () => {
     const project = temporary('project-');

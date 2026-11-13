@@ -28,12 +28,14 @@ once, then linted; "done" comes only after format, lint, build and tests at zero
 1. **Find the part size that pastes.** The export is in `export/`, in five part sizes (500 KB to 10 MB);
    follow [guides/paste-export.md](guides/paste-export.md), part 1.
 2. **Install the global base.** Paste every `global-NNN.txt` of that size and `import-base.ts` into an
-   empty folder, then run `node import-base.ts --machine`. The base lands in
-   `~/.local/share/local-ai-base`, and the mount for the containers is written.
+   empty folder, then run `node <that folder>/import-base.ts` from where you want the base. It lands
+   in `./local-ai-base` there.
 3. **Mount it in the dev containers.** Follow [guides/install.md](guides/install.md): the base at
    `/opt/local-ai-base`, read-only; its OpenCode folder at `/etc/opencode`; OpenCode kept at 2.2.7 with
-   updates off; the context window of the model declared.
-4. **Check the container.** In a recreated dev container, run the six commands of `install.md`, part 5.
+   updates off; the context window of the model declared. To try it first on one machine, with a
+   project with the base and the same project without it, follow
+   [guides/compare-with-and-without.md](guides/compare-with-and-without.md).
+4. **Check the container.** In a recreated dev container, run the commands of `install.md`, part 4.
 5. **Equip a project.** Paste every `project-NNN.txt` and `import-project.ts` into an empty folder,
    then run `node <that folder>/import-project.ts` from the root of the project. It writes `AGENTS.md`
    and `.agents/`, and keeps what the team already wrote.
@@ -46,8 +48,7 @@ once, then linted; "done" comes only after format, lint, build and tests at zero
 8. **Measure it.** Play the ten tasks of the evaluation without a base, with the 0.1 and with the 0.2:
    [guides/run-evaluation.md](guides/run-evaluation.md).
 
-Other trials: one request with and without the base, side by side
-([guides/compare-with-and-without.md](guides/compare-with-and-without.md)), heavy files
+Other trials: heavy files
 ([guides/try-heavy-files.md](guides/try-heavy-files.md)), update a tool of the documentation
 ([guides/update-a-tool.md](guides/update-a-tool.md)).
 

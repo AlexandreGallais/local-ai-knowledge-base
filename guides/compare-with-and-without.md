@@ -1,123 +1,164 @@
-# Compare one request with and without the base
+# Two test projects, with and without the base
 
-Two copies of the same Angular project, the same model, the same request: one copy with the base, one
-without anything. You see by yourself what the base changes. For figures over ten tasks, see
-[run-evaluation.md](run-evaluation.md).
+From the pasted export to two dev containers side by side: the same Angular project, the same image,
+the same OpenCode and the same model; one has the base, the other has nothing. Works on macOS and on
+Linux, in a folder of your choice. For figures over ten tasks, see [run-evaluation.md](run-evaluation.md).
 
 ## What you need
 
-- The global base installed on the machine ([install.md](install.md)), with its mount file
-  `~/.config/containers/containers.conf.d/50-local-ai-base.conf`.
-- The `.devcontainer/` folder your team uses for Angular projects, with OpenCode 2.2.7 in its image.
-- The parts of the project kit at the size you keep: `project-001.txt` and `import-project.ts`
-  ([paste-export.md](paste-export.md), part 3).
-- One request, written once in `~/compare/request.md`. Both sessions get the same text.
+- Docker Desktop, or Podman, running.
+- VS Code with the Dev Containers extension.
+- Node.js 22.18 or later on the machine, only to run the two import scripts.
+- Network access the first time a container starts: it installs OpenCode and the packages.
+- The model you use with OpenCode, and how you configure it.
 
-## 1. Make the two copies
+## The folders
 
-On the machine, outside any container. The starting projects of the evaluation are in the base:
+Everything lives in one folder, here `~/ai-test`; take any other.
 
-```sh
-mkdir -p ~/compare
-cp -r ~/.local/share/local-ai-base/evaluation/projects ~/compare/with-base
-cp -r ~/.local/share/local-ai-base/evaluation/projects ~/compare/without-base
-rm -rf ~/compare/with-base/*/.agents ~/compare/without-base/*/.agents
-cp -r <your team's .devcontainer> ~/compare/with-base/.devcontainer
-cp -r <your team's .devcontainer> ~/compare/without-base/.devcontainer
+```text
+~/ai-test/
+  paste/           the pasted parts and the two import scripts
+  local-ai-base/   the global base, made by import-base.ts
+  opencode-user/   your OpenCode configuration (the model), shared by both containers
+  with-base/       test project 1: the base is mounted in its container
+  without-base/    test project 2: nothing of the base
 ```
 
-Both copies now hold the same three projects, without `AGENTS.md` nor `.agents/`. The one you use is
-`angular-app/`; its packages are installed one folder up, in the copy itself.
+The two dev containers find `local-ai-base/` and `opencode-user/` beside their project folder: keep
+these five folders together.
 
-## 2. The copy without the base
-
-The mount file gives the base to every container created while it is there. Put it aside first:
+## 1. Paste the export
 
 ```sh
-mv ~/.config/containers/containers.conf.d/50-local-ai-base.conf ~/50-local-ai-base.conf.off
+mkdir -p ~/ai-test/paste
 ```
 
-1. Open `~/compare/without-base` in its dev container, rebuilt so that it is new.
-2. In the container, check that nothing of the base is there. Both commands must say
-   "No such file or directory":
+Paste into `~/ai-test/paste/`, at the size that passes ([paste-export.md](paste-export.md)):
 
-   ```sh
-   ls /opt/local-ai-base
-   ls /etc/opencode
-   ```
+- every `global-NNN.txt`;
+- `project-001.txt`;
+- `import-base.ts` and `import-project.ts`.
 
-3. Install the packages, with the agreement of your team: `npm install`.
-4. Put the mount file back, on the machine, before you create any other container:
+## 2. Make the global base
 
-   ```sh
-   mv ~/50-local-ai-base.conf.off ~/.config/containers/containers.conf.d/50-local-ai-base.conf
-   ```
+```sh
+cd ~/ai-test
+node paste/import-base.ts
+```
 
-This container stays without the base as long as you do not rebuild it.
+The base lands in `./local-ai-base`, the folder you ran the command from. To put it elsewhere, add
+`--target <folder>`; the folder must be new, empty or an older base.
 
-## 3. The copy with the base
+## 3. Write your OpenCode configuration
 
-1. Paste `project-001.txt` and `import-project.ts` into a new folder `~/compare/with-base/kit/`.
-2. Open `~/compare/with-base` in its dev container, rebuilt so that it gets the mount.
-3. In the container, run the six checks of [install.md](install.md), part 5.
-4. Install the packages, with the agreement of your team: `npm install`.
-5. Equip the project, then remove the pasted kit:
+```sh
+mkdir opencode-user
+cp local-ai-base/templates/devcontainer/opencode-user/opencode.jsonc opencode-user/
+```
 
-   ```sh
-   cd angular-app
-   node ../kit/import-project.ts
-   rm -rf ../kit
-   ```
+Open `opencode-user/opencode.jsonc` and add your model, as you configure it today. Both containers read
+this same file, so both use the same model.
 
-6. Run `opencode` in `angular-app/` and say hello. Confirm the kind "Angular application", then restart
-   OpenCode when it asks ([try-welcome.md](try-welcome.md)).
+## 4. Make the two projects
 
-## 4. Give the same request to both
+The starting projects of the evaluation are in the base. Copy them twice, without their profile, and
+give each copy its dev container:
 
-In each container, from `angular-app/`, start `opencode` and paste the text of `~/compare/request.md`.
+```sh
+cp -r local-ai-base/evaluation/projects with-base
+cp -r local-ai-base/evaluation/projects without-base
+rm -rf with-base/*/.agents without-base/*/.agents
+mkdir with-base/.devcontainer without-base/.devcontainer
+cp local-ai-base/templates/devcontainer/with-base/devcontainer.json with-base/.devcontainer/
+cp local-ai-base/templates/devcontainer/without-base/devcontainer.json without-base/.devcontainer/
+```
+
+Each copy holds three projects; you work in `angular-app/`.
+
+## 5. Give the project kit to the project with the base
+
+The project kit is two things written into a project: `AGENTS.md` and the folder `.agents/`. It goes
+into `with-base/angular-app/` only:
+
+```sh
+cd ~/ai-test/with-base/angular-app
+node ~/ai-test/paste/import-project.ts
+```
+
+It prints "Project kit installed". `without-base/angular-app/` gets nothing.
+
+## 6. Open the two containers
+
+In VS Code, run "Dev Containers: Open Folder in Container..." on `~/ai-test/with-base`; then, in a
+second window, on `~/ai-test/without-base`. The first start installs OpenCode 2.2.7 and the packages:
+wait for it to end.
+
+In the terminal of each container, check:
+
+```sh
+opencode --version       # both: 2.2.7
+ls /opt/local-ai-base    # with-base: VERSION, rules, tools...   without-base: No such file or directory
+ls /etc/opencode         # with-base: opencode.jsonc, agents...  without-base: No such file or directory
+```
+
+Then make `angular-app/` the root of its own Git repository, in both containers:
+
+```sh
+cd angular-app
+git init -q
+```
+
+## 7. The first conversation with the base
+
+In the container `with-base`, from `angular-app/`, run `opencode` and say hello. The AI recognises an
+Angular application and asks you to confirm it, its subject, its versions and its copyright header.
+Answer, then restart OpenCode when it asks ([try-welcome.md](try-welcome.md)).
+
+## 8. Give the same request to both
+
+In each container, from `angular-app/`, run `opencode` and paste the same request.
+
+For a first try, take the paragraph under "Request" of
+`~/ai-test/local-ai-base/evaluation/tasks/t08-select-box/task.md` (a select box) or of
+`t10-valve-list-page/task.md` (a page with its store). Never paste its "Proof of success" part: the
+AI must not see it.
 
 - With the base, the AI first writes a brief and asks questions. Answer them, and write your answers
-  down. Without the base, the AI may ask nothing.
-- When the session without the base asks a question that the base asked too, give the same answer.
-- Never help one session more than the other: no hint, no correction you would not give to both.
+  down. When the other session asks the same question, give the same answer.
+- Never help one session more than the other.
 
-For a first try, take a request of the evaluation: the paragraph under "Request" of
-`~/.local/share/local-ai-base/evaluation/tasks/t08-select-box/task.md` (a select box) or of
-`t10-valve-list-page/task.md` (a page with its store). Their data is invented, and each one comes
-with a proof test for part 5. Never paste the "Proof of success" part: the AI must not see it.
+## 9. Compare
 
-## 5. Compare
+When both say they are done, copy the proof test of the task into both projects, on the machine:
 
-Fill the same lines for both sessions:
+```sh
+for copy in with-base without-base; do
+  cp ~/ai-test/local-ai-base/evaluation/tasks/t08-select-box/proof.spec.ts \
+     ~/ai-test/$copy/angular-app/src/app/select-box.proof.spec.ts
+done
+```
+
+Then, in each container, from `angular-app/`:
+
+```sh
+npx ng build
+npx --no ng test --watch=false --include src/app/select-box.proof.spec.ts
+```
+
+For another task, take the file name from the `proof:` line of its `task.md`. Fill the same lines for
+both:
 
 | Check | Without the base | With the base |
 | --- | --- | --- |
 | Said "done" without your help? |  |  |
 | Questions asked before writing |  |  |
 | Messages you had to send to fix something |  |  |
-| `npx ng build` in `angular-app/` ends without error |  |  |
-| Tests written, and `npx ng test --watch=false` passes |  |  |
-| Proof test of the evaluation task passes (below) |  |  |
+| `npx ng build` ends without error |  |  |
+| The proof test passes |  |  |
 | Code read by you: as your team writes it? |  |  |
 | Time from the request to "done" |  |  |
 | Tokens of the session, if OpenCode shows them |  |  |
-
-The build and the tests are the same commands in both containers. The format and lint passes of the
-base only exist in the copy with the base: in the other one, judge the code by reading it.
-
-With a request of the evaluation, its proof test checks both results the same way. Once both
-sessions are over, copy it on the machine, for t08:
-
-```sh
-for copy in with-base without-base; do
-  cp ~/.local/share/local-ai-base/evaluation/tasks/t08-select-box/proof.spec.ts \
-     ~/compare/$copy/angular-app/src/app/select-box.proof.spec.ts
-done
-```
-
-Then in each container, from `angular-app/`, run the command given by the `test:` line of
-`task.md`, for t08: `npx --no ng test --watch=false --include src/app/select-box.proof.spec.ts`.
-For another task, take the file name from its `proof:` line.
 
 ## What to send back
 

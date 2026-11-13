@@ -1,55 +1,51 @@
-# Install the global base on a machine
+# Install the global base
 
-Once per machine. Then every dev container reads the base, read-only, and every project only holds
-`AGENTS.md` and `.agents/` (decision 0019 of the project: a mounted folder, servers run with stdio).
+The base is one folder, read-only, that every dev container sees at `/opt/local-ai-base`. A project
+only holds `AGENTS.md` and `.agents/`. To try it on one machine, with two test projects, follow
+[compare-with-and-without.md](compare-with-and-without.md): it does all of this step by step.
 
-## 1. Put the base in a folder of the machine
+## 1. Make the base folder
 
-1. Paste the parts of the global base export, then run `node import-base.ts` (see the export guide).
-2. The base lands in `~/.local/share/local-ai-base`. Nothing else on the machine writes there.
+Paste the parts ([paste-export.md](paste-export.md)), then, from the folder where you want the base:
 
-## 2. Mount it in every container
+```sh
+node <folder of the parts>/import-base.ts
+```
 
-Write `~/.config/containers/containers.conf.d/50-local-ai-base.conf`, with the absolute path of your
-home folder in place of `HOME`:
+The base lands in `./local-ai-base`. `--target <folder>` puts it elsewhere; the folder must be new,
+empty or an older base. Run the same command again to update it: the older base is replaced whole.
 
-```toml
-[containers]
-volumes = [
-  "HOME/.local/share/local-ai-base:/opt/local-ai-base:ro",
-  "HOME/.local/share/local-ai-base/opencode:/etc/opencode:ro",
+## 2. Give it to the dev containers
+
+Each container needs two read-only mounts: the base at `/opt/local-ai-base`, and its `opencode/`
+folder at `/etc/opencode`. Choose one way.
+
+**A. In the `devcontainer.json` of the project**, Docker or Podman. Add to `"mounts"`, with the path of
+your base folder:
+
+```jsonc
+"mounts": [
+  "type=bind,source=/path/to/local-ai-base,target=/opt/local-ai-base,readonly",
+  "type=bind,source=/path/to/local-ai-base/opencode,target=/etc/opencode,readonly"
 ]
 ```
 
-- The first line gives the base to every container, read-only, at the same path.
-- The second line gives OpenCode its common configuration, agents, skills and plugins.
-- On a machine with SELinux, add `,z` after `ro`.
+`global/templates/devcontainer/with-base/devcontainer.json` of the base is a complete example.
 
-`node import-base.ts --machine` writes this file for you.
+**B. For every container of the machine**, Podman only, without touching any project: run the import
+with `--machine`. It writes `~/.config/containers/containers.conf.d/50-local-ai-base.conf` with both
+mounts. On a machine with SELinux, add `,z` after `ro` in that file.
 
-## 3. Switch OpenCode updates off
+## 3. OpenCode in the container
 
-OpenCode reads the `update` setting only in the user's own configuration. In the dev container,
-`~/.config/opencode/opencode.jsonc` holds:
+- Install it at the version of the base: `npm install --global @opencode/cli@2.2.7`.
+- Switch its updates off, and declare your model with its context window (`limit.context`) and tool
+  calls (`capabilities.tools: true`), in `~/.config/opencode/opencode.jsonc` of the container.
+  `global/templates/devcontainer/opencode-user/opencode.jsonc` is the starting file.
 
-```jsonc
-{
-  "$schema": "https://opencode.ai/config.json",
-  "update": "disable"
-}
-```
+## 4. Check
 
-Keep `@opencode/cli` at `2.2.7` in the image of the dev container: version 2.3.0 changes how
-subagents run.
-
-## 4. Declare the size of the model
-
-Compaction only starts when OpenCode knows the context window of the model. In the configuration of
-your model provider, the model must declare `limit.context` and `capabilities.tools: true`.
-
-## 5. Check
-
-Recreate the dev container of a project, then run in it:
+In a container created after the mounts:
 
 ```sh
 ls /opt/local-ai-base                           # shows VERSION, rules, tools...
@@ -57,9 +53,6 @@ touch /opt/local-ai-base/probe                  # must fail: read-only
 node /opt/local-ai-base/tools/base-version.ts   # prints the version of the base
 opencode debug config                           # lists /etc/opencode among the sources
 opencode mcp list                               # lists the servers of the base
-git status --short                              # shows AGENTS.md and .agents/ only
 ```
 
-Write down what each command prints. If the base is missing in the container, the tool that starts
-your dev containers does not read `containers.conf`: then start them with the Dev Containers CLI and
-its `--mount` option, or ask for a default feature that declares the mount.
+If `/opt/local-ai-base` is missing, the container was created before the mounts: rebuild it.

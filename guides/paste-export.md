@@ -11,7 +11,7 @@ same content. Paste the largest parts that your paste accepts: fewer parts, less
 3. Paste `import-base.ts` the same way, then run:
 
    ```sh
-   node import-base.ts --target ~/paste-test/base
+   node import-base.ts --target ~/paste-test-base
    ```
 
 4. Read the first line it prints:
@@ -23,8 +23,8 @@ same content. Paste the largest parts that your paste accepts: fewer parts, less
 ## 2. Paste the global base
 
 1. In an empty folder, paste every `global-NNN.txt` of the size you keep, and `import-base.ts`.
-2. Run `node import-base.ts --machine`. The base lands in `~/.local/share/local-ai-base`, and the
-   mount for your containers is written (see `install.md`).
+2. From the folder where you want the base, run `node <folder of the parts>/import-base.ts`. The base
+   lands in `./local-ai-base` there (see `install.md`).
 3. If a part is damaged or missing, the command names it and writes nothing: paste that part again,
    then run the command again.
 

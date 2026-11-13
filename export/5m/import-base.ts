@@ -1,9 +1,10 @@
 // Recreates the global base from the pasted parts global-001.txt, global-002.txt...
 // One file, no package, no build step: run with Node 22.18 or later.
 //   node import-base.ts [--from <folder of the parts>] [--target <folder>] [--machine]
-// Default: the parts next to this file, the base in ~/.local/share/local-ai-base.
+// Default: the parts next to this file, the base in ./local-ai-base, in the folder you run it from.
 // Every part is checked before anything is written. A damaged or missing part is named, and
-// nothing is written. The previous base is replaced as a whole.
+// nothing is written. The previous base is replaced as a whole; a folder that is not a base, or
+// that holds the pasted parts, is refused. --machine also writes the Podman mount of the base.
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
@@ -19,7 +20,9 @@ import {
 import { homedir } from 'node:os';
 import {
   dirname,
+  isAbsolute,
   join,
+  relative,
   resolve,
 } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -211,6 +214,22 @@ function writeFiles(folder: string, files: UnpackedFile[]): void {
   }
 }
 
+// The base replaces its target whole: the target must be new, empty, or a previous base, and must
+// not hold the pasted parts. Returns why it is refused, or undefined.
+export function refusedTarget(target: string, from: string): string | undefined {
+  // Real paths: a link (such as /var to /private/var) must not hide that both are the same folder.
+  const real = (path: string): string => existsSync(path) ? realpathSync(path) : path;
+  const parts = relative(real(target), real(from));
+
+  if (parts === '' || (!parts.startsWith('..') && !isAbsolute(parts))) {
+    return `${target} holds the pasted parts; give a new folder, for example --target ./local-ai-base`;
+  }
+  if (!existsSync(target) || readdirSync(target).length === 0 || existsSync(join(target, 'VERSION'))) {
+    return undefined;
+  }
+  return `${target} is not empty and holds no base; give a new or empty folder`;
+}
+
 // Writes the new base beside the old one, then swaps them: a failure never leaves half a base.
 export function installBase(files: UnpackedFile[], target: string): void {
   const fresh = `${target}.new`;
@@ -281,11 +300,15 @@ function buildSearchIndex(target: string): void {
 
 function main(): void {
   const from = resolve(option('from') ?? dirname(fileURLToPath(import.meta.url)));
-  const target = resolve(option('target') ?? join(homedir(), '.local', 'share', 'local-ai-base'));
+  const target = resolve(option('target') ?? 'local-ai-base');
 
   try {
     const files = readPack(from, 'global');
+    const refused = refusedTarget(target, from);
 
+    if (refused !== undefined) {
+      throw new Error(refused);
+    }
     installBase(files, target);
     console.log(`Global base installed: ${files.length} files in ${target}.`);
     buildSearchIndex(target);

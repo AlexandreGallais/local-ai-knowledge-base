@@ -1,0 +1,12 @@
+{
+  // Test project WITHOUT the base: the same image, the same OpenCode and the same model as the
+  // project with the base, and nothing else. See guides/compare-with-and-without.md.
+  "name": "without-base",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:26",
+  "mounts": [
+    // Your own OpenCode configuration (the model): the same folder for both test projects.
+    "type=bind,source=${localWorkspaceFolder}/../opencode-user,target=/home/node/.config/opencode"
+  ],
+  // Once, when the container is created: the same OpenCode, then the packages.
+  "postCreateCommand": "npm install --global @opencode/cli@2.2.7 && npm install"
+}

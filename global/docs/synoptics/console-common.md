@@ -111,10 +111,11 @@ the same mechanical hold [S4] [S17]. Say which world a card speaks of.
 
 ## Open questions
 
-- "navigation" and "damage" are two symbols of the team's list that no public source defines. Readings
-  found: navigation lights and their controller; a navigation symbol on a display; the "navigation
-  full" order of a propulsion lever; a damage control plan or its incidents; the malfunction of an
-  equipment. Ask the user which one before drawing them.
+- "navigation" and "damage" are two symbols of the team's list that no public source defines, and that
+  have no card on purpose. Readings found: navigation lights and their controller; a navigation symbol
+  on a display; the "navigation full" order of a propulsion lever; a damage control plan or its
+  incidents; the malfunction of an equipment. Never guess: if a task needs one, ask the user what it
+  shows.
 - `twoValveControl` (two valves together or in opposition) and `selectorPushButton` (a push-button
   with a selector ring, or a selector to push before turning) have no public definition: confirm with
   the user.

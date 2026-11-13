@@ -1,0 +1,16 @@
+{
+  // Test project WITH the base. The folders local-ai-base/ and opencode-user/ sit beside the project
+  // folder: see guides/compare-with-and-without.md of the repository of the base.
+  "name": "with-base",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:26",
+  "mounts": [
+    // The global base, read-only, where its rules, servers and tools expect it.
+    "type=bind,source=${localWorkspaceFolder}/../local-ai-base,target=/opt/local-ai-base,readonly",
+    // Its OpenCode configuration: rules, agents, skills, MCP servers, plugin.
+    "type=bind,source=${localWorkspaceFolder}/../local-ai-base/opencode,target=/etc/opencode,readonly",
+    // Your own OpenCode configuration (the model): the same folder for both test projects.
+    "type=bind,source=${localWorkspaceFolder}/../opencode-user,target=/home/node/.config/opencode"
+  ],
+  // Once, when the container is created: OpenCode at the version of the base, then the packages.
+  "postCreateCommand": "npm install --global @opencode/cli@2.2.7 && npm install"
+}

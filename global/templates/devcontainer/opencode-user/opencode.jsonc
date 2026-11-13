@@ -1,0 +1,11 @@
+{
+  // Your own OpenCode configuration, mounted in both test containers at ~/.config/opencode.
+  "$schema": "https://opencode.ai/config.json",
+
+  // Keep OpenCode at 2.2.7: the base is written for this version.
+  "update": "disable"
+
+  // Add here the model you use with OpenCode, as you configure it today: its provider, its name,
+  // its context window (limit.context) and tool calls (capabilities.tools: true). A model served
+  // on the machine itself is reached from a container at host.docker.internal, not localhost.
+}
