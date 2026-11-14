@@ -61,7 +61,8 @@ export function readAgentRules(text: string): Rule[] {
 // The effect of one tool call: "allow", "ask" or "deny". For a policy, the tool and its input are
 // joined as "tool:input", as in the common config.
 export function evaluate(config: Config, agentRules: readonly Rule[], action: string, resource: string): string {
-  const isDeniedByPolicy = config.policies.some((policy) => policy.effect === 'deny' && wildcard(policy.resource, `${action}:${resource}`));
+  // Only "tool.use" policies concern a tool call; "websearch.use" and the others concern providers.
+  const isDeniedByPolicy = config.policies.some((policy) => policy.action === 'tool.use' && policy.effect === 'deny' && wildcard(policy.resource, `${action}:${resource}`));
   const rules = [
     ...config.rules,
     ...agentRules,

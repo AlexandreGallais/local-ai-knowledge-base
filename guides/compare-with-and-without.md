@@ -54,8 +54,12 @@ cp local-ai-base/templates/devcontainer/opencode-user/opencode.jsonc opencode-us
 ```
 
 It gives both containers the same rights: every command allowed; an install, a push, a branch or a
-deletion asks you first; the web refused. Add your model in it. A Claude key set on the machine as
-`ANTHROPIC_API_KEY` reaches both containers; start VS Code from a terminal that has it.
+deletion asks you first. Add your model in it. A Claude key set on the machine as `ANTHROPIC_API_KEY`
+reaches both containers; start VS Code from a terminal that has it.
+
+The web is locked a second time in each `devcontainer.json`, by `OPENCODE_CONFIG_CONTENT`, which OpenCode
+reads above your configuration: no web search tool (`websearch: false`), no `webfetch`, no `curl`,
+`wget`, `git clone`, `git fetch` or `git pull`, no shared session. The text is the same in both.
 
 ## 4. The two empty projects
 
@@ -82,18 +86,20 @@ It prints "Project kit installed". `without-base/` gets nothing.
 ## 6. Open the two containers
 
 In VS Code, "Dev Containers: Open Folder in Container..." on `~/ai-test/with-base`, then, in a second
-window, on `~/ai-test/without-base`. The first start installs OpenCode 2.2.7.
+window, on `~/ai-test/without-base`. The first start installs OpenCode 2.2.7 in the project itself: a
+`package.json` with only `@opencode/cli`, a `.gitignore` with `node_modules/`.
 
 In the terminal of each container:
 
 ```sh
-opencode --version       # both: 2.2.7
+npx opencode --version   # both: opencode v2.2.7
 ls /opt/local-ai-base    # with-base: VERSION, rules, tools...   without-base: No such file or directory
 ```
 
 ## 7. Ask
 
-Run `opencode` in each container, at the root of the project, and give both the same request.
+Run `npx opencode` (or `npm run opencode`) in each container, at the root of the project, and give
+both the same request.
 
 - With the base, the first conversation asks you the kind of project, its subject and its versions,
   then applies the profile. Restart OpenCode when it asks.

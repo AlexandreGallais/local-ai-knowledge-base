@@ -31,8 +31,12 @@
     { "action": "shell", "resource": "rm -fr *", "effect": "ask" }
   ],
 
-  // No search nor download on the web, in both containers.
+  // No search nor download on the web, in both containers. Each devcontainer.json sets the same lock
+  // again in OPENCODE_CONFIG_CONTENT, above this file.
+  "websearch": false,
+  "share": "disabled",
   "policies": [
+    { "action": "websearch.use", "resource": "*", "effect": "deny" },
     { "action": "tool.use", "resource": "webfetch:*", "effect": "deny" },
     { "action": "tool.use", "resource": "websearch:*", "effect": "deny" },
     { "action": "tool.use", "resource": "shell:curl *", "effect": "deny" },

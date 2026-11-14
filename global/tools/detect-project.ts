@@ -183,8 +183,22 @@ function isPureLibrary(manifest: Manifest | undefined, files: readonly string[])
   return manifest?.sideEffects === false && files.every((path) => !/^(?:export )?(?:abstract )?class |^(?:export )?let /m.test(readFileSync(path, 'utf8')));
 }
 
-function isEmpty(project: string): boolean {
-  return readdirSync(project).every((name) => IGNORED.has(name) || name.startsWith('.'));
+// The packages that only run the assistant: a package.json that holds nothing else is still empty.
+const ASSISTANT_PACKAGES = new Set(['@opencode/cli']);
+
+function holdsOnlyTheAssistant(manifest: Manifest | undefined): boolean {
+  return Object
+    .keys(allDependencies(manifest))
+    .every((name) => ASSISTANT_PACKAGES.has(name));
+}
+
+function isEmpty(project: string, manifest: Manifest | undefined): boolean {
+  const manifestFiles = holdsOnlyTheAssistant(manifest) ? new Set([
+    'package.json',
+    'package-lock.json',
+  ]) : new Set<string>();
+
+  return readdirSync(project).every((name) => IGNORED.has(name) || manifestFiles.has(name) || name.startsWith('.'));
 }
 
 function kindOf(project: string, manifest: Manifest | undefined, files: readonly string[]): {
@@ -194,10 +208,10 @@ function kindOf(project: string, manifest: Manifest | undefined, files: readonly
   const all = allDependencies(manifest);
   const other = OTHER_STACKS.find((name) => existsSync(join(project, name)));
 
-  if (isEmpty(project)) {
+  if (isEmpty(project, manifest)) {
     return {
       kind: 'empty',
-      reason: 'no file besides AGENTS.md, .agents/ and hidden files',
+      reason: 'no file besides AGENTS.md, .agents/, hidden files, and a package.json that only runs the assistant',
     };
   }
   if (all['@angular/core'] !== undefined) {

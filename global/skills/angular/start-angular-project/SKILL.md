@@ -16,11 +16,15 @@ description: Use when the user asks for a new Angular application or a new Angul
    subject and the copyright. If it is missing, load the skill `welcome` first.
 2. Ask with the question tool: the name (kebab-case) and the component prefix (`app`, or a short team
    prefix).
-3. Give the user the command to run in the project folder, and wait:
-   - application: `npx @angular/cli@22 new <name> --directory . --style=scss --ssr=false --skip-git`
+3. Give the user the commands to run in the project folder, in this order, and wait:
+   - when `package.json` only holds `@opencode/cli`: `rm package.json package-lock.json` (Angular CLI
+     refuses to write over them; `node_modules` stays, so OpenCode keeps running);
+   - application: `npx @angular/cli@22 new <name> --directory . --style=scss --ssr=false --skip-git --skip-install`
      (Vitest is the default test runner since Angular 21);
-   - library: `npx @angular/cli@22 new <name> --directory . --no-create-application --skip-git`,
-     then `npx --no -- ng generate library <name>`.
+   - library: `npx @angular/cli@22 new <name> --directory . --no-create-application --skip-git --skip-install`,
+     then `npx --no -- ng generate library <name>`;
+   - then `npm install --save-dev --save-exact @opencode/cli@2.2.7`: it installs the project and keeps
+     OpenCode in it.
 4. Ask the user to install `@ngrx/signals` at the version of Angular (`npm install @ngrx/signals@22`)
    and the packages of the profile listed in `/opt/local-ai-base/packages.md`.
 5. Run `node /opt/local-ai-base/tools/apply-profile.ts --profile <profile> --subject "<subject>"

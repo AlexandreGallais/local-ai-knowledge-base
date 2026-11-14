@@ -17,7 +17,8 @@ description: Use when the user asks for a new TypeScript library without Angular
 2. Ask with the question tool: the name of the package (kebab-case).
 3. Write `package.json` (`"type": "module"`, `"private": true`, scripts `build: tsc -p tsconfig.json` and
    `test: vitest run`; `"sideEffects": false` for `ts-pure-lib`), `tsconfig.json` extending
-   `.agents/lint/tsconfig.strict.json`, and `src/`.
+   `.agents/lint/tsconfig.strict.json`, and `src/`. When `package.json` exists, add to it: keep its
+   `devDependencies` and `scripts`, `@opencode/cli` above all.
 4. Ask the user to install the packages of the profile listed in `/opt/local-ai-base/packages.md`, at
    their pinned versions.
 5. Write a first function with the skill `write-library-function`, and run the checks until 0 errors.

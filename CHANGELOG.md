@@ -38,6 +38,12 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 - The lint pass lets Storybook files (`.storybook/*.ts`, `*.stories.ts`) export a default and their
   stories; it runs Stylelint only when the project has styles; a missing package is one clear line.
 
+- The test containers install OpenCode 2.2.7 in the project itself (`npx opencode`, `npm run
+  opencode`), pinned, and run its postinstall by hand, which npm 12 blocks. Each one locks the web in
+  `OPENCODE_CONFIG_CONTENT`: `websearch: false`, no `webfetch`, no download, no shared session. The
+  base and the user configuration say the same. A project whose `package.json` only holds
+  `@opencode/cli` counts as empty for the welcome, and the start skills keep OpenCode in it.
+
 ### Added in the tools
 
 - `tools/missing-packages.ts` lists the packages of the profile a project lacks and the one command

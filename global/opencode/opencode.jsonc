@@ -111,7 +111,10 @@
 
   // The only hard denies: no search nor download on the web. The test container without the base
   // has the same ones (templates/devcontainer/opencode-user/), so both work in the same conditions.
+  "websearch": false,
+  "share": "disabled",
   "policies": [
+    { "action": "websearch.use", "resource": "*", "effect": "deny" },
     { "action": "tool.use", "resource": "webfetch:*", "effect": "deny" },
     { "action": "tool.use", "resource": "websearch:*", "effect": "deny" },
     { "action": "tool.use", "resource": "shell:curl *", "effect": "deny" },

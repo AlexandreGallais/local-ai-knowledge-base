@@ -66,6 +66,24 @@ describe('the detection of a project', () => {
     assert.equal(detectProject(sampleCopy('ts-pure-lib')).kind, 'ts-pure-lib');
     assert.equal(detectProject(temporary('empty-')).kind, 'empty');
   });
+  it('sees a folder whose package.json only runs OpenCode as empty, and one with another package as not front-end', () => {
+    const assistant = temporary('assistant-');
+    const other = temporary('other-');
+
+    writeFileSync(join(assistant, 'package.json'), JSON.stringify({
+      devDependencies: { '@opencode/cli': '2.2.7' },
+      scripts: { opencode: 'opencode' },
+    }));
+    writeFileSync(join(assistant, 'package-lock.json'), '{}');
+    writeFileSync(join(other, 'package.json'), JSON.stringify({
+      devDependencies: {
+        '@opencode/cli': '2.2.7',
+        'left-pad': '1.3.0',
+      },
+    }));
+    assert.equal(detectProject(assistant).kind, 'empty');
+    assert.equal(detectProject(other).kind, 'not-front');
+  });
   it('reads the versions, the package manager and the test runner', () => {
     const app = detectProject(sampleCopy('angular-app'));
     const library = detectProject(sampleCopy('ts-lib'));

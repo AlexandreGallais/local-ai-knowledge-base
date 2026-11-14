@@ -48,17 +48,35 @@ describe('the two test dev containers', () => {
     assert.equal(withBase.image, 'mcr.microsoft.com/devcontainers/javascript-node:26');
     assert.equal(withoutBase.image, withBase.image);
     assert.equal(withoutBase.postCreateCommand, withBase.postCreateCommand);
-    assert.match(withBase.postCreateCommand, /@opencode\/cli@2\.2\.7/);
     assert.equal(mountTo(withoutBase, '/home/node/.config/opencode'), mountTo(withBase, '/home/node/.config/opencode'));
   });
-  it('pass the same Claude key of the machine to both', () => {
-    assert.deepEqual(withBase.remoteEnv, {
-      ANTHROPIC_API_KEY: [
-        '$',
-        '{localEnv:ANTHROPIC_API_KEY}',
-      ].join(''),
-    });
+  it('install OpenCode 2.2.7 in the project, pinned, with its postinstall, never globally', () => {
+    assert.match(withBase.postCreateCommand, /npm install --save-dev --save-exact .*@opencode\/cli@2\.2\.7/);
+    assert.match(withBase.postCreateCommand, /node node_modules\/@opencode\/cli\/postinstall\.mjs/);
+    assert.match(withBase.postCreateCommand, /npm pkg set scripts\.opencode=opencode/);
+    assert.doesNotMatch(withBase.postCreateCommand, /--global/);
+  });
+  it('pass the same Claude key and the same web lock to both', () => {
+    assert.equal(withBase.remoteEnv?.['ANTHROPIC_API_KEY'], [
+      '$',
+      '{localEnv:ANTHROPIC_API_KEY}',
+    ].join(''));
     assert.deepEqual(withoutBase.remoteEnv, withBase.remoteEnv);
+  });
+  it('lock the web in each container: no search tool, no fetch, no download, no shared session', () => {
+    const lock = JSON.parse(withBase.remoteEnv?.['OPENCODE_CONFIG_CONTENT'] ?? '{}') as RuleConfig & {
+      websearch?: boolean;
+      share?: string;
+    };
+
+    assert.equal(lock.websearch, false);
+    assert.equal(lock.share, 'disabled');
+    assert.ok(lock.policies?.some((policy) => policy.action === 'websearch.use' && policy.resource === '*' && policy.effect === 'deny'));
+    assert.equal(evaluate(lock, 'webfetch', 'https://example.test'), 'deny');
+    assert.equal(evaluate(lock, 'websearch', 'angular signals'), 'deny');
+    assert.equal(evaluate(lock, 'shell', 'curl https://example.test'), 'deny');
+    assert.equal(evaluate(lock, 'shell', 'wget https://example.test'), 'deny');
+    assert.equal(evaluate(lock, 'shell', 'git clone https://example.test/a.git'), 'deny');
   });
   it('switch OpenCode updates off in the shared user configuration', () => {
     const config = parseJsonc(readFileSync(join(TEMPLATES, 'opencode-user', 'opencode.jsonc'), 'utf8')) as Record<string, unknown>;
